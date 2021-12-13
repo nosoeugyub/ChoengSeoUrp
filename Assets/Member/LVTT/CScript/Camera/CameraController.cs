@@ -15,9 +15,11 @@ namespace Game.Cam
         [SerializeField]
         private Camera mainCamera;
         // Start is called before the first frame update
+
+      
         void Start()
         {
-            //virtualCamera = GetComponent<CinemachineVirtualCamera>();
+           
 
         }
 
@@ -43,14 +45,14 @@ namespace Game.Cam
 
             YRotangle += Input.GetAxis("Mouse X") * RotateYSpeed * -Time.deltaTime;
             //transform.localRotation = Quaternion.AngleAxis(YRotangle, Vector3.right);
-            if (YRotangle > -100)
-            {
-                YRotangle = -100;
-            }
-            if (YRotangle < -250)
-            {
-                YRotangle = -250;
-            }
+            //if (YRotangle > -100)
+            //{
+            //    YRotangle = -100;
+            //}
+            //if (YRotangle < -250)
+            //{
+            //    YRotangle = -250;
+            //}
 
             transform.localRotation = Quaternion.Euler(XRotangle,YRotangle,0);
         }
