@@ -9,18 +9,24 @@ namespace Game.Cam
     {
         [SerializeField] private float MouseSensitivity;
         private Transform parent;
-
+        [HideInInspector]
+        public bool CanRotate;
         // Start is called before the first frame update
         void Start()
         {
             parent = transform.parent;
             Cursor.lockState = CursorLockMode.Locked;
+            CanRotate = true;
         }
 
         // Update is called once per frame
         void Update()
         {
-            Rotate();
+            if (CanRotate)
+            {
+                Rotate();
+            }
+
         }
 
 
