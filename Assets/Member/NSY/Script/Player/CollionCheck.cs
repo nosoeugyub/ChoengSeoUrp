@@ -12,7 +12,7 @@ public class CollionCheck : MonoBehaviour
 {
     int id=1000;
     bool isId;
-    sign Sign;
+    
     //충돌체크 오브젝트
     // GameObject scanObject;
   

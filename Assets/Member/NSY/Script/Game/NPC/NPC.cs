@@ -11,6 +11,8 @@ namespace Game.NPC
     public  class NPC : MonoBehaviour
     {
         protected string Name;
+        protected int Id;
+        protected bool isID;
 
         protected virtual void Start()
         {
@@ -31,23 +33,6 @@ namespace Game.NPC
 
     }
 
-    class MainNPC : NPC
-    {
-        protected override void talk()
-        {
-
-            base.talk();
-        }
-    }
-
-
-    class RabbitNPC : NPC
-    {
-        protected override void talk()
-        {
-
-            base.talk();
-        }
-    }
+ 
 }
 
