@@ -2,17 +2,41 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Game.Manager;
 
 public class GameManager : MonoBehaviour
 {
     public TalkManager talkManager;
     public GameObject talkPanel;
     public Text talkText;
-    public GameObject scanObject;
+    public GameObject scanObject;// 충돌체 오브젝트
     public bool isAction;
     public int talkIndex;
+    //성엽 추가 변수
+    public GameObject scanObj;
 
-    public void Action(GameObject scanObj)
+    //성엽
+    private void Start()
+    {
+        Debug.Log("Action함수 출력");
+        if (scanObj == this.scanObj)
+        {
+            Manager.Instance.GoVillageQ += QAction;
+        }
+      
+    }
+    private void OnDestroy()
+    {
+        if (scanObj == this.scanObj)
+        {
+            Manager.Instance.GoVillageQ -= QAction;
+        }
+       
+    }
+    //
+
+
+    public void QAction(GameObject scanObj)
     {
         if(isAction)
         {

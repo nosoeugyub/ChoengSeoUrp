@@ -23,7 +23,7 @@ namespace Game.Manager
         //싱글톤
         public static Manager Instance;
         //첫번째 퀘스트 이벤트
-        public  event Action GoVillageQ;
+        public  event Action<GameObject> GoVillageQ;
 
 
 
@@ -94,13 +94,13 @@ namespace Game.Manager
 
         }
         //퀘스트///////////////////////////////////////////////////////////////////////////////////////
-        public void OnFirstQuest()
+        public void OnFirstQuest(GameObject scanObj)
         {
 
                 if (GoVillageQ != null)
                 {
 
-                    GoVillageQ.Invoke();
+                    GoVillageQ.Invoke(scanObj);
                 }
 
         }

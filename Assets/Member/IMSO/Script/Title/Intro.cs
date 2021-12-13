@@ -61,7 +61,7 @@ public class Intro : MonoBehaviour
 
         if (dialogIndex >= dialog.Length)
         {
-            TextImage.SetActive(false);
+          //  TextImage.SetActive(false);
         }
         else
         {

@@ -8,7 +8,7 @@ public class Menu : MonoBehaviour
     public void introToMain()
     {
         Debug.Log("메인 게임");
-        SceneManager.LoadScene("imso2");
+        SceneManager.LoadScene("Main");
     }
     public void OnClickNewGame()
     {

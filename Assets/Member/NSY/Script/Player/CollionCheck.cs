@@ -6,8 +6,9 @@ using DM.Inven;
 
 public class CollionCheck : MonoBehaviour
 {
+    //충돌체크 오브젝트
+    GameObject scanObj;
 
-          
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
         Rigidbody body = hit.collider.attachedRigidbody;
@@ -16,20 +17,23 @@ public class CollionCheck : MonoBehaviour
 
         if (hit.moveDirection.y < -0.3F)//땅 은 무시해라
             return;
-        //충돌검사
-        if (hit.gameObject.CompareTag("signNPC"))//처번째 퀘스트 팻말
-        {
-            if (Input.GetKeyDown(KeyCode.Z))
-            {
-                Manager.Instance.OnFirstQuest();
-                Debug.Log("팻말 퀘스트 시작해");
-            }
-        }
+   
         if (hit.gameObject.CompareTag("Item"))//item
         {
                 Debug.Log("ItemGEt");
             FindObjectOfType<InventoryManager>().AddItem(hit.gameObject.GetComponent<ItemObject>().item, 1);
 
+        }
+        //
+        if (hit.gameObject.CompareTag("signNPC"))//퀘스트
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                Manager.Instance.OnFirstQuest(scanObj);
+                Debug.Log("팻말 퀘스트 시작해");
+
+               
+            }
         }
     }
 
