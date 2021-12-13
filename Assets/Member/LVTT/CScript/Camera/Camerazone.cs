@@ -11,12 +11,12 @@ namespace Game.Cam
     {
         [SerializeField]
         private CinemachineVirtualCamera virtualCamera = null;
-        CamreaCtrl CameraCtrl;
+       // CamreaCtrl CameraCtrl;
         // Start is called before the first frame update
         void Start()
         {
             virtualCamera.enabled = false;
-            CameraCtrl = FindObjectOfType<CamreaCtrl>();
+           // CameraCtrl = FindObjectOfType<CamreaCtrl>();
         }
 
         // Update is called once per frame
@@ -28,8 +28,7 @@ namespace Game.Cam
         {
             if (other.CompareTag("Player"))
             {
-                virtualCamera.enabled = true;
-                CameraCtrl.CanRotate = false;
+                virtualCamera.enabled = true;   
             }
         }
 
@@ -38,7 +37,6 @@ namespace Game.Cam
             if (other.CompareTag("Player"))
             {
                 virtualCamera.enabled = false;
-                CameraCtrl.CanRotate = true;
             }
         }
 
