@@ -7,7 +7,7 @@ using DM.Inven;
 public class CollionCheck : MonoBehaviour
 {
     //충돌체크 오브젝트
-    GameObject scanObj;
+    GameObject scanObject;
 
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
@@ -29,7 +29,7 @@ public class CollionCheck : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.R))
             {
-                Manager.Instance.OnFirstQuest(scanObj);
+                Manager.Instance.OnFirstQuest(scanObject);
                 Debug.Log("팻말 퀘스트 시작해");
 
                

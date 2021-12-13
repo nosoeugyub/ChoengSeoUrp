@@ -94,13 +94,13 @@ namespace Game.Manager
 
         }
         //퀘스트///////////////////////////////////////////////////////////////////////////////////////
-        public void OnFirstQuest(GameObject scanObj)
+        public void OnFirstQuest(GameObject scanObject)
         {
 
                 if (GoVillageQ != null)
                 {
 
-                    GoVillageQ.Invoke(scanObj);
+                    GoVillageQ.Invoke(scanObject);
                 }
 
         }

@@ -13,27 +13,24 @@ public class GameManager : MonoBehaviour
     public bool isAction;
     public int talkIndex;
     //성엽 추가 변수
-    public GameObject scanObj;
-
-    //성엽
+   
+    //성엽========================================================
     private void Start()
     {
         Debug.Log("Action함수 출력");
-        if (scanObj == this.scanObj)
-        {
+
             Manager.Instance.GoVillageQ += QAction;
-        }
+        
       
     }
     private void OnDestroy()
     {
-        if (scanObj == this.scanObj)
-        {
+        
             Manager.Instance.GoVillageQ -= QAction;
-        }
+        
        
     }
-    //
+    //===========================================================================
 
 
     public void QAction(GameObject scanObj)
