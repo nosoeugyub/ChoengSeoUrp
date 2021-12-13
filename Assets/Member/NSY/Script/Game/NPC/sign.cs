@@ -5,10 +5,7 @@ using UnityEngine;
 
 public class sign : MonoBehaviour
 {
-
-       
-
-
-
+    public int id=1000;
+    public bool isId;
 
 }

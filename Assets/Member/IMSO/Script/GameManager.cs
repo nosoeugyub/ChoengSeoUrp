@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
     //===========================================================================
 
 
-    public void QAction(GameObject scanObj)
+    public void QAction(int id , bool isId)
     {
         if(isAction)
         {
@@ -42,9 +42,9 @@ public class GameManager : MonoBehaviour
         else
         {
             isAction = true;
-            scanObject = scanObj;
-            ObjData objData = scanObject.GetComponent<ObjData>();
-            Talk(objData.id, objData.isNPC);
+            //scanObject = scanObj;
+        //    ObjData objData = scanObject.GetComponent<ObjData>();
+            Talk(id,isId);
         }
         talkPanel.SetActive(isAction);
     }

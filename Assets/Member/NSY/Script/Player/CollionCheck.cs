@@ -3,14 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using Game.Manager;
 using DM.Inven;
+[System.Serializable]
+
+
+
 
 public class CollionCheck : MonoBehaviour
 {
+    int id=1000;
+    bool isId;
+    sign Sign;
     //충돌체크 오브젝트
-    GameObject scanObject;
+    // GameObject scanObject;
+  
 
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
+       
         Rigidbody body = hit.collider.attachedRigidbody;
         if (body == null || body.isKinematic) //충돌한 물체가 리지드바디가 없거나 이즈 키네메틱이 되있더면 무시해라
             return;
@@ -28,8 +37,9 @@ public class CollionCheck : MonoBehaviour
         if (hit.gameObject.CompareTag("signNPC"))//퀘스트
         {
             if (Input.GetKeyDown(KeyCode.R))
-            {
-                Manager.Instance.OnFirstQuest(scanObject);
+            { 
+                
+                Manager.Instance.OnFirstQuest(id, isId);
                 Debug.Log("팻말 퀘스트 시작해");
 
                
