@@ -8,6 +8,10 @@
 
   _Alpha("AlphaCut", Range(0,1)) = 0.5
 
+      [Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend("Src Blend", Float) = 1
+[Enum(UnityEngine.Rendering.BlendMode)] _DstBlend("Dst Blend", Float) = 0
+
+
     }
 
         SubShader
@@ -20,6 +24,7 @@
       }
       Pass
       {
+          Blend SrcAlpha OneMinusSrcAlpha
        Name "Universal Forward"
           Tags {"LightMode" = "UniversalForward"}
 
