@@ -3,24 +3,36 @@ using System.Collections.Generic;
 using UnityEngine;
 using Game.Manager;
 using DM.Inven;
-[System.Serializable]
+using Game.NPC;
+
 
 
 
 
 public class CollionCheck : MonoBehaviour
 {
-    int id=1000;
-    bool isId;
-    
-    //충돌체크 오브젝트
-    // GameObject scanObject;
-  
+    NPC npc; //다른 NPC를 사용하기위해 부모 NPC 
+
+
+    private void Start()
+    {
+        sign signNPC = new sign();
+        MainNpc mainnpc = new MainNpc();
+    }
+
+
+
+
+
+
+
+
 
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
        
-        Rigidbody body = hit.collider.attachedRigidbody;
+
+         Rigidbody body = hit.collider.attachedRigidbody;
         if (body == null || body.isKinematic) //충돌한 물체가 리지드바디가 없거나 이즈 키네메틱이 되있더면 무시해라
             return;
 

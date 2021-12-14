@@ -8,11 +8,15 @@ namespace Game.NPC
     
 
 
-    public  class NPC : MonoBehaviour
+    public  class NPC 
     {
-        protected string Name;
-        protected int Id;
-        protected bool isID;
+      
+
+        public int id { get; set; }
+        public string name { get; set; }
+        public bool isID { get; set; }
+
+
 
         protected virtual void Start()
         {
@@ -24,12 +28,21 @@ namespace Game.NPC
         {
           
         }
-
-      
-        protected virtual void talk()
+        public NPC()
         {
-            Debug.Log("나는" + name);
+            name = "NPC";
+            id = 0;
+            isID = false;
         }
+        protected virtual void AddID(int NPCid, bool NPCisID)
+        {
+            NPCid = id;
+            NPCisID = isID;
+            NPCid = 0;
+            NPCisID = false;
+        }
+      
+      
 
     }
 
