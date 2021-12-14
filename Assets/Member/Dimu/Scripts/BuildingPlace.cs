@@ -17,7 +17,7 @@ namespace DM.Building
 
                 RaycastHit hit;
 
-                if (Physics.Raycast(ray, out hit, 100000, 1 << 9))
+                if (Physics.Raycast(ray, out hit, 100000, 1 << 8))
                 {
                     Debug.Log("땅 레이 쏘는중");
                     instanceObj.transform.position = hit.point;
