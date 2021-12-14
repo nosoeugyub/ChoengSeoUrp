@@ -38,14 +38,16 @@ namespace DM.Quest
             questData.InitData();
             acceptQuests.Add(questData, qui);
         }
-        public void ClearQuest(QuestData questData)
+        public bool ClearQuest(QuestData questData)
         {
             if (questData.IsClear())
             {
                 acceptQuests[questData].SetActive(false);
                 acceptQuests.Remove(questData);
                 Debug.Log("Clear");
+                return true;
             }
+                return false;
         }
         public void ClearQuest()
         {

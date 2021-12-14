@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 namespace DM.Quest
 {
     public class QuestGiver : MonoBehaviour
@@ -10,12 +8,12 @@ namespace DM.Quest
 
         public void GiveQuest()
         {
-           FindObjectOfType<QuestManager>().AcceptQuest(gotQuests[questProgress], 0);
+            FindObjectOfType<QuestManager>().AcceptQuest(gotQuests[questProgress], 0);
         }
         public void ClearQuest()
         {
-            FindObjectOfType<QuestManager>().ClearQuest(gotQuests[questProgress]);
-            ++questProgress;
+            if (FindObjectOfType<QuestManager>().ClearQuest(gotQuests[questProgress]))
+                ++questProgress;
         }
     }
 }

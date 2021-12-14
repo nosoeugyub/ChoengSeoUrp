@@ -66,7 +66,16 @@ namespace DM.Quest
             }
             if (tasks.items.Length > 0)
             {
+                foreach (QuestTask item in tasks.items)
+                {
+                    Debug.Log(string.Format("f: {0}, now: {1}", item.finishData
+                             , PlayerData.ItemData[item.objType].amounts[item.behaviorType] - item.initData));
 
+                    if (item.finishData > PlayerData.ItemData[item.objType].amounts[item.behaviorType] - item.initData)
+                    {
+                        return false;
+                    }
+                }
             }
             if (tasks.kills.Length > 0)
             {
