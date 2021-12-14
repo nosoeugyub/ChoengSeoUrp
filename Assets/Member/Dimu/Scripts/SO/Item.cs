@@ -6,6 +6,7 @@ namespace DM.Inven
     public class Item : ScriptableObject
     {
         public ItemType itemType;
+        public int itemId;
         public string itemName;
         [TextArea]
         public string itemDescription;

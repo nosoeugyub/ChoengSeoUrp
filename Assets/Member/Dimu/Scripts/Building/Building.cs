@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace DM.Building
 {
+    public enum BuildingType
+    { Carrot, House }
+
     public delegate void GetIGDdelegate(ItemType itemType, int idx);
     public class Building : MonoBehaviour
     {
