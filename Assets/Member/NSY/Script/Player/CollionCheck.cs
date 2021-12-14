@@ -11,28 +11,28 @@ using Game.NPC;
 
 public class CollionCheck : MonoBehaviour
 {
-    NPC npc; //다른 NPC를 사용하기위해 부모 NPC 
-
+    [SerializeField]
+    private sign NPCsign;
+    int id;
+    bool isId;
 
     private void Start()
     {
-        sign signNPC = new sign();
-        MainNpc mainnpc = new MainNpc();
+        id = NPCsign.SignID;
+        isId = NPCsign.SignIsid;
     }
-
-
-
-
-
-
 
 
 
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
-       
+        
 
-         Rigidbody body = hit.collider.attachedRigidbody;
+
+
+
+
+       Rigidbody body = hit.collider.attachedRigidbody;
         if (body == null || body.isKinematic) //충돌한 물체가 리지드바디가 없거나 이즈 키네메틱이 되있더면 무시해라
             return;
 
@@ -46,17 +46,19 @@ public class CollionCheck : MonoBehaviour
 
         }
         //
-        if (hit.gameObject.CompareTag("signNPC"))//퀘스트
-        {
-            if (Input.GetKeyDown(KeyCode.R))
-            { 
-                
-                Manager.Instance.OnFirstQuest(id, isId);
-                Debug.Log("팻말 퀘스트 시작해");
+      
+            if (hit.gameObject.CompareTag("signNPC"))//퀘스트
+            {
+                if (Input.GetKeyDown(KeyCode.R))
+                {
 
-               
+                    Manager.Instance.OnFirstQuest(id, isId);
+                    Debug.Log("팻말 퀘스트 시작해");
+
+
+                }
             }
-        }
+        
     }
 
 }

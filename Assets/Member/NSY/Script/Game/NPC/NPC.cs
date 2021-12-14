@@ -8,7 +8,7 @@ namespace Game.NPC
     
 
 
-    public  class NPC 
+    public  class NPC : MonoBehaviour
     {
       
 
@@ -36,10 +36,11 @@ namespace Game.NPC
         }
         protected virtual void AddID(int NPCid, bool NPCisID)
         {
-            NPCid = id;
-            NPCisID = isID;
-            NPCid = 0;
-            NPCisID = false;
+        
+        }
+        protected virtual void PlayDierlog()
+        {
+
         }
       
       

@@ -7,16 +7,15 @@ namespace Game.NPC
 {
    public class MainNpc : NPC
     {
-        int MainNPCID;
-        bool MainNPCIsid;
+        int MainNPCID = 2000;
+        bool MainNPCIsid = false;
   
         protected override void AddID(int NPCid, bool NPCisID)
         {
             // base.AddID(NPCid, NPCisID);
             NPCid = MainNPCID;
             NPCisID = MainNPCIsid;
-            NPCid = 2000;
-            NPCisID = false;
+           
         }
 
     }
