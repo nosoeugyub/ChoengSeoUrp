@@ -3,12 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class sign : MonoBehaviour
+
+namespace Game.NPC
 {
+    public class sign : NPC
+    {
+        public int id = 1000;
+        public bool isId;
 
-       
-
-
-
-
+    }
 }
+
+

@@ -14,24 +14,8 @@ public class QuestManager : MonoBehaviour
         QuestList = new Dictionary<int, QuestData>();
         GenerateData();
     }
-    //성엽 작성
-     private void Start()
-    {
-        Debug.Log("퀘스트 시작할 준비");
-        Manager.Instance.GoVillageQ += StartQuest;
-        
-    }
-    private void StartQuest()
-    {
-        Debug.Log("퀘스트 시작222");
-    }
-    void OnDestroy()
-    {
-       Manager.Instance.GoVillageQ -= GenerateData;
 
-    }
-    //이까지
-    void GenerateData()
+    void GenerateData() 
     {
         QuestList.Add(10, new QuestData("마을 사람들과 대화하기",new int[] {1000,2000 }));
         QuestList.Add(20, new QuestData("청서의 잃어버린 도토리 찾아주기", new int[] { 1000, 2000 }));

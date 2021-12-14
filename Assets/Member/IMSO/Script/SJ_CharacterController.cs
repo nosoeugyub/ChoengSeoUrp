@@ -64,7 +64,7 @@ public class SJ_CharacterController : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.R) && scanObject != null)
         {
-            manager.Action(scanObject);
+         //  manager.QAction(scanObject);
         }
     }
 
