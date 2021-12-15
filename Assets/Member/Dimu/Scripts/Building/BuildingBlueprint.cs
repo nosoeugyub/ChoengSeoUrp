@@ -7,6 +7,7 @@ namespace DM.Building
     {
         [SerializeField]
         private GameObject buildFab;
+ 
         [SerializeField]
         private Button buildButton;
         private void Awake()

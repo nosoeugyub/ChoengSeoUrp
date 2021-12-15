@@ -8,7 +8,6 @@ namespace DM.Building
         public GameObject buildingUI;
         public GameObject buildingCancelUI;
         public GameObject decideBuildingPopup;
-
         public void Update()
         {
             if (isBuildMode)
@@ -43,6 +42,7 @@ namespace DM.Building
             buildingUI.SetActive(true);
             decideBuildingPopup.SetActive(false);
             buildingCancelUI.SetActive(false);
+            PlayerData.BuildBuildingData[instanceObj.transform.GetChild(0).GetComponent<Building>().BuildID()]++;//아니 건물의 인덱스가 필요한데
         }
 
         public void OnBuildMode(GameObject fab)

@@ -35,6 +35,6 @@ public class PlayerData : ScriptableObject
 }
 public class ItemBehavior
 {
-    public int id; //건물의 종류 id
+    public int id; //종류 id
     public int[] amounts = new int[3]; //아이템획득 횟수//아이템버리기 횟수//아이템먹기 횟수
 }

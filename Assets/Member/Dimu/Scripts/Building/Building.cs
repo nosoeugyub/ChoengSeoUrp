@@ -10,7 +10,7 @@ namespace DM.Building
     public class Building : MonoBehaviour
     {
         [SerializeField]
-        private NeedIngredientScriptableObject ingredientToNeed; //집마다 1개. 필요 재료 타입과 양이 들어있다.
+        private BuildingInfo buildingInfo; //집마다 1개. 필요 재료 타입과 양이 들어있다.
         [SerializeField]
         private ingredientNeeded[] gotIngredient;
         [SerializeField]
@@ -27,8 +27,8 @@ namespace DM.Building
         private void Awake()
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
-            gotIngredient = new ingredientNeeded[ingredientToNeed.GetIngredientNeededsLength()];
-            isClear = new bool[ingredientToNeed.ingredientNeededs.Length];
+            gotIngredient = new ingredientNeeded[buildingInfo.GetIngredientNeededsLength()];
+            isClear = new bool[buildingInfo.ingredientNeededs.Length];
         }
         private void OnEnable()
         {
@@ -37,24 +37,24 @@ namespace DM.Building
         }
         public void InitCount()
         {
-            for (int i = 0; i < ingredientToNeed.ingredientNeededs.Length; i++)
+            for (int i = 0; i < buildingInfo.ingredientNeededs.Length; i++)
             {
                 gotIngredient[i] = new ingredientNeeded
                 {
                     count = 0
                 };
-                gotIngredient[i].item = ingredientToNeed.GetIngredientNeededsItemType(i);
+                gotIngredient[i].item = buildingInfo.GetIngredientNeededsItemType(i);
             }
         }
 
         public void InstantiateUIs()
         {
             GetIGDdelegate dg = new GetIGDdelegate(GetIngredient);
-            for (int i = 0; i < ingredientToNeed.ingredientNeededs.Length; i++)
+            for (int i = 0; i < buildingInfo.ingredientNeededs.Length; i++)
             {
                 uiFabs[i].InitUIs(dg, i);
 
-                string text = string.Format("{0} / {1}", gotIngredient[i].count, ingredientToNeed.GetNeedCountw(i));
+                string text = string.Format("{0} / {1}", gotIngredient[i].count, buildingInfo.GetNeedCountw(i));
                 uiFabs[i].UpdateNowSlashFinishText(text);
             }
         }
@@ -63,7 +63,7 @@ namespace DM.Building
         {
             Debug.Log("GetIngredient " + ingredientype);
 
-            for (int i = 0; i < ingredientToNeed.ingredientNeededs.Length; i++)
+            for (int i = 0; i < buildingInfo.ingredientNeededs.Length; i++)
             {
                 if (gotIngredient[i].item.itemType == ingredientype && !IsTypeClear(i))
                 {
@@ -83,7 +83,7 @@ namespace DM.Building
                             //추후 클리어 버튼 눌렀을 때 애니 연출 재생을 추가해야 함.
                         }
                     }
-                    string text = string.Format("{0} / {1}", gotIngredient[i].count, ingredientToNeed.GetNeedCountw(i));
+                    string text = string.Format("{0} / {1}", gotIngredient[i].count, buildingInfo.GetNeedCountw(i));
                     uiFabs[i].UpdateNowSlashFinishText(text);
                 }
             }
@@ -100,10 +100,13 @@ namespace DM.Building
             }
             return true;
         }
-
+        public int BuildID()
+        {
+            return buildingInfo.BuildingID();
+        }
         private bool IsTypeClear(int idx)
         {
-            return gotIngredient[idx].count >= ingredientToNeed.GetNeedCountw(idx);
+            return gotIngredient[idx].count >= buildingInfo.GetNeedCountw(idx);
         }
     }
 }

@@ -14,11 +14,17 @@ namespace DM.Building
     }
 
     [CreateAssetMenu(fileName = "IngredientToNeed", menuName = "IngredientToNeed/new IngredientToNeed", order = 0)]
-    public class NeedIngredientScriptableObject : ScriptableObject
+    public class BuildingInfo : ScriptableObject
     {
         [SerializeField]
         public ingredientNeeded[] ingredientNeededs;
+        [SerializeField]
+        private int buildID;
 
+        public int BuildingID()
+        {
+            return buildID;
+        }
 
         public int GetNeedCountw(int i)
         {

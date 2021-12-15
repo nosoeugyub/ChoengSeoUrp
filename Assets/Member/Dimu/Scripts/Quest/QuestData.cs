@@ -8,6 +8,7 @@ namespace DM.Quest
         public int questID; //id 양식을 정할 것00 00 01 이라던지...
         public int npcID; //퀘스트 제공자
         public string questName;
+        [TextArea]
         public string description;
         public Sprite[] TaskImg;
         public Task tasks;
@@ -34,6 +35,10 @@ namespace DM.Quest
         {
             foreach (QuestTask item in tasks.builds)
             {
+                if (!PlayerData.BuildBuildingData.ContainsKey(item.objType))
+                {
+                    PlayerData.BuildBuildingData.Add(item.objType, new int());
+                }
                 item.initData = PlayerData.BuildBuildingData[item.objType];
             }
             foreach (QuestTask item in tasks.items)
