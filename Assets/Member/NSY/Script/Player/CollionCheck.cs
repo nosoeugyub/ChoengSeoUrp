@@ -52,8 +52,9 @@ public class CollionCheck : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.R))
                 {
 
+
                     Manager.Instance.OnFirstQuest(id, isId);
-                    Debug.Log("팻말 퀘스트 시작해");
+                                  Debug.Log("팻말 퀘스트 시작해");
 
 
                 }
