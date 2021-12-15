@@ -31,7 +31,7 @@ namespace DM.Quest
             public int finishData;
             public int initData;
         }
-        public void InitData()
+        public void InitData() //퀘스트에 필요한 항목을 현재 플레이어 데이터 값으로 초기화
         {
             foreach (QuestTask item in tasks.builds)
             {

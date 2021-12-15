@@ -6,15 +6,13 @@ namespace DM.Quest
 {
     public class QuestManager : MonoBehaviour
     {
+        private List<QuestData> totalPlayQuests;//플레이하면서 만났던 퀘스트 모음 아직 안쓰임
         private Dictionary<QuestData, GameObject> acceptQuests;
-        //private Dictionary<int , QuestData> acceptQuests;
-        //private List<QuestData> acceptQuests;
         public Transform questInfoMom;
         public GameObject questInfoUI;
         public QuestData testSOdata;
         private void Awake()
         {
-            //acceptQuests = new List<QuestData>();
             acceptQuests = new Dictionary<QuestData, GameObject>();
         }
         public void AcceptQuest(QuestData questData, int npcID)
@@ -49,6 +47,12 @@ namespace DM.Quest
                 = string.Format(questData.description);
             qui.transform.Find("BuildingImg").GetComponent<Image>().sprite
                 = questData.TaskImg[0];
+        }
+
+        public bool IsQuestAccepted(QuestData questData)
+        {
+            if (acceptQuests.ContainsKey(questData)) return true;
+            else return false;
         }
     }
 }
