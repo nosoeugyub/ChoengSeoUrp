@@ -22,10 +22,10 @@ namespace Game.Manager
 
         //싱글톤
         public static Manager Instance;
-        //첫번째 퀘스트 이벤트
+        //첫번째 다이얼로그 이벤트
         public  event Action<int , bool> GoVillageQ;
-
-
+        //첫번쨰 퀘스트 
+        //public event Action<>
 
 
 
@@ -104,6 +104,8 @@ namespace Game.Manager
                 }
 
         }
+        //퀘스트 버튼수락 
+        //public 
     }
 }
 
