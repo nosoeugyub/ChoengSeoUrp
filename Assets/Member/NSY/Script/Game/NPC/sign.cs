@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Game.Manager;
+
 
 namespace Game.NPC
 {
@@ -16,10 +16,9 @@ namespace Game.NPC
             // base.AddID(NPCid, NPCisID);
             NPCid = SignID;
             NPCisID = SignIsid;
-           
+
         }
 
-    
 
     }
 }
