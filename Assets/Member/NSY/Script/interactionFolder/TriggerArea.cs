@@ -23,11 +23,11 @@ public class TriggerArea : MonoBehaviour
     }
 
 
-    private void OnCollisionEnter(Collision collsion)
+    private void OnTriggerEnter(Collider collsion)
     {
 
         
-        if (collsion.gameObject.CompareTag("signNPC"))//퀘스트
+        if (collsion.gameObject.CompareTag("Player"))//퀘스트
         {
             Debug.Log("충돌함");
            
@@ -35,11 +35,11 @@ public class TriggerArea : MonoBehaviour
                 Debug.Log("팻말 퀘스트 시작해");
                 Manager.Instance.OnFirstQuest(id, isId);
         }
-        if (collsion.gameObject.CompareTag("Item"))//item
-        {
-            Debug.Log("ItemGEt");
-            FindObjectOfType<InventoryManager>().AddItem(collsion.gameObject.GetComponent<ItemObject>().item, 1);
+       // if (collsion.gameObject.CompareTag("Item"))//item
+      //  {
+      //      Debug.Log("ItemGEt");
+       //     FindObjectOfType<InventoryManager>().AddItem(collsion.gameObject.GetComponent<ItemObject>().item, 1);
 
-        }
+   //        }
     }
 }
