@@ -5,17 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour
 {
-    public void introToMain()
+    public void Intro1()
     {
-        Debug.Log("메인 게임");
-        SceneManager.LoadScene("Main");
+        SceneManager.LoadScene("Intro1");
     }
-    public void OnClickNewGame()
+    public void Intro2()
     {
-        Debug.Log("새 게임");
-        SceneManager.LoadScene("Intro");
+        SceneManager.LoadScene("Intro2");
     }
-    
+
     public void OnClickLoad()
     {
         Debug.Log("불러오기");
@@ -33,5 +31,11 @@ public class Menu : MonoBehaviour
 #else
         Application.Quit();
 #endif
+    }
+  
+    public void introToMain()
+    {
+        Debug.Log("메인 게임");
+        SceneManager.LoadScene("Main");
     }
 }
