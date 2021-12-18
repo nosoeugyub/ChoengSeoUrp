@@ -96,13 +96,10 @@ namespace Game.Manager
         //퀘스트///////////////////////////////////////////////////////////////////////////////////////
         public void OnFirstQuest(int id , bool isId)
         {
-
                 if (GoVillageQ != null)
                 {
-
                     GoVillageQ.Invoke(id, isId);
                 }
-
         }
         //퀘스트 버튼수락 
         //public 

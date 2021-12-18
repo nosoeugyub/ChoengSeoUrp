@@ -7,10 +7,13 @@ using Game.NPC;
 public class TriggerArea : MonoBehaviour
 {
     [SerializeField]
-    private sign NPCsign;
+    //private sign NPCsign;
+
+    public GameObject MapImage;
+    GameObject scanObject;
 
 
-    int id;
+    /*int id;
     bool isId;
     private void Start()
     {
@@ -20,26 +23,19 @@ public class TriggerArea : MonoBehaviour
     private void Update()
     {
      
-    }
+    }*/
 
 
     private void OnTriggerEnter(Collider collsion)
-    {
-
-        
-        if (collsion.gameObject.CompareTag("Player"))//퀘스트
+    {      
+        if (collsion.gameObject.CompareTag("Player"))
         {
             Debug.Log("충돌함");
-           
 
-                Debug.Log("팻말 퀘스트 시작해");
-                Manager.Instance.OnFirstQuest(id, isId);
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                MapImage.SetActive(true);
+            }
         }
-       // if (collsion.gameObject.CompareTag("Item"))//item
-      //  {
-      //      Debug.Log("ItemGEt");
-       //     FindObjectOfType<InventoryManager>().AddItem(collsion.gameObject.GetComponent<ItemObject>().item, 1);
-
-   //        }
     }
 }

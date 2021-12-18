@@ -13,7 +13,6 @@ namespace Game.NPC
     
         protected override void AddID(int NPCid, bool NPCisID)
         {
-            // base.AddID(NPCid, NPCisID);
             NPCid = SignID;
             NPCisID = SignIsid;
 
