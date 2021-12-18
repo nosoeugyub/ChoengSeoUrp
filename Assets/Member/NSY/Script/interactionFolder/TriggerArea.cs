@@ -12,34 +12,45 @@ public class TriggerArea : MonoBehaviour
 
     int id;
     bool isId;
+    bool isSign;
     private void Start()
     {
         id = NPCsign.SignID;
         isId = NPCsign.SignIsid;
+       
     }
     private void Update()
     {
-     
+        isSign = Input.GetKeyDown(KeyCode.G);
     }
 
 
-    private void OnTriggerEnter(Collider collsion)
+     void OnTriggerStay(Collider col)
     {
 
-        
-        if (collsion.gameObject.CompareTag("Player"))//퀘스트
+
+        if (col.gameObject.CompareTag("Player"))//퀘스트
         {
             Debug.Log("충돌함");
-           
-
+            if (isSign)
+            {
                 Debug.Log("팻말 퀘스트 시작해");
                 Manager.Instance.OnFirstQuest(id, isId);
-        }
-       // if (collsion.gameObject.CompareTag("Item"))//item
-      //  {
-      //      Debug.Log("ItemGEt");
-       //     FindObjectOfType<InventoryManager>().AddItem(collsion.gameObject.GetComponent<ItemObject>().item, 1);
+            }
+            else
+                isSign = false;
 
-   //        }
+        }
+
+     
+
+
+
+        // if (collsion.gameObject.CompareTag("Item"))//item
+        //  {
+        //      Debug.Log("ItemGEt");
+        //     FindObjectOfType<InventoryManager>().AddItem(collsion.gameObject.GetComponent<ItemObject>().item, 1);
+
+        //        }
     }
 }

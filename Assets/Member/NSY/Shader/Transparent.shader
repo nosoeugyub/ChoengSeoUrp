@@ -36,7 +36,7 @@
 
        #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 
-   half4 _TintColor;
+   half4 _Color;
    float _Intensity;
    float _Alpha;
 
@@ -69,8 +69,8 @@
        half4 frag(VertexOutput i) : SV_Target
        {
           half4 color = _MainTex.Sample(sampler_MainTex, i.uv);
-          color.rgb = _TintColor;
-          color.a = color.a * _Alpha;
+          color.rgb = _Color;
+          color.a = _Color.a * _Alpha;
           return color;
            }
    ENDHLSL
