@@ -10,41 +10,20 @@ namespace Game.Cam
 
         public GameObject Character;
 
-      //  public Shader defaultShader;
-      //  public Shader targetShader;
+        public Material defaultShader;
+        public Material targetShader;
 
-        public Material defaultMat;
-        public Material TargetMat;
 
         // 가리는 오브젝트 리스트
         public List<GameObject> transparentObjs = new List<GameObject>();
 
-        public void Awake()
-        {
-          //  targetShader = Shader.Find("Custom/Transperant");
-        }
+   
 
 
-        IEnumerator returnObjs()
-        {
-            for (int i = 0; i < transparentObjs.Count; i++)
-            {
-                transparentObjs[i].GetComponentInChildren<SpriteRenderer>().material = defaultMat;
-                Material Mat = transparentObjs[i].GetComponentInChildren<SpriteRenderer>().material;
-
-               Color matColor= ObstacleRenderer.color;
-                matColor.a = 1f;
-                ObstacleRenderer.color = matColor;
-            }
-
-            transparentObjs.Clear();
+        
 
 
-            yield return null;
-        }
-
-
-        void Update()
+        void FixedUpdate()
 
         {
             float Distance = Vector3.Distance(transform.position, Character.transform.position);
@@ -74,24 +53,40 @@ namespace Game.Cam
 
 
                 // 이미 반투명 상태라면 리턴
-                if (ObstacleRenderer.material == TargetMat) return;
+                if (ObstacleRenderer.color.a == 0.5f) return;
 
 
-                if (ObstacleRenderer != null)
+               else if (ObstacleRenderer != null)
 
                 {
-                    ObstacleRenderer.material = TargetMat;
+                    ObstacleRenderer.material = targetShader;
                     transparentObjs.Add(hit.transform.gameObject);
-                    Material Mat = ObstacleRenderer.material;
+                    Color Mat = ObstacleRenderer.color;
 
-
-
-                    Color matColor = Mat.color;
-                       matColor.a = 0.5f;
-                      Mat.color = matColor;
+                    Color matColor = Mat;
+                    matColor.a = 0.5f;
+                    Mat = matColor;
                 }
 
             }
+            
+        }
+        IEnumerator returnObjs()
+        {
+            for (int i = 0; i < transparentObjs.Count; i++)
+            {
+                transparentObjs[i].GetComponentInChildren<SpriteRenderer>().material = defaultShader;
+                Color sprColor = transparentObjs[i].GetComponentInChildren<SpriteRenderer>().color;
+
+                Color matColor = sprColor;
+                matColor.a = 1f;
+                sprColor = matColor;
+            }
+
+            transparentObjs.Clear();
+
+
+            yield return null;
         }
     }
 }
