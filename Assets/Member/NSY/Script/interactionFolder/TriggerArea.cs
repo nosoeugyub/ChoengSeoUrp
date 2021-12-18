@@ -7,35 +7,68 @@ using Game.NPC;
 public class TriggerArea : MonoBehaviour
 {
     [SerializeField]
-    //private sign NPCsign;
+    private MainNpc mainNpc;
+    int mainid;
+    bool mainisId;
 
-    public GameObject MapImage;
-    GameObject scanObject;
-
-
-    /*int id;
-    bool isId;
+    [SerializeField]
+    private sign SignNpc;
+    int singid;
+    bool singisid;
+   
+    bool isSign;
     private void Start()
     {
-        id = NPCsign.SignID;
-        isId = NPCsign.SignIsid;
+        mainid = mainNpc.MainNPCID;
+        mainisId = mainNpc.MainNPCIsid;
+
+        singid = SignNpc.SignID;
+        singisid = SignNpc.SignIsid;
+
     }
     private void Update()
     {
-     
-    }*/
+        isSign = Input.GetKeyDown(KeyCode.G);
+    }
 
 
-    private void OnTriggerEnter(Collider collsion)
-    {      
-        if (collsion.gameObject.CompareTag("Player"))
+     void OnTriggerStay(Collider col)
+    {
+        if (col.gameObject.CompareTag("signNPC"))//퀘스트
         {
             Debug.Log("충돌함");
-
-            if (Input.GetKeyDown(KeyCode.R))
+            if (isSign)
             {
-                MapImage.SetActive(true);
+                Debug.Log("팻말 퀘스트 시작해");
+                Manager.Instance.OnFirstQuest(singid, singisid);
             }
+            else
+                isSign = false;
+
         }
+
+        if (col.gameObject.CompareTag("MainNPC"))//퀘스트
+        {
+            Debug.Log("충돌함");
+            if (isSign)
+            {
+                Debug.Log("메인 퀘스트 시작해");
+                Manager.Instance.OnFirstQuest(mainid, mainisId);
+            }
+            else
+                isSign = false;
+
+        }
+
+     
+
+
+
+        // if (collsion.gameObject.CompareTag("Item"))//item
+        //  {
+        //      Debug.Log("ItemGEt");
+        //     FindObjectOfType<InventoryManager>().AddItem(collsion.gameObject.GetComponent<ItemObject>().item, 1);
+
+        //        }
     }
 }

@@ -14,6 +14,10 @@ public class TextTyping : MonoBehaviour
     public float TypingPerSecond = 0.05f;//타이핑 속도
 
     public GameObject TextImage;
+    public GameObject RoadImage;
+
+    public float DestroyTime = 2.0f;
+
 
     private void Start()
     {
@@ -62,6 +66,9 @@ public class TextTyping : MonoBehaviour
         if (dialogIndex >= dialog.Length)
         {
             TextImage.SetActive(false);
+            RoadImage.SetActive(true);
+
+            Destroy(RoadImage, DestroyTime);
         }
         else
         {
