@@ -9,15 +9,12 @@ namespace Game.NPC
     public class sign : NPC
     {
       public  int SignID ;
-      public  bool SignIsid = false;
-    
+      public  bool SignIsid = false;   
         protected override void AddID(int NPCid, bool NPCisID)
         {
             NPCid = SignID;
             NPCisID = SignIsid;
-
         }
-
 
     }
 }

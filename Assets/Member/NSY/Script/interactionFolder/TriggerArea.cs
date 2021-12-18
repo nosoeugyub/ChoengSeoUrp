@@ -17,6 +17,9 @@ public class TriggerArea : MonoBehaviour
     bool singisid;
    
     bool isSign;
+
+    public GameObject TalkMessage;
+    public GameObject QuestBox;
     private void Start()
     {
         mainid = mainNpc.MainNPCID;
@@ -28,7 +31,7 @@ public class TriggerArea : MonoBehaviour
     }
     private void Update()
     {
-        isSign = Input.GetKeyDown(KeyCode.G);
+        isSign = Input.GetKeyDown(KeyCode.R);
     }
 
 
@@ -36,20 +39,17 @@ public class TriggerArea : MonoBehaviour
     {
         if (col.gameObject.CompareTag("signNPC"))//퀘스트
         {
-            Debug.Log("충돌함");
+            //Debug.Log("충돌함");
             if (isSign)
             {
                 Debug.Log("팻말 퀘스트 시작해");
-                Manager.Instance.OnFirstQuest(singid, singisid);
+                Manager.Instance.OnPanel();
             }
-            else
-                isSign = false;
-
         }
 
         if (col.gameObject.CompareTag("MainNPC"))//퀘스트
         {
-            Debug.Log("충돌함");
+            /*Debug.Log("충돌함");
             if (isSign)
             {
                 Debug.Log("메인 퀘스트 시작해");
@@ -57,18 +57,18 @@ public class TriggerArea : MonoBehaviour
             }
             else
                 isSign = false;
+            */
+            if(Input.GetKeyDown(KeyCode.R))
+            {
+                TalkMessage.SetActive(true);
 
+                Invoke("Delay", 6f);                           
+            }
         }
-
-     
-
-
-
-        // if (collsion.gameObject.CompareTag("Item"))//item
-        //  {
-        //      Debug.Log("ItemGEt");
-        //     FindObjectOfType<InventoryManager>().AddItem(collsion.gameObject.GetComponent<ItemObject>().item, 1);
-
-        //        }
     }
+    public void Delay()
+    {
+        QuestBox.SetActive(true);
+    }
+
 }
