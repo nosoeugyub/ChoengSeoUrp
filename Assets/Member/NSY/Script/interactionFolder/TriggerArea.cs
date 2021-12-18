@@ -7,17 +7,24 @@ using Game.NPC;
 public class TriggerArea : MonoBehaviour
 {
     [SerializeField]
-    private sign NPCsign;
+    private MainNpc mainNpc;
+    int mainid;
+    bool mainisId;
 
-
-    int id;
-    bool isId;
+    [SerializeField]
+    private sign SignNpc;
+    int singid;
+    bool singisid;
+   
     bool isSign;
     private void Start()
     {
-        id = NPCsign.SignID;
-        isId = NPCsign.SignIsid;
-       
+        mainid = mainNpc.MainNPCID;
+        mainisId = mainNpc.MainNPCIsid;
+
+        singid = SignNpc.SignID;
+        singisid = SignNpc.SignIsid;
+
     }
     private void Update()
     {
@@ -27,15 +34,26 @@ public class TriggerArea : MonoBehaviour
 
      void OnTriggerStay(Collider col)
     {
-
-
-        if (col.gameObject.CompareTag("Player"))//퀘스트
+        if (col.gameObject.CompareTag("signNPC"))//퀘스트
         {
             Debug.Log("충돌함");
             if (isSign)
             {
                 Debug.Log("팻말 퀘스트 시작해");
-                Manager.Instance.OnFirstQuest(id, isId);
+                Manager.Instance.OnFirstQuest(singid, singisid);
+            }
+            else
+                isSign = false;
+
+        }
+
+        if (col.gameObject.CompareTag("MainNPC"))//퀘스트
+        {
+            Debug.Log("충돌함");
+            if (isSign)
+            {
+                Debug.Log("메인 퀘스트 시작해");
+                Manager.Instance.OnFirstQuest(mainid, mainisId);
             }
             else
                 isSign = false;

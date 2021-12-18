@@ -7,8 +7,8 @@ namespace Game.NPC
 {
    public class MainNpc : NPC
     {
-        int MainNPCID = 2000;
-        bool MainNPCIsid = false;
+      public  int MainNPCID = 1001;
+      public  bool MainNPCIsid = false;
   
         protected override void AddID(int NPCid, bool NPCisID)
         {
