@@ -53,19 +53,19 @@ namespace Game.Cam
 
 
                 // 이미 반투명 상태라면 리턴
-                if (ObstacleRenderer.color.a == 0.5f) return;
+              //  if (ObstacleRenderer.color.a == 0.5f || ObstacleRenderer.material == targetShader) return;
 
 
-               else if (ObstacleRenderer != null)
+                if (ObstacleRenderer != null)
 
                 {
                     ObstacleRenderer.material = targetShader;
                     transparentObjs.Add(hit.transform.gameObject);
-                    Color Mat = ObstacleRenderer.color;
+                    Material Mat = ObstacleRenderer.material;
 
-                    Color matColor = Mat;
+                    Color matColor = Mat.color;
                     matColor.a = 0.5f;
-                    Mat = matColor;
+                    Mat.color = matColor;
                 }
 
             }
