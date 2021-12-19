@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class QuestManager : MonoBehaviour
 {
-    public int QuestId;
+    public int QuestId; //현재 진행중인 퀘스트 id
     public int questActionIndex;
     Dictionary<int, QuestData> QuestList;
 

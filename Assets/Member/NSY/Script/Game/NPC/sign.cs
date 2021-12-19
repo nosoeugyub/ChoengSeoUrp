@@ -8,17 +8,13 @@ namespace Game.NPC
 {
     public class sign : NPC
     {
-      public  int SignID = 1000;
-      public  bool SignIsid = false;
-    
+      public  int SignID ;
+      public  bool SignIsid = false;   
         protected override void AddID(int NPCid, bool NPCisID)
         {
-            // base.AddID(NPCid, NPCisID);
             NPCid = SignID;
             NPCisID = SignIsid;
-
         }
-
 
     }
 }

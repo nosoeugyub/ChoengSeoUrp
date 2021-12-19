@@ -27,20 +27,10 @@ namespace Game.Cam
         // Update is called once per frame
         void Update()
         {
-
-            if (Input.GetKey(KeyCode.Q))
+           if(Input.GetMouseButton(0))
             {
-               XRotangle +=  RotateXSpeed * -Time.deltaTime;
-                transform.localRotation = Quaternion.AngleAxis(XRotangle, Vector3.up);
-            }
-
-            if (Input.GetKey(KeyCode.E))
-            {
-                XRotangle += (-RotateXSpeed) * -Time.deltaTime;
-                transform.localRotation = Quaternion.AngleAxis(XRotangle, Vector3.up);
-            }
-
-
+                CameraRotate();
+            }    
         }
 
         void SetStartCamPos()
@@ -48,19 +38,13 @@ namespace Game.Cam
             transform.localRotation = Quaternion.Euler(0, StartCamXRot, 0);
             XRotangle = StartCamXRot;
         }
-        //void CamRotateY()
-        //{
-        //    YRotangle += Input.GetAxis("Mouse Y") * RotateYSpeed * -Time.deltaTime;
-        //    if (YRotangle < MinRotY)
-        //    {
-        //        YRotangle = MinRotY;
-        //    }
-        //    if (YRotangle > MaxRotY)
-        //    {
-        //        YRotangle = MaxRotY;
-        //    }
-        //    transform.localRotation = Quaternion.AngleAxis(YRotangle, Vector3.right);
-        //}
+        
+
+        void CameraRotate()
+        {
+            XRotangle += Input.GetAxis("Mouse X") * RotateXSpeed * -Time.deltaTime;
+            transform.localRotation = Quaternion.AngleAxis(XRotangle, Vector3.up);
+        }
         //void CameraRotate()
         //{
         //    XRotangle += Input.GetAxis("Mouse Y") * RotateYSpeed * -Time.deltaTime;
@@ -87,7 +71,22 @@ namespace Game.Cam
         //    //}
 
         //    transform.localRotation = Quaternion.Euler(XRotangle,YRotangle,0);
+
+        ///////
+        //if (Input.GetKey(KeyCode.Q))
+        //{
+        //   XRotangle +=  RotateXSpeed * -Time.deltaTime;
+        //    transform.localRotation = Quaternion.AngleAxis(XRotangle, Vector3.up);
         //}
+
+        //if (Input.GetKey(KeyCode.E))
+        //{
+        //    XRotangle += (-RotateXSpeed) * -Time.deltaTime;
+        //    transform.localRotation = Quaternion.AngleAxis(XRotangle, Vector3.up);
+        //}
+        //}
+
+
     }
 }
 

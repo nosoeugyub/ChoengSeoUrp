@@ -38,37 +38,7 @@ namespace Player.Movement
 
 
         }
-      //  protected override void  FixedUpdate()
-      //  {
-          //  FreezeRotation();
-          //  RayCast();
-       // }
-        //소정씨
-     //   void FreezeRotation()
-      //  {
-      //      rigid.angularVelocity = Vector3.zero;
-      //  }
-       // void RayCast()
-       // {
-       //     RaycastHit hit;
-        //    Debug.DrawRay(transform.position, transform.forward * 5, Color.red);
 
-        //    if (Physics.Raycast(gameObject.transform.position, gameObject.transform.forward, out hit, 5))
-      //      {
-        //        if (hit.collider != null)
-        //        {
-         //           Debug.Log("이것은" + hit.transform.name);
-        //            scanObject = hit.collider.gameObject;
-        //        }
-        //        else
-        //        {
-         //           scanObject = null;
-          //      }
-         //   }
-      //  }
-        /// <summary>
-        /// 
-        /// </summary>
         private void Idle() //정지및 점프 감지
         {
             if (!isJumping)
@@ -98,11 +68,6 @@ namespace Player.Movement
            //     theStatusController.DecreaseStamina(100);
                 return true;
             }
-
-          //  if (Input.GetKeyDown(KeyCode.R) && scanObject != null) // 소정씨 코드
-          //  {
-           //     manager.Action(scanObject);
-           // }
             return false;
         }
 
@@ -124,24 +89,10 @@ namespace Player.Movement
 
             move = (transform.forward * vertical + transform.right * horizontal).normalized;
             SpeedVec = move * moveSpeed;
-
             
             return SpeedVec;
         }
-  
-
-
-
-
-
-
-
-
-
     }
-
-
-
 }
 
 

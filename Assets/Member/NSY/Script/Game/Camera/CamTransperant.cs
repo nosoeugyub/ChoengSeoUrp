@@ -87,7 +87,7 @@ namespace Game.Cam
 
 
                     Color matColor = Mat.color;
-                       matColor.a = 1f;
+                       matColor.a = 0.5f;
                       Mat.color = matColor;
                 }
 

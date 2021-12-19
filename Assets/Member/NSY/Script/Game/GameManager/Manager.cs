@@ -18,6 +18,10 @@ namespace Game.Manager
 
     public class Manager : MonoBehaviour
     {
+        public GameObject Panel;
+        public GameObject EscPanel;
+
+        public GameObject QuestWindow;
         //하위 ui매니져들 들어갈 예정
 
         //싱글톤
@@ -94,18 +98,28 @@ namespace Game.Manager
 
         }
         //퀘스트///////////////////////////////////////////////////////////////////////////////////////
-        public void OnFirstQuest(int id , bool isId)
+        public void OnFirstQuest(int id, bool isId)
         {
+            if (GoVillageQ != null)
+            {
+                GoVillageQ.Invoke(id, isId);
+            }
+                        
+        }
 
-                if (GoVillageQ != null)
-                {
-
-                    GoVillageQ.Invoke(id, isId);
-                }
-
+        public void OnPanel()
+        {
+            Panel.SetActive(true);
+        }
+        public void Close()
+        {
+            Panel.SetActive(false);
         }
         //퀘스트 버튼수락 
-        //public 
+        public void SureButton()
+        {
+            QuestWindow.SetActive(false);
+        }
     }
 }
 

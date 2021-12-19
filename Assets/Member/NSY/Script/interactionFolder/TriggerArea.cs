@@ -7,39 +7,68 @@ using Game.NPC;
 public class TriggerArea : MonoBehaviour
 {
     [SerializeField]
-    private sign NPCsign;
+    private MainNpc mainNpc;
+    int mainid;
+    bool mainisId;
 
+    [SerializeField]
+    private sign SignNpc;
+    int singid;
+    bool singisid;
+   
+    bool isSign;
 
-    int id;
-    bool isId;
+    public GameObject TalkMessage;
+    public GameObject QuestBox;
     private void Start()
     {
-        id = NPCsign.SignID;
-        isId = NPCsign.SignIsid;
+        mainid = mainNpc.MainNPCID;
+        mainisId = mainNpc.MainNPCIsid;
+
+        singid = SignNpc.SignID;
+        singisid = SignNpc.SignIsid;
+
     }
     private void Update()
     {
-     
+        isSign = Input.GetKeyDown(KeyCode.R);
     }
 
 
-    private void OnTriggerEnter(Collider collsion)
+     void OnTriggerStay(Collider col)
     {
-
-        
-        if (collsion.gameObject.CompareTag("Player"))//퀘스트
+        if (col.gameObject.CompareTag("signNPC"))//퀘스트
         {
-            Debug.Log("충돌함");
-           
-
+            //Debug.Log("충돌함");
+            if (isSign)
+            {
                 Debug.Log("팻말 퀘스트 시작해");
-                Manager.Instance.OnFirstQuest(id, isId);
+                Manager.Instance.OnPanel();
+            }
         }
-       // if (collsion.gameObject.CompareTag("Item"))//item
-      //  {
-      //      Debug.Log("ItemGEt");
-       //     FindObjectOfType<InventoryManager>().AddItem(collsion.gameObject.GetComponent<ItemObject>().item, 1);
 
-   //        }
+        if (col.gameObject.CompareTag("MainNPC"))//퀘스트
+        {
+            /*Debug.Log("충돌함");
+            if (isSign)
+            {
+                Debug.Log("메인 퀘스트 시작해");
+                Manager.Instance.OnFirstQuest(mainid, mainisId);
+            }
+            else
+                isSign = false;
+            */
+            if(Input.GetKeyDown(KeyCode.R))
+            {
+                TalkMessage.SetActive(true);
+
+                Invoke("Delay", 6f);                           
+            }
+        }
     }
+    public void Delay()
+    {
+        QuestBox.SetActive(true);
+    }
+
 }
