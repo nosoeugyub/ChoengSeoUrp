@@ -30,7 +30,7 @@ namespace Player.Movement
             base.Update();
             Move();
             Idle();
-            LookAround();
+           //LookAround();
 
 
         }

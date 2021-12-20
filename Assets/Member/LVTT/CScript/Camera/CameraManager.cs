@@ -17,15 +17,15 @@ namespace Game.Cam
         // Update is called once per frame
         void Update()
         {
-            if (Input.GetKey(KeyCode.Q))
-            {
-                ActiveCamera(0);
-            }
+            //if (Input.GetKey(KeyCode.Q))
+            //{
+            //    ActiveCamera(0);
+            //}
 
-            if(Input.GetKey(KeyCode.E))
-            {
-                DeactiveCamera(0);
-            }
+            //if(Input.GetKey(KeyCode.E))
+            //{
+            //    DeactiveCamera(0);
+            //}
         }
 
         void DeactiveAllSubCam()
@@ -34,15 +34,17 @@ namespace Game.Cam
             {
                 virtualCamera[i].enabled = false;
             }
+
+            
            
         }
         
-        void ActiveCamera(int camNum)
+       public void ActiveCamera(int camNum)
         {
             virtualCamera[camNum].enabled = true;
         }
 
-        void DeactiveCamera(int camNum)
+        public void DeactiveCamera(int camNum)
         {
             virtualCamera[camNum].enabled = false;
         }

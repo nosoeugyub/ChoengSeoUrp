@@ -11,23 +11,28 @@ namespace Game.Cam
         //public float MinRotY;
         public float StartCamXRot;
         public float RotateXSpeed;
+        public Transform target;
+       // public Vector3 offset;
         float XRotangle;
-        //public float RotateYSpeed;
-        // float YRotangle;
-        //[SerializeField]
-        //private Camera mainCamera;
+        // float smoothedSpeed = 0.125f;
 
 
-
+        CameraManager CamManager;
         void Start()
         {
+            CamManager = FindObjectOfType<CameraManager>();
             SetStartCamPos();
+
         }
 
         // Update is called once per frame
-        void Update()
+        void LateUpdate()
         {
-           if(Input.GetMouseButton(0))
+            //Vector3 desiredPosition = target.position + offset;
+            //Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothedSpeed);
+            //transform.position = smoothedPosition;
+            
+            if(Input.GetMouseButton(0))
             {
                 CameraRotate();
             }    
@@ -44,6 +49,24 @@ namespace Game.Cam
         {
             XRotangle += Input.GetAxis("Mouse X") * RotateXSpeed * -Time.deltaTime;
             transform.localRotation = Quaternion.AngleAxis(XRotangle, Vector3.up);
+           
+           target.localRotation = Quaternion.AngleAxis(XRotangle, Vector3.up);
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if(other.gameObject.tag=="Floor")
+            {
+                CamManager.ActiveCamera(1);
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.gameObject.tag == "Floor")
+            {
+                CamManager.DeactiveCamera(1);
+            }
         }
         //void CameraRotate()
         //{
