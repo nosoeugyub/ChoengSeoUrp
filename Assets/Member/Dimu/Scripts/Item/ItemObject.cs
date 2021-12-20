@@ -12,7 +12,7 @@ public class ItemObject : MonoBehaviour
         {
             FindObjectOfType<InventoryManager>().AddItem(item, 1);
             PlayerData.ItemData[item.itemId].amounts[0]++;
-            Debug.Log(PlayerData.ItemData[item.itemId].amounts[0]);
+            Debug.Log(item.itemId + ", "+PlayerData.ItemData[item.itemId].amounts[0]);
         }
     }
 }

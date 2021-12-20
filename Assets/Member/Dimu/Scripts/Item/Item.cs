@@ -15,6 +15,6 @@ namespace DM.Inven
 
     public enum ItemType
     {
-       None, Branch, Stone, Seed, Berry
+       None, Branch, Ricesheaf, Stone, Seed, Berry
     }
 }

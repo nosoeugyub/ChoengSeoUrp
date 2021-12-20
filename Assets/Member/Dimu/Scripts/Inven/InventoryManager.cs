@@ -30,11 +30,12 @@ namespace DM.Inven
 
         private void Update()
         {
-            OnOffInventoryUI();
+            if (Input.GetKeyDown(KeyCode.I))
+                OnOffInventoryUI();
         }
         public void OnOffInventoryUI()
         {
-            if (Input.GetKeyDown(KeyCode.I))
+            
                 inventoryMom.gameObject.SetActive(!inventoryMom.gameObject.activeSelf);
         }
         public bool CanAddItem() //아이템 추가가 가능한지 bool 퀘스트 보상 수령 시에도 호출 가능
@@ -43,9 +44,9 @@ namespace DM.Inven
         }
         public bool AddItem(Item item, int howmuch) //add 성공 여부를 리턴.
         {
-            if (!PlayerData.ItemData.ContainsKey((int)item.itemId))
+            if (!PlayerData.ItemData.ContainsKey(item.itemId))
             {
-                PlayerData.ItemData.Add((int)item.itemId, new ItemBehavior());
+                PlayerData.ItemData.Add(item.itemId, new ItemBehavior());
             }
 
             if (!CanAddItem())

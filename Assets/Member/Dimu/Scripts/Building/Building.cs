@@ -19,6 +19,10 @@ namespace DM.Building
         private GameObject clearButton;
         [SerializeField]
         private Sprite finishSprite;
+        [SerializeField]
+        private Sprite underConstructionSprite;
+        [SerializeField]
+        private GameObject ingredientUI;
 
         private bool[] isClear;
 
@@ -33,7 +37,7 @@ namespace DM.Building
         private void OnEnable()
         {
             InitCount();//데이터 저장 시 호출 위치 바꿔야 함. 데이터 초기화 함수임
-            InstantiateUIs();
+            
         }
         public void InitCount()
         {
@@ -88,10 +92,18 @@ namespace DM.Building
                 }
             }
         }
-        public void ChangeImg()
+        public void ChangeFinishImg()
         {
             spriteRenderer.sprite = finishSprite;
         }
+        public void StartBuild()
+        {
+            PlayerData.BuildBuildingData[BuildID()]++;//아니 건물의 인덱스가 필요한데
+            spriteRenderer.sprite = underConstructionSprite;
+            ingredientUI.SetActive(true);
+            InstantiateUIs();
+        }
+        
         private bool IsBuildClear()
         {
             for (int i = 0; i < isClear.Length; i++)
