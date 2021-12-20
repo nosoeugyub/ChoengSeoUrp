@@ -15,7 +15,7 @@ namespace Game.Manager
         public GameManager gameManager;
         public QuestManager questmanager;
         public TalkManager talkmanager;
-
+        public SoundManager soundmanager;
 
 
 
