@@ -39,7 +39,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 560084449}
-  m_IndirectSpecularColor: {r: 0.32786888, g: 0.27533802, b: 0.59751314, a: 1}
+  m_IndirectSpecularColor: {r: 0.3277756, g: 0.2752588, b: 0.5974989, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1168,6 +1168,7 @@ MonoBehaviour:
   jumpForce: 0
   moveSpeed: 10
   Anim: {fileID: 0}
+  cameraArm: {fileID: 192029437}
 --- !u!114 &82019782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2789,7 +2790,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 192029436}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4410d7343ced5c9429dba702b111134c, type: 3}
   m_Name: 
@@ -2809,8 +2810,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Character: {fileID: 2072464379}
-  defaultMat: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
-  TargetMat: {fileID: 2100000, guid: 0d792c18c01baa94eba2e6a5930bbe3d, type: 2}
+  defaultShader: {fileID: 0}
+  targetShader: {fileID: 0}
   transparentObjs: []
 --- !u!114 &192029440
 MonoBehaviour:
@@ -4588,7 +4589,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1926159568}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -179.2, z: 0}
 --- !u!1 &300205627
 GameObject:
   m_ObjectHideFlags: 0
@@ -18250,7 +18251,7 @@ SpriteRenderer:
   m_Size: {x: 5.75, y: 8.86}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1161541047

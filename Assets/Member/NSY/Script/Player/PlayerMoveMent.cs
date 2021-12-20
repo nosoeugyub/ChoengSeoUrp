@@ -10,18 +10,14 @@ namespace Player.Movement
     {
       
 
-        // [SerializeField]
-        //  private imso.StatusController theStatusController;
 
-        
 
-   //     [SerializeField]
+
         private Game.Move.Moving theMovingController;
 
-      //  public GameManager manager;
-       // GameObject scanObject;
+        [SerializeField] private Transform cameraArm;
 
-      
+
 
         protected override void Start()
         {
@@ -29,12 +25,12 @@ namespace Player.Movement
             theMovingController = FindObjectOfType<Game.Move.Moving>();
         }
 
-        protected override void Update()
+        protected override void FixedUpdate()
         {
             base.Update();
             Move();
             Idle();
-           
+            LookAround();
 
 
         }
@@ -84,13 +80,32 @@ namespace Player.Movement
         protected  Vector3 MovementTo()
         {
             Vector3 move = Vector3.zero;
-            float vertical = Input.GetAxisRaw("Vertical");
-            float horizontal = Input.GetAxisRaw("Horizontal");
+            Vector2 moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+            bool isMove = moveInput.magnitude != 0;
+            if (isMove)
+            {
+                Vector3 lookForward = new Vector3(cameraArm.forward.x, 0f, cameraArm.forward.z).normalized;
+                Vector3 lookRight = new Vector3(cameraArm.right.x, 0f, cameraArm.right.z).normalized;
+                move = lookForward * moveInput.y + lookRight * moveInput.x;
 
-            move = (transform.forward * vertical + transform.right * horizontal).normalized;
-            SpeedVec = move * moveSpeed;
-            
+
+                transform.forward = lookForward;
+                SpeedVec = move * moveSpeed;
+
+              
+            }
             return SpeedVec;
+
+
+        }
+
+
+        private void LookAround()
+        {
+            Vector2 mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+            Vector3 camAngle = cameraArm.rotation.eulerAngles;
+
+            cameraArm.rotation = Quaternion.Euler(camAngle.x, camAngle.y + mouseDelta.x*3, camAngle.z);
         }
     }
 }
