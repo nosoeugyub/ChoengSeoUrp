@@ -43,6 +43,11 @@ namespace DM.Inven
         }
         public bool AddItem(Item item, int howmuch) //add 성공 여부를 리턴.
         {
+            if (!PlayerData.ItemData.ContainsKey((int)item.itemId))
+            {
+                PlayerData.ItemData.Add((int)item.itemId, new ItemBehavior());
+            }
+
             if (!CanAddItem())
             {
                 print("용량이 가득 차 더이상 수납할 수 없습니다.");

@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using DM.Inven;
 using UnityEngine;
-using DM.Inven;
 
 public class ItemObject : MonoBehaviour
 {
@@ -10,8 +8,11 @@ public class ItemObject : MonoBehaviour
     public string explain;
     public void OnTriggerEnter(Collider other)
     {
-        FindObjectOfType<InventoryManager>().AddItem(item, 1);
-        PlayerData.ItemData[item.itemId].amounts[0]++;
-        Debug.Log(PlayerData.ItemData[item.itemId].amounts[0]);
+        if (other.CompareTag("Player"))
+        {
+            FindObjectOfType<InventoryManager>().AddItem(item, 1);
+            PlayerData.ItemData[item.itemId].amounts[0]++;
+            Debug.Log(PlayerData.ItemData[item.itemId].amounts[0]);
+        }
     }
 }
