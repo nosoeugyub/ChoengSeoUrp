@@ -6,13 +6,11 @@ using DM.Inven;
 using Game.NPC;
 public class TriggerArea : MonoBehaviour
 {
-    [SerializeField]
-    private MainNpc mainNpc;
+  
     int mainid;
     bool mainisId;
 
-    [SerializeField]
-    private sign SignNpc;
+
     int singid;
     bool singisid;
    
@@ -22,9 +20,13 @@ public class TriggerArea : MonoBehaviour
     public GameObject QuestBox;
     private void Start()
     {
+
+        MainNpc mainNpc = new MainNpc();
         mainid = mainNpc.MainNPCID;
         mainisId = mainNpc.MainNPCIsid;
 
+
+        sign SignNpc = new sign();
         singid = SignNpc.SignID;
         singisid = SignNpc.SignIsid;
 
