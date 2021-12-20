@@ -8,8 +8,8 @@ namespace Player.Movement
 {
     public class PlayerMoveMent : PlyerState
     {
-      
 
+        public float camrotSpeed;
 
 
 
@@ -90,11 +90,11 @@ namespace Player.Movement
 
 
                 transform.forward = lookForward;
-                SpeedVec = move * moveSpeed;
+                move *=  moveSpeed;
 
               
             }
-            return SpeedVec;
+            return move;
 
 
         }
@@ -105,7 +105,7 @@ namespace Player.Movement
             Vector2 mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
             Vector3 camAngle = cameraArm.rotation.eulerAngles;
 
-            cameraArm.rotation = Quaternion.Euler(camAngle.x, camAngle.y + mouseDelta.x*3, camAngle.z);
+            cameraArm.rotation = Quaternion.Euler(camAngle.x, camAngle.y + mouseDelta.x* camrotSpeed, camAngle.z);
         }
     }
 }
