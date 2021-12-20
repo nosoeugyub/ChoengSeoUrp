@@ -6,23 +6,71 @@ using UnityEngine;
 
 namespace Game.Manager
 {
-    public enum Sound
+    public class Sound
     {
-        Bgm, //반복재생이나 배경음악
-        Effect, //클릭 소리나 퀘스트 완료소리 등등 짧게 한번만 내게
-        Count,//갯수세기용 
-
+        public string name;
+        public AudioClip clip;
     }
+
 
     public class SoundManager : MonoBehaviour
     {
-        [SerializeField] private AudioSource _musicSource, effectSource, _BackGroundmusic;
+
+        public AudioSource[] audioSourceEffect;
+        public AudioSource audioSourceBGM;
+
+        public string[] playSoundName;//특정곡
+
+        public Sound[] effectsound;//이펙트 사운드
+        public Sound[] BGM;//브금
 
 
-        public void PlaySound(AudioClip clip)
+        private void Start()
         {
+            playSoundName = new string[audioSourceEffect.Length];
+        }
+        public void PlaySE(string _name)
+        {
+            for (int i = 0; i < effectsound.Length; i++)
+            {
+                if (_name == effectsound[i].name)
+                {
+                    for (int j = 0; j < audioSourceEffect.Length; j++)
+                    {
+                        if (!audioSourceEffect[j].isPlaying)
+                        {
+                            playSoundName[j] = effectsound[i].name;
+                            audioSourceEffect[j].clip = effectsound[i].clip;
+                            audioSourceEffect[j].Play();
+                            return;
+                        }
+                    }
+                    return;
+                }
+            }
+        }
 
+        public void StopAllSE()
+        {
+            for (int i = 0; i < audioSourceEffect.Length; i++)
+            {
+                audioSourceEffect[i].Stop();
+            }
+        }
+        public void StopSE(string _name)
+        {
+            for (int i = 0; i < audioSourceEffect.Length; i++)
+            {
+                if (playSoundName[i] == _name)
+                {
+                    audioSourceEffect[i].Stop();
+                    break;
+                }
+               
+            }
         }
     }
+
+
 }
 
