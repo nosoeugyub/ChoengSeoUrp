@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game.State
+namespace NSY.State
 {
     enum CharacterClassSTate
     {

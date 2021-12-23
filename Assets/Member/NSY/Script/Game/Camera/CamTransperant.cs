@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game.Cam
+namespace NSY.Cam
 {
     public class CamTransperant : MonoBehaviour
     {

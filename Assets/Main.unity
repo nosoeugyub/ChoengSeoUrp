@@ -1094,12 +1094,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 82019779}
-  - component: {fileID: 82019781}
-  - component: {fileID: 82019780}
-  - component: {fileID: 82019783}
   - component: {fileID: 82019784}
   - component: {fileID: 82019785}
-  - component: {fileID: 82019782}
   - component: {fileID: 82019786}
   m_Layer: 0
   m_Name: SamplePlayer
@@ -1123,85 +1119,6 @@ Transform:
   m_Father: {fileID: 635591933}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!114 &82019780
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 82019778}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e1f1bf9796ffc64e84c5004d4356ab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PlayerClassName: PlayerState
-  Mask:
-    serializedVersion: 2
-    m_Bits: 256
-  isSmell: 0
-  isJumping: 0
-  JumpCount: 0
-  MaxJumpCount: 1
-  jumpForce: 15
-  moveSpeed: 10
-  Anim: {fileID: 0}
---- !u!114 &82019781
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 82019778}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1afcb1600d21dcb41af1e96047463d13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PlayerClassName: PlayerMove
-  Mask:
-    serializedVersion: 2
-    m_Bits: 256
-  isSmell: 0
-  isJumping: 0
-  JumpCount: 0
-  MaxJumpCount: 1
-  jumpForce: 0
-  moveSpeed: 10
-  Anim: {fileID: 0}
-  camrotSpeed: 5
-  cameraArm: {fileID: 192029437}
---- !u!114 &82019782
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 82019778}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae2b45fbf56c1714fa13cd52e14a54e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mainNpc: {fileID: 812153363}
-  SignNpc: {fileID: 329395169}
-  TalkMessage: {fileID: 923062946}
-  QuestBox: {fileID: 975818152}
---- !u!114 &82019783
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 82019778}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca394edd4ca015a47a416b3355d05cee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CharControl: {fileID: 82019785}
-  target: {fileID: 0}
-  Player: {fileID: 82019778}
 --- !u!114 &82019784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4599,7 +4516,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 289718872}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 8.23, y: 14.35282, z: 102.47}
+  m_LocalPosition: {x: 8.23, y: 15.04564, z: 105.47}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 1926159568}
@@ -7001,6 +6918,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aba57e3449deb64abe8548afb3b7e55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Panels: []
 --- !u!1001 &447067257
 PrefabInstance:
   m_ObjectHideFlags: 0
