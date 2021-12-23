@@ -13,18 +13,40 @@ namespace NSY.Player
         internal PlayerMoveMent playermove;
         [SerializeField]
         internal PlayerState playerstate;
+        [SerializeField]
+        internal PlayerCollision playercollision;
+
+        //Player 상태
+        [SerializeField]
+        internal CharacterController characterCtrl;
+        [SerializeField]
+        internal Camera maincamera;
+        internal Animator anim;
+
+        //Player 정보
+        public float PlayerSpeed;
+        internal string CurrentState;
+
 
         // Start is called before the first frame update
         void Start()
         {
-
+            characterCtrl = GetComponent<CharacterController>();
+            anim = GetComponent<Animator>();
         }
 
-        // Update is called once per frame
-        void Update()
+        internal void ChageState(string newState)
         {
-
+            if (newState != CurrentState)
+            {
+                anim.Play(newState);
+                CurrentState = newState;
+            }
         }
+   
+    
+
+    
     }
 }
 

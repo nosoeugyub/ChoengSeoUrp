@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace NSY.Player
+namespace NSY.PlayerState
 {
-    public class PlayerState : MonoBehaviour
+    public abstract class PlayerState 
     {
+        [SerializeField]
+        PlayerController playerController;
         // Start is called before the first frame update
         void Start()
         {
