@@ -11,8 +11,7 @@ namespace NSY.Player
         internal PlayerInput playerinput;
         [SerializeField]
         internal PlayerMoveMent playermove;
-        [SerializeField]
-        internal PlayerState playerstate;
+       
         [SerializeField]
         internal PlayerCollision playercollision;
 
