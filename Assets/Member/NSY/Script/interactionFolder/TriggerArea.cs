@@ -6,17 +6,23 @@ using DM.Inven;
 using Game.NPC;
 public class TriggerArea : MonoBehaviour
 {
+    //촌장
     [SerializeField]
     private MainNpc mainNpc;
     int mainid;
     bool mainisId;
-
+    //팻말
     [SerializeField]
     private sign SignNpc;
     int singid;
     bool singisid;
-   
+   /// <summary>
+   /// 감지
+   /// </summary>
     bool isSign;
+    bool isTriggering;
+    GameObject TriggerNPC;
+
 
     public GameObject TalkMessage;
     public GameObject QuestBox;
@@ -39,6 +45,8 @@ public class TriggerArea : MonoBehaviour
     {
         if (col.gameObject.CompareTag("signNPC"))//퀘스트
         {
+            isTriggering = true;
+            TriggerNPC = col.gameObject;
             //Debug.Log("충돌함");
             if (isSign)
             {
@@ -64,6 +72,14 @@ public class TriggerArea : MonoBehaviour
 
                 Invoke("Delay", 6f);                           
             }
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("signNPC"))
+        {
+            isTriggering = false;
+            TriggerNPC = null;
         }
     }
     public void Delay()

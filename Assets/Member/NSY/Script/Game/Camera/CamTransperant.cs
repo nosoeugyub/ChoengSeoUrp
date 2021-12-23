@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game.Cam
+namespace NSY.Cam
 {
     public class CamTransperant : MonoBehaviour
     {
@@ -10,8 +10,9 @@ namespace Game.Cam
 
         public GameObject Character;
 
-        public Material defaultShader;
-        public Material targetShader;
+       public Material defaultMat;
+        public Material TargetMat;
+    
 
 
         // 가리는 오브젝트 리스트
@@ -53,34 +54,40 @@ namespace Game.Cam
 
 
                 // 이미 반투명 상태라면 리턴
-              //  if (ObstacleRenderer.color.a == 0.5f || ObstacleRenderer.material == targetShader) return;
+               // if (ObstacleRenderer.material == TargetMat) return;
 
 
                 if (ObstacleRenderer != null)
 
                 {
-                    ObstacleRenderer.material = targetShader;
+                     ObstacleRenderer.material = TargetMat;
                     transparentObjs.Add(hit.transform.gameObject);
                     Material Mat = ObstacleRenderer.material;
 
+
                     Color matColor = Mat.color;
                     matColor.a = 0.5f;
-                    Mat.color = matColor;
+                   Mat.color = matColor;
                 }
+
+
+
+
 
             }
             
         }
+        //되돌리기
         IEnumerator returnObjs()
         {
             for (int i = 0; i < transparentObjs.Count; i++)
             {
-                transparentObjs[i].GetComponentInChildren<SpriteRenderer>().material = defaultShader;
-                Color sprColor = transparentObjs[i].GetComponentInChildren<SpriteRenderer>().color;
+                transparentObjs[i].GetComponentInChildren<SpriteRenderer>().material = defaultMat;
+                Material Mat = transparentObjs[i].GetComponentInChildren<SpriteRenderer>().material;
 
-                Color matColor = sprColor;
-                matColor.a = 1f;
-                sprColor = matColor;
+             //   Color matColor = Mat;
+            //    matColor.a = 1f;
+            //    Mat = matColor;
             }
 
             transparentObjs.Clear();

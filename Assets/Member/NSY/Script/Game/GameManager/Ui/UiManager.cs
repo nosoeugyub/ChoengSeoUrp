@@ -5,19 +5,19 @@ using UnityEngine.UI;
 
 namespace Game.Manager
 {
+ 
+
     public class UiManager : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
-        {
+        //판넬의 리스트
+        public List<UiView> Panels; 
 
-        }
 
-        // Update is called once per frame
-        void Update()
-        {
 
-        }
+      
+
+
+
     }
 
 }
