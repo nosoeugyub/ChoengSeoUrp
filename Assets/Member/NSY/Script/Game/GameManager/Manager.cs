@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 
-namespace Game.Manager
+namespace NSY.Manager
 {
     public enum GameState
     {

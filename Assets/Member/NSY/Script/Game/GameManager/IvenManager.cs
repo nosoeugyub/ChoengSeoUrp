@@ -7,7 +7,7 @@ using UnityEngine;
 /// <summary>
 /// 아이템 매니저 
 /// </summary>
-namespace Game.Manager
+namespace NSY.Manager
 {
     public class IvenManager : MonoBehaviour
     {

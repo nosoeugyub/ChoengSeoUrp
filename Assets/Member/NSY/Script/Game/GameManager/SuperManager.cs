@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game.Manager
+namespace NSY.Manager
 { /// <summary>
 /// 사용법: 사용하고 싶은 객체에 SuperManager.instance.~~~
 /// </summary>

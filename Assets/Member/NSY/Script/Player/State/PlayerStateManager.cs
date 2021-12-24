@@ -8,7 +8,7 @@ public class PlayerStateManager : MonoBehaviour
 {
     PlayerState currentState;
     //각각상태의 스크립트 초기화
-  public   IdleState idlestate = new IdleState();
+   public   IdleState idlestate = new IdleState();
    public dangerousState dangerState = new dangerousState();
    public DieState diestate = new DieState();
 

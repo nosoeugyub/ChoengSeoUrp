@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Game.Manager;
+using NSY.Manager;
 
 public class GameManager : MonoBehaviour
 {

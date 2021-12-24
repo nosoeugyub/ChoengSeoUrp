@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Game.Manager;
+using NSY.Manager;
 using DM.Inven;
 using Game.NPC;
 public class TriggerArea : MonoBehaviour

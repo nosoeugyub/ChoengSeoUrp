@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 
-namespace Game.Manager
+namespace NSY.Manager
 {
     public class Sound
     {

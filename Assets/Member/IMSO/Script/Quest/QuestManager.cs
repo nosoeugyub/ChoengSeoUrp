@@ -1,4 +1,4 @@
-﻿using Game.Manager;
+﻿using NSY.Manager;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
