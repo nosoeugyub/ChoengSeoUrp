@@ -19,7 +19,8 @@ namespace DM.Building
         [SerializeField]
         public ingredientNeeded[] ingredientNeededs;
         [SerializeField]
-        private int buildID;
+        private int buildID; 
+        
 
         public int BuildingID()
         {

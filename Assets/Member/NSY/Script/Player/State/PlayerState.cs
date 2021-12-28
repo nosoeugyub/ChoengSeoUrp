@@ -10,7 +10,7 @@ namespace NSY.PlayerState
 
         abstract protected int Hungry
         {
-            get; set; 
+            get; set;
         }
         abstract protected int Tired 
         {

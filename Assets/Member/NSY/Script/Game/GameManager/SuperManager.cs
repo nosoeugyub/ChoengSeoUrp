@@ -17,7 +17,7 @@ namespace NSY.Manager
         public TalkManager talkmanager;
         public SoundManager soundmanager;
         public PlayerStateManager playerStatemanager;
-
+       
 
         public static SuperManager Instance
         {
