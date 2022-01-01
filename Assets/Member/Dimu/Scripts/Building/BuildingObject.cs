@@ -7,7 +7,7 @@ namespace DM.Building
     { Carrot, House }
 
     public delegate void GetIGDdelegate(ItemType itemType, int idx);
-    public class Building : MonoBehaviour
+    public class BuildingObject : MonoBehaviour
     {
         [SerializeField]
         private BuildingInfo buildingInfo; //집마다 1개. 필요 재료 타입과 양이 들어있다.
@@ -98,6 +98,12 @@ namespace DM.Building
         }
         public void StartBuild()
         {
+            //플레이어 데이터에 해당 빌딩이 없다면 추가
+            if (!PlayerData.BuildBuildingData.ContainsKey(buildingInfo.BuildingID()))
+            {
+                PlayerData.BuildBuildingData.Add(buildingInfo.BuildingID(), new int());
+            }
+
             PlayerData.BuildBuildingData[BuildID()]++;//아니 건물의 인덱스가 필요한데
             spriteRenderer.sprite = underConstructionSprite;
             ingredientUI.SetActive(true);

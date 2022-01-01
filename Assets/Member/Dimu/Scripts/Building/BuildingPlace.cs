@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 namespace DM.Building
 {
+
     public class BuildingPlace : MonoBehaviour
     {
         public bool isBuildMode = false;
@@ -43,7 +44,7 @@ namespace DM.Building
             decideBuildingPopup.SetActive(false);
             buildingCancelUI.SetActive(false);
 
-            Building instB= instanceObj.transform.GetChild(0).GetComponent<Building>();
+            BuildingObject instB= instanceObj.transform.GetChild(0).GetComponent<BuildingObject>();
             instB.StartBuild();
         }
 

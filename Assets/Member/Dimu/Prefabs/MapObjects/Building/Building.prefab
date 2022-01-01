@@ -129,7 +129,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 4313613078896673092}
+      - m_Target: {fileID: 0}
         m_MethodName: ChangeImg
         m_Mode: 1
         m_Arguments:
@@ -295,8 +295,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1983795598215835461}
   - component: {fileID: 3994411171668245252}
-  - component: {fileID: 4313613078896673092}
   - component: {fileID: 7083487476197717506}
+  - component: {fileID: 8463596000037887063}
   m_Layer: 0
   m_Name: Building
   m_TagString: Untagged
@@ -332,25 +332,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4313613078896673092
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9185443511587352083}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6849e8f172221114b889f225d1747a78, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buildingInfo: {fileID: 0}
-  gotIngredient: []
-  uiFabs: []
-  clearButton: {fileID: 3158573005507846616}
-  finishSprite: {fileID: 21300000, guid: 58d57c5f6cf8c774885c5035ad9ec9bd, type: 3}
-  underConstructionSprite: {fileID: 0}
-  ingredientUI: {fileID: 0}
 --- !u!212 &7083487476197717506
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -401,6 +382,26 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8463596000037887063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9185443511587352083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3afcd7951f4ce244e810025bd5501a43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildingInfo: {fileID: 0}
+  gotIngredient: []
+  uiFabs: []
+  clearButton: {fileID: 3158573005507846616}
+  finishSprite: {fileID: 0}
+  underConstructionSprite: {fileID: 21300000, guid: 421a3996775ec6940a1509b350f19ddc,
+    type: 3}
+  ingredientUI: {fileID: 9072253050935207008}
 --- !u!1001 &7116605913968256550
 PrefabInstance:
   m_ObjectHideFlags: 0

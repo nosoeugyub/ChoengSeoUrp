@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DM.Quest;
 using DM.Inven;
+using DM.Building;
 
 namespace NSY.Manager
 { /// <summary>
