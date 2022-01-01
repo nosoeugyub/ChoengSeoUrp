@@ -25,7 +25,7 @@ namespace DM.Inven
     public enum ItemType
     {
         //1차 재료
-        None = 0, Twigs, Cutgrass, Rocks, Gold,
+        None = 0, Twigs, Cutgrass, Rocks, Gold,leaf,Mud,
         //1차 식량
         Seed = 100, Berry,
         //2차재료
