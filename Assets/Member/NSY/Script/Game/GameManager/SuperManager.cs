@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DM.Quest;
+using DM.Inven;
 
 namespace NSY.Manager
 { /// <summary>
@@ -12,9 +14,8 @@ namespace NSY.Manager
 
 
         [Header("매니저")]
-        public GameManager gameManager;
         public QuestManager questmanager;
-        public TalkManager talkmanager;
+        public InventoryManager inventoryManager;
         public SoundManager soundmanager;
         public PlayerStateManager playerStatemanager;
        

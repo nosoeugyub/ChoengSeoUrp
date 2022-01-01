@@ -21,11 +21,11 @@ namespace DM.Inven
         public void SetItemSlot(Item item) //생성 시 셋팅
         {
             itemInfo = item;
-            itemImage.sprite = itemInfo.itemSprite;
+            itemImage.sprite = itemInfo.ItemSprite;
             itemNameText.text = value + "";
             value = 0;
 
-            itemInfoUI.GetComponent<Text>().text = itemInfo.itemDescription;
+            itemInfoUI.GetComponent<Text>().text = itemInfo.ItemDescription;
             DeleteAllButton.onClick.AddListener(() => FindObjectOfType<InventoryManager>().DeleteItem(itemInfo, value));//+플레이어 위치에 아이템 생성
 
             itemInfoUI.SetActive(false);

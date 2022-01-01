@@ -69,7 +69,7 @@ namespace DM.Building
 
             for (int i = 0; i < buildingInfo.ingredientNeededs.Length; i++)
             {
-                if (gotIngredient[i].item.itemType == ingredientype && !IsTypeClear(i))
+                if (gotIngredient[i].item.ItemType == ingredientype && !IsTypeClear(i))
                 {
                     InventoryManager ivt = FindObjectOfType<InventoryManager>();
                     if (ivt.GetItemValue(gotIngredient[i].item) <= 0)

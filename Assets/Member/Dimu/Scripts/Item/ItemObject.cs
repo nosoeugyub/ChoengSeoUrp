@@ -11,8 +11,8 @@ public class ItemObject : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             FindObjectOfType<InventoryManager>().AddItem(item, 1);
-            PlayerData.ItemData[item.itemId].amounts[0]++;
-            Debug.Log(item.itemId + ", "+PlayerData.ItemData[item.itemId].amounts[0]);
+            PlayerData.ItemData[(int)item.ItemType].amounts[0]++;
+            Debug.Log((int)item.ItemType + ", "+PlayerData.ItemData[(int)item.ItemType].amounts[0]);
         }
     }
 }

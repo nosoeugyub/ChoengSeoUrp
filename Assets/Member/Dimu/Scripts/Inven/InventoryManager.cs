@@ -44,9 +44,9 @@ namespace DM.Inven
         }
         public bool AddItem(Item item, int howmuch) //add 성공 여부를 리턴.
         {
-            if (!PlayerData.ItemData.ContainsKey(item.itemId))
+            if (!PlayerData.ItemData.ContainsKey((int)item.ItemType))
             {
-                PlayerData.ItemData.Add(item.itemId, new ItemBehavior());
+                PlayerData.ItemData.Add((int)item.ItemType, new ItemBehavior());
             }
 
             if (!CanAddItem())
@@ -126,7 +126,7 @@ namespace DM.Inven
             foreach (var item in itemslots)
             {
                 print(GetItemValue(item.Key));
-                print(item.Value.itemInfo.itemName);
+                print(item.Value.itemInfo.ItemName);
             }
         }
         #endregion
