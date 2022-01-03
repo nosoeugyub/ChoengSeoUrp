@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿       using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -9,25 +9,20 @@ namespace NSY.Manager
     public enum GameState
     {
         Playerlive,
-        PlayQuest,
-        PlayBuild,
-        PlayerGetItem,
+        PlayerInteraction,
         PlayerDie
     }
 
 
     public class Manager : MonoBehaviour
     {
-        public GameObject Panel;
-        public GameObject EscPanel;
 
-        public GameObject QuestWindow;
         //하위 ui매니져들 들어갈 예정
 
         //싱글톤
         public static Manager Instance;
         //첫번째 다이얼로그 이벤트
-        public  event Action<int , bool> GoVillageQ;
+        public event Action<int, bool> GoVillageQ;
         //첫번쨰 퀘스트 
         //public event Action<>
 
@@ -59,18 +54,14 @@ namespace NSY.Manager
                 case GameState.Playerlive:
                     HandlerPlayerLeave();
                     break;
-                case GameState.PlayQuest:
-                    HandlerPlayerQuest();
+                case GameState.PlayerInteraction:
+                    HandlerPlayerInteraction();
                     break;
-                case GameState.PlayBuild:
-                    HandlerPlayerBulld();
-                    break;
+             
                 case GameState.PlayerDie:
                     HandlerPlayerDie();
                     break;
-                case GameState.PlayerGetItem:
-                    HandlerPlayerGetItem();
-                    break;
+             
                 default:
                     break;
                     throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
@@ -81,11 +72,7 @@ namespace NSY.Manager
         {
 
         }
-        private void HandlerPlayerBulld()
-        {
-
-        }
-        private void HandlerPlayerQuest()
+        private void  HandlerPlayerInteraction()
         {
 
         }
@@ -93,10 +80,7 @@ namespace NSY.Manager
         {
 
         }
-        private void HandlerPlayerGetItem()
-        {
-
-        }
+       
         //퀘스트///////////////////////////////////////////////////////////////////////////////////////
         public void OnFirstQuest(int id, bool isId)
         {
@@ -104,23 +88,10 @@ namespace NSY.Manager
             {
                 GoVillageQ.Invoke(id, isId);
             }
-                        
-        }
 
-        public void OnPanel()
-        {
-            Panel.SetActive(true);
-        }
-        public void Close()
-        {
-            Panel.SetActive(false);
-        }
-        //퀘스트 버튼수락 
-        public void SureButton()
-        {
-            QuestWindow.SetActive(false);
         }
     }
+     
 }
 
 

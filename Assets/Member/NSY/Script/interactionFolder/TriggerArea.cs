@@ -51,7 +51,7 @@ public class TriggerArea : MonoBehaviour
             if (isSign)
             {
                 Debug.Log("팻말 퀘스트 시작해");
-                Manager.Instance.OnPanel();
+              
             }
         }
 
