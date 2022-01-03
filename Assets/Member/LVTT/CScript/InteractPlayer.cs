@@ -3,25 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace TT_INTERACT
+namespace TT.ObjINTERACT
 {
     public class InteractPlayer : MonoBehaviour
     { 
         public bool isInteracting;
+
+        InteractUI InteractUI;
         void Start()
         {
             isInteracting = false;
+            InteractUI = FindObjectOfType<InteractUI>();
         }
 
        
         void Update()
         {
-            
+            if (isInteracting)
+            {
+                //if(!InteractUI.onInteractTrigger)
+                //{ InteractUI.ShowInteract();
+                //  }
+               
+
+            }
+
+            if (!isInteracting)
+            {
+                //InteractUI.UnshowInteract();
+            }
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.tag == "InteractObj")
+            if (other.gameObject.tag == "TutItem")
             {
                 if (!isInteracting)
                 {
@@ -34,7 +49,7 @@ namespace TT_INTERACT
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.gameObject.tag == "InteractObj")
+            if (other.gameObject.tag == "TutItem")
             {
                 if (isInteracting)
                 {
