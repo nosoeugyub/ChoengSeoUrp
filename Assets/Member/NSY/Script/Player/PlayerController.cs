@@ -8,6 +8,8 @@ namespace NSY.Player
     public class PlayerController : MonoBehaviour
     {
         [SerializeField]
+        internal PlayerVital playerVital;
+        [SerializeField]
         internal PlayerInput playerinput;
         [SerializeField]
         internal PlayerMoveMent playermove;
@@ -26,7 +28,14 @@ namespace NSY.Player
         public float PlayerSpeed;
         internal string CurrentState;
 
-
+        private void Awake()
+        {
+           
+        }
+        private void OnDestroy()
+        {
+           
+        }
         // Start is called before the first frame update
         void Start()
         {
@@ -42,10 +51,13 @@ namespace NSY.Player
                 CurrentState = newState;
             }
         }
-   
-    
+        
+     
 
-    
+
+
+
+
     }
 }
 

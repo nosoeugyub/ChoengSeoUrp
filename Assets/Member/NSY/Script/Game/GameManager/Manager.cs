@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿       using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -9,9 +9,7 @@ namespace NSY.Manager
     public enum GameState
     {
         Playerlive,
-        PlayQuest,
-        PlayBuild,
-        PlayerGetItem,
+        PlayerInteraction,
         PlayerDie
     }
 
@@ -56,18 +54,14 @@ namespace NSY.Manager
                 case GameState.Playerlive:
                     HandlerPlayerLeave();
                     break;
-                case GameState.PlayQuest:
-                    HandlerPlayerQuest();
+                case GameState.PlayerInteraction:
+                    HandlerPlayerInteraction();
                     break;
-                case GameState.PlayBuild:
-                    HandlerPlayerBulld();
-                    break;
+             
                 case GameState.PlayerDie:
                     HandlerPlayerDie();
                     break;
-                case GameState.PlayerGetItem:
-                    HandlerPlayerGetItem();
-                    break;
+             
                 default:
                     break;
                     throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
@@ -78,11 +72,7 @@ namespace NSY.Manager
         {
 
         }
-        private void HandlerPlayerBulld()
-        {
-
-        }
-        private void HandlerPlayerQuest()
+        private void  HandlerPlayerInteraction()
         {
 
         }
@@ -90,10 +80,7 @@ namespace NSY.Manager
         {
 
         }
-        private void HandlerPlayerGetItem()
-        {
-
-        }
+       
         //퀘스트///////////////////////////////////////////////////////////////////////////////////////
         public void OnFirstQuest(int id, bool isId)
         {
