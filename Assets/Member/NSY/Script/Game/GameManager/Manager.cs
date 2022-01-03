@@ -18,16 +18,13 @@ namespace NSY.Manager
 
     public class Manager : MonoBehaviour
     {
-        public GameObject Panel;
-        public GameObject EscPanel;
 
-        public GameObject QuestWindow;
         //하위 ui매니져들 들어갈 예정
 
         //싱글톤
         public static Manager Instance;
         //첫번째 다이얼로그 이벤트
-        public  event Action<int , bool> GoVillageQ;
+        public event Action<int, bool> GoVillageQ;
         //첫번쨰 퀘스트 
         //public event Action<>
 
@@ -104,23 +101,10 @@ namespace NSY.Manager
             {
                 GoVillageQ.Invoke(id, isId);
             }
-                        
-        }
 
-        public void OnPanel()
-        {
-            Panel.SetActive(true);
-        }
-        public void Close()
-        {
-            Panel.SetActive(false);
-        }
-        //퀘스트 버튼수락 
-        public void SureButton()
-        {
-            QuestWindow.SetActive(false);
         }
     }
+     
 }
 
 

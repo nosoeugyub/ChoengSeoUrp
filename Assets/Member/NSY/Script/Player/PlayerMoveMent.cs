@@ -6,7 +6,7 @@ namespace NSY.Player
     {
         [SerializeField]
         PlayerController playerController;
-        float Mass = 1;
+        float Mass = 10;
 
         internal Vector3 idleMove = Vector3.zero;
         internal Vector3 lookForward;
@@ -58,12 +58,11 @@ namespace NSY.Player
         {
             Vector3 move = idleMove;
             float Gravity = Physics.gravity.y;
-            move.y += Gravity * Mass;
+            move.y += Gravity * Mass * Time.deltaTime; 
 
-            if (playerController.characterCtrl.isGrounded)
-            {
-                move.y = 0.0f;
-            }
+            
+            playerController.characterCtrl.Move(move * Time.deltaTime);
+            
 
         }
 
