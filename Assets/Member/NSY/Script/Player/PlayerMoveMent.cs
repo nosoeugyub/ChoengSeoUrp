@@ -6,7 +6,7 @@ namespace NSY.Player
     {
         [SerializeField]
         PlayerController playerController;
-        float Mass = 10;
+        float Mass = 7;
 
         internal Vector3 idleMove = Vector3.zero;
         internal Vector3 lookForward;
@@ -15,6 +15,9 @@ namespace NSY.Player
 
         internal bool isMove;
 
+      
+
+      
 
         public void FixedUpdate()
         {
@@ -28,10 +31,12 @@ namespace NSY.Player
 
         protected void Move()
         {
-            Vector2 MoveDelta = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-            isMove = MoveDelta.magnitude != 0; // 0이면 이동입력이 없는것 
+            
             if (isMove)
             {
+                Debug.Log("움직이는중");
+                Vector2 MoveDelta = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+                isMove = MoveDelta.magnitude != 0; // 0이면 이동입력이 없는것 
 
                 lookForward = new Vector3(playerController.maincamera.transform.forward.x, 0f, playerController.maincamera.transform.forward.z).normalized;//보는 방향을 바라보는 방향 카메라
                 LookRight = new Vector3(playerController.maincamera.transform.right.x, 0f, playerController.maincamera.transform.right.z).normalized; //보는방향을 평면화
@@ -51,7 +56,8 @@ namespace NSY.Player
 
 
         }
-   
+       
+         
 
 
         public void idle()
@@ -64,6 +70,11 @@ namespace NSY.Player
             playerController.characterCtrl.Move(move * Time.deltaTime);
             
 
+        }
+
+        public void StOPPlayer()
+        {
+            playerController.characterCtrl.Move(idleMove);
         }
 
     }

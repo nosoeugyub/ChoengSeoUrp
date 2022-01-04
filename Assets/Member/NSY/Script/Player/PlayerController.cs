@@ -7,6 +7,7 @@ namespace NSY.Player
 {
     public class PlayerController : MonoBehaviour
     {
+        
         [SerializeField]
         internal PlayerVital playerVital;
         [SerializeField]

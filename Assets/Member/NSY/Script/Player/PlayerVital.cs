@@ -2,34 +2,38 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class PlayerVital : MonoBehaviour
+
+
+namespace NSY.Player
 {
-    [SerializeField]
-    PlayerController playerController;
-
-    [Header("건강")]
-    public Image PlayerHealth_imgae;
-    public int Health { get; set; }
-    public int MaxHealth;
-    public int healthDislatetime = 200;
-    private int healthcurrentTime;
-
-    private void Start()
+    public class PlayerVital : MonoBehaviour
     {
-        PlayerHealth_imgae.fillAmount = Health;
-        Health = 50;
-    }
+        [SerializeField]
+        PlayerController playerController;
 
-    private void Update()
-    {
-        StartCoroutine(disVital());
-        GaugeUpdate();
-    }
+        [Header("건강")]
+        public Image PlayerHealth_imgae;
+        public int Health { get; set; }
+        public int MaxHealth;
+        public int healthDislatetime = 200;
+        private int healthcurrentTime;
 
-    IEnumerator disVital()
-    {
-     
-            if (Health>0)
+        private void Start()
+        {
+            PlayerHealth_imgae.fillAmount = Health;
+            Health = 50;
+        }
+
+        private void Update()
+        {
+            StartCoroutine(disVital());
+            GaugeUpdate();
+        }
+
+        IEnumerator disVital()
+        {
+
+            if (Health > 0)
             {
                 if (healthcurrentTime <= healthDislatetime)
                 {
@@ -41,16 +45,19 @@ public class PlayerVital : MonoBehaviour
                     healthcurrentTime = 0;
                 }
             }
-           
+
 
             yield return null;
-        
 
-        
-    }
-    void GaugeUpdate()
-    {
-        PlayerHealth_imgae.fillAmount = (float)Health / MaxHealth;
+
+
+        }
+        void GaugeUpdate()
+        {
+            PlayerHealth_imgae.fillAmount = (float)Health / MaxHealth;
+        }
+
     }
 
 }
+

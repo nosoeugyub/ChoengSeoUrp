@@ -10,9 +10,18 @@ namespace NSY.Player
         [SerializeField]
         PlayerController playerController;
 
+        private GameObject TriggerNPC;
+        private bool TriggerCheck;
+
+
+
         private void OnTriggerEnter(Collider other)
         {
-           
+            if (other.CompareTag("NPC"))
+            {
+                TriggerCheck = true;
+                TriggerNPC = other.gameObject;
+            }
         }
         private void OnTriggerStay(Collider other)
         {
@@ -20,7 +29,11 @@ namespace NSY.Player
         }
         private void OnTriggerExit(Collider other)
         {
-
+            if (other.CompareTag("NPC"))
+            {
+                TriggerCheck = false;
+                TriggerNPC =null;
+            }
         }
     }
 
