@@ -15,10 +15,9 @@ namespace NSY.Manager
 
 
         [Header("매니저")]
-        public QuestManager questmanager;
-        public InventoryManager inventoryManager;
+        public EventManager eventmanager;
         public SoundManager soundmanager;
-        public PlayerStateManager playerStatemanager;
+      
        
 
         public static SuperManager Instance

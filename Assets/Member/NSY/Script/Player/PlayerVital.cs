@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using NSY.Manager;
 
 namespace NSY.Player
 {
@@ -16,6 +17,8 @@ namespace NSY.Player
         public int MaxHealth;
         public int healthDislatetime = 200;
         private int healthcurrentTime;
+       
+
 
         private void Start()
         {

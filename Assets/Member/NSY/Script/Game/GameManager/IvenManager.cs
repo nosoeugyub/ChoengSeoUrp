@@ -11,19 +11,7 @@ namespace NSY.Manager
 {
     public class IvenManager : MonoBehaviour
     {
-        private void Awake()
-        {
-            Manager.OnGameStateChange += ManagerOnOnGameStateChanged;
-        }
-
-        private void OnDestroy()
-        {
-            Manager.OnGameStateChange -= ManagerOnOnGameStateChanged;
-        }
-        private void ManagerOnOnGameStateChanged(GameState state)
-        {
-            
-        }
+   
 
         // Start is called before the first frame update
         void Start()
