@@ -10,9 +10,23 @@ namespace NSY.Player
         [SerializeField]
         PlayerController playerController;
 
+        private GameObject triggeringNpc;
+        private bool trigger;
+
+
+        private void Update()
+        {
+                //상호작용하면 불러올 함수들
+        }
+
+
         private void OnTriggerEnter(Collider other)
         {
-           
+            if (other.CompareTag("NPC"))
+            {
+                trigger = true;
+                triggeringNpc = other.gameObject;
+            }
         }
         private void OnTriggerStay(Collider other)
         {
@@ -20,7 +34,11 @@ namespace NSY.Player
         }
         private void OnTriggerExit(Collider other)
         {
-
+            if (other.CompareTag("NPC"))
+            {
+                trigger = false;
+                triggeringNpc = null;
+            }
         }
     }
 
