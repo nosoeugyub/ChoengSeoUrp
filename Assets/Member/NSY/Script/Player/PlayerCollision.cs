@@ -11,22 +11,38 @@ namespace NSY.Player
         PlayerController playerController;
 
         private GameObject triggeringNpc;
+        private GameObject triggerObj;
         private bool trigger;
-
+        private bool triggerObjs;
 
         private void Update()
         {
-                //상호작용하면 불러올 함수들
+            //상호작용하면 불러올 함수들
+            if (triggerObjs)
+            {
+                if (playerController.playerinput.GetItem == true)
+                {
+                    Debug.Log("음식상자가 충돌됐고 E키를 눌렀다. + 애니메이션 재생");
+                    // 튜툐리얼 이벤트 함수 호출
+                }
+                else
+                {
+
+                }
+               
+            }
         }
 
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("NPC"))
+            if (other.CompareTag("Food Box"))
             {
-                trigger = true;
-                triggeringNpc = other.gameObject;
+                triggerObjs = true;
+                triggerObj = other.gameObject;
             }
+
+            
         }
         private void OnTriggerStay(Collider other)
         {
@@ -34,10 +50,10 @@ namespace NSY.Player
         }
         private void OnTriggerExit(Collider other)
         {
-            if (other.CompareTag("NPC"))
+            if (other.CompareTag("Food Box"))
             {
-                trigger = false;
-                triggeringNpc = null;
+                triggerObjs = false;
+                triggerObj = null;
             }
         }
     }

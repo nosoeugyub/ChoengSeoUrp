@@ -13,6 +13,6 @@ public class PopupUI : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        throw new NotImplementedException();
+        OnFocus();
     }
 }

@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class PopUpManager : MonoBehaviour
 {
-    public PopupUI _inventroyPopup;
-    public PopupUI _dialoguePopup;
+   // public PopupUI _inventroyPopup;
+    public PopupUI _BuildPopup;
+
+
 
     //실시간 팝업관리 링크드 리스트ㅓ
     private LinkedList<PopupUI> _activePopupList;
@@ -15,8 +17,8 @@ public class PopUpManager : MonoBehaviour
 
     [Space]
     public KeyCode EscKey = KeyCode.Escape;
-    public KeyCode inventoryKey = KeyCode.I;
-
+  //  public KeyCode inventoryKey = KeyCode.I;
+    public KeyCode BuildKey = KeyCode.B;
     private void Awake()
     {
         _activePopupList = new LinkedList<PopupUI>();
@@ -38,7 +40,8 @@ public class PopUpManager : MonoBehaviour
             
         }
         //단축키를 눌렀을때
-        ToggleKeyDownAction(inventoryKey, _inventroyPopup);
+     //   ToggleKeyDownAction(inventoryKey, _inventroyPopup);
+        ToggleKeyDownAction(BuildKey, _BuildPopup);
     }
     /// <summary>
     /// Prive 함수들====================================
@@ -48,7 +51,7 @@ public class PopUpManager : MonoBehaviour
     {  //list초기화+
         _allPopupList = new List<PopupUI>
         {
-            _inventroyPopup
+            _BuildPopup
         };
         foreach (var popup in _allPopupList)//팝업 이벤트 등록
         {
