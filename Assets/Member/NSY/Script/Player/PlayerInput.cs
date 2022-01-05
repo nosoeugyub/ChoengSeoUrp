@@ -9,15 +9,16 @@ namespace NSY.Player
         [SerializeField]
         PlayerController playerController;
 
+        //플레이어가 누르는 키입력
+        [Space]
+        public KeyCode _GetItem = KeyCode.E;
+        public KeyCode _GetNPC = KeyCode.Space;
 
-        internal bool inputInventroy;
+
+      
         internal bool GetItem;
         internal bool activeNpc;
-        // Start is called before the first frame update
-        void Start()
-        {
 
-        }
 
         // Update is called once per frame
         void Update()
@@ -28,7 +29,7 @@ namespace NSY.Player
         //아이템먹기
         public void ActiveItem()
         {
-            if (Input.GetKey(KeyCode.G))
+            if (Input.GetKey(_GetItem))
             {
                 GetItem = true;
             }
@@ -39,7 +40,7 @@ namespace NSY.Player
         }
         public void ActiveNpc()
         {
-            if (Input.GetKey(KeyCode.Space))
+            if (Input.GetKey(_GetNPC))
             {
                 activeNpc = true;
             }
