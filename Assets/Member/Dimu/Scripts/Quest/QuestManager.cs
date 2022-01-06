@@ -15,6 +15,8 @@ namespace DM.Quest
         {
             acceptQuests = new Dictionary<QuestData, GameObject>();
         }
+        
+        public void Start() { print(""); }//start update 등의 구문이 없다면 에디터에서 public QuestManager questmanager; 같은 구문에 넣을 수 없다.
         public void AcceptQuest(QuestData questData, int npcID)
         {
             if (acceptQuests.ContainsKey(questData)) return;
