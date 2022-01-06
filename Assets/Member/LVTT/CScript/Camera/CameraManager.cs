@@ -6,26 +6,17 @@ using Cinemachine;
 namespace Game.Cam
 { public class CameraManager : MonoBehaviour
     {
+        [Header("SubCameraList")]
         [SerializeField]
         private CinemachineVirtualCamera [] virtualCamera = null;
-        // Start is called before the first frame update
+        
         void Start()
         {
-            DeactiveAllSubCam();
+            DeactiveAllSubCam();  
         }
-
-        // Update is called once per frame
         void Update()
         {
-            //if (Input.GetKey(KeyCode.Q))
-            //{
-            //    ActiveCamera(0);
-            //}
-
-            //if(Input.GetKey(KeyCode.E))
-            //{
-            //    DeactiveCamera(0);
-            //}
+            
         }
 
         void DeactiveAllSubCam()
@@ -33,21 +24,35 @@ namespace Game.Cam
             for(int i=0;i<virtualCamera.Length;i++)
             {
                 virtualCamera[i].enabled = false;
-            }
-
-            
-           
+            }     
         }
         
-       public void ActiveCamera(int camNum)
+       public void ActiveCamera(int camNum) //다른 카메라 뷰 바꿈
         {
             virtualCamera[camNum].enabled = true;
         }
 
-        public void DeactiveCamera(int camNum)
+        public void DeactiveCamera(int camNum)//메인 카메라에 돌아감
         {
             virtualCamera[camNum].enabled = false;
         }
+
+        public void ChangeFollowTarger(Transform newTarget,int camNum)//배열있는 SubCamera의 Followtarget가 바꿈
+        {
+            virtualCamera[camNum].Follow = newTarget;
+        }
+
+        public IEnumerator AutoFocusObjectLocation(Transform focusObject,float stayTime,int camNum)
+        {
+            //카메라의 Followtarget가 원하는 Object로 바꿈
+            ChangeFollowTarger(focusObject, camNum);// camNum = 이 script에서 vísualcamera 배열의 있는 SubCamera 위치
+            //카메라 뷰 바꿈
+            ActiveCamera(camNum);
+            //바꾼 후에 Object 뷰가 유지
+            yield return new WaitForSeconds(stayTime);//stayTime = 메안 뷰 -> Object 뷰 바꾸는 시간  +뷰 유지 시간
+            //메인 카메라에 다시 돌아간다
+            DeactiveCamera(camNum);
+        }   
     }
 }
 

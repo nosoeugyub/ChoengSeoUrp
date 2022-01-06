@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TutprefacUI : MonoBehaviour
+public class TutNoticeUI : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
