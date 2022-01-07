@@ -4,6 +4,7 @@ using UnityEngine;
 using DM.Quest;
 using DM.Inven;
 using DM.Building;
+using DM.Dialog;
 
 namespace NSY.Manager
 { /// <summary>
@@ -16,6 +17,7 @@ namespace NSY.Manager
 
         [Header("매니저")]
         public QuestManager questmanager;
+        public DialogueManager dialogueManager;
         public InventoryManager inventoryManager;
         public SoundManager soundmanager;
         public PlayerStateManager playerStatemanager;
