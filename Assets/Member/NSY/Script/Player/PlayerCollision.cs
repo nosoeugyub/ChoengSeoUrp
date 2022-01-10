@@ -27,6 +27,12 @@ namespace NSY.Player
                 trigger = true;
                 triggeringNpc = other.gameObject;
             }
+            if (other.CompareTag("InteractObj"))
+            {
+                other.GetComponent<InteractObject>().DropItems();
+                print("spawn" + other.name);
+
+            }
         }
         private void OnTriggerStay(Collider other)
         {

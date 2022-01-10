@@ -12,9 +12,11 @@ namespace DM.Quest
         public GameObject questInfoUI;
         public QuestData testSOdata;
         public QuestList[] questLists;
+        public List<QuestData> clearQuestLists;
         private void Awake()
         {
             acceptQuests = new Dictionary<QuestData, GameObject>();
+            clearQuestLists = new List<QuestData>();
         }
         
         public void Start() { print(""); }//start update 등의 구문이 없다면 에디터에서 public QuestManager questmanager; 같은 구문에 넣을 수 없다.
@@ -22,6 +24,7 @@ namespace DM.Quest
         public void AcceptQuest(int questId, int npcID)//(QuestData questData, int npcID)
         {
             QuestData nowQuestData = questLists[npcID].questList[questId];
+            nowQuestData.CanAccept();
             if (acceptQuests.ContainsKey(nowQuestData)) return;
         
             nowQuestData.npcID = npcID;
@@ -30,7 +33,6 @@ namespace DM.Quest
         
             nowQuestData.InitData();
             acceptQuests.Add(nowQuestData, qui);
-            print("수ㅏㄺ완료");
         }public bool ClearQuest(QuestData questData)
         {
             if (questData.IsClear())

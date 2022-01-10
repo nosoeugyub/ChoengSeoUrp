@@ -1,5 +1,4 @@
 ﻿using NSY.Manager;
-using System;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,96 +18,134 @@ namespace DM.Dialog
         public int dialogLength;
         public int dialogIndex;
         public DialogList[] dialogLists;
-
+        public Button spawnStartCanAcceptQuestButton;
 
         void Start()
         {
             //StartShowDialog("testJson");
 
-            DialogData DialogData = new DialogData(2, 1);
+            DialogData DialogData = new DialogData(2, 1, 2, 1);
             DialogData.questId = 0;
             DialogData.subjectCharacterID = 1;
+            DialogData.acceptSentenceInfo[0] = new Sentence("그래그래 수락해야지", 1);
+            DialogData.acceptSentenceInfo[1] = new Sentence("어서가고", 1);
+            DialogData.rejectSentenceInfo[0] = new Sentence("이걸 거절해?", 1);
             DialogData.sentenceInfo[0] = new Sentence("디무", 1);
             DialogData.sentenceInfo[1] = new Sentence("mumu", 2);
             CreateJsonFile(Application.dataPath, "testJson3", DialogData);
         }
-        public void UpdateDialog()
+        public void FirstShowDialog(int charId)
         {
-            dialogText.text = nowDialogData.sentenceInfo[dialogIndex].sentence;
-            nameText.text = nowDialogData.sentenceInfo[dialogIndex++].characterId + "";//NPC 이름으로 변경해줘야함
-            IfLastDialog();
-        }
-
-        private void IfLastDialog()
-        {
-            if (dialogLength <= dialogIndex)
+            dialogUI.SetActive(true);
+            //기본 대화를 출력한다. < < 생략 LoadDialogData(charId, diaIdx);
+            //charid에 해당하는 퀘스트를 다 뒤져서 수행 가능한 개수의 퀘스트 버튼을 생성한다.
+            foreach (var questData in  SuperManager.Instance.questmanager.questLists[charId].questList)
             {
-                //마지막 대사일 때 작동
-                nextButton.gameObject.SetActive(false);
-
-                //만약 대화데이터에 퀘스트가 있다면
-                if (nowDialogData.questId > -1)
+                if(questData.CanAccept())
                 {
-                    //수락 거절 버튼 띄우고 
-                    acceptButton.gameObject.SetActive(true);
-                    rejectButton.gameObject.SetActive(true);
-                    acceptButton.onClick.AddListener(() =>
+                    //퀘스트 버튼(spawnStartCanAcceptQuestButton) 생성 후 리스너 등록
+                    spawnStartCanAcceptQuestButton.onClick.AddListener(() =>
                     {
-                        SuperManager.Instance.questmanager.AcceptQuest(nowDialogData.questId, nowDialogData.subjectCharacterID);
-                        //수락 대화 출력
-                        AcceptDialog();
-                        dialogUI.SetActive(false);
+                        StartShowDialog(charId, questData.QuestID);
                     });
-                    rejectButton.onClick.AddListener(() =>
-                    {
-                        //거절 대화 출력
-                        RejectDialog();
-                        dialogUI.SetActive(false);
-                    });
-                    return;
                 }
+
             }
-        }
-
-        private void RejectDialog()
-        {
-            nextButton.gameObject.SetActive(true);
-            dialogText.text = nowDialogData.rejectSentenceInfo[dialogIndex].sentence;
-            nameText.text = nowDialogData.rejectSentenceInfo[dialogIndex++].characterId + "";
-            nextButton.onClick.RemoveAllListeners();
-            nextButton.onClick.AddListener(() =>
-            {
-                RejectDialog();
-            });
-        }
-        private void AcceptDialog()
-        {
-            nextButton.gameObject.SetActive(true);
-            dialogText.text = nowDialogData.acceptSentenceInfo[dialogIndex].sentence;
-            nameText.text = nowDialogData.acceptSentenceInfo[dialogIndex++].characterId + "";
-            nextButton.onClick.RemoveAllListeners();
-            nextButton.onClick.AddListener(() =>
-            {
-                AcceptDialog();
-            });
-            //next 버튼에 UpdateDialog()말고 AcceptDialog() addlistener하기
-        }
-
-        public void TestEvent()
-        {
-            StartShowDialog(0, 0);
+           
         }
         public void StartShowDialog(int charId, int diaIdx)//(string eventname)
         {
-            dialogUI.SetActive(true);
+            AcceptRejectButtonOnOff(false);
             LoadDialogData(charId, diaIdx);
             nextButton.onClick.RemoveAllListeners();
             nextButton.onClick.AddListener(() =>
             {
                 UpdateDialog();
             });
-                UpdateDialog();
+            UpdateDialog();
         }
+        public void UpdateDialog() //
+        {
+            UpdateDialogText(nowDialogData.sentenceInfo);
+            if (dialogLength == dialogIndex)
+                LastDialog();
+        }
+
+        private void UpdateDialogText(Sentence[] sentences)
+        {
+            dialogText.text = sentences[dialogIndex].sentence;
+            nameText.text = sentences[dialogIndex++].characterId + "";//NPC 이름으로 변경해줘야함
+        }
+
+        //마지막 대사일 때 작동
+        private void LastDialog()
+        {
+            nextButton.gameObject.SetActive(false);
+            //만약 대화데이터에 퀘스트가 있다면
+            if (nowDialogData.questId > -1)
+            {
+
+                //수락 거절 버튼 띄우고 
+                AcceptRejectButtonOnOff(true);
+                acceptButton.onClick.AddListener(() =>
+                {
+                    //퀘수락
+                    SuperManager.Instance.questmanager.AcceptQuest(nowDialogData.questId, nowDialogData.subjectCharacterID);
+                    //수락 대화 출력
+                    SetAnotherDialog(nowDialogData.acceptSentenceInfo);
+                });
+                rejectButton.onClick.AddListener(() =>
+                {
+                    //거절 대화 출력
+                    SetAnotherDialog(nowDialogData.rejectSentenceInfo);
+                });
+            }
+            else
+                CloseDialog();
+        }
+
+        private void SetAnotherDialog(Sentence[] sentences)
+        {
+            dialogIndex = 0;
+
+            nextButton.gameObject.SetActive(true);
+
+            nextButton.onClick.RemoveAllListeners();
+            nextButton.onClick.AddListener(() =>
+            {
+                AnotherDialog(sentences);
+            });
+
+            AnotherDialog(sentences);
+            AcceptRejectButtonOnOff(false);
+        }
+
+        private void AnotherDialog(Sentence[] sentences)
+        {
+            if (sentences.Length == dialogIndex)
+            {
+                CloseDialog();
+                return;
+            }
+            UpdateDialogText(sentences);
+        }
+        private void AcceptRejectButtonOnOff(bool isOn)
+        {
+            acceptButton.gameObject.SetActive(isOn);
+            rejectButton.gameObject.SetActive(isOn);
+        }
+
+        private void CloseDialog()
+        {
+            dialogUI.SetActive(false);
+        }
+
+        public void TestEvent()
+        {
+            StartShowDialog(0, 0);
+        }
+
+        #region Data
         public void LoadDialogData(int charId, int diaIdx)//string eventname)
         {
             //Application.persistentDataPath
@@ -135,6 +172,7 @@ namespace DM.Dialog
             string path = createPath + "/JsonData/" + fileName + ".Json";
             File.WriteAllText(path, json);
         }
+        #endregion
     }
 
     [System.Serializable]
@@ -147,9 +185,11 @@ namespace DM.Dialog
         public Sentence[] acceptSentenceInfo;
         public Sentence[] rejectSentenceInfo;
 
-        public DialogData(int slength, int charId)
+        public DialogData(int slength, int charId, int accSLength, int rejSLength)
         {
             sentenceInfo = new Sentence[slength];
+            acceptSentenceInfo = new Sentence[accSLength];
+            rejectSentenceInfo = new Sentence[rejSLength];
             subjectCharacterID = charId;
         }
     }
