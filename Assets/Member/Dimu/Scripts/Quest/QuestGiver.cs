@@ -8,7 +8,7 @@ namespace DM.Quest
 
         public void GiveQuest()
         {
-            FindObjectOfType<QuestManager>().AcceptQuest(gotQuests[questProgress], 0);
+            //FindObjectOfType<QuestManager>().AcceptQuest(gotQuests[questProgress], 0);
         }
         public void ClearQuest()
         {

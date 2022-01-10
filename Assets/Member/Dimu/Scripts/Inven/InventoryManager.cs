@@ -22,7 +22,6 @@ namespace DM.Inven
         {
             UpdateStorageText();
         }
-
         private void UpdateStorageText() //저장공간 텍스트 업데이트
         {
             storageSpaceText.text = string.Format("{0}/{1}", storageSpace, maxStorageSpace);

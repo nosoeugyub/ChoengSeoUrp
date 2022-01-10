@@ -1,17 +1,20 @@
-﻿using UnityEngine;
+﻿using NSY.Manager;
+using UnityEngine;
 
 namespace DM.Quest
 {
     [CreateAssetMenu(fileName = "QuestData", menuName = "QuestData/new QuestData", order = 0)]
     public class QuestData : ScriptableObject
     {
-        public int questID; //id 양식을 정할 것00 00 01 이라던지...
+        public int questID; //id 양식을 정할 것00 00 01 이라던지... // 다이얼로그 때문에 012로 해야할듯.
         public int npcID; //퀘스트 제공자
         public string questName;
         [TextArea]
         public string description;
         public Sprite[] TaskImg;
         public Task tasks;
+        public Requirements requirements;
+
 
         [System.Serializable]
         public class Task
@@ -31,6 +34,19 @@ namespace DM.Quest
             public int finishData;
             public int initData;
         }
+        public class QuestInfo
+        {
+            public int questId;
+            public string charId;
+        }
+        [System.Serializable]
+        public class Requirements
+        {
+            public QuestData[] requireQuests;
+            public QuestInfo[] requireQuests2;
+            public int requireLevel;
+        }
+
         public void InitData() //퀘스트에 필요한 항목을 현재 플레이어 데이터 값으로 초기화
         {
             foreach (QuestTask item in tasks.builds)
@@ -43,7 +59,7 @@ namespace DM.Quest
             }
             foreach (QuestTask item in tasks.items)
             {
-                if(!PlayerData.ItemData.ContainsKey(item.objType))
+                if (!PlayerData.ItemData.ContainsKey(item.objType))
                 {
                     PlayerData.ItemData.Add(item.objType, new ItemBehavior());
                 }
@@ -88,5 +104,28 @@ namespace DM.Quest
             }
             return true;
         }
+        public bool CanAccept()
+        {
+            //레벨이 충족되었는가?
+            //if(requirements.requirementLevel > 현재 레벨)
+            //{
+            //   return false;
+            //}
+            //선행퀘스트가 있는가?
+            foreach (QuestData requireQuest in requirements.requireQuests)
+            {
+                //선행퀘스트가 클리어 퀘스트 목록에 하나라도 없으면
+                if (!SuperManager.Instance.questmanager.clearQuestLists.Contains(requireQuest))
+                {
+                    Debug.Log("선행퀘스트를 클리어해야 합니다.");
+                    return false;
+                }
+            }
+            Debug.Log("퀘스트를 받을 수 있습니다.");
+
+            return true;
+        }
+
+        public int QuestID => questID;
     }
 }
