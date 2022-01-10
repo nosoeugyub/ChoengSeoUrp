@@ -46,6 +46,12 @@ namespace NSY.Player
 
             }
 
+            if (other.CompareTag("InteractObj"))
+            {
+                other.GetComponent<InteractObject>().DropItems();
+                print("spawn" + other.name);
+
+            }
 
         }
         private void OnTriggerStay(Collider other)
