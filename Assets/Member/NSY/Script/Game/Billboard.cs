@@ -8,6 +8,7 @@ public class Billboard : MonoBehaviour
 {
 
     private Camera MainCam;
+    Vector3 cameraDir;
     public bool useStaticLookCam;
 
     private void Start()
@@ -19,7 +20,9 @@ public class Billboard : MonoBehaviour
        
         if (!useStaticLookCam)
         {
-            transform.LookAt(MainCam.transform);
+            cameraDir = MainCam.transform.forward;
+            cameraDir.y = 0;
+            transform.rotation = Quaternion.LookRotation(cameraDir);
         }
         else
         {
