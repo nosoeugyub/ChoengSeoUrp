@@ -29,8 +29,8 @@ namespace DM.Inven
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.I))
-                OnOffInventoryUI();
+          //  if (Input.GetKeyDown(KeyCode.I))
+            //    OnOffInventoryUI();
         }
         public void OnOffInventoryUI()
         {

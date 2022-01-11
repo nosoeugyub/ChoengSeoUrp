@@ -36,6 +36,7 @@ namespace NSY.Manager
                 {
                     SuperManager.Instance.uimanager.TutorpopUps[popUpIndex].SetActive(true);
                 }
+
                
             }
 

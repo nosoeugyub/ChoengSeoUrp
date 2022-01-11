@@ -1,18 +1,31 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class PopupUiHeader : MonoBehaviour
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using System;
+public class PopupUiHeader : MonoBehaviour, IBeginDragHandler, IDragHandler
 {
-    // Start is called before the first frame update
-    void Start()
+    private RectTransform _parentRect;
+
+    private Vector2 _rectBegin;
+    private Vector2 _moveBegin;
+    private Vector2 _moveOffset;
+
+    private void Awake()
     {
-        
+        _parentRect = transform.parent.GetComponent<RectTransform>();
     }
 
-    // Update is called once per frame
-    void Update()
+    void IBeginDragHandler.OnBeginDrag(PointerEventData eventData)
     {
-        
+        _rectBegin = _parentRect.anchoredPosition;
+        _moveBegin = eventData.position;
+    }
+
+    void IDragHandler.OnDrag(PointerEventData eventData)
+    {
+        _moveOffset = eventData.position - _moveBegin;
+        _parentRect.anchoredPosition = _rectBegin + _moveOffset;
     }
 }
