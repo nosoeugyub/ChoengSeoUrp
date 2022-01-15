@@ -9,10 +9,13 @@ namespace Game.Cam
     {
         //public float MaxRotY;
         //public float MinRotY;
-        public float StartCamXRot;
-        public float RotateXSpeed;
-        public Transform target;
-       // public Vector3 offset;
+        /// <summary>
+        //public float StartCamXRot;
+        //public float RotateXSpeed;
+        //public Transform target;
+        /// </summary>
+
+        // public Vector3 offset;
         float XRotangle;
         // float smoothedSpeed = 0.125f;
 
@@ -21,53 +24,64 @@ namespace Game.Cam
         void Start()
         {
             CamManager = FindObjectOfType<CameraManager>();
-            SetStartCamPos();
+            //SetStartCamPos();
 
         }
 
         // Update is called once per frame
+
+        private void Update()
+        {
+            
+
         void LateUpdate()
         {
             //Vector3 desiredPosition = target.position + offset;
             //Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothedSpeed);
             //transform.position = smoothedPosition;
             
-            if(Input.GetMouseButton(0))
-            {
-                CameraRotate();
-            }    
+            //Rotate Camera by draging mouse
+            //if(Input.GetMouseButton(0))
+            //{
+            //    CameraRotate();
+            //}    
+            ///////////////////////////////
+        
         }
 
-        void SetStartCamPos()
-        {
-            transform.localRotation = Quaternion.Euler(0, StartCamXRot, 0);
-            XRotangle = StartCamXRot;
-        }
+        //void SetStartCamPos()
+        //{
+        //    transform.localRotation = Quaternion.Euler(0, StartCamXRot, 0);
+        //    XRotangle = StartCamXRot;
+        //}
         
 
-        void CameraRotate()
-        {
-            XRotangle += Input.GetAxis("Mouse X") * RotateXSpeed * -Time.deltaTime;
-            transform.localRotation = Quaternion.AngleAxis(XRotangle, Vector3.up);
+        //void CameraRotate()
+        //{
+        //    XRotangle += Input.GetAxis("Mouse X") * RotateXSpeed * -Time.deltaTime;
+        //    transform.localRotation = Quaternion.AngleAxis(XRotangle, Vector3.up);
            
-           target.localRotation = Quaternion.AngleAxis(XRotangle, Vector3.up);
-        }
+        //   target.localRotation = Quaternion.AngleAxis(XRotangle, Vector3.up);
+        //}
 
-        private void OnTriggerEnter(Collider other)
-        {
-            if(other.gameObject.tag=="Floor")
-            {
-                CamManager.ActiveCamera(1);
-            }
-        }
+        //private void OnTriggerEnter(Collider other)
+        //{
+        //    if(other.gameObject.tag=="Floor")
+        //    {
+        //        CamManager.ActiveCamera(1);
+        //    }
+        //}
 
-        private void OnTriggerExit(Collider other)
-        {
-            if (other.gameObject.tag == "Floor")
-            {
-                CamManager.DeactiveCamera(1);
-            }
-        }
+        //private void OnTriggerExit(Collider other)
+        //{
+        //    if (other.gameObject.tag == "Floor")
+        //    {
+        //        CamManager.DeactiveCamera(1);
+        //    }
+        //}
+
+
+        //Rotate both direction
         //void CameraRotate()
         //{
         //    XRotangle += Input.GetAxis("Mouse Y") * RotateYSpeed * -Time.deltaTime;
@@ -111,5 +125,6 @@ namespace Game.Cam
 
 
     }
+        }
 }
 
