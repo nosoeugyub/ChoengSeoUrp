@@ -24,7 +24,7 @@ namespace DM.Quest
         public void AcceptQuest(int questId, int npcID)//(QuestData questData, int npcID)
         {
             QuestData nowQuestData = questLists[npcID].questList[questId];
-            nowQuestData.CanAccept();
+            //nowQuestData.CanAccept();
             if (acceptQuests.ContainsKey(nowQuestData)) return;
         
             nowQuestData.npcID = npcID;

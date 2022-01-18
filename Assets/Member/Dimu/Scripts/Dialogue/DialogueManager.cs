@@ -24,21 +24,22 @@ namespace DM.Dialog
         {
             //StartShowDialog("testJson");
 
-            DialogData DialogData = new DialogData(2, 1, 2, 1);
-            DialogData.questId = 0;
-            DialogData.subjectCharacterID = 1;
-            DialogData.acceptSentenceInfo[0] = new Sentence("그래그래 수락해야지", 1);
-            DialogData.acceptSentenceInfo[1] = new Sentence("어서가고", 1);
-            DialogData.rejectSentenceInfo[0] = new Sentence("이걸 거절해?", 1);
-            DialogData.sentenceInfo[0] = new Sentence("디무", 1);
-            DialogData.sentenceInfo[1] = new Sentence("mumu", 2);
-            CreateJsonFile(Application.dataPath, "testJson3", DialogData);
+            //DialogData DialogData = new DialogData(2, 1, 2, 1);
+            //DialogData.questId = 0;
+            //DialogData.subjectCharacterID = 1;
+            //DialogData.acceptSentenceInfo[0] = new Sentence("그래그래 수락해야지", 1);
+            //DialogData.acceptSentenceInfo[1] = new Sentence("어서가고", 1);
+            //DialogData.rejectSentenceInfo[0] = new Sentence("이걸 거절해?", 1);
+            //DialogData.sentenceInfo[0] = new Sentence("디무", 1);
+            //DialogData.sentenceInfo[1] = new Sentence("mumu", 2);
+            //CreateJsonFile(Application.dataPath, "testJson3", DialogData);
         }
-        public void FirstShowDialog(int charId)
+        public void FirstShowDialog(int charId) //첫 상호작용 시 호출
         {
             dialogUI.SetActive(true);
             //기본 대화를 출력한다. < < 생략 LoadDialogData(charId, diaIdx);
             //charid에 해당하는 퀘스트를 다 뒤져서 수행 가능한 개수의 퀘스트 버튼을 생성한다.
+            //수행 가능한 퀘스트가 아니라 대화로 해야할 것 같음.
             foreach (var questData in  SuperManager.Instance.questmanager.questLists[charId].questList)
             {
                 if(questData.CanAccept())
