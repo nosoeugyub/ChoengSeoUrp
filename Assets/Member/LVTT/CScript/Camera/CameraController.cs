@@ -7,8 +7,10 @@ namespace Game.Cam
 {
     public class CameraController : MonoBehaviour
     {
-        //public float MaxRotY;
-        //public float MinRotY;
+        [Header("X Rotate Area")]
+        public float MinRotX;
+        public float MaxRotX; 
+        [Header("X Rotation Option")]
         public float StartCamXRot;
         public float RotateXSpeed;
         public Transform target;
@@ -31,11 +33,14 @@ namespace Game.Cam
             //Vector3 desiredPosition = target.position + offset;
             //Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothedSpeed);
             //transform.position = smoothedPosition;
+
+            //if(Input.GetMouseButton(0))
+            //{
+            //    CameraRotate();
+            //}    
             
-            if(Input.GetMouseButton(0))
-            {
-                CameraRotate();
-            }    
+            //플레이어가 X방향 이동할 때 카메라 자동 회전해당 
+            CameraRotate();
         }
 
         void SetStartCamPos()
@@ -47,10 +52,12 @@ namespace Game.Cam
 
         void CameraRotate()
         {
-            XRotangle += Input.GetAxis("Mouse X") * RotateXSpeed * -Time.deltaTime;
+            //XRotangle += Input.GetAxis("Mouse X") * RotateXSpeed * -Time.deltaTime;
+            XRotangle += Input.GetAxisRaw("Horizontal") * (-RotateXSpeed) * -Time.deltaTime;
             transform.localRotation = Quaternion.AngleAxis(XRotangle, Vector3.up);
-           
-           target.localRotation = Quaternion.AngleAxis(XRotangle, Vector3.up);
+            XRotangle = Mathf.Clamp(XRotangle, MinRotX, MaxRotX);
+
+            target.localRotation = Quaternion.AngleAxis(XRotangle, Vector3.up);
         }
 
         private void OnTriggerEnter(Collider other)
