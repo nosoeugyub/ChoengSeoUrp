@@ -16,6 +16,12 @@ namespace NSY.Player
         internal bool isMove;
 
 
+        //곡선
+        [Header("곡선 벡터")]
+        public GameObject PlayerObjec; 
+
+
+
         public void FixedUpdate()
         {
            
