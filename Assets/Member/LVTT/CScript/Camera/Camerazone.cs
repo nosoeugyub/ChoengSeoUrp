@@ -10,10 +10,13 @@ namespace Game.Cam
     public class Camerazone : MonoBehaviour
     {
         [SerializeField]
-        private CinemachineVirtualCamera virtualCamera = null;
+        //private CinemachineVirtualCamera virtualCamera = null;
+        private GameObject virtualCamera;
+        [SerializeField]
+        private GameObject MainCam;
         void Start()
         {
-            virtualCamera.enabled = false;
+            //virtualCamera.enabled = false;
          
         }
 
@@ -26,15 +29,30 @@ namespace Game.Cam
         {
             if (other.CompareTag("Player"))
             {
-                virtualCamera.enabled = true;   
+                virtualCamera.SetActive(true);
+
+                MainCam.SetActive(false);
             }
         }
 
+        private void OnTriggerStay(Collider other)
+        {
+            if (other.CompareTag("Player"))
+            {
+                virtualCamera.SetActive(true);
+
+                MainCam.SetActive(false);
+            }
+        }
         private void OnTriggerExit(Collider other)
         {
             if (other.CompareTag("Player"))
             {
-                virtualCamera.enabled = false;
+                //virtualCamera.enabled = false;
+                virtualCamera.SetActive(false);
+
+                MainCam.SetActive(true);
+               // currentVirtualCam.enabled = true;
             }
         }
 

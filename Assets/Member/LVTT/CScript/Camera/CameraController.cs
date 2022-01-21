@@ -16,7 +16,7 @@ namespace Game.Cam
         public Transform target;
        // public Vector3 offset;
         float XRotangle;
-        // float smoothedSpeed = 0.125f;
+        public bool reverseRotation;
 
 
         CameraManager CamManager;
@@ -40,7 +40,16 @@ namespace Game.Cam
             //}    
             
             //플레이어가 X방향 이동할 때 카메라 자동 회전해당 
-            CameraRotate();
+            if(reverseRotation)
+            {
+                CameraRotate();
+            }
+
+            if(!reverseRotation)
+            {
+                CameraCornerRotate();
+            }
+            
         }
 
         void SetStartCamPos()
@@ -60,6 +69,15 @@ namespace Game.Cam
             target.localRotation = Quaternion.AngleAxis(XRotangle, Vector3.up);
         }
 
+        void CameraCornerRotate()
+        {
+            //XRotangle += Input.GetAxis("Mouse X") * RotateXSpeed * -Time.deltaTime;
+            XRotangle += Input.GetAxisRaw("Horizontal") * (RotateXSpeed) * -Time.deltaTime;
+            transform.localRotation = Quaternion.AngleAxis(XRotangle, Vector3.up);
+            XRotangle = Mathf.Clamp(XRotangle, MinRotX, MaxRotX);
+
+            target.localRotation = Quaternion.AngleAxis(XRotangle, Vector3.up);
+        }
         private void OnTriggerEnter(Collider other)
         {
             if(other.gameObject.tag=="Floor")

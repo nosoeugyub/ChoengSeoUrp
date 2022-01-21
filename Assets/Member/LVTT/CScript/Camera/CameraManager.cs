@@ -4,11 +4,18 @@ using UnityEngine;
 using Cinemachine;
 
 namespace Game.Cam
+
 { public class CameraManager : MonoBehaviour
     {
+        //[Header("MainCameraList")]
+        //[SerializeField]
+        //private GameObject[] MainCamera = null;
+
         [Header("SubCameraList")]
         [SerializeField]
-        private CinemachineVirtualCamera [] virtualCamera = null;
+        private GameObject[] virtualCamera = null;
+        //[SerializeField]
+        //private CinemachineVirtualCamera [] virtualCamera = null;
         
         void Start()
         {
@@ -23,23 +30,24 @@ namespace Game.Cam
         {
             for(int i=0;i<virtualCamera.Length;i++)
             {
-                virtualCamera[i].enabled = false;
+                virtualCamera[i].SetActive(false);
             }     
         }
         
        public void ActiveCamera(int camNum) //다른 카메라 뷰 바꿈
         {
-            virtualCamera[camNum].enabled = true;
+            virtualCamera[camNum].SetActive(true);
         }
 
         public void DeactiveCamera(int camNum)//메인 카메라에 돌아감
         {
-            virtualCamera[camNum].enabled = false;
+            virtualCamera[camNum].SetActive(false);
         }
 
         public void ChangeFollowTarger(Transform newTarget,int camNum)//배열있는 SubCamera의 Followtarget가 바꿈
         {
-            virtualCamera[camNum].Follow = newTarget;
+            CinemachineVirtualCamera virtualCam = virtualCamera[camNum].GetComponent<CinemachineVirtualCamera>();
+            virtualCam.Follow = newTarget;
         }
 
         public IEnumerator AutoFocusObjectLocation(Transform focusObject,float stayTime,int camNum)
