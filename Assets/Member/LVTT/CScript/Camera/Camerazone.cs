@@ -14,6 +14,8 @@ namespace Game.Cam
         private GameObject virtualCamera;
         [SerializeField]
         private GameObject MainCam;
+        [SerializeField]
+        bool CanSwitchCam;
         void Start()
         {
             //virtualCamera.enabled = false;
@@ -39,7 +41,7 @@ namespace Game.Cam
         {
             if (other.CompareTag("Player"))
             {
-                virtualCamera.SetActive(true);
+                //virtualCamera.SetActive(true);
 
                 MainCam.SetActive(false);
             }
