@@ -26,6 +26,17 @@ namespace NSY.Player
             ActiveItem();
             ActiveNpc();
         }
+        /// <summary> 튜토리얼 인풋
+        
+
+
+
+
+
+        /// </summary>
+
+
+
         //아이템먹기
         public void ActiveItem()
         {

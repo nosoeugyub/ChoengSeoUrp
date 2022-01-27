@@ -28,6 +28,11 @@ namespace NSY.Manager
             EventManager.HitFoodBox -= TutorPopup;
             EventManager.UnHitFoodBox -= ChangePopup;
         }
+         void Update()
+        {
+            TutorPopup();
+        }
+
         void TutorPopup()
         {
             for (int i = 0; i < SuperManager.Instance.uimanager.TutorpopUps.Length; i++)
@@ -36,10 +41,17 @@ namespace NSY.Manager
                 {
                     SuperManager.Instance.uimanager.TutorpopUps[popUpIndex].SetActive(true);
                 }
-
-               
             }
-
+            if (popUpIndex == 0)
+            {
+                if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)
+                    || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow))
+                {
+                    Debug.Log("눌렀으니 끄셈 ㅡㅡ");
+                    ChangePopup();
+                }
+            }
+            
         }
         private void ChangePopup()
         {
@@ -48,6 +60,7 @@ namespace NSY.Manager
                 if (i == popUpIndex)
                 {
                     SuperManager.Instance.uimanager.TutorpopUps[popUpIndex].SetActive(false);
+                    popUpIndex++;
                 }
 
             }

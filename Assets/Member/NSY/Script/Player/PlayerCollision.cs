@@ -20,7 +20,7 @@ namespace NSY.Player
             //상호작용하면 불러올 함수들
             if (triggerObjs)
             {
-                SuperManager.Instance.uimanager.FoodBoxUi.SetActive(true);
+               // SuperManager.Instance.uimanager.FoodBoxUi.SetActive(true);
                 if (playerController.playerinput.GetItem == true)
                 {
                     Debug.Log("음식상자가 충돌됐고 E키를 눌렀다. + 애니메이션 재생");
@@ -30,7 +30,7 @@ namespace NSY.Player
             }
             else
             {
-                SuperManager.Instance.uimanager.FoodBoxUi.SetActive(false);
+              //  SuperManager.Instance.uimanager.FoodBoxUi.SetActive(false);
             }
         }
 
