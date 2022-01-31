@@ -13,20 +13,48 @@ namespace Game.Cam
         //private CinemachineVirtualCamera virtualCamera = null;
         private GameObject virtualCamera;
         [SerializeField]
+        private GameObject virtualCamera2;
+        [SerializeField]
         private GameObject MainCam;
         [SerializeField]
         bool CanSwitchCam;
+        bool OnCam1 = true;
+
         void Start()
         {
-            //virtualCamera.enabled = false;
-         
+
         }
 
         // Update is called once per frame
         void Update()
         {
+            if (CanSwitchCam)
+            {
+                if (Input.GetKeyDown(KeyCode.Q))
+                {
+                    ChangeView();
+                }
+            }
+
         }
 
+        void ChangeView()
+        {
+            switch (OnCam1)
+            {
+                case true:
+                    virtualCamera.SetActive(false);
+                    virtualCamera2.SetActive(true);
+                    OnCam1 = false;
+                    break;
+                case false:
+                    virtualCamera.SetActive(true);
+                    virtualCamera2.SetActive(false);
+                    OnCam1 = true;
+                    break;
+            }
+
+        }
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))
@@ -34,6 +62,9 @@ namespace Game.Cam
                 virtualCamera.SetActive(true);
 
                 MainCam.SetActive(false);
+
+                OnCam1 = true;
+
             }
         }
 
@@ -41,8 +72,6 @@ namespace Game.Cam
         {
             if (other.CompareTag("Player"))
             {
-                //virtualCamera.SetActive(true);
-
                 MainCam.SetActive(false);
             }
         }
@@ -54,7 +83,7 @@ namespace Game.Cam
                 virtualCamera.SetActive(false);
 
                 MainCam.SetActive(true);
-               // currentVirtualCam.enabled = true;
+                // currentVirtualCam.enabled = true;
             }
         }
 
