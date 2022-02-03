@@ -13,7 +13,7 @@ namespace NSY.Player
         [Space]
         public KeyCode _GetItem = KeyCode.E;
         public KeyCode _GetNPC = KeyCode.Space;
-
+        public KeyCode _InputBackBtn = KeyCode.B;
 
       
         internal bool GetItem;
