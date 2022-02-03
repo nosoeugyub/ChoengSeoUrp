@@ -23,7 +23,7 @@ namespace Game.Cam
         void Start()
         {
             CamManager = FindObjectOfType<CameraManager>();
-            SetStartCamPos();
+           // SetStartCamPos();
 
         }
 
@@ -40,16 +40,16 @@ namespace Game.Cam
             //}    
             
             //플레이어가 X방향 이동할 때 카메라 자동 회전해당 
-            if(reverseRotation)
-            {
-                CameraRotate();
-            }
-
-            if(!reverseRotation)
-            {
-                CameraCornerRotate();
-            }
             
+                        if (reverseRotation)
+                        {
+                            CameraRotate();
+                        }
+
+                        if (!reverseRotation)
+                        {
+                            CameraCornerRotate();
+                        } 
         }
 
         void SetStartCamPos()

@@ -16,12 +16,14 @@ namespace Game.Cam
         private GameObject virtualCamera2;
         [SerializeField]
         private GameObject MainCam;
-        [SerializeField]
+        //[SerializeField]
+        //bool FixedZone;
         bool CanSwitchCam;
-        bool OnCam1 = true;
-
+        CameraManager CamManager;
         void Start()
         {
+            CamManager = FindObjectOfType<CameraManager>();
+            //LookIn = true;
 
         }
 
@@ -30,27 +32,30 @@ namespace Game.Cam
         {
             if (CanSwitchCam)
             {
-                if (Input.GetKeyDown(KeyCode.Q))
+                if (Input.GetKeyDown(KeyCode.B))
                 {
                     ChangeView();
                 }
             }
 
+            
+            
+
         }
 
         void ChangeView()
         {
-            switch (OnCam1)
+            switch (CamManager.LookIn)
             {
                 case true:
                     virtualCamera.SetActive(false);
                     virtualCamera2.SetActive(true);
-                    OnCam1 = false;
+                    CamManager.LookIn = false;
                     break;
                 case false:
                     virtualCamera.SetActive(true);
                     virtualCamera2.SetActive(false);
-                    OnCam1 = true;
+                    CamManager.LookIn = true;
                     break;
             }
 
@@ -59,11 +64,20 @@ namespace Game.Cam
         {
             if (other.CompareTag("Player"))
             {
-                virtualCamera.SetActive(true);
+
+                CanSwitchCam = true;
 
                 MainCam.SetActive(false);
 
-                OnCam1 = true;
+                 switch (CamManager.LookIn)
+                {
+                    case true:
+                        virtualCamera.SetActive(true);
+                        break;
+                    case false:
+                        virtualCamera2.SetActive(true);
+                        break;
+                }
 
             }
         }
@@ -79,11 +93,12 @@ namespace Game.Cam
         {
             if (other.CompareTag("Player"))
             {
+                CanSwitchCam = false;
                 //virtualCamera.enabled = false;
                 virtualCamera.SetActive(false);
-
+                virtualCamera2.SetActive(false);
                 MainCam.SetActive(true);
-                // currentVirtualCam.enabled = true;
+               CamManager.LookIn = true;
             }
         }
 

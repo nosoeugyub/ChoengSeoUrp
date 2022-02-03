@@ -10,6 +10,7 @@ namespace Game.Cam
         //[Header("MainCameraList")]
         //[SerializeField]
         //private GameObject[] MainCamera = null;
+        public bool LookIn;
 
         [Header("SubCameraList")]
         [SerializeField]
@@ -19,6 +20,7 @@ namespace Game.Cam
         
         void Start()
         {
+            LookIn = true;
             DeactiveAllSubCam();  
         }
         void Update()
