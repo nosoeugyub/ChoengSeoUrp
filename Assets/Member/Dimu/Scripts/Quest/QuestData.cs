@@ -20,8 +20,8 @@ namespace DM.Quest
         public class Task
         {
             [SerializeField] public QuestTask[] builds; //건물 짓기
+            [SerializeField] public QuestTask[] startTalk; //말걸기
             [SerializeField] public QuestTask[] items; //아이템 얻기 버리기 등
-            [SerializeField] public QuestTask[] kills; //뭐 때려잡기
             //건물 짓기(목표점 + 현재점)
             //재료 줍기
             //뭐 행동하기 (해당 행동을 했을 때 퀘스트로 들어오게 추가해야함.) 
@@ -57,6 +57,7 @@ namespace DM.Quest
                 }
                 item.initData = PlayerData.BuildBuildingData[item.objType];
             }
+
             foreach (QuestTask item in tasks.items)
             {
                 if (!PlayerData.ItemData.ContainsKey(item.objType))
@@ -65,17 +66,17 @@ namespace DM.Quest
                 }
                 item.initData = PlayerData.ItemData[item.objType].amounts[item.behaviorType];
             }
-            foreach (QuestTask item in tasks.kills)
-            {
-                item.initData = 0;
-            }
         }
-        public bool IsClear()
+        public bool CanClear()
         {
             if (tasks.builds.Length > 0)
             {
                 foreach (QuestTask item in tasks.builds)
                 {
+                    if (!PlayerData.BuildBuildingData.ContainsKey(item.objType))
+                    {
+                        PlayerData.BuildBuildingData.Add(item.objType, new int());
+                    }
                     Debug.Log(string.Format("f: {0}, now: {1}", item.finishData
                              , PlayerData.BuildBuildingData[item.objType] - item.initData));
 
@@ -89,6 +90,10 @@ namespace DM.Quest
             {
                 foreach (QuestTask item in tasks.items)
                 {
+                    if (!PlayerData.ItemData.ContainsKey(item.objType))
+                    {
+                        PlayerData.ItemData.Add(item.objType, new ItemBehavior());
+                    }
                     Debug.Log(string.Format("f: {0}, now: {1}", item.finishData
                              , PlayerData.ItemData[item.objType].amounts[item.behaviorType] - item.initData));
 
@@ -97,10 +102,6 @@ namespace DM.Quest
                         return false;
                     }
                 }
-            }
-            if (tasks.kills.Length > 0)
-            {
-
             }
             return true;
         }
@@ -115,7 +116,7 @@ namespace DM.Quest
             foreach (QuestData requireQuest in requirements.requireQuests)
             {
                 //선행퀘스트가 클리어 퀘스트 목록에 하나라도 없으면
-                if (!SuperManager.Instance.questmanager.clearQuestLists.Contains(requireQuest))
+                if (!FindObjectOfType<QuestManager>().IsQuestCleared(requireQuest.questID, requireQuest.npcID))
                 {
                     Debug.Log("선행퀘스트를 클리어해야 합니다.");
                     return false;

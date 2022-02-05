@@ -12,8 +12,8 @@ namespace DM.Quest
         }
         public void ClearQuest()
         {
-            if (FindObjectOfType<QuestManager>().ClearQuest(gotQuests[questProgress]))
-                ++questProgress;
+            //if (FindObjectOfType<QuestManager>().ClearQuest(gotQuests[questProgress]))
+            //    ++questProgress;
         }
     }
 }

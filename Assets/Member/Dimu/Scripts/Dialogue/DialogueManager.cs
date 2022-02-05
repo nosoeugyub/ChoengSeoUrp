@@ -1,71 +1,121 @@
 ﻿using DM.Quest;
-using NSY.Manager;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
+
+public enum Character
+{ CheongSeo, Ejang, Length }
 
 namespace DM.Dialog
 {
 
     public class DialogueManager : MonoBehaviour
     {
-        DialogData nowDialogData;//현재담겨있는 데이터 
+        DialogData nowDialogData;//현재담겨있는 대화 데이터 
+        int dialogLength;
+        int dialogIndex;
+
+        [Header("UI")]
         public GameObject dialogUI;//대화창 조상
-        public Button nextButton;
-        //public Button acceptButton;
-        //public Button rejectButton;
+        public Button nextButton; //다음 버튼
         public Text dialogText;
         public Text nameText;
-        public int dialogLength;
-        public int dialogIndex;
-        public DialogList[] dialogLists;
-        public Button spawnStartCanAcceptQuestButton;
 
+        [Header("DialogInfos")]
+        public DialogList[] dialogLists;
+        public int[] dialogIdxs = new int[(int)Character.Length];//0부터 캐릭터 인덱스 값은 대화인덱스
+
+        public int nowPartner = 1; //일단 이장 고정
+
+        QuestManager questManager;
+
+        private void Awake()
+        {
+            questManager = FindObjectOfType<QuestManager>();
+        }
         void Start()
         {
             //StartShowDialog("testJson");
 
-            //DialogData DialogData = new DialogData(2, 1);
+            //DialogData DialogData = new DialogData(2, 1,1,2);
             //DialogData.questId = 0;
             //DialogData.subjectCharacterID = 1;
-            //DialogData.sentenceInfo[0] = new Sentence("첫문장일세... 하이하이", 0);
-            //DialogData.sentenceInfo[1] = new Sentence("퀘스트를 받아주게나... 거절은 할 수 없네", 1);
+            //DialogData.acceptSentenceInfo[0] = new Sentence("퀘스트를 받아주게나", 1);
+            //DialogData.acceptSentenceInfo[1] = new Sentence("알겠습니다", 0);
+            //DialogData.proceedingSentenceInfo[0] = new Sentence("퀘스트 진행중...", 1);
+            //DialogData.clearSentenceInfo[0] = new Sentence("클리어~~", 1);
+            //DialogData.clearSentenceInfo[1] = new Sentence("와~", 0);
             //CreateJsonFile(Application.dataPath, "FirstTalkWithHim", DialogData);
         }
         public void FirstShowDialog(int charId) //첫 상호작용 시 호출
         {
-            dialogUI.SetActive(true);
+            nowPartner = charId;
             //기본 대화를 출력한다. < < 생략 LoadDialogData(charId, diaIdx);
             //charid에 해당하는 퀘스트를 다 뒤져서 수행 가능한 개수의 퀘스트 버튼을 생성한다.
             //수행 가능한 퀘스트가 아니라 대화로 해야할 것 같음.
-            foreach (var questData in FindObjectOfType<QuestManager>().questLists[charId].questList)
-            {
-                if (questData.CanAccept())
-                {
-                    //퀘스트 버튼(spawnStartCanAcceptQuestButton) 생성 후 리스너 등록
-                    spawnStartCanAcceptQuestButton.onClick.AddListener(() =>
-                    {
-                        StartShowDialog(charId, questData.QuestID);
-                    });
-                }
+            //foreach (var questData in FindObjectOfType<QuestManager>().questLists[charId].questList)
+            //{
+            //    if (questData.CanAccept())
+            //    {
+            //퀘스트 버튼(spawnStartCanAcceptQuestButton) 생성 후 리스너 등록
+            //        spawnStartCanAcceptQuestButton.onClick.AddListener(() =>
+            //        {
+            StartShowDialog(dialogIdxs[nowPartner]);
+            //        });
+            //    }
 
-            }
+            //}
 
         }
-        public void StartShowDialog(int charId, int diaIdx)//(string eventname)
+        public void StartShowDialog(int diaIdx)
         {
-            //AcceptRejectButtonOnOff(false);
-            LoadDialogData(charId, diaIdx);
+            LoadDialogData(nowPartner, diaIdx);
+            Sentence[] ss = null;
+
+            if (questManager.CanClear(nowDialogData.questId, nowPartner)) //클리어 가능한지?
+            {
+                Debug.Log("CanClear");
+                ss = nowDialogData.clearSentenceInfo;
+                dialogLength = nowDialogData.clearSentenceInfo.Length;
+
+                questManager.ClearQuest(nowDialogData.questId, nowPartner);//퀘스트 클리어
+                dialogIdxs[nowPartner]++; //클리어했다고 판정 후 다음 대화로 이동
+            }
+            else if (questManager.IsQuestAccepted(nowDialogData.questId, nowPartner))//클리어 못했는데 수락중인지?
+            {
+                Debug.Log("IsQuestAccepted");
+                ss = nowDialogData.proceedingSentenceInfo;
+                dialogLength = nowDialogData.proceedingSentenceInfo.Length;
+            }
+            else if (questManager.CanAcceptQuest(nowDialogData.questId, nowPartner))//클리어X수락X, 수락가능한지?
+            {
+                Debug.Log("CanAcceptQuest");
+                ss = nowDialogData.acceptSentenceInfo;
+                dialogLength = nowDialogData.acceptSentenceInfo.Length;
+            }
+            else //아무것도 없을 때
+            { Debug.LogError("StartShowDialog :: Sentence null"); return; }
+
+
+            dialogUI.SetActive(true);
+
+            //if (questManager.CanClear(nowDialogData.questId, nowPartner) //클리어 가능한지?
+            //    || questManager.IsQuestAccepted(nowDialogData.questId, nowPartner)//진행중인지?
+            //    || questManager.CanAcceptQuest(nowDialogData.questId, nowPartner))//수락가능한지?
+            //{
+            //    LoadDialogData(nowPartner, 0);
+            //}
+
             nextButton.onClick.RemoveAllListeners();
             nextButton.onClick.AddListener(() =>
             {
-                UpdateDialog();
+                UpdateDialog(ss);
             });
-            UpdateDialog();
+            UpdateDialog(ss);
         }
-        public void UpdateDialog() //
+        public void UpdateDialog(Sentence[] sentences)
         {
-            UpdateDialogText(nowDialogData.sentenceInfo);
+            UpdateDialogText(sentences);
             if (dialogLength == dialogIndex)
                 LastDialog();
         }
@@ -73,8 +123,7 @@ namespace DM.Dialog
         private void UpdateDialogText(Sentence[] sentences)
         {
             dialogText.text = sentences[dialogIndex].sentence;
-            //nameText.text = sentences[dialogIndex++].characterId + "";//NPC 이름으로 변경해줘야함
-            nameText.text = dialogLists[sentences[dialogIndex++].characterId].charName;//NPC 이름으로 변경해줘야함
+            nameText.text = dialogLists[sentences[dialogIndex++].characterId].charName;
         }
 
         //마지막 대사일 때 작동
@@ -85,72 +134,18 @@ namespace DM.Dialog
             {
                 CloseDialog();
             });
-            //nextButton.gameObject.SetActive(false);
             //만약 대화데이터에 퀘스트가 있다면
             if (nowDialogData.questId > -1)
             {
                 //강제수락
-                FindObjectOfType<QuestManager>().AcceptQuest(nowDialogData.questId, nowDialogData.subjectCharacterID);
-
-                ////수락 거절 버튼 띄우고 
-                //AcceptRejectButtonOnOff(true);
-                //acceptButton.onClick.AddListener(() =>
-                //{
-                //    //퀘수락
-                //    SuperManager.Instance.questmanager.AcceptQuest(nowDialogData.questId, nowDialogData.subjectCharacterID);
-                //    //수락 대화 출력
-                //    SetAnotherDialog(nowDialogData.acceptSentenceInfo);
-                //});
-                //rejectButton.onClick.AddListener(() =>
-                //{
-                //    //거절 대화 출력
-                //    SetAnotherDialog(nowDialogData.rejectSentenceInfo);
-                //});
+                if(!questManager.IsQuestCleared(nowDialogData.questId, nowPartner))
+                questManager.AcceptQuest(nowDialogData.questId, nowPartner);
             }
-            //else
-                //CloseDialog();
         }
-
-        //private void SetAnotherDialog(Sentence[] sentences)
-        //{
-        //    dialogIndex = 0;
-
-        //    nextButton.gameObject.SetActive(true);
-
-        //    nextButton.onClick.RemoveAllListeners();
-        //    nextButton.onClick.AddListener(() =>
-        //    {
-        //        AnotherDialog(sentences);
-        //    });
-
-        //    AnotherDialog(sentences);
-        //    AcceptRejectButtonOnOff(false);
-        //}
-
-        //private void AnotherDialog(Sentence[] sentences)
-        //{
-        //    if (sentences.Length == dialogIndex)
-        //    {
-        //        CloseDialog();
-        //        return;
-        //    }
-        //    UpdateDialogText(sentences);
-        //}
-
-        //private void AcceptRejectButtonOnOff(bool isOn)
-        //{
-        //    acceptButton.gameObject.SetActive(isOn);
-        //    rejectButton.gameObject.SetActive(isOn);
-        //}
 
         private void CloseDialog()
         {
             dialogUI.SetActive(false);
-        }
-
-        public void TestEvent()
-        {
-            StartShowDialog(0, 0);
         }
 
         #region Data
@@ -164,8 +159,9 @@ namespace DM.Dialog
 
                 string FromJsonData = File.ReadAllText(filePath);
                 nowDialogData = JsonUtility.FromJson<DialogData>(FromJsonData);
-                dialogLength = nowDialogData.sentenceInfo.Length;
+                //dialogLength = nowDialogData.acceptSentenceInfo.Length;
                 dialogIndex = 0;
+                Debug.Log(dialogIndex + " dialogIndex 초기화");
             }
             else
             {
@@ -186,18 +182,18 @@ namespace DM.Dialog
     [System.Serializable]
     public class DialogData
     {
-        public Sentence[] sentenceInfo;//문장뭉치
+        public Sentence[] acceptSentenceInfo;//시작 문장뭉치
+        public Sentence[] proceedingSentenceInfo;//진행중 문장뭉치
+        public Sentence[] clearSentenceInfo;//완료 문장뭉치
+
         public int questId; //문장이 끝나면 주어질 퀘스트
         public int subjectCharacterID; //대화 주체(상대)
 
-        //public Sentence[] acceptSentenceInfo;
-        //public Sentence[] rejectSentenceInfo;
-
-        public DialogData(int slength, int charId)//, int accSLength, int rejSLength)
+        public DialogData(int slength, int charId, int proSLength, int clearSLength)
         {
-            sentenceInfo = new Sentence[slength];
-            //acceptSentenceInfo = new Sentence[accSLength];
-            //rejectSentenceInfo = new Sentence[rejSLength];
+            acceptSentenceInfo = new Sentence[slength];
+            proceedingSentenceInfo = new Sentence[proSLength];
+            clearSentenceInfo = new Sentence[clearSLength];
             subjectCharacterID = charId;
         }
     }
@@ -216,5 +212,11 @@ namespace DM.Dialog
     {
         public string charName;
         public string[] dialogList;
+    }
+
+    [System.Serializable]
+    public class DialogProgress
+    {
+        public int dialogCount;
     }
 }
