@@ -78,21 +78,21 @@ namespace Game.Cam
 
             target.localRotation = Quaternion.AngleAxis(XRotangle, Vector3.up);
         }
-        private void OnTriggerEnter(Collider other)
-        {
-            if(other.gameObject.tag=="Floor")
-            {
-                CamManager.ActiveCamera(1);
-            }
-        }
+        //private void OnTriggerEnter(Collider other)
+        //{
+        //    if(other.gameObject.tag=="Floor")
+        //    {
+        //        CamManager.ActiveCamera(1);
+        //    }
+        //}
 
-        private void OnTriggerExit(Collider other)
-        {
-            if (other.gameObject.tag == "Floor")
-            {
-                CamManager.DeactiveCamera(1);
-            }
-        }
+        //private void OnTriggerExit(Collider other)
+        //{
+        //    if (other.gameObject.tag == "Floor")
+        //    {
+        //        CamManager.DeactiveCamera(1);
+        //    }
+        //}
         //void CameraRotate()
         //{
         //    XRotangle += Input.GetAxis("Mouse Y") * RotateYSpeed * -Time.deltaTime;

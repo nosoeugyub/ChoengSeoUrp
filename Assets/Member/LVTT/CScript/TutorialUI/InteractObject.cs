@@ -84,10 +84,10 @@ namespace TT.ObjINTERACT
 
              }
             //////////////////////////////////////////////////////////////// Object 뷰에 카메라 바꿈--Sample
-            if (Input.GetKey(KeyCode.U))
-            {
-                StartCoroutine(CamManager.AutoFocusObjectLocation(gameObject.transform,2.0f,0));
-            }
+            //if (Input.GetKey(KeyCode.U))
+            //{
+            //    StartCoroutine(CamManager.AutoFocusObjectLocation(gameObject.transform,2.0f,0));
+            //}
             ////////////////////////////////////////////////////////////////
         }
        
