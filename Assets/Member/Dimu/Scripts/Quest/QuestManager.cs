@@ -40,7 +40,7 @@ namespace DM.Quest
             {
                 QuestData nowQuestData = questLists[npcID].questList[questId];
                 clearQuestLists.Add(nowQuestData);
-                //acceptQuests[nowQuestData].SetActive(false);
+                acceptQuests[nowQuestData].SetActive(false);
                 acceptQuests.Remove(nowQuestData);
                 Debug.Log("Clear");
                 return true;

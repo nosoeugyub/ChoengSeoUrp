@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public enum Character
-{ CheongSeo, Ejang, Length }
+{ CheongSeo, Ejang, Rabbit, Length }
 
 namespace DM.Dialog
 {
@@ -13,7 +13,8 @@ namespace DM.Dialog
     {
         DialogData nowDialogData;//현재담겨있는 대화 데이터 
         int dialogLength;
-        int dialogIndex;
+        int nowSentenceIdx;
+        public Transform partnerTf;
 
         [Header("UI")]
         public GameObject dialogUI;//대화창 조상
@@ -25,7 +26,7 @@ namespace DM.Dialog
         public DialogList[] dialogLists;
         public int[] dialogIdxs = new int[(int)Character.Length];//0부터 캐릭터 인덱스 값은 대화인덱스
 
-        public int nowPartner = 1; //일단 이장 고정
+        public int nowPartner = -1; //일단 이장 고정
 
         QuestManager questManager;
 
@@ -47,23 +48,30 @@ namespace DM.Dialog
             //DialogData.clearSentenceInfo[1] = new Sentence("와~", 0);
             //CreateJsonFile(Application.dataPath, "FirstTalkWithHim", DialogData);
         }
-        public void FirstShowDialog(int charId) //첫 상호작용 시 호출
+        public void FirstShowDialog(int charId)//, Transform transform) //첫 상호작용 시 호출
         {
             nowPartner = charId;  //대화하는 대상을 현재 파트너로 지정
+            //partnerTf = transform;
 
+            if (!PlayerData.npcData.ContainsKey(charId))
+            {
+                PlayerData.npcData.Add(charId, new int());
+            }
             PlayerData.npcData[charId]++; //charId npc와 1번 상호작용 했다.
 
-            StartShowDialog(dialogIdxs[nowPartner]); //파트너와 진행해야 하는 순서의 대화를 진행
+            StartShowDialog(); //파트너와 진행해야 하는 순서의 대화를 진행
         }
-        public void StartShowDialog(int diaIdx)
+        public void StartShowDialog()
         {
-            LoadDialogData(nowPartner, diaIdx); //해당 대화 데이터 불러오기.
             Sentence[] ss = null;//대화뭉치를 담을 변수
+            int sentenceState = -1;//대화뭉치 타입(수락0, 진행중1, 완료2)
 
             //현재 진행중인 퀘스트에서 자신과 상호작용 하는 내용의 퀘스트가 있는지?
             //있다면 해당 퀘스트의 CanClear 검사
             //클리어할 수 있다면 해당 퀘스트 클리어 처리 후 완료 대사를 ss에 넣는다.
             dialogUI.SetActive(true);
+            Vector3 uiPos = new Vector3(partnerTf.position.x, partnerTf.position.y+4, partnerTf.position.z);
+            dialogUI.transform.position = Camera.main.WorldToScreenPoint(uiPos) ;
 
             QuestData qd = questManager.ReturnQuestRequireNpc(nowPartner);
             //완료자가 nowPartner(현재 대화 상대)인 퀘스트 받아옴. 제공자는 같을 수도,  다를 수 있음.
@@ -72,59 +80,61 @@ namespace DM.Dialog
                 LoadDialogData(qd.npcID, dialogIdxs[qd.npcID]); //제공자의 퀘스트의 해당 대화 데이터 불러오기.
                 ss = nowDialogData.clearSentenceInfo;
                 dialogLength = nowDialogData.clearSentenceInfo.Length;
+                sentenceState = 2;//클리어
 
                 dialogIdxs[nowPartner]++;
             }
 
+            else if (dialogLists[nowPartner].dialogList.Length - dialogIdxs[nowPartner] < 1 || 
+                !LoadDialogData(nowPartner, dialogIdxs[nowPartner])) //해당 대화 데이터 불러오기 실패 시
+            {
+                Debug.LogError("StartShowDialog :: LoadDialogData fail, no data");
+                dialogUI.SetActive(false);
+                return;
+            }
             else if (questManager.IsQuestAccepted(nowDialogData.questId, nowPartner))//진행해야 하는 퀘 수락중인지?
             {
                 ss = nowDialogData.proceedingSentenceInfo;
                 dialogLength = nowDialogData.proceedingSentenceInfo.Length;
-            }
+                sentenceState = 1;//진행중
 
+            }
             else if (questManager.CanAcceptQuest(nowDialogData.questId, nowPartner))//클리어X수락X, 수락가능한지?
             {
                 ss = nowDialogData.acceptSentenceInfo;
                 dialogLength = nowDialogData.acceptSentenceInfo.Length;
+                sentenceState = 0;//수락
             }
             else //아무것도 없을 때
-            { 
-                Debug.LogError("StartShowDialog :: Sentence null");
+            {
+                Debug.LogError("StartShowDialog :: nothing else");
                 dialogUI.SetActive(false);
-                return; 
+                return;
             }
-
-
-
-            //if (questManager.CanClear(nowDialogData.questId, nowPartner) //클리어 가능한지?
-            //    || questManager.IsQuestAccepted(nowDialogData.questId, nowPartner)//진행중인지?
-            //    || questManager.CanAcceptQuest(nowDialogData.questId, nowPartner))//수락가능한지?
-            //{
-            //    LoadDialogData(nowPartner, 0);//0번을 기본대화로 할까 생각중.
-            //}
 
             nextButton.onClick.RemoveAllListeners();
             nextButton.onClick.AddListener(() =>
             {
-                UpdateDialog(ss);
+                UpdateDialog(ss, sentenceState);
             });
-            UpdateDialog(ss);
+            UpdateDialog(ss, sentenceState);
         }
-        public void UpdateDialog(Sentence[] sentences)
+
+        public void UpdateDialog(Sentence[] sentences, int sentenceState)
         {
             UpdateDialogText(sentences);
-            if (dialogLength == dialogIndex)
-                LastDialog();
+            if (dialogLength == nowSentenceIdx)
+                LastDialog(sentenceState);
         }
 
         private void UpdateDialogText(Sentence[] sentences)
         {
-            dialogText.text = sentences[dialogIndex].sentence;
-            nameText.text = dialogLists[sentences[dialogIndex++].characterId].charName;
+            dialogText.text = sentences[nowSentenceIdx].sentence;
+            nameText.text = dialogLists[sentences[nowSentenceIdx++].characterId].charName;
         }
 
         //마지막 대사일 때 작동
-        private void LastDialog()
+        private void LastDialog(int sentenceState)
         {
             nextButton.onClick.RemoveAllListeners();
             nextButton.onClick.AddListener(() =>
@@ -135,8 +145,15 @@ namespace DM.Dialog
             if (nowDialogData.questId > -1)
             {
                 //완료 상태 아니라면 강제수락
-                if (!questManager.IsQuestCleared(nowDialogData.questId, nowPartner))
-                    questManager.AcceptQuest(nowDialogData.questId, nowPartner);
+                print(sentenceState);
+                switch (sentenceState)
+                {
+                    case 0://수락 상태라면?
+                        questManager.AcceptQuest(nowDialogData.questId, nowPartner);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
@@ -146,7 +163,7 @@ namespace DM.Dialog
         }
 
         #region Data
-        public void LoadDialogData(int charId, int diaIdx)//string eventname)
+        public bool LoadDialogData(int charId, int diaIdx)//string eventname)
         {
             //Application.persistentDataPath
             string filePath = Application.dataPath + "/JsonData/" + dialogLists[charId].dialogList[diaIdx] + ".Json";
@@ -156,13 +173,14 @@ namespace DM.Dialog
 
                 string FromJsonData = File.ReadAllText(filePath);
                 nowDialogData = JsonUtility.FromJson<DialogData>(FromJsonData);
-                //dialogLength = nowDialogData.acceptSentenceInfo.Length;
-                dialogIndex = 0;
-                Debug.Log(dialogIndex + " dialogIndex 초기화");
+                nowSentenceIdx = 0;
+                Debug.Log(nowSentenceIdx + " dialogIndex 초기화");
+                return true;
             }
             else
             {
                 Debug.Log("경로에 파일이 없음");
+                return false;
             }
         }
 
