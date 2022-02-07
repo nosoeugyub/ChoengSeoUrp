@@ -49,61 +49,58 @@ namespace DM.Dialog
         }
         public void FirstShowDialog(int charId) //첫 상호작용 시 호출
         {
-            nowPartner = charId;
-            //기본 대화를 출력한다. < < 생략 LoadDialogData(charId, diaIdx);
-            //charid에 해당하는 퀘스트를 다 뒤져서 수행 가능한 개수의 퀘스트 버튼을 생성한다.
-            //수행 가능한 퀘스트가 아니라 대화로 해야할 것 같음.
-            //foreach (var questData in FindObjectOfType<QuestManager>().questLists[charId].questList)
-            //{
-            //    if (questData.CanAccept())
-            //    {
-            //퀘스트 버튼(spawnStartCanAcceptQuestButton) 생성 후 리스너 등록
-            //        spawnStartCanAcceptQuestButton.onClick.AddListener(() =>
-            //        {
-            StartShowDialog(dialogIdxs[nowPartner]);
-            //        });
-            //    }
+            nowPartner = charId;  //대화하는 대상을 현재 파트너로 지정
 
-            //}
+            PlayerData.npcData[charId]++; //charId npc와 1번 상호작용 했다.
 
+            StartShowDialog(dialogIdxs[nowPartner]); //파트너와 진행해야 하는 순서의 대화를 진행
         }
         public void StartShowDialog(int diaIdx)
         {
-            LoadDialogData(nowPartner, diaIdx);
-            Sentence[] ss = null;
+            LoadDialogData(nowPartner, diaIdx); //해당 대화 데이터 불러오기.
+            Sentence[] ss = null;//대화뭉치를 담을 변수
 
-            if (questManager.CanClear(nowDialogData.questId, nowPartner)) //클리어 가능한지?
+            //현재 진행중인 퀘스트에서 자신과 상호작용 하는 내용의 퀘스트가 있는지?
+            //있다면 해당 퀘스트의 CanClear 검사
+            //클리어할 수 있다면 해당 퀘스트 클리어 처리 후 완료 대사를 ss에 넣는다.
+            dialogUI.SetActive(true);
+
+            QuestData qd = questManager.ReturnQuestRequireNpc(nowPartner);
+            //완료자가 nowPartner(현재 대화 상대)인 퀘스트 받아옴. 제공자는 같을 수도,  다를 수 있음.
+            if (qd != null && questManager.ClearQuest(qd.questID, qd.npcID))//없거나 클리어할 수 없다면
             {
-                Debug.Log("CanClear");
+                LoadDialogData(qd.npcID, dialogIdxs[qd.npcID]); //제공자의 퀘스트의 해당 대화 데이터 불러오기.
                 ss = nowDialogData.clearSentenceInfo;
                 dialogLength = nowDialogData.clearSentenceInfo.Length;
 
-                questManager.ClearQuest(nowDialogData.questId, nowPartner);//퀘스트 클리어
-                dialogIdxs[nowPartner]++; //클리어했다고 판정 후 다음 대화로 이동
+                dialogIdxs[nowPartner]++;
             }
-            else if (questManager.IsQuestAccepted(nowDialogData.questId, nowPartner))//클리어 못했는데 수락중인지?
+
+            else if (questManager.IsQuestAccepted(nowDialogData.questId, nowPartner))//진행해야 하는 퀘 수락중인지?
             {
-                Debug.Log("IsQuestAccepted");
                 ss = nowDialogData.proceedingSentenceInfo;
                 dialogLength = nowDialogData.proceedingSentenceInfo.Length;
             }
+
             else if (questManager.CanAcceptQuest(nowDialogData.questId, nowPartner))//클리어X수락X, 수락가능한지?
             {
-                Debug.Log("CanAcceptQuest");
                 ss = nowDialogData.acceptSentenceInfo;
                 dialogLength = nowDialogData.acceptSentenceInfo.Length;
             }
             else //아무것도 없을 때
-            { Debug.LogError("StartShowDialog :: Sentence null"); return; }
+            { 
+                Debug.LogError("StartShowDialog :: Sentence null");
+                dialogUI.SetActive(false);
+                return; 
+            }
 
 
-            dialogUI.SetActive(true);
 
             //if (questManager.CanClear(nowDialogData.questId, nowPartner) //클리어 가능한지?
             //    || questManager.IsQuestAccepted(nowDialogData.questId, nowPartner)//진행중인지?
             //    || questManager.CanAcceptQuest(nowDialogData.questId, nowPartner))//수락가능한지?
             //{
-            //    LoadDialogData(nowPartner, 0);
+            //    LoadDialogData(nowPartner, 0);//0번을 기본대화로 할까 생각중.
             //}
 
             nextButton.onClick.RemoveAllListeners();
@@ -137,9 +134,9 @@ namespace DM.Dialog
             //만약 대화데이터에 퀘스트가 있다면
             if (nowDialogData.questId > -1)
             {
-                //강제수락
-                if(!questManager.IsQuestCleared(nowDialogData.questId, nowPartner))
-                questManager.AcceptQuest(nowDialogData.questId, nowPartner);
+                //완료 상태 아니라면 강제수락
+                if (!questManager.IsQuestCleared(nowDialogData.questId, nowPartner))
+                    questManager.AcceptQuest(nowDialogData.questId, nowPartner);
             }
         }
 

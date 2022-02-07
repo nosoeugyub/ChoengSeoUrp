@@ -1,14 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-    [CreateAssetMenu(fileName = "PlayerData", menuName = "PlayerData/new PlayerData", order = 0)]
+[CreateAssetMenu(fileName = "PlayerData", menuName = "PlayerData/new PlayerData", order = 0)]
 public class PlayerData : ScriptableObject
 {
-    public static Dictionary<int, int> BuildBuildingData
-        = new Dictionary<int, int>();
-    public static Dictionary<int, ItemBehavior> ItemData
-    = new Dictionary<int, ItemBehavior>();
+    public static Dictionary<int, int> BuildBuildingData = new Dictionary<int, int>();//
+    public static Dictionary<int, ItemBehavior> ItemData = new Dictionary<int, ItemBehavior>();
+    public static Dictionary<int, int> npcData = new Dictionary<int, int>();
+
 
 
     //public void AddAmountTestBuilding(int dataid)

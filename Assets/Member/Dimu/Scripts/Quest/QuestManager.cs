@@ -65,7 +65,7 @@ namespace DM.Quest
 
             return nowQuestData.CanClear();
         }
-        public bool IsQuestAccepted(int questId, int npcID)//퀘스트 진행중인지?
+        public bool IsQuestAccepted(int questId, int npcID)//특정 퀘스트 진행중인지?
         {
             if (acceptQuests.ContainsKey(questLists[npcID].questList[questId])) return true;
             else return false;
@@ -77,6 +77,16 @@ namespace DM.Quest
         public bool IsQuestCleared(int questId, int npcID)//클리어한 퀘스트인지?
         {
             return clearQuestLists.Contains(questLists[npcID].questList[questId]);
+        }
+        //다른 Npc 와의 상호작용을 요구하는 퀘스트를 진행중인지
+        public QuestData ReturnQuestRequireNpc(int npcID)
+        {
+            foreach (var item in acceptQuests)
+            {
+                if (item.Key.interactNpcID == npcID) //현재 진행중인 퀘스트들 중에 완료자가 나랑 같은?
+                    return item.Key;
+            }
+            return null;
         }
     }
     [System.Serializable]
