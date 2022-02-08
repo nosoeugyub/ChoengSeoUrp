@@ -49,13 +49,13 @@ namespace DM.Quest
 
         public void InitData() //퀘스트에 필요한 항목을 현재 플레이어 데이터 값으로 초기화
         {
-            foreach (QuestTask item in tasks.builds)
+            foreach (QuestTask building in tasks.builds)
             {
-                if (!PlayerData.BuildBuildingData.ContainsKey(item.objType))
+                if (!PlayerData.BuildBuildingData.ContainsKey(building.objType))
                 {
-                    PlayerData.BuildBuildingData.Add(item.objType, new int());
+                    PlayerData.BuildBuildingData.Add(building.objType, new int());
                 }
-                item.initData = PlayerData.BuildBuildingData[item.objType];
+                building.initData = PlayerData.BuildBuildingData[building.objType];
             }
 
             foreach (QuestTask item in tasks.items)
@@ -71,12 +71,12 @@ namespace DM.Quest
         {
             if (tasks.builds.Length > 0)
             {
-                foreach (QuestTask item in tasks.builds)
+                foreach (QuestTask building in tasks.builds)
                 {
-                    if (!PlayerData.BuildBuildingData.ContainsKey(item.objType)) PlayerData.BuildBuildingData.Add(item.objType, new int());
-                    Debug.Log(string.Format("fin: {0}, now: {1}", item.finishData, PlayerData.BuildBuildingData[item.objType] - item.initData));
+                    if (!PlayerData.BuildBuildingData.ContainsKey(building.objType)) PlayerData.BuildBuildingData.Add(building.objType, new int());
+                    Debug.Log(string.Format("fin: {0}, now: {1}", building.finishData, PlayerData.BuildBuildingData[building.objType] - building.initData));
 
-                    if (item.finishData > PlayerData.BuildBuildingData[item.objType] - item.initData)
+                    if (building.finishData > PlayerData.BuildBuildingData[building.objType] - building.initData)
                     {
                         return false;
                     }
@@ -97,18 +97,30 @@ namespace DM.Quest
             }
             if (tasks.npcs.Length > 0)
             {
-                foreach (QuestTask item in tasks.npcs)
+                foreach (QuestTask npc in tasks.npcs)
                 {
-                    if (!PlayerData.ItemData.ContainsKey(item.objType)) PlayerData.ItemData.Add(item.objType, new ItemBehavior());
-                    Debug.Log(string.Format("fin: {0}, now: {1}", item.finishData, PlayerData.npcData[item.objType] - item.initData));
+                    if (!PlayerData.ItemData.ContainsKey(npc.objType)) PlayerData.ItemData.Add(npc.objType, new ItemBehavior());
+                    Debug.Log(string.Format("fin: {0}, now: {1}", npc.finishData, PlayerData.npcData[npc.objType] - npc.initData));
 
-                    if (item.finishData > PlayerData.npcData[item.objType] - item.initData)
+                    if (npc.finishData > PlayerData.npcData[npc.objType] - npc.initData)
                     {
                         return false;
                     }
                 }
             }
+            if (tasks.locations.Length > 0)
+            {
+                foreach (QuestTask location in tasks.locations)
+                {
+                    if (!PlayerData.ItemData.ContainsKey(location.objType)) PlayerData.ItemData.Add(location.objType, new ItemBehavior());
+                    Debug.Log(string.Format("fin: {0}, now: {1}", location.finishData, PlayerData.loactionData[location.objType] - location.initData));
 
+                    if (location.finishData > PlayerData.loactionData[location.objType] - location.initData)
+                    {
+                        return false;
+                    }
+                }
+            }
             return true;
         }
         public bool CanAccept()
