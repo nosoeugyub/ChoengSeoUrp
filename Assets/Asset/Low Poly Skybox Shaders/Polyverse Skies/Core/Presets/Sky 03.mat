@@ -9,9 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Sky 03
   m_Shader: {fileID: 4800000, guid: 6fc9318f5193c094c98c0d450cd61e3b, type: 3}
-  m_ShaderKeywords: _DISABLEDIRECTIONLIGHT_ON _ENABLECLOUDSROTATION_ON _ENABLECLOUDS_ON
-    _ENABLESTARS_ON _ENABLESUNMOONMASK_ON _ENABLESUNMOON_ON _ENABLESUN_ON _USECUBEMAP_ON
-    _USEENVIRONMENTGRADIENT_ON _USETEXTURE_ON
+  m_ShaderKeywords: _DISABLEDIRECTIONLIGHT_ON _ENABLECLOUDSROTATION_ON _ENABLESUNMOONMASK_ON
+    _ENABLESUNMOON_ON _ENABLESUN_ON _USECUBEMAP_ON _USEENVIRONMENTGRADIENT_ON _USETEXTURE_ON
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -30,7 +29,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _CloudsCubemap:
-        m_Texture: {fileID: 8900000, guid: e3373d7062a4a5044ac0f0745de6c934, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Cubemap:
@@ -106,7 +105,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SunTexture:
-        m_Texture: {fileID: 2800000, guid: 4d70420f1a4758e469e0ac65b6df86cb, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 0, y: 0}
         m_Offset: {x: 1, y: 1}
     - _Tex:
@@ -176,14 +175,14 @@ Material:
     - _DstBlend: 0
     - _Enable1Twinkling: 0
     - _EnableBuiltinFog: 0
-    - _EnableClouds: 1
+    - _EnableClouds: 0
     - _EnableCloudsRotation: 1
     - _EnableDirectionLight: 0
     - _EnableFogMessage: 0
     - _EnableMoon: 0
     - _EnablePatternOverlay: 0
     - _EnableSkyPatternOverlay: 0
-    - _EnableStars: 1
+    - _EnableStars: 0
     - _EnableStarsRotation: 0
     - _EnableStarsTwinkling: 1
     - _EnableSun: 1
