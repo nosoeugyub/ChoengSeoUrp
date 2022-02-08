@@ -7,6 +7,8 @@ namespace NSY.Player
 {
     public class PlayerCollision : MonoBehaviour
     {
+        //
+
         [SerializeField]
         PlayerController playerController;
 
