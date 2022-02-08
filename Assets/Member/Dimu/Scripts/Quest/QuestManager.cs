@@ -18,31 +18,34 @@ namespace DM.Quest
             acceptQuests = new Dictionary<QuestData, GameObject>();
             clearQuestLists = new List<QuestData>();
         }
-        
+
         public void Start() { print(""); }//start update 등의 구문이 없다면 에디터에서 public QuestManager questmanager; 같은 구문에 넣을 수 없다.
-        
-        public void AcceptQuest(int questId, int npcID)//(QuestData questData, int npcID)
+
+        public void AcceptQuest(int questId, int npcID)//퀘스트 수락하기
         {
             QuestData nowQuestData = questLists[npcID].questList[questId];
             //nowQuestData.CanAccept();
             if (acceptQuests.ContainsKey(nowQuestData)) return;
-        
+
             nowQuestData.npcID = npcID;
             GameObject qui = Instantiate(questInfoUI, questInfoMom) as GameObject;
             UpdateQuestInfoUI(qui, nowQuestData);
-        
+
             nowQuestData.InitData();
             acceptQuests.Add(nowQuestData, qui);
-        }public bool ClearQuest(QuestData questData)
+        }
+        public bool ClearQuest(int questId, int npcID) //퀘스트 클리어하기
         {
-            if (questData.IsClear())
+            if (CanClear(questId, npcID))
             {
-                acceptQuests[questData].SetActive(false);
-                acceptQuests.Remove(questData);
+                QuestData nowQuestData = questLists[npcID].questList[questId];
+                clearQuestLists.Add(nowQuestData);
+                acceptQuests[nowQuestData].SetActive(false);
+                acceptQuests.Remove(nowQuestData);
                 Debug.Log("Clear");
                 return true;
             }
-                return false;
+            return false;
         }
         public void UpdateQuestInfoUI(GameObject qui, QuestData questData)
         {
@@ -56,10 +59,34 @@ namespace DM.Quest
                 = questData.TaskImg[0];
         }
 
-        public bool IsQuestAccepted(QuestData questData)
+        public bool CanClear(int questId, int npcID)//퀘스트 클리어 가능한지?
         {
-            if (acceptQuests.ContainsKey(questData)) return true;
+            QuestData nowQuestData = questLists[npcID].questList[questId];
+
+            return nowQuestData.CanClear();
+        }
+        public bool IsQuestAccepted(int questId, int npcID)//특정 퀘스트 진행중인지?
+        {
+            if (acceptQuests.ContainsKey(questLists[npcID].questList[questId])) return true;
             else return false;
+        }
+        public bool CanAcceptQuest(int questId, int npcID)//퀘스트 수락 가능한지?
+        {
+            return questLists[npcID].questList[questId].CanAccept();
+        }
+        public bool IsQuestCleared(int questId, int npcID)//클리어한 퀘스트인지?
+        {
+            return clearQuestLists.Contains(questLists[npcID].questList[questId]);
+        }
+        //다른 Npc 와의 상호작용을 요구하는 퀘스트를 진행중인지
+        public QuestData ReturnQuestRequireNpc(int npcID)
+        {
+            foreach (var item in acceptQuests)
+            {
+                if (item.Key.interactNpcID == npcID) //현재 진행중인 퀘스트들 중에 완료자가 나랑 같은?
+                    return item.Key;
+            }
+            return null;
         }
     }
     [System.Serializable]
