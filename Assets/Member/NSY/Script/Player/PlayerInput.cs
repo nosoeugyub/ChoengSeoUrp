@@ -11,20 +11,17 @@ namespace NSY.Player
 
         //플레이어가 누르는 키입력
         [Space]
-        public KeyCode _GetItem = KeyCode.E;
-        public KeyCode _GetNPC = KeyCode.Space;
-        public KeyCode _InputBackBtn = KeyCode.B;
-
+        public KeyCode _InputInterBtn = KeyCode.F;
       
-        internal bool GetItem;
-        internal bool activeNpc;
+       
+        internal bool interectObj;
 
 
         // Update is called once per frame
         void Update()
         {
-            ActiveItem();
-            ActiveNpc();
+
+            ActiveObj();
         }
         /// <summary> 튜토리얼 인풋
         
@@ -37,29 +34,21 @@ namespace NSY.Player
 
 
 
-        //아이템먹기
-        public void ActiveItem()
+       
+        public void ActiveObj()
         {
-            if (Input.GetKey(_GetItem))
+            if (Input.GetKey(_InputInterBtn))
             {
-                GetItem = true;
+                interectObj = true;
             }
             else
             {
-                GetItem = false;
+                interectObj = false;
             }
         }
-        public void ActiveNpc()
-        {
-            if (Input.GetKey(_GetNPC))
-            {
-                activeNpc = true;
-            }
-            else
-            {
-                activeNpc = false;
-            }
-        }
+
+
+     
     }
 }
 
