@@ -28,6 +28,7 @@ namespace DM.Dialog
         public int[] dialogIdxs = new int[(int)Character.Length];//0부터 캐릭터 인덱스 값은 대화인덱스
 
         public int nowPartner = -1; //일단 이장 고정
+        bool isTalking = false;
 
         QuestManager questManager;
 
@@ -51,6 +52,7 @@ namespace DM.Dialog
         }
         public void FirstShowDialog(int charId)//, Transform transform) //첫 상호작용 시 호출
         {
+            isTalking = true;
             nowPartner = charId;  //대화하는 대상을 현재 파트너로 지정
             //partnerTf = transform;
 
@@ -141,6 +143,7 @@ namespace DM.Dialog
             nextButton.onClick.AddListener(() =>
             {
                 CloseDialog();
+                isTalking = false;
             });
             //만약 대화데이터에 퀘스트가 있다면
             if (nowDialogData.questId > -1)
