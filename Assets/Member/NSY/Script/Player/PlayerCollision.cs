@@ -7,6 +7,8 @@ namespace NSY.Player
 {
     public class PlayerCollision : MonoBehaviour
     {
+        //
+
         [SerializeField]
         PlayerController playerController;
 
@@ -21,9 +23,9 @@ namespace NSY.Player
             if (triggerObjs)
             {
                // SuperManager.Instance.uimanager.FoodBoxUi.SetActive(true);
-                if (playerController.playerinput.GetItem == true)
+                if (playerController.playerinput.interectObj == true)
                 {
-                    Debug.Log("음식상자가 충돌됐고 E키를 눌렀다. + 애니메이션 재생");
+                    Debug.Log("오브젝트와 충돌됐고 F키를 눌렀다.");
                     
                 }
 
@@ -37,12 +39,12 @@ namespace NSY.Player
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Food Box"))
+            if (other.CompareTag("NPC"))
             {
                 triggerObjs = true;
                 triggerObj = other.gameObject;
-                // 튜툐리얼 이벤트 함수 호출
-                EventManager._Instace.StartTutor();
+                // 이벤트 함수 호출
+               
 
             }
 
@@ -60,12 +62,12 @@ namespace NSY.Player
         }
         private void OnTriggerExit(Collider other)
         {
-            if (other.CompareTag("Food Box"))
+            if (other.CompareTag("NPC"))
             {
                 triggerObjs = false;
                 triggerObj = null;
-                //생존 튜토 끝
-                EventManager._Instace.EndTutor();
+                //종료 함수
+              
             }
         }
     }
