@@ -47,10 +47,10 @@ namespace NSY.Player
                
 
             }
-
-            if (other.CompareTag("InteractObj"))
+            InteractObject interactObject = other.GetComponent<InteractObject>();
+            if (interactObject)
             {
-                other.GetComponent<InteractObject>().DropItems();
+                interactObject.DropItems();
                 print("spawn" + other.name);
 
             }
