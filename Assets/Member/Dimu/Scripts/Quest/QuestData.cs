@@ -51,19 +51,22 @@ namespace DM.Quest
         {
             foreach (QuestTask building in tasks.builds)
             {
-                if (!PlayerData.BuildBuildingData.ContainsKey(building.objType))
-                {
-                    PlayerData.BuildBuildingData.Add(building.objType, new int());
-                }
-                building.initData = PlayerData.BuildBuildingData[building.objType];
+                //if (!PlayerData.BuildBuildingData.ContainsKey(building.objType))
+                //{
+                //    PlayerData.BuildBuildingData.Add(building.objType, new BuildingBehavior());
+                //}
+                PlayerData.AddValueInDictionary(building.objType, building.behaviorType, PlayerData.BuildBuildingData);
+                building.initData = PlayerData.BuildBuildingData[building.objType].amounts[building.behaviorType];
             }
 
             foreach (QuestTask item in tasks.items)
             {
-                if (!PlayerData.ItemData.ContainsKey(item.objType))
-                {
-                    PlayerData.ItemData.Add(item.objType, new ItemBehavior());
-                }
+                //if (!PlayerData.ItemData.ContainsKey(item.objType))
+                //{
+                //    PlayerData.ItemData.Add(item.objType, new ItemBehavior());
+                //}
+                PlayerData.AddValueInDictionary(item.objType, item.behaviorType, PlayerData.ItemData);
+
                 item.initData = PlayerData.ItemData[item.objType].amounts[item.behaviorType];
             }
         }
@@ -73,10 +76,13 @@ namespace DM.Quest
             {
                 foreach (QuestTask building in tasks.builds)
                 {
-                    if (!PlayerData.BuildBuildingData.ContainsKey(building.objType)) PlayerData.BuildBuildingData.Add(building.objType, new int());
-                    Debug.Log(string.Format("fin: {0}, now: {1}", building.finishData, PlayerData.BuildBuildingData[building.objType] - building.initData));
+                    //if (!PlayerData.BuildBuildingData.ContainsKey(building.objType))
+                    //    PlayerData.BuildBuildingData.Add(building.objType, new BuildingBehavior());
+                    PlayerData.AddValueInDictionary(building.objType, building.behaviorType, PlayerData.BuildBuildingData);
 
-                    if (building.finishData > PlayerData.BuildBuildingData[building.objType] - building.initData)
+                    Debug.Log(string.Format("fin: {0}, now: {1}", building.finishData, PlayerData.BuildBuildingData[building.objType].amounts[building.behaviorType] - building.initData));
+
+                    if (building.finishData > PlayerData.BuildBuildingData[building.objType].amounts[building.behaviorType] - building.initData)
                     {
                         return false;
                     }
@@ -86,7 +92,9 @@ namespace DM.Quest
             {
                 foreach (QuestTask item in tasks.items)
                 {
-                    if (!PlayerData.ItemData.ContainsKey(item.objType)) PlayerData.ItemData.Add(item.objType, new ItemBehavior());
+                    //if (!PlayerData.ItemData.ContainsKey(item.objType)) PlayerData.ItemData.Add(item.objType, new ItemBehavior());
+                    PlayerData.AddValueInDictionary(item.objType, item.behaviorType, PlayerData.ItemData);
+
                     Debug.Log(string.Format("fin: {0}, now: {1}", item.finishData, PlayerData.ItemData[item.objType].amounts[item.behaviorType] - item.initData));
 
                     if (item.finishData > PlayerData.ItemData[item.objType].amounts[item.behaviorType] - item.initData)
@@ -99,10 +107,13 @@ namespace DM.Quest
             {
                 foreach (QuestTask npc in tasks.npcs)
                 {
-                    if (!PlayerData.ItemData.ContainsKey(npc.objType)) PlayerData.ItemData.Add(npc.objType, new ItemBehavior());
-                    Debug.Log(string.Format("fin: {0}, now: {1}", npc.finishData, PlayerData.npcData[npc.objType] - npc.initData));
+                    //if (!PlayerData.npcData.ContainsKey(npc.objType)) PlayerData.npcData.Add(npc.objType, new ItemBehavior());
 
-                    if (npc.finishData > PlayerData.npcData[npc.objType] - npc.initData)
+                    PlayerData.AddValueInDictionary(npc.objType, npc.behaviorType, PlayerData.npcData);
+
+                    Debug.Log(string.Format("fin: {0}, now: {1}", npc.finishData, PlayerData.npcData[npc.objType].amounts[npc.behaviorType] - npc.initData));
+
+                    if (npc.finishData > PlayerData.npcData[npc.objType].amounts[0] - npc.initData)
                     {
                         return false;
                     }
@@ -112,10 +123,11 @@ namespace DM.Quest
             {
                 foreach (QuestTask location in tasks.locations)
                 {
-                    if (!PlayerData.ItemData.ContainsKey(location.objType)) PlayerData.ItemData.Add(location.objType, new ItemBehavior());
-                    Debug.Log(string.Format("fin: {0}, now: {1}", location.finishData, PlayerData.loactionData[location.objType] - location.initData));
+                    //if (!PlayerData.ItemData.ContainsKey(location.objType)) PlayerData.ItemData.Add(location.objType, new ItemBehavior());
+                    PlayerData.AddValueInDictionary(location.objType, location.behaviorType, PlayerData.locationData);
+                    Debug.Log(string.Format("fin: {0}, now: {1}", location.finishData, PlayerData.locationData[location.objType].amounts[location.behaviorType] - location.initData));
 
-                    if (location.finishData > PlayerData.loactionData[location.objType] - location.initData)
+                    if (location.finishData > PlayerData.locationData[location.objType].amounts[0] - location.initData)
                     {
                         return false;
                     }
