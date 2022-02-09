@@ -13,11 +13,12 @@ namespace NSY.Manager
         private EventManager() { }
         private static EventManager _instace = null;
         
-        //이벤트 델리게이트
-        public delegate void StartStateTutor();
-        public static event  StartStateTutor HitFoodBox;
-        public delegate void EndStateTutor();
-        public static event EndStateTutor UnHitFoodBox;
+        //이벤트 델리게이트 ,초반 튜토리얼
+        public delegate void StartTreeTutor();
+        public static event StartTreeTutor FristTreeCollder;
+
+        public delegate void EndTreeTutor();
+        public static event StartTreeTutor UnFristTreeCollder;
         //==
 
 
@@ -37,18 +38,18 @@ namespace NSY.Manager
                 _instace = value;
             }
         }
-        public void StartTutor()
+        public void StartFirstTree()
         {
-            if (HitFoodBox != null)
+            if (FristTreeCollder != null)
             {
-                HitFoodBox();
+                FristTreeCollder();
             }
         }
-        public void EndTutor()
+        public void EndFirstTree()
         {
-            if (UnHitFoodBox != null)
+            if (UnFristTreeCollder != null)
             {
-                UnHitFoodBox();
+                UnFristTreeCollder();
             }
         }
     }   
