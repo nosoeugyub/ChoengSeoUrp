@@ -12,7 +12,6 @@ public class ItemObject : MonoBehaviour
         {
             FindObjectOfType<InventoryManager>().AddItem(item, 1);
             PlayerData.AddValue((int)item.ItemType,0, PlayerData.ItemData);
-            //PlayerData.ItemData[(int)item.ItemType].amounts[0]++; //0 = 아이템얻기
             Debug.Log((int)item.ItemType + ", "+PlayerData.ItemData[(int)item.ItemType].amounts[0]);
         }
     }

@@ -61,6 +61,7 @@ namespace NSY.Player
             BuildingObject buildingObject = other.GetComponent<BuildingObject>();
             if(buildingObject)
             {
+                PlayerData.AddValue(buildingObject.BuildID(),(int)BuildingBehaviorEnum.Interact,PlayerData.BuildBuildingData);
                 
                 return;
             }

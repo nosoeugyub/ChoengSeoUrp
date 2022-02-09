@@ -95,16 +95,11 @@ namespace DM.Building
         public void ChangeFinishImg()
         {
             spriteRenderer.sprite = finishSprite;
+            PlayerData.AddValue(BuildID(),(int)BuildingBehaviorEnum.CompleteBuild, PlayerData.BuildBuildingData);
         }
         public void StartBuild()
         {
-            //플레이어 데이터에 해당 빌딩이 없다면 추가
-            //if (!PlayerData.BuildBuildingData.ContainsKey(buildingInfo.BuildingID()))
-            //{
-            //    PlayerData.BuildBuildingData.Add(buildingInfo.BuildingID(), new BuildingBehavior());
-            //}
-            PlayerData.AddValue(BuildID(),2, PlayerData.BuildBuildingData);
-            //PlayerData.BuildBuildingData[BuildID()].amounts[2]++;//아니 건물의 인덱스가 필요한데
+            PlayerData.AddValue(BuildID(),(int)BuildingBehaviorEnum.StartBuild, PlayerData.BuildBuildingData);
             spriteRenderer.sprite = underConstructionSprite;
             ingredientUI.SetActive(true);
             InstantiateUIs();

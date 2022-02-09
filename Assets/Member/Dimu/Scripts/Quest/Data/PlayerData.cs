@@ -8,32 +8,13 @@ public class PlayerData : ScriptableObject
     public static Dictionary<int, Behavior> ItemData = new Dictionary<int, Behavior>();
     public static Dictionary<int, Behavior> npcData = new Dictionary<int, Behavior>();
     public static Dictionary<int, Behavior> locationData = new Dictionary<int, Behavior>();
-    //public static Dictionary<int, BuildingBehavior> BuildBuildingData = new Dictionary<int, BuildingBehavior>();//
-    //public static Dictionary<int, ItemBehavior> ItemData = new Dictionary<int, ItemBehavior>();
-    //public static Dictionary<int, NpcBehavior> npcData = new Dictionary<int, NpcBehavior>();
-    //public static Dictionary<int, LocationBehavior> locationData = new Dictionary<int, LocationBehavior>();
 
-    //public static void AddValue<T>(int dataid, int behav, Dictionary<int, T> pairs) where T : Behavior, new()
-    //{
-    //    AddDictionary(dataid, pairs);
-    //    pairs[dataid].amounts[behav]++;
-    //}
     public static void AddValue(int dataid, int behav, Dictionary<int,Behavior> pairs)
     {
         AddDictionary(dataid, pairs);
         pairs[dataid].amounts[behav]++;
     }
 
-    //public static void AddDictionary<T>(int dataid, Dictionary<int, T> pairs) where T : Behavior, new()
-    //{
-    //    if (!pairs.ContainsKey(dataid))
-    //    {
-    //        Debug.Log("add dictionary");
-    //        T t = new T();
-    //        t.EBehavior(3);
-    //        pairs.Add(dataid, t);
-    //    }
-    //} 
     public static void AddDictionary(int dataid, Dictionary<int, Behavior> pairs)
     {
         if (!pairs.ContainsKey(dataid))
@@ -46,16 +27,11 @@ public class PlayerData : ScriptableObject
     public void AddAmountTestBuilding(int dataid)
     {
         AddValue(dataid, (int)BuildingBehaviorEnum.Interact, BuildBuildingData);
-
-
-        //BuildBuildingData[dataid].amounts[2]++;
-        //Debug.Log(BuildBuildingData[dataid].amounts[2]);
+        Debug.Log(BuildBuildingData[dataid].amounts[2]);
     }
     public void AddAmountItem(int dataid, int btype)
     {
         AddValue(dataid, btype, ItemData);
-
-        //ItemData[dataid].amounts[btype]++;
         Debug.Log(ItemData[dataid].amounts[btype] + " " + btype);
     }
 }
@@ -86,6 +62,28 @@ public class Behavior
         amounts = new int[i];
     }
 }
+
+//public static Dictionary<int, BuildingBehavior> BuildBuildingData = new Dictionary<int, BuildingBehavior>();//
+//public static Dictionary<int, ItemBehavior> ItemData = new Dictionary<int, ItemBehavior>();
+//public static Dictionary<int, NpcBehavior> npcData = new Dictionary<int, NpcBehavior>();
+//public static Dictionary<int, LocationBehavior> locationData = new Dictionary<int, LocationBehavior>();
+
+//public static void AddValue<T>(int dataid, int behav, Dictionary<int, T> pairs) where T : Behavior, new()
+//{
+//    AddDictionary(dataid, pairs);
+//    pairs[dataid].amounts[behav]++;
+//}
+
+//public static void AddDictionary<T>(int dataid, Dictionary<int, T> pairs) where T : Behavior, new()
+//{
+//    if (!pairs.ContainsKey(dataid))
+//    {
+//        Debug.Log("add dictionary");
+//        T t = new T();
+//        t.EBehavior(3);
+//        pairs.Add(dataid, t);
+//    }
+//} 
 
 //public class ItemBehavior : Behavior
 //{
