@@ -11,62 +11,91 @@ public class PlayerData : ScriptableObject
     //public static Dictionary<int, BuildingBehavior> BuildBuildingData = new Dictionary<int, BuildingBehavior>();//
     //public static Dictionary<int, ItemBehavior> ItemData = new Dictionary<int, ItemBehavior>();
     //public static Dictionary<int, NpcBehavior> npcData = new Dictionary<int, NpcBehavior>();
-    //public static Dictionary<int, LocationBehavior> loactionData = new Dictionary<int, LocationBehavior>();
+    //public static Dictionary<int, LocationBehavior> locationData = new Dictionary<int, LocationBehavior>();
 
-    public static void AddValueInDictionary<T>(int dataid, int behav, Dictionary<int, T> pairs) where T : Behavior, new()
+    //public static void AddValue<T>(int dataid, int behav, Dictionary<int, T> pairs) where T : Behavior, new()
+    //{
+    //    AddDictionary(dataid, pairs);
+    //    pairs[dataid].amounts[behav]++;
+    //}
+    public static void AddValue(int dataid, int behav, Dictionary<int,Behavior> pairs)
+    {
+        AddDictionary(dataid, pairs);
+        pairs[dataid].amounts[behav]++;
+    }
+
+    //public static void AddDictionary<T>(int dataid, Dictionary<int, T> pairs) where T : Behavior, new()
+    //{
+    //    if (!pairs.ContainsKey(dataid))
+    //    {
+    //        Debug.Log("add dictionary");
+    //        T t = new T();
+    //        t.EBehavior(3);
+    //        pairs.Add(dataid, t);
+    //    }
+    //} 
+    public static void AddDictionary(int dataid, Dictionary<int, Behavior> pairs)
     {
         if (!pairs.ContainsKey(dataid))
         {
             Debug.Log("add dictionary");
-            pairs.Add(dataid, new T());
+            pairs.Add(dataid, new Behavior(3));
         }
-        pairs[dataid].amounts[behav]++;
-    }
-
-    public static void AddValue<T>(int dataid, int behav, Dictionary<int, T> pairs) where T : Behavior, new()
-    {
-        pairs[dataid].amounts[behav]++;
     }
 
     public void AddAmountTestBuilding(int dataid)
     {
-        AddValueInDictionary(dataid, 2, BuildBuildingData);
+        AddValue(dataid, (int)BuildingBehaviorEnum.Interact, BuildBuildingData);
 
 
-        BuildBuildingData[dataid].amounts[2]++;
-        Debug.Log(BuildBuildingData[dataid].amounts[2]);
+        //BuildBuildingData[dataid].amounts[2]++;
+        //Debug.Log(BuildBuildingData[dataid].amounts[2]);
     }
     public void AddAmountItem(int dataid, int btype)
     {
-        AddValueInDictionary(dataid, btype, ItemData);
+        AddValue(dataid, btype, ItemData);
 
-        ItemData[dataid].amounts[btype]++;
+        //ItemData[dataid].amounts[btype]++;
         Debug.Log(ItemData[dataid].amounts[btype] + " " + btype);
     }
 }
-public enum ItemBehavior
+
+public enum ItemBehaviorEnum
 {
     GetItem, DropItem, EatItem
-    //public int[] amounts = new int[3]; //아이템획득 횟수//아이템버리기 횟수//아이템먹기 횟수
 }
-public enum BuildingBehavior
+public enum BuildingBehaviorEnum
 {
     Interact, StartBuild, CompleteBuild
-    //public int[] amounts = new int[3]; //상호작용 횟수, 건축 시작 횟수, 건축완료 횟수
 }
-public enum NpcBehavior
+public enum NpcBehaviorEnum
 {
     Interact
-    //public int[] amounts = new int[1]; //상호작용 횟수
 }
-public enum LocationBehavior
+public enum LocationBehaviorEnum
 {
     Interact
-    //public int[] amounts = new int[1]; //상호작용 횟수
 }
 
 public class Behavior
 {
     public int id; //종류 id
-    public int[] amounts = new int[3]; //상호작용 횟수
+    public int[] amounts;// = new int[3]; //상호작용 횟수
+    public Behavior(int i)
+    {
+        amounts = new int[i];
+    }
 }
+
+//public class ItemBehavior : Behavior
+//{
+//}
+//public class BuildingBehavior : Behavior
+//{
+//}
+//public class NpcBehavior : Behavior
+//{
+//}
+//public class LocationBehavior : Behavior
+//{
+//}

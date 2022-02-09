@@ -103,7 +103,7 @@ namespace DM.Building
             //{
             //    PlayerData.BuildBuildingData.Add(buildingInfo.BuildingID(), new BuildingBehavior());
             //}
-            PlayerData.AddValueInDictionary(BuildID(),2, PlayerData.BuildBuildingData);
+            PlayerData.AddValue(BuildID(),2, PlayerData.BuildBuildingData);
             //PlayerData.BuildBuildingData[BuildID()].amounts[2]++;//아니 건물의 인덱스가 필요한데
             spriteRenderer.sprite = underConstructionSprite;
             ingredientUI.SetActive(true);

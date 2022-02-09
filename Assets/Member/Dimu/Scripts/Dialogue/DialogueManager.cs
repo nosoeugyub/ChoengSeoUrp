@@ -57,7 +57,7 @@ namespace DM.Dialog
             nowPartner = charId;  //대화하는 대상을 현재 파트너로 지정
             partnerTf = transform;
 
-            PlayerData.AddValueInDictionary(charId,(int)NpcBehavior.Interact, PlayerData.npcData);
+            PlayerData.AddValue(charId,0, PlayerData.npcData);
             //PlayerData.npcData[charId].amounts[0]++; //charId npc와 1번 상호작용 했다.
 
             StartShowDialog(); //파트너와 진행해야 하는 순서의 대화를 진행
