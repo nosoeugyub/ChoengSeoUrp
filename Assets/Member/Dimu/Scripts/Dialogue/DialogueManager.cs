@@ -52,6 +52,7 @@ namespace DM.Dialog
         }
         public void FirstShowDialog(int charId)//, Transform transform) //첫 상호작용 시 호출
         {
+            if (isTalking) return;
             isTalking = true;
             nowPartner = charId;  //대화하는 대상을 현재 파트너로 지정
             //partnerTf = transform;
