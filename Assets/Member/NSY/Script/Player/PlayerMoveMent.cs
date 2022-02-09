@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Game.Cam;
 
 namespace NSY.Player
 {
@@ -15,19 +16,28 @@ namespace NSY.Player
 
         internal bool isMove;
 
-
+        
         //곡선
         [Header("곡선 벡터")]
-        public GameObject PlayerObjec; 
+        public GameObject PlayerObjec;
 
 
 
+        CameraManager CamManager;
+        private void Start()
+        {
+            CamManager = FindObjectOfType<CameraManager>();
+        }
         public void FixedUpdate()
         {
-           
+
+            if (!CamManager.IsZoom)
+            {
+                Move();
+            }
+
             idle();
-            Move();
-          
+
         }
 
 
