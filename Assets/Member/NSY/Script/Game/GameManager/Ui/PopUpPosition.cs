@@ -6,9 +6,10 @@ public class PopUpPosition : MonoBehaviour
 {
     [SerializeField] public Transform Playertransform;
     [SerializeField] public Transform FristApple;
+    public GameObject PopUpApple;
     [SerializeField] Vector3 Uioffset;
     [SerializeField] Vector3 PlayTransUioffset;
-    public GameObject PopUpApple;
+    
     //public GameObject PopUpTuto001;
 
     // Update is called once per frame

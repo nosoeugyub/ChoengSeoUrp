@@ -11,9 +11,14 @@ namespace NSY.Manager
         //추가 컴포넌트
         [SerializeField]
         PlayerInput PlayerInput;
+        //첫번째 튜토리얼 표지판보기
         [SerializeField]
         SignPost signpost;
+        [SerializeField]
+        GameObject signpostObj;
 
+
+        [SerializeField]
         private int popUpIndex;
         private float waitTime = 2f;
 
@@ -29,42 +34,60 @@ namespace NSY.Manager
             {
                 if (i == popUpIndex)
                 {
-                    SuperManager.Instance.uimanager.TutorpopUps[popUpIndex].SetActive(true);
+                    SuperManager.Instance.uimanager.TutorpopUps[i].SetActive(true);
+                   
                 }
+                else
+                {
+                  
+                    SuperManager.Instance.uimanager.TutorpopUps[i].SetActive(false);
+                }
+                    
+
+                
             }
             if (popUpIndex == 0)
             {
                 if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)
                     || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow))
                 {
-                    Debug.Log("눌렀으니 끄셈 ㅡㅡ");
-                    ChangePopup();
-                    popUpIndex++;
+                    StartCoroutine(ZeroTuto());
                 }
+                StopCoroutine(ZeroTuto());
             }
             else if(popUpIndex == 1)//표지판 가는 유아이
             {
-                Debug.Log("2번째 ON...");
-                signpost.FirstSign = true;
-                popUpIndex++;
-
-
+     
+                //StartCoroutine(OneTuto());
 
             }
         }
-        private void ChangePopup()
+        IEnumerator ZeroTuto()
         {
-            for (int i = 0; i < SuperManager.Instance.uimanager.TutorpopUps.Length; i++)
-            {
-                if (i == popUpIndex)
-                {
-                    SuperManager.Instance.uimanager.TutorpopUps[popUpIndex].SetActive(false);
-                   
-                }
-
-            }
+            popUpIndex = -1;
+            yield return new WaitForSeconds(1f);
+            signpostObj.GetComponent<SignPost>().enabled = true;
+            yield return new WaitForSeconds(2.7f);
+            popUpIndex =1;
+            yield return new WaitForSeconds(3f);
+            popUpIndex = -1;
         }
 
+
+        IEnumerator OneTuto()
+        {
+           
+             yield return new WaitForSeconds(5f);
+            popUpIndex++;
+        }
+        IEnumerator SecondTuto()//이벤토리 열라는 튜토리얼 
+        {
+            yield return new WaitForSeconds(0.3f);
+        }
+        IEnumerator ThirdTuto()//지도  열라는 튜토리얼 
+        {
+            yield return new WaitForSeconds(0.3f);
+        }
     }
 
 

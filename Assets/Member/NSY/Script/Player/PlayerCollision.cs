@@ -81,6 +81,7 @@ namespace NSY.Player
             if (other.CompareTag("FristTree"))
             {
                 Debug.Log("나무 이벤트 끝");
+                EventManager._Instace.EndFirstTree();
             }
         }
     }
