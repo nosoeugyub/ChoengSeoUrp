@@ -28,7 +28,7 @@ namespace Game.Cam
         }
 
         // Update is called once per frame
-        void LateUpdate()
+        void Update()
         {
             //Vector3 desiredPosition = target.position + offset;
             //Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothedSpeed);

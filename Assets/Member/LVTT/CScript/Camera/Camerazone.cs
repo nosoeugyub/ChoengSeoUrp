@@ -12,8 +12,8 @@ namespace Game.Cam
         [SerializeField]
         //private CinemachineVirtualCamera virtualCamera = null;
         private GameObject virtualCamera;
-        [SerializeField]
-        private GameObject virtualCamera2;
+        //[SerializeField]
+        //private GameObject virtualCamera2;
         [SerializeField]
         private GameObject MainCam;
         //[SerializeField]
@@ -30,54 +30,54 @@ namespace Game.Cam
         // Update is called once per frame
         void Update()
         {
-            if (CanSwitchCam)
-            {
-                if (Input.GetKeyDown(KeyCode.B))
-                {
-                    ChangeView();
-                }
-            }
+            //if (CanSwitchCam)
+            //{
+            //    if (Input.GetKeyDown(KeyCode.B))
+            //    {
+            //        ChangeView();
+            //    }
+            //}
 
             
             
 
         }
 
-        void ChangeView()
-        {
-            switch (CamManager.LookIn)
-            {
-                case true:
-                    virtualCamera.SetActive(false);
-                    virtualCamera2.SetActive(true);
-                    CamManager.LookIn = false;
-                    break;
-                case false:
-                    virtualCamera.SetActive(true);
-                    virtualCamera2.SetActive(false);
-                    CamManager.LookIn = true;
-                    break;
-            }
+        //void ChangeView()
+        //{
+        //    switch (CamManager.LookIn)
+        //    {
+        //        case true:
+        //            virtualCamera.SetActive(false);
+        //            virtualCamera2.SetActive(true);
+        //            CamManager.LookIn = false;
+        //            break;
+        //        case false:
+        //            virtualCamera.SetActive(true);
+        //            virtualCamera2.SetActive(false);
+        //            CamManager.LookIn = true;
+        //            break;
+        //    }
 
-        }
+        //}
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))
             {
 
-                CanSwitchCam = true;
+                //CanSwitchCam = true;
 
                 MainCam.SetActive(false);
-
-                 switch (CamManager.LookIn)
-                {
-                    case true:
-                        virtualCamera.SetActive(true);
-                        break;
-                    case false:
-                        virtualCamera2.SetActive(true);
-                        break;
-                }
+                virtualCamera.SetActive(true);
+                // switch (CamManager.LookIn)
+                //{
+                //    case true:
+                //        virtualCamera.SetActive(true);
+                //        break;
+                //    case false:
+                //        virtualCamera2.SetActive(true);
+                //        break;
+                //}
 
             }
         }
@@ -93,10 +93,10 @@ namespace Game.Cam
         {
             if (other.CompareTag("Player"))
             {
-                CanSwitchCam = false;
+                //CanSwitchCam = false;
                 //virtualCamera.enabled = false;
                 virtualCamera.SetActive(false);
-                virtualCamera2.SetActive(false);
+                //virtualCamera2.SetActive(false);
                 MainCam.SetActive(true);
                CamManager.LookIn = true;
             }
