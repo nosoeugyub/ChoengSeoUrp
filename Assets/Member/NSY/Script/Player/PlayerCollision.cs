@@ -12,8 +12,8 @@ namespace NSY.Player
         [SerializeField]
         PlayerController playerController;
 
-        private GameObject triggeringNpc;
-        private GameObject triggerObj;
+        
+        public GameObject triggerObj;
         private bool trigger;
         private bool triggerObjs;
 
@@ -54,6 +54,12 @@ namespace NSY.Player
                 print("spawn" + other.name);
 
             }
+            if (other.CompareTag("FristTree"))
+            {
+                Debug.Log("첫 번째 나무 부딪히고 사과 떨어짐");
+                EventManager._Instace.StartFirstTree();
+
+            }
 
         }
         private void OnTriggerStay(Collider other)
@@ -68,6 +74,10 @@ namespace NSY.Player
                 triggerObj = null;
                 //종료 함수
               
+            }
+            if (other.CompareTag("FristTree"))
+            {
+                Debug.Log("나무 이벤트 끝");
             }
         }
     }

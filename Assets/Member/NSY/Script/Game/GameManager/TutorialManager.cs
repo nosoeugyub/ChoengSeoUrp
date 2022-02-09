@@ -16,18 +16,7 @@ namespace NSY.Manager
         private int popUpIndex;
         private float waitTime = 2f;
 
-         void Start()//이벤트 할당
-        {
-           EventManager.HitFoodBox += TutorPopup;
-            EventManager.UnHitFoodBox += ChangePopup;
-        }
-
-      
-        private void OnDisable()//해제
-        {
-            EventManager.HitFoodBox -= TutorPopup;
-            EventManager.UnHitFoodBox -= ChangePopup;
-        }
+       
          void Update()
         {
             TutorPopup();
