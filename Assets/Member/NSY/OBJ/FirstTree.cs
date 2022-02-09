@@ -14,12 +14,17 @@ public class FirstTree : MonoBehaviour
         EventManager.FristTreeCollder += DropApple;
     }
 
+
+
     private void DropApple()
     {
         Debug.Log("사과 떨어져라");
         Rid.useGravity = true;
 
+    }
 
-
+    private void OnDestroy()
+    {
+        EventManager.FristTreeCollder -= DropApple;
     }
 }
