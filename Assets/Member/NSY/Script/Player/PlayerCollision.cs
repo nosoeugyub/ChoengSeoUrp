@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using NSY.Manager;
+using Game.NPC;
 
 namespace NSY.Player
 {
@@ -39,12 +40,14 @@ namespace NSY.Player
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("NPC"))
+            print("OnTriggerEnter");
+            MainNpc npc = other.GetComponent<MainNpc>();
+            if (npc)
             {
                 triggerObjs = true;
                 triggerObj = other.gameObject;
                 // 이벤트 함수 호출
-               
+                npc.PlayDialog();
 
             }
             InteractObject interactObject = other.GetComponent<InteractObject>();

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using NSY.Manager;
 
 
 namespace Game.NPC
@@ -10,8 +11,13 @@ namespace Game.NPC
 
     public  class NPC : MonoBehaviour
     {
-      
+        [SerializeField]
+        Character characterType;
 
+        public int GetCharacterType()
+        {
+            return (int)characterType;
+        }
         public int id { get; set; }
         public string name { get; set; }
         public bool isID { get; set; }
@@ -38,9 +44,9 @@ namespace Game.NPC
         {
         
         }
-        protected virtual void PlayDierlog()
+        public void PlayDialog()
         {
-
+           SuperManager.Instance.dialogueManager.FirstShowDialog((int)characterType);
         }
         
       

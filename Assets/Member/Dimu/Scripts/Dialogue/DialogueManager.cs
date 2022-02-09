@@ -1,4 +1,5 @@
-﻿using DM.Quest;
+﻿using NSY.Manager;
+using DM.Quest;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
@@ -32,7 +33,7 @@ namespace DM.Dialog
 
         private void Awake()
         {
-            questManager = FindObjectOfType<QuestManager>();
+            questManager = SuperManager.Instance.questmanager;
         }
         void Start()
         {
