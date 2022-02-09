@@ -34,7 +34,7 @@ namespace TT.ObjINTERACT
             if (DistantFromPlayer <= ShowSignPostDistant)
             {
                 CamManager.ChangeFollowTarger(gameObject.transform, 0);
-                if (Input.GetKeyDown(KeyCode.U))
+                if (Input.GetKeyDown(KeyCode.F))
                 {
                     ChangeView();
                 }
