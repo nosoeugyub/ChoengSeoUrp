@@ -65,6 +65,13 @@ namespace NSY.Player
                 
                 return;
             }
+            ////////초반 튜토리얼 오브젝트와 충돌 판정
+            if (other.CompareTag("FristPost"))
+            {
+                Debug.Log("첫 번째 표지판 부딪히고 유아이 띄우셈");
+                EventManager._Instace.StartFirstPost();
+
+            }
             if (other.CompareTag("FristTree"))
             {
                 Debug.Log("첫 번째 나무 부딪히고 사과 떨어짐");
@@ -90,6 +97,11 @@ namespace NSY.Player
             {
                 Debug.Log("나무 이벤트 끝");
                 EventManager._Instace.EndFirstTree();
+            }
+            if (other.CompareTag("FristPost"))
+            {
+                Debug.Log("표지판 이벤트 끝");
+                EventManager._Instace.EndFirstPost();
             }
         }
     }

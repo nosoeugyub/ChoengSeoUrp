@@ -17,7 +17,7 @@ namespace NSY.Manager
         [SerializeField]
         GameObject signpostObj;
 
-
+        //튜토리얼 인덱스
         [SerializeField]
         private int popUpIndex;
         private float waitTime = 2f;
@@ -51,14 +51,17 @@ namespace NSY.Manager
                 if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)
                     || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow))
                 {
-                    StartCoroutine(ZeroTuto());
+                    StartCoroutine(ZeroTuto());//표지판 가는 유아이
                 }
-                StopCoroutine(ZeroTuto());
+                
             }
-            else if(popUpIndex == 1)//표지판 가는 유아이
+            else
+                StopCoroutine(ZeroTuto());
+
+            if(popUpIndex == 2)
             {
      
-                //StartCoroutine(OneTuto());
+                StartCoroutine(OneTuto());
 
             }
         }
@@ -68,9 +71,10 @@ namespace NSY.Manager
             yield return new WaitForSeconds(1f);
             signpostObj.GetComponent<SignPost>().enabled = true;
             yield return new WaitForSeconds(2.7f);
-            popUpIndex =1;
-            yield return new WaitForSeconds(3f);
+            popUpIndex =1;//2번째 유아이 On
+            yield return new WaitForSeconds(2f);
             popUpIndex = -1;
+
         }
 
 
@@ -78,7 +82,7 @@ namespace NSY.Manager
         {
            
              yield return new WaitForSeconds(5f);
-            popUpIndex++;
+            
         }
         IEnumerator SecondTuto()//이벤토리 열라는 튜토리얼 
         {

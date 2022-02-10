@@ -2,12 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Game.Cam;
-
+using NSY.Manager;
 
 namespace TT.ObjINTERACT
 {
     public class SignPost : MonoBehaviour
     {
+
+
+        //NSY ADD Event
+        public GameObject FristPostUi;
+
+
+
+
+
+
+
+        //
+
+
+
        // public bool isinteracting;
         public float ShowSignPostDistant;//F키로 zoomin/zoomout Player와 표지판의 사용할 슈 있는 영역 
         public float AutoZoomTime;
@@ -16,6 +31,10 @@ namespace TT.ObjINTERACT
         CameraManager CamManager;
         void Start()
         {
+            //NSY ADD Event
+            EventManager.FirstPostCollder += ActiveUi;
+            EventManager.UnFirstPostCollder += ActiveUiFalse;
+            //
             ThePlayer = GameObject.FindGameObjectWithTag("Player");
             CamManager = FindObjectOfType<CameraManager>();
 
@@ -33,6 +52,7 @@ namespace TT.ObjINTERACT
             float DistantFromPlayer = Vector3.Distance(transform.position, ThePlayer.transform.position);
             if (DistantFromPlayer <= ShowSignPostDistant)
             {
+
                 CamManager.ChangeFollowTarger(gameObject.transform, 0);
                 if (Input.GetKeyDown(KeyCode.F))
                 {
@@ -55,6 +75,24 @@ namespace TT.ObjINTERACT
                     CamManager.IsZoom = true;
                     break;
             }
+        }
+        /// <summary>
+        /// /////////NSY ADD COde
+        /// </summary>
+        private void ActiveUi()
+        {
+          
+            FristPostUi.SetActive(true);
+        }
+        private void ActiveUiFalse()
+        {
+            FristPostUi.SetActive(false);
+            Debug.Log("꺼짐");
+        }
+        private void OnDestroy()
+        {
+            EventManager.FirstPostCollder -= ActiveUi;
+            EventManager.UnFirstPostCollder -= ActiveUiFalse;
         }
     }
 }
