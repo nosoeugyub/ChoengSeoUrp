@@ -50,18 +50,15 @@ namespace DM.Dialog
             //DialogData.clearSentenceInfo[1] = new Sentence("와~", 0);
             //CreateJsonFile(Application.dataPath, "FirstTalkWithHim", DialogData);
         }
-        public void FirstShowDialog(int charId)//, Transform transform) //첫 상호작용 시 호출
+        public void FirstShowDialog(int charId, Transform transform) //첫 상호작용 시 호출
         {
-            if (isTalking) return;
+            if(isTalking) return;
             isTalking = true;
             nowPartner = charId;  //대화하는 대상을 현재 파트너로 지정
-            //partnerTf = transform;
+            partnerTf = transform;
 
-            if (!PlayerData.npcData.ContainsKey(charId))
-            {
-                PlayerData.npcData.Add(charId, new int());
-            }
-            PlayerData.npcData[charId]++; //charId npc와 1번 상호작용 했다.
+            PlayerData.AddValue(charId,0, PlayerData.npcData);
+            //PlayerData.npcData[charId].amounts[0]++; //charId npc와 1번 상호작용 했다.
 
             StartShowDialog(); //파트너와 진행해야 하는 순서의 대화를 진행
         }
@@ -94,6 +91,7 @@ namespace DM.Dialog
             {
                 Debug.LogError("StartShowDialog :: LoadDialogData fail, no data");
                 dialogUI.SetActive(false);
+                isTalking = false;
                 return;
             }
             else if (questManager.IsQuestAccepted(nowDialogData.questId, nowPartner))//진행해야 하는 퀘 수락중인지?
@@ -113,6 +111,7 @@ namespace DM.Dialog
             {
                 Debug.LogError("StartShowDialog :: nothing else");
                 dialogUI.SetActive(false);
+                isTalking = false;
                 return;
             }
 

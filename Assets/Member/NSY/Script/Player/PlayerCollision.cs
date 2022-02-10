@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using NSY.Manager;
 using Game.NPC;
+using DM.Building;
 
 namespace NSY.Player
 {
@@ -48,14 +49,21 @@ namespace NSY.Player
                 triggerObj = other.gameObject;
                 // 이벤트 함수 호출
                 npc.PlayDialog();
-
+                return;
             }
             InteractObject interactObject = other.GetComponent<InteractObject>();
             if (interactObject)
             {
                 interactObject.DropItems();
                 print("spawn" + other.name);
-
+                return;
+            }
+            BuildingObject buildingObject = other.GetComponent<BuildingObject>();
+            if(buildingObject)
+            {
+                PlayerData.AddValue(buildingObject.BuildID(),(int)BuildingBehaviorEnum.Interact,PlayerData.BuildBuildingData);
+                
+                return;
             }
             if (other.CompareTag("FristTree"))
             {

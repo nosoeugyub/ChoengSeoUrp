@@ -46,7 +46,7 @@ namespace Game.NPC
         }
         public void PlayDialog()
         {
-           SuperManager.Instance.dialogueManager.FirstShowDialog((int)characterType);
+           SuperManager.Instance.dialogueManager.FirstShowDialog((int)characterType, transform);
         }
         
       

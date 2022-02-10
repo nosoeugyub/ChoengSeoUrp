@@ -49,21 +49,16 @@ namespace DM.Quest
 
         public void InitData() //퀘스트에 필요한 항목을 현재 플레이어 데이터 값으로 초기화
         {
+
             foreach (QuestTask building in tasks.builds)
             {
-                if (!PlayerData.BuildBuildingData.ContainsKey(building.objType))
-                {
-                    PlayerData.BuildBuildingData.Add(building.objType, new int());
-                }
-                building.initData = PlayerData.BuildBuildingData[building.objType];
+                PlayerData.AddDictionary(building.objType, PlayerData.BuildBuildingData);
+                building.initData = PlayerData.BuildBuildingData[building.objType].amounts[building.behaviorType];
             }
 
             foreach (QuestTask item in tasks.items)
             {
-                if (!PlayerData.ItemData.ContainsKey(item.objType))
-                {
-                    PlayerData.ItemData.Add(item.objType, new ItemBehavior());
-                }
+                PlayerData.AddDictionary(item.objType, PlayerData.ItemData);
                 item.initData = PlayerData.ItemData[item.objType].amounts[item.behaviorType];
             }
         }
@@ -73,10 +68,10 @@ namespace DM.Quest
             {
                 foreach (QuestTask building in tasks.builds)
                 {
-                    if (!PlayerData.BuildBuildingData.ContainsKey(building.objType)) PlayerData.BuildBuildingData.Add(building.objType, new int());
-                    Debug.Log(string.Format("fin: {0}, now: {1}", building.finishData, PlayerData.BuildBuildingData[building.objType] - building.initData));
+                    PlayerData.AddDictionary(building.objType, PlayerData.BuildBuildingData);
+                    Debug.Log(string.Format("fin: {0}, now: {1}", building.finishData, PlayerData.BuildBuildingData[building.objType].amounts[building.behaviorType] - building.initData));
 
-                    if (building.finishData > PlayerData.BuildBuildingData[building.objType] - building.initData)
+                    if (building.finishData > PlayerData.BuildBuildingData[building.objType].amounts[building.behaviorType] - building.initData)
                     {
                         return false;
                     }
@@ -86,7 +81,7 @@ namespace DM.Quest
             {
                 foreach (QuestTask item in tasks.items)
                 {
-                    if (!PlayerData.ItemData.ContainsKey(item.objType)) PlayerData.ItemData.Add(item.objType, new ItemBehavior());
+                    PlayerData.AddDictionary(item.objType, PlayerData.ItemData);
                     Debug.Log(string.Format("fin: {0}, now: {1}", item.finishData, PlayerData.ItemData[item.objType].amounts[item.behaviorType] - item.initData));
 
                     if (item.finishData > PlayerData.ItemData[item.objType].amounts[item.behaviorType] - item.initData)
@@ -99,10 +94,10 @@ namespace DM.Quest
             {
                 foreach (QuestTask npc in tasks.npcs)
                 {
-                    if (!PlayerData.ItemData.ContainsKey(npc.objType)) PlayerData.ItemData.Add(npc.objType, new ItemBehavior());
-                    Debug.Log(string.Format("fin: {0}, now: {1}", npc.finishData, PlayerData.npcData[npc.objType] - npc.initData));
+                    PlayerData.AddDictionary(npc.objType, PlayerData.npcData);
+                    Debug.Log(string.Format("fin: {0}, now: {1}", npc.finishData, PlayerData.npcData[npc.objType].amounts[npc.behaviorType] - npc.initData));
 
-                    if (npc.finishData > PlayerData.npcData[npc.objType] - npc.initData)
+                    if (npc.finishData > PlayerData.npcData[npc.objType].amounts[0] - npc.initData)
                     {
                         return false;
                     }
@@ -112,10 +107,10 @@ namespace DM.Quest
             {
                 foreach (QuestTask location in tasks.locations)
                 {
-                    if (!PlayerData.ItemData.ContainsKey(location.objType)) PlayerData.ItemData.Add(location.objType, new ItemBehavior());
-                    Debug.Log(string.Format("fin: {0}, now: {1}", location.finishData, PlayerData.loactionData[location.objType] - location.initData));
+                    PlayerData.AddDictionary(location.objType, PlayerData.locationData);
+                    Debug.Log(string.Format("fin: {0}, now: {1}", location.finishData, PlayerData.locationData[location.objType].amounts[location.behaviorType] - location.initData));
 
-                    if (location.finishData > PlayerData.loactionData[location.objType] - location.initData)
+                    if (location.finishData > PlayerData.locationData[location.objType].amounts[0] - location.initData)
                     {
                         return false;
                     }

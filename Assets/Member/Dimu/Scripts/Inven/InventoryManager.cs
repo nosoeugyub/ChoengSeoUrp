@@ -43,10 +43,11 @@ namespace DM.Inven
         }
         public bool AddItem(Item item, int howmuch) //add 성공 여부를 리턴.
         {
-            if (!PlayerData.ItemData.ContainsKey((int)item.ItemType))
-            {
-                PlayerData.ItemData.Add((int)item.ItemType, new ItemBehavior());
-            }
+            //if (!PlayerData.ItemData.ContainsKey((int)item.ItemType))
+            //{
+            //    PlayerData.ItemData.Add((int)item.ItemType, new ItemBehavior());
+            //}
+            //PlayerData.AddDictionary((int)item.ItemType, PlayerData.ItemData);
 
             if (!CanAddItem())
             {
