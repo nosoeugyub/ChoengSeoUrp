@@ -58,6 +58,12 @@ namespace NSY.Player
                 print("spawn" + other.name);
                 return;
             }
+            ItemObject io = other.GetComponent<ItemObject>();
+            if (io)
+            {
+                io.AddItem();
+                return;
+            }
             BuildingObject buildingObject = other.GetComponent<BuildingObject>();
             if(buildingObject)
             {
