@@ -12,8 +12,15 @@ namespace NSY.Manager
         //싱글턴
         private EventManager() { }
         private static EventManager _instace = null;
-        
-        //이벤트 델리게이트 ,초반 튜토리얼
+
+        //이벤트 델리게이트, 표지판 튜토리얼
+        public delegate void StartSignPost();
+        public static event StartSignPost FirstPostCollder;
+
+        public delegate void EndSignPost();
+        public static event EndSignPost UnFirstPostCollder;
+
+        //이벤트 델리게이트 ,사과나무초반 튜토리얼
         public delegate void StartTreeTutor();
         public static event StartTreeTutor FristTreeCollder;
 
@@ -38,6 +45,23 @@ namespace NSY.Manager
                 _instace = value;
             }
         }
+        //표지판 첫 퀘스트
+        public void StartFirstPost()
+        {
+            if (FirstPostCollder != null)
+            {
+                FirstPostCollder();
+            }
+        }
+        public void EndFirstPost()
+        {
+            if (UnFirstPostCollder != null)
+            {
+                UnFirstPostCollder();
+            }
+        }
+
+        //사과나무 첫 퀘스트
         public void StartFirstTree()
         {
             if (FristTreeCollder != null)

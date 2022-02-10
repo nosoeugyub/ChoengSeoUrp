@@ -5,17 +5,28 @@ using UnityEngine;
 public class PopUpPosition : MonoBehaviour
 {
     [SerializeField] public Transform Playertransform;
-    [SerializeField] public Transform Box;
+    //초반 튜토리얼 구간
+    //표지판
+    [SerializeField] public Transform FristPost;
+    public GameObject PopUpPost;
+    //사과나무
+    [SerializeField] public Transform FristApple;
+    public GameObject PopUpApple;
+
+
+
+
     [SerializeField] Vector3 Uioffset;
     [SerializeField] Vector3 PlayTransUioffset;
-    public GameObject PopUpBox;
-    public GameObject PopUpTuto001;
+    
+    //public GameObject PopUpTuto001;
 
     // Update is called once per frame
     void Update()
     {
-        PopUpBox.transform.position = Camera.main.WorldToScreenPoint(Box.position + Uioffset);
-        PopUpTuto001.transform.position = Camera.main.WorldToScreenPoint(Playertransform.position + PlayTransUioffset);
+        PopUpPost.transform.position = Camera.main.WorldToScreenPoint(Playertransform.position + Uioffset);
+        PopUpApple.transform.position = Camera.main.WorldToScreenPoint(FristApple.position + Uioffset);
+       
 
     }
 }

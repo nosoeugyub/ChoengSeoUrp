@@ -11,19 +11,24 @@ namespace TT.ObjINTERACT
     public class InteractObject : MonoBehaviour
     {
         public bool isinteracting;
-        public float ShowUIDistant;
-        [SerializeField] Transform ItemUI;
-        public GameObject prefabUi;
-        private GameObject TutUi=null;
-        [SerializeField] Vector3 ItemUiOffset;
+       // public float ShowSignPostDistant;
 
+        /// Tutorial UI part
+        //public float ShowUIDistant;
+        //[SerializeField] Transform ItemUI;
+        //public GameObject prefabUi;
+        //private GameObject TutUi = null;
+        //[SerializeField] Vector3 ItemUiOffset;
+        //public bool TutUIisOn;
+        ///
         private GameObject ThePlayer;
-        public bool TutUIisOn;
+        
+
         InteractUI InteractUI;
         CameraManager CamManager;
         void Start()
         {
-            TutUIisOn = false;
+            //TutUIisOn = false;
             ThePlayer =GameObject.FindGameObjectWithTag("Player");
             InteractUI = FindObjectOfType<InteractUI>();
             CamManager = FindObjectOfType<CameraManager>();
@@ -34,55 +39,55 @@ namespace TT.ObjINTERACT
              
             float DistantFromPlayer = Vector3.Distance(transform.position, ThePlayer.transform.position);
 
-            if (ItemUI.childCount > 0)
-            {
-                TutUi.transform.position = Camera.main.WorldToScreenPoint(transform.position+ ItemUiOffset);
+            //if (ItemUI.childCount > 0)
+            //{
+            //    TutUi.transform.position = Camera.main.WorldToScreenPoint(transform.position+ ItemUiOffset);
 
 
 
-                float UiScaleValue = Vector3.Distance(transform.position, ThePlayer.transform.position);
-                UiScaleValue = Mathf.Clamp(UiScaleValue, 0.1f, 0.5f);
-                TutUi.transform.localScale = new Vector3(UiScaleValue, UiScaleValue, 0);
+            //    float UiScaleValue = Vector3.Distance(transform.position, ThePlayer.transform.position);
+            //    UiScaleValue = Mathf.Clamp(UiScaleValue, 0.1f, 0.5f);
+            //    TutUi.transform.localScale = new Vector3(UiScaleValue, UiScaleValue, 0);
 
-                if (DistantFromPlayer > ShowUIDistant)
-                {
-                    //InteractUI.UnshowPlayerInteract();
+            //    if (DistantFromPlayer > ShowUIDistant)
+            //    {
+            //        //InteractUI.UnshowPlayerInteract();
 
-                    UnshowItemUi();
-                    TutUIisOn = false;
-                }
+            //        UnshowItemUi();
+            //        TutUIisOn = false;
+            //    }
 
-                if (DistantFromPlayer < 1.0f)
-                {
-                    UnshowItemUi();
-                    TutUIisOn = false;
-                }    
+            //    if (DistantFromPlayer < 1.0f)
+            //    {
+            //        UnshowItemUi();
+            //        TutUIisOn = false;
+            //    }    
 
 
-            }
+            //}
 
-            if (ItemUI.childCount <= 0)
-            {
-                if (DistantFromPlayer <= ShowUIDistant && DistantFromPlayer >= 1.0f)
-                {
+            //if (ItemUI.childCount <= 0)
+            //{
+            //    if (DistantFromPlayer <= ShowUIDistant && DistantFromPlayer >= 1.0f)
+            //    {
 
-                    if (!TutUIisOn)
-                    {
-                        //if(!InteractUI.onInteractTrigger)
-                        //{ InteractUI.ShowPlayerInteract();
-                        //  }
+            //        if (!TutUIisOn)
+            //        {
+            //            //if(!InteractUI.onInteractTrigger)
+            //            //{ InteractUI.ShowPlayerInteract();
+            //            //  }
             
-                        ShowItemInteract();
-                        TutUIisOn = true;
-                    }
+            //            ShowItemInteract();
+            //            TutUIisOn = true;
+            //        }
 
-                }
-                if(DistantFromPlayer>ShowUIDistant)
-                {
+            //    }
+            //    if(DistantFromPlayer>ShowUIDistant)
+            //    {
 
-                }
+            //    }
 
-             }
+            // }
             //////////////////////////////////////////////////////////////// Object 뷰에 카메라 바꿈--Sample
             //if (Input.GetKey(KeyCode.U))
             //{
@@ -91,17 +96,18 @@ namespace TT.ObjINTERACT
             ////////////////////////////////////////////////////////////////
         }
        
-        void ShowItemInteract()
-        {
-            TutUi = Instantiate(prefabUi, ItemUI.transform);
-        }
-        void UnshowItemUi()
-        {
-            foreach (Transform child in ItemUI.transform)
-            {
-                GameObject.Destroy(child.gameObject);
-            }
-        }    
+        ///Show/Unshow ItemUI
+        //void ShowItemInteract()
+        //{
+        //    TutUi = Instantiate(prefabUi, ItemUI.transform);
+        //}
+        //void UnshowItemUi()
+        //{
+        //    foreach (Transform child in ItemUI.transform)
+        //    {
+        //        GameObject.Destroy(child.gameObject);
+        //    }
+        //}    
     }
 }
 

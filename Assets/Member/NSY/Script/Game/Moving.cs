@@ -18,9 +18,11 @@ namespace Game.Move
             CharControl.Move(Destination);
         }
 
-        public void Distance(float Dis , GameObject Player , GameObject Target)
+        public float Distance(float Dis , GameObject Player , GameObject Target)
         {
             Dis = Vector3.Distance(Player.transform.position, Target.transform.position);
+
+            return Dis;
         }
 
     }
