@@ -5,6 +5,10 @@ namespace NSY.Player
 {
     public class PlayerMoveMent : MonoBehaviour
     {
+        //플립
+        [SerializeField]
+        SpriteRenderer spriterender;
+
         [SerializeField]
         PlayerController playerController;
         float Mass = 10;
@@ -27,6 +31,7 @@ namespace NSY.Player
         private void Start()
         {
             CamManager = FindObjectOfType<CameraManager>();
+           // spriterender = GetComponent<SpriteRenderer>();
         }
         public void FixedUpdate()
         {
@@ -34,6 +39,7 @@ namespace NSY.Player
             if (!CamManager.IsZoom)
             {
                 Move();
+                Flip();
             }
 
             idle();
@@ -46,6 +52,7 @@ namespace NSY.Player
         {
             Vector2 MoveDelta = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
             isMove = MoveDelta.magnitude != 0; // 0이면 이동입력이 없는것 
+            playerController.SpritePlayerAnim.SetBool("isWalk", isMove);
             if (isMove)
             {
 
@@ -80,6 +87,22 @@ namespace NSY.Player
             playerController.characterCtrl.Move(move * Time.deltaTime);
             
 
+        }
+
+        public void Flip()
+        {
+            float FlipMove = Input.GetAxisRaw("Horizontal");
+            bool facingRight = true;
+            facingRight = !facingRight;
+            if (FlipMove>0)
+            {
+                spriterender.flipX = false;
+            }
+            else if(FlipMove< 0)
+            {
+                spriterender.flipX = true;
+            }
+           
         }
 
     }

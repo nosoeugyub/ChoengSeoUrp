@@ -28,14 +28,13 @@ namespace NSY.Player
         public float PlayerSpeed;
         internal string CurrentState;
 
-        private void Awake()
-        {
-           
-        }
-        private void OnDestroy()
-        {
-           
-        }
+        //스프라이트 애니메이션
+
+       public Animator SpritePlayerAnim;
+       public Animator GamePlayerAnim;
+
+
+       
         // Start is called before the first frame update
         void Start()
         {
