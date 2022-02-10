@@ -29,8 +29,8 @@ namespace DM.Inven
 
         private void Update()
         {
-          //  if (Input.GetKeyDown(KeyCode.I))
-            //    OnOffInventoryUI();
+          if (Input.GetKeyDown(KeyCode.I))
+              OnOffInventoryUI();
         }
         public void OnOffInventoryUI()
         {
@@ -72,6 +72,8 @@ namespace DM.Inven
             itemslots[item].AddValue(howmuch);
             storageSpace += howmuch;
             UpdateStorageText();
+            PlayerData.AddValue((int)item.ItemType, (int)ItemBehaviorEnum.GetItem, PlayerData.ItemData);
+
         }
 
         public void DeleteItem(Item item, int howmuch) //템삭제
