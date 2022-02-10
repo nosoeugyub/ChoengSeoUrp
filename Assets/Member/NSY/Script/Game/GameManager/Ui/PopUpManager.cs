@@ -6,7 +6,7 @@ using UnityEngine;
 public class PopUpManager : MonoBehaviour
 {
    // public PopupUI _inventroyPopup;
-    public PopupUI _BuildPopup;
+   // public PopupUI _BuildPopup;
     public PopupUI _ivenPopup;
 
 
@@ -41,7 +41,7 @@ public class PopUpManager : MonoBehaviour
         }
         //단축키를 눌렀을때
         ToggleKeyDownAction(inventoryKey, _ivenPopup);
-        ToggleKeyDownAction(BuildKey, _BuildPopup);
+       // ToggleKeyDownAction(BuildKey, _BuildPopup);
     }
     /// <summary>
     /// Prive 함수들====================================
@@ -51,7 +51,7 @@ public class PopUpManager : MonoBehaviour
     {   // 1. 리스트 초기화
         _allPopupList = new List<PopupUI>()
             {
-                _ivenPopup, _BuildPopup
+                _ivenPopup
             };
 
         // 2. 모든 팝업에 이벤트 등록
