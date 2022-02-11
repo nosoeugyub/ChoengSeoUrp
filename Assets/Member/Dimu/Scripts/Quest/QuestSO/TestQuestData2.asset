@@ -15,19 +15,20 @@ MonoBehaviour:
   questID: 0
   npcID: 1
   interactNpcID: 2
-  questName: "\uAC74\uCD95\uBB3C \uC124\uCE58"
-  description: "\uAC74\uCD95\uBB3C\uC744  \uC124\uCE58\uD574\uB77C!"
+  questName: "\uD1A0\uB07C\uC5D0\uAC8C \uB9D0\uAC78\uAE30"
+  description: "\uD1A0\uB07C\uC5D0\uAC8C \uB9D0\uC744 \uAC78\uC73C"
   TaskImg:
   - {fileID: 21300000, guid: c78f98549216e5d498f37baebc8c0078, type: 3}
   tasks:
-    builds:
-    - objType: 1
+    builds: []
+    items: []
+    npcs:
+    - objType: 2
       behaviorType: 0
       finishData: 1
       initData: 0
-    items: []
-    npcs: []
     locations: []
   requirements:
-    requireQuests: []
+    requireQuests:
+    - {fileID: 11400000, guid: 9d9b61eeacd91e8479c29a6a7a04dd41, type: 2}
     requireLevel: 0
