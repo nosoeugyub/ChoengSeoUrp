@@ -28,7 +28,7 @@ namespace Game.Cam
         }
 
         // Update is called once per frame
-        void Update()
+        void LateUpdate()
         {
             //Vector3 desiredPosition = target.position + offset;
             //Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothedSpeed);
@@ -66,7 +66,7 @@ namespace Game.Cam
             transform.localRotation = Quaternion.AngleAxis(XRotangle, Vector3.up);
             XRotangle = Mathf.Clamp(XRotangle, MinRotX, MaxRotX);
 
-            target.localRotation = Quaternion.AngleAxis(XRotangle, Vector3.up);
+           // target.localRotation = Quaternion.AngleAxis(XRotangle, Vector3.up);
         }
 
         void CameraCornerRotate()
