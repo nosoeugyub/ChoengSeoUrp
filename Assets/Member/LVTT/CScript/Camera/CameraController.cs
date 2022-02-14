@@ -65,7 +65,7 @@ namespace Game.Cam
             XRotangle += Input.GetAxisRaw("Horizontal") * (-RotateXSpeed) * -Time.deltaTime;
             transform.localRotation = Quaternion.AngleAxis(XRotangle, Vector3.up);
             XRotangle = Mathf.Clamp(XRotangle, MinRotX, MaxRotX);
-
+            
            // target.localRotation = Quaternion.AngleAxis(XRotangle, Vector3.up);
         }
 
