@@ -19,7 +19,7 @@ public class FrutStateManager : MonoBehaviour
     FruitState currentState;
     //각각상태의 스크립트 초기화
    public   IdleState idlestate = new IdleState();
-  
+    public WholeState wholeState = new WholeState();
 
 
     private void Start()
