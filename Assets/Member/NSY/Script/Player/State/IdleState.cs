@@ -18,6 +18,11 @@ namespace NSY.PlayerState
 
         }
 
+        public override void CollisionEnter(FrutStateManager state, Collision collision)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public override void EnterState(FrutStateManager state)
         {
             state.transform.localScale = StartApplesize;

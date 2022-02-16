@@ -47,6 +47,9 @@ public class FrutStateManager : MonoBehaviour
 
     }
 
-  
+    public void OnCollisionEnter(Collision collision)
+    {
+        currentState.CollisionEnter(this, collision);
+    }
 
 }
