@@ -22,7 +22,7 @@ namespace NSY.Manager
         public QuestManager questmanager;
         public DialogueManager dialogueManager;
         public InventoryManager inventoryManager;
-        public PlayerStateManager playerStatemanager;
+       
 
         public static SuperManager Instance
         {
