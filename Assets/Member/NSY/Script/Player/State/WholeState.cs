@@ -38,7 +38,7 @@ namespace NSY.PlayerState
         public override void UpdateState(FrutStateManager state)
         {
 
-            isFruitDrop = true;
+                isFruitDrop = true;
                 Debug.Log("열매 하강!");
                 state.GetComponent<Rigidbody>().useGravity = isFruitDrop;
             
