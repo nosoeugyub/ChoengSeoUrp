@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using Game.Cam;
-
+using TT.MapTravel;
 namespace NSY.Player
 {
     public class PlayerMoveMent : MonoBehaviour
@@ -20,10 +20,11 @@ namespace NSY.Player
 
         internal bool isMove;
 
-        
+
         //곡선
-        [Header("곡선 벡터")]
-        public GameObject PlayerObjec;
+        [Header("텔레포트")]
+         MapTravel maptravel;
+
 
 
 
@@ -43,10 +44,16 @@ namespace NSY.Player
             }
 
             idle();
-
+           // if (Input.GetKey(KeyCode.Z))
+           // {
+            //    Tele();
+           // }
         }
-
-
+       // public GameObject TransZero;
+       // void Tele()
+       // {
+        //    transform.position = new Vector3(TransZero.transform.position.x , TransZero.transform.position.y , TransZero.transform.position.z);
+       // }
 
         protected void Move()
         {
@@ -65,7 +72,10 @@ namespace NSY.Player
                 Vector3 CurVec = MoveVec;
                 Vector3 movement = (CurVec + idleMove) * Time.deltaTime;
                playerController.characterCtrl.Move(movement);
+                //CurVec에 MapTravel 백터를 수정하시면 됩니다.
+             
             }
+         
             else
                 playerController.characterCtrl.Move(idleMove);
 
