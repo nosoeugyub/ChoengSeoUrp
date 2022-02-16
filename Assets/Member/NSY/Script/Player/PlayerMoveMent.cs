@@ -39,7 +39,7 @@ namespace NSY.Player
             if (!CamManager.IsZoom)
             {
                 Move();
-                Flip();
+               Flip();
             }
 
             idle();
@@ -64,7 +64,7 @@ namespace NSY.Player
                 transform.forward = lookForward;
                 Vector3 CurVec = MoveVec;
                 Vector3 movement = (CurVec + idleMove) * Time.deltaTime;
-                playerController.characterCtrl.Move(movement);
+               playerController.characterCtrl.Move(movement);
             }
             else
                 playerController.characterCtrl.Move(idleMove);
