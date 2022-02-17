@@ -22,7 +22,7 @@ public class FrutStateManager : MonoBehaviour
     public WholeState wholeState = new WholeState();
 
 
-    private void Start()
+    private void OnEnable()
     {
 
         currentState = idlestate; //초기 상태
@@ -30,6 +30,10 @@ public class FrutStateManager : MonoBehaviour
 
       
 
+    }
+    private void OnDisable()
+    {
+        ObjectPooling.ReturnToPool(gameObject);
     }
     private void Update()
     {

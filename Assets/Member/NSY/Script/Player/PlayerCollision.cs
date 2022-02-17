@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using NSY.Manager;
+using NSY.PlayerState;
 using Game.NPC;
 using DM.Building;
 
@@ -22,7 +23,7 @@ namespace NSY.Player
 
 
         //열매 상태
-        FrutStateManager state;
+       
 
         private void Update()
         {
@@ -92,10 +93,10 @@ namespace NSY.Player
             //과일나무랑 만남
             if (other.CompareTag("FruitTree"))
             {
-                
-                //이벤트 함수 적어놀예정
-                EventManager._Instace.PlayerActiveFruitTree(state);
-                Debug.Log("열매 떨어져!");
+
+                Debug.Log("이벤트시작");
+                EventManager._Instace.PlayerActiveFruitTree();
+              
             }
 
         }
