@@ -21,17 +21,17 @@ namespace NSY.Player
         internal bool isMove;
 
 
-        //곡선
-        [Header("텔레포트")]
-         MapTravel maptravel;
 
 
 
 
+        MapTravel MapTravel;
         CameraManager CamManager;
         private void Start()
         {
+            MapTravel = FindObjectOfType<MapTravel>();
             CamManager = FindObjectOfType<CameraManager>();
+
            // spriterender = GetComponent<SpriteRenderer>();
         }
         public void FixedUpdate()
@@ -44,16 +44,23 @@ namespace NSY.Player
             }
 
             idle();
-           // if (Input.GetKey(KeyCode.Z))
-           // {
-            //    Tele();
-           // }
+            if (Input.GetKey(KeyCode.Z))
+            {
+                TravelToArea(1);
+            }
         }
-       // public GameObject TransZero;
-       // void Tele()
-       // {
+        // public GameObject TransZero;
+        // void Tele()
+        // {
         //    transform.position = new Vector3(TransZero.transform.position.x , TransZero.transform.position.y , TransZero.transform.position.z);
-       // }
+        // }
+
+        void TravelToArea(int AreaNum)
+        {
+            Vector3 newPos = MapTravel.AreaList[AreaNum].transform.position;
+            newPos.y = transform.position.y;
+            transform.position = newPos;
+        }
 
         protected void Move()
         {

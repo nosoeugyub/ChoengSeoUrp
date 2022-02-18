@@ -16,10 +16,10 @@ namespace TT.MapTravel
         // Update is called once per frame
         void Update()
         {
-            if (Input.GetKey(KeyCode.U))
-            {
-                TravelToArea(0);
-            }
+            //if (Input.GetKey(KeyCode.U))
+            //{
+            //    TravelToArea(0);
+            //}
         }
 
         void TravelToArea(int AreaNum)
