@@ -159,6 +159,7 @@ namespace DM.Dialog
                         break;
                 }
             }
+            //수락 시 이벤트가 있다면 진행
         }
 
         private void CloseDialog()

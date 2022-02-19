@@ -33,6 +33,7 @@ namespace DM.Quest
 
             nowQuestData.InitData();
             acceptQuests.Add(nowQuestData, qui);
+
         }
         public bool ClearQuest(int questId, int npcID) //퀘스트 클리어하기
         {
