@@ -12,7 +12,6 @@ namespace Game.NPC
         public void CanInteract(GameObject player)
         {
             PlayerInput.OnPressFDown = Interact;
-
         }
 
         public void EndInteract() { }

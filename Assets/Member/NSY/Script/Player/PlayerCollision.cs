@@ -75,14 +75,6 @@ namespace NSY.Player
             {
                 interacts.Remove(interactable);
             }
-
-            if (other.CompareTag("NPC"))
-            {
-                triggerObjs = false;
-                triggerObj = null;
-                //종료 함수
-
-            }
             if (other.CompareTag("FristTree"))
             {
                 Debug.Log("나무 이벤트 끝");
@@ -128,38 +120,8 @@ namespace NSY.Player
             }
 
         }
-
-
-
-
-
-
-
-        
-        public GameObject triggerObj;
-        private bool trigger;
-        private bool triggerObjs;
         //열매 상태
         FrutStateManager state;
-
-        //private void Update()
-        //{
-        //    //상호작용하면 불러올 함수들
-        //    if (triggerObjs)
-        //    {
-               
-        //        if (playerController.playerinput.interectObj == true)
-        //        {
-        //            Debug.Log("오브젝트와 충돌됐고 F키를 눌렀다.");
-                    
-        //        }
-
-        //    }
-        //    else
-        //    {
-        //      //  SuperManager.Instance.uimanager.FoodBoxUi.SetActive(false);
-        //    }
-        //}
     }
 
 }

@@ -28,6 +28,12 @@ namespace NSY.Manager
         public static event EndTreeTutor UnFristTreeCollder;
         //==
 
+        public static Action[] EventActions = new Action[2];
+        public static Action EventAction;
+        //EventAction 는 항상 실행중.
+        //이벤트 바로 넣기 >> EventActions[0] = ~~~;
+        //이벤트 실행 >>      EventAction += EventActions[0];
+        //이벤트 종료 >>      EventAction -= EventActions[0];
 
         //일반 과일나무와 상호작용 했을띠
         FrutStateManager state;
@@ -84,7 +90,10 @@ namespace NSY.Manager
             }
         }
 
-
+        private void Update()
+        {
+            EventAction();
+        }
 
         //일반적인 과일나무 상호작용
         public void PlayerActiveFruitTree(FrutStateManager state)

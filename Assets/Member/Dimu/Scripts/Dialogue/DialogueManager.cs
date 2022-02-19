@@ -29,7 +29,7 @@ namespace DM.Dialog
 
         public int nowPartner = -1; //일단 이장 고정
         bool isTalking = false;
-
+        float times = 0;
         QuestManager questManager;
 
         private void Awake()
@@ -38,6 +38,7 @@ namespace DM.Dialog
         }
         void Start()
         {
+            EventManager.EventActions[1] = Test;
             //StartShowDialog("testJson");
 
             //DialogData DialogData = new DialogData(2, 1,1,2);
@@ -49,6 +50,12 @@ namespace DM.Dialog
             //DialogData.clearSentenceInfo[0] = new Sentence("클리어~~", 1);
             //DialogData.clearSentenceInfo[1] = new Sentence("와~", 0);
             //CreateJsonFile(Application.dataPath, "FirstTalkWithHim", DialogData);
+        }
+        public void Test()
+        {
+            print("event test");
+            times += Time.deltaTime;
+            if (times > 3) { EventManager.EventAction -= EventManager.EventActions[1]; }
         }
         public void FirstShowDialog(int charId, Transform transform) //첫 상호작용 시 호출
         {
@@ -132,6 +139,9 @@ namespace DM.Dialog
 
         private void UpdateDialogText(Sentence[] sentences)
         {
+            if (sentences[nowSentenceIdx].eventIdx > 0) 
+                EventManager.EventAction += EventManager.EventActions[sentences[nowSentenceIdx].eventIdx];
+            
             dialogText.text = sentences[nowSentenceIdx].sentence;
             nameText.text = dialogLists[sentences[nowSentenceIdx++].characterId].charName;
         }
@@ -222,6 +232,7 @@ namespace DM.Dialog
     {
         public string sentence;
         public int characterId;
+        public int eventIdx;
 
         public Sentence(string sentence_, int characterId_)
         { sentence = sentence_; characterId = characterId_; }
