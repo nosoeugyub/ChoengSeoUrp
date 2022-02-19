@@ -9,6 +9,9 @@ namespace NSY.Player
         [SerializeField]
         PlayerController playerController;
 
+        public delegate void InputEvent();
+        public static InputEvent OnPressFDown;
+
         //플레이어가 누르는 키입력
         [Space]
         public KeyCode _InputInterBtn = KeyCode.F;
@@ -44,6 +47,12 @@ namespace NSY.Player
             else
             {
                 interectObj = false;
+            }
+
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                print("상호작용");
+                OnPressFDown();
             }
         }
 
