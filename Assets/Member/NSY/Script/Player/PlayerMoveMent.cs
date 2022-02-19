@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using Game.Cam;
-
+using TT.MapTravel;
 namespace NSY.Player
 {
     public class PlayerMoveMent : MonoBehaviour
@@ -20,17 +20,18 @@ namespace NSY.Player
 
         internal bool isMove;
 
-        
-        //곡선
-        [Header("곡선 벡터")]
-        public GameObject PlayerObjec;
 
 
 
+
+
+        MapTravel MapTravel;
         CameraManager CamManager;
         private void Start()
         {
+            MapTravel = FindObjectOfType<MapTravel>();
             CamManager = FindObjectOfType<CameraManager>();
+
            // spriterender = GetComponent<SpriteRenderer>();
         }
         public void FixedUpdate()
@@ -39,14 +40,27 @@ namespace NSY.Player
             if (!CamManager.IsZoom)
             {
                 Move();
-                Flip();
+               Flip();
             }
 
             idle();
-
+            if (Input.GetKey(KeyCode.Z))
+            {
+                TravelToArea(1);
+            }
         }
+        // public GameObject TransZero;
+        // void Tele()
+        // {
+        //    transform.position = new Vector3(TransZero.transform.position.x , TransZero.transform.position.y , TransZero.transform.position.z);
+        // }
 
-
+        void TravelToArea(int AreaNum)
+        {
+            Vector3 newPos = MapTravel.AreaList[AreaNum].transform.position;
+            newPos.y = transform.position.y;
+            transform.position = newPos;
+        }
 
         protected void Move()
         {
@@ -64,8 +78,11 @@ namespace NSY.Player
                 transform.forward = lookForward;
                 Vector3 CurVec = MoveVec;
                 Vector3 movement = (CurVec + idleMove) * Time.deltaTime;
-                playerController.characterCtrl.Move(movement);
+               playerController.characterCtrl.Move(movement);
+                //CurVec에 MapTravel 백터를 수정하시면 됩니다.
+             
             }
+         
             else
                 playerController.characterCtrl.Move(idleMove);
 

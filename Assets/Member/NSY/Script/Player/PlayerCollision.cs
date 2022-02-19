@@ -9,8 +9,8 @@ namespace NSY.Player
 {
     public class PlayerCollision : MonoBehaviour
     {
-        //
-
+       
+        
         [SerializeField]
         PlayerController playerController;
 
@@ -19,12 +19,17 @@ namespace NSY.Player
         private bool trigger;
         private bool triggerObjs;
 
+
+
+        //열매 상태
+        FrutStateManager state;
+
         private void Update()
         {
             //상호작용하면 불러올 함수들
             if (triggerObjs)
             {
-               // SuperManager.Instance.uimanager.FoodBoxUi.SetActive(true);
+               
                 if (playerController.playerinput.interectObj == true)
                 {
                     Debug.Log("오브젝트와 충돌됐고 F키를 눌렀다.");
@@ -83,6 +88,14 @@ namespace NSY.Player
                 Debug.Log("첫 번째 나무 부딪히고 사과 떨어짐");
                 EventManager._Instace.StartFirstTree();
 
+            }
+            //과일나무랑 만남
+            if (other.CompareTag("FruitTree"))
+            {
+                
+                //이벤트 함수 적어놀예정
+                EventManager._Instace.PlayerActiveFruitTree(state);
+                Debug.Log("열매 떨어져!");
             }
 
         }

@@ -25,8 +25,15 @@ namespace NSY.Manager
         public static event StartTreeTutor FristTreeCollder;
 
         public delegate void EndTreeTutor();
-        public static event StartTreeTutor UnFristTreeCollder;
+        public static event EndTreeTutor UnFristTreeCollder;
         //==
+
+
+        //일반 과일나무와 상호작용 했을띠
+        FrutStateManager state;
+
+        public delegate void ActiveFruitTree(FrutStateManager state);
+        public static event ActiveFruitTree activefruittree;
 
 
         public static EventManager _Instace
@@ -74,6 +81,17 @@ namespace NSY.Manager
             if (UnFristTreeCollder != null)
             {
                 UnFristTreeCollder();
+            }
+        }
+
+
+
+        //일반적인 과일나무 상호작용
+        public void PlayerActiveFruitTree(FrutStateManager state)
+        {
+            if (activefruittree != null)
+            {
+                activefruittree(state);
             }
         }
     }   
