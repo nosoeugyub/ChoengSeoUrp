@@ -17,12 +17,12 @@ namespace NSY.Manager
 
         [Header("매니저")]
         public UiManager uimanager;
-        public SoundManager soundmanager;
+        
         public TutorialManager tutorialManager;
         public QuestManager questmanager;
         public DialogueManager dialogueManager;
-        public InventoryManager inventoryManager;
-       
+        public SpawnManager spawnmanager;
+
 
         public static SuperManager Instance
         {
