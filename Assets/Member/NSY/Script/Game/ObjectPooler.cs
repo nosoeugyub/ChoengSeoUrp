@@ -6,7 +6,7 @@ using System;
 #if UNITY_EDITOR
 using UnityEditor;
 
-[CustomEditor(typeof(ObjectPooling))]
+[CustomEditor(typeof(ObjectPooler))]
 public class ObjectPoolerEditor : Editor
 {
 	const string INFO = "풀링한 오브젝트에 다음을 적으세요 \nvoid OnDisable()\n{\n" +
@@ -21,9 +21,9 @@ public class ObjectPoolerEditor : Editor
 }
 #endif
 
-public class ObjectPooling : MonoBehaviour
+public class ObjectPooler : MonoBehaviour
 {
-	static ObjectPooling inst;
+	static ObjectPooler inst;
 	void Awake() => inst = this;
 
 	[Serializable]

@@ -4,13 +4,32 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
+    //리스폰의 속성값
     public Transform[] SpawnPos;
+    public float CurTime;
+    public 
 
-
-  IEnumerator SpawnTrash()
+    private void Update()
     {
-        yield return new WaitForSeconds(10f);
-        GameObject PaperTrash = ObjectPooling.SpawnFromPool("PaperTrash", SpawnPos[0].transform.position);
+       
+        
+            StartCoroutine(SpawnTrash());
+        
        
     }
+
+    IEnumerator SpawnTrash()
+    {
+        yield return new WaitForSeconds(5f);
+        if (CurTime >=)
+        {
+            GameObject PaperTrash = ObjectPooler.SpawnFromPool("PaperTrash", SpawnPos[].transform.position);
+        }
+            
+        
+       
+       
+    }
+
+
 }

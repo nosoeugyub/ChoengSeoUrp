@@ -33,7 +33,7 @@ public class FrutStateManager : MonoBehaviour
     }
     private void OnDisable()
     {
-        ObjectPooling.ReturnToPool(gameObject);
+        ObjectPooler.ReturnToPool(gameObject);
     }
     private void Update()
     {
