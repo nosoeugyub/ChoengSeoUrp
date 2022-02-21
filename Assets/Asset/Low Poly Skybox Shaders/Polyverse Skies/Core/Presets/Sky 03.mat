@@ -9,8 +9,9 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Sky 03
   m_Shader: {fileID: 4800000, guid: 6fc9318f5193c094c98c0d450cd61e3b, type: 3}
-  m_ShaderKeywords: _DISABLEDIRECTIONLIGHT_ON _ENABLECLOUDSROTATION_ON _ENABLESUNMOONMASK_ON
-    _ENABLESUNMOON_ON _ENABLESUN_ON _USECUBEMAP_ON _USEENVIRONMENTGRADIENT_ON _USETEXTURE_ON
+  m_ShaderKeywords: _CLOUDSLITBYSUN_ON _DISABLEDIRECTIONLIGHT_ON _ENABLECLOUDSROTATION_ON
+    _ENABLECLOUDS_ON _ENABLEMOON_ON _ENABLESTARS_ON _ENABLESUNMOONMASK_ON _ENABLESUNMOON_ON
+    _ENABLESUN_ON _USECUBEMAP_ON _USEENVIRONMENTGRADIENT_ON _USETEXTURE_ON
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -29,7 +30,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _CloudsCubemap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 8900000, guid: 5bf545dec997743419de1df4195b3a0d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Cubemap:
@@ -65,7 +66,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MoonTexture:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 4b7b1ce1177cb73438353ee185f82b1d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Normal:
@@ -105,7 +106,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SunTexture:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 0a28a61d877fb69449fdc4b87d968f33, type: 3}
         m_Scale: {x: 0, y: 0}
         m_Offset: {x: 1, y: 1}
     - _Tex:
@@ -162,7 +163,7 @@ Material:
     - _CloudsCat: 1
     - _CloudsHeight: 0.2
     - _CloudsIntensity: 1
-    - _CloudsLitbySun: 0
+    - _CloudsLitbySun: 1
     - _CloudsRotation: 100
     - _CloudsRotationSpeed: 1
     - _Contrast: 0.477
@@ -175,14 +176,14 @@ Material:
     - _DstBlend: 0
     - _Enable1Twinkling: 0
     - _EnableBuiltinFog: 0
-    - _EnableClouds: 0
+    - _EnableClouds: 1
     - _EnableCloudsRotation: 1
     - _EnableDirectionLight: 0
     - _EnableFogMessage: 0
-    - _EnableMoon: 0
+    - _EnableMoon: 1
     - _EnablePatternOverlay: 0
     - _EnableSkyPatternOverlay: 0
-    - _EnableStars: 0
+    - _EnableStars: 1
     - _EnableStarsRotation: 0
     - _EnableStarsTwinkling: 1
     - _EnableSun: 1
@@ -247,7 +248,7 @@ Material:
     - _SunRadoisA: 0.463
     - _SunSize: 0.5
     - _ToggleSwitch0: 0
-    - _TwinklingContrast: 1
+    - _TwinklingContrast: 0.45
     - _TwinklingSpeed: 0.05
     - _UVSec: 0
     - _UseCUBEMAP: 1
