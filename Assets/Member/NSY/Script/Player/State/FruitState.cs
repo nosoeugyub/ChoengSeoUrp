@@ -11,7 +11,7 @@ namespace NSY.PlayerState
         public  abstract  void EnterState(FrutStateManager state);
         public  abstract void UpdateState(FrutStateManager state);
 
-       public abstract void ChangeState(FrutStateManager state);
+       public abstract void EventState(FrutStateManager state);
 
         public abstract void CollisionEnter(FrutStateManager state , Collision collision);
     }

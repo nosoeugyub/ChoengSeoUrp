@@ -11,7 +11,7 @@ public class FrutStateManager : ItemObject, IInteractable
     public WholeState wholeState = new WholeState();
 
 
-    private void Start()
+    private void OnEnable()
     {
 
         currentState = idlestate; //초기 상태
@@ -19,6 +19,10 @@ public class FrutStateManager : ItemObject, IInteractable
 
 
 
+    }
+    private void OnDisable()
+    {
+        ObjectPooler.ReturnToPool(gameObject);
     }
     private void Update()
     {

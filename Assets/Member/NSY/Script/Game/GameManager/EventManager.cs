@@ -38,7 +38,7 @@ namespace NSY.Manager
         //일반 과일나무와 상호작용 했을띠
         FrutStateManager state;
 
-        public delegate void ActiveFruitTree(FrutStateManager state);
+        public delegate void ActiveFruitTree();
         public static event ActiveFruitTree activefruittree;
 
 
@@ -96,11 +96,11 @@ namespace NSY.Manager
         }
 
         //일반적인 과일나무 상호작용
-        public void PlayerActiveFruitTree(FrutStateManager state)
+        public void PlayerActiveFruitTree()
         {
             if (activefruittree != null)
             {
-                activefruittree(state);
+                activefruittree();
             }
         }
     }   
