@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using NSY.Player;
-
+using Game.Cam;
 namespace TT.MapTravel
 {
     public class MapUI : MonoBehaviour
@@ -8,20 +8,23 @@ namespace TT.MapTravel
         [SerializeField] GameObject MapTravelUI;
         bool MapUIisOn;
         PlayerMoveMent PlayerMovement;
-        // Start is called before the first frame update
-        void Start()
+        CameraManager CamManager;
+         void Start()
         {
             MapUIisOn = false;
             PlayerMovement = FindObjectOfType<PlayerMoveMent>();
+            CamManager = FindObjectOfType<CameraManager>();
         }
-
-        // Update is called once per frame
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.M))
-            {
-                OpenandCloseMapUI();
+           if (!CamManager.IsZoom)
+           {
+                if (Input.GetKeyDown(KeyCode.M))
+                {
+                    OpenandCloseMapUI();
+                }
             }
+           
         }
 
        public void OpenandCloseMapUI()

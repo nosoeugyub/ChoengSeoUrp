@@ -33,6 +33,7 @@ namespace NSY.Player
             MapTravel = FindObjectOfType<MapTravel>();
             CamManager = FindObjectOfType<CameraManager>();
             Maptravel = false;
+            curAreaNum = 1;
             //////End of "Zess's code"//////
             
             // spriterender = GetComponent<SpriteRenderer>();
@@ -56,6 +57,9 @@ namespace NSY.Player
                 CharacterTravel();
             }
             //////End of "Zess's code"//////
+
+            
+
         }
 
         //////Zess's code//////
