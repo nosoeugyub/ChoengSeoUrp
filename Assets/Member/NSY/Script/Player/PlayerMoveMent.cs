@@ -19,21 +19,26 @@ namespace NSY.Player
         internal Vector3 MoveVec;
 
         internal bool isMove;
-
-
-
-
-
-
+        //////Zess's code//////
+        [HideInInspector]
+        public int curAreaNum;
+        [HideInInspector]
+        public bool Maptravel;
         MapTravel MapTravel;
         CameraManager CamManager;
+        //////End of "Zess's code"//////
         private void Start()
         {
+            //////Zess's code//////
             MapTravel = FindObjectOfType<MapTravel>();
             CamManager = FindObjectOfType<CameraManager>();
-
-           // spriterender = GetComponent<SpriteRenderer>();
+            Maptravel = false;
+            //////End of "Zess's code"//////
+            
+            // spriterender = GetComponent<SpriteRenderer>();
         }
+
+
         public void FixedUpdate()
         {
 
@@ -44,23 +49,94 @@ namespace NSY.Player
             }
 
             idle();
-            if (Input.GetKey(KeyCode.Z))
+
+            //////Zess's code//////
+            if (Maptravel)
             {
-                TravelToArea(1);
+                CharacterTravel();
+            }
+            //////End of "Zess's code"//////
+        }
+
+        //////Zess's code//////
+        void CharacterTravel()
+        {
+            Maptravel = false;
+            switch (curAreaNum)
+            {
+                case 0:
+                    TravelToOuterArea(0);
+                    break;
+                case 1:
+                    TravelToOuterArea(1);
+                    break;
+                case 2:
+                    TravelToOuterArea(2);
+                    break;
+                case 3:
+                    TravelToOuterArea(3);
+                    break;
+                case 4:
+                    TravelToOuterArea(4);
+                    break;
+                case 5:
+                    TravelToOuterArea(5);
+                    break;
+                case 6:
+                    TravelToOuterArea(6);
+                    break;
+                case 7:
+                    TravelToOuterArea(7);
+                    break;
+                case 8:
+                    TravelToInnerArea(0);
+                    break;
+                case 9:
+                    TravelToInnerArea(1);
+                    break;
+                case 10:
+                    TravelToInnerArea(2);
+                    break;
+                case 11:
+                    TravelToInnerArea(3);
+                    break;
+                case 12:
+                    TravelToInnerArea(4);
+                    break;
+                case 13:
+                    TravelToInnerArea(5);
+                    break;
+                case 14:
+                    TravelToInnerArea(6);
+                    break;
+                case 15:
+                    TravelToInnerArea(7);
+                    break;
+                case 16:
+                    TravelToInnerArea(8);
+                    break;
+                case 17:
+                    TravelToInnerArea(9);
+                    break;
+                case 18:
+                    TravelToInnerArea(10);
+                    break;
             }
         }
-        // public GameObject TransZero;
-        // void Tele()
-        // {
-        //    transform.position = new Vector3(TransZero.transform.position.x , TransZero.transform.position.y , TransZero.transform.position.z);
-        // }
-
-        void TravelToArea(int AreaNum)
+            void TravelToOuterArea(int AreaNum)
         {
-            Vector3 newPos = MapTravel.AreaList[AreaNum].transform.position;
+            Vector3 newPos = MapTravel.OuterAreaList[AreaNum].transform.position;
             newPos.y = transform.position.y;
             transform.position = newPos;
         }
+
+        void TravelToInnerArea(int AreaNum)
+        {
+            Vector3 newPos = MapTravel.InnerAreaList[AreaNum].transform.position;
+            newPos.y = transform.position.y;
+            transform.position = newPos;
+        }
+        //////End of "Zess's code"//////
 
         protected void Move()
         {

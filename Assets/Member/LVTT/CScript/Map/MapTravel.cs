@@ -7,7 +7,8 @@ namespace TT.MapTravel
     {
         public Transform Player;
 
-        public Transform[] AreaList;
+        public Transform[] OuterAreaList;
+        public Transform[] InnerAreaList;
         void Start()
         {
 
@@ -22,12 +23,7 @@ namespace TT.MapTravel
             //}
         }
 
-        void TravelToArea(int AreaNum)
-        {
-            Vector3 newPos = AreaList[AreaNum].transform.position;
-            newPos.y = Player.transform.position.y;
-            Player.transform.position = newPos;
-        }    
+
     }
 }
 
