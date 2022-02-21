@@ -92,7 +92,7 @@ namespace NSY.Manager
 
         private void Update()
         {
-            EventAction();
+            EventAction(); //이벤트 실행 (메서드 없을 때 실행시키지 않는 방법 찾는중)
         }
 
         //일반적인 과일나무 상호작용

@@ -9,9 +9,9 @@ namespace NSY.Player
 {
     public class PlayerCollision : MonoBehaviour
     {
-        [SerializeField] List<IInteractable> interacts = new List<IInteractable>();
-        IInteractable closestObj;
-        public GameObject collisionUI;
+        [SerializeField] List<IInteractable> interacts = new List<IInteractable>();//상호작용 범위 내 있는 IInteractable오브젝트 리스트
+        IInteractable closestObj;//가장 가까운 친구
+        public GameObject collisionUI;//띄울 UI
 
         [SerializeField]
         PlayerController playerController;
@@ -90,6 +90,7 @@ namespace NSY.Player
         {
             LightClosestObj();
         }
+        //가장 가까운 오브젝트 검출
         public void LightClosestObj()
         {
             if (interacts.Count == 0)
@@ -105,6 +106,7 @@ namespace NSY.Player
             Vector3 uiPos = new Vector3(closestObj.ReturnTF().position.x, closestObj.ReturnTF().position.y + 4, closestObj.ReturnTF().position.z);
             collisionUI.transform.position = Camera.main.WorldToScreenPoint(uiPos);
         }
+        //거리 계산
         public void DistChect()
         {
             float shortestDist = 1000000;
