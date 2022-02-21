@@ -64,7 +64,7 @@ namespace NSY.Player
             {
 
                 //이벤트 함수 적어놀예정
-                EventManager._Instace.PlayerActiveFruitTree(state);
+                EventManager._Instace.PlayerActiveFruitTree();
                 Debug.Log("열매 떨어져!");
             }
         }
