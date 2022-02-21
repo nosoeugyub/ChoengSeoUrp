@@ -12,6 +12,10 @@ public class PopUpPosition : MonoBehaviour
     //사과나무
     [SerializeField] public Transform FristApple;
     public GameObject PopUpApple;
+    //인벤토리 열기
+    //미니맵 퀘스트
+    [SerializeField] public Transform FirstMiniMap;
+    public GameObject MiniMap;
 
 
 
@@ -24,9 +28,9 @@ public class PopUpPosition : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        PopUpPost.transform.position = Camera.main.WorldToScreenPoint(Playertransform.position + Uioffset);
+        PopUpPost.transform.position = Camera.main.WorldToScreenPoint(FristPost.position + Uioffset);
         PopUpApple.transform.position = Camera.main.WorldToScreenPoint(FristApple.position + Uioffset);
-       
+        MiniMap.transform.position = Camera.main.WorldToScreenPoint(Playertransform.position + Uioffset);
 
     }
 }
