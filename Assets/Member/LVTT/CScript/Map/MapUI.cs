@@ -19,10 +19,9 @@ namespace TT.MapTravel
         {
            if (!CamManager.IsZoom)
            {
-                if (Input.GetKeyDown(KeyCode.M))
-                {
-                    OpenandCloseMapUI();
-                }
+               
+                 //   OpenandCloseMapUI();
+                
             }
            
         }
