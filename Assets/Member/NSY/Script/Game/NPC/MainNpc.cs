@@ -9,7 +9,7 @@ namespace Game.NPC
         //public  int MainNPCID = 1001;
         //public  bool MainNPCIsid = false;
 
-        public void CanInteract(GameObject player)
+        public void CanInteract()
         {
             PlayerInput.OnPressFDown = Interact;
         }

@@ -22,7 +22,7 @@ public class ItemObject : MonoBehaviour, IInteractable
         AddItem();
     }
 
-    public void CanInteract(GameObject player)
+    public void CanInteract()
     {
         NSY.Player.PlayerInput.OnPressFDown = Interact;
     }

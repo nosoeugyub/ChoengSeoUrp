@@ -95,13 +95,13 @@ namespace NSY.Player
         {
             if (interacts.Count == 0)
             {
-                collisionUI.SetActive(false);
+                //collisionUI.SetActive(false);
                 return;
             }
-            collisionUI.SetActive(true);
+            //collisionUI.SetActive(true);
 
             DistChect();
-            closestObj.CanInteract(playerController.gameObject);
+            closestObj.CanInteract();
 
             Vector3 uiPos = new Vector3(closestObj.ReturnTF().position.x, closestObj.ReturnTF().position.y + 4, closestObj.ReturnTF().position.z);
             collisionUI.transform.position = Camera.main.WorldToScreenPoint(uiPos);
