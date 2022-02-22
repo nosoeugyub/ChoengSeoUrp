@@ -406,12 +406,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 931c6fb662bd9554686b6af80382658b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  partnerTf: {fileID: 0}
   dialogUI: {fileID: 6659301345534230434}
   nextButton: {fileID: 5877507782671720717}
   dialogText: {fileID: 67602702263487560}
   nameText: {fileID: 6684166840314429757}
-  dialogLists: []
-  dialogIdxs: 0000000000000000
+  dialogLists:
+  - charName: "\uCCAD\uC11C"
+    dialogList:
+    - FirstTalkWithMe
+  - charName: "\uC774\uC7A5"
+    dialogList:
+    - FirstTalkWithHim
+    - FirstTalkWithHim2
+  - charName: "\uD1A0\uB07C"
+    dialogList:
+    - "\uC4F0\uB808\uAE30\uB97C\uC8FC\uC6CC\uB77C"
+  dialogIdxs: 000000000000000000000000
   nowPartner: 1
 --- !u!1 &5508273956434393930
 GameObject:

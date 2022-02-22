@@ -29,7 +29,7 @@ namespace DM.Quest
 
             nowQuestData.npcID = npcID;
             GameObject qui = Instantiate(questInfoUI, questInfoMom) as GameObject;
-            UpdateQuestInfoUI(qui, nowQuestData);
+            //UpdateQuestInfoUI(qui, nowQuestData);
 
             nowQuestData.InitData();
             acceptQuests.Add(nowQuestData, qui);
@@ -56,8 +56,8 @@ namespace DM.Quest
                 = string.Format(questData.description);
             qui.transform.Find("ProgressText").GetComponent<Text>().text
                 = string.Format(questData.description);
-            qui.transform.Find("BuildingImg").GetComponent<Image>().sprite
-                = questData.TaskImg[0];
+            //qui.transform.Find("BuildingImg").GetComponent<Image>().sprite
+            //    = questData.TaskImg[0];
         }
 
         public bool CanClear(int questId, int npcID)//퀘스트 클리어 가능한지?
