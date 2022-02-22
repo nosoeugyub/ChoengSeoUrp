@@ -12,6 +12,7 @@ public class ClickManager : MonoBehaviour
     private void Awake()
     {
         layerMask = 1 << LayerMask.NameToLayer("Interactable");
+        //마우스 상호작용 오브젝트는 Interactable 이라는 레이어를 가지고 있어야 합니다.
     }
     private void Update()
     {

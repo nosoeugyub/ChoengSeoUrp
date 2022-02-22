@@ -18,13 +18,13 @@ namespace NSY.Player
 
         public void OnTriggerEnter(Collider other)
         {
-            print("OnTriggerEnter");
-            
-            IInteractable interactable = other.GetComponent<IInteractable>();
-            if (interactable != null)
-            {
-                interacts.Add(interactable);
-            }
+            //print("OnTriggerEnter");
+            //
+            //IInteractable interactable = other.GetComponent<IInteractable>();
+            //if (interactable != null)
+            //{
+            //    interacts.Add(interactable);
+            //}
 
             //InteractObject interactObject = other.GetComponent<InteractObject>();
             //if (interactObject)
@@ -88,7 +88,7 @@ namespace NSY.Player
         }
         public void Update()
         {
-            LightClosestObj();
+            //LightClosestObj();
         }
         //가장 가까운 오브젝트 검출
         public void LightClosestObj()
