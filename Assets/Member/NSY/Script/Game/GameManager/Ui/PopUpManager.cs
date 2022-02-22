@@ -2,10 +2,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TT.MapTravel;
+using Game.Cam;
 public class PopUpManager : MonoBehaviour
 {
-   // public PopupUI _inventroyPopup;
+    //미니맵 컴포넌트
+    CameraManager CamManager;
+
+
+
+    public PopupUI  MapUi;
    // public PopupUI _BuildPopup;
     public PopupUI _ivenPopup;
 
@@ -18,6 +24,7 @@ public class PopUpManager : MonoBehaviour
     [Space]
     public KeyCode EscKey = KeyCode.Escape;
     public KeyCode inventoryKey = KeyCode.I;
+    public KeyCode MiniMapKey = KeyCode.M;
     public KeyCode BuildKey = KeyCode.B;
     private void Awake()
     {
@@ -26,7 +33,10 @@ public class PopUpManager : MonoBehaviour
         InitCloseAll();
         
     }
-
+    private void Start()
+    {
+        CamManager = FindObjectOfType<CameraManager>();
+    }
 
     private void Update()
     {
@@ -41,7 +51,7 @@ public class PopUpManager : MonoBehaviour
         }
         //단축키를 눌렀을때
         ToggleKeyDownAction(inventoryKey, _ivenPopup);
-       // ToggleKeyDownAction(BuildKey, _BuildPopup);
+        ToggleKeyDownAction(MiniMapKey, MapUi);
     }
     /// <summary>
     /// Prive 함수들====================================
@@ -51,7 +61,7 @@ public class PopUpManager : MonoBehaviour
     {   // 1. 리스트 초기화
         _allPopupList = new List<PopupUI>()
             {
-                _ivenPopup
+                _ivenPopup,MapUi
             };
 
         // 2. 모든 팝업에 이벤트 등록
