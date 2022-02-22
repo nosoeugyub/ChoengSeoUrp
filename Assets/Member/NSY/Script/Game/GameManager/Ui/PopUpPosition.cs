@@ -18,7 +18,7 @@ public class PopUpPosition : MonoBehaviour
     public GameObject MiniMap;
 
 
-
+    using  
 
     [SerializeField] Vector3 Uioffset;
     [SerializeField] Vector3 PlayTransUioffset;
