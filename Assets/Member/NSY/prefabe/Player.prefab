@@ -72,9 +72,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4734001088782708369}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ec396d2778c0a64f9566abe281a51cc, type: 3}
+  m_Script: {fileID: 11500000, guid: 07037f9f195549a42b38fc04275c62d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collisionUI: {fileID: 0}
   playerController: {fileID: 4397998359987372906}
 --- !u!1 &4734001089623499144
 GameObject:
@@ -150,6 +151,8 @@ MonoBehaviour:
   characterCtrl: {fileID: 4734001089623499157}
   maincamera: {fileID: 0}
   PlayerSpeed: 1.2
+  SpritePlayerAnim: {fileID: 0}
+  GamePlayerAnim: {fileID: 0}
 --- !u!114 &5777408093625932307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,7 +165,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1afcb1600d21dcb41af1e96047463d13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spriterender: {fileID: 0}
   playerController: {fileID: 4397998359987372906}
+  curAreaNum: 0
+  Maptravel: 0
 --- !u!114 &406097229730921028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,8 +182,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 4397998359987372906}
-  _GetItem: 101
-  _GetNPC: 32
+  _InputInterBtn: 102
 --- !u!114 &9200458234349053941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,7 +259,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 76c93d8fb8597ec4c8677bd8d4605c8b, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

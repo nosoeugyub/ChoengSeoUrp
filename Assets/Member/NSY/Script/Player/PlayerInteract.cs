@@ -32,6 +32,7 @@ namespace NSY.Player
             IInteractable interactable = other.GetComponent<IInteractable>();
             if (interactable != null)
             {
+                Debug.Log("interact true");
                 canInteract = true;
             }
             ////////초반 튜토리얼 오브젝트와 충돌 판정
@@ -61,6 +62,7 @@ namespace NSY.Player
             IInteractable interactable = other.GetComponent<IInteractable>();
             if (interactable != null)
             {
+                Debug.Log("interact false");
                 canInteract = false;
             }
 

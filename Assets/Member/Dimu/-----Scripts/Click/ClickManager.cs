@@ -6,12 +6,12 @@ public class ClickManager : MonoBehaviour
     //IInteractable interactable;
     public GameObject collisionUI;//띄울 UI
 
-    int layerMask;   // Player 레이어만 충돌 체크함
-    private void Awake()
-    {
-        layerMask = 1 << LayerMask.NameToLayer("Interactable");
-        //마우스 상호작용 오브젝트는 Interactable 이라는 레이어를 가지고 있어야 합니다.
-    }
+    //int layerMask;   // Player 레이어만 충돌 체크함
+    //private void Awake()
+    //{
+    //    layerMask = 1 << LayerMask.NameToLayer("Interactable");
+    //    //마우스 상호작용 오브젝트는 Interactable 이라는 레이어를 가지고 있어야 합니다.
+    //}
     //private void Update()
     //{
     //    ray = Camera.main.ScreenPointToRay(Input.mousePosition);
