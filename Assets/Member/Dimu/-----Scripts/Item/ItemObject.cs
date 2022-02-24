@@ -20,6 +20,7 @@ public class ItemObject : MonoBehaviour, IInteractable
     public void Interact()
     {
         AddItem();
+        Destroy(this.gameObject);
     }
 
     public void CanInteract()

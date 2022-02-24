@@ -91,11 +91,11 @@ namespace NSY.Player
             {
                 print(hit.collider.name);
                 interactable = hit.collider.GetComponent<IInteractable>();
-                if (interactable != null)
+                if (interactable != null)//그 옵젝이 상호작용 가능하면? 추가해야함
                 {
                     collisionUI.SetActive(true);
                     interactable.CanInteract();
-                    Vector3 uiPos = new Vector3(interactable.ReturnTF().position.x, interactable.ReturnTF().position.y + 3, interactable.ReturnTF().position.z);
+                    Vector3 uiPos = new Vector3(interactable.ReturnTF().position.x, interactable.ReturnTF().position.y + 2, interactable.ReturnTF().position.z);
                     collisionUI.transform.position = Camera.main.WorldToScreenPoint(uiPos);
                 }
             }

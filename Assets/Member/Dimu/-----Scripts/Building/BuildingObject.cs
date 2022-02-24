@@ -7,7 +7,7 @@ namespace DM.Building
     { Carrot, House }
 
     public delegate void GetIGDdelegate(ItemType itemType, int idx);
-    public class BuildingObject : MonoBehaviour
+    public class BuildingObject : MonoBehaviour, IInteractable
     {
         [SerializeField]
         private BuildingInfo buildingInfo; //집마다 1개. 필요 재료 타입과 양이 들어있다.
@@ -120,6 +120,25 @@ namespace DM.Building
         private bool IsTypeClear(int idx)
         {
             return gotIngredient[idx].count >= buildingInfo.GetNeedCountw(idx);
+        }
+
+        public void Interact()
+        {
+            PlayerData.AddValue(BuildID(), (int)BuildingBehaviorEnum.Interact, PlayerData.BuildBuildingData);
+        }
+
+        public void CanInteract()
+        {
+            NSY.Player.PlayerInput.OnPressFDown = Interact;
+        }
+
+        public void EndInteract()
+        {
+        }
+
+        public Transform ReturnTF()
+        {
+            return transform;
         }
     }
 }
