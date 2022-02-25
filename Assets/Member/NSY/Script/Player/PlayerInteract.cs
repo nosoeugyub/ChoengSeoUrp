@@ -6,9 +6,11 @@ namespace NSY.Player
 {
     public class PlayerInteract : MonoBehaviour
     {
-        //[SerializeField] List<IInteractable> interacts = new List<IInteractable>();//상호작용 범위 내 있는 IInteractable오브젝트 리스트
-        //IInteractable closestObj;//가장 가까운 친구
+        [SerializeField] List<IInteractable> interacts = new List<IInteractable>();//상호작용 범위 내 있는 IInteractable오브젝트 리스트
+        IInteractable closestObj;//가장 가까운 친구
         public GameObject collisionUI;//띄울 UI
+
+        GameObject handItem;
 
         [SerializeField]
         PlayerController playerController;
@@ -27,6 +29,7 @@ namespace NSY.Player
             layerMask = 1 << LayerMask.NameToLayer("Interactable");
             //마우스 상호작용 오브젝트는 Interactable 이라는 레이어를 가지고 있어야 합니다.
         }
+
         public void OnTriggerEnter(Collider other)
         {
             IInteractable interactable = other.GetComponent<IInteractable>();
@@ -34,6 +37,7 @@ namespace NSY.Player
             {
                 Debug.Log("interact true");
                 canInteract = true;
+                interacts.Add(interactable);
             }
             ////////초반 튜토리얼 오브젝트와 충돌 판정
             if (other.CompareTag("FristPost"))
@@ -64,6 +68,7 @@ namespace NSY.Player
             {
                 Debug.Log("interact false");
                 canInteract = false;
+                interacts.Remove(interactable);
             }
 
             if (other.CompareTag("FristTree"))
@@ -79,6 +84,7 @@ namespace NSY.Player
         }
         private void Update()
         {
+
             if (!canInteract)
             {
                 collisionUI.SetActive(false);
@@ -91,7 +97,7 @@ namespace NSY.Player
             {
                 print(hit.collider.name);
                 interactable = hit.collider.GetComponent<IInteractable>();
-                if (interactable != null)//그 옵젝이 상호작용 가능하면? 추가해야함
+                if (interactable != null && IsInteracted(interactable))// 클릭한 옵젝이 닿은 옵젝 리스트에 있다면 통과
                 {
                     collisionUI.SetActive(true);
                     interactable.CanInteract();
@@ -109,15 +115,18 @@ namespace NSY.Player
                 {
                     print(hit.collider.name);
                     interactable = hit.collider.GetComponent<IInteractable>();
-                    if (interactable != null)
+                    if (interactable != null && IsInteracted(interactable))
                     {
                         interactable.Interact();
                     }
                 }
             }
-
-
         }
+        public bool IsInteracted(IInteractable it)
+        {
+            return interacts.Contains(it);
+        }
+
         ////가장 가까운 오브젝트 검출
         //public void LightClosestObj()
         //{
@@ -149,7 +158,6 @@ namespace NSY.Player
         //        }
         //    }
         //}
-        
     }
 
 }
