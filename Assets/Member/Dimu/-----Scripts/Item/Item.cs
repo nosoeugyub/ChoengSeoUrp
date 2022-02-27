@@ -33,7 +33,10 @@ namespace DM.Inven
         //2차 식량
 
         //3차재료
-        Rope = 10000,
+        Rope = 10000, 
+
+        //NSY추가 코드
+        Weapon = 20000, pick, axe,
     }
 
     [System.Serializable]

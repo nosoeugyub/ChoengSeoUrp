@@ -2,6 +2,7 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+
 namespace DM.Inven
 {
     public class Slot : MonoBehaviour
