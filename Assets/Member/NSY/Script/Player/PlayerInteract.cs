@@ -1,4 +1,5 @@
-﻿using NSY.Manager;
+﻿using DM.Inven;
+using NSY.Manager;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ namespace NSY.Player
         IInteractable closestObj;//가장 가까운 친구
         public GameObject collisionUI;//띄울 UI
 
-        GameObject handItem;
+        Item handItem;
 
         [SerializeField]
         PlayerController playerController;
@@ -108,7 +109,6 @@ namespace NSY.Player
             else
                 collisionUI.SetActive(false);
 
-
             if (Input.GetMouseButtonDown(0))
             {
                 if (Physics.Raycast(ray, out hit, 10000, layerMask))
@@ -125,6 +125,12 @@ namespace NSY.Player
         public bool IsInteracted(IInteractable it)
         {
             return interacts.Contains(it);
+        }
+
+        public void SetHandItem(Item item)
+        {
+            handItem = item;
+            //애니메이션 변경
         }
 
         ////가장 가까운 오브젝트 검출
