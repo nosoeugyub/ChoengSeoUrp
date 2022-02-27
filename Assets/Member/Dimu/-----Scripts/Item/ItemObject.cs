@@ -25,6 +25,7 @@ public class ItemObject : MonoBehaviour, IInteractable
 
     public void CanInteract()
     {
+
         NSY.Player.PlayerInput.OnPressFDown = Interact;
     }
 

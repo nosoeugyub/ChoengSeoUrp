@@ -45,4 +45,9 @@ namespace DM.Inven
         [SerializeField]
         public int count;
     }
+
+public class FoodItem : Item
+{
+
+}
 }
