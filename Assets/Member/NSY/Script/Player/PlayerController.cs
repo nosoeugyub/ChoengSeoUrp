@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using NSY.Iven;
+using DM.Inven;
 //부모 클래스
 namespace NSY.Player
 {
@@ -33,8 +34,21 @@ namespace NSY.Player
        public Animator SpritePlayerAnim;
        public Animator GamePlayerAnim;
 
+        // 이벤트 드래그 엔 드롭
+        [SerializeField] InventoryNSY inventory;
+        [SerializeField] EquipPanel equipmentPanel;
+        //스텟 판넬 추가
 
-       
+        private void Awake()
+        {
+            //장착 관련 이벤
+            inventory.OnRightClickEvent += Equip;
+            equipmentPanel.OnRightClickEvent += UneQuip;
+            //드래그 이벤트
+            inventory.OnBeginDragEvent += BeginDrag;
+            equipmentPanel.OnBeginDragEvent += BeginDrag;
+            //1227
+        }
         // Start is called before the first frame update
         void Start()
         {

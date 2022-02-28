@@ -7,17 +7,35 @@ namespace NSY.Iven
 {
     public class ChestItem : MonoBehaviour
     {
-        [SerializeField] Item item;
-        [SerializeField] InventoryNSY inventory;
+        Item item;
+        InventoryNSY inventory;
 
 
         private bool isInRange;
 
-       public void Update()
+        private void Start()
+        {
+            inventory = FindObjectOfType<InventoryNSY>();
+        }
+
+        public void OnValidate()
+        {
+            if (inventory == null)
+            {
+                inventory = FindObjectOfType<InventoryNSY>();
+            }
+           
+        }
+
+        public void Update()
         {
             if (isInRange && Input.GetKeyDown(KeyCode.E))
             {
-                inventory.AddItem(item);
+                if (item != null)
+                {
+                    inventory.AddItem(item);
+                }
+                
             }
             
         }

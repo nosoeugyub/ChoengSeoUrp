@@ -8,15 +8,21 @@ using System;
 
 namespace NSY.Iven
 {
-    public class ItemSlot : MonoBehaviour , IPointerClickHandler
+    public class ItemSlot : MonoBehaviour , IPointerClickHandler, IPointerEnterHandler,IPointerExitHandler , IDragHandler, IBeginDragHandler , IEndDragHandler , IDropHandler
     {
        
         [SerializeField]
         Image itemImage;
         private Item _item;
 
+        public event Action<ItemSlot> OnPointerEnterEvent;
+        public event Action<ItemSlot> OnPointerExitEvent;
+        public event Action<ItemSlot> OnRightClickEvent;
+        public event Action<ItemSlot> OnBeginDragEvent;
+        public event Action<ItemSlot> OnEndDragEvent;
+        public event Action<ItemSlot> OnDragEvent;
+        public event Action<ItemSlot> OnDropEvent;
 
-        public event Action<Item> OnRightClickEvent;
 
         public Item item
         {
@@ -46,17 +52,78 @@ namespace NSY.Iven
                 itemImage = GetComponent<Image>();
             }
         }
-
-        void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
+        public void OnPointerClick(PointerEventData eventData)
         {
             if (eventData != null && eventData.button == PointerEventData.InputButton.Right)
             {
-                if (item != null && OnRightClickEvent != null)
+                if (OnRightClickEvent != null)
                 {
-                    OnRightClickEvent(item);
+                    OnRightClickEvent(this);
                 }
             }
         }
+
+        /// <summary>
+        ///  드래그엔드롭
+        /// </summary>
+        /// <param name="eventData"></param>
+        /// 
+
+        Vector2 originalPosition; //슬롯 초기위치
+        public void OnDrag(PointerEventData eventData)
+        {
+            //드레그
+            // itemImage.transform.position = Input.mousePosition;
+            if (OnDragEvent != null)
+            {
+                OnDragEvent(this);
+            }
+        }
+
+        public void OnBeginDrag(PointerEventData eventData)
+        {
+            // originalPosition = itemImage.transform.position;
+            if (OnBeginDragEvent != null)
+            {
+                OnBeginDragEvent(this);
+            }
+        }
+
+        public void OnEndDrag(PointerEventData eventData)
+        {
+            //드래그가 끝
+            //   itemImage.transform.position = originalPosition;
+            if (OnEndDragEvent != null)
+            {
+                OnEndDragEvent(this);
+            }
+        }
+
+        public void OnDrop(PointerEventData eventData)
+        {
+            if (OnDropEvent != null)
+            {
+                OnDropEvent(this);
+            }
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            if (OnPointerEnterEvent != null)
+            {
+                OnPointerEnterEvent(this);
+            }
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            if (OnPointerExitEvent != null)
+            {
+                OnPointerExitEvent(this);
+            }
+        }
+
+      
     }
 
 

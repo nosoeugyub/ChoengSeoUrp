@@ -12,7 +12,7 @@ namespace NSY.Iven
 
         private void Awake()
         {
-            iventorynsy.OnItemRightClickEvent += EquipFromInventory;
+            //iventorynsy.OnItemRightClickEvent += EquipFromInventory;
         }
                                                                                         
         private void EquipFromInventory(Item item)

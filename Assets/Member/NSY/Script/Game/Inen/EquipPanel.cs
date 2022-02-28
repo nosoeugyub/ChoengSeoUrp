@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DM.Inven;
+using System;
 
 namespace NSY.Iven
 {
@@ -9,6 +10,14 @@ namespace NSY.Iven
     {
         [SerializeField] Transform equipmentSlotsParent;
         [SerializeField] EquipmentSlot[] equipmentSlots;
+
+        public event Action<ItemSlot> OnPointerEnterEvent;
+        public event Action<ItemSlot> OnPointerExitEvent;
+        public event Action<ItemSlot> OnRightClickEvent;
+        public event Action<ItemSlot> OnBeginDragEvent;
+        public event Action<ItemSlot> OnEndDragEvent;
+        public event Action<ItemSlot> OnDragEvent;
+        public event Action<ItemSlot> OnDropEvent;
 
         private void OnValidate()
         {
