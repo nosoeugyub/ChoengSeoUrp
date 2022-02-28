@@ -3,15 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DM.Inven;
+using UnityEngine.EventSystems;
+using System;
 
 namespace NSY.Iven
 {
-    public class ItemSlot : MonoBehaviour
+    public class ItemSlot : MonoBehaviour , IPointerClickHandler
     {
        
         [SerializeField]
         Image itemImage;
         private Item _item;
+
+
+        public event Action<Item> OnRightClickEvent;
+
         public Item item
         {
             get { return _item; }
@@ -38,6 +44,17 @@ namespace NSY.Iven
             if (itemImage == null)
             {
                 itemImage = GetComponent<Image>();
+            }
+        }
+
+        void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
+        {
+            if (eventData != null && eventData.button == PointerEventData.InputButton.Right)
+            {
+                if (item != null && OnRightClickEvent != null)
+                {
+                    OnRightClickEvent(item);
+                }
             }
         }
     }

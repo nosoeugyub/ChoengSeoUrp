@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DM.Inven;
-
+using System;
 namespace NSY.Iven
 {
     public class InventoryNSY : MonoBehaviour
@@ -11,7 +11,15 @@ namespace NSY.Iven
         [SerializeField] Transform itemsParent;
         [SerializeField] ItemSlot[] itemSlots;  //배열
 
+        public event Action<Item> OnItemRightClickEvent;
 
+        private void Awake()
+        {
+            for (int i = 0; i < itemSlots.Length; i++)
+            {
+                itemSlots[i].OnRightClickEvent += OnItemRightClickEvent;
+            }
+        }
 
         private void OnValidate()
         {
