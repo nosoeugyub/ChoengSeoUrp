@@ -14,6 +14,16 @@ namespace NSY.Iven
             base.OnValidate();
             gameObject.name = itemtype.ToString() + " Slot";
         }
+
+        public override bool CanReceiveItem(Item item)
+        {
+            if (item == null)
+            {
+                return true;
+            }
+            Item EQitem = item as Item;
+            return EQitem != null && EQitem.ItemType == itemtype;
+        }
     }
 }
 
