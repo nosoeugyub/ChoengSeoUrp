@@ -72,7 +72,7 @@ namespace DM.Inven
             itemslots[item].AddValue(howmuch);
             storageSpace += howmuch;
             UpdateStorageText();
-            PlayerData.AddValue((int)item.ItemType, (int)ItemBehaviorEnum.GetItem, PlayerData.ItemData);
+            PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.GetItem, PlayerData.ItemData);
 
         }
 

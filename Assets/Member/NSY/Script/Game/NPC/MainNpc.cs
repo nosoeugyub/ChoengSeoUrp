@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game.NPC
 {
-    public class MainNpc : NPC, IInteractable
+    public class MainNpc : NPC//, IInteractable
     {
         //public  int MainNPCID = 1001;
         //public  bool MainNPCIsid = false;

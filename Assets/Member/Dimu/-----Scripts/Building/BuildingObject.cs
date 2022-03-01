@@ -6,8 +6,8 @@ namespace DM.Building
     public enum BuildingType
     { Carrot, House }
 
-    public delegate void GetIGDdelegate(ItemType itemType, int idx);
-    public class BuildingObject : MonoBehaviour, IInteractable
+    public delegate void GetIGDdelegate(InItemType itemType, int idx);
+    public class BuildingObject : MonoBehaviour//, IInteractable
     {
         [SerializeField]
         private BuildingInfo buildingInfo; //집마다 1개. 필요 재료 타입과 양이 들어있다.
@@ -63,13 +63,13 @@ namespace DM.Building
             }
         }
 
-        public void GetIngredient(ItemType ingredientype, int idx)
+        public void GetIngredient(InItemType ingredientype, int idx)
         {
             Debug.Log("GetIngredient " + ingredientype);
 
             for (int i = 0; i < buildingInfo.ingredientNeededs.Length; i++)
             {
-                if (gotIngredient[i].item.ItemType == ingredientype && !IsTypeClear(i))
+                if (gotIngredient[i].item.InItemType == ingredientype && !IsTypeClear(i))
                 {
                     InventoryManager ivt = FindObjectOfType<InventoryManager>();
                     if (ivt.GetItemValue(gotIngredient[i].item) <= 0)

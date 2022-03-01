@@ -7,7 +7,7 @@ namespace DM.Building
     public class IngredientUI : MonoBehaviour
     {
         [SerializeField]
-        private ItemType ingredientUItype; //디자이너가 할당
+        private InItemType ingredientUItype; //디자이너가 할당
         [SerializeField]
         private Button getButton;
         [SerializeField]

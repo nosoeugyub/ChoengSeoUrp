@@ -2,7 +2,7 @@
 using NSY.PlayerState;
 using UnityEngine;
 
-public class FrutStateManager : ItemObject, IInteractable
+public class FrutStateManager : ItemObject//, IInteractable
 {
     //상태
     FruitState currentState;
