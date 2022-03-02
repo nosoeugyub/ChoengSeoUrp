@@ -36,8 +36,6 @@ public enum OutItemType
     Talk,Tool, Mineral, Food, Collect, Etc
 }
 
-public enum ToolType
-{ Ax, Pickaxe, MagnifyingGlass }
 
 public enum InItemType
 {
@@ -53,9 +51,9 @@ public enum InItemType
     Rope = 10000,
 
     //도구
-    Ax = 100000, Pickaxe,
+    Ax = 100000, Pickaxe, MagnifyingGlass,
     //미네랄
-    tree = 1000000
+    tree = 1000000, Stone,
 }
 
 [System.Serializable]
@@ -66,9 +64,4 @@ public class ingredientNeeded
 
     [SerializeField]
     public int count;
-}
-
-public class FoodItem : Item
-{
-
 }

@@ -148,7 +148,7 @@ namespace NSY.Player
 
             if (Physics.Raycast(ray, out hit, 10000, layerMask))
             {
-                print(hit.collider.name);
+                //print(hit.collider.name);
                 nowInteractable = hit.collider.GetComponent<IInteractable>();
                 if (nowInteractable != null && IsInteracted(nowInteractable))// 클릭한 옵젝이 닿은 옵젝 리스트에 있다면 통과
                 {

@@ -13,11 +13,6 @@ public class MineObject : ItemObject, IMineable
     {
         nowChopCount = 0;
     }
-
-    void Update()
-    {
-        
-    }
     public string CanInteract()
     {
         return "캐기";
@@ -29,8 +24,8 @@ public class MineObject : ItemObject, IMineable
             print("다른 도구로 시도해주십쇼.");
             return;
         }
-        print(nowChopCount);
-        if(++nowChopCount == handitem.ChopCount)
+            print(nowChopCount);
+        if(++nowChopCount >= item.ChopCount)
         {
             NSY.Player.PlayerInput.OnPressFDown = null;
             Destroy(gameObject);
