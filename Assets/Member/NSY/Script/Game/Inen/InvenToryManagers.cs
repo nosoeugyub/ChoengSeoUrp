@@ -17,7 +17,8 @@ namespace NSY.Iven
         [SerializeField] Image draggableitem;
 
 
-        private ItemSlot draggedSlot;
+        private ItemSlot dragitemSlot;
+
         private void Awake()
         {
             //인벤토리 클레스 이벤트
@@ -57,16 +58,11 @@ namespace NSY.Iven
         {
             if (itemslot.item != null)
             {
-                draggedSlot = itemslot;
+                dragitemSlot = itemslot;
                 draggableitem.sprite = itemslot.item.ItemSprite;
                 draggableitem.transform.position = Input.mousePosition;
-                draggableitem.enabled = true;
+                draggableitem.gameObject.SetActive(true);
             }
-        }
-        private void EndDrag(ItemSlot itemslot)
-        {
-            draggedSlot = null;
-            draggableitem.enabled = false;
         }
         private void Drag(ItemSlot itemslot)
         {
@@ -74,20 +70,26 @@ namespace NSY.Iven
             {
                 draggableitem.transform.position = Input.mousePosition;
             }
-            
+
         }
+        private void EndDrag(ItemSlot itemslot)
+        {
+          
+            dragitemSlot = null;
+            draggableitem.gameObject.SetActive(false);
+            this.enabled = false;
+        }
+       
         private void Drop(ItemSlot dropitemslot)
         {
-            if (dropitemslot.CanReceiveItem(draggedSlot.item) && draggedSlot.CanReceiveItem(dropitemslot.item))
-            {
-                Item dragItem = draggedSlot.item as Item;
-                Item dropItem = dropitemslot.item as Item;
+            //  if (dragitemSlot == null) return;
 
-              
-                Item draggeditem = draggedSlot.item;
-                draggedSlot.item = dropitemslot.item;
-                dropitemslot.item = draggeditem;
-            }
+           
+           // if (dropitemslot.CanReceiveItem(dragitemSlot.item) && dragitemSlot.CanReceiveItem(dropitemslot.item))
+           // {
+                Debug.Log("드롭이벤트 발생");
+                Swapitems(dropitemslot);
+           // }
            
         }
       
@@ -120,7 +122,28 @@ namespace NSY.Iven
             }
         }
 
+        private void Swapitems(ItemSlot dropitemslot)
+        {
+            Item dragItem = dragitemSlot.item as Item;
+            Item dropitem = dropitemslot.item as Item;
 
+            Item draggeditem = dragitemSlot.item;
+            dragitemSlot.item = dropitemslot.item;
+            dropitemslot.item = draggeditem;
+              // if(dropitemslot is EquipmentSlot)
+              // {
+              //  
+              //}
+            //  if (draggedSlot is EquipmentSlot)
+            //  {
+
+            //}
+
+
+            //draggedSlot.item = dropitemslot.item;
+
+            // dropitemslot.item = dragItem;
+        }
 
     }
 

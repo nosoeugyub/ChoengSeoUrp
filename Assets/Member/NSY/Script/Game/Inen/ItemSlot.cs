@@ -23,6 +23,9 @@ namespace NSY.Iven
         public event Action<ItemSlot> OnDragEvent;
         public event Action<ItemSlot> OnDropEvent;
 
+        private Color normalColor = Color.white;
+        private Color disabledColor = new Color(1, 1, 1, 0);
+        private Color dragColor = new Color(1, 1, 1, 0.5f);
 
         public Item item
         {
@@ -32,12 +35,12 @@ namespace NSY.Iven
                 _item = value;
                 if (_item == null)
                 {
-                    itemImage.enabled = false;
+                    itemImage.color = disabledColor;
                 }
                 else
                 {
                     itemImage.sprite = _item.ItemSprite;
-                    itemImage.enabled = true;
+                    itemImage.color = normalColor;
 
                 }
             }
@@ -55,7 +58,7 @@ namespace NSY.Iven
         public virtual bool CanReceiveItem(Item item)
         {
 
-            return true;
+            return false;
         }
         public void OnPointerClick(PointerEventData eventData)
         {
@@ -87,7 +90,10 @@ namespace NSY.Iven
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            // originalPosition = itemImage.transform.position;
+            if (item != null)
+            {
+                itemImage.color = dragColor;
+            }
             if (OnBeginDragEvent != null)
             {
                 OnBeginDragEvent(this);
@@ -96,8 +102,10 @@ namespace NSY.Iven
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            //드래그가 끝
-            //   itemImage.transform.position = originalPosition;
+            if (item != null)
+            {
+                itemImage.color = dragColor;
+            }
             if (OnEndDragEvent != null)
             {
                 OnEndDragEvent(this);
@@ -106,10 +114,15 @@ namespace NSY.Iven
 
         public void OnDrop(PointerEventData eventData)
         {
-            if (OnDropEvent != null)
+            if (eventData.button == PointerEventData.InputButton.Left)
             {
-                OnDropEvent(this);
+                OnDropEvent.Invoke(this);
             }
+            
+          //  if (OnDropEvent != null)
+           // {
+            //    OnDropEvent(this);
+           // }
         }
 
         public void OnPointerEnter(PointerEventData eventData)

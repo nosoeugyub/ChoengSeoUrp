@@ -34,6 +34,7 @@ namespace NSY.Iven
                 itemSlots[i].OnDragEvent += OnDragEvent;
                 itemSlots[i].OnDropEvent += OnDropEvent;
             }
+            ReFreshUi();
         }
 
         private void OnValidate()
@@ -42,7 +43,7 @@ namespace NSY.Iven
             {
                 itemSlots = itemsParent.GetComponentsInChildren<ItemSlot>();
             }
-            ReFreshUi();
+           
         }
         private void ReFreshUi()//아이템 슬롯과 리스트가 일치하게 돌려주는 함수
         {

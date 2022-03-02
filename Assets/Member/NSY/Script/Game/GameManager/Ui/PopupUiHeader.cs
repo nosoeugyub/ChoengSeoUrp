@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
+
 public class PopupUiHeader : MonoBehaviour, IBeginDragHandler, IDragHandler
 {
     private RectTransform _parentRect;
