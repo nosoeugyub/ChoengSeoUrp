@@ -82,7 +82,7 @@ namespace NSY.Iven
        
         private void Drop(ItemSlot dropitemslot)
         {
-            //  if (dragitemSlot == null) return;
+              if (dragitemSlot == null) return;
 
            
            // if (dropitemslot.CanReceiveItem(dragitemSlot.item) && dragitemSlot.CanReceiveItem(dropitemslot.item))

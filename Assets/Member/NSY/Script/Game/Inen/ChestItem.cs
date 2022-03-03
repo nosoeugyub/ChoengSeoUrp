@@ -33,7 +33,7 @@ namespace NSY.Iven
             {
                 if (item != null)
                 {
-                    inventory.AddItem(item);
+                    inventory.AddItem(Instantiate(item));
                 }
                 
             }

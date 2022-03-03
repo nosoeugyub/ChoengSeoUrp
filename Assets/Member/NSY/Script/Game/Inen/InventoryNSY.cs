@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 
 namespace NSY.Iven
 {
-    public class InventoryNSY : MonoBehaviour
+    public class InventoryNSY : MonoBehaviour, IItemContainer
     {
         [FormerlySerializedAs("items")]
         [SerializeField] List<Item> startingitems; // 아이템 리스트
@@ -43,14 +43,14 @@ namespace NSY.Iven
             {
                 itemSlots = itemsParent.GetComponentsInChildren<ItemSlot>();
             }
-           
+            ReFreshUi();
         }
         private void ReFreshUi()//아이템 슬롯과 리스트가 일치하게 돌려주는 함수
         {
             int i = 0;
             for (; i < startingitems.Count && i<itemSlots.Length; i++)//가지고 있는 슬롯에 아이템 리스트를 할당,
             {
-                itemSlots[i].item = startingitems[i];
+                itemSlots[i].item =Instantiate( startingitems[i]);
             }
 
             for ( ; i < itemSlots.Length; i++) // 들어갈 항목이 없는 나머지 슬롯에  Null
@@ -91,6 +91,21 @@ namespace NSY.Iven
             }
             return false;
         }
+        public Item RemoveItem(string itemID)
+        {
+            for (int i = 0; i < itemSlots.Length; i++)
+            {
+                Item item = itemSlots[i].item;
+                if (item != null && item.ItemName == itemID)
+                {
+
+                    return item;
+                }
+
+
+            }
+            return null;
+        }
         public bool isFull()//아이템 리스트가 슬롯칸보다 같거나 많을경우
         {
             for (int i = 0; i < itemSlots.Length; i++)
@@ -105,6 +120,29 @@ namespace NSY.Iven
             }
             return true;
         }
+
+
+
+       
+
+        public int ItemCount(string itemID)
+        {
+
+            int number = 0;
+            for (int i = 0; i < itemSlots.Length; i++)
+            {
+                if (itemSlots[i].item.ItemName == itemID)
+                {
+
+                    return number++;
+                }
+
+
+            }
+            return number;
+        }
+
+       
     }
 
 }
