@@ -44,7 +44,7 @@ namespace NSY.Iven
                     for (int i = 0; i < itemAmount.Amount; i++)
                     {
                         Item oldItem = itemContainer.RemoveItem(itemAmount.Item.ItemName);
-                        Destroy(oldItem);
+                        oldItem.Destroy();
                     }
                 }
 
@@ -52,7 +52,7 @@ namespace NSY.Iven
                 {
                     for (int i = 0; i < itemAmount.Amount; i++)
                     {
-                        itemContainer.AddItem(Instantiate(itemAmount.Item));
+                        itemContainer.AddItem(itemAmount.Item.GetCopy());
                     }
                 }
             }

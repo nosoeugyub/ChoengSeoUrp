@@ -7,16 +7,15 @@ namespace NSY.Iven
 {
     public class ChestItem : MonoBehaviour
     {
-        Item item;
-        InventoryNSY inventory;
+        public  Item item;
+        public  InventoryNSY inventory;
+        public SpriteRenderer spriteRenderer;
+        public int amount = 1;
 
-
+        public Color emptyColor;
         private bool isInRange;
 
-        private void Start()
-        {
-            inventory = FindObjectOfType<InventoryNSY>();
-        }
+        
 
         public void OnValidate()
         {
@@ -24,18 +23,35 @@ namespace NSY.Iven
             {
                 inventory = FindObjectOfType<InventoryNSY>();
             }
-           
+            if (inventory == null)
+            {
+                spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+            }
+            spriteRenderer.sprite = item.ItemSprite;
+            spriteRenderer.enabled = false;
+
+
+
         }
 
         public void Update()
         {
             if (isInRange && Input.GetKeyDown(KeyCode.E))
             {
-                if (item != null)
+                Item itemCopy = item.GetCopy();
+                if (inventory.AddItem(itemCopy))
                 {
-                    inventory.AddItem(Instantiate(item));
+                    amount--;
+                    if (amount ==0)
+                    {
+                        spriteRenderer.color = emptyColor;
+                    }
                 }
-                
+                else
+                {
+                    itemCopy.Destroy();
+
+                }
             }
             
         }

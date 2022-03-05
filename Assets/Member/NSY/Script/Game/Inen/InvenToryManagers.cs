@@ -17,7 +17,7 @@ namespace NSY.Iven
         [SerializeField] Image draggableitem;
 
 
-        private ItemSlot dragitemSlot;
+        private BaseItemSlot dragitemSlot;
 
         private void Awake()
         {
@@ -38,7 +38,7 @@ namespace NSY.Iven
             equipPanel.OnDropEvent += Drop;
         }
                  
-        private void Equip(ItemSlot itemslot)
+        private void Equip(BaseItemSlot itemslot)
         {
             Item item = itemslot.item as Item;
             if (item != null)
@@ -46,7 +46,7 @@ namespace NSY.Iven
                 Equip(item);
             }
         }
-        private void Unequip(ItemSlot itemslot)
+        private void Unequip(BaseItemSlot itemslot)
         {
             Item item = itemslot.item as Item;
             if (item != null)
@@ -54,7 +54,7 @@ namespace NSY.Iven
                 Unequip(item);
             }
         }
-        private void BeginDrag(ItemSlot itemslot)
+        private void BeginDrag(BaseItemSlot itemslot)
         {
             if (itemslot.item != null)
             {
@@ -64,7 +64,7 @@ namespace NSY.Iven
                 draggableitem.gameObject.SetActive(true);
             }
         }
-        private void Drag(ItemSlot itemslot)
+        private void Drag(BaseItemSlot itemslot)
         {
             if (draggableitem.enabled)
             {
@@ -72,7 +72,7 @@ namespace NSY.Iven
             }
 
         }
-        private void EndDrag(ItemSlot itemslot)
+        private void EndDrag(BaseItemSlot itemslot)
         {
           
             dragitemSlot = null;
@@ -80,17 +80,21 @@ namespace NSY.Iven
             this.enabled = false;
         }
        
-        private void Drop(ItemSlot dropitemslot)
+        private void Drop(BaseItemSlot dropitemslot)
         {
-              if (dragitemSlot == null) return;
+            if (dragitemSlot == null) return;
 
-           
-           // if (dropitemslot.CanReceiveItem(dragitemSlot.item) && dragitemSlot.CanReceiveItem(dropitemslot.item))
-           // {
-                Debug.Log("드롭이벤트 발생");
+            if (dropitemslot.CanAddStack(dragitemSlot.item))
+            {
+                AddStacks(dropitemslot);
+            }
+            else if(dropitemslot.CanReceiveItem(dragitemSlot.item) && dragitemSlot.CanReceiveItem(dropitemslot.item))
+            {
                 Swapitems(dropitemslot);
-           // }
-           
+            }
+               
+            
+
         }
       
 
@@ -121,28 +125,30 @@ namespace NSY.Iven
                 iventorynsy.AddItem(item);
             }
         }
+        private void AddStacks(BaseItemSlot dropitemslot)
+        {
+            //갯수 중복시 옮기는거
+            int numAddableStacks = dropitemslot.item.MaximumStacks - dropitemslot.Amount;
+            int stacksToAdd = Mathf.Min(numAddableStacks, dragitemSlot.Amount);
 
-        private void Swapitems(ItemSlot dropitemslot)
+            dropitemslot.Amount += stacksToAdd;
+            dragitemSlot.Amount -= stacksToAdd;
+        }
+        private void Swapitems(BaseItemSlot dropitemslot)
         {
             Item dragItem = dragitemSlot.item as Item;
             Item dropitem = dropitemslot.item as Item;
 
             Item draggeditem = dragitemSlot.item;
+            int draggedItemAmount = dragitemSlot.Amount;
+
             dragitemSlot.item = dropitemslot.item;
+            dragitemSlot.Amount = dropitemslot.Amount;
+
             dropitemslot.item = draggeditem;
-              // if(dropitemslot is EquipmentSlot)
-              // {
-              //  
-              //}
-            //  if (draggedSlot is EquipmentSlot)
-            //  {
+            dragitemSlot.Amount = draggedItemAmount;
 
-            //}
-
-
-            //draggedSlot.item = dropitemslot.item;
-
-            // dropitemslot.item = dragItem;
+           
         }
 
     }

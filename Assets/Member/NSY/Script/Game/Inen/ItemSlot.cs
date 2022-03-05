@@ -8,66 +8,38 @@ using System;
 
 namespace NSY.Iven
 {
-    public class ItemSlot : MonoBehaviour , IPointerClickHandler, IPointerEnterHandler,IPointerExitHandler , IDragHandler, IBeginDragHandler , IEndDragHandler , IDropHandler
+    public class ItemSlot : BaseItemSlot , IDragHandler, IBeginDragHandler , IEndDragHandler , IDropHandler
     {
-       
-        [SerializeField]
-        Image itemImage;
-        private Item _item;
+        bool isDragging;
+      
+        public event Action<BaseItemSlot> OnBeginDragEvent;
+        public event Action<BaseItemSlot> OnEndDragEvent;
+        public event Action<BaseItemSlot> OnDragEvent;
+        public event Action<BaseItemSlot> OnDropEvent;
 
-        public event Action<ItemSlot> OnPointerEnterEvent;
-        public event Action<ItemSlot> OnPointerExitEvent;
-        public event Action<ItemSlot> OnRightClickEvent;
-        public event Action<ItemSlot> OnBeginDragEvent;
-        public event Action<ItemSlot> OnEndDragEvent;
-        public event Action<ItemSlot> OnDragEvent;
-        public event Action<ItemSlot> OnDropEvent;
-
-        private Color normalColor = Color.white;
-        private Color disabledColor = new Color(1, 1, 1, 0);
+      //  private Color normalColor = Color.white;
+      //  private Color disabledColor = new Color(1, 1, 1, 0);
         private Color dragColor = new Color(1, 1, 1, 0.5f);
 
-        public Item item
-        {
-            get { return _item; }
-            set
-            {
-                _item = value;
-                if (_item == null)
-                {
-                    itemImage.color = disabledColor;
-                }
-                else
-                {
-                    itemImage.sprite = _item.ItemSprite;
-                    itemImage.color = normalColor;
 
-                }
-            }
+
+        public override bool CanAddStack(Item item, int amount = 1)
+        {
+            return base.CanAddStack(item, amount) && Amount + amount <= item.MaximumStacks; 
         }
-      
 
 
-        protected virtual void OnValidate() //이미지가 비어있으면 찾아서 등록
+        public override bool CanReceiveItem(Item item)
         {
-            if (itemImage == null)
-            {
-                itemImage = GetComponent<Image>();
-            }
+            return true;
         }
-        public virtual bool CanReceiveItem(Item item)
+        protected override void OnDisable()
         {
+            base.OnDisable();
 
-            return false;
-        }
-        public void OnPointerClick(PointerEventData eventData)
-        {
-            if (eventData != null && eventData.button == PointerEventData.InputButton.Right)
+            if (isDragging)
             {
-                if (OnRightClickEvent != null)
-                {
-                    OnRightClickEvent(this);
-                }
+                OnEndDrag(null);
             }
         }
 
@@ -90,6 +62,8 @@ namespace NSY.Iven
 
         public void OnBeginDrag(PointerEventData eventData)
         {
+            isDragging = true;
+
             if (item != null)
             {
                 itemImage.color = dragColor;
@@ -102,6 +76,7 @@ namespace NSY.Iven
 
         public void OnEndDrag(PointerEventData eventData)
         {
+            isDragging = false;
             if (item != null)
             {
                 itemImage.color = dragColor;
@@ -125,21 +100,7 @@ namespace NSY.Iven
            // }
         }
 
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            if (OnPointerEnterEvent != null)
-            {
-                OnPointerEnterEvent(this);
-            }
-        }
-
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            if (OnPointerExitEvent != null)
-            {
-                OnPointerExitEvent(this);
-            }
-        }
+      
 
       
     }

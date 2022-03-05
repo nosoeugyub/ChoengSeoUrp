@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+//NSY추가
+using UnityEditor;
 
 namespace DM.Inven
 {
@@ -20,6 +22,26 @@ namespace DM.Inven
         public Sprite ItemSprite => itemSprite;
         public ingredientNeeded[] NnecessaryIngredient => necessaryIngredient;
 
+
+
+        //NSY 추가 코드
+        [Range(1,20)]
+        public int MaximumStacks = 1;
+
+        private void OnValidate()
+        {
+            string path = AssetDatabase.GetAssetPath(this);
+            itemName = AssetDatabase.AssetPathToGUID(path);
+        }
+
+         public virtual Item GetCopy() //항목들을 객ㅊ체 자체에 참조 사용
+        {
+            return Instantiate(this);
+        }
+        public virtual void Destroy() //항목을 없에는 함수
+        {
+            Destroy(this);
+        }
     }
 
     public enum ItemType
