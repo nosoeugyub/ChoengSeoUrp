@@ -29,9 +29,40 @@ namespace NSY.Iven
         {
             Init();
 
-            foreach (CraftingRecipe craftingRecipeUI in craftingRecipeUis)
+            foreach (CraftingRecipeUI craftingRecipeUI in craftingRecipeUis)
             {
+                craftingRecipeUI.OnPointerEnterEvent += OnPointerEnterEvent;
+                craftingRecipeUI.OnPointerEnterEvent += OnPointerEnterEvent;
+            }
+        }
 
+        private void Init()
+        {
+            recipeUIParent.GetComponentsInChildren<CraftingRecipeUI>(includeInactive: true, result: craftingRecipeUis);
+            UpdateCraftingRecipes();
+        }
+
+        public void UpdateCraftingRecipes()
+        {
+            for (int i = 0; i < CraftingRecipes.Count; i++)
+            {
+                if (craftingRecipeUis.Count== i)
+                {
+                    craftingRecipeUis.Add(Instantiate(recipeUIPrefab, recipeUIParent, false));
+                }
+                else if (craftingRecipeUis[i] == null)
+                {
+                    craftingRecipeUis[i] = Instantiate(recipeUIPrefab, recipeUIParent, false);
+
+                }
+
+                craftingRecipeUis[i].ItemContainer = ItemContainer;
+                craftingRecipeUis[i].CraftingRecipe = CraftingRecipes[i];
+            }
+
+            for (int i = CraftingRecipes.Count; i < craftingRecipeUis.Count; i++)
+            {
+                craftingRecipeUis[i].CraftingRecipe = null;
             }
         }
     }
