@@ -77,8 +77,8 @@ namespace NSY.Iven
                 }
                 if (amountText != null) //&& _item.MaximumStacks > 1 
                 {
-                    amountText.enabled = _item != null && _amount > 1 && _item.MaximumStacks > 1;
-                    if (amountText.enabled)
+                    amountText.enabled = _item != null && _amount > 1 ;
+                    if(amountText.enabled)
                     {
                         amountText.text = _amount.ToString();
                     }
@@ -104,9 +104,9 @@ namespace NSY.Iven
             Amount = _amount;
         }
 
-        public virtual bool CanAddStack(Item item, int amount = 1)
+        public virtual bool CanAddStack(Item Item, int amount = 1)
         {
-            return item != null && item.ItemName == item.ItemName;
+            return item != null && item.ItemName == Item.ItemName;
         }
         //갯수채우기 함수
 

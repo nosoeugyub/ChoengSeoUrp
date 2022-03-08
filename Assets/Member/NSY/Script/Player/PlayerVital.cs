@@ -7,6 +7,9 @@ namespace NSY.Player
 {
     public class PlayerVital : MonoBehaviour
     {
+      public  int MaxVital = 100;
+      public  int CurVital;
+
         [SerializeField]
         PlayerController playerController;
 

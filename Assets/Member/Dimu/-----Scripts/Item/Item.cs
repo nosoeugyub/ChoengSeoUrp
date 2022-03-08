@@ -36,7 +36,7 @@ namespace DM.Inven
 
          public virtual Item GetCopy() //항목들을 객ㅊ체 자체에 참조 사용
         {
-            return Instantiate(this);
+            return this;
         }
         public virtual void Destroy() //항목을 없에는 함수
         {

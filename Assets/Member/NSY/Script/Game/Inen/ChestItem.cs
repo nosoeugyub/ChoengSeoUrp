@@ -23,7 +23,7 @@ namespace NSY.Iven
             {
                 inventory = FindObjectOfType<InventoryNSY>();
             }
-            if (inventory == null)
+            if (spriteRenderer == null)
             {
                 spriteRenderer = GetComponentInChildren<SpriteRenderer>();
             }

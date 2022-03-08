@@ -18,7 +18,7 @@ namespace NSY.Iven
         {
             for (int i = 0; i < itemSlots.Length; i++)
             {//itemSlots[i].item == null || (itemSlots[i].item.ItemName == item.ItemName && itemSlots[i].Amount < item.MaximumStacks
-                if (itemSlots[i].item == null || (itemSlots[i].item.ItemName == item.ItemName && itemSlots[i].Amount < item.MaximumStacks))
+                if (itemSlots[i].item == null || itemSlots[i].CanAddStack(item))
                 {
                     itemSlots[i].item = item;
                     itemSlots[i].Amount++;
@@ -49,10 +49,10 @@ namespace NSY.Iven
                 if (itemSlots[i].item == item)
                 {
                     itemSlots[i].Amount--;
-                     if (itemSlots[i].Amount == 0)
-                      {
-                          itemSlots[i].item = null;
-                     }
+                   //  if (itemSlots[i].Amount == 0)
+                    //  {
+                   //       itemSlots[i].item = null;
+                   //  }
 
                     return true;
                 }
@@ -108,8 +108,8 @@ namespace NSY.Iven
                 Item item = itemSlots[i].item;
                 if (itemSlots[i].item.ItemName == itemID)
                 {
-                    //number += itemSlots[i].Amount;
-                    number++;
+                    number += itemSlots[i].Amount;
+                   // number++;
                 }
 
 

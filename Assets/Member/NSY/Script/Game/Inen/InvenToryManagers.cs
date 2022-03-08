@@ -4,13 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using DM.Inven;
 using NSY.Player;
+using System;
+
 
 namespace NSY.Iven
 {
     public class InvenToryManagers : MonoBehaviour
     {
         //케릭터 속성
-        PlayerController playercontroller;
+        public int Vital = 100;
 
         [SerializeField] InventoryNSY iventorynsy;
         [SerializeField] EquipPanel equipPanel;
@@ -22,8 +24,8 @@ namespace NSY.Iven
         private void Awake()
         {
             //인벤토리 클레스 이벤트
-            iventorynsy.OnRightClickEvent += Equip;
-            equipPanel.OnRightClickEvent += Unequip;
+            iventorynsy.OnRightClickEvent += InventoryRightClick;
+            equipPanel.OnRightClickEvent += EquipmentPanelRightClick;
             //드래그 시작
             iventorynsy.OnBeginDragEvent += BeginDrag;
             equipPanel.OnBeginDragEvent += BeginDrag;
@@ -38,20 +40,29 @@ namespace NSY.Iven
             equipPanel.OnDropEvent += Drop;
         }
                  
-        private void Equip(BaseItemSlot itemslot)
+        private void InventoryRightClick(BaseItemSlot itemslot)
         {
-            Item item = itemslot.item as Item;
-            if (item != null)
+            if (itemslot.item is Item)
             {
-                Equip(item);
+                Equip((Item)itemslot.item);
+            }
+            else if(itemslot.item is UseableItem)
+            {
+                UseableItem usableitem = (UseableItem)itemslot.item;
+                usableitem.Use(this);
+
+                if (usableitem.isConsumable)
+                {
+                    iventorynsy.RemoveItem(usableitem);
+                    usableitem.Destroy();
+                }
             }
         }
-        private void Unequip(BaseItemSlot itemslot)
+        private void EquipmentPanelRightClick(BaseItemSlot itemslot)
         {
-            Item item = itemslot.item as Item;
-            if (item != null)
+            if (itemslot.item is Item)
             {
-                Unequip(item);
+                Unequip((Item)itemslot.item);
             }
         }
         private void BeginDrag(BaseItemSlot itemslot)
@@ -66,10 +77,10 @@ namespace NSY.Iven
         }
         private void Drag(BaseItemSlot itemslot)
         {
-            if (draggableitem.enabled)
-            {
+          //  if (draggableitem.enabled)
+           // {
                 draggableitem.transform.position = Input.mousePosition;
-            }
+           // }
 
         }
         private void EndDrag(BaseItemSlot itemslot)
@@ -77,7 +88,7 @@ namespace NSY.Iven
           
             dragitemSlot = null;
             draggableitem.gameObject.SetActive(false);
-            this.enabled = false;
+         //   this.enabled = false;
         }
        
         private void Drop(BaseItemSlot dropitemslot)
@@ -88,7 +99,7 @@ namespace NSY.Iven
             {
                 AddStacks(dropitemslot);
             }
-            else if(dropitemslot.CanReceiveItem(dragitemSlot.item) && dragitemSlot.CanReceiveItem(dropitemslot.item))
+            else  if(dropitemslot.CanReceiveItem(dragitemSlot.item) && dragitemSlot.CanReceiveItem(dropitemslot.item))
             {
                 Swapitems(dropitemslot);
             }

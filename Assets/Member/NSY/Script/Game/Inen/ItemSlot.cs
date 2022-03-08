@@ -17,9 +17,9 @@ namespace NSY.Iven
         public event Action<BaseItemSlot> OnDragEvent;
         public event Action<BaseItemSlot> OnDropEvent;
 
-      //  private Color normalColor = Color.white;
+         private Color normalColor = Color.white;
       //  private Color disabledColor = new Color(1, 1, 1, 0);
-        private Color dragColor = new Color(1, 1, 1, 0.5f);
+        private Color dragColor = new Color(1, 1, 1, 0.2f);
 
 
 
@@ -79,7 +79,7 @@ namespace NSY.Iven
             isDragging = false;
             if (item != null)
             {
-                itemImage.color = dragColor;
+                itemImage.color = normalColor;
             }
             if (OnEndDragEvent != null)
             {
@@ -89,15 +89,15 @@ namespace NSY.Iven
 
         public void OnDrop(PointerEventData eventData)
         {
-            if (eventData.button == PointerEventData.InputButton.Left)
-            {
-                OnDropEvent.Invoke(this);
-            }
+            //if (eventData.button == PointerEventData.InputButton.Left)
+            //{
+            //    OnDropEvent.Invoke(this);
+            //}
             
-          //  if (OnDropEvent != null)
-           // {
-            //    OnDropEvent(this);
-           // }
+            if (OnDropEvent != null)
+            {
+                OnDropEvent(this);
+            }
         }
 
       
