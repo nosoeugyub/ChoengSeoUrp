@@ -30,6 +30,7 @@ namespace Game.Cam
             LookIn = true;
             DeactiveAllSideCam();
             DeactiveAllCornerCam();
+            DeaactiveAllSubCam();
         }
         void Update()
         {
@@ -49,6 +50,13 @@ namespace Game.Cam
             for (int i = 0; i < CornerCamera.Length; i++)
             {
                 CornerCamera[i].SetActive(false);
+            }
+        }
+
+        void DeaactiveAllSubCam() {
+            for (int i = 0; i < virtualCamera.Length; i++)
+            {
+             virtualCamera[i].SetActive(false);
             }
         }
 
