@@ -51,7 +51,7 @@ public enum InItemType
     Rope = 10000,
 
     //도구
-    Ax = 100000, Pickaxe, MagnifyingGlass,
+    Ax = 100000, Pickaxe, MagnifyingGlass, Hammer,
     //미네랄
     tree = 1000000, Stone,
 }

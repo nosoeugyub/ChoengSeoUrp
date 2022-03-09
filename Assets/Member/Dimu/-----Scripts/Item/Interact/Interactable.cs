@@ -31,5 +31,5 @@ public interface IEventable : IInteractable
 }
 public interface IBuildable : IInteractable
 {
-    void OnBuildMode();
+    void OnBuildMode(Button[] buttons);
 }

@@ -4,26 +4,25 @@ using UnityEngine;
 
 namespace Game.NPC
 {
-    public class MainNpc : NPC//, IInteractable
+    public class MainNpc : NPC, ITalkable
     {
         //public  int MainNPCID = 1001;
         //public  bool MainNPCIsid = false;
 
-        public void CanInteract()
+        public string CanInteract()
         {
-            PlayerInput.OnPressFDown = Interact;
-        }
-
-        public void EndInteract() { }
-
-        public void Interact()
-        {
-            PlayDialog();
+            //PlayerInput.OnPressFDown = Interact;
+            return "말걸기";
         }
 
         public Transform ReturnTF()
         {
             return transform;
+        }
+
+        public void Talk()
+        {
+            PlayDialog();
         }
 
         //protected override void AddID(int NPCid, bool NPCisID)

@@ -9,7 +9,7 @@ namespace NSY.Player
     {
         [SerializeField] List<IInteractable> interacts = new List<IInteractable>();//상호작용 범위 내 있는 IInteractable오브젝트 리스트
         //[SerializeField] Dictionary<IInteractable, T> interactss= new Dictionary<IInteractable>();//상호작용 범위 내 있는 IInteractable오브젝트 리스트
-
+        [SerializeField] Button[] buildingButtons;
         //IInteractable closestObj;//가장 가까운 친구
         public GameObject interactUI;//띄울 UI
         public Text interactUiText;//띄울 UI
@@ -26,8 +26,11 @@ namespace NSY.Player
         bool canInteract = false;
         int layerMask;   // Player 레이어만 충돌 체크함
 
-        //열매 상태
-        FrutStateManager state;
+        [SerializeField] float interactCooltime;
+        [SerializeField] float interactTime;
+
+        ////열매 상태
+        //FrutStateManager state;
 
         private void Awake()
         {
@@ -45,31 +48,46 @@ namespace NSY.Player
                 interacts.Add(interactable);
             }
 
-            ////////초반 튜토리얼 오브젝트와 충돌 판정
-            if (other.CompareTag("FristPost"))
-            {
-                Debug.Log("첫 번째 표지판 부딪히고 유아이 띄우셈");
-                EventManager._Instace.StartFirstPost();
+            //////////초반 튜토리얼 오브젝트와 충돌 판정
+            //if (other.CompareTag("FristPost"))
+            //{
+            //    Debug.Log("첫 번째 표지판 부딪히고 유아이 띄우셈");
+            //    EventManager._Instace.StartFirstPost();
 
-            }
-            if (other.CompareTag("FristTree"))
-            {
-                Debug.Log("첫 번째 나무 부딪히고 사과 떨어짐");
-                EventManager._Instace.StartFirstTree();
+            //}
+            //if (other.CompareTag("FristTree"))
+            //{
+            //    Debug.Log("첫 번째 나무 부딪히고 사과 떨어짐");
+            //    EventManager._Instace.StartFirstTree();
 
-            }
-            //과일나무랑 만남
-            if (other.CompareTag("FruitTree"))
-            {
+            //}
+            ////과일나무랑 만남
+            //if (other.CompareTag("FruitTree"))
+            //{
 
-                //이벤트 함수 적어놀예정
-                EventManager._Instace.PlayerActiveFruitTree();
-                Debug.Log("열매 떨어져!");
-            }
+            //    //이벤트 함수 적어놀예정
+            //    EventManager._Instace.PlayerActiveFruitTree();
+            //    Debug.Log("열매 떨어져!");
+            //}
         }
 
         private void InvokeInteract(IInteractable interactable)
         {
+            if(!handItem)
+            {
+                ICollectable collectable = interactable.ReturnTF().GetComponent<ICollectable>();
+                if (collectable != null)
+                {
+                    collectable.Collect();
+                    return;
+                }
+                ITalkable talkable = interactable.ReturnTF().GetComponent<ITalkable>();
+                if (talkable != null)
+                {
+                    talkable.Talk();
+                    return;
+                }
+            }
             switch (handItem.OutItemType)
             {
                 case OutItemType.Tool://손에 도구를 들고 있으면
@@ -77,6 +95,11 @@ namespace NSY.Player
                     if (mineable != null)
                     {
                         mineable.Mine(handItem);
+                    }
+                    IBuildable buildable = interactable.ReturnTF().GetComponent<IBuildable>();
+                    if (buildable != null)
+                    {
+                        buildable.OnBuildMode(buildingButtons);
                     }
                     break;
                 case OutItemType.Food://음식 들고있으면
@@ -96,18 +119,18 @@ namespace NSY.Player
                     break;
 
                 default://어느 타입도 아닌 맨손>> 인벤에 넣을 수 있는 아이템이라면 인벤에 넣기. 대화도 걸기
-                    ICollectable collectable = interactable.ReturnTF().GetComponent<ICollectable>();
-                    if (collectable != null)
-                    {
-                        collectable.Collect();
-                        break;
-                    }
-                    ITalkable talkable = interactable.ReturnTF().GetComponent<ITalkable>();
-                    if (talkable != null)
-                    {
-                        talkable.Talk();
-                        break;
-                    }
+                    //ICollectable collectable = interactable.ReturnTF().GetComponent<ICollectable>();
+                    //if (collectable != null)
+                    //{
+                    //    collectable.Collect();
+                    //    break;
+                    //}
+                    //ITalkable talkable = interactable.ReturnTF().GetComponent<ITalkable>();
+                    //if (talkable != null)
+                    //{
+                    //    talkable.Talk();
+                    //    break;
+                    //}
                     //ItemObject item= interactable.ReturnTF().GetComponent<ItemObject>();
                     //item.
                     break;
@@ -124,22 +147,25 @@ namespace NSY.Player
                 interacts.Remove(interactable);
             }
 
-            if (other.CompareTag("FristTree"))
-            {
-                Debug.Log("나무 이벤트 끝");
-                EventManager._Instace.EndFirstTree();
-            }
-            if (other.CompareTag("FristPost"))
-            {
-                Debug.Log("표지판 이벤트 끝");
-                EventManager._Instace.EndFirstPost();
-            }
+            //if (other.CompareTag("FristTree"))
+            //{
+            //    Debug.Log("나무 이벤트 끝");
+            //    EventManager._Instace.EndFirstTree();
+            //}
+            //if (other.CompareTag("FristPost"))
+            //{
+            //    Debug.Log("표지판 이벤트 끝");
+            //    EventManager._Instace.EndFirstPost();
+            //}
         }
         private void Update()
         {
-
             if (!canInteract)
             {
+                foreach (var button in buildingButtons)
+                {
+                    button.gameObject.SetActive(false);
+                }
                 interactUI.SetActive(false);
                 return;
             }
@@ -159,9 +185,21 @@ namespace NSY.Player
                 }
             }
             else
+            {
+                //foreach (var button in buildingButtons)
+                //{
+                //    button.gameObject.SetActive(false);
+                //}
                 interactUI.SetActive(false);
+            }
 
-            if (Input.GetMouseButtonDown(0))
+            if (interactTime <= interactCooltime)
+            {
+                interactTime += Time.deltaTime;
+                return;
+            }
+
+            if (Input.GetMouseButton(0))
             {
                 if (Physics.Raycast(ray, out hit, 10000, layerMask))
                 {
@@ -170,11 +208,13 @@ namespace NSY.Player
                     {
                         print(hit.collider.name);
                         InvokeInteract(nowInteractable);
+                        interactTime = 0;
                         //interactable.Interact();
                     }
                 }
             }
         }
+
         public bool IsInteracted(IInteractable it)
         {
             return interacts.Contains(it);
