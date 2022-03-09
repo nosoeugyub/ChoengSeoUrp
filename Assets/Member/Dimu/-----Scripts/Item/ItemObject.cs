@@ -27,7 +27,6 @@ public class ItemObject : MonoBehaviour
     //{
     //    NSY.Player.PlayerInput.OnPressFDown = Interact;
     //}
-
     public Transform ReturnTF()
     {
         return transform;

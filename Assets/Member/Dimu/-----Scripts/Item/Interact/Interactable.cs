@@ -29,3 +29,7 @@ public interface IEventable : IInteractable
 {
     void EtcEvent();
 }
+public interface IBuildable : IInteractable
+{
+    void OnBuildMode();
+}

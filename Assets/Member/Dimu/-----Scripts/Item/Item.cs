@@ -33,7 +33,7 @@ public class Item : ScriptableObject
 
 public enum OutItemType
 {
-    Talk,Tool, Mineral, Food, Collect, Etc
+    Talk,Tool, Mineral, Food, Collect, Build, Etc
 }
 
 

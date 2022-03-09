@@ -108,7 +108,7 @@ namespace NSY.Player
                         talkable.Talk();
                         break;
                     }
-                    ItemObject item= interactable.ReturnTF().GetComponent<ItemObject>();
+                    //ItemObject item= interactable.ReturnTF().GetComponent<ItemObject>();
                     //item.
                     break;
             }
