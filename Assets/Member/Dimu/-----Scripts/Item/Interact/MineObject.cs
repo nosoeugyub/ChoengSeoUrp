@@ -31,6 +31,10 @@ public class MineObject : ItemObject, IMineable
             Destroy(gameObject);
             DropItems();
         }
+        else
+        {
+            //내구도 하락...
+        }
     }
 
     public void DropItems()

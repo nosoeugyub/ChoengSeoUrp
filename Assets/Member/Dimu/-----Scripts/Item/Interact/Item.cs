@@ -54,6 +54,8 @@ public enum InItemType
     Ax = 100000, Pickaxe, MagnifyingGlass, Hammer,
     //미네랄
     tree = 1000000, Stone,
+    //이벤트오브젝트
+    Trashcan= 2000000,
 }
 
 [System.Serializable]

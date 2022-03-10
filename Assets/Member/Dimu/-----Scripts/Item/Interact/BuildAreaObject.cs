@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class BuildObject : ItemObject, IBuildable
+public class BuildAreaObject : MonoBehaviour, IInteractable //ItemObject, IBuildable
 {
     [SerializeField] BuildState buildState;
 
@@ -53,6 +53,11 @@ public class BuildObject : ItemObject, IBuildable
             });
             buttons[2].gameObject.SetActive(false);
         }
+    }
+
+    public Transform ReturnTF()
+    {
+        return transform;
     }
 
     public void SetBuildingState(BuildState buildstate)
