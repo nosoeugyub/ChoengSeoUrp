@@ -50,6 +50,7 @@ namespace NSY.Iven
                 {
                     previousitem = (Item)equipmentSlots[i].item;
                     equipmentSlots[i].item = item;
+                    equipmentSlots[i].Amount = 1;
                     return true;
                 }
                 
@@ -66,6 +67,7 @@ namespace NSY.Iven
                 if (equipmentSlots[i].item == item)
                 {
                     equipmentSlots[i].item = null;
+                    equipmentSlots[i].Amount = 0;
                     return true;
                 }
 

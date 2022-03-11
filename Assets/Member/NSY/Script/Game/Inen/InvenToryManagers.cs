@@ -16,6 +16,7 @@ namespace NSY.Iven
 
         [SerializeField] InventoryNSY iventorynsy;
         [SerializeField] EquipPanel equipPanel;
+        [SerializeField] CraftManager craftPanel;
         [SerializeField] Image draggableitem;
 
 
@@ -107,7 +108,25 @@ namespace NSY.Iven
             
 
         }
-      
+        //조합
+        public void OuMouseDownItem(Item item)
+        {
+            if (iventorynsy.RemoveItem(item))
+            {
+                Item previousitem;
+                if (craftPanel.CraftAddItem(item, out previousitem))
+                {
+                    if (previousitem != null)
+                    {
+                        iventorynsy.AddItem(previousitem);
+                    }
+                }
+                else
+                {
+                    iventorynsy.AddItem(item);
+                }
+            }
+        }
 
         //아이템 장착 제거
         public void Equip(Item item)
