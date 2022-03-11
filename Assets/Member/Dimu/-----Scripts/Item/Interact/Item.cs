@@ -55,7 +55,7 @@ public enum InItemType
     //미네랄
     tree = 1000000, Stone,
     //이벤트오브젝트
-    Trashcan= 2000000,
+    Trashcan= 2000000,Mailbox,
 }
 
 [System.Serializable]

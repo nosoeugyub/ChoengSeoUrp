@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class MineObject : ItemObject, IMineable
 {
@@ -24,8 +21,8 @@ public class MineObject : ItemObject, IMineable
             print("다른 도구로 시도해주십쇼.");
             return;
         }
-            print(nowChopCount);
-        if(++nowChopCount >= item.ChopCount)
+        print(nowChopCount);
+        if (++nowChopCount >= item.ChopCount)
         {
             NSY.Player.PlayerInput.OnPressFDown = null;
             Destroy(gameObject);
