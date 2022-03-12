@@ -18,6 +18,13 @@ namespace NSY.Iven
         [SerializeField] EquipPanel equipPanel;
         [SerializeField] CraftManager craftPanel;
         [SerializeField] Image draggableitem;
+        //조합 필요한 컴포넌트들
+        CraftSlot craftslot;
+        Item currntitem;
+        Item item;
+
+
+
 
 
         private BaseItemSlot dragitemSlot;
@@ -25,20 +32,25 @@ namespace NSY.Iven
         private void Awake()
         {
             //인벤토리 클레스 이벤트
+
             iventorynsy.OnRightClickEvent += InventoryRightClick;
             equipPanel.OnRightClickEvent += EquipmentPanelRightClick;
             //드래그 시작
             iventorynsy.OnBeginDragEvent += BeginDrag;
             equipPanel.OnBeginDragEvent += BeginDrag;
+            craftPanel.OnBeginDragEvent += BeginDrag;
             //드래그 끝
             iventorynsy.OnEndDragEvent += EndDrag;
             equipPanel.OnEndDragEvent += EndDrag;
+            craftPanel.OnEndDragEvent += EndDrag;
             //드래그
             iventorynsy.OnDragEvent += Drag;
             equipPanel.OnDragEvent += Drag;
+            craftPanel.OnDragEvent += Drag;
             //드롭
             iventorynsy.OnDropEvent += Drop;
             equipPanel.OnDropEvent += Drop;
+            craftPanel.OnDropEvent += Drop;
         }
                  
         private void InventoryRightClick(BaseItemSlot itemslot)
@@ -46,6 +58,7 @@ namespace NSY.Iven
             if (itemslot.item is Item)
             {
                 Equip((Item)itemslot.item);
+             
             }
             else if(itemslot.item is UseableItem)
             {
@@ -78,10 +91,9 @@ namespace NSY.Iven
         }
         private void Drag(BaseItemSlot itemslot)
         {
-          //  if (draggableitem.enabled)
-           // {
+          
                 draggableitem.transform.position = Input.mousePosition;
-           // }
+           
 
         }
         private void EndDrag(BaseItemSlot itemslot)
@@ -94,6 +106,14 @@ namespace NSY.Iven
        
         private void Drop(BaseItemSlot dropitemslot)
         {
+          
+
+            if (currntitem != null)
+            {
+                craftPanel.itemList[craftslot.index] = currntitem;
+
+            }
+
             if (dragitemSlot == null) return;
 
             if (dropitemslot.CanAddStack(dragitemSlot.item))
@@ -104,30 +124,48 @@ namespace NSY.Iven
             {
                 Swapitems(dropitemslot);
             }
-               
-            
 
+
+           
         }
         //조합
-        public void OuMouseDownItem(Item item)
+       void CheckForCreatedRecipes()
         {
-            if (iventorynsy.RemoveItem(item))
+          //  craftPanel.ResultSlot.gameObject.SetActive(false);
+          //  craftPanel.ResultSlot = null;
+
+            string currentRecipeString = "";
+            foreach (Item item  in craftPanel.itemList)
             {
-                Item previousitem;
-                if (craftPanel.CraftAddItem(item, out previousitem))
+                if (item != null)
                 {
-                    if (previousitem != null)
-                    {
-                        iventorynsy.AddItem(previousitem);
-                    }
+                    currentRecipeString += item.ItemName;
                 }
                 else
                 {
-                    iventorynsy.AddItem(item);
+                    currentRecipeString += "null";
+                }
+            }
+
+            for (int i = 0; i < craftPanel.recipes.Length; i++)
+            {
+                if (craftPanel.recipes[i] == currentRecipeString)
+                {
+                    
+                    craftPanel.ResultSlot.item = craftPanel.recipeResults[i];
                 }
             }
         }
 
+        public void OnClickSlot(CraftSlot craftslot)
+        {
+            craftslot.item = null;
+            craftPanel.itemList[craftslot.index] = null;
+            craftslot.gameObject.SetActive(false);
+            CheckForCreatedRecipes();
+            Debug.Log("이거됨");
+
+        }
         //아이템 장착 제거
         public void Equip(Item item)
         {

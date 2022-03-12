@@ -8,7 +8,14 @@ namespace NSY.Iven
 {
     public class CraftManager : MonoBehaviour
     {
-        public Item CurrentItem;
+         Item CurrentItem;
+        //레시피
+       public List<Item> itemList;
+        public string[] recipes;
+        public Item[] recipeResults;
+        public CraftSlot ResultSlot;
+
+
 
         [SerializeField] Transform CraftingSlotsParent;
         [SerializeField] CraftSlot[] CratfingSlots;
@@ -43,7 +50,13 @@ namespace NSY.Iven
             CratfingSlots = CraftingSlotsParent.GetComponentsInChildren<CraftSlot>();
         }
 
-
+        public void OuMouseDownItem(Item item)
+        {
+            if (CurrentItem == null)
+            {
+                CurrentItem = item;
+            }
+        }
 
 
         public bool CraftAddItem(Item item, out Item Craftpreviousitem)

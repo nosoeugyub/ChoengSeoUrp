@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DM.Inven;
+using UnityEngine.EventSystems;
 
 namespace NSY.Iven
 {
     public class CraftSlot : ItemSlot
     {
        public int index;
-        public Item item;
+        Item item;
 
         public ItemType itemtype;
 
@@ -18,15 +19,7 @@ namespace NSY.Iven
             gameObject.name = itemtype.ToString() + " Slot";
         }
 
-        public override bool CanReceiveItem(Item item)
-        {
-            if (item == null)
-            {
-                return true;
-            }
-            Item EQitem = item as Item;
-            return EQitem != null && EQitem.ItemType == itemtype;
-        }
+      
     }
 
 }
