@@ -1,7 +1,6 @@
-﻿using DM.Inven;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class ItemObject : MonoBehaviour, IInteractable
+public class ItemObject : MonoBehaviour//, IInteractable
 {
     public Item item;
     private void OnEnable()
@@ -22,8 +21,10 @@ public class ItemObject : MonoBehaviour, IInteractable
     {
         return "상호작용하기";
     }
-       public void Interact()
+    public void Interact()
     {
         //상호작용 인덱스 체크
+        print(string.Format( "AddData : {0}", item.ItemName));
+        PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.InteractItem, PlayerData.ItemData, (int)ItemBehaviorEnum.length);
     }
 }

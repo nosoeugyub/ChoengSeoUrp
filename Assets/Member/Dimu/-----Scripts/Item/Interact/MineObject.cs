@@ -22,6 +22,8 @@ public class MineObject : ItemObject, IMineable
             return;
         }
         print(nowChopCount);
+        Interact();
+
         if (++nowChopCount >= item.ChopCount)
         {
             NSY.Player.PlayerInput.OnPressFDown = null;

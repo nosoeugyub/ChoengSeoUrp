@@ -3,6 +3,7 @@
 public class BuildAreaObject : MonoBehaviour, IInteractable
 {
     [SerializeField] BuildState buildState;
+    [SerializeField] int buildingId;
 
     [Tooltip("이 오브젝트를 채집할 수 있는 도구 타입")]
     [SerializeField] InItemType toolType;
@@ -18,9 +19,8 @@ public class BuildAreaObject : MonoBehaviour, IInteractable
         {
             button.gameObject.SetActive(true);
         }
-
         //건축물 상호작용 인덱스 체크
-
+        Interact();
         //Set Event Methods
         if (buildState == BuildState.NotFinish)
         {
@@ -56,7 +56,10 @@ public class BuildAreaObject : MonoBehaviour, IInteractable
             buttons[2].gameObject.SetActive(false);
         }
     }
-
+    public void Interact()
+    {
+        PlayerData.AddValue(buildingId, (int)BuildingBehaviorEnum.Interact, PlayerData.BuildBuildingData, (int)BuildingBehaviorEnum.length);
+    }
     public Transform ReturnTF()
     {
         return transform;

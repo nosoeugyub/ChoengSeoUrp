@@ -16,11 +16,23 @@ public class EventObject : ItemObject, IEventable
 
     public void EtcEvent(Item _handItem)
     {
-        handItem = _handItem;
-        if (item.InItemType == InItemType.Trashcan && handItem.InItemType == InItemType.Trash)
-            TrashCut();
-        else if (item.InItemType == InItemType.Mailbox && handItem.InItemType == InItemType.Mailbox)
-            GetMessage();
+        if (_handItem)
+        {
+            handItem = _handItem;
+            if (item.InItemType == InItemType.Trashcan && handItem.InItemType == InItemType.Trash)
+                TrashCut();
+
+            Interact();
+
+        }
+        else
+        {
+            if (item.InItemType == InItemType.Mailbox)
+                GetMessage();
+
+            Interact();
+
+        }
     }
 
     public void TrashCut()

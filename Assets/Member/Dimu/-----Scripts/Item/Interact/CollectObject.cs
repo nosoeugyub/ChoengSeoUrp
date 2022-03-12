@@ -10,5 +10,6 @@ public class CollectObject : ItemObject, ICollectable
     public void Collect()
     {
         FindObjectOfType<InventoryManager>().AddItem(item, 1);
+        Interact();
     }
 }

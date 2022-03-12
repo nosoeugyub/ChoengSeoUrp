@@ -31,32 +31,7 @@ public class Item : ScriptableObject
 
 }
 
-public enum OutItemType
-{
-    Talk,Tool, Mineral, Food, Collect, Build, Etc
-}
 
-
-public enum InItemType
-{
-    //1차 재료
-    None = 0, Twigs, Cutgrass, Rocks, Gold, leaf, Mud, Trash,
-    //1차 식량
-    Seed = 100, Berry,
-    //2차재료
-    Woodplank = 1000, Cutstone, String, torch,
-    //2차 식량
-
-    //3차재료
-    Rope = 10000,
-
-    //도구
-    Ax = 100000, Pickaxe, MagnifyingGlass, Hammer,
-    //미네랄
-    tree = 1000000, Stone,
-    //이벤트오브젝트
-    Trashcan= 2000000,Mailbox,
-}
 
 [System.Serializable]
 public class ingredientNeeded

@@ -84,13 +84,18 @@ namespace NSY.Player
                 talkable.Talk();
                 return;
             }
+            IEventable eventable = interactable.ReturnTF().GetComponent<IEventable>();
+            if (eventable != null)
+            {
+                eventable.EtcEvent(handItem);
+                return;
+            }
             ItemObject itemObject = interactable.ReturnTF().GetComponent<ItemObject>();
             if (itemObject != null)
             {
                 itemObject.Interact();
                 return;
             }
-            
             if (!handItem) return;
 
             switch (handItem.OutItemType)
@@ -115,14 +120,10 @@ namespace NSY.Player
                         eatable.Eat();
                     }
                     break;
-                case OutItemType.Etc://이벤트 들고있으면
-                    IEventable eventable = interactable.ReturnTF().GetComponent<IEventable>();
-                    if (eventable != null)
-                    {
-                        eventable.EtcEvent(handItem);
-                    }
-                    //기타 아이템을 NPC에 전달하는 기능이 있다면 여기 추가
-                    break;
+                //case OutItemType.Etc://이벤트아이템 들고있으면
+
+                //    //기타 아이템을 NPC에 전달하는 기능이 있다면 여기 추가
+                //    break;
 
                 default://어느 타입도 아닌 맨손>> 인벤에 넣을 수 있는 아이템이라면 인벤에 넣기. 대화도 걸기
                     //ICollectable collectable = interactable.ReturnTF().GetComponent<ICollectable>();
