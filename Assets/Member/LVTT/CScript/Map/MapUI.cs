@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿using Game.Cam;
 using NSY.Player;
-using Game.Cam;
+using UnityEngine;
 namespace TT.MapTravel
 {
     public class MapUI : MonoBehaviour
@@ -9,7 +9,7 @@ namespace TT.MapTravel
         //bool MapUIisOn;
         PlayerMoveMent PlayerMovement;
         CameraManager CamManager;
-         void Start()
+        void Start()
         {
             //MapUIisOn = false;
             PlayerMovement = FindObjectOfType<PlayerMoveMent>();
@@ -17,30 +17,39 @@ namespace TT.MapTravel
         }
         void Update()
         {
-           if (!CamManager.IsZoom)
-           {
-               
-                 //   OpenandCloseMapUI();
-                
+            if (!CamManager.IsZoom)
+            {
+
+                //   OpenandCloseMapUI();
+
             }
-           
+
         }
 
-       //public void OpenandCloseMapUI()
-       // {
-       //     switch (MapUIisOn)
-       //     {
-       //         case true:
-       //             MapTravelUI.SetActive(false);
-       //             MapUIisOn = false;
-       //             break;
-       //         case false:
-       //             MapTravelUI.SetActive(true);
-       //             MapUIisOn = true;
-       //             break;
-       //     }
+        //public void OpenandCloseMapUI()
+        // {
+        //     switch (MapUIisOn)
+        //     {
+        //         case true:
+        //             MapTravelUI.SetActive(false);
+        //             MapUIisOn = false;
+        //             break;
+        //         case false:
+        //             MapTravelUI.SetActive(true);
+        //             MapUIisOn = true;
+        //             break;
+        //     }
 
-       // }
+        // }
+
+        public void BtnTravelToOuterArea(int areaNum)
+        {
+            //OpenandCloseMapUI();
+            print("BtnTravelToOuterArea" + areaNum);
+            PlayerData.AddValue(areaNum, (int)LocationBehaviorEnum.Interact, PlayerData.locationData, (int)LocationBehaviorEnum.length);
+            PlayerMovement.curAreaNum = areaNum;
+            PlayerMovement.Maptravel = true;
+        }
 
         ////Outer////
         public void BtnTravelToOuterArea1()
@@ -126,7 +135,7 @@ namespace TT.MapTravel
         }
         public void BtnTravelToInnerArea5()
         {
-           // OpenandCloseMapUI();
+            // OpenandCloseMapUI();
             PlayerMovement.curAreaNum = 12;
             PlayerMovement.Maptravel = true;
         }

@@ -7,10 +7,10 @@ namespace DM.Quest
     public class QuestManager : MonoBehaviour
     {
         private List<QuestData> totalPlayQuests;//플레이하면서 만났던 퀘스트 모음 아직 안쓰임
-        private Dictionary<QuestData, GameObject> acceptQuests;
+        public Dictionary<QuestData, GameObject> acceptQuests;
         public Transform questInfoMom;
         public GameObject questInfoUI;
-        public QuestData testSOdata;
+        public QuestData testSoData;
         public QuestList[] questLists;
         public List<QuestData> clearQuestLists;
         private void Awake()
