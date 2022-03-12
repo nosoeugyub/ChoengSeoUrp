@@ -84,9 +84,15 @@ namespace NSY.Player
                 talkable.Talk();
                 return;
             }
-            if (!handItem)
+            ItemObject itemObject = interactable.ReturnTF().GetComponent<ItemObject>();
+            if (itemObject != null)
             {
+                itemObject.Interact();
+                return;
             }
+            
+            if (!handItem) return;
+
             switch (handItem.OutItemType)
             {
                 case OutItemType.Tool://손에 도구를 들고 있으면

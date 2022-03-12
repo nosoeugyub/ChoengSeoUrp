@@ -1,7 +1,5 @@
-﻿       using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
-using System;
 
 
 namespace NSY.Manager
@@ -46,7 +44,7 @@ namespace NSY.Manager
         {
             get
             {
-                if (_instace ==null)
+                if (_instace == null)
                 {
                     _instace = new EventManager();
                 }
@@ -92,7 +90,8 @@ namespace NSY.Manager
 
         private void Update()
         {
-            EventAction(); //이벤트 실행 (메서드 없을 때 실행시키지 않는 방법 찾는중)
+            if (EventAction == null) return;
+            EventAction(); //이벤트 실행
         }
 
         //일반적인 과일나무 상호작용
@@ -103,8 +102,8 @@ namespace NSY.Manager
                 activefruittree();
             }
         }
-    }   
-     
+    }
+
 }
 
 

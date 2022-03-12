@@ -1,7 +1,7 @@
 ﻿using DM.Inven;
 using UnityEngine;
 
-public class ItemObject : MonoBehaviour
+public class ItemObject : MonoBehaviour, IInteractable
 {
     public Item item;
     private void OnEnable()
@@ -16,5 +16,14 @@ public class ItemObject : MonoBehaviour
     public Transform ReturnTF()
     {
         return transform;
+    }
+
+    public string CanInteract()
+    {
+        return "상호작용하기";
+    }
+       public void Interact()
+    {
+        //상호작용 인덱스 체크
     }
 }

@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class EventObject : ItemObject, IEventable
 {
-    //[SerializeField] EventItemType eventItemType;
     Item handItem;
     [SerializeField] Item mailBoxMessage;
     public string CanInteract()
@@ -35,6 +34,3 @@ public class EventObject : ItemObject, IEventable
 
     }
 }
-
-//public enum EventItemType
-//{ Trashcan }

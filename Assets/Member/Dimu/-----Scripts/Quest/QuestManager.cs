@@ -43,7 +43,9 @@ namespace DM.Quest
                 clearQuestLists.Add(nowQuestData);
                 acceptQuests[nowQuestData].SetActive(false);
                 acceptQuests.Remove(nowQuestData);
-                Debug.Log("Clear");
+                Debug.Log("Clear, 보상주기");
+
+
                 return true;
             }
             return false;
@@ -97,3 +99,5 @@ namespace DM.Quest
         public QuestData[] questList;
     }
 }
+public enum RewardType
+{ Gold, Item, Event,}

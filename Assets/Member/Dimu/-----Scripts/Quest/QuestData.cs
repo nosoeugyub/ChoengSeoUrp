@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using NSY.Manager;
+using UnityEngine;
 
 namespace DM.Quest
 {
@@ -45,6 +46,12 @@ namespace DM.Quest
             public QuestData[] requireQuests;
             public QuestInfo[] requireQuests2;
             public int requireLevel;
+        }
+        [System.Serializable]
+        public class Rewards
+        {
+            public RewardType rewardType;
+            public int requireCount;
         }
 
         public void InitData() //퀘스트에 필요한 항목을 현재 플레이어 데이터 값으로 초기화
@@ -129,7 +136,7 @@ namespace DM.Quest
             foreach (QuestData requireQuest in requirements.requireQuests)
             {
                 //선행퀘스트가 클리어 퀘스트 목록에 하나라도 없으면
-                if (!FindObjectOfType<QuestManager>().IsQuestCleared(requireQuest.questID, requireQuest.npcID))
+                if (SuperManager.Instance.questmanager.IsQuestCleared(requireQuest.questID, requireQuest.npcID))
                 {
                     Debug.Log("선행퀘스트를 클리어해야 합니다.");
                     return false;

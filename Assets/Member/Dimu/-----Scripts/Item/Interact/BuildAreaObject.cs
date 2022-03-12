@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class BuildAreaObject : MonoBehaviour, IInteractable //ItemObject, IBuildable
+public class BuildAreaObject : MonoBehaviour, IInteractable
 {
     [SerializeField] BuildState buildState;
 
@@ -9,7 +9,7 @@ public class BuildAreaObject : MonoBehaviour, IInteractable //ItemObject, IBuild
 
     public string CanInteract()
     {
-        return "건물 짓기";
+        return "건물 상호작용";
     }
 
     public void OnBuildMode(UnityEngine.UI.Button[] buttons)
@@ -18,6 +18,8 @@ public class BuildAreaObject : MonoBehaviour, IInteractable //ItemObject, IBuild
         {
             button.gameObject.SetActive(true);
         }
+
+        //건축물 상호작용 인덱스 체크
 
         //Set Event Methods
         if (buildState == BuildState.NotFinish)
@@ -30,7 +32,7 @@ public class BuildAreaObject : MonoBehaviour, IInteractable //ItemObject, IBuild
             });
             buttons[1].onClick.AddListener(() =>
             {
-                print("2. break Buildin");
+                print("2. break Building");
                 //2. break Building
             });
             buttons[2].onClick.AddListener(() =>
