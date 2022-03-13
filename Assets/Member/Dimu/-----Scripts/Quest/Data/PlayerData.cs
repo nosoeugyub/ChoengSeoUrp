@@ -71,9 +71,9 @@ public enum OutItemType
 public enum InItemType
 {
     //1차 재료
-    None = 0, Twigs, Cutgrass, Rocks, Gold, leaf, Mud, Trash,
+    None = 0, Twigs, Cutgrass, Rocks, Petal, leaf, Mud, Trash,
     //1차 식량
-    Seed = 10000, Berry,
+    Seed = 10000, Apple,
     //2차재료
     Woodplank = 20000, Cutstone, String, torch,
     //2차 식량

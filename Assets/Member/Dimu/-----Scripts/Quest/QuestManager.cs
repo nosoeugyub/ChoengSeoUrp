@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using DM.Inven;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -39,11 +40,30 @@ namespace DM.Quest
         {
             if (CanClear(questId, npcID))
             {
+                
                 QuestData nowQuestData = questLists[npcID].questList[questId];
+
+                foreach (var reward in nowQuestData.rewards)
+                {
+                    if (reward.rewardType == RewardType.Gold)
+                    {
+                        //재화 증가
+                        Debug.Log("Clear, 재화 획득");
+                    }
+                    else if(reward.rewardType == RewardType.Item)
+                    {
+                        //아이템 추가
+                        print(reward.itemType.ItemName);
+                        FindObjectOfType<InventoryManager>().AddItem(reward.itemType, reward.requireCount);
+                    }
+                    else if (reward.rewardType == RewardType.Event)
+                    {
+
+                    }
+                }
                 clearQuestLists.Add(nowQuestData);
                 acceptQuests[nowQuestData].SetActive(false);
                 acceptQuests.Remove(nowQuestData);
-                Debug.Log("Clear, 보상주기");
 
 
                 return true;
@@ -100,4 +120,4 @@ namespace DM.Quest
     }
 }
 public enum RewardType
-{ Gold, Item, Event,}
+{ Gold, Item, Event, }

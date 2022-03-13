@@ -113,13 +113,13 @@ namespace NSY.Player
                         buildAreaObject.OnBuildMode(buildingButtons);
                     }
                     break;
-                case OutItemType.Food://음식 들고있으면
-                    IEatable eatable = interactable.ReturnTF().GetComponent<IEatable>();
-                    if (eatable != null)
-                    {
-                        eatable.Eat();
-                    }
-                    break;
+                //case OutItemType.Food://음식 들고있으면
+                //    IEatable eatable = interactable.ReturnTF().GetComponent<IEatable>();
+                //    if (eatable != null)
+                //    {
+                //        eatable.Eat();
+                //    }
+                //    break;
                 //case OutItemType.Etc://이벤트아이템 들고있으면
 
                 //    //기타 아이템을 NPC에 전달하는 기능이 있다면 여기 추가

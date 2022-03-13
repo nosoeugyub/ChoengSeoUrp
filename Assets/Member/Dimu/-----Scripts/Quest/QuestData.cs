@@ -15,6 +15,7 @@ namespace DM.Quest
         public Sprite[] TaskImg;
         public Task tasks;
         public Requirements requirements;
+        public Rewards[] rewards;
 
 
         [System.Serializable]
@@ -51,6 +52,7 @@ namespace DM.Quest
         public class Rewards
         {
             public RewardType rewardType;
+            public Item itemType;
             public int requireCount;
         }
 
