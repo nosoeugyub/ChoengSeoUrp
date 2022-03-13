@@ -37,12 +37,12 @@ namespace NSY.Iven
             }
             ReFreshUi();
         }
-
+        
         private void OnValidate()
         {
             if (itemsParent != null)
             {
-                //GetComponentsInChildren(includeInactive: true, result: itemSlots);
+               // itemsParent.GetComponentsInChildren(includeInactive: true, result: itemSlots);
                 itemSlots = itemsParent.GetComponentsInChildren<ItemSlot>(); //itemslot => baseitemslot수정
             }
             ReFreshUi();

@@ -28,12 +28,7 @@ namespace DM.Inven
         [Range(1,20)]
         public int MaximumStacks = 1;
 
-        private void OnValidate()
-        {
-            string path = AssetDatabase.GetAssetPath(this);
-            itemName = AssetDatabase.AssetPathToGUID(path);
-        }
-
+      
          public virtual Item GetCopy() //항목들을 객ㅊ체 자체에 참조 사용
         {
             return this;
@@ -57,8 +52,7 @@ namespace DM.Inven
         //3차재료
         Rope = 10000, 
 
-        //NSY추가 코드
-        Weapon = 20000, pick, axe,
+       
     }
 
     [System.Serializable]

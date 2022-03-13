@@ -57,7 +57,7 @@ namespace NSY.Iven
         {
             if (itemslot.item is Item)
             {
-                Equip((Item)itemslot.item);
+                Equip((EquippableItem)itemslot.item);
              
             }
             else if(itemslot.item is UseableItem)
@@ -76,7 +76,7 @@ namespace NSY.Iven
         {
             if (itemslot.item is Item)
             {
-                Unequip((Item)itemslot.item);
+                Unequip((EquippableItem)itemslot.item);
             }
         }
         private void BeginDrag(BaseItemSlot itemslot)
@@ -166,19 +166,20 @@ namespace NSY.Iven
             Debug.Log("이거됨");
 
         }
-        //아이템 장착 제거
-        public void Equip(Item item)
+        //아이템 장착 해제
+        public void Equip(EquippableItem item)
         {
            
             if (iventorynsy.RemoveItem(item))
             {
-                Item previousitem;
+                EquippableItem previousitem;
                 if (equipPanel.AddItem(item, out previousitem))
-                {
+                { 
                     if (previousitem != null)
                     {
                         iventorynsy.AddItem(previousitem);
                     }
+                    
                 }
                 else
                 {
@@ -186,7 +187,29 @@ namespace NSY.Iven
                 }
             }
         }
-        public void Unequip(Item item)
+        //조합 아이템을 추가또는 제거
+        public void Craftinsert(Item item)
+        {
+            if (iventorynsy.RemoveItem(item))
+            {
+                Item CraftpreviousItem;
+                if (craftPanel.CraftAddItem(item, out CraftpreviousItem))
+                {
+                    iventorynsy.AddItem(CraftpreviousItem);
+                }
+                else
+                {
+                    iventorynsy.AddItem(item);
+                }
+            }
+        }
+
+
+
+
+
+
+        public void Unequip(EquippableItem item)
         {
             if (!iventorynsy.isFull() && equipPanel.RemoveItem(item))
             {

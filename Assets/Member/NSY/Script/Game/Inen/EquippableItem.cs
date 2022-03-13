@@ -5,15 +5,19 @@ using DM.Inven;
 
 namespace NSY.Iven
 {
-    
+    public enum EquipmentType
+    {
+        Axe,Pick
+    }
 
     [CreateAssetMenu]
     public class EquippableItem : Item
     {
         public int VitalPlus;
         public int VitalMius;
-        [Space]
-        public ItemType itemtype;
+       
+        public EquipmentType equipmentType;
+
     }
 
 }

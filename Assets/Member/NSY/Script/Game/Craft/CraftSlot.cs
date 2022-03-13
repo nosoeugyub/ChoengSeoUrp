@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using DM.Inven;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace NSY.Iven
 {
     public class CraftSlot : ItemSlot
     {
        public int index;
-        Item item;
+       
 
         public ItemType itemtype;
 

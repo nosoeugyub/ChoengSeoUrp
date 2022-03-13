@@ -7,12 +7,12 @@ namespace NSY.Iven
 {
     public class EquipmentSlot : ItemSlot
     {
-        public ItemType itemtype;
+        public EquipmentType equipmentType;
 
-        protected override void OnValidate()
+        protected override void OnValidate()//개체의 이름을 지정
         {
             base.OnValidate();
-            gameObject.name = itemtype.ToString() + " Slot";
+            gameObject.name = equipmentType.ToString() + " Slot";
         }
 
         public override bool CanReceiveItem(Item item)
@@ -21,8 +21,8 @@ namespace NSY.Iven
             {
                 return true;
             }
-            Item EQitem = item as Item;
-            return EQitem != null && EQitem.ItemType == itemtype;
+            EquippableItem equippableitem = item as EquippableItem;
+            return equippableitem != null && equippableitem.equipmentType == equipmentType;
         }
     }
 }

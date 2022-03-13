@@ -49,10 +49,7 @@ namespace NSY.Iven
                 if (itemSlots[i].item == item)
                 {
                     itemSlots[i].Amount--;
-                   //  if (itemSlots[i].Amount == 0)
-                    //  {
-                   //       itemSlots[i].item = null;
-                   //  }
+                   
 
                     return true;
                 }
@@ -71,10 +68,7 @@ namespace NSY.Iven
                 if (item != null && item.ItemName == itemID)
                 {
                     itemSlots[i].Amount--;
-                     // if (itemSlots[i].Amount == 0)
-                     //{
-                     // itemSlots[i].item = null;
-                     //  }
+                    
                     return item;
                 }
 
