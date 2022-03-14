@@ -1,5 +1,4 @@
-﻿using NSY.Manager;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -73,21 +72,32 @@ namespace NSY.Player
 
         private void InvokeInteract(IInteractable interactable)
         {
-            if(!handItem)
+            ICollectable collectable = interactable.ReturnTF().GetComponent<ICollectable>();
+            if (collectable != null)
             {
-                ICollectable collectable = interactable.ReturnTF().GetComponent<ICollectable>();
-                if (collectable != null)
-                {
-                    collectable.Collect();
-                    return;
-                }
-                ITalkable talkable = interactable.ReturnTF().GetComponent<ITalkable>();
-                if (talkable != null)
-                {
-                    talkable.Talk();
-                    return;
-                }
+                collectable.Collect();
+                return;
             }
+            ITalkable talkable = interactable.ReturnTF().GetComponent<ITalkable>();
+            if (talkable != null)
+            {
+                talkable.Talk();
+                return;
+            }
+            IEventable eventable = interactable.ReturnTF().GetComponent<IEventable>();
+            if (eventable != null)
+            {
+                eventable.EtcEvent(handItem);
+                return;
+            }
+            ItemObject itemObject = interactable.ReturnTF().GetComponent<ItemObject>();
+            if (itemObject != null)
+            {
+                itemObject.Interact();
+                return;
+            }
+            if (!handItem) return;
+
             switch (handItem.OutItemType)
             {
                 case OutItemType.Tool://손에 도구를 들고 있으면
@@ -96,27 +106,24 @@ namespace NSY.Player
                     {
                         mineable.Mine(handItem);
                     }
-                    IBuildable buildable = interactable.ReturnTF().GetComponent<IBuildable>();
-                    if (buildable != null)
+                    BuildAreaObject buildAreaObject = interactable.ReturnTF().GetComponent<BuildAreaObject>();
+                    //IBuildable buildable = interactable.ReturnTF().GetComponent<IBuildable>();
+                    if (buildAreaObject != null)
                     {
-                        buildable.OnBuildMode(buildingButtons);
+                        buildAreaObject.OnBuildMode(buildingButtons);
                     }
                     break;
-                case OutItemType.Food://음식 들고있으면
-                    IEatable eatable = interactable.ReturnTF().GetComponent<IEatable>();
-                    if (eatable != null)
-                    {
-                        eatable.Eat();
-                    }
-                    break;
-                case OutItemType.Etc://이벤트 들고있으면
-                    IEventable eventable = interactable.ReturnTF().GetComponent<IEventable>();
-                    if (eventable != null)
-                    {
-                        eventable.EtcEvent();
-                    }
-                    //기타 아이템을 NPC에 전달하는 기능이 있다면 여기 추가
-                    break;
+                //case OutItemType.Food://음식 들고있으면
+                //    IEatable eatable = interactable.ReturnTF().GetComponent<IEatable>();
+                //    if (eatable != null)
+                //    {
+                //        eatable.Eat();
+                //    }
+                //    break;
+                //case OutItemType.Etc://이벤트아이템 들고있으면
+
+                //    //기타 아이템을 NPC에 전달하는 기능이 있다면 여기 추가
+                //    break;
 
                 default://어느 타입도 아닌 맨손>> 인벤에 넣을 수 있는 아이템이라면 인벤에 넣기. 대화도 걸기
                     //ICollectable collectable = interactable.ReturnTF().GetComponent<ICollectable>();

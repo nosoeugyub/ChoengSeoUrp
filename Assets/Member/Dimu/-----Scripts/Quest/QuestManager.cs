@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using DM.Inven;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,10 +8,10 @@ namespace DM.Quest
     public class QuestManager : MonoBehaviour
     {
         private List<QuestData> totalPlayQuests;//플레이하면서 만났던 퀘스트 모음 아직 안쓰임
-        private Dictionary<QuestData, GameObject> acceptQuests;
+        public Dictionary<QuestData, GameObject> acceptQuests;
         public Transform questInfoMom;
         public GameObject questInfoUI;
-        public QuestData testSOdata;
+        public QuestData testSoData;
         public QuestList[] questLists;
         public List<QuestData> clearQuestLists;
         private void Awake()
@@ -39,11 +40,32 @@ namespace DM.Quest
         {
             if (CanClear(questId, npcID))
             {
+                
                 QuestData nowQuestData = questLists[npcID].questList[questId];
+
+                foreach (var reward in nowQuestData.rewards)
+                {
+                    if (reward.rewardType == RewardType.Gold)
+                    {
+                        //재화 증가
+                        Debug.Log(string.Format( "Clear, {0}G 획득",reward.requireCount));
+                    }
+                    else if(reward.rewardType == RewardType.Item)
+                    {
+                        //아이템 추가
+                        print(reward.itemType.ItemName);
+                        FindObjectOfType<InventoryManager>().AddItem(reward.itemType, reward.requireCount);
+                    }
+                    else if (reward.rewardType == RewardType.Event)
+                    {
+
+                    }
+                }
                 clearQuestLists.Add(nowQuestData);
                 acceptQuests[nowQuestData].SetActive(false);
                 acceptQuests.Remove(nowQuestData);
-                Debug.Log("Clear");
+
+
                 return true;
             }
             return false;
@@ -97,3 +119,5 @@ namespace DM.Quest
         public QuestData[] questList;
     }
 }
+public enum RewardType
+{ Gold, Item, Event, }

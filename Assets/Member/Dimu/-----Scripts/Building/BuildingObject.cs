@@ -95,11 +95,11 @@ namespace DM.Building
         public void ChangeFinishImg()
         {
             spriteRenderer.sprite = finishSprite;
-            PlayerData.AddValue(BuildID(),(int)BuildingBehaviorEnum.CompleteBuild, PlayerData.BuildBuildingData);
+            PlayerData.AddValue(BuildID(),(int)BuildingBehaviorEnum.CompleteBuild, PlayerData.BuildBuildingData,((int)BuildingBehaviorEnum.length));
         }
         public void StartBuild()
         {
-            PlayerData.AddValue(BuildID(),(int)BuildingBehaviorEnum.StartBuild, PlayerData.BuildBuildingData);
+            PlayerData.AddValue(BuildID(),(int)BuildingBehaviorEnum.StartBuild, PlayerData.BuildBuildingData, ((int)BuildingBehaviorEnum.length));
             spriteRenderer.sprite = underConstructionSprite;
             ingredientUI.SetActive(true);
             InstantiateUIs();
@@ -124,7 +124,7 @@ namespace DM.Building
 
         public void Interact()
         {
-            PlayerData.AddValue(BuildID(), (int)BuildingBehaviorEnum.Interact, PlayerData.BuildBuildingData);
+            PlayerData.AddValue(BuildID(), (int)BuildingBehaviorEnum.Interact, PlayerData.BuildBuildingData, (int)BuildingBehaviorEnum.length);
         }
 
         public void CanInteract()

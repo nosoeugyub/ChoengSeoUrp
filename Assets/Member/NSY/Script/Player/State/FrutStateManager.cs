@@ -47,7 +47,7 @@ public class FrutStateManager : ItemObject//, IInteractable
 
     public void Interact()
     {
-        AddItem();
+        //AddItem();
     }
     public void CanInteract(GameObject player)
     {

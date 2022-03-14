@@ -27,7 +27,7 @@ public interface ICollectable : IInteractable
 }
 public interface IEventable : IInteractable
 {
-    void EtcEvent();
+    void EtcEvent(Item handItem);
 }
 public interface IBuildable : IInteractable
 {
