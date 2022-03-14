@@ -1,0 +1,81 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using DM.Inven;
+using System;
+
+namespace NSY.Iven
+{
+    public class EquipPanel : MonoBehaviour
+    {
+        [SerializeField] Transform equipmentSlotsParent;
+        [SerializeField] EquipmentSlot[] equipmentSlots;
+
+        public event Action<BaseItemSlot> OnPointerEnterEvent;
+        public event Action<BaseItemSlot> OnPointerExitEvent;
+        public event Action<BaseItemSlot> OnRightClickEvent;
+        public event Action<BaseItemSlot> OnBeginDragEvent;
+        public event Action<BaseItemSlot> OnEndDragEvent;
+        public event Action<BaseItemSlot> OnDragEvent;
+        public event Action<BaseItemSlot> OnDropEvent;
+
+
+        private void Start()
+        {
+            for (int i = 0; i < equipmentSlots.Length; i++)
+            {
+                equipmentSlots[i].OnPointerEnterEvent +=  OnPointerEnterEvent;
+                equipmentSlots[i].OnPointerExitEvent +=  OnPointerExitEvent;
+                equipmentSlots[i].OnRightClickEvent +=  OnRightClickEvent;
+                equipmentSlots[i].OnBeginDragEvent +=   OnBeginDragEvent;
+                equipmentSlots[i].OnEndDragEvent += OnEndDragEvent;
+                equipmentSlots[i].OnDragEvent +=  OnDragEvent;
+                equipmentSlots[i].OnDropEvent +=  OnDropEvent;
+            }
+           
+        }
+
+
+        private void OnValidate()
+        {
+            equipmentSlots = equipmentSlotsParent.GetComponentsInChildren<EquipmentSlot>();
+        }
+        //추가 out 매개 변수는 반환 값이 있는 것과 같지만 해당 값이 할당될 매개변수로 변수를 전달 합니다.
+        //슬롯에 추가하기전에 out변수에 이전항목을 할당해야합니다
+        public bool AddItem(EquippableItem item , out EquippableItem previousitem)
+        {
+            for (int i = 0; i < equipmentSlots.Length; i++)
+            {
+                if (equipmentSlots[i].equipmentType == item.equipmentType)
+                {
+                    previousitem = (EquippableItem)equipmentSlots[i].item;
+                    equipmentSlots[i].item = item;
+                    equipmentSlots[i].Amount = 1;
+                    return true;
+                }
+                
+
+            }
+            previousitem = null; //아니면 다시 인벤토리로 
+            return false;
+        }
+        //제거
+        public bool RemoveItem(EquippableItem item)
+        {
+            for (int i = 0; i < equipmentSlots.Length; i++)
+            {
+                if (equipmentSlots[i].item == item)
+                {
+                    equipmentSlots[i].item = null;
+                    equipmentSlots[i].Amount = 0;
+                    return true;
+                }
+
+
+            }
+            return false;
+        }
+    }
+
+}
+

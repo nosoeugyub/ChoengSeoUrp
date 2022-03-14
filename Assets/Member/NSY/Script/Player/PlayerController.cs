@@ -1,6 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using NSY.Iven;
+using DM.Inven;
+using System;
+using UnityEngine.UI;
+
 
 //부모 클래스
 namespace NSY.Player
@@ -33,6 +38,8 @@ namespace NSY.Player
        public Animator SpritePlayerAnim;
        public Animator GamePlayerAnim;
 
+        //피로도
+        public int Tired;
 
        
         // Start is called before the first frame update
@@ -52,11 +59,7 @@ namespace NSY.Player
         }
         
      
-
-
-
-
-
+       
     }
 }
 
