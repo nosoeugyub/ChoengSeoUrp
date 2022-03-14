@@ -47,14 +47,14 @@ namespace NSY.Iven
             {
                 if (CraftingRecipe.CanCraft(ItemContainer))
                 {
-                    if (!ItemContainer.isFull())
-                    {
+                   // if (!ItemContainer.CanAddItem(Item item, 1))
+                   // {
                         craftingRectipe.Craft(ItemContainer);
-                    }
-                    else
-                    {
+                  //  }
+                 //   else
+                 //   {
                         Debug.Log("인벤꽉참");
-                    }
+                   // }
                 }
                 else
                 {

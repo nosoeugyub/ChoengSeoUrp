@@ -16,8 +16,8 @@ namespace NSY.Iven
         public event Action<BaseItemSlot> OnEndDragEvent;
         public event Action<BaseItemSlot> OnDragEvent;
         public event Action<BaseItemSlot> OnDropEvent;
-
-         private Color normalColor = Color.white;
+      
+        private Color normalColor = Color.white;
       //  private Color disabledColor = new Color(1, 1, 1, 0);
         private Color dragColor = new Color(1, 1, 1, 0.2f);
 
@@ -43,13 +43,7 @@ namespace NSY.Iven
             }
         }
 
-        /// <summary>
-        ///  드래그엔드롭
-        /// </summary>
-        /// <param name="eventData"></param>
-        /// 
-
-        Vector2 originalPosition; //슬롯 초기위치
+       
         public void OnDrag(PointerEventData eventData)
         {
             //드레그
@@ -89,10 +83,7 @@ namespace NSY.Iven
 
         public void OnDrop(PointerEventData eventData)
         {
-            //if (eventData.button == PointerEventData.InputButton.Left)
-            //{
-            //    OnDropEvent.Invoke(this);
-            //}
+            
             
             if (OnDropEvent != null)
             {
@@ -102,7 +93,7 @@ namespace NSY.Iven
 
       
 
-      
+
     }
 
 

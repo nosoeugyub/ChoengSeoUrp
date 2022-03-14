@@ -24,13 +24,13 @@ namespace NSY.Iven
         {
             for (int i = 0; i < equipmentSlots.Length; i++)
             {
-                equipmentSlots[i].OnPointerEnterEvent += OnPointerEnterEvent;
-                equipmentSlots[i].OnPointerExitEvent += OnPointerExitEvent;
-                equipmentSlots[i].OnRightClickEvent += OnRightClickEvent;
-                equipmentSlots[i].OnBeginDragEvent += OnBeginDragEvent;
+                equipmentSlots[i].OnPointerEnterEvent +=  OnPointerEnterEvent;
+                equipmentSlots[i].OnPointerExitEvent +=  OnPointerExitEvent;
+                equipmentSlots[i].OnRightClickEvent +=  OnRightClickEvent;
+                equipmentSlots[i].OnBeginDragEvent +=   OnBeginDragEvent;
                 equipmentSlots[i].OnEndDragEvent += OnEndDragEvent;
-                equipmentSlots[i].OnDragEvent += OnDragEvent;
-                equipmentSlots[i].OnDropEvent += OnDropEvent;
+                equipmentSlots[i].OnDragEvent +=  OnDragEvent;
+                equipmentSlots[i].OnDropEvent +=  OnDropEvent;
             }
            
         }

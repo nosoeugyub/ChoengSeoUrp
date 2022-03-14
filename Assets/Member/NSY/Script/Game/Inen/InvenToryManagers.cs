@@ -11,6 +11,8 @@ namespace NSY.Iven
 {
     public class InvenToryManagers : MonoBehaviour
     {
+        
+
         //케릭터 속성
         public int Vital = 100;
 
@@ -18,10 +20,12 @@ namespace NSY.Iven
         [SerializeField] EquipPanel equipPanel;
         [SerializeField] CraftManager craftPanel;
         [SerializeField] Image draggableitem;
+        [SerializeField] DropItemArea Dropitemarea;
+        [SerializeField] QuestionDialog questionDialog;
         //조합 필요한 컴포넌트들
         CraftSlot craftslot;
         Item currntitem;
-        Item item;
+      
 
 
 
@@ -29,12 +33,16 @@ namespace NSY.Iven
 
         private BaseItemSlot dragitemSlot;
 
+       
+
         private void Awake()
         {
             //인벤토리 클레스 이벤트
 
             iventorynsy.OnRightClickEvent += InventoryRightClick;
+           
             equipPanel.OnRightClickEvent += EquipmentPanelRightClick;
+            
             //드래그 시작
             iventorynsy.OnBeginDragEvent += BeginDrag;
             equipPanel.OnBeginDragEvent += BeginDrag;
@@ -51,11 +59,14 @@ namespace NSY.Iven
             iventorynsy.OnDropEvent += Drop;
             equipPanel.OnDropEvent += Drop;
             craftPanel.OnDropEvent += Drop;
+            Dropitemarea.OnDropEvent += DropItemOutsideUI;
         }
-                 
+       
+
         private void InventoryRightClick(BaseItemSlot itemslot)
         {
-            if (itemslot.item is Item)
+            Debug.Log("이거됨");
+            if (itemslot.item is EquippableItem)
             {
                 Equip((EquippableItem)itemslot.item);
              
@@ -74,7 +85,8 @@ namespace NSY.Iven
         }
         private void EquipmentPanelRightClick(BaseItemSlot itemslot)
         {
-            if (itemslot.item is Item)
+            EquippableItem equippableItem = itemslot.item as EquippableItem;
+            if (itemslot.item is EquippableItem)
             {
                 Unequip((EquippableItem)itemslot.item);
             }
@@ -120,14 +132,34 @@ namespace NSY.Iven
             {
                 AddStacks(dropitemslot);
             }
-            else  if(dropitemslot.CanReceiveItem(dragitemSlot.item) && dragitemSlot.CanReceiveItem(dropitemslot.item))
+            else if (dropitemslot.CanReceiveItem(dragitemSlot.item) && dragitemSlot.CanReceiveItem(dropitemslot.item))
             {
                 Swapitems(dropitemslot);
             }
 
 
-           
+
         }
+        //버리기
+        private void DropItemOutsideUI()
+        {
+            if (dragitemSlot == null)
+            {
+                return;
+            }
+           
+            BaseItemSlot baseitemslot = dragitemSlot;
+            questionDialog.Show();
+            questionDialog.OnYesEvent += () => DestroyItem(baseitemslot);
+
+
+        }
+        private void DestroyItem(BaseItemSlot baseitemslot)//버릴떄 쓰는 로직
+        {
+            baseitemslot.item.Destroy();
+            baseitemslot.item = null;
+        }
+
         //조합
        void CheckForCreatedRecipes()
         {
@@ -163,7 +195,7 @@ namespace NSY.Iven
             craftPanel.itemList[craftslot.index] = null;
             craftslot.gameObject.SetActive(false);
             CheckForCreatedRecipes();
-            Debug.Log("이거됨");
+           
 
         }
         //아이템 장착 해제
@@ -179,12 +211,20 @@ namespace NSY.Iven
                     {
                         iventorynsy.AddItem(previousitem);
                     }
+                   
                     
                 }
                 else
                 {
                     iventorynsy.AddItem(item);
                 }
+            }
+        }
+        public void Unequip(EquippableItem item)
+        {
+            if (!iventorynsy.CanAddItem(item) && equipPanel.RemoveItem(item))
+            {
+                iventorynsy.AddItem(item);
             }
         }
         //조합 아이템을 추가또는 제거
@@ -209,13 +249,7 @@ namespace NSY.Iven
 
 
 
-        public void Unequip(EquippableItem item)
-        {
-            if (!iventorynsy.isFull() && equipPanel.RemoveItem(item))
-            {
-                iventorynsy.AddItem(item);
-            }
-        }
+      
         private void AddStacks(BaseItemSlot dropitemslot)
         {
             //갯수 중복시 옮기는거
@@ -223,24 +257,86 @@ namespace NSY.Iven
             int stacksToAdd = Mathf.Min(numAddableStacks, dragitemSlot.Amount);
 
             dropitemslot.Amount += stacksToAdd;
-            dragitemSlot.Amount -= stacksToAdd;
+            dropitemslot.Amount -= stacksToAdd;
         }
         private void Swapitems(BaseItemSlot dropitemslot)
         {
-            Item dragItem = dragitemSlot.item as Item;
-            Item dropitem = dropitemslot.item as Item;
+            EquippableItem dragItem = dragitemSlot.item as EquippableItem;
+            EquippableItem dropitem = dropitemslot.item as EquippableItem;
 
-            Item draggeditem = dragitemSlot.item;
+           
+
+            Item draggedItem = dragitemSlot.item;
             int draggedItemAmount = dragitemSlot.Amount;
 
             dragitemSlot.item = dropitemslot.item;
             dragitemSlot.Amount = dropitemslot.Amount;
 
-            dropitemslot.item = draggeditem;
-            dragitemSlot.Amount = draggedItemAmount;
+            dropitemslot.item = draggedItem;
+            dropitemslot.Amount = draggedItemAmount;
 
-           
+
         }
+
+
+        //
+        private ItemContainer openItemContainer;
+
+        private void TransferToItemContainer(BaseItemSlot itemSlot)
+        {
+            Item item = itemSlot.item;
+            if (item != null && openItemContainer.CanAddItem(item))
+            {
+                iventorynsy.RemoveItem(item);
+                openItemContainer.AddItem(item);
+            }
+        }
+
+        private void TransferToInventory(BaseItemSlot itemSlot)
+        {
+            Item item = itemSlot.item;
+            if (item != null && iventorynsy.CanAddItem(item))
+            {
+                openItemContainer.RemoveItem(item);
+                iventorynsy.AddItem(item);
+            }
+        }
+
+        public void OpenItemContainer(ItemContainer itemContainer)
+        {
+            openItemContainer = itemContainer;
+
+            iventorynsy.OnRightClickEvent -= InventoryRightClick;
+            iventorynsy.OnRightClickEvent += TransferToItemContainer;
+
+            itemContainer.OnRightClickEvent += TransferToInventory;
+
+         //   itemContainer.OnPointerEnterEvent += ShowTooltip;
+         //   itemContainer.OnPointerExitEvent += HideTooltip;
+            itemContainer.OnBeginDragEvent += BeginDrag;
+            itemContainer.OnEndDragEvent += EndDrag;
+            itemContainer.OnDragEvent += Drag;
+            itemContainer.OnDropEvent += Drop;
+        }
+
+        public void CloseItemContainer(ItemContainer itemContainer)
+        {
+            openItemContainer = null;
+
+            iventorynsy.OnRightClickEvent += InventoryRightClick;
+            iventorynsy.OnRightClickEvent -= TransferToItemContainer;
+
+            itemContainer.OnRightClickEvent -= TransferToInventory;
+
+        //    itemContainer.OnPointerEnterEvent -= ShowTooltip;
+        //    itemContainer.OnPointerExitEvent -= HideTooltip;
+            itemContainer.OnBeginDragEvent -= BeginDrag;
+            itemContainer.OnEndDragEvent -= EndDrag;
+            itemContainer.OnDragEvent -= Drag;
+            itemContainer.OnDropEvent -= Drop;
+        }
+
+
 
     }
 

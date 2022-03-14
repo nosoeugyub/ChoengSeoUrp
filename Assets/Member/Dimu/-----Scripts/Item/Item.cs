@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 //NSY추가
-using UnityEditor;
+
 
 namespace DM.Inven
 {
@@ -27,9 +27,8 @@ namespace DM.Inven
         //NSY 추가 코드
         [Range(1,20)]
         public int MaximumStacks = 1;
-
-      
-         public virtual Item GetCopy() //항목들을 객ㅊ체 자체에 참조 사용
+        
+        public virtual Item GetCopy() //항목들을 객ㅊ체 자체에 참조 사용
         {
             return this;
         }

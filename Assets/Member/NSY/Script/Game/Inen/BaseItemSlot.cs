@@ -8,11 +8,11 @@ using System;
 
 namespace NSY.Iven
 {
-    public class BaseItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
+    public class BaseItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
     {
         [SerializeField]public Image itemImage;
 
-
+        ItemTooltip tooltip;
         //슬롯갯수
         [SerializeField] public Text amountText;
 
@@ -20,10 +20,12 @@ namespace NSY.Iven
 
         private Color normalColor = Color.white;
         private Color disabledColor = new Color(1, 1, 1, 0);
-
+        public event Action<BaseItemSlot> OnRightClickEvent;
+        public event Action<BaseItemSlot> OnLeftClickEvent;
         public event Action<BaseItemSlot> OnPointerEnterEvent;
         public event Action<BaseItemSlot> OnPointerExitEvent;
-        public event Action<BaseItemSlot> OnRightClickEvent;
+       
+      //  public event Action<BaseItemSlot> OnLeftClickEvent;
 
         private Item _item;
         public Item item
@@ -51,6 +53,7 @@ namespace NSY.Iven
 
                 if (isPointerOver)
                 {
+
                     OnPointerExit(null);
                     OnPointerEnter(null);
                 }
@@ -91,6 +94,11 @@ namespace NSY.Iven
         // 이미지 텍스트
         protected virtual void OnValidate() //이미지가 비어있으면 찾아서 등록
         {
+            if (tooltip == null)
+            {
+                tooltip = FindObjectOfType<ItemTooltip>();
+            }
+
             if (itemImage == null)
             {
                 itemImage = GetComponent<Image>();
@@ -103,7 +111,14 @@ namespace NSY.Iven
             item = _item;
             Amount = _amount;
         }
-
+        protected virtual void OnDisable()
+        {
+            if (isPointerOver)
+            {
+              
+                OnPointerExit(null);
+            }
+        }
         public virtual bool CanAddStack(Item Item, int amount = 1)
         {
             return item != null && item.ItemName == Item.ItemName;
@@ -113,24 +128,6 @@ namespace NSY.Iven
         public virtual bool CanReceiveItem(Item item)
         {
             return false;
-        }
-        //이벤트
-        public void OnPointerClick(PointerEventData eventData)
-        {
-            if (eventData != null && eventData.button == PointerEventData.InputButton.Right)
-            {
-                if (OnRightClickEvent != null)
-                {
-                    OnRightClickEvent(this);
-                }
-            }
-        }
-        protected virtual void OnDisable()
-        {
-            if (isPointerOver)
-            {
-                OnPointerExit(null);
-            }
         }
 
         public void OnPointerEnter(PointerEventData eventData)
@@ -143,7 +140,7 @@ namespace NSY.Iven
             }
         }
 
-        public void OnPointerExit(PointerEventData eventData)
+        public  void OnPointerExit(PointerEventData eventData)
         {
 
             isPointerOver = false;
@@ -153,6 +150,31 @@ namespace NSY.Iven
             }
         }
 
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            
+            if (eventData != null && eventData.button == PointerEventData.InputButton.Right)
+            {
+                if (OnRightClickEvent != null)
+                {
+
+                    OnRightClickEvent(this);
+                }
+            }
+            if (eventData != null && eventData.button == PointerEventData.InputButton.Left)
+            {
+                if (item is EquippableItem)
+                {
+                    tooltip.ShowEqulTooltip((EquippableItem)item);
+                }
+               else if(item)
+                {
+                    tooltip.ShowItemTooltip(item);
+                }
+
+            }
+        }
     }
 
 }

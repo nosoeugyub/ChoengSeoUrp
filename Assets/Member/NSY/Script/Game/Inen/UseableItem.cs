@@ -12,9 +12,12 @@ namespace NSY.Iven
        
 
         public bool isConsumable;
+        public int somAmount;
         public virtual void Use(InvenToryManagers inventoryMgr)
         {
-           // inventoryMgr.Vital += someAmount;
+            inventoryMgr.Vital += somAmount;
+
+
         }
     }
 
