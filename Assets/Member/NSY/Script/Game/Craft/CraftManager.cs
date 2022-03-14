@@ -36,10 +36,10 @@ namespace NSY.Iven
                 CratfingSlots[i].OnPointerEnterEvent += OnPointerEnterEvent;
                 CratfingSlots[i].OnPointerExitEvent += OnPointerExitEvent;
                 CratfingSlots[i].OnRightClickEvent += OnRightClickEvent;
-                CratfingSlots[i].OnBeginDragEvent += OnBeginDragEvent;
-                CratfingSlots[i].OnEndDragEvent += OnEndDragEvent;
-                CratfingSlots[i].OnDragEvent += OnDragEvent;
-                CratfingSlots[i].OnDropEvent += OnDropEvent;
+             //   CratfingSlots[i].OnBeginDragEvent += OnBeginDragEvent;
+              //  CratfingSlots[i].OnEndDragEvent += OnEndDragEvent;
+               // CratfingSlots[i].OnDragEvent += OnDragEvent;
+               // CratfingSlots[i].OnDropEvent += OnDropEvent;
             }
 
         }
@@ -63,7 +63,7 @@ namespace NSY.Iven
         {
             for (int i = 0; i < CratfingSlots.Length; i++)
             {
-                if (CratfingSlots[i].itemtype == item.ItemType)
+                if (CratfingSlots[i].itemtype == item.InItemType)
                 {
                     Craftpreviousitem = (Item)CratfingSlots[i].item;
                     CratfingSlots[i].item = item;

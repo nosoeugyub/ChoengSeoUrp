@@ -7,12 +7,12 @@ using UnityEngine.UI;
 
 namespace NSY.Iven
 {
-    public class CraftSlot : ItemSlot
+    public class CraftSlot : BaseItemSlot
     {
        public int index;
        
 
-        public ItemType itemtype;
+        public InItemType itemtype;
 
         protected override void OnValidate()
         {

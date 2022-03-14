@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -13098,7 +13098,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pools:
   - tag: PaperTrash
-    SpawnPrefab: {fileID: 11400000, guid: 14529d95bae400344946f3f2ace4198d, type: 2}
+    SpawnPrefab: {fileID: 0}
     prefab: {fileID: 1433034003668029275, guid: 7e918fc17a7188e4a8963f2d7e8e7c93,
       type: 3}
     size: 0
@@ -33100,6 +33100,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1409667489, guid: 9407b02f8ebe01e429bfb5c4cc88b262, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1838538575, guid: 9407b02f8ebe01e429bfb5c4cc88b262, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 406097229730921028, guid: 9407b02f8ebe01e429bfb5c4cc88b262,
         type: 3}
       propertyPath: m_Enabled
@@ -36191,7 +36199,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 5c0ce520b87fc884e811748dd46c7244, type: 2}
-  explain: "\uBCA0\uB9AC\uBCA0\uB9AC\uB9C8\uC655"
 --- !u!1 &1271928056
 GameObject:
   m_ObjectHideFlags: 3

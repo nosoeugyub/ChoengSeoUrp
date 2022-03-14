@@ -26,7 +26,7 @@ namespace NSY.Iven
         {
             Debug.Log("이거 됨");
             ItemNameTex.text = item.ItemName;
-            ItemSlotTex.text = item.ItemType.ToString();
+            ItemSlotTex.text = item.InItemType.ToString();
             ItemStatsTex.text = item.ItemDescription;
 
         }

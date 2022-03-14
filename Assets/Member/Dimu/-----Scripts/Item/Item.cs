@@ -29,6 +29,20 @@ public class Item : ScriptableObject
     public DropItem[] DropItems => dropItems;
     public int ChopCount => chopCount;
 
+    //NSY추가 
+    public int MaximumStacks = 1;
+
+    public virtual Item GetCopy()
+    {
+        return this;
+    }
+
+    public virtual void Destroy()
+    {
+        Destroy(this);
+    }
+
+
 }
 
 public enum OutItemType
