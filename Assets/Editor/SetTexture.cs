@@ -18,6 +18,8 @@ public class SetTexture
 
 
 			TextureImporter textureImporter = AssetImporter.GetAtPath(path) as TextureImporter;
+			string a = texture.name;
+			Debug.Log(a +  "aa");
 
 			textureImporter.textureType = TextureImporterType.Sprite;
 
