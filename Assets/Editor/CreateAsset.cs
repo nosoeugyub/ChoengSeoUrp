@@ -19,7 +19,7 @@ public class CreateAsset : MonoBehaviour
             //string name = "DimuMat";
             AssetDatabase.CreateAsset(material, string.Format("{0}.mat", path));
 
-            material.SetTexture("Base Map", texture);
+            material.SetTexture("_MainTex", texture);
             
             Debug.Log(AssetDatabase.GetAssetPath(material));
             //return;
