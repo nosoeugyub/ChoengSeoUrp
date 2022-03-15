@@ -36,10 +36,10 @@ namespace NSY.Iven
                 CratfingSlots[i].OnPointerEnterEvent += OnPointerEnterEvent;
                 CratfingSlots[i].OnPointerExitEvent += OnPointerExitEvent;
                 CratfingSlots[i].OnRightClickEvent += OnRightClickEvent;
-             //   CratfingSlots[i].OnBeginDragEvent += OnBeginDragEvent;
-              //  CratfingSlots[i].OnEndDragEvent += OnEndDragEvent;
-               // CratfingSlots[i].OnDragEvent += OnDragEvent;
-               // CratfingSlots[i].OnDropEvent += OnDropEvent;
+                CratfingSlots[i].OnBeginDragEvent += OnBeginDragEvent;
+                CratfingSlots[i].OnEndDragEvent += OnEndDragEvent;
+                CratfingSlots[i].OnDragEvent += OnDragEvent;
+                CratfingSlots[i].OnDropEvent += OnDropEvent;
             }
 
         }

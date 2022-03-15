@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace NSY.Iven
 {
-    public class CraftSlot : BaseItemSlot
+    public class CraftSlot : ItemSlot
     {
        public int index;
        
@@ -19,8 +19,16 @@ namespace NSY.Iven
             base.OnValidate();
             gameObject.name = itemtype.ToString() + " Slot";
         }
+        public override bool CanReceiveItem(Item item)
+        {
+            if (item == null)
+            {
+                return true;
+            }
+            Item craftitem = item ;
+            return craftitem != null && craftitem.InItemType == itemtype;
+        }
 
-      
     }
 
 }
