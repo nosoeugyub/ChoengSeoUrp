@@ -69,62 +69,45 @@ namespace NSY.Player
             switch (curAreaNum)
             {
                 case 0:
-                    TravelToOuterArea(0);
-                    break;
-                case 1:
                     TravelToOuterArea(1);
                     break;
-                case 2:
-                    TravelToOuterArea(2);
-                    break;
-                case 3:
-                    TravelToOuterArea(3);
-                    break;
-                case 4:
-                    TravelToOuterArea(4);
-                    break;
-                case 5:
-                    TravelToOuterArea(5);
-                    break;
-                case 6:
-                    TravelToOuterArea(6);
-                    break;
-                case 7:
-                    TravelToOuterArea(7);
-                    break;
-                case 8:
+                case 1:
                     TravelToInnerArea(0);
                     break;
-                case 9:
+                case 2:
                     TravelToInnerArea(1);
                     break;
-                case 10:
+                case 3:
                     TravelToInnerArea(2);
                     break;
-                case 11:
+                case 4:
                     TravelToInnerArea(3);
                     break;
-                case 12:
+                case 5:
                     TravelToInnerArea(4);
                     break;
-                case 13:
+                case 6:
                     TravelToInnerArea(5);
                     break;
-                case 14:
+                case 7:
                     TravelToInnerArea(6);
                     break;
-                case 15:
+                case 8:
                     TravelToInnerArea(7);
                     break;
-                case 16:
+                case 9:
                     TravelToInnerArea(8);
                     break;
-                case 17:
+                case 10:
                     TravelToInnerArea(9);
                     break;
-                case 18:
+                case 11:
                     TravelToInnerArea(10);
                     break;
+                case 12:
+                    TravelToInnerArea(11);
+                    break;
+              
             }
         }
             void TravelToOuterArea(int AreaNum)
