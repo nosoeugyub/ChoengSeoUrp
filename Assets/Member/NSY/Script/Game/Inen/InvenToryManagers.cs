@@ -40,7 +40,7 @@ namespace NSY.Iven
             //인벤토리 클레스 이벤트
 
             iventorynsy.OnRightClickEvent += InventoryRightClick;
-           
+            iventorynsy.OnLeftClickEvent += InventoryLeftClick;
             equipPanel.OnRightClickEvent += EquipmentPanelRightClick;
             
             //드래그 시작
@@ -65,7 +65,7 @@ namespace NSY.Iven
 
         private void InventoryRightClick(BaseItemSlot itemslot)
         {
-            Debug.Log("이거됨");
+           
             if (itemslot.item is EquippableItem)
             {
                 Equip((EquippableItem)itemslot.item);
@@ -83,6 +83,15 @@ namespace NSY.Iven
                     iventorynsy.RemoveItem(usableitem);
                     usableitem.Destroy();
                 }
+            }
+        }
+        private void InventoryLeftClick(BaseItemSlot itemslot)
+        {
+            Debug.Log("이거됨");
+            if (itemslot.item is Item)
+            {
+                craftPanel.CraftAddItem(itemslot.item.GetCopy());
+                itemslot.Amount--;
             }
         }
         private void EquipmentPanelRightClick(BaseItemSlot itemslot)
@@ -195,16 +204,7 @@ namespace NSY.Iven
                 iventorynsy.AddItem(item);
             }
         }
-        //조합 아이템을 추가또는 제거
-        //조합
-       
-       
-        //조합 아이템 슬롯 추가
   
-
-
-
-
 
 
         private void AddStacks(BaseItemSlot dropitemslot)

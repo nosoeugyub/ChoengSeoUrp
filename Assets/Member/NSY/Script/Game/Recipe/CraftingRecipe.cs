@@ -40,7 +40,7 @@ namespace NSY.Iven
         {
             if (CanCraft(itemContainer))
             {
-                foreach (ItemAmount itemAmount in Materials)
+                foreach (ItemAmount itemAmount in Materials) //만들면 갯수 제거
                 {
                     for (int i = 0; i < itemAmount.Amount; i++)
                     {
@@ -49,7 +49,7 @@ namespace NSY.Iven
                     }
                 }
 
-                foreach (ItemAmount itemAmount in Materials)
+                foreach (ItemAmount itemAmount in Results)
                 {
                     for (int i = 0; i < itemAmount.Amount; i++)
                     {

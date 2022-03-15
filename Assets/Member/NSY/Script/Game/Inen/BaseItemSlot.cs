@@ -164,6 +164,11 @@ namespace NSY.Iven
             }
             if (eventData != null && eventData.button == PointerEventData.InputButton.Left)
             {
+                if (OnLeftClickEvent != null)
+                {
+
+                    OnLeftClickEvent(this);
+                }
                 if (item is EquippableItem)
                 {
                     tooltip.ShowEqulTooltip((EquippableItem)item);
