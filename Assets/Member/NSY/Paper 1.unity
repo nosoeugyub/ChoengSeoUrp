@@ -15075,7 +15075,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 514490845}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5dfe93994b2b59e418c3a1d54251a0f2, type: 3}
   m_Name: 
@@ -20477,7 +20477,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemImage: {fileID: 708300811}
   amountText: {fileID: 698102759}
-  index: 0
+  index: 1
   itemtype: 0
 --- !u!114 &708300811
 MonoBehaviour:
@@ -20598,7 +20598,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemImage: {fileID: 708344207}
   amountText: {fileID: 819199789}
-  index: 0
+  index: 2
   itemtype: 0
 --- !u!114 &708344207
 MonoBehaviour:
@@ -50389,7 +50389,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.532, g: 0.532, b: 0.532, a: 0}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -50407,7 +50407,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1704899842}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1764081115}
+        m_MethodName: OnResultBtn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1704899842
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52588,20 +52599,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6287918f93294e848a219fbd98c1231f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  recipes:
-  - Applenullnull
   recipeResults:
-  - {fileID: 11400000, guid: 5c0ce520b87fc884e811748dd46c7244, type: 2}
+  - {fileID: 11400000, guid: 9003e2535ff621c43b844691700572a5, type: 2}
+  itemSlots: []
+  arrowParent: {fileID: 1764081114}
+  slotIndex: 0
+  itemList: []
   CraftingSlotsParent: {fileID: 1764081114}
   CratfingSlots:
   - {fileID: 740556265}
   - {fileID: 708300810}
   - {fileID: 708344206}
   - {fileID: 514490847}
+  Recipe:
+  - {fileID: 11400000, guid: a07b6d81d4f98ba4988295db8476bdef, type: 2}
   ResultSlot: {fileID: 514490847}
 --- !u!1 &1765468407
 GameObject:
@@ -59095,6 +59106,8 @@ MonoBehaviour:
   draggableitem: {fileID: 9560435}
   Dropitemarea: {fileID: 2090490638}
   questionDialog: {fileID: 941750093}
+  ResultSlot: {fileID: 0}
+  CraftingRecipes: []
 --- !u!114 &1977540479
 MonoBehaviour:
   m_ObjectHideFlags: 0

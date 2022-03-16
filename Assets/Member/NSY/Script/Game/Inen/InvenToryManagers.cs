@@ -25,10 +25,12 @@ namespace NSY.Iven
         //조합 필요한 컴포넌트들
         CraftSlot craftslot;
         Item currntitem;
-      
-
-
-
+      //레시피
+      private CraftingRecipe carftingRecipe;
+        private List<Item> itemlist;
+        [SerializeField] CraftSlot ResultSlot;
+        private BaseItemSlot[] itemSlots;
+        public List<CraftingRecipe> CraftingRecipes;
 
 
         private BaseItemSlot dragitemSlot;
@@ -42,7 +44,7 @@ namespace NSY.Iven
             iventorynsy.OnRightClickEvent += InventoryRightClick;
             iventorynsy.OnLeftClickEvent += InventoryLeftClick;
             equipPanel.OnRightClickEvent += EquipmentPanelRightClick;
-            
+            craftPanel.OnLeftClickEvent += CraftPanelLeftClick;
             //드래그 시작
             iventorynsy.OnBeginDragEvent += BeginDrag;
             equipPanel.OnBeginDragEvent += BeginDrag;
@@ -87,19 +89,53 @@ namespace NSY.Iven
         }
         private void InventoryLeftClick(BaseItemSlot itemslot)
         {
-            Debug.Log("이거됨");
+           
+
             if (itemslot.item is Item)
             {
                 craftPanel.CraftAddItem(itemslot.item.GetCopy());
+                if (itemslot != null)
+                {
+                   
+                }
+               
                 itemslot.Amount--;
             }
+
+           
+         
+
         }
+        private int CheckForCreatedRecipe(CraftingRecipe Recipe , IList<ItemAmount> itemAmountList, int slotIndex)
+        {
+           
+            ResultSlot.item = null;
+            for (int i = 0; i < itemAmountList.Count; slotIndex++)
+            {
+                ItemAmount itemAmount = itemAmountList[i];
+                BaseItemSlot BIS = itemSlots[slotIndex];
+
+                BIS.item = itemAmount.Item;
+                BIS.Amount = itemAmount.Amount;
+            }
+            return slotIndex;
+        }
+
+
         private void EquipmentPanelRightClick(BaseItemSlot itemslot)
         {
-            EquippableItem equippableItem = itemslot.item as EquippableItem;
+           
             if (itemslot.item is EquippableItem)
             {
                 Unequip((EquippableItem)itemslot.item);
+            }
+        }
+        private void CraftPanelLeftClick(BaseItemSlot itemslot)
+        {
+            if (itemslot.item is Item)
+            {
+                iventorynsy.AddItem(itemslot.item.GetCopy());
+                itemslot.Amount--;
             }
         }
         private void BeginDrag(BaseItemSlot itemslot)
@@ -124,7 +160,7 @@ namespace NSY.Iven
           
             dragitemSlot = null;
             draggableitem.gameObject.SetActive(false);
-         //   this.enabled = false;
+        ;
         }
        
         private void Drop(BaseItemSlot dropitemslot)
@@ -144,11 +180,7 @@ namespace NSY.Iven
                 Swapitems(dropitemslot);
             }
 
-            //갯수옮기기
-            if (dragitemSlot.Amount >1)
-            {
-
-            }
+          
 
 
         }
@@ -199,13 +231,24 @@ namespace NSY.Iven
         }
         public void Unequip(EquippableItem item)
         {
-            if (!iventorynsy.CanAddItem(item) && equipPanel.RemoveItem(item))
+            if (iventorynsy.CanAddItem(item) && equipPanel.RemoveItem(item))
             {
                 iventorynsy.AddItem(item);
             }
         }
-  
+        BaseItemSlot itemslotss;
+        public void CarftUnequip(Item item)
+        {
+            if (itemslotss.item is Item)
+            {
+                iventorynsy.AddItem(item.GetCopy());
 
+                itemslotss.Amount++;
+            }
+          
+
+          
+        }
 
         private void AddStacks(BaseItemSlot dropitemslot)
         {

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using DM.Inven;
 using System;
 
@@ -10,37 +11,34 @@ namespace NSY.Iven
     {
         Item CurrentItem;
         //레시피
-        public List<Item> itemList;
-        public string[] recipes;
+       
+        
         public Item[] recipeResults;
+        [SerializeField] BaseItemSlot[] itemSlots;
+        [SerializeField] RectTransform arrowParent;
+        public int slotIndex = 0;
 
-
-
-
+        [Header("레시피 컴포넌트")]
+        public List<Item> itemList;
         [SerializeField] Transform CraftingSlotsParent;
         [SerializeField] CraftSlot[] CratfingSlots;
-        public CraftSlot ResultSlot;
-
+        [SerializeField] CraftingRecipe[] Recipe;
+        [SerializeField] CraftSlot ResultSlot;
+        CraftSlot craftslot;
+       
 
         [Header("Public variables")]
         public IItemContainer itemContainer; //아이템을 제작하기위한 참조
 
 
+
         private CraftingRecipe craftingRecipe;
         public CraftingRecipe CraftingRecipe
         {
-            get
-            {
-                return craftingRecipe;
-            }
-            set
-            {
-                SetCraftingRecipe(value);
-            }
-
+            get { return craftingRecipe; }
+            set { SetCraftingRecipe(value); }
         }
 
-        
 
 
         public event Action<BaseItemSlot> OnPointerEnterEvent;
@@ -51,6 +49,10 @@ namespace NSY.Iven
         public event Action<BaseItemSlot> OnDragEvent;
         public event Action<BaseItemSlot> OnDropEvent;
 
+        private void OnValidate()
+        {
+            CratfingSlots = CraftingSlotsParent.GetComponentsInChildren<CraftSlot>();
+        }
 
         private void Start()
         {
@@ -79,21 +81,9 @@ namespace NSY.Iven
         }
 
 
-        private void OnValidate()
-        {
-            CratfingSlots = CraftingSlotsParent.GetComponentsInChildren<CraftSlot>();
-        }
-
-        public void OuMouseDownItem(Item item)
-        {
-            if (CurrentItem == null)
-            {
-                CurrentItem = item;
-            }
-        }
-
-
       
+
+       
 
         public  bool CraftAddItem( Item item)
         {
@@ -138,6 +128,14 @@ namespace NSY.Iven
             return false;
         }
 
+
+
+      
+       public void OnResultBtn()
+        {
+            Debug.Log("버튼클릭함");
+            craftingRecipe.Craft(itemContainer);
+        }
         private void SetCraftingRecipe(CraftingRecipe newCraftingRecipe)
         {
             craftingRecipe = newCraftingRecipe;
@@ -146,12 +144,12 @@ namespace NSY.Iven
             {
                 int slotIndex = 0;
                 slotIndex = SetSlots(craftingRecipe.Materials, slotIndex);
-               // arrowParent.SetSiblingIndex(slotIndex);
+                arrowParent.SetSiblingIndex(slotIndex);
                 slotIndex = SetSlots(craftingRecipe.Results, slotIndex);
 
-                for (int i = slotIndex; i < CratfingSlots.Length; i++)
+                for (int i = slotIndex; i < itemSlots.Length; i++)
                 {
-                    CratfingSlots[i].transform.parent.gameObject.SetActive(false);
+                    itemSlots[i].transform.parent.gameObject.SetActive(false);
                 }
 
                 gameObject.SetActive(true);
@@ -166,7 +164,7 @@ namespace NSY.Iven
             for (int i = 0; i < itemAmountList.Count; i++, slotIndex++)
             {
                 ItemAmount itemAmount = itemAmountList[i];
-                CraftSlot itemSlot = CratfingSlots[slotIndex];
+                BaseItemSlot itemSlot = itemSlots[slotIndex];
 
                 itemSlot.item = itemAmount.Item;
                 itemSlot.Amount = itemAmount.Amount;
@@ -174,14 +172,7 @@ namespace NSY.Iven
             }
             return slotIndex;
         }
-        public void OnCraftButtonClick()
-        {
-            if (craftingRecipe != null && itemContainer != null)
-            {
-                craftingRecipe.Craft(itemContainer);
-            }
-        }
-      
+
     }
 
 }

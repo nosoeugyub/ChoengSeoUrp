@@ -17,47 +17,83 @@ namespace NSY.Iven
     [CreateAssetMenu]
     public class CraftingRecipe : ScriptableObject
     {
+        InventoryNSY inventory;
+        CraftManager craftpanel;
+
         //재료를 생성할 때 소비될 재료
         public List<ItemAmount> Materials;
         public List<ItemAmount> Results; //결과
 
 
 
-        public bool CanCraft(IItemContainer itemContainer ) //조합가능 여부 
+        
+
+        public void Craft(IItemContainer itemContainert)
+        {
+            if (CanCraft(itemContainert))
+            {
+                RemoveMataial(craftpanel);
+                AddResult(inventory);
+            }
+        }
+        public bool CanCraft(IItemContainer itemContainer) //조합가능 여부 
         {
 
-            foreach (ItemAmount itemAmount in Materials)//항목을 체크하고 항목여부에따라 bool값 반환
+
+            return HasMaterials(itemContainer) && HasSpace(itemContainer);
+        }
+        private bool HasMaterials(IItemContainer itemContainer)
+        {
+            foreach (ItemAmount itemAmount in Materials)
             {
                 if (itemContainer.ItemCount(itemAmount.Item.ItemName) < itemAmount.Amount)
                 {
+                    Debug.LogWarning("You don't have the required materials.");
                     return false;
                 }
             }
             return true;
         }
 
-        public void Craft(IItemContainer itemContainer)
+        private bool HasSpace(IItemContainer itemContainer)
         {
-            if (CanCraft(itemContainer))
+            foreach (ItemAmount itemAmount in Results)
             {
-                foreach (ItemAmount itemAmount in Materials) //만들면 갯수 제거
+                if (!itemContainer.CanAddItem(itemAmount.Item, itemAmount.Amount))
                 {
-                    for (int i = 0; i < itemAmount.Amount; i++)
-                    {
-                        Item oldItem = itemContainer.RemoveItem(itemAmount.Item.ItemName);
-                        oldItem.Destroy();
-                    }
+                    Debug.LogWarning("Your inventory is full.");
+                    return false;
                 }
+            }
+            return true;
+        }
 
-                foreach (ItemAmount itemAmount in Results)
+
+        public void RemoveMataial(CraftManager craftSlots)
+        {
+            foreach (ItemAmount itemAmount in Materials)
+            {
+                for (int i = 0; i < itemAmount.Amount; i++)
                 {
-                    for (int i = 0; i < itemAmount.Amount; i++)
-                    {
-                        itemContainer.AddItem(itemAmount.Item.GetCopy());
-                    }
+                    craftSlots.RemoveItem(itemAmount.Item);
+                    
                 }
             }
         }
+        public void AddResult(IItemContainer itemContainern)
+        {
+            
+
+            foreach (ItemAmount itemAmount in Results)
+            {
+                for (int i = 0; i < itemAmount.Amount; i++)
+                {
+                    itemContainern.AddItem(itemAmount.Item.GetCopy());
+                }
+            }
+          
+        }
+
     }
 
 
