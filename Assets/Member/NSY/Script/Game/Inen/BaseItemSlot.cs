@@ -173,7 +173,7 @@ namespace NSY.Iven
                 {
                     tooltip.ShowEqulTooltip((EquippableItem)item);
                 }
-               else if(item)
+                if(item is Item)
                 {
                     tooltip.ShowItemTooltip(item);
                 }

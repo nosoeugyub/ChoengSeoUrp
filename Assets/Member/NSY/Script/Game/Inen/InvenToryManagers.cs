@@ -26,11 +26,12 @@ namespace NSY.Iven
         CraftSlot craftslot;
         Item currntitem;
       //레시피
-      private CraftingRecipe carftingRecipe;
-        private List<Item> itemlist;
-        [SerializeField] CraftSlot ResultSlot;
-        private BaseItemSlot[] itemSlots;
-        public List<CraftingRecipe> CraftingRecipes;
+      [Header("레시피 레퍼런스")]
+        private CraftingRecipe carftingRecipe;
+        [SerializeField] CraftSlot[] CraftSlot;
+       
+       
+       
 
 
         private BaseItemSlot dragitemSlot;
@@ -62,6 +63,9 @@ namespace NSY.Iven
             equipPanel.OnDropEvent += Drop;
             craftPanel.OnDropEvent += Drop;
             Dropitemarea.OnDropEvent += DropItemOutsideUI;
+
+
+            carftingRecipe = new CraftingRecipe();
         }
        
 
@@ -89,37 +93,29 @@ namespace NSY.Iven
         }
         private void InventoryLeftClick(BaseItemSlot itemslot)
         {
-           
 
             if (itemslot.item is Item)
             {
-                craftPanel.CraftAddItem(itemslot.item.GetCopy());
-                if (itemslot != null)
-                {
-                   
-                }
                
+                craftPanel.CraftAddItem(itemslot.item.GetCopy());
+                UpdateRecipe();
                 itemslot.Amount--;
+                
+                
+               
             }
 
            
          
 
         }
-        private int CheckForCreatedRecipe(CraftingRecipe Recipe , IList<ItemAmount> itemAmountList, int slotIndex)
+        void UpdateRecipe()
         {
-           
-            ResultSlot.item = null;
-            for (int i = 0; i < itemAmountList.Count; slotIndex++)
-            {
-                ItemAmount itemAmount = itemAmountList[i];
-                BaseItemSlot BIS = itemSlots[slotIndex];
-
-                BIS.item = itemAmount.Item;
-                BIS.Amount = itemAmount.Amount;
-            }
-            return slotIndex;
+  
+            craftPanel.SetCraftingRecipe();
         }
+
+
 
 
         private void EquipmentPanelRightClick(BaseItemSlot itemslot)
@@ -135,6 +131,7 @@ namespace NSY.Iven
             if (itemslot.item is Item)
             {
                 iventorynsy.AddItem(itemslot.item.GetCopy());
+                UpdateRecipe();
                 itemslot.Amount--;
             }
         }
