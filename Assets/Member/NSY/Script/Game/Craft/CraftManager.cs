@@ -135,8 +135,17 @@ namespace NSY.Iven
         {
             Debug.Log("버튼클릭함");
 
-            Result();
-
+            ivenTory.AddItem(ResultSlot.item.GetCopy());
+            for (int i = 0; i < CratfingSlots.Length; i++)
+            {
+                if( CraftRecipe[i].Materials[i].Item == CratfingSlots[i].item)
+                {
+                  
+                     CratfingSlots[i].Amount -= CraftRecipe[i].Materials[i].Amount;
+                   
+                }
+            }
+           
         }
 
         
@@ -184,24 +193,30 @@ namespace NSY.Iven
                                     isRecipe2 = true;
                                 }
                             }
-
-                        }
                         if (isRecipe1 && isRecipe2 && isRecipe0)
                         {
-                        Debug.Log("레시피 맞음");
+                            Debug.Log("레시피 맞음");
 
-                        ResultSlot.item = CraftRecipe[i].Results[i].Item;
-                        ResultSlot.Amount = CraftRecipe[i].Results[i].Amount;
-                        Color color = ResultSlot.GetComponent<Image>().color;
-                        color.a = 1.0f;
-                        ResultSlot.GetComponent<Image>().color = color;
-
-                      
-                       
+                            ResultSlot.item = CraftRecipe[i].Results[i].Item;
+                            ResultSlot.Amount = CraftRecipe[i].Results[i].Amount;
+                            Color color = ResultSlot.GetComponent<Image>().color;
+                            color.a = 1.0f;
+                            ResultSlot.GetComponent<Image>().color = color;
 
 
-                       
+
+
+
+                            
                         }
+                        else if(!isRecipe1 || !isRecipe2 || !isRecipe0)
+                        {
+                            ResultSlot = null;
+                        }
+
+                           
+                    }
+                        
                     
                          
                     }
@@ -212,10 +227,7 @@ namespace NSY.Iven
 
         }
         
-        void Result()
-        {
-            ivenTory.AddItem(ResultSlot.item.GetCopy());
-        }
+  
 
     }
 
