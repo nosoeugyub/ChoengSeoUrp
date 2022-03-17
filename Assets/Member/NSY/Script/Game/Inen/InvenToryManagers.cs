@@ -96,10 +96,12 @@ namespace NSY.Iven
 
             if (itemslot.item is Item)
             {
-               
+                Debug.Log(" 탐색");
                 craftPanel.CraftAddItem(itemslot.item.GetCopy());
                 UpdateRecipe();
                 itemslot.Amount--;
+              
+               
                 
                 
                
@@ -109,12 +111,26 @@ namespace NSY.Iven
          
 
         }
-        void UpdateRecipe()
+        private void CraftPanelLeftClick(BaseItemSlot itemslot)
         {
-  
-            craftPanel.SetCraftingRecipe();
+            if (itemslot.item is Item)
+            {
+                iventorynsy.AddItem(itemslot.item.GetCopy());
+                UpdateRecipe();
+                itemslot.Amount--;
+            }
+        }
+        void UpdateRecipe()
+        {//탐색
+            Item Recipe;
+
+            Recipe = craftPanel.SetCraftingRecipe();
+            
+
+
         }
 
+      
 
 
 
@@ -126,15 +142,7 @@ namespace NSY.Iven
                 Unequip((EquippableItem)itemslot.item);
             }
         }
-        private void CraftPanelLeftClick(BaseItemSlot itemslot)
-        {
-            if (itemslot.item is Item)
-            {
-                iventorynsy.AddItem(itemslot.item.GetCopy());
-                UpdateRecipe();
-                itemslot.Amount--;
-            }
-        }
+        
         private void BeginDrag(BaseItemSlot itemslot)
         {
             if (itemslot.item != null)
@@ -233,19 +241,8 @@ namespace NSY.Iven
                 iventorynsy.AddItem(item);
             }
         }
-        BaseItemSlot itemslotss;
-        public void CarftUnequip(Item item)
-        {
-            if (itemslotss.item is Item)
-            {
-                iventorynsy.AddItem(item.GetCopy());
-
-                itemslotss.Amount++;
-            }
-          
-
-          
-        }
+      
+       
 
         private void AddStacks(BaseItemSlot dropitemslot)
         {

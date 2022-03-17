@@ -24,18 +24,19 @@ namespace NSY.Iven
         [SerializeField] Transform CraftingSlotsParent;
         [SerializeField]public CraftSlot[] CratfingSlots;
         
-        [SerializeField] CraftSlot ResultSlot;
-        public List<CraftingRecipe> CraftRecipe;
-        CraftingRecipe craftingRecipes;
+        [SerializeField]public CraftSlot ResultSlot;
+        public Item[] CraftRecipe;
+        Item craftingRecipes;
 
         [SerializeField] InventoryNSY ivenTory;
 
         [Header("Public variables")]
         public IItemContainer itemContainer; //아이템을 제작하기위한 참조
 
+        [SerializeField]
+        Item NullRecpie;
 
-
-        private CraftingRecipe craftingRecipe;
+        private Item craftingRecipe;
       
 
 
@@ -83,7 +84,7 @@ namespace NSY.Iven
       
 
        
-
+        //추가 , 탐색, 비쥬얼
         public  bool CraftAddItem( Item item)
         {
             for (int i = 0; i < CratfingSlots.Length; i++)
@@ -91,7 +92,14 @@ namespace NSY.Iven
                 if (CratfingSlots[i].CanAddStack(item))
                 {
                     CratfingSlots[i].item = item;
+                    //    
+                    CratfingSlots[i]._item.recipe[i].item = item;
                     CratfingSlots[i].Amount++;
+
+
+                       
+                    
+
                     return true;
                 }
 
@@ -102,13 +110,15 @@ namespace NSY.Iven
                 if (CratfingSlots[i].item == null)
                 {
                     CratfingSlots[i].item = item;
+              //      CratfingSlots[i]._item.recipe[i].item = item;
                     CratfingSlots[i].Amount++;
                     return true;
                 }
 
 
             }
-       
+
+         
             return false;
         }
         //제거
@@ -136,96 +146,104 @@ namespace NSY.Iven
             Debug.Log("버튼클릭함");
 
             ivenTory.AddItem(ResultSlot.item.GetCopy());
-            for (int i = 0; i < CratfingSlots.Length; i++)
+
+            for (int i = 0; i < CraftRecipe.Length; i++)
             {
-                if( CraftRecipe[i].Materials[i].Item == CratfingSlots[i].item)
+                for (int j = 0; j < CraftRecipe[i].recipe.Length; j++)
                 {
-                  
-                     CratfingSlots[i].Amount -= CraftRecipe[i].Materials[i].Amount;
-                   
+                    for (int k = 0; k < CratfingSlots.Length; k++)
+                    {
+                        CratfingSlots[k].Amount -= CraftRecipe[i].recipe[j].Count;
+                    }
+
+
                 }
             }
            
+            ResultSlot.item = null;
         }
 
         
         
 
-       public void SetCraftingRecipe()
+       public Item SetCraftingRecipe()
         {
          
             bool isRecipe0; //1번째 레시피 ...
             bool isRecipe1;
             bool isRecipe2;
-            int SlotCheckNumber;
             
-                for (int i = 0; i < CraftRecipe.Count; i++)//레시피 검사
+            
+                for (int i = 0; i < CraftRecipe.Length; i++)//레시피 검사
                 {
+                       Debug.Log("레시피 중");
 
                         isRecipe0 = false;
                         isRecipe1 = false;
                         isRecipe2 = false;
-                    for (int j = 0; j < CraftRecipe[i].Materials.Count;  j++)//레피안의 재료검사
+                    for (int j = 0; j < CraftRecipe[i].recipe.Length;  j++)//레피안의 재료검사
                     {
-                        if (CraftRecipe[i].Materials.Count == 2)
+                        if (CraftRecipe[i].recipe.Length == 2)
                         {
                             isRecipe2 = true;
                         }
-                        else if(CraftRecipe[i].Materials.Count == 1)
+                        else if(CraftRecipe[i].recipe.Length == 1)
                         {
                                isRecipe1 = true;
                                 isRecipe2 = true;
                         }
+
                         for (int k = 0; k < CratfingSlots.Length; k++)//새로만들 조합대
                         {
-                            if (CraftRecipe[i].Materials[j].Item == CratfingSlots[k].item && CraftRecipe[i].Materials[j].Amount == CratfingSlots[k].Amount)
-                            {
-                                if (j== 0 )
-                                {
-                                    isRecipe0 = true;
+                           if (CraftRecipe[i].recipe[j].item == CratfingSlots[k].item && CraftRecipe[i].recipe[j].Count == CratfingSlots[k].Amount)
+                           {
+                               if (j == 0)
+                               {
+                                isRecipe0 = true;
+                               }
+                               else if (j == 1)
+                               {
+                                isRecipe1 = true;
+                               }
+                               else if (j == 2)
+                               {
+                                isRecipe2 = true;
+                               }
+
+                               if (isRecipe1 && isRecipe2 && isRecipe0)
+                               {
+                                Debug.Log("레시피 맞음");
+                                ResultSlot.UpdateResult(craftingRecipes);
+                                ResultSlot.item = CraftRecipe[i];
+
+                                Color color = ResultSlot.GetComponent<Image>().color;
+                                color.a = 1.0f;
+                                ResultSlot.GetComponent<Image>().color = color;
+
+                                return CraftRecipe[i];
+                               }
+                                else
+                               {
+                                ResultSlot.item = null;
                                 }
-                                else if(j == 1)
-                                {
-                                    isRecipe1 = true;
-                                }
-                                else if(j == 2)
-                                {
-                                    isRecipe2 = true;
-                                }
-                            }
-                        if (isRecipe1 && isRecipe2 && isRecipe0)
-                        {
-                            Debug.Log("레시피 맞음");
 
-                            ResultSlot.item = CraftRecipe[i].Results[i].Item;
-                            ResultSlot.Amount = CraftRecipe[i].Results[i].Amount;
-                            Color color = ResultSlot.GetComponent<Image>().color;
-                            color.a = 1.0f;
-                            ResultSlot.GetComponent<Image>().color = color;
-
-
-
-
-
-                            
                         }
-                        else if(!isRecipe1 || !isRecipe2 || !isRecipe0)
-                        {
-                            ResultSlot = null;
-                        }
+                          
 
-                           
-                    }
+
+
+                        }
                         
                     
                          
                     }
                
-            }
-            
+                    
+                }
+            return NullRecpie;// 맞지않다 
 
 
-        }
+       }
         
   
 

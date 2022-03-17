@@ -23,7 +23,7 @@ namespace NSY.Iven
 
         //재료를 생성할 때 소비될 재료
         public List<ItemAmount> Materials;//재료
-        public List<ItemAmount> Results; //결과
+        public ItemAmount Results; //결과
 
 
 

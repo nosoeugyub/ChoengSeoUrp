@@ -12,6 +12,7 @@ namespace NSY.Iven
     {
         [SerializeField]public Image itemImage;
 
+        [SerializeField]
         ItemTooltip tooltip;
         //슬롯갯수
         [SerializeField] public Text amountText;
@@ -27,7 +28,7 @@ namespace NSY.Iven
        
       //  public event Action<BaseItemSlot> OnLeftClickEvent;
 
-        private Item _item;
+        public Item _item;
         public Item item
         {
             get { return _item; }
