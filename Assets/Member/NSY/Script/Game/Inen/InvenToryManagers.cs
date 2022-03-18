@@ -43,7 +43,7 @@ namespace NSY.Iven
             //인벤토리 클레스 이벤트
 
             iventorynsy.OnRightClickEvent += InventoryRightClick;
-            iventorynsy.OnLeftClickEvent += InventoryLeftClick;
+           // iventorynsy.OnLeftClickEvent += InventoryLeftClick;
             equipPanel.OnRightClickEvent += EquipmentPanelRightClick;
             craftPanel.OnLeftClickEvent += CraftPanelLeftClick;
             //드래그 시작
@@ -71,7 +71,18 @@ namespace NSY.Iven
 
         private void InventoryRightClick(BaseItemSlot itemslot)
         {
-           
+            if (itemslot.item is Item)
+            {
+
+                
+                craftPanel.CraftAddItem(itemslot.item.GetCopy());
+                itemslot.Amount--;
+                UpdateRecipe();
+
+                Debug.Log(" 탐색");
+
+            }
+
             if (itemslot.item is EquippableItem)
             {
                 Equip((EquippableItem)itemslot.item);
@@ -91,33 +102,17 @@ namespace NSY.Iven
                 }
             }
         }
-        private void InventoryLeftClick(BaseItemSlot itemslot)
-        {
-
-            if (itemslot.item is Item)
-            {
-                Debug.Log(" 탐색");
-                craftPanel.CraftAddItem(itemslot.item.GetCopy());
-                UpdateRecipe();
-                itemslot.Amount--;
-              
-               
-                
-                
-               
-            }
-
-           
-         
-
-        }
+       
+      
         private void CraftPanelLeftClick(BaseItemSlot itemslot)
         {
             if (itemslot.item is Item)
             {
                 iventorynsy.AddItem(itemslot.item.GetCopy());
-                UpdateRecipe();
                 itemslot.Amount--;
+                UpdateRecipe();
+               
+
             }
         }
         void UpdateRecipe()

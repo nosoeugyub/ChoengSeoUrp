@@ -22,7 +22,7 @@ namespace NSY.Iven
         [Header("레시피 컴포넌트")]
       
         [SerializeField] Transform CraftingSlotsParent;
-        [SerializeField]public CraftSlot[] CratfingSlots;
+        [SerializeField] public List<CraftSlot>  CratfingSlots;
         
         [SerializeField]public CraftSlot ResultSlot;
         public Item[] CraftRecipe;
@@ -56,17 +56,6 @@ namespace NSY.Iven
 
         private void Start()
         {
-            //for (int i = 0; i < CratfingSlots.Length; i++)
-          //  {
-                //CratfingSlots[i].OnPointerEnterEvent += OnPointerEnterEvent;
-                //CratfingSlots[i].OnPointerExitEvent += OnPointerExitEvent;
-                //CratfingSlots[i].OnRightClickEvent += OnLeftClickEvent;
-                //CratfingSlots[i].OnBeginDragEvent += OnBeginDragEvent;
-                //CratfingSlots[i].OnEndDragEvent += OnEndDragEvent;
-                //CratfingSlots[i].OnDragEvent += OnDragEvent;
-                //CratfingSlots[i].OnDropEvent += OnDropEvent;
-          //  }
-
 
             foreach (CraftSlot craftSlot in CratfingSlots)
             {
@@ -85,19 +74,67 @@ namespace NSY.Iven
 
        
         //추가 , 탐색, 비쥬얼
-        public  bool CraftAddItem( Item item)
+        public  bool CraftAddItem( Item item  )
         {
-            for (int i = 0; i < CratfingSlots.Length; i++)
+            for (int i = 0; i < CratfingSlots.Count; i++)
+            {
+                if (CratfingSlots[i].CanAddStack(item))
+                {
+                 
+                    CratfingSlots[i].item = item;
+                    CratfingSlots[i].Amount++;
+                  //  CratfingSlots[i]._item.recipe[i].item = item;
+                   
+
+                  
+                  
+
+                    return true;
+                }
+
+
+            }
+            for (int i = 0; i < CratfingSlots.Count; i++)
+            {
+                if (CratfingSlots[i].item == null)
+                {
+                //    item = CratfingSlots[i]._item.recipe[i].item;
+                    CratfingSlots[i].item = item;
+                   
+                    CratfingSlots[i].Amount++;
+                    Debug.Log(" 더해줌띠");
+
+                    return true;
+                }
+
+
+            }
+
+            
+            return false;
+        }
+        public bool CraftMiuseItem(Item item)
+        {
+            for (int i = 0; i < CratfingSlots.Count; i++)
             {
                 if (CratfingSlots[i].CanAddStack(item))
                 {
                     CratfingSlots[i].item = item;
-                    //    
+                    CratfingSlots[i].Amount--;
+                  
+
+                    return true;
+                }
+
+
+            }
+            for (int i = 0; i < CratfingSlots.Count; i++)
+            {
+                if (CratfingSlots[i].item == null)
+                {
+                    CratfingSlots[i].item = item;
                     CratfingSlots[i]._item.recipe[i].item = item;
-                    CratfingSlots[i].Amount++;
-
-
-                       
+                    CratfingSlots[i].Amount--;
                     
 
                     return true;
@@ -105,26 +142,14 @@ namespace NSY.Iven
 
 
             }
-            for (int i = 0; i < CratfingSlots.Length; i++)
-            {
-                if (CratfingSlots[i].item == null)
-                {
-                    CratfingSlots[i].item = item;
-              //      CratfingSlots[i]._item.recipe[i].item = item;
-                    CratfingSlots[i].Amount++;
-                    return true;
-                }
 
 
-            }
-
-         
             return false;
         }
         //제거
         public bool RemoveItem(Item item)
         {
-            for (int i = 0; i < CratfingSlots.Length; i++)
+            for (int i = 0; i < CratfingSlots.Count; i++)
             {
                 if (CratfingSlots[i].item == item)
                 {
@@ -151,7 +176,7 @@ namespace NSY.Iven
             {
                 for (int j = 0; j < CraftRecipe[i].recipe.Length; j++)
                 {
-                    for (int k = 0; k < CratfingSlots.Length; k++)
+                    for (int k = 0; k < CratfingSlots.Count; k++)
                     {
                         CratfingSlots[k].Amount -= CraftRecipe[i].recipe[j].Count;
                     }
@@ -193,7 +218,7 @@ namespace NSY.Iven
                                 isRecipe2 = true;
                         }
 
-                        for (int k = 0; k < CratfingSlots.Length; k++)//새로만들 조합대
+                        for (int k = 0; k < CratfingSlots.Count; k++)//새로만들 조합대
                         {
                            if (CraftRecipe[i].recipe[j].item == CratfingSlots[k].item && CraftRecipe[i].recipe[j].Count == CratfingSlots[k].Amount)
                            {

@@ -73,6 +73,7 @@ namespace NSY.Iven
                 _amount = value;
                 if (_amount < 0)
                 {
+                    
                     _amount = 0;
                 }
                 if (_amount == 0 && item != null)
