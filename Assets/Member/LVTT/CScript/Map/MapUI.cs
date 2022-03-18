@@ -5,8 +5,8 @@ namespace TT.MapTravel
 {
     public class MapUI : MonoBehaviour
     {
-       // [SerializeField] GameObject MapTravelUI;
-        //bool MapUIisOn;
+        // [SerializeField] GameObject MapTravelUI;
+        [SerializeField] Transform Player;
         PlayerMoveMent PlayerMovement;
         CameraManager CamManager;
         void Start()
@@ -43,9 +43,16 @@ namespace TT.MapTravel
             PlayerData.AddValue(areaNum, (int)LocationBehaviorEnum.Interact, PlayerData.locationData, (int)LocationBehaviorEnum.length);
             PlayerMovement.curAreaNum = areaNum;
             PlayerMovement.Maptravel = true;
+            TurnPlayertoCam(0);
         }
 
-        //////Outer////
+        void TurnPlayertoCam(float YRot)
+        {
+            //Vector3 CurRot = Player.localRotation.eulerAngles;
+            //CurRot.y = YRot;
+            Player.localRotation = Quaternion.AngleAxis(YRot,Vector3.up);
+        }
+        ////////Outer////
         //public void BtnTravelToOuterArea1()
         //{
         //   // OpenandCloseMapUI();
