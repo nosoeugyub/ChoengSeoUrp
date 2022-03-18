@@ -208,7 +208,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240169634770015}
+  tooltip: {fileID: 0}
   amountText: {fileID: 5396240171558659899}
+  _item: {fileID: 0}
 --- !u!1 &5396240169637434287
 GameObject:
   m_ObjectHideFlags: 0
@@ -441,7 +443,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240169646478284}
+  tooltip: {fileID: 0}
   amountText: {fileID: 5396240171396818518}
+  _item: {fileID: 0}
 --- !u!1 &5396240169648394570
 GameObject:
   m_ObjectHideFlags: 0
@@ -580,6 +584,7 @@ MonoBehaviour:
   draggableitem: {fileID: 5396240171588901922}
   Dropitemarea: {fileID: 5396240169776211551}
   questionDialog: {fileID: 5396240170923051548}
+  CraftSlot: []
 --- !u!114 &5396240169662734894
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -682,7 +687,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240169667115831}
+  tooltip: {fileID: 0}
   amountText: {fileID: 5396240170217031552}
+  _item: {fileID: 11400000, guid: c977c9f102d087e409cf45b7c9776feb, type: 2}
 --- !u!1 &5396240169672276166
 GameObject:
   m_ObjectHideFlags: 0
@@ -1744,7 +1751,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240169931973195}
+  tooltip: {fileID: 0}
   amountText: {fileID: 5396240171667092581}
+  _item: {fileID: 0}
 --- !u!1 &5396240169936388351
 GameObject:
   m_ObjectHideFlags: 0
@@ -2214,7 +2223,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240170032249670}
+  tooltip: {fileID: 0}
   amountText: {fileID: 5396240171262858107}
+  _item: {fileID: 0}
 --- !u!1 &5396240170064902784
 GameObject:
   m_ObjectHideFlags: 0
@@ -2416,21 +2427,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6287918f93294e848a219fbd98c1231f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  recipes:
-  - 3e2b49c113df1c44092ce5a1cc24461enullnull
-  recipeResults:
-  - {fileID: 11400000, guid: 5c0ce520b87fc884e811748dd46c7244, type: 2}
-  ResultSlot: {fileID: 5396240171350146190}
+  arrowParent: {fileID: 0}
+  slotIndex: 0
   CraftingSlotsParent: {fileID: 5396240170134241419}
   CratfingSlots:
   - {fileID: 5396240171124244664}
   - {fileID: 5396240171002490149}
   - {fileID: 5396240171613921897}
   - {fileID: 5396240171350146190}
+  ResultSlot: {fileID: 5396240171350146190}
+  CraftRecipe: []
+  ivenTory: {fileID: 0}
+  NullRecpie: {fileID: 0}
 --- !u!1 &5396240170189433293
 GameObject:
   m_ObjectHideFlags: 0
@@ -2598,7 +2606,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240170189642603}
+  tooltip: {fileID: 0}
   amountText: {fileID: 5396240170761273285}
+  _item: {fileID: 0}
 --- !u!1 &5396240170189676191
 GameObject:
   m_ObjectHideFlags: 0
@@ -2993,7 +3003,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240170227878541}
+  tooltip: {fileID: 0}
   amountText: {fileID: 5396240171723003021}
+  _item: {fileID: 0}
 --- !u!1 &5396240170270202050
 GameObject:
   m_ObjectHideFlags: 0
@@ -3484,7 +3496,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240170359408240}
+  tooltip: {fileID: 0}
   amountText: {fileID: 0}
+  _item: {fileID: 0}
   equipmentType: 1
 --- !u!1 &5396240170365616113
 GameObject:
@@ -3653,7 +3667,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240170394783509}
+  tooltip: {fileID: 0}
   amountText: {fileID: 5396240170189433295}
+  _item: {fileID: 11400000, guid: bf2e58205a4b1f345bbff4b9bf8eca3a, type: 2}
 --- !u!1 &5396240170407636857
 GameObject:
   m_ObjectHideFlags: 0
@@ -4215,7 +4231,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240170533580470}
+  tooltip: {fileID: 0}
   amountText: {fileID: 5396240170271262262}
+  _item: {fileID: 0}
 --- !u!1 &5396240170655157626
 GameObject:
   m_ObjectHideFlags: 0
@@ -4541,7 +4559,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240170728941414}
+  tooltip: {fileID: 0}
   amountText: {fileID: 5396240170425209045}
+  _item: {fileID: 0}
 --- !u!1 &5396240170750105721
 GameObject:
   m_ObjectHideFlags: 0
@@ -5049,7 +5069,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240171002490148}
+  tooltip: {fileID: 0}
   amountText: {fileID: 0}
+  _item: {fileID: 0}
+  craftmanager: {fileID: 0}
   index: 1
   itemtype: 0
 --- !u!114 &5396240171002490146
@@ -5394,7 +5417,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240171124244663}
+  tooltip: {fileID: 0}
   amountText: {fileID: 0}
+  _item: {fileID: 0}
+  craftmanager: {fileID: 0}
   index: 0
   itemtype: 0
 --- !u!114 &5396240171124244665
@@ -5514,7 +5540,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240171152789433}
+  tooltip: {fileID: 0}
   amountText: {fileID: 5396240171523103542}
+  _item: {fileID: 0}
 --- !u!1 &5396240171262858105
 GameObject:
   m_ObjectHideFlags: 0
@@ -5839,7 +5867,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240171350146225}
+  tooltip: {fileID: 0}
   amountText: {fileID: 0}
+  _item: {fileID: 0}
+  craftmanager: {fileID: 0}
   index: 3
   itemtype: 0
 --- !u!114 &5396240171350146227
@@ -6097,7 +6128,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240171419421997}
+  tooltip: {fileID: 0}
   amountText: {fileID: 5396240171463719842}
+  _item: {fileID: 0}
 --- !u!1 &5396240171441188024
 GameObject:
   m_ObjectHideFlags: 0
@@ -6343,7 +6376,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240171500527133}
+  tooltip: {fileID: 0}
   amountText: {fileID: 5396240171620605369}
+  _item: {fileID: 0}
 --- !u!1 &5396240171521867108
 GameObject:
   m_ObjectHideFlags: 0
@@ -6433,7 +6468,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240171521867113}
+  tooltip: {fileID: 0}
   amountText: {fileID: 5396240169956694526}
+  _item: {fileID: 0}
 --- !u!1 &5396240171523103540
 GameObject:
   m_ObjectHideFlags: 0
@@ -6679,7 +6716,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240171563709827}
+  tooltip: {fileID: 0}
   amountText: {fileID: 5396240170365616115}
+  _item: {fileID: 0}
 --- !u!1 &5396240171588901920
 GameObject:
   m_ObjectHideFlags: 0
@@ -6843,7 +6882,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240171613921896}
+  tooltip: {fileID: 0}
   amountText: {fileID: 0}
+  _item: {fileID: 0}
+  craftmanager: {fileID: 0}
   index: 2
   itemtype: 0
 --- !u!114 &5396240171613921894
@@ -7468,5 +7510,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240171733947493}
+  tooltip: {fileID: 0}
   amountText: {fileID: 0}
+  _item: {fileID: 0}
   equipmentType: 0
