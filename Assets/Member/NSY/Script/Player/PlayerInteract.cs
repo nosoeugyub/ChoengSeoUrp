@@ -28,6 +28,7 @@ namespace NSY.Player
         [SerializeField] float interactCooltime;
         [SerializeField] float interactTime;
 
+
         ////열매 상태
         //FrutStateManager state;
 
@@ -69,7 +70,6 @@ namespace NSY.Player
             //    Debug.Log("열매 떨어져!");
             //}
         }
-
         private void InvokeInteract(IInteractable interactable)
         {
             ICollectable collectable = interactable.ReturnTF().GetComponent<ICollectable>();
@@ -176,6 +176,8 @@ namespace NSY.Player
                 interactUI.SetActive(false);
                 return;
             }
+
+
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue, 0.3f);
 

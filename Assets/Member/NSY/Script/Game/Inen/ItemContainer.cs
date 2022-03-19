@@ -70,6 +70,8 @@ namespace NSY.Iven
                 {
                     ItemSlots[i].item = item;
                     ItemSlots[i].Amount++;
+                    PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.GetItem, PlayerData.ItemData, ((int)ItemBehaviorEnum.length));
+
                     return true;
                 }
 
@@ -81,6 +83,8 @@ namespace NSY.Iven
                 {
                     ItemSlots[i].item = item;
                     ItemSlots[i].Amount++;
+                    PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.GetItem, PlayerData.ItemData, ((int)ItemBehaviorEnum.length));
+
                     return true;
                 }
 
