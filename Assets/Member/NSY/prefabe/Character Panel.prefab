@@ -32,7 +32,7 @@ RectTransform:
   m_Children:
   - {fileID: 5396240170801846844}
   m_Father: {fileID: 5396240169662734892}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -208,7 +208,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240169634770015}
+  tooltip: {fileID: 0}
   amountText: {fileID: 5396240171558659899}
+  _item: {fileID: 0}
 --- !u!1 &5396240169637434287
 GameObject:
   m_ObjectHideFlags: 0
@@ -441,7 +443,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240169646478284}
+  tooltip: {fileID: 0}
   amountText: {fileID: 5396240171396818518}
+  _item: {fileID: 0}
 --- !u!1 &5396240169648394570
 GameObject:
   m_ObjectHideFlags: 0
@@ -526,6 +530,7 @@ GameObject:
   - component: {fileID: 5396240169662734892}
   - component: {fileID: 5396240169662734895}
   - component: {fileID: 5396240169662734894}
+  - component: {fileID: 6141359584124260627}
   m_Layer: 0
   m_Name: Character Panel
   m_TagString: Untagged
@@ -545,11 +550,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5396240169776211520}
-  - {fileID: 5396240170407636856}
-  - {fileID: 5396240170530877422}
   - {fileID: 5396240171618903555}
+  - {fileID: 5396240170530877422}
+  - {fileID: 5396240170407636856}
   - {fileID: 5396240171325210059}
-  - {fileID: 5396240170134241419}
   - {fileID: 5396240169629475913}
   - {fileID: 5396240171588901923}
   - {fileID: 5396240170923051549}
@@ -580,6 +584,7 @@ MonoBehaviour:
   draggableitem: {fileID: 5396240171588901922}
   Dropitemarea: {fileID: 5396240169776211551}
   questionDialog: {fileID: 5396240170923051548}
+  CraftSlot: []
 --- !u!114 &5396240169662734894
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -593,6 +598,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _closeButton: {fileID: 5396240169629475908}
+--- !u!114 &6141359584124260627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5396240169662734893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fed0bcd527913e4883dca67f089b219, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EquionmentPanel: {fileID: 5396240170873028278}
+  iteminfoPanel: {fileID: 5396240170288476586}
+  CraftPanel: {fileID: 5396240170134241416}
 --- !u!1 &5396240169667115826
 GameObject:
   m_ObjectHideFlags: 0
@@ -682,7 +702,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240169667115831}
+  tooltip: {fileID: 0}
   amountText: {fileID: 5396240170217031552}
+  _item: {fileID: 11400000, guid: c977c9f102d087e409cf45b7c9776feb, type: 2}
 --- !u!1 &5396240169672276166
 GameObject:
   m_ObjectHideFlags: 0
@@ -1744,7 +1766,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240169931973195}
+  tooltip: {fileID: 0}
   amountText: {fileID: 5396240171667092581}
+  _item: {fileID: 0}
 --- !u!1 &5396240169936388351
 GameObject:
   m_ObjectHideFlags: 0
@@ -2214,7 +2238,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240170032249670}
+  tooltip: {fileID: 0}
   amountText: {fileID: 5396240171262858107}
+  _item: {fileID: 0}
 --- !u!1 &5396240170064902784
 GameObject:
   m_ObjectHideFlags: 0
@@ -2391,13 +2417,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5396240170134241416}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5396240170104563961}
-  m_Father: {fileID: 5396240169662734892}
-  m_RootOrder: 5
+  m_Father: {fileID: 5396240171325210059}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2416,21 +2442,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6287918f93294e848a219fbd98c1231f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  recipes:
-  - 3e2b49c113df1c44092ce5a1cc24461enullnull
-  recipeResults:
-  - {fileID: 11400000, guid: 5c0ce520b87fc884e811748dd46c7244, type: 2}
-  ResultSlot: {fileID: 5396240171350146190}
+  arrowParent: {fileID: 0}
+  slotIndex: 0
   CraftingSlotsParent: {fileID: 5396240170134241419}
   CratfingSlots:
   - {fileID: 5396240171124244664}
   - {fileID: 5396240171002490149}
   - {fileID: 5396240171613921897}
   - {fileID: 5396240171350146190}
+  ResultSlot: {fileID: 5396240171350146190}
+  CraftRecipe: []
+  ivenTory: {fileID: 0}
+  NullRecpie: {fileID: 0}
 --- !u!1 &5396240170189433293
 GameObject:
   m_ObjectHideFlags: 0
@@ -2598,7 +2621,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240170189642603}
+  tooltip: {fileID: 0}
   amountText: {fileID: 5396240170761273285}
+  _item: {fileID: 0}
 --- !u!1 &5396240170189676191
 GameObject:
   m_ObjectHideFlags: 0
@@ -2993,7 +3018,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240170227878541}
+  tooltip: {fileID: 0}
   amountText: {fileID: 5396240171723003021}
+  _item: {fileID: 0}
 --- !u!1 &5396240170270202050
 GameObject:
   m_ObjectHideFlags: 0
@@ -3484,7 +3511,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240170359408240}
+  tooltip: {fileID: 0}
   amountText: {fileID: 0}
+  _item: {fileID: 0}
   equipmentType: 1
 --- !u!1 &5396240170365616113
 GameObject:
@@ -3653,7 +3682,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240170394783509}
+  tooltip: {fileID: 0}
   amountText: {fileID: 5396240170189433295}
+  _item: {fileID: 11400000, guid: bf2e58205a4b1f345bbff4b9bf8eca3a, type: 2}
 --- !u!1 &5396240170407636857
 GameObject:
   m_ObjectHideFlags: 0
@@ -3686,7 +3717,7 @@ RectTransform:
   m_Children:
   - {fileID: 5396240169672276169}
   m_Father: {fileID: 5396240169662734892}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4125,7 +4156,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5396240170530877328}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6141359584124260627}
+        m_MethodName: CraftBtnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5396240170533580469
 GameObject:
   m_ObjectHideFlags: 0
@@ -4215,7 +4257,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240170533580470}
+  tooltip: {fileID: 0}
   amountText: {fileID: 5396240170271262262}
+  _item: {fileID: 0}
 --- !u!1 &5396240170655157626
 GameObject:
   m_ObjectHideFlags: 0
@@ -4541,7 +4585,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240170728941414}
+  tooltip: {fileID: 0}
   amountText: {fileID: 5396240170425209045}
+  _item: {fileID: 0}
 --- !u!1 &5396240170750105721
 GameObject:
   m_ObjectHideFlags: 0
@@ -4941,7 +4987,7 @@ RectTransform:
   - {fileID: 5396240169950685208}
   - {fileID: 5396240170317513385}
   m_Father: {fileID: 5396240169662734892}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5049,7 +5095,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240171002490148}
+  tooltip: {fileID: 0}
   amountText: {fileID: 0}
+  _item: {fileID: 0}
+  craftmanager: {fileID: 0}
   index: 1
   itemtype: 0
 --- !u!114 &5396240171002490146
@@ -5114,7 +5163,7 @@ RectTransform:
   - {fileID: 5396240171065125565}
   - {fileID: 5396240169798568910}
   m_Father: {fileID: 5396240171325210059}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5394,7 +5443,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240171124244663}
+  tooltip: {fileID: 0}
   amountText: {fileID: 0}
+  _item: {fileID: 0}
+  craftmanager: {fileID: 0}
   index: 0
   itemtype: 0
 --- !u!114 &5396240171124244665
@@ -5514,7 +5566,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240171152789433}
+  tooltip: {fileID: 0}
   amountText: {fileID: 5396240171523103542}
+  _item: {fileID: 0}
 --- !u!1 &5396240171262858105
 GameObject:
   m_ObjectHideFlags: 0
@@ -5624,6 +5678,7 @@ RectTransform:
   m_Children:
   - {fileID: 5396240170873028281}
   - {fileID: 5396240170288476589}
+  - {fileID: 5396240170134241419}
   - {fileID: 5396240171014167179}
   m_Father: {fileID: 5396240169662734892}
   m_RootOrder: 4
@@ -5839,7 +5894,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240171350146225}
+  tooltip: {fileID: 0}
   amountText: {fileID: 0}
+  _item: {fileID: 0}
+  craftmanager: {fileID: 0}
   index: 3
   itemtype: 0
 --- !u!114 &5396240171350146227
@@ -6097,7 +6155,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240171419421997}
+  tooltip: {fileID: 0}
   amountText: {fileID: 5396240171463719842}
+  _item: {fileID: 0}
 --- !u!1 &5396240171441188024
 GameObject:
   m_ObjectHideFlags: 0
@@ -6343,7 +6403,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240171500527133}
+  tooltip: {fileID: 0}
   amountText: {fileID: 5396240171620605369}
+  _item: {fileID: 0}
 --- !u!1 &5396240171521867108
 GameObject:
   m_ObjectHideFlags: 0
@@ -6433,7 +6495,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240171521867113}
+  tooltip: {fileID: 0}
   amountText: {fileID: 5396240169956694526}
+  _item: {fileID: 0}
 --- !u!1 &5396240171523103540
 GameObject:
   m_ObjectHideFlags: 0
@@ -6679,7 +6743,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240171563709827}
+  tooltip: {fileID: 0}
   amountText: {fileID: 5396240170365616115}
+  _item: {fileID: 0}
 --- !u!1 &5396240171588901920
 GameObject:
   m_ObjectHideFlags: 0
@@ -6710,7 +6776,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5396240169662734892}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -6843,7 +6909,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240171613921896}
+  tooltip: {fileID: 0}
   amountText: {fileID: 0}
+  _item: {fileID: 0}
+  craftmanager: {fileID: 0}
   index: 2
   itemtype: 0
 --- !u!114 &5396240171613921894
@@ -6906,7 +6975,7 @@ RectTransform:
   m_Children:
   - {fileID: 5396240170220508885}
   m_Father: {fileID: 5396240169662734892}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -6992,7 +7061,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5396240171618903557}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6141359584124260627}
+        m_MethodName: IvenBtnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5396240171620605367
 GameObject:
   m_ObjectHideFlags: 0
@@ -7468,5 +7548,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5396240171733947493}
+  tooltip: {fileID: 0}
   amountText: {fileID: 0}
+  _item: {fileID: 0}
   equipmentType: 0
