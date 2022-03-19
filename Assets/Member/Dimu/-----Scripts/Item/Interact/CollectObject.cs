@@ -1,4 +1,4 @@
-﻿using DM.Inven;
+﻿using NSY.Iven;
 
 public class CollectObject : ItemObject, ICollectable
 {
@@ -9,7 +9,8 @@ public class CollectObject : ItemObject, ICollectable
 
     public void Collect()
     {
-        FindObjectOfType<InventoryManager>().AddItem(item, 1);
+        FindObjectOfType<InventoryNSY>().AddItem(item);
+
         Interact();
     }
 }

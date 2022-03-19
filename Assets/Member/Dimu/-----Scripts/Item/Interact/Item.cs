@@ -39,7 +39,7 @@ public class Item : ScriptableObject
 
     public virtual void Destroy()
     {
-        Destroy(this);
+        //Destroy(this);
     }
     [SerializeField]
     public RecipeIteminfo[] recipe;
