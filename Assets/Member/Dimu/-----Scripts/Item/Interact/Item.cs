@@ -41,8 +41,17 @@ public class Item : ScriptableObject
     {
         Destroy(this);
     }
+    [SerializeField]
+    public RecipeIteminfo[] recipe;
 
+}
+[System.Serializable]
+public class RecipeIteminfo
+{
+    public Item item;
 
+    public int Count;
+    
 }
 
 

@@ -12,6 +12,7 @@ namespace NSY.Iven
     {
         [SerializeField]public Image itemImage;
 
+        [SerializeField]
         ItemTooltip tooltip;
         //슬롯갯수
         [SerializeField] public Text amountText;
@@ -27,7 +28,7 @@ namespace NSY.Iven
        
       //  public event Action<BaseItemSlot> OnLeftClickEvent;
 
-        private Item _item;
+        public Item _item;
         public Item item
         {
             get { return _item; }
@@ -72,6 +73,7 @@ namespace NSY.Iven
                 _amount = value;
                 if (_amount < 0)
                 {
+                    
                     _amount = 0;
                 }
                 if (_amount == 0 && item != null)
@@ -164,13 +166,18 @@ namespace NSY.Iven
             }
             if (eventData != null && eventData.button == PointerEventData.InputButton.Left)
             {
+                if (OnLeftClickEvent != null)
+                {
+
+                    OnLeftClickEvent(this);
+                }
                 if (item is EquippableItem)
                 {
                     tooltip.ShowEqulTooltip((EquippableItem)item);
                 }
-               else if(item)
+                if (item is Item )
                 {
-                    tooltip.ShowItemTooltip(item);
+                //    tooltip.ShowItemTooltip(item);
                 }
 
             }
