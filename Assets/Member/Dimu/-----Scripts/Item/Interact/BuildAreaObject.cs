@@ -1,13 +1,18 @@
 ﻿using UnityEngine;
+using TT.BuildSystem;
 
 public class BuildAreaObject : MonoBehaviour, IInteractable
 {
-    [SerializeField] BuildState buildState;
+    [SerializeField]public BuildState buildState;
     [SerializeField] int buildingId;
 
     [Tooltip("이 오브젝트를 채집할 수 있는 도구 타입")]
     [SerializeField] InItemType toolType;
-
+    BuildingBlock BuildBlock;
+    void Start()
+    {
+        BuildBlock = GetComponent<BuildingBlock>();
+    }
     public string CanInteract()
     {
         return "건물 상호작용";
@@ -26,17 +31,21 @@ public class BuildAreaObject : MonoBehaviour, IInteractable
         {
             buttons[0].onClick.AddListener(() =>
             {
+                BuildBlock.BuildBuilding();
                 print("1. Build Building");
                 //1. Build Building
                 //ex) BuildMode = true; Like your script 'BuildingBlock'
             });
             buttons[1].onClick.AddListener(() =>
             {
+                BuildBlock.DemolishBuidling();
+                
                 print("2. break Building");
                 //2. break Building
             });
             buttons[2].onClick.AddListener(() =>
             {
+                BuildBlock.CompleteBuilding();
                 print("3. Finish Building");
                 //3. Finish Building
             });
@@ -45,11 +54,13 @@ public class BuildAreaObject : MonoBehaviour, IInteractable
         {
             buttons[0].onClick.AddListener(() =>
             {
+                BuildBlock.BuildBuilding();
                 print("1. Repair Building");
                 //1. Repair Building
             });
             buttons[1].onClick.AddListener(() =>
             {
+                BuildBlock.DemolishBuidling();
                 print("2. break Building");
                 //2. break Building
             });
