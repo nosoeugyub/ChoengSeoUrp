@@ -9,17 +9,7 @@ namespace TT.MapTravel
 
         public Transform[] OuterAreaList;
         public Transform[] InnerAreaList;
-        void Start()
-        {
-
-        }
-
-   
-        void Update()
-        {
-         
-        }
-
+        
 
     }
 }
