@@ -39,6 +39,7 @@ namespace NSY.Iven
             if (isInRange && Input.GetKeyDown(KeyCode.E))
             {
                 Item itemCopy = item.GetCopy();
+
                 if (inventory.AddItem(itemCopy))
                 {
                     amount--;
