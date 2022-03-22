@@ -82,7 +82,7 @@ public enum InItemType
     Rope = 30000,
 
     //도구
-    Ax = 40000, Pickaxe, MagnifyingGlass, Hammer,
+    Axe = 40000, Pickaxe, MagnifyingGlass, Hammer,
     //미네랄
     tree = 50000, Stone,
     //이벤트오브젝트

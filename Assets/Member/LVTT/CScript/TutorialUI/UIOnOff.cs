@@ -38,14 +38,14 @@ namespace TT.Test
             UIList[UINum].SetActive(false);
         }
 
-        public void CloseBuildMenu()
+        public void CloseBuildMenu(BuildState curblockbuildState)
         {
-            BuildingBlock CurBlock = CurBuilding.GetComponent<BuildingBlock>();
-            BuildAreaObject CurBuildObj = CurBuilding.GetComponent<BuildAreaObject>();
+            //BuildingBlock CurBlock = CurBuilding.GetComponent<BuildingBlock>();
+            //BuildAreaObject CurBuildObj = CurBuilding.GetComponent<BuildAreaObject>();
             UIList[1].SetActive(false);
            if(IsBuildMode)
             {
-                if (CurBuildObj.buildState ==BuildState.NotFinish)
+                if (curblockbuildState == BuildState.NotFinish)
                 {
                     TurnOnUI(4);
                     CamManager.DeactiveSubCamera(1);
