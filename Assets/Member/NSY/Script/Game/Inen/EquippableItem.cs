@@ -7,7 +7,7 @@ namespace NSY.Iven
 {
     public enum EquipmentType
     {
-        Axe,Pick
+        Tool
     }
 
     [CreateAssetMenu]
