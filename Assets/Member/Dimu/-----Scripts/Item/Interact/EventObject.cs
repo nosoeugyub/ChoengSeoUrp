@@ -1,4 +1,5 @@
 ﻿using DM.Inven;
+using NSY.Iven;
 using UnityEngine;
 
 public class EventObject : ItemObject, IEventable
@@ -38,11 +39,11 @@ public class EventObject : ItemObject, IEventable
     public void TrashCut()
     {
         //아이템 개수가 0이 되면 손을 비우는 처리 필요
-        FindObjectOfType<InventoryManager>().DeleteItem(handItem, 1);
+        //FindObjectOfType<InventoryNSY>().DeleteItem(handItem, 1);
     }
     public void GetMessage()
     {
-        FindObjectOfType<InventoryManager>().AddItem(mailBoxMessage, 1);
+        FindObjectOfType<InventoryNSY>().AddItem(mailBoxMessage);
 
     }
 }

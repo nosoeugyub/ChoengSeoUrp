@@ -1,4 +1,5 @@
 ﻿using DM.Inven;
+using NSY.Iven;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -54,7 +55,7 @@ namespace DM.Quest
                     {
                         //아이템 추가
                         print(reward.itemType.ItemName);
-                        FindObjectOfType<InventoryManager>().AddItem(reward.itemType, reward.requireCount);
+                        FindObjectOfType<InventoryNSY>().AddItem(reward.itemType);//, reward.requireCount);
                     }
                     else if (reward.rewardType == RewardType.Event)
                     {
