@@ -243,7 +243,7 @@ RectTransform:
   - {fileID: 5396240169648394573}
   - {fileID: 5396240169962667604}
   m_Father: {fileID: 5396240170873028281}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -2274,7 +2274,7 @@ RectTransform:
   m_LocalScale: {x: -1.2155025, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5396240170873028281}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3426,98 +3426,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!1 &5396240170359408206
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5396240170359408242}
-  - component: {fileID: 5396240170359408243}
-  - component: {fileID: 5396240170359408240}
-  - component: {fileID: 5396240170359408241}
-  m_Layer: 0
-  m_Name: Pick Slot
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &5396240170359408242
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5396240170359408206}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 5396240170873028281}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -282.1, y: -22.98}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 1, y: 1}
---- !u!222 &5396240170359408243
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5396240170359408206}
-  m_CullTransparentMesh: 0
---- !u!114 &5396240170359408240
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5396240170359408206}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!114 &5396240170359408241
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5396240170359408206}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f12af02b37150144a14ecc65546e3dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemImage: {fileID: 5396240170359408240}
-  tooltip: {fileID: 0}
-  amountText: {fileID: 0}
-  _item: {fileID: 0}
-  equipmentType: 1
 --- !u!1 &5396240170365616113
 GameObject:
   m_ObjectHideFlags: 0
@@ -4930,7 +4838,6 @@ RectTransform:
   m_Children:
   - {fileID: 5396240170655157629}
   - {fileID: 5396240171733947491}
-  - {fileID: 5396240170359408242}
   - {fileID: 5396240169637434286}
   - {fileID: 5396240170064902787}
   m_Father: {fileID: 5396240171325210059}
@@ -4956,7 +4863,6 @@ MonoBehaviour:
   equipmentSlotsParent: {fileID: 5396240170873028281}
   equipmentSlots:
   - {fileID: 5396240171733947490}
-  - {fileID: 5396240170359408241}
 --- !u!1 &5396240170923051546
 GameObject:
   m_ObjectHideFlags: 0
@@ -7472,7 +7378,7 @@ GameObject:
   - component: {fileID: 5396240171733947493}
   - component: {fileID: 5396240171733947490}
   m_Layer: 0
-  m_Name: Axe Slot
+  m_Name: Tool Slot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
