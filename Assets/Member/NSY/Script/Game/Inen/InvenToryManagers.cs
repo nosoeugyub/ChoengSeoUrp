@@ -16,6 +16,8 @@ namespace NSY.Iven
         //케릭터 속성
         public int Vital = 100;
 
+
+        [SerializeField] BtnIven btniven;
         [SerializeField] InventoryNSY iventorynsy;
         [SerializeField] EquipPanel equipPanel;
         [SerializeField] CraftManager craftPanel;
@@ -71,7 +73,7 @@ namespace NSY.Iven
 
         private void InventoryRightClick(BaseItemSlot itemslot)
         {
-            if (itemslot.item is Item)
+            if (itemslot.item is Item && btniven.Craft)
             {
 
                 
@@ -83,14 +85,14 @@ namespace NSY.Iven
 
             }
 
-            if (itemslot.item is EquippableItem)
+            if (itemslot.item is EquippableItem && btniven.isInven)
             {
                 Equip((EquippableItem)itemslot.item);
              
             }
            
 
-            else if(itemslot.item is UseableItem)
+            else if(itemslot.item is UseableItem && btniven.isInven)
             {
                 UseableItem usableitem = (UseableItem)itemslot.item;
                 usableitem.Use(this);
@@ -106,7 +108,7 @@ namespace NSY.Iven
       
         private void CraftPanelLeftClick(BaseItemSlot itemslot)
         {
-            if (itemslot.item is Item)
+            if (itemslot.item is Item && btniven.isInven)
             {
                 iventorynsy.AddItem(itemslot.item.GetCopy());
                 itemslot.Amount--;
@@ -132,7 +134,7 @@ namespace NSY.Iven
         private void EquipmentPanelRightClick(BaseItemSlot itemslot)
         {
            
-            if (itemslot.item is EquippableItem)
+            if (itemslot.item is EquippableItem && btniven.isInven)
             {
                 Unequip((EquippableItem)itemslot.item);
             }
