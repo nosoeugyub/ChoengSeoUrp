@@ -73,7 +73,7 @@ namespace NSY.Iven
 
         private void InventoryRightClick(BaseItemSlot itemslot)
         {
-            if (itemslot.item is Item && btniven.Craft)
+            if (itemslot.item is Item && btniven.Craft == true)
             {
 
                 
@@ -85,14 +85,12 @@ namespace NSY.Iven
 
             }
 
-            if (itemslot.item is EquippableItem && btniven.isInven)
+            if (itemslot.item is EquippableItem && btniven.isInven == true)
             {
                 Equip((EquippableItem)itemslot.item);
              
             }
-           
-
-            else if(itemslot.item is UseableItem && btniven.isInven)
+            else if (itemslot.item is UseableItem && btniven.isInven == true)
             {
                 UseableItem usableitem = (UseableItem)itemslot.item;
                 usableitem.Use(this);
@@ -103,12 +101,14 @@ namespace NSY.Iven
                     usableitem.Destroy();
                 }
             }
+
+
         }
        
       
         private void CraftPanelLeftClick(BaseItemSlot itemslot)
         {
-            if (itemslot.item is Item && btniven.isInven)
+            if (itemslot.item is Item && btniven.Craft == true)
             {
                 iventorynsy.AddItem(itemslot.item.GetCopy());
                 itemslot.Amount--;

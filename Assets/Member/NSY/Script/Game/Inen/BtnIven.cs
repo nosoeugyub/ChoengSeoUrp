@@ -9,7 +9,7 @@ public class BtnIven : MonoBehaviour
     [SerializeField] GameObject iteminfoPanel;
     [SerializeField] GameObject CraftPanel;
 
-   public bool isInven;
+   public bool isInven = true;
    public bool Craft;
 
     public void IvenBtnClick()
