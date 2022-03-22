@@ -9,8 +9,7 @@ namespace NSY.Iven
 {
     public class CraftSlot : ItemSlot
     {
-        [SerializeField]
-        CraftManager craftmanager;
+      
         Item Recipe;
         Image ResultSprite;
 

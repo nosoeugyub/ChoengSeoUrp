@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TT.BuildSystem;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -106,7 +107,7 @@ namespace NSY.Player
                     {
                         mineable.Mine(handItem);
                     }
-                    BuildAreaObject buildAreaObject = interactable.ReturnTF().GetComponent<BuildAreaObject>();
+                    BuildingBlock buildAreaObject = interactable.ReturnTF().GetComponent<BuildingBlock>();
                     //IBuildable buildable = interactable.ReturnTF().GetComponent<IBuildable>();
                     if (buildAreaObject != null)
                     {

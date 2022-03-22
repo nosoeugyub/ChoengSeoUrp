@@ -9,7 +9,7 @@ public class CollectObject : ItemObject, ICollectable
 
     public void Collect()
     {
-        FindObjectOfType<InventoryNSY>().AddItem(item);
+        inventoryNSY.AddItem(item);
 
         Interact();
     }

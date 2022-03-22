@@ -1,8 +1,14 @@
-﻿using UnityEngine;
+﻿using NSY.Iven;
+using UnityEngine;
 
 public class ItemObject : MonoBehaviour//, IInteractable
 {
-    public Item item;
+    [SerializeField]protected Item item;
+    protected InventoryNSY inventoryNSY;
+    private void Awake()
+    {
+        inventoryNSY=FindObjectOfType<InventoryNSY>();
+    }
     private void OnEnable()
     {
         transform.GetChild(0).GetComponent<MeshRenderer>().material = item.ItemMaterial;
