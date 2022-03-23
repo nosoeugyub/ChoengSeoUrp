@@ -15,12 +15,8 @@ namespace DM.Quest
         public QuestData testSoData;
         public QuestList[] questLists;
         public List<QuestData> clearQuestLists;
-
-        InventoryNSY inventoryNSY;
-
         private void Awake()
         {
-            inventoryNSY = FindObjectOfType<InventoryNSY>();
             acceptQuests = new Dictionary<QuestData, GameObject>();
             clearQuestLists = new List<QuestData>();
         }
@@ -59,7 +55,7 @@ namespace DM.Quest
                     {
                         //아이템 추가
                         print(reward.itemType.ItemName);
-                        //inventoryNSY.AddItem(reward.itemType);//, reward.requireCount);
+                        FindObjectOfType<InventoryNSY>().AddItem(reward.itemType);//, reward.requireCount);
                     }
                     else if (reward.rewardType == RewardType.Event)
                     {

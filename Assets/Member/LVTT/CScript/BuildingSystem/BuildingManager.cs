@@ -89,7 +89,7 @@ namespace TT.BuildSystem
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.A))
             {
                 //건축자재 생성메서드
                 GameObject newPrefab = Instantiate(SpawnBuildItem, nowBuildingBlock.HouseBuild.transform.position, Quaternion.identity, nowBuildingBlock.HouseBuild.transform);

@@ -60,7 +60,7 @@ namespace TT.BuildSystem
                 });
                 buttons[2].onClick.AddListener(() =>
                 {
-                    BuildManager.BuildModeOff();
+                    //CompleteBuilding();
                     print("3. Finish Building");
                     //3. Finish Building
                 });
