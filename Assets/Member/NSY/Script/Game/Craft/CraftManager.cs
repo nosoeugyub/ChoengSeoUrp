@@ -237,7 +237,7 @@ namespace NSY.Iven
 
                                if (isRecipe1 && isRecipe2 && isRecipe0)
                                {
-                                Debug.Log("레시피 맞음");
+                                //Debug.Log("레시피 맞음");
                                 ResultSlot.UpdateResult(craftingRecipes);
                                 ResultSlot.item = CraftRecipe[i];
 
@@ -246,6 +246,7 @@ namespace NSY.Iven
                                 ResultSlot.GetComponent<Image>().color = color;
 
                                 PlayerData.AddValue((int)ResultSlot.item.InItemType, (int)CraftBehaviorEnum.Craft, PlayerData.craftData, (int)CraftBehaviorEnum.length);
+                                Debug.Log(string.Format("{0} 타입의 제작물 생성", ResultSlot.item.InItemType));
 
                                 return CraftRecipe[i];
                                }
