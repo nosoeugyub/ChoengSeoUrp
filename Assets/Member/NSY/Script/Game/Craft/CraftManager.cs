@@ -245,6 +245,8 @@ namespace NSY.Iven
                                 color.a = 1.0f;
                                 ResultSlot.GetComponent<Image>().color = color;
 
+                                PlayerData.AddValue((int)ResultSlot.item.InItemType, (int)CraftBehaviorEnum.Craft, PlayerData.craftData, (int)CraftBehaviorEnum.length);
+
                                 return CraftRecipe[i];
                                }
                                 else

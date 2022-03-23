@@ -78,7 +78,7 @@ namespace DM.Dialog
             //있다면 해당 퀘스트의 CanClear 검사
             //클리어할 수 있다면 해당 퀘스트 클리어 처리 후 완료 대사를 ss에 넣는다.
             dialogUI.SetActive(true);
-            Vector3 uiPos = new Vector3(partnerTf.position.x, partnerTf.position.y+4, partnerTf.position.z);
+            Vector3 uiPos = new Vector3(partnerTf.position.x, partnerTf.position.y+6, partnerTf.position.z);
             dialogUI.transform.position = Camera.main.WorldToScreenPoint(uiPos) ;
 
             QuestData qd = questManager.ReturnQuestRequireNpc(nowPartner);

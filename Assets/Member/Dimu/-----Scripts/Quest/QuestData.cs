@@ -24,7 +24,8 @@ namespace DM.Quest
             [SerializeField] public QuestTask[] builds; //건물 짓기, 철거하기 등
             [SerializeField] public QuestTask[] items; //아이템 얻기 버리기 등
             [SerializeField] public QuestTask[] npcs; //npc 상호작용 등
-            [SerializeField] public QuestTask[] locations; //npc 상호작용 등
+            [SerializeField] public QuestTask[] locations; //지역 상호작용 등
+            [SerializeField] public QuestTask[] gotItems; //인벤에 보유중인 친구들
             //재료 줍기
             //뭐 행동하기 (해당 행동을 했을 때 퀘스트로 들어오게 추가해야함.) 
         }
@@ -123,6 +124,17 @@ namespace DM.Quest
                     {
                         return false;
                     }
+                }
+            }
+            if (tasks.gotItems.Length > 0)
+            {
+                foreach (QuestTask gotItem in tasks.gotItems)
+                {
+                    //if (gotItem.finishData > PlayerData.gotItemData[gotItem.objType].amounts[0] - gotItem.initData)
+                    //if(gotItem .finishData > SuperManager.Instance.inventoryManager.ItemCount(gotItem.objType.ToString()))
+                    //{
+                    //    return false;
+                    //}
                 }
             }
             return true;

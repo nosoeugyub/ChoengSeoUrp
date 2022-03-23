@@ -46,9 +46,9 @@ namespace DM.Quest
         {
             if (CanClear(questId, npcID))
             {
-                
                 QuestData nowQuestData = questLists[npcID].questList[questId];
-
+                
+                //reward
                 foreach (var reward in nowQuestData.rewards)
                 {
                     if (reward.rewardType == RewardType.Gold)
@@ -64,7 +64,7 @@ namespace DM.Quest
                     }
                     else if (reward.rewardType == RewardType.Event)
                     {
-
+                        //이벤트 할당
                     }
                 }
                 clearQuestLists.Add(nowQuestData);

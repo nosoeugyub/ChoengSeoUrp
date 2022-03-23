@@ -7,7 +7,9 @@ public class PlayerData : ScriptableObject
     public static Dictionary<int, Behavior> BuildBuildingData = new Dictionary<int, Behavior>();//
     public static Dictionary<int, Behavior> ItemData = new Dictionary<int, Behavior>();
     public static Dictionary<int, Behavior> npcData = new Dictionary<int, Behavior>();
-    public static Dictionary<int, Behavior> locationData = new Dictionary<int, Behavior>();
+    public static Dictionary<int, Behavior> locationData = new Dictionary<int, Behavior>();//장소에 방문한 횟수
+    public static Dictionary<int, Behavior> gotItemData = new Dictionary<int, Behavior>();//인벤토리에 있는 아이템 개수
+    public static Dictionary<int, Behavior> craftData = new Dictionary<int, Behavior>();//아이템 제작 횟수
 
     public static void AddValue(int dataid, int behav, Dictionary<int,Behavior> pairs, int listCount)
     {
@@ -52,7 +54,10 @@ public enum LocationBehaviorEnum
 {
     Interact, length
 }
-
+public enum CraftBehaviorEnum
+{
+    Craft, length
+}
 public class Behavior
 {
     public int id; //종류 id
@@ -66,8 +71,6 @@ public enum OutItemType
 {
     Talk, Tool, Mineral, Food, Collect, Build, Etc
 }
-
-
 public enum InItemType
 {
     //1차 재료
