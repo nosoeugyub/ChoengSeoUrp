@@ -39,16 +39,16 @@ namespace TT.BuildSystem
         } 
         public void SetInventoryPos(Vector3 MovePos)
         {
-            InventoryUI.position = Camera.main.WorldToScreenPoint(MovePos);
+            //InventoryUI.position = Camera.main.WorldToScreenPoint(MovePos);
         }
         public void MoveInventToRight()
         {
-            InventoryUI.position = Camera.main.WorldToScreenPoint(InventBuildPos);
+ //           InventoryUI.position = Camera.main.WorldToScreenPoint(InventBuildPos);
         }
 
         public void ResetInventPos()
         {
-            InventoryUI.position = Camera.main.WorldToScreenPoint(Vector3.zero);
+            //InventoryUI.position = Camera.main.WorldToScreenPoint(Vector3.zero);
         }
 
         public void AssignBuildItemSpawnPos(Transform SpawnParent,Transform CurBuilding)             

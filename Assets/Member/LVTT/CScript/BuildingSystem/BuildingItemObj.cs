@@ -1,16 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace TT.BuildSystem
 {
-    public enum BuildItemKind { Wall, Roof, Door,Window }
+    public enum BuildItemKind { Wall, Roof, Door, Window }
 
     public class BuildingItemObj : MonoBehaviour
     {
         public float yDragOffset = 2.5f;
         public float xDragOffset = 2f;
-        [SerializeField]public BuildItemKind ItemKind;
+        [SerializeField] public BuildItemKind ItemKind;
         float zOffset;
         private float BuildItemGap = 0.01f;
         [SerializeField] private LayerMask mouseColliderLayerMask = new LayerMask();
@@ -18,29 +16,32 @@ namespace TT.BuildSystem
         private float mZCoord;
         private bool itemisSet;
         bool canTouch;
-        
+
         float MaxX;
         float MinX;
         float MaxY;
         float MinY;
 
         BuildingManager BuildManager;
-        private void Start()
+        private void Awake()
         {
             BuildManager = FindObjectOfType<BuildingManager>();
             HouseBuildAreaCal();
             itemisSet = false;
             canTouch = false;
-            zOffset=transform.position.z;
+            zOffset = transform.position.z;
         }
 
         private void Update()
         {
-            if (!itemisSet)
-            { 
-                ItemMove(); }
 
-           
+
+            if (!itemisSet)
+            {
+                ItemMove();
+            }
+
+
         }
         void HouseBuildAreaCal()
         {
@@ -60,11 +61,13 @@ namespace TT.BuildSystem
                     if (canTouch)
                     {
                         BringItemTotheBack();
-                        itemisSet = false; }
-                break;
+                        itemisSet = false;
+                        print("itemisSet = false");
+                    }
+                    break;
                 case false:
                     SetItemPos();
-                break;
+                    break;
             }
         }
 
@@ -73,6 +76,7 @@ namespace TT.BuildSystem
             transform.position = GetMouseWorldPos() + mOffset;
             itemisSet = true;
             canTouch = false;
+            print("itemisSet = true, canTouch = false");
             BuildManager.OnBuildItemDrag = false;
         }
 
@@ -83,9 +87,12 @@ namespace TT.BuildSystem
             {
                 if (raycastHit.collider.gameObject)
                 {
-                   
+
                     if (!BuildManager.OnBuildItemDrag)
-                    { canTouch = true; }
+                    { 
+                        canTouch = true;
+                        print("canTouch = true");
+                    }
                 }
                 //return Camera.main.ScreenToWorldPoint(raycastHit.point);
                 return raycastHit.point;
@@ -98,36 +105,38 @@ namespace TT.BuildSystem
 
         void BringItemTotheBack()
         {
-            BuildingBlock CurBlock = BuildManager.CurBuilding.GetComponent<BuildingBlock>();
-            foreach(GameObject item in CurBlock.BuildItemList)
+            BuildingBlock CurBlock = BuildManager.nowBuildingBlock;
+            foreach (GameObject item in CurBlock.BuildItemList)
             {
                 BuildingItemObj ItemObj = item.GetComponent<BuildingItemObj>();
                 if (ItemObj.ItemKind == BuildItemKind.Wall)
                 { }
                 else
                 {
-                   
-                     Vector3 MoveBackPos = item.transform.position;
+
+                    Vector3 MoveBackPos = item.transform.position;
                     MoveBackPos.z = item.transform.position.z + BuildItemGap;
-                    if (MoveBackPos.z<= CurBlock.MaxBackItemzPos)
+                    if (MoveBackPos.z <= CurBlock.MaxBackItemzPos)
                     {
                         MoveBackPos.z = CurBlock.MaxBackItemzPos;
                     }
-                        item.transform.position = MoveBackPos;
-                }    
-          
+                    item.transform.position = MoveBackPos;
+                }
+
             }
         }
         void ItemMove()
         {
-            
+
             BuildManager.OnBuildItemDrag = true;
+            print("BuildManager.OnBuildItemDrag = true");
+
             Vector3 DragPos = GetMouseWorldPos() + mOffset;
 
             if (DragPos.x >= MaxX)
             {
                 DragPos.x = MaxX;
-              
+
             }
             if (DragPos.x <= MinX)
             {
@@ -136,7 +145,7 @@ namespace TT.BuildSystem
             if (DragPos.y >= MaxY)
             {
                 DragPos.y = MaxY;
-                
+
             }
             if (DragPos.y <= MinY)
             {
@@ -144,12 +153,12 @@ namespace TT.BuildSystem
             }
 
             //DragPos.z = 502.6f;
-            BuildingBlock CurBlock = BuildManager.CurBuilding.GetComponent<BuildingBlock>();
-            DragPos.z =CurBlock.CurFrontItemzPos;
-           
+            BuildingBlock CurBlock = BuildManager.nowBuildingBlock;
+            DragPos.z = CurBlock.CurFrontItemzPos;
+
             transform.position = DragPos;
         }
-       
+
     }
 
 }

@@ -20,10 +20,10 @@ namespace TT.BuildSystem
         public void BtnSpawnHouseBuildItem()
         {
             BuildingBlock CurBlock = CurBuilding.GetComponent<BuildingBlock>();
-            BuildingItemObj ItemObj = SpawnBuildItem.GetComponent<BuildingItemObj>();
+            BuildMaterialObject ItemObj = SpawnBuildItem.GetComponent<BuildMaterialObject>();
             Vector3 spawnPos = SpawnParent.transform.position;
             spawnPos.y = SpawnOffsetY;
-            if (ItemObj.ItemKind==BuildItemKind.Wall)
+            if (ItemObj.buildMaterialState == BuildMaterialState.Wall)
             {
                 spawnPos.z = spawnPos.z + SpawnOffsetZ;// when the building is facing South
             }
