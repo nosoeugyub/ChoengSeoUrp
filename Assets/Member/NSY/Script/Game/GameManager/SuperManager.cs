@@ -5,6 +5,7 @@ using DM.Quest;
 using DM.Inven;
 using DM.Building;
 using DM.Dialog;
+using NSY.Iven;
 
 namespace NSY.Manager
 { /// <summary>
@@ -22,6 +23,7 @@ namespace NSY.Manager
         public QuestManager questmanager;
         public DialogueManager dialogueManager;
         public SpawnManager spawnmanager;
+        public InventoryNSY inventoryManager;
 
 
         public static SuperManager Instance

@@ -1,5 +1,6 @@
 ﻿using DM.Inven;
 using NSY.Iven;
+using NSY.Manager;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,11 +17,11 @@ namespace DM.Quest
         public QuestList[] questLists;
         public List<QuestData> clearQuestLists;
 
-        InventoryNSY inventoryNSY;
+        //[SerializeField] InventoryNSY inventoryNSY;
 
         private void Awake()
         {
-            inventoryNSY = FindObjectOfType<InventoryNSY>();
+            //inventoryNSY = FindObjectOfType<InventoryNSY>();
             acceptQuests = new Dictionary<QuestData, GameObject>();
             clearQuestLists = new List<QuestData>();
         }
@@ -59,7 +60,7 @@ namespace DM.Quest
                     {
                         //아이템 추가
                         print(reward.itemType.ItemName);
-                        //inventoryNSY.AddItem(reward.itemType);//, reward.requireCount);
+                        SuperManager.Instance.inventoryManager.AddItem(reward.itemType);//, reward.requireCount);
                     }
                     else if (reward.rewardType == RewardType.Event)
                     {

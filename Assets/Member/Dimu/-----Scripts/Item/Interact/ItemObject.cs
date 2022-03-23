@@ -4,10 +4,8 @@ using UnityEngine;
 public class ItemObject : MonoBehaviour//, IInteractable
 {
     [SerializeField]protected Item item;
-    protected InventoryNSY inventoryNSY;
     private void Awake()
     {
-        inventoryNSY=FindObjectOfType<InventoryNSY>();
     }
     private void OnEnable()
     {
