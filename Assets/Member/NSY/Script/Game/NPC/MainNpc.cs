@@ -1,4 +1,4 @@
-﻿using NSY.Player;
+﻿using NSY.Manager;
 using UnityEngine;
 
 
@@ -33,7 +33,10 @@ namespace Game.NPC
 
         //}
 
-
+        public void PlayDialog()
+        {
+            SuperManager.Instance.dialogueManager.FirstShowDialog(this);
+        }
     }
 }
 

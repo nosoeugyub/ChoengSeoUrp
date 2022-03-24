@@ -90,9 +90,7 @@ namespace DM.Quest
 
         public bool CanClear(int questId, int npcID)//퀘스트 클리어 가능한지?
         {
-            QuestData nowQuestData = questLists[npcID].questList[questId];
-
-            return nowQuestData.CanClear();
+            return questLists[npcID].questList[questId].CanClear();
         }
         public bool IsQuestAccepted(int questId, int npcID)//특정 퀘스트 진행중인지?
         {
@@ -116,6 +114,34 @@ namespace DM.Quest
                     return item.Key;
             }
             return null;
+        }
+        public List<QuestData> GetIsAcceptedQuestList(int npcID)
+        {
+            List<QuestData> canAcceptQuests = new List<QuestData>();
+
+            for (int i = 0; i < questLists[npcID].questList.Length; i++)
+            {
+                if (IsQuestAccepted(i, npcID))
+                {
+                    canAcceptQuests.Add(questLists[npcID].questList[i]);
+                }
+            }
+
+            return canAcceptQuests;
+        }
+        public List<QuestData> GetCanAcceptQuestList(int npcID)
+        {
+            List<QuestData> canAcceptQuests = new List<QuestData>();
+
+            for (int i = 0; i < questLists[npcID].questList.Length; i++)
+            {
+                if (CanAcceptQuest(i, npcID))
+                {
+                    canAcceptQuests.Add(questLists[npcID].questList[i]);
+                }
+            }
+
+            return canAcceptQuests;
         }
     }
     [System.Serializable]
