@@ -16,6 +16,7 @@ public class BtnIven : MonoBehaviour
 
     //레시피목록
     [Header("레시피목록")]
+    [SerializeField] GameObject ListBG;
     [SerializeField] GameObject ToolBtn;
 
     public bool isInven = true;
@@ -75,7 +76,15 @@ public class BtnIven : MonoBehaviour
     //레시피 목록
     public void ToolBtnClick()
     {
+        ListBG.SetActive(false);
         ToolBtn.SetActive(true);
     }
 
+    //레시피 목록 뒤로가기
+
+    public void ToolBackList()
+    {
+        ListBG.SetActive(true);
+        ToolBtn.SetActive(false);
+    }
 }
