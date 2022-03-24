@@ -25,6 +25,7 @@ namespace NSY.Iven
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 AddToolRecipe(testitem);
+                SrotRecipe();
                 Debug.Log("스페이스바는 누름 ㅋ");
             }
         }
@@ -50,7 +51,14 @@ namespace NSY.Iven
             }
             return ;
         }
-
+        //순회해서 정렬
+        public void SrotRecipe()
+        {
+            for (int i = 0; i < RecipeList.Count; i++)
+            {
+                RecipeList.Sort();
+            }
+        }
     }
 
 
