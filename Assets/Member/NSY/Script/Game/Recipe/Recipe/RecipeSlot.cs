@@ -40,10 +40,7 @@ namespace NSY.Iven
                     MatImage[i].sprite = _RecipeItem.recipe[i].item.ItemSprite;
                   
 
-                    if (_RecipeItem.recipe[i].item = null)
-                    {
-                        MatImage[i].sprite = null;
-                    }
+                   
                 }
               
 
@@ -72,7 +69,7 @@ namespace NSY.Iven
         }
         protected override void OnValidate()
         {
-          //  base.OnValidate();
+           // base.OnValidate();
             RecipeItem = _RecipeItem;
             RecipeAmout = _RecipeAmount;
 

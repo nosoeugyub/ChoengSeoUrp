@@ -45,20 +45,24 @@ namespace NSY.Iven
                     RecipeList.Add(NoneRecipeList[i]);
                     Destroy(NoneRecipeList[i]);
                     NoneRecipeList[i] = null;
+                    Debug.Log("레시피 미획득=> 획득");
+
+                    if (Recipeslot[i]._RecipeItem.ItemName == RecipeList[i].ItemName)
+                    {
+                        Recipeslot[i].transform.SetSiblingIndex(RecipeList[i].RecipeCode);
+                    }
 
                 } 
 
             
+
             }
-            SrotRecipe();
+          
             return ;
             
         }
         //순회해서 정렬
-        public void SrotRecipe()
-        {
-           
-        }
+   
     }
 
 
