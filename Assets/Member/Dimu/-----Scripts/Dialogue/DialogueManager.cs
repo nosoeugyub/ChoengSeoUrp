@@ -329,6 +329,8 @@ namespace DM.Dialog
     [System.Serializable]
     public class DialogData
     {
+        DialogTask dialogTask;
+
         public Sentence[] acceptSentenceInfo;//시작 문장뭉치
         public Sentence[] proceedingSentenceInfo;//진행중 문장뭉치
         public Sentence[] clearSentenceInfo;//완료 문장뭉치
@@ -365,11 +367,12 @@ namespace DM.Dialog
     [System.Serializable]
     public class DialogTask
     {
-        QuestIndexSet haveToClear;
-        QuestIndexSet haveToDoing;
-        int itemIndexToBuild;
-        int itemIndexToHand;
+        QuestIndexSet[] haveToClear;
+        QuestIndexSet[] haveToDoing;
+        int[] itemIndexToBuild;
+        int[] itemIndexToHand;
     }
+    [System.Serializable]
     public class QuestIndexSet
     {
         public int npcid;
