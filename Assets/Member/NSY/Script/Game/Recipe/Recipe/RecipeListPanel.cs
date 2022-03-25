@@ -16,16 +16,16 @@ namespace NSY.Iven
       public  Item testitem;
 
 
+        [Header("정렬 컴포넌트")]
+        RectTransform AddUiPos;
+        public List<RecipeSlot> Recipeslot = new List<RecipeSlot>();
        
-
-
-
         public void Update()
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 AddToolRecipe(testitem);
-                SrotRecipe();
+               
                 Debug.Log("스페이스바는 누름 ㅋ");
             }
         }
@@ -48,16 +48,16 @@ namespace NSY.Iven
 
                 } 
 
+            
             }
+            SrotRecipe();
             return ;
+            
         }
         //순회해서 정렬
         public void SrotRecipe()
         {
-            for (int i = 0; i < RecipeList.Count; i++)
-            {
-                RecipeList.Sort();
-            }
+           
         }
     }
 

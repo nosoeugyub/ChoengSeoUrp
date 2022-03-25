@@ -8,25 +8,17 @@ namespace NSY.Iven
 {
     public class RecipeSlot : BaseItemSlot
     {
+        [Header("레시피 슬롯")]
         public Image ResultImg;
 
        
 
-        //1번쨰 칸
-        [Header("1번쨰 칸")]
-        public Image firstSlotImg;
-        public Text firstSlotAmount;
-        //2 번쨰칸
-        [Header("2번쨰 칸")]
-        public Image SecondSlotImg;
-        public Text SecondSlotAmount;
-        //3번쨰칸
-        [Header("3번쨰 칸")]
-        public Image ThridSlotImg;
-        public Text ThridSlotAmount;
+       
 
+        public Image[] MatImage;
+        public Text[] AmountImage;
 
-        //미흭득 컬러 흭득 커럴
+        //미흭득 컬러 흭득 컬러
         private Color NullColor = new Color(1, 1, 1, 0);
         private Color NothingColor = new Color(1, 1, 1, 0.5f);
         private Color GetColor = new Color(1, 1, 1, 1);
@@ -45,17 +37,19 @@ namespace NSY.Iven
                 for (int i = 0; i < _RecipeItem.recipe.Length; i++)
                 {
                     ResultImg.sprite = _RecipeItem.ItemSprite;
-                    firstSlotImg.sprite = _RecipeItem.recipe[0].item.ItemSprite ;
-                    SecondSlotImg.sprite = _RecipeItem.recipe[1].item.ItemSprite;
-                    SecondSlotImg.sprite = _RecipeItem.recipe[2].item.ItemSprite;
+                    MatImage[i].sprite = _RecipeItem.recipe[i].item.ItemSprite;
+                  
 
-                   
+                    if (_RecipeItem.recipe[i].item = null)
+                    {
+                        MatImage[i].sprite = null;
+                    }
                 }
               
 
             }
         }
-        [Header("레시피 재료 갯수")]
+        //[Header("레시피 재료 갯수")]
         public int _RecipeAmount;
         public int RecipeAmout
         {
@@ -65,25 +59,26 @@ namespace NSY.Iven
             }
             set
             {
-              
+
                 for (int i = 0; i < _RecipeItem.recipe.Length; i++)
                 {
-
-                    firstSlotAmount.text = _RecipeItem.recipe[0].Count.ToString();
-                    SecondSlotAmount.text = _RecipeItem.recipe[1].Count.ToString();
-                    ThridSlotAmount.text = _RecipeItem.recipe[2].Count.ToString();
+                    AmountImage[i].text = _RecipeItem.recipe[i].Count.ToString();
+                 
 
 
                 }
+              
             }
         }
         protected override void OnValidate()
         {
-
-
+          //  base.OnValidate();
             RecipeItem = _RecipeItem;
             RecipeAmout = _RecipeAmount;
+
+
         }
+            
 
     }
 
