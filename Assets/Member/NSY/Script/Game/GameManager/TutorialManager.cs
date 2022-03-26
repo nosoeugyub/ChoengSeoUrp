@@ -62,18 +62,18 @@ namespace NSY.Manager
                     StopCoroutine(ZeroTuto());
                 
             }
-            //미니맵
-            if (SuperManager.Instance.questmanager.IsQuestAccepted(QuestID, NPCID) == true)
-            {
-                StartCoroutine(ThirdTuto());
-
-            }
-            else if(SuperManager.Instance.questmanager.IsQuestAccepted(QuestID, NPCID) == false)
-            {
-                HouseLine.SetActive(false);
-            }
-            else
-                StopCoroutine(ThirdTuto());
+            ////미니맵
+            //if (SuperManager.Instance.questmanager.IsQuestAccepted(QuestID, NPCID) == true)
+            //{
+            //    StartCoroutine(ThirdTuto());
+            //
+            //}
+            //else if(SuperManager.Instance.questmanager.IsQuestAccepted(QuestID, NPCID) == false)
+            //{
+            //    HouseLine.SetActive(false);
+            //}
+            //else
+            //    StopCoroutine(ThirdTuto());
 
         }
         IEnumerator ZeroTuto()

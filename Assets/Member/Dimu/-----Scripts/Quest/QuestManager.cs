@@ -92,18 +92,18 @@ namespace DM.Quest
         {
             return questLists[npcID].questList[questId].CanClear();
         }
-        public bool IsQuestAccepted(int questId, int npcID)//특정 퀘스트 진행중인지?
+        public bool IsQuestAccepted(QuestData questData)//특정 퀘스트 진행중인지?
         {
-            if (acceptQuests.ContainsKey(questLists[npcID].questList[questId])) return true;
+            if (acceptQuests.ContainsKey(questData)) return true;
             else return false;
         }
         public bool CanAcceptQuest(int questId, int npcID)//퀘스트 수락 가능한지?
         {
             return questLists[npcID].questList[questId].CanAccept();
         }
-        public bool IsQuestCleared(int questId, int npcID)//클리어한 퀘스트인지?
+        public bool IsQuestCleared(QuestData questData)//클리어한 퀘스트인지?
         {
-            return clearQuestLists.Contains(questLists[npcID].questList[questId]);
+            return clearQuestLists.Contains(questData);
         }
         //다른 Npc 와의 상호작용을 요구하는 퀘스트를 진행중인지
         public QuestData ReturnQuestRequireNpc(int npcID)
@@ -121,7 +121,7 @@ namespace DM.Quest
 
             for (int i = 0; i < questLists[npcID].questList.Length; i++)
             {
-                if (IsQuestAccepted(i, npcID))
+                if (IsQuestAccepted(questLists[npcID].questList[i]))
                 {
                     canAcceptQuests.Add(questLists[npcID].questList[i]);
                 }

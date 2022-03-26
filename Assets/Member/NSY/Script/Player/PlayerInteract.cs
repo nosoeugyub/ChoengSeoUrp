@@ -82,7 +82,7 @@ namespace NSY.Player
             ITalkable talkable = interactable.ReturnTF().GetComponent<ITalkable>();
             if (talkable != null)
             {
-                talkable.Talk();
+                talkable.Talk(handItem);
                 return;
             }
             IEventable eventable = interactable.ReturnTF().GetComponent<IEventable>();

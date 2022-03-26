@@ -20,9 +20,9 @@ namespace Game.NPC
             return transform;
         }
 
-        public void Talk()
+        public void Talk(Item handitem)
         {
-            PlayDialog();
+            PlayDialog(handitem);
         }
 
         //protected override void AddID(int NPCid, bool NPCisID)
@@ -33,9 +33,9 @@ namespace Game.NPC
 
         //}
 
-        public void PlayDialog()
+        public void PlayDialog(Item handitem)
         {
-            SuperManager.Instance.dialogueManager.FirstShowDialog(this);
+            SuperManager.Instance.dialogueManager.FirstShowDialog(this, handitem);
         }
     }
 }

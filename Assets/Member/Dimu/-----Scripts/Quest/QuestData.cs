@@ -150,7 +150,7 @@ namespace DM.Quest
             foreach (QuestData requireQuest in requirements.requireQuests)
             {
                 //선행퀘스트가 클리어 퀘스트 목록에 하나라도 없으면
-                if (SuperManager.Instance.questmanager.IsQuestCleared(requireQuest.questID, requireQuest.npcID))
+                if (SuperManager.Instance.questmanager.IsQuestCleared(requireQuest))
                 {
                     Debug.Log("선행퀘스트를 클리어해야 합니다.");
                     return false;
