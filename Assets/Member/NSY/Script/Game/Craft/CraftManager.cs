@@ -20,12 +20,14 @@ namespace NSY.Iven
         public int slotIndex = 0;
 
         [Header("레시피 컴포넌트")]
-      
+        [SerializeField] RecipeListPanel RecipelistPanel;
+
+
         [SerializeField] Transform CraftingSlotsParent;
         [SerializeField] public List<CraftSlot>  CratfingSlots;
         
         [SerializeField]public CraftSlot ResultSlot;
-        public Item[] CraftRecipe;
+      
         Item craftingRecipes;
 
         [SerializeField] InventoryNSY ivenTory;
@@ -172,13 +174,13 @@ namespace NSY.Iven
 
             ivenTory.AddItem(ResultSlot.item.GetCopy());
 
-            for (int i = 0; i < CraftRecipe.Length; i++)
+            for (int i = 0; i < RecipelistPanel.RecipeList.Count; i++)
             {
-                for (int j = 0; j < CraftRecipe[i].recipe.Length; j++)
+                for (int j = 0; j < RecipelistPanel.RecipeList[i].recipe.Length; j++)
                 {
                     for (int k = 0; k < CratfingSlots.Count; k++)
                     {
-                        CratfingSlots[k].Amount -= CraftRecipe[i].recipe[j].Count;
+                        CratfingSlots[k].Amount -= RecipelistPanel.RecipeList[i].recipe[j].Count;
                     }
 
 
@@ -199,20 +201,20 @@ namespace NSY.Iven
             bool isRecipe2;
             
             
-                for (int i = 0; i < CraftRecipe.Length; i++)//레시피 검사
+                for (int i = 0; i < RecipelistPanel.RecipeList.Count; i++)//레시피 검사
                 {
                        Debug.Log("레시피 중");
 
                         isRecipe0 = false;
                         isRecipe1 = false;
                         isRecipe2 = false;
-                    for (int j = 0; j < CraftRecipe[i].recipe.Length;  j++)//레피안의 재료검사
-                    {
-                        if (CraftRecipe[i].recipe.Length == 2)
+                    for (int j = 0; j < RecipelistPanel.RecipeList[i].recipe.Length;  j++)//레피안의 재료검사
+                    { 
+                        if (RecipelistPanel.RecipeList[i].recipe.Length == 2)
                         {
                             isRecipe2 = true;
                         }
-                        else if(CraftRecipe[i].recipe.Length == 1)
+                        else if(RecipelistPanel.RecipeList[i].recipe.Length == 1)
                         {
                                isRecipe1 = true;
                                 isRecipe2 = true;
@@ -220,7 +222,8 @@ namespace NSY.Iven
 
                         for (int k = 0; k < CratfingSlots.Count; k++)//새로만들 조합대
                         {
-                           if (CraftRecipe[i].recipe[j].item == CratfingSlots[k].item && CraftRecipe[i].recipe[j].Count == CratfingSlots[k].Amount)
+                        
+                           if (RecipelistPanel.RecipeList[i].recipe[j].item == CratfingSlots[k].item && RecipelistPanel.RecipeList[i].recipe[j].Count == CratfingSlots[k].Amount)
                            {
                                if (j == 0)
                                {
@@ -239,13 +242,13 @@ namespace NSY.Iven
                                {
                                 Debug.Log("레시피 맞음");
                                 ResultSlot.UpdateResult(craftingRecipes);
-                                ResultSlot.item = CraftRecipe[i];
-
+                                ResultSlot.item = RecipelistPanel.RecipeList[i];
+                                
                                 Color color = ResultSlot.GetComponent<Image>().color;
                                 color.a = 1.0f;
                                 ResultSlot.GetComponent<Image>().color = color;
 
-                                return CraftRecipe[i];
+                                return RecipelistPanel.RecipeList[i];
                                }
                                 else
                                {

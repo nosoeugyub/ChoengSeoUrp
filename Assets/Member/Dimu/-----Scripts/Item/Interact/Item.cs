@@ -31,7 +31,7 @@ public class Item : ScriptableObject
 
     //NSY추가 
     public int MaximumStacks = 1;
-
+   
     public virtual Item GetCopy()
     {
         return this;
@@ -41,13 +41,17 @@ public class Item : ScriptableObject
     {
         //Destroy(this);
     }
+
+    [Header("레시피")]
     [SerializeField]
     public RecipeIteminfo[] recipe;
-
+    [SerializeField]
+    public int RecipeCode;//레시피 아이템의 코드
 }
 [System.Serializable]
 public class RecipeIteminfo
 {
+   
     public Item item;
 
     public int Count;
