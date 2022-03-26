@@ -9,6 +9,7 @@ public class BtnIven : MonoBehaviour
     [SerializeField] GameObject iteminfoPanel;
     [SerializeField] GameObject CraftPanel;
     [SerializeField] GameObject RecipeListPanel;
+    [SerializeField] GameObject RecipeListBackBtn;
 
     [SerializeField] GameObject iventroy;
 
@@ -78,6 +79,7 @@ public class BtnIven : MonoBehaviour
     {
         ListBG.SetActive(false);
         ToolBtn.SetActive(true);
+        RecipeListBackBtn.SetActive(true);
     }
 
     //레시피 목록 뒤로가기
@@ -86,5 +88,6 @@ public class BtnIven : MonoBehaviour
     {
         ListBG.SetActive(true);
         ToolBtn.SetActive(false);
+        RecipeListBackBtn.SetActive(false);
     }
 }
