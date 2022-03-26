@@ -19,10 +19,12 @@ namespace TT.BuildSystem
         [Tooltip("이 오브젝트를 채집할 수 있는 도구 타입")]
         [SerializeField] InItemType toolType;
 
+        bool buildButtonFuncAdded;
         ////////////////////////////////////////////////////////
         void Start()
         {
             BuildManager = FindObjectOfType<BuildingManager>();
+            buildButtonFuncAdded=false;
         }
 
         public void AddBuildItemToList(GameObject Item)
@@ -34,7 +36,7 @@ namespace TT.BuildSystem
         {
             BuildItemList.Clear();
         }
-        public void OnBuildMode(UnityEngine.UI.Button[] buttons)
+        public void OnBuildMode(UnityEngine.UI.Button[] buttons,GameObject interactUI)
         {
             foreach (var button in buttons)
             {
@@ -45,41 +47,51 @@ namespace TT.BuildSystem
             //Set Event Methods
             if (buildState == BuildState.NotFinish)
             {
-                buttons[0].onClick.AddListener(() =>
+                if(!this.buildButtonFuncAdded)
                 {
-                    BuildManager.BuildModeOn(this);
-                    //BuildBuilding();
-                    print("1. Build Building");
-                    //1. Build Building
-                });
-                buttons[1].onClick.AddListener(() =>
-                {
-                    //DemolishBuidling();
-                    print("2. break Building");
-                    //2. break Building
-                });
-                buttons[2].onClick.AddListener(() =>
-                {
-                    //CompleteBuilding();
-                    print("3. Finish Building");
-                    //3. Finish Building
-                });
+                    buttons[0].onClick.AddListener(() =>
+                    {
+                        BuildManager.BuildModeOn(this, buttons, interactUI);
+                        //BuildBuilding();
+                        print("1. Build Building");
+                        //1. Build Building
+                    });
+                    buttons[1].onClick.AddListener(() =>
+                    {
+                        //DemolishBuidling();
+                        print("2. break Building");
+                        //2. break Building
+                    });
+                    buttons[2].onClick.AddListener(() =>
+                    {
+                        //CompleteBuilding();
+                        print("3. Finish Building");
+                        //3. Finish Building
+                    });
+                    this.buildButtonFuncAdded = true;
+                }
+               
             }
             else if (buildState == BuildState.Finish)
             {
-                buttons[0].onClick.AddListener(() =>
+               if(!this.buildButtonFuncAdded)
                 {
-                    //BuildBuilding();
-                    print("1. Repair Building");
-                    //1. Repair Building
-                });
-                buttons[1].onClick.AddListener(() =>
-                {
-                    //DemolishBuidling();
-                    print("2. break Building");
-                    //2. break Building
-                });
-                buttons[2].gameObject.SetActive(false);
+                    buttons[0].onClick.AddListener(() =>
+                    {
+                        //BuildBuilding();
+                        print("1. Repair Building");
+                        //1. Repair Building
+                    });
+                    buttons[1].onClick.AddListener(() =>
+                    {
+                        //DemolishBuidling();
+                        print("2. break Building");
+                        //2. break Building
+                    });
+                    buttons[2].gameObject.SetActive(false);
+                    this.buildButtonFuncAdded = true;
+                }
+               
             }
         }
         ////////////////////////////////////////////////////////

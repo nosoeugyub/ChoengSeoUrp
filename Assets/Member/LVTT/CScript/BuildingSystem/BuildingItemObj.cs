@@ -129,7 +129,7 @@ namespace TT.BuildSystem
         {
 
             BuildManager.OnBuildItemDrag = true;
-            print("BuildManager.OnBuildItemDrag = true");
+           // print("BuildManager.OnBuildItemDrag = true");
 
             Vector3 DragPos = GetMouseWorldPos() + mOffset;
 
