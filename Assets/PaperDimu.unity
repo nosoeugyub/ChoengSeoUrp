@@ -21245,12 +21245,12 @@ PrefabInstance:
     - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
         type: 3}
       propertyPath: questDialogLists.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
         type: 3}
       propertyPath: questDialogLists.Array.data[1].dialogList.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
         type: 3}
@@ -21260,11 +21260,21 @@ PrefabInstance:
     - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
         type: 3}
       propertyPath: dailydialogLists.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
         type: 3}
       propertyPath: dailydialogLists.Array.data[1].dialogList.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
+        type: 3}
+      propertyPath: dailydialogLists.Array.data[2].dialogList.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
+        type: 3}
+      propertyPath: questDialogLists.Array.data[2].dialogList.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
@@ -21287,7 +21297,8 @@ PrefabInstance:
         type: 3}
       propertyPath: questDialogLists.Array.data[1].dialogList.Array.data[1]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 11400000, guid: f19cc10df5aac2c4b885dec7d6531bec,
+        type: 2}
     - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
         type: 3}
       propertyPath: questDialogLists.Array.data[0].dialogList.Array.data[0]
@@ -21324,6 +21335,46 @@ PrefabInstance:
       propertyPath: questDialogLists.Array.data[1].dialogList.Array.data[2]
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
+        type: 3}
+      propertyPath: dailydialogLists.Array.data[2].charName
+      value: hen
+      objectReference: {fileID: 0}
+    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
+        type: 3}
+      propertyPath: dailydialogLists.Array.data[2].dialogList.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: db50f2a58fa398840b8301b8cfe72f48,
+        type: 2}
+    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
+        type: 3}
+      propertyPath: questDialogLists.Array.data[2].charName
+      value: hen
+      objectReference: {fileID: 0}
+    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
+        type: 3}
+      propertyPath: questDialogLists.Array.data[2].dialogList.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 1efebedc2ef4aa94a91cb57818860d03,
+        type: 2}
+    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
+        type: 3}
+      propertyPath: questDialogLists.Array.data[2].dialogList.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 04065d100d2de794b9c3be3caa4d51e2,
+        type: 2}
+    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
+        type: 3}
+      propertyPath: dailydialogLists.Array.data[1].dialogList.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 1e28594522cdf6e49810756cb5883b07,
+        type: 2}
+    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
+        type: 3}
+      propertyPath: dailydialogLists.Array.data[2].dialogList.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: ef9d0e96533943140863a86bc6ce3ee7,
+        type: 2}
     - target: {fileID: 3326110370991390363, guid: efcb8539c03eecb4696aa5df5c1685eb,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -58241,15 +58292,36 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 525941682}
     m_Modifications:
+    - target: {fileID: 2383958624676443869, guid: c71a37545dbfe3344b9d16e99460eddb,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: dedcc01c5eb68e743b658e1793d3dab9,
+        type: 3}
+    - target: {fileID: 2383958624676443869, guid: c71a37545dbfe3344b9d16e99460eddb,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 1.37
+      objectReference: {fileID: 0}
+    - target: {fileID: 2383958624676443869, guid: c71a37545dbfe3344b9d16e99460eddb,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 1.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 2383958624676443869, guid: c71a37545dbfe3344b9d16e99460eddb,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8227108853980852553, guid: c71a37545dbfe3344b9d16e99460eddb,
         type: 3}
       propertyPath: m_Name
-      value: Rabbit
+      value: Hen
       objectReference: {fileID: 0}
     - target: {fileID: 8227108853980852598, guid: c71a37545dbfe3344b9d16e99460eddb,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 123.1
+      value: 84.99
       objectReference: {fileID: 0}
     - target: {fileID: 8227108853980852598, guid: c71a37545dbfe3344b9d16e99460eddb,
         type: 3}
@@ -58259,7 +58331,7 @@ PrefabInstance:
     - target: {fileID: 8227108853980852598, guid: c71a37545dbfe3344b9d16e99460eddb,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 37.639984
+      value: 36.13
       objectReference: {fileID: 0}
     - target: {fileID: 8227108853980852598, guid: c71a37545dbfe3344b9d16e99460eddb,
         type: 3}

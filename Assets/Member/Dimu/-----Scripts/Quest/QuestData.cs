@@ -93,8 +93,8 @@ namespace DM.Quest
                 {
                     PlayerData.AddDictionary(item.objType, PlayerData.ItemData, (int)ItemBehaviorEnum.length);
                     Debug.Log(string.Format("fin: {0}, now: {1}", item.finishData, PlayerData.ItemData[item.objType].amounts[item.behaviorType] - item.initData));
-
-                    if (item.finishData > PlayerData.ItemData[item.objType].amounts[item.behaviorType] - item.initData)
+                    int questdata = PlayerData.ItemData[item.objType].amounts[item.behaviorType] - item.initData;
+                    if (item.finishData > questdata)
                     {
                         return false;
                     }

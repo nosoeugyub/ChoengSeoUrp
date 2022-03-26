@@ -76,7 +76,7 @@ namespace DM.Dialog
             Vector3 uiPos = new Vector3(partnerTf.position.x, partnerTf.position.y + 6, partnerTf.position.z);
             dialogUI.transform.position = Camera.main.WorldToScreenPoint(uiPos);
 
-            QuestData qd = questManager.ReturnQuestRequireNpc(nowPartner);
+            QuestData qd = questManager.ReturnCanClearQuestRequireNpc(nowPartner);
 
             //List<QuestData> isAcceptedQuests = questManager.GetIsAcceptedQuestList(nowPartner);//진행중인 퀘스트
             //List<QuestData> canAcceptQuests = questManager.GetCanAcceptQuestList(nowPartner);//수락가능 퀘스트
@@ -84,7 +84,7 @@ namespace DM.Dialog
             List<DialogData> canStartDialogs = GetCanAcceptDialogList(nowPartner, true);//시작가능 대화
 
             //완료자가 nowPartner(현재 대화 상대)인 퀘스트 받아옴. 제공자는 같을 수도,  다를 수 있음.
-            if (qd != null && questManager.ClearQuest(qd.questID, qd.npcID))//없거나 클리어할 수 없다면
+            if (qd != null && questManager.ClearQuest(qd.questID, qd.npcID))//있거나 클리어할 수 있다면
             {
                 nowDialogData = questDialogLists[qd.npcID].dialogList[qd.questID];
 

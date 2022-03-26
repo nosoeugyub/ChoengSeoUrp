@@ -1,6 +1,4 @@
-﻿using DM.Inven;
-using NSY.Iven;
-using NSY.Manager;
+﻿using NSY.Manager;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -47,16 +45,16 @@ namespace DM.Quest
             if (CanClear(questId, npcID))
             {
                 QuestData nowQuestData = questLists[npcID].questList[questId];
-                
+
                 //reward
                 foreach (var reward in nowQuestData.rewards)
                 {
                     if (reward.rewardType == RewardType.Gold)
                     {
                         //재화 증가
-                        Debug.Log(string.Format( "Clear, {0}G 획득",reward.requireCount));
+                        Debug.Log(string.Format("Clear, {0}G 획득", reward.requireCount));
                     }
-                    else if(reward.rewardType == RewardType.Item)
+                    else if (reward.rewardType == RewardType.Item)
                     {
                         //아이템 추가
                         print(reward.itemType.ItemName);
@@ -106,14 +104,21 @@ namespace DM.Quest
             return clearQuestLists.Contains(questData);
         }
         //다른 Npc 와의 상호작용을 요구하는 퀘스트를 진행중인지
-        public QuestData ReturnQuestRequireNpc(int npcID)
+        public QuestData ReturnCanClearQuestRequireNpc(int npcID)//클리어 가능한 친구가 있다면 우선적으로 리턴해야 한다.
         {
+            QuestData qd = null;
             foreach (var item in acceptQuests)
             {
                 if (item.Key.interactNpcID == npcID) //현재 진행중인 퀘스트들 중에 완료자가 나랑 같은?
-                    return item.Key;
+                {
+                    if (CanClear(item.Key.questID, item.Key.npcID))
+                    {
+                        return item.Key;
+                    }
+
+                }
             }
-            return null;
+            return qd;
         }
         public List<QuestData> GetIsAcceptedQuestList(int npcID)
         {
