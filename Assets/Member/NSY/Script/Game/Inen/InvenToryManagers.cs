@@ -31,6 +31,9 @@ namespace NSY.Iven
       [Header("레시피 레퍼런스")]
         private CraftingRecipe carftingRecipe;
         [SerializeField] CraftSlot[] CraftSlot;
+        //우편
+        [SerializeField] PostPanel postpanel;
+
        
        
        
@@ -44,6 +47,7 @@ namespace NSY.Iven
         {
             //인벤토리 클레스 이벤트
 
+            postpanel.OnPostLeftClickEvent += ClickPostButton;
             iventorynsy.OnRightClickEvent += InventoryRightClick;
            // iventorynsy.OnLeftClickEvent += InventoryLeftClick;
             equipPanel.OnRightClickEvent += EquipmentPanelRightClick;
@@ -69,7 +73,11 @@ namespace NSY.Iven
 
             carftingRecipe = new CraftingRecipe();
         }
-       
+        //우편 버튼 눌렀을때.
+        private void ClickPostButton(PostSlot postslot)
+        {
+            Debug.Log("버튼클릭함");
+        }
 
         private void InventoryRightClick(BaseItemSlot itemslot)
         {

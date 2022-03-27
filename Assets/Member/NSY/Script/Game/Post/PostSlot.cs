@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using UnityEngine.EventSystems;
+
 namespace NSY.Iven
 {
-    public class PostSlot : MonoBehaviour
+    public class PostSlot : MonoBehaviour , IPointerDownHandler
     {
         [Header("획득 되고안되고 색깔차이")]
         [SerializeField]
@@ -20,6 +22,13 @@ namespace NSY.Iven
         [SerializeField] public Text posttext;
         [SerializeField]
         private Post _post;
+
+
+
+        //읽었는지 안읽었는지 확인하는 이벤트
+        public event Action<PostSlot> OnPostLeftClickEvent;
+
+
         public Post post
         {
             get
@@ -90,6 +99,18 @@ namespace NSY.Iven
             }
             post = _post;
             PostText = _PostText;
+        }
+
+        //우편클릭
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            if (eventData != null && eventData.button == PointerEventData.InputButton.Left)
+            {
+                if (OnPostLeftClickEvent != null)
+                {
+                    OnPostLeftClickEvent(this);
+                }
+            }
         }
     }
 
