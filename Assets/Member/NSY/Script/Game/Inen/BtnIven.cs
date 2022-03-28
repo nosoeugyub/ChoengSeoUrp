@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using NSY.Iven;
+using System;
 
 public class BtnIven : MonoBehaviour
 {
-
+    
     [SerializeField] GameObject EquionmentPanel;
     [SerializeField] GameObject iteminfoPanel;
     [SerializeField] GameObject CraftPanel;
@@ -24,6 +26,18 @@ public class BtnIven : MonoBehaviour
     [SerializeField] GameObject postPanel;
     [SerializeField] GameObject ClosePost;
     [SerializeField] GameObject PostpanelBG;
+    [Header("알림컴포넌트")]
+    private PostSlot postslot;
+    public event Action OnPostEvent;
+    [SerializeField]
+    private PostPanel postPenl;
+
+
+
+
+
+
+
 
     public bool isInven = true;
     public bool Craft;
@@ -122,14 +136,21 @@ public class BtnIven : MonoBehaviour
         }
        
     }
-    //이장 우편
-    public void PostSlotClick()
+    //우편 활성화
+    public void Show()
     {
+        gameObject.SetActive(true);// 유아이 활성화
+        OnPostEvent = null;
+        
+    }
+    public void OnPostButtonClick()
+    {
+        if (OnPostEvent != null)
+        {
+            OnPostEvent();
+        }
        
-        GameObject.Find("MainPostSlot").transform.Find("MainNpcPost").gameObject.SetActive(true);
     }
-    public void CloseSlotClick()
-    {
-        GameObject.Find("MainPostSlot").transform.Find("MainNpcPost").gameObject.SetActive(false);
-    }
+
+
 }

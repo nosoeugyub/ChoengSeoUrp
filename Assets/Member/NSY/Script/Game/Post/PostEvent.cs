@@ -5,10 +5,9 @@ using UnityEngine;
 
 namespace NSY.Iven
 {
-    public class PostEvent : MonoBehaviour
+    public class PostEvent : ItemContainer
     {
-        [SerializeField] PostPanel _PostPanel;
-        [SerializeField] PostSlot[]  _PostSolt;
+       
 
  
 

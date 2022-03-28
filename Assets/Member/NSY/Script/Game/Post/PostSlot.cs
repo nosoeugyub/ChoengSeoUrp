@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 namespace NSY.Iven
 {
-    public class PostSlot : MonoBehaviour , IPointerDownHandler
+    public class PostSlot : MonoBehaviour
     {
         [Header("획득 되고안되고 색깔차이")]
         [SerializeField]
@@ -20,15 +20,42 @@ namespace NSY.Iven
         [Header("할당될 컴포넌트들")]
         [SerializeField] public Image postImage;
         [SerializeField] public Text posttext;
+        public GameObject PostOBJ;
+
+        [Header("읽음표시 배열")]
+        [SerializeField]
+        public GameObject[] postRusult;
+
+
+        [Header("안의 내용 오브젝트")]
+        [SerializeField]
+        private GameObject _PostContents;
+        public GameObject PostContents
+        {
+            get
+            {
+                return _PostContents;
+            }
+            set
+            {
+                _PostContents = value;
+                if (_post == null)
+                {
+                    PostOBJ = null;
+                }
+                else
+                {
+                    PostOBJ = _post._PostContents;
+                    _PostContents = PostOBJ ;
+                }
+
+            }
+        }
+
+
+        [Header("할당될 오브젝트")]
         [SerializeField]
         private Post _post;
-
-
-
-        //읽었는지 안읽었는지 확인하는 이벤트
-        public event Action<PostSlot> OnPostLeftClickEvent;
-
-
         public Post post
         {
             get
@@ -42,7 +69,7 @@ namespace NSY.Iven
                 {
                     postImage.sprite = null;
                     postImage.color = NoneAddColor;
-               
+
                 }
                 else
                 {
@@ -52,7 +79,7 @@ namespace NSY.Iven
                 }
             }
         }
-       
+
         private Text _PostText;
         public Text PostText
         {
@@ -75,19 +102,12 @@ namespace NSY.Iven
 
         public void OnValidate()
         {
-      
+
             if (_post == null)
             {
                 gameObject.name = "None Slot";
                 PostBtn.image.color = NoneAddColor;
             }
-
-        
-            
-                
-            
-
-           
 
             if (postImage == null)
             {
@@ -99,20 +119,18 @@ namespace NSY.Iven
             }
             post = _post;
             PostText = _PostText;
+            PostContents = _PostContents;
         }
 
         //우편클릭
-        public void OnPointerDown(PointerEventData eventData)
+        public void ClickBtnPostUser(Post post)
         {
-            if (eventData != null && eventData.button == PointerEventData.InputButton.Left)
-            {
-                if (OnPostLeftClickEvent != null)
-                {
-                    OnPostLeftClickEvent(this);
-                }
-            }
-        }
-    }
 
+            PostOBJ = post._PostContents;
+            Instantiate(PostOBJ);
+            PostOBJ.SetActive(true);
+        }
+
+    }
 
 }

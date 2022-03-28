@@ -33,7 +33,7 @@ namespace NSY.Iven
         [SerializeField] CraftSlot[] CraftSlot;
         //우편
         [SerializeField] PostPanel postpanel;
-
+     
        
        
        
@@ -45,9 +45,13 @@ namespace NSY.Iven
 
         private void Awake()
         {
-            //인벤토리 클레스 이벤트
+            btniven.OnPostEvent += ClickPostSlotUi;
 
-            postpanel.OnPostLeftClickEvent += ClickPostButton;
+
+
+
+
+            //인벤토리 클레스 이벤트
             iventorynsy.OnRightClickEvent += InventoryRightClick;
            // iventorynsy.OnLeftClickEvent += InventoryLeftClick;
             equipPanel.OnRightClickEvent += EquipmentPanelRightClick;
@@ -337,6 +341,13 @@ namespace NSY.Iven
 
 
 
+
+        public void  ClickPostSlotUi()
+        {
+            Debug.Log("버튼누름");
+            postpanel.AddContectPost();
+
+        }
     }
 
 }

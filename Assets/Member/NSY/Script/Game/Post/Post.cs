@@ -25,8 +25,13 @@ namespace NSY.Iven
 
         //우편 내용 텍스트
         [SerializeField]
-        private string PostContents;
-        public string _PostContents { get { return PostContents; } }
+        private GameObject PostContents;
+        public GameObject _PostContents { get { return PostContents; } }
+
+
+        [SerializeField]
+         public int _PostNum;
+        public int PostNumP {  get { return _PostNum; } }
     }
 
 }

@@ -11,6 +11,8 @@ namespace NSY.Iven
     {
       //  public ItemSlot[] itemSlots;
         public List<ItemSlot> ItemSlots;
+        
+       
 
         public event Action<BaseItemSlot> OnPointerEnterEvent;
         public event Action<BaseItemSlot> OnPointerExitEvent;
@@ -20,6 +22,9 @@ namespace NSY.Iven
         public event Action<BaseItemSlot> OnEndDragEvent;
         public event Action<BaseItemSlot> OnDragEvent;
         public event Action<BaseItemSlot> OnDropEvent;
+
+
+
 
         protected virtual void Awake()
         {
@@ -159,6 +164,9 @@ namespace NSY.Iven
                 ItemSlots[i].Amount = 0;
             }
         }
+
+       
+
     }
 
 }

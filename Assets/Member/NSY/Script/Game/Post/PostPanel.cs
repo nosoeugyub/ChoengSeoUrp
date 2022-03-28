@@ -10,12 +10,13 @@ namespace NSY.Iven
     {
 
         //이벤트
-        public event Action<PostSlot> OnPostLeftClickEvent;
-
+        public GameObject PostRusultTransform;
+        public GameObject[] PostRusultPrafab;
 
         [SerializeField] Transform PostSlotsParent;
-        [SerializeField] private List<PostSlot> postslot;
-        [SerializeField] private Post[] Post; //추가되면 들어갈 우편목록 
+        [SerializeField] public List<PostSlot> postslot;
+        [Header("우편 목록")]
+        [SerializeField] private Post[] Post; //우편목록 
         [Header("안읽은 우편함")]
         public List<Post> AddPostList = new List<Post>(); // 안읽은 우편함
 
@@ -28,15 +29,8 @@ namespace NSY.Iven
             }
         }
 
-        private void Start()
-        {
-            for (int i = 0; i < postslot.Count; i++)
-            {
-                postslot[i].OnPostLeftClickEvent += OnPostLeftClickEvent;
-            }
-        }
-
-
+        
+        
         public bool AddPost(Post post)
         {
             for (int i = 0; i < postslot.Count; i++)
@@ -44,8 +38,11 @@ namespace NSY.Iven
                 if (postslot[i].post == null)
                 {
                     postslot[i].post = post;
-                    postslot[i].posttext.text =post._Posttext;
-                    postslot[i].gameObject.name = post._PostName.ToString() + "Slot";
+                    postslot[i].posttext.text = post._Posttext;
+                    postslot[i].PostOBJ = post._PostContents;
+                    post._PostNum++;
+                   postslot[i].gameObject.name = post._PostName.ToString();
+                   
                     for (int j = 0; j < Post.Length; j++)
                     {
                         if (postslot[i].post == Post[j])
@@ -55,10 +52,29 @@ namespace NSY.Iven
                     }
                     return true;
                 }
-               
+
             }
             return false;
         }
+
+
+        public void AddContectPost()
+        {
+
+            for (int i = 0; i < postslot.Count; i++)
+            {
+                if (postslot[i].post != null)
+                {
+                   
+                    GameObject PostImage = Instantiate(postslot[i].PostOBJ) as GameObject ;
+                    PostImage.transform.SetParent(PostRusultTransform.transform, false);
+                    postslot[i].PostOBJ.SetActive(true);
+                }
+            }
+        }
+      
+
+
 
 
         private void Update()
