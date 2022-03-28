@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4123280054350793678}
   - component: {fileID: 4123280054350793677}
   - component: {fileID: 4123280054350793676}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,7 +104,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4123280054433368081}
   - component: {fileID: 4123280054433368082}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BoundFront
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -150,7 +150,7 @@ GameObject:
   - component: {fileID: 4123280054561734942}
   - component: {fileID: 4123280054561734941}
   - component: {fileID: 4123280054561734940}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: LayerMaskWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -241,13 +241,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4123280054577332983}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GuideObj
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4123280054577332983
 Transform:
   m_ObjectHideFlags: 0
@@ -275,7 +275,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4123280054628325711}
   - component: {fileID: 4123280054630016688}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BoundBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -322,7 +322,7 @@ GameObject:
   - component: {fileID: 4123280054969960023}
   - component: {fileID: 4123280054969960022}
   - component: {fileID: 4123280054969960021}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Road
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -936,7 +936,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4123280055118334128}
   - component: {fileID: 4123280055118334129}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BoundLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -981,8 +981,7 @@ GameObject:
   - component: {fileID: 4123280055350815964}
   - component: {fileID: 4123280055350815966}
   - component: {fileID: 4123280055350815965}
-  - component: {fileID: 4123280055350815967}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BuildingArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1033,28 +1032,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83250eade0b79f5429b6c83f68c1f5f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 0}
   HouseBuild: {fileID: 4123280055626430901}
   BuildItemList: []
-  BuildBlockObjList:
-  - {fileID: 4123280055967156640}
-  - {fileID: 4123280056203766463}
-  - {fileID: 4123280054561734938}
-  BuildMode: 0
   CurFrontItemzPos: 0
   MaxBackItemzPos: 0
---- !u!114 &4123280055350815967
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4123280055350815963}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f22436cc1d5ef8745a94f970772b1309, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   buildState: 0
   buildingId: 0
   toolType: 0
@@ -1067,7 +1048,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4123280055626430901}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HouseBuild
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1098,7 +1079,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4123280055655279821}
   - component: {fileID: 4123280055655279822}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BoundRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1144,7 +1125,7 @@ GameObject:
   - component: {fileID: 4123280055967156644}
   - component: {fileID: 4123280055967156643}
   - component: {fileID: 4123280055967156642}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HouseBuildArea-Blue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1235,7 +1216,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4123280056203766432}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1272,7 +1253,7 @@ GameObject:
   - component: {fileID: 4123280056344860221}
   - component: {fileID: 4123280056344860220}
   - component: {fileID: 4123280056344860219}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GardenBuildArea-Blue
   m_TagString: Untagged
   m_Icon: {fileID: 0}

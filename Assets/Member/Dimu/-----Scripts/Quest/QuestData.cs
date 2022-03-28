@@ -24,7 +24,8 @@ namespace DM.Quest
             [SerializeField] public QuestTask[] builds; //건물 짓기, 철거하기 등
             [SerializeField] public QuestTask[] items; //아이템 얻기 버리기 등
             [SerializeField] public QuestTask[] npcs; //npc 상호작용 등
-            [SerializeField] public QuestTask[] locations; //npc 상호작용 등
+            [SerializeField] public QuestTask[] locations; //지역 상호작용 등
+            [SerializeField] public QuestTask[] gotItems; //인벤에 보유중인 친구들
             //재료 줍기
             //뭐 행동하기 (해당 행동을 했을 때 퀘스트로 들어오게 추가해야함.) 
         }
@@ -92,8 +93,8 @@ namespace DM.Quest
                 {
                     PlayerData.AddDictionary(item.objType, PlayerData.ItemData, (int)ItemBehaviorEnum.length);
                     Debug.Log(string.Format("fin: {0}, now: {1}", item.finishData, PlayerData.ItemData[item.objType].amounts[item.behaviorType] - item.initData));
-
-                    if (item.finishData > PlayerData.ItemData[item.objType].amounts[item.behaviorType] - item.initData)
+                    int questdata = PlayerData.ItemData[item.objType].amounts[item.behaviorType] - item.initData;
+                    if (item.finishData > questdata)
                     {
                         return false;
                     }
@@ -125,6 +126,17 @@ namespace DM.Quest
                     }
                 }
             }
+            if (tasks.gotItems.Length > 0)
+            {
+                foreach (QuestTask gotItem in tasks.gotItems)
+                {
+                    //if (gotItem.finishData > PlayerData.gotItemData[gotItem.objType].amounts[0] - gotItem.initData)
+                    //if(gotItem .finishData > SuperManager.Instance.inventoryManager.ItemCount(gotItem.objType.ToString()))
+                    //{
+                    //    return false;
+                    //}
+                }
+            }
             return true;
         }
         public bool CanAccept()
@@ -138,7 +150,7 @@ namespace DM.Quest
             foreach (QuestData requireQuest in requirements.requireQuests)
             {
                 //선행퀘스트가 클리어 퀘스트 목록에 하나라도 없으면
-                if (SuperManager.Instance.questmanager.IsQuestCleared(requireQuest.questID, requireQuest.npcID))
+                if (SuperManager.Instance.questmanager.IsQuestCleared(requireQuest))
                 {
                     Debug.Log("선행퀘스트를 클리어해야 합니다.");
                     return false;

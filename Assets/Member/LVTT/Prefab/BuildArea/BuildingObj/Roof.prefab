@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3714485982636825932}
   - component: {fileID: 765156875842327790}
   - component: {fileID: 3714485982636825922}
+  - component: {fileID: 7086501346037221790}
   m_Layer: 0
   m_Name: Roof
   m_TagString: BuildObj
@@ -107,9 +108,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1aa875259ddfa2d45b7c9198ba4160a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yDragOffset: 2.8
+  yDragOffset: 3.5
   xDragOffset: 1.8
   ItemKind: 1
   mouseColliderLayerMask:
     serializedVersion: 2
     m_Bits: 1024
+--- !u!114 &7086501346037221790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3714485982636825920}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f22436cc1d5ef8745a94f970772b1309, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildMaterialState: 2
+  buildMatId: 0
+  toolType: 40003

@@ -28,9 +28,9 @@ public class PopUpPosition : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        PopUpPost.transform.position = Camera.main.WorldToScreenPoint(FristPost.position + Uioffset);
-        PopUpApple.transform.position = Camera.main.WorldToScreenPoint(FristApple.position + Uioffset);
-        MiniMap.transform.position = Camera.main.WorldToScreenPoint(Playertransform.position + Uioffset);
+        //PopUpPost.transform.position = Camera.main.WorldToScreenPoint(FristPost.position + Uioffset);
+        //PopUpApple.transform.position = Camera.main.WorldToScreenPoint(FristApple.position + Uioffset);
+        //MiniMap.transform.position = Camera.main.WorldToScreenPoint(Playertransform.position + Uioffset);
 
     }
 }

@@ -1,5 +1,4 @@
-﻿using DM.Inven;
-using NSY.Iven;
+﻿using NSY.Manager;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,8 +14,12 @@ namespace DM.Quest
         public QuestData testSoData;
         public QuestList[] questLists;
         public List<QuestData> clearQuestLists;
+
+        //[SerializeField] InventoryNSY inventoryNSY;
+
         private void Awake()
         {
+            //inventoryNSY = FindObjectOfType<InventoryNSY>();
             acceptQuests = new Dictionary<QuestData, GameObject>();
             clearQuestLists = new List<QuestData>();
         }
@@ -41,25 +44,25 @@ namespace DM.Quest
         {
             if (CanClear(questId, npcID))
             {
-                
                 QuestData nowQuestData = questLists[npcID].questList[questId];
 
+                //reward
                 foreach (var reward in nowQuestData.rewards)
                 {
                     if (reward.rewardType == RewardType.Gold)
                     {
                         //재화 증가
-                        Debug.Log(string.Format( "Clear, {0}G 획득",reward.requireCount));
+                        Debug.Log(string.Format("Clear, {0}G 획득", reward.requireCount));
                     }
-                    else if(reward.rewardType == RewardType.Item)
+                    else if (reward.rewardType == RewardType.Item)
                     {
                         //아이템 추가
                         print(reward.itemType.ItemName);
-                        FindObjectOfType<InventoryNSY>().AddItem(reward.itemType);//, reward.requireCount);
+                        SuperManager.Instance.inventoryManager.AddItem(reward.itemType);//, reward.requireCount);
                     }
                     else if (reward.rewardType == RewardType.Event)
                     {
-
+                        //이벤트 할당
                     }
                 }
                 clearQuestLists.Add(nowQuestData);
@@ -85,32 +88,65 @@ namespace DM.Quest
 
         public bool CanClear(int questId, int npcID)//퀘스트 클리어 가능한지?
         {
-            QuestData nowQuestData = questLists[npcID].questList[questId];
-
-            return nowQuestData.CanClear();
+            return questLists[npcID].questList[questId].CanClear();
         }
-        public bool IsQuestAccepted(int questId, int npcID)//특정 퀘스트 진행중인지?
+        public bool IsQuestAccepted(QuestData questData)//특정 퀘스트 진행중인지?
         {
-            if (acceptQuests.ContainsKey(questLists[npcID].questList[questId])) return true;
+            if (acceptQuests.ContainsKey(questData)) return true;
             else return false;
         }
         public bool CanAcceptQuest(int questId, int npcID)//퀘스트 수락 가능한지?
         {
             return questLists[npcID].questList[questId].CanAccept();
         }
-        public bool IsQuestCleared(int questId, int npcID)//클리어한 퀘스트인지?
+        public bool IsQuestCleared(QuestData questData)//클리어한 퀘스트인지?
         {
-            return clearQuestLists.Contains(questLists[npcID].questList[questId]);
+            return clearQuestLists.Contains(questData);
         }
         //다른 Npc 와의 상호작용을 요구하는 퀘스트를 진행중인지
-        public QuestData ReturnQuestRequireNpc(int npcID)
+        public QuestData ReturnCanClearQuestRequireNpc(int npcID)//클리어 가능한 친구가 있다면 우선적으로 리턴해야 한다.
         {
+            QuestData qd = null;
             foreach (var item in acceptQuests)
             {
                 if (item.Key.interactNpcID == npcID) //현재 진행중인 퀘스트들 중에 완료자가 나랑 같은?
-                    return item.Key;
+                {
+                    if (CanClear(item.Key.questID, item.Key.npcID))
+                    {
+                        return item.Key;
+                    }
+
+                }
             }
-            return null;
+            return qd;
+        }
+        public List<QuestData> GetIsAcceptedQuestList(int npcID)
+        {
+            List<QuestData> canAcceptQuests = new List<QuestData>();
+
+            for (int i = 0; i < questLists[npcID].questList.Length; i++)
+            {
+                if (IsQuestAccepted(questLists[npcID].questList[i]))
+                {
+                    canAcceptQuests.Add(questLists[npcID].questList[i]);
+                }
+            }
+
+            return canAcceptQuests;
+        }
+        public List<QuestData> GetCanAcceptQuestList(int npcID)
+        {
+            List<QuestData> canAcceptQuests = new List<QuestData>();
+
+            for (int i = 0; i < questLists[npcID].questList.Length; i++)
+            {
+                if (CanAcceptQuest(i, npcID))
+                {
+                    canAcceptQuests.Add(questLists[npcID].questList[i]);
+                }
+            }
+
+            return canAcceptQuests;
         }
     }
     [System.Serializable]

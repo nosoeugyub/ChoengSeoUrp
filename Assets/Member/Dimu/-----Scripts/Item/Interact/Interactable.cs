@@ -10,7 +10,7 @@ public interface IInteractable
 }
 public interface ITalkable : IInteractable
 {
-    void Talk();
+    void Talk(Item handitem);
 }
 public interface IMineable :IInteractable
 {

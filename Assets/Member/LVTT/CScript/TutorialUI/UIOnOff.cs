@@ -41,11 +41,11 @@ namespace TT.Test
         public void CloseBuildMenu()
         {
             BuildingBlock CurBlock = CurBuilding.GetComponent<BuildingBlock>();
-            BuildAreaObject CurBuildObj = CurBuilding.GetComponent<BuildAreaObject>();
+            //BuildAreaObject CurBuildObj = CurBuilding.GetComponent<BuildAreaObject>();
             UIList[1].SetActive(false);
            if(IsBuildMode)
             {
-                if (CurBuildObj.buildState ==BuildState.NotFinish)
+                if (CurBlock.buildState == BuildState.NotFinish)
                 {
                     TurnOnUI(4);
                     CamManager.DeactiveSubCamera(1);
@@ -53,7 +53,7 @@ namespace TT.Test
                 }
                 else
                 {
-                    CurBlock.ExitBuildMode();
+                    //CurBlock.ExitBuildMode();
                 }
             }
             
@@ -62,30 +62,30 @@ namespace TT.Test
         public void BtnBuildBuilding()
         {
             BuildingBlock CurBlock = CurBuilding.GetComponent<BuildingBlock>();
-            CurBlock.BuildBuilding();
+            //CurBlock.BuildBuilding();
         }
         public void BtnDemolishBuilding()
         {
             BuildingBlock CurBlock = CurBuilding.GetComponent<BuildingBlock>();
-            CurBlock.DemolishBuidling();
+            //CurBlock.DemolishBuidling();
         }
         public void BtnCompleteBuilding()
         {
             BuildingBlock CurBlock = CurBuilding.GetComponent<BuildingBlock>();
-            CurBlock.CompleteBuilding();
+            //CurBlock.CompleteBuilding();
         }
         public void BtnCompleteandExit()
         {
             BuildingBlock CurBlock = CurBuilding.GetComponent<BuildingBlock>();
             TurnOffUI(4);
-            CurBlock.CompleteBuilding();
-            CurBlock.ExitBuildMode();
+            //CurBlock.CompleteBuilding();
+            //CurBlock.ExitBuildMode();
         }
         public void BtnReturntoBuildMode()
         {
             BuildingBlock CurBlock = CurBuilding.GetComponent<BuildingBlock>();
             TurnOffUI(4);
-            CurBlock.BuildBuilding();
+            //CurBlock.BuildBuilding();
           
             CamManager.DeactiveSubCamera(3);
             CamManager.ActiveSubCamera(1);
