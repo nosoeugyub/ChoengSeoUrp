@@ -24,9 +24,12 @@ namespace TT.BuildSystem
         public GameObject[] BuildBlockObjList;
         public BuildingBlock nowBuildingBlock;
 
+        //BuildItemObj
+        public BuildingItemObj curDragObj;
+        public float BuildItemScaleVar=0.2f;
        // public GameObject SpawnBuildItem;
 
-
+        public bool isBuildMode=false;
         private void Awake()
         {
             TheUI = FindObjectOfType<UIOnOff>();
@@ -40,8 +43,9 @@ namespace TT.BuildSystem
             foreach (var button in buttons)
             {
                 button.gameObject.SetActive(false);
+                button.onClick.RemoveAllListeners();
             }
-
+            buildingBlock.buildButtonFuncAdded = false;
             interactUI.SetActive(false);
             nowBuildingBlock = buildingBlock;
 
@@ -54,6 +58,7 @@ namespace TT.BuildSystem
             SlotManager.AssignBuildItemSpawnPos(nowBuildingBlock.HouseBuild, nowBuildingBlock.gameObject.transform);
 
             TheUI.IsBuildMode = true;
+            isBuildMode = true;
             TheUI.TurnOffUI(0);
             TheUI.TurnOnUI(1);
 
@@ -61,7 +66,7 @@ namespace TT.BuildSystem
 
             Player.SetActive(false);
 
-            SlotManager.MoveInventToRight();
+            //SlotManager.MoveInventToRight();
 
             ViewGuideObject(0);
             ViewGuideObject(2);
@@ -72,20 +77,20 @@ namespace TT.BuildSystem
 
         public void BuildModeOff()
         {
-            TheUI.IsBuildMode = false;
             TheUI.TurnOffUI(1);
-
+            TheUI.IsBuildMode = false;
+            isBuildMode = false;
+           
             CamManager.DeactiveSubCamera(1);
             CamManager.DeactiveSubCamera(2);
             CamManager.DeactiveSubCamera(3);
 
             Player.SetActive(true);
 
-            SlotManager.ResetInventPos();
+            //SlotManager.ResetInventPos();
 
             UnViewGuideObject(0);
             UnViewGuideObject(2);
-            ViewGuideObject(1);
         }
 
         void ViewGuideObject(int ObjNum)
@@ -99,7 +104,25 @@ namespace TT.BuildSystem
         {
             BuildBlockObjList[ObjNum].SetActive(false);
         }
-
+        void ScaleBuildItem()
+        {
+            if (Input.GetAxis("Mouse ScrollWheel") > 0)
+            {
+                Vector3 var = curDragObj.transform.localScale;
+                var.x += BuildItemScaleVar;
+                var.y += BuildItemScaleVar;
+                curDragObj.SetBuildItemScale(var);
+                //Debug.Log("Mouse is Scrolling up");
+            }
+            else if (Input.GetAxis("Mouse ScrollWheel") < 0)
+            {
+                Vector3 var = curDragObj.transform.localScale;
+                var.x -= BuildItemScaleVar;
+                var.y -= BuildItemScaleVar;
+                curDragObj.SetBuildItemScale(var);
+                //Debug.Log("Mouse is Scrolling down");
+            }
+        }    
         private void Update()
         {
             //if (Input.GetKeyDown(KeyCode.A))
@@ -113,14 +136,7 @@ namespace TT.BuildSystem
 
             if(OnBuildItemDrag)
             {
-                if(Input.GetAxis("Mouse ScrollWheel")>0)
-                {
-                    Debug.Log("Mouse is Scrolling up");
-                }
-                else if(Input.GetAxis("Mouse ScrollWheel")<0)
-                {
-                    Debug.Log("Mouse is Scrolling down");
-                }
+                ScaleBuildItem();
             }
         }
     }

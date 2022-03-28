@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace TT.BuildSystem
 {
-    public class BuildingItemDragAbove : MonoBehaviour
+    public class BuildingDecoObj : MonoBehaviour
     {
         
         public float xOffset = 1.8f;

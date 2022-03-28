@@ -60,7 +60,11 @@ namespace TT.BuildSystem
                 case true:
                     if (canTouch)
                     {
-                        BringItemTotheBack();
+                       
+                        if (this.ItemKind == BuildItemKind.Wall)
+                        {}
+                        else
+                        { BringItemTotheBack(); }
                         itemisSet = false;
                         print("itemisSet = false");
                     }
@@ -110,7 +114,8 @@ namespace TT.BuildSystem
             {
                 BuildingItemObj ItemObj = item.GetComponent<BuildingItemObj>();
                 if (ItemObj.ItemKind == BuildItemKind.Wall)
-                { }
+                {//Do nothing
+                 }
                 else
                 {
 
@@ -129,7 +134,8 @@ namespace TT.BuildSystem
         {
 
             BuildManager.OnBuildItemDrag = true;
-           // print("BuildManager.OnBuildItemDrag = true");
+            // print("BuildManager.OnBuildItemDrag = true");
+            BuildManager.curDragObj = this.GetComponent<BuildingItemObj>();
 
             Vector3 DragPos = GetMouseWorldPos() + mOffset;
 
@@ -152,12 +158,22 @@ namespace TT.BuildSystem
                 DragPos.y = MinY;
             }
 
-            //DragPos.z = 502.6f;
             BuildingBlock CurBlock = BuildManager.nowBuildingBlock;
-            DragPos.z = CurBlock.CurFrontItemzPos;
+
+            if (this.ItemKind == BuildItemKind.Wall)
+            {
+                DragPos.z = CurBlock.CurWallItemzPos;
+            }
+            else
+            { DragPos.z = CurBlock.CurFrontItemzPos; }
 
             transform.position = DragPos;
         }
+
+        public void SetBuildItemScale(Vector3 scalenum)
+        {
+            transform.localScale = scalenum;
+        }    
 
     }
 
