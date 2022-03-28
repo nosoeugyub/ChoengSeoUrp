@@ -7,7 +7,7 @@ namespace NSY.Player
 {
     public class PlayerInteract : MonoBehaviour
     {
-        [SerializeField] List<IInteractable> interacts = new List<IInteractable>();//상호작용 범위 내 있는 IInteractable오브젝트 리스트
+        [SerializeField] List<IInteractble> interacts = new List<IInteractble>();//상호작용 범위 내 있는 IInteractable오브젝트 리스트
         //[SerializeField] Dictionary<IInteractable, T> interactss= new Dictionary<IInteractable>();//상호작용 범위 내 있는 IInteractable오브젝트 리스트
         [SerializeField] Button[] buildingButtons;
         //IInteractable closestObj;//가장 가까운 친구
@@ -22,7 +22,7 @@ namespace NSY.Player
 
         RaycastHit hit;
         Ray ray;
-        IInteractable nowInteractable;
+        IInteractble nowInteractable;
         bool canInteract = false;
         int layerMask;   // Player 레이어만 충돌 체크함
 
@@ -41,7 +41,7 @@ namespace NSY.Player
 
         public void OnTriggerEnter(Collider other)
         {
-            IInteractable interactable = other.GetComponent<IInteractable>();
+            IInteractble interactable = other.GetComponent<IInteractble>();
             if (interactable != null)
             {
                 Debug.Log("interact true");
@@ -71,7 +71,7 @@ namespace NSY.Player
             //    Debug.Log("열매 떨어져!");
             //}
         }
-        private void InvokeInteract(IInteractable interactable)
+        private void InvokeInteract(IInteractble interactable)
         {
             ICollectable collectable = interactable.ReturnTF().GetComponent<ICollectable>();
             if (collectable != null)
@@ -113,6 +113,12 @@ namespace NSY.Player
                     {
                         buildAreaObject.OnBuildMode(buildingButtons,interactUI);
                     }
+                    IBuildable buildMat = interactable.ReturnTF().GetComponent<IBuildable>();
+                    //IBuildable buildable = interactable.ReturnTF().GetComponent<IBuildable>();
+                    if (buildMat != null)
+                    {
+                        buildMat.Demolish();
+                    }
                     break;
                 //case OutItemType.Food://음식 들고있으면
                 //    IEatable eatable = interactable.ReturnTF().GetComponent<IEatable>();
@@ -147,7 +153,7 @@ namespace NSY.Player
 
         public void OnTriggerExit(Collider other)
         {
-            IInteractable interactable = other.GetComponent<IInteractable>();
+            IInteractble interactable = other.GetComponent<IInteractble>();
             if (interactable != null)
             {
                 Debug.Log("interact false");
@@ -185,7 +191,7 @@ namespace NSY.Player
             if (Physics.Raycast(ray, out hit, 10000, layerMask))
             {
                 //print(hit.collider.name);
-                nowInteractable = hit.collider.GetComponent<IInteractable>();
+                nowInteractable = hit.collider.GetComponent<IInteractble>();
                 if (nowInteractable != null && IsInteracted(nowInteractable))// 클릭한 옵젝이 닿은 옵젝 리스트에 있다면 통과
                 {
                     interactUI.SetActive(true);
@@ -213,7 +219,7 @@ namespace NSY.Player
             {
                 if (Physics.Raycast(ray, out hit, 10000, layerMask))
                 {
-                    nowInteractable = hit.collider.GetComponent<IInteractable>();
+                    nowInteractable = hit.collider.GetComponent<IInteractble>();
                     if (nowInteractable != null && IsInteracted(nowInteractable))
                     {
                         print(hit.collider.name);
@@ -225,7 +231,7 @@ namespace NSY.Player
             }
         }
 
-        public bool IsInteracted(IInteractable it)
+        public bool IsInteracted(IInteractble it)
         {
             return interacts.Contains(it);
         }

@@ -20,7 +20,6 @@ namespace TT.BuildSystem
         public void BtnSpawnHouseBuildItem()
         {
             BuildingBlock CurBlock = CurBuilding.GetComponent<BuildingBlock>();
-            BuildMaterialObject ItemObj = SpawnBuildItem.GetComponent<BuildMaterialObject>();
             Vector3 spawnPos = SpawnParent.transform.position;
             spawnPos.y =spawnPos.y + SpawnOffsetY;
             //if (ItemObj.buildMaterialState == BuildMaterialState.Wall)

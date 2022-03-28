@@ -2,20 +2,26 @@
 
 namespace TT.BuildSystem
 {
-    public enum BuildItemKind { Wall, Roof, Door, Window }
+    public enum BuildItemKind { Wall, Roof, Door, Window, Signboard, Etc }
 
-    public class BuildingItemObj : MonoBehaviour
+    public class BuildingItemObj : ItemObject, IBuildable
     {
+        [SerializeField] public BuildItemKind ItemKind;
+        [Tooltip("이 오브젝트를 채집할 수 있는 도구 타입")]
+        [SerializeField] InItemType toolType;
+
+        [SerializeField] private LayerMask mouseColliderLayerMask = new LayerMask();
+
         public float yDragOffset = 2.5f;
         public float xDragOffset = 2f;
-        [SerializeField] public BuildItemKind ItemKind;
+
         float zOffset;
         private float BuildItemGap = 0.01f;
-        [SerializeField] private LayerMask mouseColliderLayerMask = new LayerMask();
         private Vector3 mOffset;
         private float mZCoord;
         private bool itemisSet;
         bool canTouch;
+
 
         float MaxX;
         float MinX;
@@ -159,6 +165,20 @@ namespace TT.BuildSystem
             transform.position = DragPos;
         }
 
+        public string CanInteract()
+        {
+            return "BuildItemObj";
+        }
+
+        public Transform ReturnTF()
+        {
+            return transform;
+        }
+
+        public void Demolish()
+        {
+
+        }
     }
 
 }

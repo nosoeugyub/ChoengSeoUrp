@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace TT.BuildSystem
 {
-    public class BuildingBlock : MonoBehaviour, IInteractable
+    public class BuildingBlock : MonoBehaviour, IInteractble
     {
         BuildingManager BuildManager;
 
