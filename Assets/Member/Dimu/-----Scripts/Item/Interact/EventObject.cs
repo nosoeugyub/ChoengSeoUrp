@@ -1,6 +1,5 @@
 ﻿using DM.Inven;
 using NSY.Iven;
-using NSY.Manager;
 using UnityEngine;
 
 public class EventObject : ItemObject, IEventable
@@ -44,7 +43,7 @@ public class EventObject : ItemObject, IEventable
     }
     public void GetMessage()
     {
-        SuperManager.Instance.inventoryManager.AddItem(mailBoxMessage);
+        FindObjectOfType<InventoryNSY>().AddItem(mailBoxMessage);
 
     }
 }

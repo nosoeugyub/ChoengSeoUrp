@@ -1,5 +1,4 @@
 ﻿using NSY.Iven;
-using NSY.Manager;
 
 public class CollectObject : ItemObject, ICollectable
 {
@@ -10,7 +9,7 @@ public class CollectObject : ItemObject, ICollectable
 
     public void Collect()
     {
-        SuperManager.Instance.inventoryManager.AddItem(item);
+        inventoryNSY.AddItem(item);
 
         Interact();
     }

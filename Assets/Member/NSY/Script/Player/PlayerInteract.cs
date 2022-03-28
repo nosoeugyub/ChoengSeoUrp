@@ -111,7 +111,7 @@ namespace NSY.Player
                     //IBuildable buildable = interactable.ReturnTF().GetComponent<IBuildable>();
                     if (buildAreaObject != null)
                     {
-                        buildAreaObject.OnBuildMode(buildingButtons);
+                        buildAreaObject.OnBuildMode(buildingButtons,interactUI);
                     }
                     break;
                 //case OutItemType.Food://음식 들고있으면

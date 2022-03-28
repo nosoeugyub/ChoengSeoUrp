@@ -3,13 +3,14 @@ using TT.Test;
 using UnityEngine;
 
 
+
 namespace TT.BuildSystem
 {
     public class BuildingManager : MonoBehaviour
     {
         //[SerializeField] public Transform CurBuilding;
         public GameObject Player;
-
+        public float GuideObjOffsetY;
         [HideInInspector]
         public int BuildItemDragIndex = 0;
         [HideInInspector]
@@ -23,7 +24,7 @@ namespace TT.BuildSystem
         public GameObject[] BuildBlockObjList;
         public BuildingBlock nowBuildingBlock;
 
-        public GameObject SpawnBuildItem;
+       // public GameObject SpawnBuildItem;
 
 
         private void Awake()
@@ -32,8 +33,16 @@ namespace TT.BuildSystem
             SlotManager = FindObjectOfType<BuildItemInventorySlot>();
             CamManager = FindObjectOfType<CameraManager>();
         }
-        public void BuildModeOn(BuildingBlock buildingBlock)
+
+        
+        public void BuildModeOn(BuildingBlock buildingBlock, UnityEngine.UI.Button[] buttons,GameObject interactUI)
         {
+            foreach (var button in buttons)
+            {
+                button.gameObject.SetActive(false);
+            }
+
+            interactUI.SetActive(false);
             nowBuildingBlock = buildingBlock;
 
             TheUI.CurBuilding = nowBuildingBlock.gameObject.transform;
@@ -54,9 +63,11 @@ namespace TT.BuildSystem
 
             SlotManager.MoveInventToRight();
 
-            ViewObject(0);
-            ViewObject(2);
-            UnViewObject(1);
+            ViewGuideObject(0);
+            ViewGuideObject(2);
+            UnViewGuideObject(1);
+
+         
         }
 
         public void BuildModeOff()
@@ -72,30 +83,44 @@ namespace TT.BuildSystem
 
             SlotManager.ResetInventPos();
 
-            UnViewObject(0);
-            UnViewObject(2);
-            ViewObject(1);
+            UnViewGuideObject(0);
+            UnViewGuideObject(2);
+            ViewGuideObject(1);
         }
 
-        void ViewObject(int ObjNum)
+        void ViewGuideObject(int ObjNum)
         {
             BuildBlockObjList[ObjNum].SetActive(true);
-            BuildBlockObjList[ObjNum].transform.position = nowBuildingBlock.transform.position;
+            Vector3 GuidePos = nowBuildingBlock.HouseBuild.transform.position;
+            GuidePos.y =GuidePos.y+GuideObjOffsetY;
+            BuildBlockObjList[ObjNum].transform.position = GuidePos;
         }
-        void UnViewObject(int ObjNum)
+        void UnViewGuideObject(int ObjNum)
         {
             BuildBlockObjList[ObjNum].SetActive(false);
         }
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            //if (Input.GetKeyDown(KeyCode.A))
+            //{
+            //    //건축자재 생성메서드
+            //    GameObject newPrefab = Instantiate(SpawnBuildItem, nowBuildingBlock.HouseBuild.transform.position, Quaternion.identity, nowBuildingBlock.HouseBuild.transform);
+            //    newPrefab.name = SpawnBuildItem.name;
+            //    nowBuildingBlock.AddBuildItemToList(newPrefab);
+            //    nowBuildingBlock.CurFrontItemzPos = nowBuildingBlock.HouseBuild.transform.position.z;
+            //}
+
+            if(OnBuildItemDrag)
             {
-                //건축자재 생성메서드
-                GameObject newPrefab = Instantiate(SpawnBuildItem, nowBuildingBlock.HouseBuild.transform.position, Quaternion.identity, nowBuildingBlock.HouseBuild.transform);
-                newPrefab.name = SpawnBuildItem.name;
-                nowBuildingBlock.AddBuildItemToList(newPrefab);
-                nowBuildingBlock.CurFrontItemzPos = nowBuildingBlock.HouseBuild.transform.position.z;
+                if(Input.GetAxis("Mouse ScrollWheel")>0)
+                {
+                    Debug.Log("Mouse is Scrolling up");
+                }
+                else if(Input.GetAxis("Mouse ScrollWheel")<0)
+                {
+                    Debug.Log("Mouse is Scrolling down");
+                }
             }
         }
     }
