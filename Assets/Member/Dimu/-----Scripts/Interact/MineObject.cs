@@ -14,15 +14,20 @@ public class MineObject : ItemObject, IMineable
     {
         return "캐기";
     }
-    public void Mine(Item handitem)
+    public bool Mine(Item handitem, Animator animator)
     {
         if (handitem.InItemType != toolType)
         {
             print("다른 도구로 시도해주십쇼.");
-            return;
+            return false;
         }
-        print(nowChopCount);
+        //print(nowChopCount);
         Interact();
+
+        if (handitem.InItemType == InItemType.Pickaxe)
+            animator.SetBool("isMining", true);
+        else if (handitem.InItemType == InItemType.Axe)
+            animator.SetBool("isAxing", true);
 
         if (++nowChopCount >= item.ChopCount)
         {
@@ -34,6 +39,7 @@ public class MineObject : ItemObject, IMineable
         {
             //내구도 하락...
         }
+        return true;
     }
 
     public void DropItems()
@@ -41,13 +47,13 @@ public class MineObject : ItemObject, IMineable
         GameObject instantiateItem;
         foreach (DropItem item in item.DropItems)
         {
-            print("spawn" + 2);
+            //print("spawn" + 2);
             for (int i = 0; i < item.count; ++i)
             {
                 instantiateItem = Instantiate(item.itemObj) as GameObject;
                 Vector3 randVec = new Vector3(Random.Range(-1.5f, 1.5f), 0, Random.Range(-1.5f, 1.5f));
                 instantiateItem.transform.position = gameObject.transform.position + randVec;
-                print("spawn" + instantiateItem.name);
+                //print("spawn" + instantiateItem.name);
             }
         }
     }

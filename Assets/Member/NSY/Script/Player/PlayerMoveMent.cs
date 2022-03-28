@@ -43,7 +43,7 @@ namespace NSY.Player
         public void FixedUpdate()
         {
 
-            if (!CamManager.IsZoom)
+            if (!CamManager.IsZoom && playerController.playerinteract.CanActing())
             {
                 Move();
                Flip();

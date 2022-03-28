@@ -18,7 +18,7 @@ namespace NSY.Player
         Item handItem;
 
         [SerializeField]
-        PlayerController playerController;
+        PlayerAnimator playerAnimator;
 
         RaycastHit hit;
         Ray ray;
@@ -26,9 +26,7 @@ namespace NSY.Player
         bool canInteract = false;
         int layerMask;   // Player 레이어만 충돌 체크함
 
-        [SerializeField] float interactCooltime;
-        [SerializeField] float interactTime;
-
+        public bool isAnimating = false;
 
         ////열매 상태
         //FrutStateManager state;
@@ -44,7 +42,7 @@ namespace NSY.Player
             IInteractble interactable = other.GetComponent<IInteractble>();
             if (interactable != null)
             {
-                Debug.Log("interact true");
+                //Debug.Log("interact true");
                 canInteract = true;
                 interacts.Add(interactable);
             }
@@ -91,33 +89,36 @@ namespace NSY.Player
                 eventable.EtcEvent(handItem);
                 return;
             }
-            ItemObject itemObject = interactable.ReturnTF().GetComponent<ItemObject>();
-            if (itemObject != null)
-            {
-                itemObject.Interact();
-                return;
-            }
+
+            Debug.Log("도구를 들고 있지 않습니다. return");
             if (!handItem) return;
 
+            isAnimating = true;
             switch (handItem.OutItemType)
             {
                 case OutItemType.Tool://손에 도구를 들고 있으면
                     IMineable mineable = interactable.ReturnTF().GetComponent<IMineable>();
                     if (mineable != null)
                     {
-                        mineable.Mine(handItem);
+                        if (!mineable.Mine(handItem, playerAnimator.animator))
+                        {
+                            isAnimating = false;
+                        }
+                        return;
                     }
                     BuildingBlock buildAreaObject = interactable.ReturnTF().GetComponent<BuildingBlock>();
                     //IBuildable buildable = interactable.ReturnTF().GetComponent<IBuildable>();
                     if (buildAreaObject != null)
                     {
-                        buildAreaObject.OnBuildMode(buildingButtons,interactUI);
+                        buildAreaObject.OnBuildMode( buildingButtons, interactUI);
+                        return;
                     }
                     IBuildable buildMat = interactable.ReturnTF().GetComponent<IBuildable>();
                     //IBuildable buildable = interactable.ReturnTF().GetComponent<IBuildable>();
                     if (buildMat != null)
                     {
                         buildMat.Demolish();
+                        return;
                     }
                     break;
                 //case OutItemType.Food://음식 들고있으면
@@ -132,22 +133,17 @@ namespace NSY.Player
                 //    //기타 아이템을 NPC에 전달하는 기능이 있다면 여기 추가
                 //    break;
 
-                default://어느 타입도 아닌 맨손>> 인벤에 넣을 수 있는 아이템이라면 인벤에 넣기. 대화도 걸기
-                    //ICollectable collectable = interactable.ReturnTF().GetComponent<ICollectable>();
-                    //if (collectable != null)
-                    //{
-                    //    collectable.Collect();
-                    //    break;
-                    //}
-                    //ITalkable talkable = interactable.ReturnTF().GetComponent<ITalkable>();
-                    //if (talkable != null)
-                    //{
-                    //    talkable.Talk();
-                    //    break;
-                    //}
-                    //ItemObject item= interactable.ReturnTF().GetComponent<ItemObject>();
-                    //item.
+                default:
                     break;
+            }
+            isAnimating = false;
+
+
+            ItemObject itemObject = interactable.ReturnTF().GetComponent<ItemObject>();
+            if (itemObject != null)
+            {
+                itemObject.Interact();
+                return;
             }
         }
 
@@ -156,25 +152,16 @@ namespace NSY.Player
             IInteractble interactable = other.GetComponent<IInteractble>();
             if (interactable != null)
             {
-                Debug.Log("interact false");
+                //Debug.Log("interact false");
                 canInteract = false;
                 interacts.Remove(interactable);
             }
-
-            //if (other.CompareTag("FristTree"))
-            //{
-            //    Debug.Log("나무 이벤트 끝");
-            //    EventManager._Instace.EndFirstTree();
-            //}
-            //if (other.CompareTag("FristPost"))
-            //{
-            //    Debug.Log("표지판 이벤트 끝");
-            //    EventManager._Instace.EndFirstPost();
-            //}
         }
+
+
         private void Update()
         {
-            if (!canInteract)
+            if (!canInteract || isAnimating)
             {
                 foreach (var button in buildingButtons)
                 {
@@ -202,16 +189,17 @@ namespace NSY.Player
             }
             else
             {
-                //foreach (var button in buildingButtons)
-                //{
-                //    button.gameObject.SetActive(false);
-                //}
                 interactUI.SetActive(false);
             }
 
-            if (interactTime <= interactCooltime)
+            if (CanActing())
             {
-                interactTime += Time.deltaTime;
+                playerAnimator.animator.SetBool("isMining", false);
+                playerAnimator.animator.SetBool("isAxing", false);
+                playerAnimator.animator.SetBool("isEating", false);
+            }
+            else
+            {
                 return;
             }
 
@@ -222,13 +210,16 @@ namespace NSY.Player
                     nowInteractable = hit.collider.GetComponent<IInteractble>();
                     if (nowInteractable != null && IsInteracted(nowInteractable))
                     {
-                        print(hit.collider.name);
+                        Debug.Log("상호작용한 물체: "+ hit.collider.name);
                         InvokeInteract(nowInteractable);
-                        interactTime = 0;
-                        //interactable.Interact();
                     }
                 }
             }
+        }
+
+        public bool CanActing()
+        {
+            return !isAnimating;
         }
 
         public bool IsInteracted(IInteractble it)
@@ -273,6 +264,7 @@ namespace NSY.Player
         //        }
         //    }
         //}
+
     }
 
 }
