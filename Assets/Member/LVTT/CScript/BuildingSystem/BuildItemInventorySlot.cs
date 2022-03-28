@@ -53,26 +53,39 @@ namespace TT.BuildSystem
             foreach (Transform child in SlotParent)
             {
                 BuildingItemSpawn Slot = child.GetComponent<BuildingItemSpawn>();
-                if (BuildManager.OnBuildItemDrag)
+                if (BuildManager.isBuildMode)
                 {
-                    Slot.Slotbutton.interactable = false;
-                }
-                else
-                {if (BuildManager.nowBuildingBlock.hasWall)
+                    if (BuildManager.OnBuildItemDrag)
                     {
-                        if (Slot.ItemType == CItemType.BuildItem)
-                        { Slot.Slotbutton.interactable = true; }
-                        else
-                        { Slot.Slotbutton.interactable = false; }    
+                        Slot.Slotbutton.interactable = false;
                     }
                     else
                     {
-                        if (!Slot.isWall)
-                        { Slot.Slotbutton.interactable = false; }
+                        if (BuildManager.nowBuildingBlock.hasWall)
+                        {
+                            if (Slot.ItemType == CItemType.BuildItem)
+                            { Slot.Slotbutton.interactable = true; }
+                            else
+                            { Slot.Slotbutton.interactable = false; }
+                        }
+                        else
+                        {
+                            if (!Slot.isWall)
+                            { Slot.Slotbutton.interactable = false; }
+                        }
                     }
                 }
-             
+                else
+                {
+                    if (Slot.ItemType == CItemType.DecoItem)
+                    { Slot.Slotbutton.interactable = true; }
+                    else
+                    { Slot.Slotbutton.interactable = false; }
+                }
             }
+               
+             
+            
         }
  //       public void SetInventoryPos(Vector3 MovePos)
  //       {
