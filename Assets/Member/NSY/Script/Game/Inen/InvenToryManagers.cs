@@ -16,7 +16,7 @@ namespace NSY.Iven
         //케릭터 속성
         public int Vital = 100;
 
-
+        [SerializeField] PostEvent PostEvent;
         [SerializeField] BtnIven btniven;
         [SerializeField] InventoryNSY iventorynsy;
         [SerializeField] EquipPanel equipPanel;
@@ -346,7 +346,7 @@ namespace NSY.Iven
         {
           
             Debug.Log("버튼누름");
-            postpanel.AddContectPost();
+            PostEvent.BtnClickPost();
 
         }
     }

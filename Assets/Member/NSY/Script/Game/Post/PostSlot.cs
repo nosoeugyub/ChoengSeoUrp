@@ -11,16 +11,16 @@ namespace NSY.Iven
     {
         [Header("획득 되고안되고 색깔차이")]
         [SerializeField]
-        private Button PostBtn;
+        public Button PostBtn;
         private Color AddColor = new Color(1, 1, 1, 1);
         //  private Color disabledColor = new Color(1, 1, 1, 0);
         private Color NoneAddColor = new Color(1, 1, 1, 0f);
-
+        public Color ReadColor = new Color(1, 1, 1, 0.4f);
 
         [Header("할당될 컴포넌트들")]
         [SerializeField] public Image postImage;   
         [SerializeField] public Text posttext;
-        public GameObject PostOBJ;
+        [SerializeField]  public Image PostImg;
 
         [Header("읽음표시 배열")]
         [SerializeField]
@@ -34,19 +34,19 @@ namespace NSY.Iven
         {
             get
             {
-                return _PostContents;
+                return _PostContentsImg;
             }
             set
             {
-                _PostContents = value;
+                _PostContentsImg = value;
                 if (_post == null)
                 {
-                    PostOBJ = null;
+                    PostImg = null;
                 }
                 else
                 {
-                    PostOBJ = _post._PostContents;
-                    _PostContents = PostOBJ ;
+                    PostImg = _post._Postimg;
+                    _PostContentsImg = PostImg;
                 }
 
             }
@@ -119,7 +119,7 @@ namespace NSY.Iven
             }
             post = _post;
             PostText = _PostText;
-            PostContents = _PostContents;
+            PostContentsImg = _PostContentsImg;
         }
 
   

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 
 namespace NSY.Iven
@@ -8,12 +9,21 @@ namespace NSY.Iven
   
     public class PostPanel : MonoBehaviour
     {
-        public int postnumber = 0;
-        //이벤트
-        public GameObject PostRusultTransform;
-        public GameObject[] PostRusultPrafab;
+        //부모 오브젝트
+        public Transform ParentObj;
+        //슬로오브젝트
+        public PostSlot Slot;
 
+       
+        //이벤트
+        public Transform PostRusultTransform;
+        public GameObject[] PostRusultPrafab;
+        public Image PostResultImg;
+
+
+        PostSlot postslotss;
         [SerializeField] Transform PostSlotsParent;
+
         [SerializeField] public List<PostSlot> postslot;
         [Header("우편 목록")]
         [SerializeField] private Post[] Post; //우편목록 
@@ -28,30 +38,32 @@ namespace NSY.Iven
               
             }
         }
-
-        
-        
+    
+       
         public bool AddPost(Post post)
         {
+            //var n_Slot = Instantiate(Slot);
+            //n_Slot.transform.SetParent(ParentObj.transform, false);
+            //postslot.Add(n_Slot);
             for (int i = 0; i < postslot.Count; i++)
             {
                 if (postslot[i].post == null)
                 {
+                    
+
                     postslot[i].post = post;
                     postslot[i].posttext.text = post._Posttext;
-                    postslot[i].post._PostNum = i;  //할당번호
-                    postslot[i].PostOBJ = post._PostContents;
-                    
+                    postslot[i].PostImg = post._Postimg;
                     postslot[i].gameObject.name = post._PostName.ToString();
+                    postslot[i].gameObject.transform.SetAsFirstSibling();
+                    
 
-                    var PostImage = Instantiate(postslot[i].PostOBJ) as GameObject;
-                    PostImage.transform.SetParent(PostRusultTransform.transform, false);
                     for (int j = 0; j < Post.Length; j++)
                     {
                         if (postslot[i].post == Post[j])
                         {
                             AddPostList.Add(Post[j]); //안읽은 메시지
-                            postnumber = j;   //생성번호 
+                         
                             Post[j] = null;
                            
                         }
@@ -60,35 +72,21 @@ namespace NSY.Iven
                 }
 
             }
+           
             return false;
         }
 
-        public void AddContectPost( )
-        {
-         
 
 
-            for (int i = 0; i < postslot.Count; i++)
-            {
-             
-                  
-                      
 
-                     //   postslot[i].PostOBJ.SetActive(true);
-                    
+   
 
-            }
-                
-
-                
-        }
-           
-            
-    }
+       
 
         public void ClosePost()
         {
-
+            PostResultImg.enabled =false;
+            PostResultImg.sprite = null;
         }
 
 

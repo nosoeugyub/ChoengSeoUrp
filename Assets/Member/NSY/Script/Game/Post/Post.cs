@@ -24,14 +24,10 @@ namespace NSY.Iven
         public Sprite _PostImage { get { return PostImage; } }
 
         //우편 내용 텍스트
+      
         [SerializeField]
-        private GameObject PostContents;
-        public GameObject _PostContents { get { return PostContents; } }
-
-
-        [SerializeField]
-         public Image _PostNum;
-        public Image PostNum {  get { return _PostNum; } }
+         public Image _Postimg;
+        public Image Postimg {  get { return _Postimg; } }
     }
 
 }
