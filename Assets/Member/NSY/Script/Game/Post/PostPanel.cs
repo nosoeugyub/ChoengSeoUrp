@@ -43,6 +43,7 @@ namespace NSY.Iven
                     postslot[i].PostOBJ = post._PostContents;
                     
                     postslot[i].gameObject.name = post._PostName.ToString();
+
                     var PostImage = Instantiate(postslot[i].PostOBJ) as GameObject;
                     PostImage.transform.SetParent(PostRusultTransform.transform, false);
                     for (int j = 0; j < Post.Length; j++)

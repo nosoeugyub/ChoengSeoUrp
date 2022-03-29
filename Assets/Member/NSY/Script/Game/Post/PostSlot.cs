@@ -18,7 +18,7 @@ namespace NSY.Iven
 
 
         [Header("할당될 컴포넌트들")]
-        [SerializeField] public Image postImage;
+        [SerializeField] public Image postImage;   
         [SerializeField] public Text posttext;
         public GameObject PostOBJ;
 
