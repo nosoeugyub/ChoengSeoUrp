@@ -8,7 +8,7 @@ namespace NSY.Iven
   
     public class PostPanel : MonoBehaviour
     {
-
+        public int postnumber = 0;
         //이벤트
         public GameObject PostRusultTransform;
         public GameObject[] PostRusultPrafab;
@@ -39,15 +39,20 @@ namespace NSY.Iven
                 {
                     postslot[i].post = post;
                     postslot[i].posttext.text = post._Posttext;
+                    postslot[i].post._PostNum = i;  //할당번호
                     postslot[i].PostOBJ = post._PostContents;
-                    post._PostNum++;
-                   postslot[i].gameObject.name = post._PostName.ToString();
-                   
+                    
+                    postslot[i].gameObject.name = post._PostName.ToString();
+                    var PostImage = Instantiate(postslot[i].PostOBJ) as GameObject;
+                    PostImage.transform.SetParent(PostRusultTransform.transform, false);
                     for (int j = 0; j < Post.Length; j++)
                     {
                         if (postslot[i].post == Post[j])
                         {
+                            AddPostList.Add(Post[j]); //안읽은 메시지
+                            postnumber = j;   //생성번호 
                             Post[j] = null;
+                           
                         }
                     }
                     return true;
@@ -57,23 +62,33 @@ namespace NSY.Iven
             return false;
         }
 
-
-        public void AddContectPost()
+        public void AddContectPost( )
         {
+         
+
 
             for (int i = 0; i < postslot.Count; i++)
             {
-                if (postslot[i].post != null)
-                {
-                   
-                    GameObject PostImage = Instantiate(postslot[i].PostOBJ) as GameObject ;
-                    PostImage.transform.SetParent(PostRusultTransform.transform, false);
-                    postslot[i].PostOBJ.SetActive(true);
-                }
-            }
-        }
-      
+             
+                  
+                      
 
+                     //   postslot[i].PostOBJ.SetActive(true);
+                    
+
+            }
+                
+
+                
+        }
+           
+            
+    }
+
+        public void ClosePost()
+        {
+
+        }
 
 
 

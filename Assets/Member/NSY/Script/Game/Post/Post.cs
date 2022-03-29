@@ -30,8 +30,8 @@ namespace NSY.Iven
 
 
         [SerializeField]
-         public int _PostNum;
-        public int PostNumP {  get { return _PostNum; } }
+         public Image _PostNum;
+        public Image PostNum {  get { return _PostNum; } }
     }
 
 }

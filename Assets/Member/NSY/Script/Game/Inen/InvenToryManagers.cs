@@ -341,9 +341,10 @@ namespace NSY.Iven
 
 
 
-
+      
         public void  ClickPostSlotUi()
         {
+          
             Debug.Log("버튼누름");
             postpanel.AddContectPost();
 

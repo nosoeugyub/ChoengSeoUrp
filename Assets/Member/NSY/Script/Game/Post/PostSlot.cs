@@ -29,8 +29,8 @@ namespace NSY.Iven
 
         [Header("안의 내용 오브젝트")]
         [SerializeField]
-        private GameObject _PostContents;
-        public GameObject PostContents
+        private Image _PostContentsImg;
+        public Image PostContentsImg
         {
             get
             {
@@ -122,14 +122,7 @@ namespace NSY.Iven
             PostContents = _PostContents;
         }
 
-        //우편클릭
-        public void ClickBtnPostUser(Post post)
-        {
-
-            PostOBJ = post._PostContents;
-            Instantiate(PostOBJ);
-            PostOBJ.SetActive(true);
-        }
+  
 
     }
 
