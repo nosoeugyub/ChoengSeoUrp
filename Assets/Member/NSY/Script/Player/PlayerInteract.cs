@@ -14,11 +14,13 @@ namespace NSY.Player
         public GameObject interactUI;//띄울 UI
         public Text interactUiText;//띄울 UI
 
-        [SerializeField]//임시
-        Item handItem;
+        [SerializeField] Item handItem;
 
-        [SerializeField]
-        PlayerAnimator playerAnimator;
+        [SerializeField] SpriteRenderer handItemObj;
+
+        [SerializeField] PlayerAnimator playerAnimator;
+
+        [SerializeField] Item[] testToolItems;
 
         RaycastHit hit;
         Ray ray;
@@ -90,7 +92,6 @@ namespace NSY.Player
                 return;
             }
 
-            Debug.Log("도구를 들고 있지 않습니다. return");
             if (!handItem) return;
 
             isAnimating = true;
@@ -110,7 +111,8 @@ namespace NSY.Player
                     //IBuildable buildable = interactable.ReturnTF().GetComponent<IBuildable>();
                     if (buildAreaObject != null)
                     {
-                        buildAreaObject.OnBuildMode( buildingButtons, interactUI);
+                        isAnimating = false;
+                        buildAreaObject.OnBuildMode(buildingButtons, interactUI);
                         return;
                     }
                     IBuildable buildMat = interactable.ReturnTF().GetComponent<IBuildable>();
@@ -161,6 +163,25 @@ namespace NSY.Player
 
         private void Update()
         {
+            ///////////test Input/////////
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                SetHandItem(testToolItems[0]);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                SetHandItem(testToolItems[1]);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                SetHandItem(testToolItems[2]);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                SetHandItem(testToolItems[3]);
+            }
+            ///////////test Input/////////
+
             if (!canInteract || isAnimating)
             {
                 foreach (var button in buildingButtons)
@@ -210,7 +231,7 @@ namespace NSY.Player
                     nowInteractable = hit.collider.GetComponent<IInteractble>();
                     if (nowInteractable != null && IsInteracted(nowInteractable))
                     {
-                        Debug.Log("상호작용한 물체: "+ hit.collider.name);
+                        Debug.Log("상호작용한 물체: " + hit.collider.name);
                         InvokeInteract(nowInteractable);
                     }
                 }
@@ -230,6 +251,7 @@ namespace NSY.Player
         public void SetHandItem(Item item)
         {
             handItem = item;
+            handItemObj.sprite = handItem.ItemSprite;
             //애니메이션 변경
         }
 
