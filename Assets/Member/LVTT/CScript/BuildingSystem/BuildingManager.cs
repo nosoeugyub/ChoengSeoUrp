@@ -10,7 +10,16 @@ namespace TT.BuildSystem
     {
         //[SerializeField] public Transform CurBuilding;
         public GameObject Player;
+        //GuideObj
         public float GuideObjOffsetY;
+        [SerializeField] Transform GuideObjCorner;
+        [SerializeField] Transform GuideObj;
+        [HideInInspector]
+        public float HalfGuideObjWidth;
+        [HideInInspector]
+        public float HalfGuideObjHeight;
+       
+        
         [HideInInspector]
         public int BuildItemDragIndex = 0;
         [HideInInspector]
@@ -20,28 +29,39 @@ namespace TT.BuildSystem
         BuildItemInventorySlot SlotManager;
         UIOnOff TheUI;
 
+        //BuildItemObj
+        public BuildingItemObj curDragObj;
+        public float BuildItemScaleVar = 0.1f;
+
         //BuildBlock Obj
         public GameObject[] BuildBlockObjList;
         public BuildingBlock nowBuildingBlock;
 
-       // public GameObject SpawnBuildItem;
+        // public GameObject SpawnBuildItem;
 
-
+        public bool isBuildMode = false;
         private void Awake()
         {
             TheUI = FindObjectOfType<UIOnOff>();
             SlotManager = FindObjectOfType<BuildItemInventorySlot>();
             CamManager = FindObjectOfType<CameraManager>();
+           
         }
 
-        
+        private void Start()
+        {
+            GuideObjCal();
+        }
+
         public void BuildModeOn(BuildingBlock buildingBlock, UnityEngine.UI.Button[] buttons,GameObject interactUI)
         {
             foreach (var button in buttons)
             {
                 button.gameObject.SetActive(false);
+                button.onClick.RemoveAllListeners();
             }
 
+            buildingBlock.buildButtonFuncAdded = false;
             interactUI.SetActive(false);
             nowBuildingBlock = buildingBlock;
 
@@ -54,6 +74,7 @@ namespace TT.BuildSystem
             SlotManager.AssignBuildItemSpawnPos(nowBuildingBlock.HouseBuild, nowBuildingBlock.gameObject.transform);
 
             TheUI.IsBuildMode = true;
+            isBuildMode = true;
             TheUI.TurnOffUI(0);
             TheUI.TurnOnUI(1);
 
@@ -61,7 +82,7 @@ namespace TT.BuildSystem
 
             Player.SetActive(false);
 
-            SlotManager.MoveInventToRight();
+            //SlotManager.MoveInventToRight();
 
             ViewGuideObject(0);
             ViewGuideObject(2);
@@ -74,6 +95,7 @@ namespace TT.BuildSystem
         {
             TheUI.IsBuildMode = false;
             TheUI.TurnOffUI(1);
+            isBuildMode = false;
 
             CamManager.DeactiveSubCamera(1);
             CamManager.DeactiveSubCamera(2);
@@ -81,11 +103,11 @@ namespace TT.BuildSystem
 
             Player.SetActive(true);
 
-            SlotManager.ResetInventPos();
+           // SlotManager.ResetInventPos();
 
             UnViewGuideObject(0);
             UnViewGuideObject(2);
-            ViewGuideObject(1);
+            
         }
 
         void ViewGuideObject(int ObjNum)
@@ -100,27 +122,38 @@ namespace TT.BuildSystem
             BuildBlockObjList[ObjNum].SetActive(false);
         }
 
+        void ScaleBuildItem()
+        {
+            if (Input.GetAxis("Mouse ScrollWheel") > 0)
+            {
+                Vector3 var = curDragObj.transform.localScale;
+                var.x += BuildItemScaleVar;
+                var.y += BuildItemScaleVar;
+                curDragObj.SetBuildItemScale(var);
+                Debug.Log("Mouse is Scrolling up");
+            }
+            else if (Input.GetAxis("Mouse ScrollWheel") < 0)
+            {
+                Vector3 var = curDragObj.transform.localScale;
+                var.x -= BuildItemScaleVar;
+                var.y -= BuildItemScaleVar;
+                curDragObj.SetBuildItemScale(var);
+                Debug.Log("Mouse is Scrolling down");
+            }
+        }
+
+        void GuideObjCal()
+        {
+            HalfGuideObjHeight = GuideObjCorner.transform.position.y- GuideObj.transform.position.y;
+            HalfGuideObjWidth = GuideObjCorner.transform.position.x - GuideObj.transform.position.x;
+        }
         private void Update()
         {
-            //if (Input.GetKeyDown(KeyCode.A))
-            //{
-            //    //건축자재 생성메서드
-            //    GameObject newPrefab = Instantiate(SpawnBuildItem, nowBuildingBlock.HouseBuild.transform.position, Quaternion.identity, nowBuildingBlock.HouseBuild.transform);
-            //    newPrefab.name = SpawnBuildItem.name;
-            //    nowBuildingBlock.AddBuildItemToList(newPrefab);
-            //    nowBuildingBlock.CurFrontItemzPos = nowBuildingBlock.HouseBuild.transform.position.z;
-            //}
+           
 
-            if(OnBuildItemDrag)
+            if (OnBuildItemDrag)
             {
-                if(Input.GetAxis("Mouse ScrollWheel")>0)
-                {
-                    Debug.Log("Mouse is Scrolling up");
-                }
-                else if(Input.GetAxis("Mouse ScrollWheel")<0)
-                {
-                    Debug.Log("Mouse is Scrolling down");
-                }
+                ScaleBuildItem();
             }
         }
     }

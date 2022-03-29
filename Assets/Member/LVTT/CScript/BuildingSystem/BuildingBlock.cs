@@ -10,16 +10,22 @@ namespace TT.BuildSystem
         public Transform HouseBuild;
         public List<GameObject> BuildItemList;
         [HideInInspector]
+        public float CurWallItemzPos;
+        [HideInInspector]
         public float CurFrontItemzPos;
         [HideInInspector]
         public float MaxBackItemzPos;
+
 
         [SerializeField] public BuildState buildState;
         [SerializeField] int buildingId;
         [Tooltip("이 오브젝트를 채집할 수 있는 도구 타입")]
         [SerializeField] InItemType toolType;
 
-        bool buildButtonFuncAdded;
+        [HideInInspector]
+        public bool buildButtonFuncAdded;
+        [HideInInspector]
+        public bool hasWall = false;
         ////////////////////////////////////////////////////////
         void Start()
         {
@@ -42,17 +48,17 @@ namespace TT.BuildSystem
             {
                 button.gameObject.SetActive(true);
             }
+
             //건축물 상호작용 인덱스 체크
             Interact();
             //Set Event Methods
             if (buildState == BuildState.NotFinish)
             {
-                if(!this.buildButtonFuncAdded)
+                if (!this.buildButtonFuncAdded)
                 {
                     buttons[0].onClick.AddListener(() =>
                     {
                         BuildManager.BuildModeOn(this, buttons, interactUI);
-                        //BuildBuilding();
                         print("1. Build Building");
                         //1. Build Building
                     });
@@ -70,11 +76,11 @@ namespace TT.BuildSystem
                     });
                     this.buildButtonFuncAdded = true;
                 }
-               
+
             }
             else if (buildState == BuildState.Finish)
             {
-               if(!this.buildButtonFuncAdded)
+                if (!this.buildButtonFuncAdded)
                 {
                     buttons[0].onClick.AddListener(() =>
                     {
@@ -91,7 +97,7 @@ namespace TT.BuildSystem
                     buttons[2].gameObject.SetActive(false);
                     this.buildButtonFuncAdded = true;
                 }
-               
+
             }
         }
         ////////////////////////////////////////////////////////
