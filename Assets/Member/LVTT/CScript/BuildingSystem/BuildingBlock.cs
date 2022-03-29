@@ -10,6 +10,8 @@ namespace TT.BuildSystem
         public Transform HouseBuild;
         public List<GameObject> BuildItemList;
         [HideInInspector]
+        public float CurWallItemzPos;
+        [HideInInspector]
         public float CurFrontItemzPos;
         [HideInInspector]
         public float MaxBackItemzPos;
@@ -18,13 +20,16 @@ namespace TT.BuildSystem
         [SerializeField] int buildingId;
         [Tooltip("이 오브젝트를 채집할 수 있는 도구 타입")]
         [SerializeField] InItemType toolType;
-
-        bool buildButtonFuncAdded;
+        [HideInInspector]
+        public bool buildButtonFuncAdded;
+        [HideInInspector]
+        public bool hasWall=false;
         ////////////////////////////////////////////////////////
         void Start()
         {
             BuildManager = FindObjectOfType<BuildingManager>();
             buildButtonFuncAdded=false;
+            //hasWall = false;
         }
 
         public void AddBuildItemToList(GameObject Item)
@@ -42,6 +47,10 @@ namespace TT.BuildSystem
             {
                 button.gameObject.SetActive(true);
             }
+
+        
+
+
             //건축물 상호작용 인덱스 체크
             Interact();
             //Set Event Methods
@@ -52,7 +61,6 @@ namespace TT.BuildSystem
                     buttons[0].onClick.AddListener(() =>
                     {
                         BuildManager.BuildModeOn(this, buttons, interactUI);
-                        //BuildBuilding();
                         print("1. Build Building");
                         //1. Build Building
                     });
@@ -111,6 +119,14 @@ namespace TT.BuildSystem
         public void SetBuildingState(BuildState buildstate)
         {
             buildState = buildstate;
+        }
+
+        void BuildButtonsListenerRemove(UnityEngine.UI.Button[] buttons)
+        {
+            foreach (var button in buttons)
+            {
+                button.onClick.RemoveAllListeners();
+            }
         }
     }
 }
