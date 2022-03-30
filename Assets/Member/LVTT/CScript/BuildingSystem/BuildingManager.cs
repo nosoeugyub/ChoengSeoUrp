@@ -130,7 +130,7 @@ namespace TT.BuildSystem
                 var.x += BuildItemScaleVar;
                 var.y += BuildItemScaleVar;
                 curDragObj.SetBuildItemScale(var);
-                Debug.Log("Mouse is Scrolling up");
+               // Debug.Log("Mouse is Scrolling up");
             }
             else if (Input.GetAxis("Mouse ScrollWheel") < 0)
             {
@@ -138,14 +138,17 @@ namespace TT.BuildSystem
                 var.x -= BuildItemScaleVar;
                 var.y -= BuildItemScaleVar;
                 curDragObj.SetBuildItemScale(var);
-                Debug.Log("Mouse is Scrolling down");
+               // Debug.Log("Mouse is Scrolling down");
             }
         }
 
         void GuideObjCal()
         {
-            HalfGuideObjHeight = GuideObjCorner.transform.position.y- GuideObj.transform.position.y;
+           // Debug.Log("GuideObjCalculate");
+            HalfGuideObjHeight = GuideObjCorner.transform.position.y - GuideObj.transform.position.y;
             HalfGuideObjWidth = GuideObjCorner.transform.position.x - GuideObj.transform.position.x;
+            //Debug.Log(HalfGuideObjHeight);
+            //Debug.Log(HalfGuideObjWidth);
         }
         private void Update()
         {

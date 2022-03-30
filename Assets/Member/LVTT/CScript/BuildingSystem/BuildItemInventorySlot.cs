@@ -9,7 +9,7 @@ namespace TT.BuildSystem
         public List<Transform> InventoryList;
         public Transform InventoryUI;
         [SerializeField] Transform SlotParent;
-        [SerializeField] Vector3 InventBuildPos;
+       // [SerializeField] Vector3 InventBuildPos;
 
         BuildingManager BuildManager;
 

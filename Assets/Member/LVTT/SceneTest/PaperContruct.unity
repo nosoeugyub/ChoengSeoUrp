@@ -4861,7 +4861,6 @@ RectTransform:
   m_LocalScale: {x: 0.55260414, y: 0.55260414, z: 0.55260414}
   m_Children:
   - {fileID: 111306981}
-  - {fileID: 929425784}
   m_Father: {fileID: 1110361842}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -13079,7 +13078,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1110361843}
         m_MethodName: BtnCompleteandExit
         m_Mode: 1
         m_Arguments:
@@ -13390,7 +13389,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.5672083, y: 1}
+    m_SensorSize: {x: 1.5511696, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -19521,7 +19520,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1110361843}
         m_MethodName: BtnReturntoBuildMode
         m_Mode: 1
         m_Arguments:
@@ -19667,7 +19666,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1110361843}
         m_MethodName: CloseBuildMenu
         m_Mode: 1
         m_Arguments:
@@ -26579,41 +26578,6 @@ Transform:
   m_Father: {fileID: 1765540345}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &929425783
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 929425784}
-  m_Layer: 0
-  m_Name: DemolishConfirm
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &929425784
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 929425783}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 154569179}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &935280433
 GameObject:
   m_ObjectHideFlags: 0
@@ -32135,7 +32099,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 2.4560184, y: 1}
+    m_SensorSize: {x: 1.5511696, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -34608,6 +34572,12 @@ SortingGroup:
   m_SortingLayerID: -2068414699
   m_SortingLayer: -3
   m_SortingOrder: -2
+--- !u!4 &1214735506 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 317872889411382966, guid: 70c6b523673036040a0777769536bd06,
+    type: 3}
+  m_PrefabInstance: {fileID: 317872889142711581}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1218219974
 GameObject:
   m_ObjectHideFlags: 0
@@ -62446,6 +62416,11 @@ PrefabInstance:
       propertyPath: Player
       value: 
       objectReference: {fileID: 372393001}
+    - target: {fileID: 317872889060726233, guid: 70c6b523673036040a0777769536bd06,
+        type: 3}
+      propertyPath: GuideObj
+      value: 
+      objectReference: {fileID: 1214735506}
     - target: {fileID: 317872889060726238, guid: 70c6b523673036040a0777769536bd06,
         type: 3}
       propertyPath: m_LocalPosition.x
