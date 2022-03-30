@@ -245,10 +245,6 @@ namespace TT.BuildSystem
 
         }
 
-        public void SetBuildItemScale(Vector3 scalenum)
-        {
-            transform.localScale = scalenum;
-        }
     }
 
 }
