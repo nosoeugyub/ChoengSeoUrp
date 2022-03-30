@@ -44,9 +44,9 @@ namespace TT.Test
         {
             BuildingBlock CurBlock = CurBuilding.GetComponent<BuildingBlock>();
             //BuildAreaObject CurBuildObj = CurBuilding.GetComponent<BuildAreaObject>();
-            // UIList[1].SetActive(false);
+            //UIList[1].SetActive(false);
             TurnOffUI(1);
-           if(IsBuildMode)
+            if (IsBuildMode)
             {
                 if (CurBlock.buildState == BuildState.NotFinish)
                 {
@@ -59,10 +59,9 @@ namespace TT.Test
                     //CurBlock.ExitBuildMode();
                 }
             }
-           
             
         }
-  
+
         //public void BtnBuildBuilding()
         //{
         //    BuildingBlock CurBlock = CurBuilding.GetComponent<BuildingBlock>();
@@ -92,11 +91,11 @@ namespace TT.Test
             BuildingBlock CurBlock = CurBuilding.GetComponent<BuildingBlock>();
             TurnOffUI(4);
             TurnOnUI(1);
-           
-          
+            //CurBlock.BuildBuilding();
+
             CamManager.DeactiveSubCamera(3);
             CamManager.ActiveSubCamera(1);
-            //InventorySlot.SetInventoryPos(SetOffsetPos);
+           // InventorySlot.SetInventoryPos(SetOffsetPos);
         }
 
     }

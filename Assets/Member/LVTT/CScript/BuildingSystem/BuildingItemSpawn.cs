@@ -1,11 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace TT.BuildSystem
 {
-    public enum CItemType { BuildItem,DecoItem }
+    public enum CItemType { BuildItem, DecoItem }
     public class BuildingItemSpawn : MonoBehaviour
     {
         public Button Slotbutton;
@@ -15,6 +14,7 @@ namespace TT.BuildSystem
         public GameObject SpawnBuildItem;
         public Transform SpawnParent;
         public Transform CurBuilding;
+
         public Transform ThePlayer;
         public bool isWall;
         [SerializeField] public CItemType ItemType;
@@ -23,7 +23,6 @@ namespace TT.BuildSystem
         public void BtnSpawnHouseBuildItem()
         {
             BuildingBlock CurBlock = CurBuilding.GetComponent<BuildingBlock>();
-            //BuildMaterialObject ItemObj = SpawnBuildItem.GetComponent<BuildMaterialObject>();
             Vector3 spawnPos = SpawnParent.transform.position;
             spawnPos.y =spawnPos.y + SpawnOffsetY;
             if (this.isWall)
@@ -31,6 +30,7 @@ namespace TT.BuildSystem
                 spawnPos.z = spawnPos.z - SpawnOffsetZ;// when the building is facing South
                 CurBlock.CurWallItemzPos = spawnPos.z;
                 CurBlock.hasWall = true;
+               
             }
             else
             {
@@ -46,9 +46,9 @@ namespace TT.BuildSystem
             CurBlock.CurFrontItemzPos = spawnPos.z;
         }
 
-        public void BtnSpawnDeconBuildItem()
+        public void BtnSpawnGardenBuildItem()
         {
-            Vector3 spawnPos = ThePlayer.transform.position;
+            Vector3 spawnPos = SpawnParent.transform.position;
             spawnPos.y = SpawnOffsetY;
             spawnPos.z = spawnPos.z + SpawnOffsetZ;
             var newPrefab = Instantiate(SpawnBuildItem, spawnPos, Quaternion.identity, SpawnParent.transform);

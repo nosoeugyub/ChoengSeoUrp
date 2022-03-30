@@ -1,18 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-
 
 namespace TT.BuildSystem
 {
     public class BuildItemInventorySlot : MonoBehaviour
     {
-       
-        public List<Transform>InventoryList;
+        public List<Transform> InventoryList;
         public Transform InventoryUI;
         [SerializeField] Transform SlotParent;
-        [SerializeField] Vector3 InventBuildPos;
+       // [SerializeField] Vector3 InventBuildPos;
 
         BuildingManager BuildManager;
 
@@ -20,6 +17,7 @@ namespace TT.BuildSystem
         void Start()
         {
             BuildManager = FindObjectOfType<BuildingManager>();
+            CheckBuildItemList();
             //InventOriginPos = InventoryUI.position;
             AddSlotToList();
         }
@@ -27,26 +25,23 @@ namespace TT.BuildSystem
         // Update is called once per frame
         void Update()
         {
-           //if(Input.GetMouseButtonDown(0))
-           // { MoveInventToRight(); }
-           //if (Input.GetMouseButtonDown(1))
-           // { ResetInventPos(); }
+           
 
-            if(BuildManager.isBuildMode)
+            if (BuildManager.isBuildMode)
             {
-                
+
                 CheckBuildItemList();
             }
         }
 
         void AddSlotToList()
         {
-            foreach(Transform child in SlotParent)
+            foreach (Transform child in SlotParent)
             {
                 InventoryList.Add(child);
-            }    
-           
-        } 
+            }
+
+        }
 
         void CheckBuildItemList()
         {
@@ -64,14 +59,22 @@ namespace TT.BuildSystem
                         if (BuildManager.nowBuildingBlock.hasWall)
                         {
                             if (Slot.ItemType == CItemType.BuildItem)
-                            { Slot.Slotbutton.interactable = true; }
+                            { Slot.Slotbutton.interactable = true;
+                               
+                            }
                             else
-                            { Slot.Slotbutton.interactable = false; }
+                            { Slot.Slotbutton.interactable = false;
+                               
+                            }
                         }
                         else
                         {
-                            if (!Slot.isWall)
-                            { Slot.Slotbutton.interactable = false; }
+                            if (Slot.isWall)
+                            { Slot.Slotbutton.interactable = true; }
+                            else
+                            {
+                                Slot.Slotbutton.interactable = false;
+                            }
                         }
                     }
                 }
@@ -83,25 +86,25 @@ namespace TT.BuildSystem
                     { Slot.Slotbutton.interactable = false; }
                 }
             }
-               
-             
-            
+
+
+
         }
- //       public void SetInventoryPos(Vector3 MovePos)
- //       {
- //           //InventoryUI.position = Camera.main.WorldToScreenPoint(MovePos);
- //       }
- //       public void MoveInventToRight()
- //       {
- ////           InventoryUI.position = Camera.main.WorldToScreenPoint(InventBuildPos);
- //       }
+        //       public void SetInventoryPos(Vector3 MovePos)
+        //       {
+        //           //InventoryUI.position = Camera.main.WorldToScreenPoint(MovePos);
+        //       }
+        //       public void MoveInventToRight()
+        //       {
+        ////           InventoryUI.position = Camera.main.WorldToScreenPoint(InventBuildPos);
+        //       }
 
- //       public void ResetInventPos()
- //       {
- //           //InventoryUI.position = Camera.main.WorldToScreenPoint(Vector3.zero);
- //       }
+        //       public void ResetInventPos()
+        //       {
+        //           //InventoryUI.position = Camera.main.WorldToScreenPoint(Vector3.zero);
+        //       }
 
-        public void AssignBuildItemSpawnPos(Transform SpawnParent,Transform CurBuilding)             
+        public void AssignBuildItemSpawnPos(Transform SpawnParent, Transform CurBuilding)
         {
             foreach (Transform Slot in InventoryList)
             {

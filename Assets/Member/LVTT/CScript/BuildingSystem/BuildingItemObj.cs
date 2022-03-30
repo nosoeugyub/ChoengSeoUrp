@@ -14,8 +14,10 @@ namespace TT.BuildSystem
 
         public float yDragOffset = 2.5f;
         public float xDragOffset = 2f;
+        public float MaxScale;
+        public float MinScale;
 
-        float zOffset;
+       float zOffset;
         private float BuildItemGap = 0.01f;
         private Vector3 mOffset;
         private float mZCoord;
@@ -27,6 +29,12 @@ namespace TT.BuildSystem
         float MinX;
         float MaxY;
         float MinY;
+
+        Vector3 ObjOriginPos;
+        float ObjOriginWidth;
+        float ObjOriginHeight;
+        float curObjWidth;
+        float curObjHeight;
 
         BuildingManager BuildManager;
         private void Awake()
@@ -51,10 +59,16 @@ namespace TT.BuildSystem
         }
         void HouseBuildAreaCal()
         {
+           ObjOriginPos = gameObject.transform.position;
             MaxX = gameObject.transform.position.x + xDragOffset;
             MinX = gameObject.transform.position.x - xDragOffset;
             MaxY = gameObject.transform.position.y + yDragOffset;
             MinY = gameObject.transform.position.y - yDragOffset;
+            ObjOriginWidth = BuildManager.HalfGuideObjWidth - xDragOffset;
+            ObjOriginHeight = BuildManager.HalfGuideObjHeight - yDragOffset;
+            curObjWidth = ObjOriginWidth;
+            curObjHeight = ObjOriginHeight;
+            
         }
         private void OnMouseDown()
         {
@@ -66,13 +80,17 @@ namespace TT.BuildSystem
                 case true:
                     if (canTouch)
                     {
-                        BringItemTotheBack();
+                        if (this.ItemKind == BuildItemKind.Wall)
+                        { }
+                        else
+                        { BringItemTotheBack(); }
                         itemisSet = false;
                         print("itemisSet = false");
                     }
                     break;
                 case false:
                     SetItemPos();
+                    HouseBuildReCal();
                     break;
             }
         }
@@ -82,8 +100,9 @@ namespace TT.BuildSystem
             transform.position = GetMouseWorldPos() + mOffset;
             itemisSet = true;
             canTouch = false;
-            print("itemisSet = true, canTouch = false");
+          //  print("itemisSet = true, canTouch = false");
             BuildManager.OnBuildItemDrag = false;
+          
         }
 
         Vector3 GetMouseWorldPos()
@@ -116,7 +135,8 @@ namespace TT.BuildSystem
             {
                 BuildingItemObj ItemObj = item.GetComponent<BuildingItemObj>();
                 if (ItemObj.ItemKind == BuildItemKind.Wall)
-                { }
+                {//Do nothing
+                }
                 else
                 {
 
@@ -135,10 +155,10 @@ namespace TT.BuildSystem
         {
 
             BuildManager.OnBuildItemDrag = true;
-           // print("BuildManager.OnBuildItemDrag = true");
-
+            //print("BuildManager.OnBuildItemDrag = true");
+            BuildManager.curDragObj = this.GetComponent<BuildingItemObj>();
             Vector3 DragPos = GetMouseWorldPos() + mOffset;
-
+           // HouseBuildReCal();
             if (DragPos.x >= MaxX)
             {
                 DragPos.x = MaxX;
@@ -158,13 +178,58 @@ namespace TT.BuildSystem
                 DragPos.y = MinY;
             }
 
-            //DragPos.z = 502.6f;
             BuildingBlock CurBlock = BuildManager.nowBuildingBlock;
-            DragPos.z = CurBlock.CurFrontItemzPos;
+
+            if (this.ItemKind == BuildItemKind.Wall)
+            {
+                DragPos.z = CurBlock.CurWallItemzPos;
+            }
+            else
+            { DragPos.z = CurBlock.CurFrontItemzPos; }
 
             transform.position = DragPos;
         }
+        public void SetBuildItemScale(Vector3 scalenum)
+        {
+           if(scalenum.x>=MaxScale)
+            {
+                scalenum.x = MaxScale;
+            }
+            if (scalenum.x <= MinScale)
+            {
+                scalenum.x = MinScale;
+            }
+            if (scalenum.y >= MaxScale)
+            {
+                scalenum.y = MaxScale;
+            }
+            if (scalenum.y <= MinScale)
+            {
+                scalenum.y = MinScale;
+            }
+            transform.localScale = scalenum;
+            curObjWidth = curObjWidth * transform.localScale.x;
+            Debug.Log("curobjWidth = " + curObjWidth);
+            //Debug.Log(ObjOriginWidth);
+            curObjHeight = curObjHeight * transform.localScale.y;
+            //Debug.Log(curObjHeight);
+            //Debug.Log(ObjOriginHeight);
+        }
 
+        void HouseBuildReCal()
+        {
+            //Debug.Log("MaX = " + MaxX);
+            //float tempMaxX = ObjOriginPos.x + (BuildManager.HalfGuideObjWidth - curObjWidth);
+            //Debug.Log("ObjoriginX" + ObjOriginPos.x);
+            //Debug.Log("HalfGuideWidth" + BuildManager.HalfGuideObjWidth);
+            //Debug.Log("TempMax=" + tempMaxX);
+            //MaxX = ObjOriginPos.x + (BuildManager.HalfGuideObjWidth -curObjWidth);
+            //Debug.Log(MaxX);
+            //MinX = ObjOriginPos.x - (BuildManager.HalfGuideObjWidth - curObjWidth);
+            //Debug.Log(MinX);
+            //MaxY = ObjOriginPos.y + (BuildManager.HalfGuideObjHeight - curObjHeight);
+            //MinY = ObjOriginPos.y - (BuildManager.HalfGuideObjHeight - curObjHeight);
+        }
         public string CanInteract()
         {
             return "BuildItemObj";
