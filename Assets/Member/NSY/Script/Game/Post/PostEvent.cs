@@ -27,6 +27,7 @@ namespace NSY.Iven
         IEnumerator ChageImg()
         {
             n_PostPanel.PostResultImg.enabled = false;
+            n_PostPanel.closebtn.SetActive(true);
             yield return new WaitForSeconds(0.1f);
             n_PostPanel.PostResultImg.enabled = true;
             n_PostPanel.PostResultImg.sprite = n_PostSlot.PostImg.sprite;

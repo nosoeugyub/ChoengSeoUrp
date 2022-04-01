@@ -9,6 +9,8 @@ namespace NSY.Iven
   
     public class PostPanel : MonoBehaviour
     {
+        [SerializeField] public GameObject closebtn;
+
         //부모 오브젝트
         public Transform ParentObj;
         //슬로오브젝트
@@ -85,6 +87,7 @@ namespace NSY.Iven
 
         public void ClosePost()
         {
+            closebtn.SetActive(false);
             PostResultImg.enabled =false;
             PostResultImg.sprite = null;
         }
