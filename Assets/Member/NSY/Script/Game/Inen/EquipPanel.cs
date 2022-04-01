@@ -20,7 +20,7 @@ namespace NSY.Iven
         public event Action<BaseItemSlot> OnDropEvent;
 
 
-        private void Start()
+        private void Start()                        
         {
             for (int i = 0; i < equipmentSlots.Length; i++)
             {
