@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using DM.Inven;
 using NSY.Player;
 using System;
-
+using TT.BuildSystem;
 
 namespace NSY.Iven
 {
@@ -24,6 +24,7 @@ namespace NSY.Iven
         [SerializeField] Image draggableitem;
         [SerializeField] DropItemArea Dropitemarea;
         [SerializeField] QuestionDialog questionDialog;
+        [SerializeField] BuildingItemSpawn buildingItemSpawn;
         //조합 필요한 컴포넌트들
         CraftSlot craftslot;
         Item currntitem;
@@ -53,6 +54,7 @@ namespace NSY.Iven
 
             //인벤토리 클레스 이벤트
             iventorynsy.OnRightClickEvent += InventoryRightClick;
+            iventorynsy.OnLeftClickEvent += BuildingLeftClick ;
            // iventorynsy.OnLeftClickEvent += InventoryLeftClick;
             equipPanel.OnRightClickEvent += EquipmentPanelRightClick;
             craftPanel.OnLeftClickEvent += CraftPanelLeftClick;
@@ -77,6 +79,13 @@ namespace NSY.Iven
 
             carftingRecipe = new CraftingRecipe();
         }
+
+        private void BuildingLeftClick(BaseItemSlot obj)
+        {
+            if(BuildingManager.isBuildMode)
+                buildingItemSpawn.BtnSpawnHouseBuildItem(obj.item.ItemPrefab);
+        }
+
         //우편 버튼 눌렀을때.
         private void ClickPostButton(PostSlot postslot)
         {

@@ -17,6 +17,7 @@ public class Item : ScriptableObject
     [SerializeField] private int chopCount;
     [SerializeField] private DropItem[] dropItems;
     [SerializeField] private int durability;
+    [SerializeField] private GameObject itemPrefab;
 
 
     public string ItemName => itemName;
@@ -28,6 +29,7 @@ public class Item : ScriptableObject
     public ingredientNeeded[] NnecessaryIngredient => necessaryIngredient;
     public DropItem[] DropItems => dropItems;
     public int ChopCount => chopCount;
+    public GameObject ItemPrefab => itemPrefab;
 
     //NSY추가 
     public int MaximumStacks = 1;

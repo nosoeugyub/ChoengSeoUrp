@@ -11,15 +11,15 @@ namespace TT.BuildSystem
         [SerializeField] Transform SlotParent;
        // [SerializeField] Vector3 InventBuildPos;
 
-        BuildingManager BuildManager;
+        //BuildingManager BuildManager;
 
         // Start is called before the first frame update
         void Start()
         {
-            BuildManager = FindObjectOfType<BuildingManager>();
-            CheckBuildItemList();
-            //InventOriginPos = InventoryUI.position;
-            AddSlotToList();
+            //BuildManager = FindObjectOfType<BuildingManager>();
+            //CheckBuildItemList();
+            ////InventOriginPos = InventoryUI.position;
+            //AddSlotToList();
         }
 
         // Update is called once per frame
@@ -27,66 +27,66 @@ namespace TT.BuildSystem
         {
            
 
-            if (BuildManager.isBuildMode)
-            {
-
-                CheckBuildItemList();
-            }
+            //if (BuildingManager.isBuildMode)
+            //{
+            //
+            //    CheckBuildItemList();
+            //}
         }
 
         void AddSlotToList()
         {
-            foreach (Transform child in SlotParent)
-            {
-                InventoryList.Add(child);
-            }
+            //foreach (Transform child in SlotParent)
+            //{
+            //    InventoryList.Add(child);
+            //}
 
         }
 
         void CheckBuildItemList()
         {
-            foreach (Transform child in SlotParent)
-            {
-                BuildingItemSpawn Slot = child.GetComponent<BuildingItemSpawn>();
-                if (BuildManager.isBuildMode)
-                {
-                    if (BuildManager.OnBuildItemDrag)
-                    {
-                        Slot.Slotbutton.interactable = false;
-                    }
-                    else
-                    {
-                        if (BuildManager.nowBuildingBlock.hasWall)
-                        {
-                            if (Slot.ItemType == CItemType.BuildItem)
-                            { Slot.Slotbutton.interactable = true;
-                               
-                            }
-                            else
-                            { Slot.Slotbutton.interactable = false;
-                               
-                            }
-                        }
-                        else
-                        {
-                            if (Slot.isWall)
-                            { Slot.Slotbutton.interactable = true; }
-                            else
-                            {
-                                Slot.Slotbutton.interactable = false;
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    if (Slot.ItemType == CItemType.DecoItem)
-                    { Slot.Slotbutton.interactable = true; }
-                    else
-                    { Slot.Slotbutton.interactable = false; }
-                }
-            }
-
+            //foreach (Transform child in SlotParent)
+            //{
+            //    BuildingItemSpawn Slot = child.GetComponent<BuildingItemSpawn>();
+            //    if (BuildManager.isBuildMode)
+            //    {
+            //        if (BuildManager.OnBuildItemDrag)
+            //        {
+            //            Slot.Slotbutton.interactable = false;
+            //        }
+            //        else
+            //        {
+            //            if (BuildManager.nowBuildingBlock.hasWall)
+            //            {
+            //                if (Slot.ItemType == CItemType.BuildItem)
+            //                { Slot.Slotbutton.interactable = true;
+            //                   
+            //                }
+            //                else
+            //                { Slot.Slotbutton.interactable = false;
+            //                   
+            //                }
+            //            }
+            //            else
+            //            {
+            //                if (Slot.isWall)
+            //                { Slot.Slotbutton.interactable = true; }
+            //                else
+            //                {
+            //                    Slot.Slotbutton.interactable = false;
+            //                }
+            //            }
+            //        }
+            //    }
+            //    else
+            //    {
+            //        if (Slot.ItemType == CItemType.DecoItem)
+            //        { Slot.Slotbutton.interactable = true; }
+            //        else
+            //        { Slot.Slotbutton.interactable = false; }
+            //    }
+            //}
+            //
 
 
         }
@@ -104,17 +104,17 @@ namespace TT.BuildSystem
         //           //InventoryUI.position = Camera.main.WorldToScreenPoint(Vector3.zero);
         //       }
 
-        public void AssignBuildItemSpawnPos(Transform SpawnParent, Transform CurBuilding)
-        {
-            foreach (Transform Slot in InventoryList)
-            {
-                BuildingItemSpawn BuildItemSpawn = Slot.GetComponent<BuildingItemSpawn>();
-                BuildItemSpawn.SpawnParent = SpawnParent;
-                BuildItemSpawn.CurBuilding = CurBuilding;
-            }
-
-
-        }
+        //public void AssignBuildItemSpawnPos(Transform SpawnParent, Transform CurBuilding)
+        //{
+        //    foreach (Transform Slot in InventoryList)
+        //    {
+        //        BuildingItemSpawn BuildItemSpawn = Slot.GetComponent<BuildingItemSpawn>();
+        //        BuildItemSpawn.SpawnParent = SpawnParent;
+        //        BuildItemSpawn.CurBuilding = CurBuilding;
+        //    }
+        //
+        //
+        //}
     }
 
 }
