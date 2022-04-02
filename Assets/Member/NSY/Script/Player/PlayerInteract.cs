@@ -41,6 +41,7 @@ namespace NSY.Player
 
         public void OnTriggerEnter(Collider other)
         {
+            ReliableOnTriggerExit.NotifyTriggerEnter(other, gameObject, OnTriggerExit);
             IInteractble interactable = other.GetComponent<IInteractble>();
             if (interactable != null)
             {
@@ -48,28 +49,6 @@ namespace NSY.Player
                 canInteract = true;
                 interacts.Add(interactable);
             }
-
-            //////////초반 튜토리얼 오브젝트와 충돌 판정
-            //if (other.CompareTag("FristPost"))
-            //{
-            //    Debug.Log("첫 번째 표지판 부딪히고 유아이 띄우셈");
-            //    EventManager._Instace.StartFirstPost();
-
-            //}
-            //if (other.CompareTag("FristTree"))
-            //{
-            //    Debug.Log("첫 번째 나무 부딪히고 사과 떨어짐");
-            //    EventManager._Instace.StartFirstTree();
-
-            //}
-            ////과일나무랑 만남
-            //if (other.CompareTag("FruitTree"))
-            //{
-
-            //    //이벤트 함수 적어놀예정
-            //    EventManager._Instace.PlayerActiveFruitTree();
-            //    Debug.Log("열매 떨어져!");
-            //}
         }
         private void InvokeInteract(IInteractble interactable)
         {
@@ -151,10 +130,11 @@ namespace NSY.Player
 
         public void OnTriggerExit(Collider other)
         {
+            ReliableOnTriggerExit.NotifyTriggerExit(other, gameObject);
             IInteractble interactable = other.GetComponent<IInteractble>();
             if (interactable != null)
             {
-                //Debug.Log("interact false");
+                Debug.Log("interact false");
                 canInteract = false;
                 interacts.Remove(interactable);
             }
@@ -181,6 +161,17 @@ namespace NSY.Player
                 SetHandItem(testToolItems[3]);
             }
             ///////////test Input/////////
+            ///
+            if (CanActing())
+            {
+                playerAnimator.animator.SetBool("isMining", false);
+                playerAnimator.animator.SetBool("isAxing", false);
+                playerAnimator.animator.SetBool("isEating", false);
+            }
+            else
+            {
+                return;
+            }
 
             if (!canInteract || isAnimating)
             {
@@ -213,16 +204,7 @@ namespace NSY.Player
                 interactUI.SetActive(false);
             }
 
-            if (CanActing())
-            {
-                playerAnimator.animator.SetBool("isMining", false);
-                playerAnimator.animator.SetBool("isAxing", false);
-                playerAnimator.animator.SetBool("isEating", false);
-            }
-            else
-            {
-                return;
-            }
+
 
             if (Input.GetMouseButton(0))
             {

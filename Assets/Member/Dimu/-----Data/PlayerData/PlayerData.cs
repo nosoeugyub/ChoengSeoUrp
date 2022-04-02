@@ -21,7 +21,7 @@ public class PlayerData : ScriptableObject
     {
         if (!pairs.ContainsKey(dataid))
         {
-            Debug.Log("add dictionary");
+            //Debug.Log("add dictionary");
             pairs.Add(dataid, new Behavior(listCount));
         }
     }

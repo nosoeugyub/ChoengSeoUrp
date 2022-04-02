@@ -1,14 +1,49 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class MineObject : ItemObject, IMineable
 {
     int nowChopCount;
+    [SerializeField] float respawnTime = 5;
+    [SerializeField] float time = 0;
+    int state = 0;//0 성장완료 1미완료
+
+    BoxCollider boxcol;
+
     [Tooltip("이 오브젝트를 채집할 수 있는 도구 타입")]
     [SerializeField] InItemType toolType;
 
+    private void Awake()
+    {
+        base.Awake();
+        boxcol = GetComponent<BoxCollider>();
+    }
     private void OnEnable()
     {
         nowChopCount = 0;
+    }
+
+    IEnumerator Respawn()
+    {
+        yield return new WaitForSeconds(respawnTime);
+        ChangeMineState(0);
+    }
+    private void ChangeMineState(int state)
+    {
+        if (state == 0)
+        {
+            Debug.Log("초기화");
+            boxcol.enabled = true;
+            nowChopCount = 0;
+            time = 0;
+            quad.material.color = new Color(1,1,1,1);
+        }
+        else if(state == 1)
+        {
+            quad.material.color = new Color(1,1,1,0);
+            boxcol.enabled = false;
+
+        }
     }
     public string CanInteract()
     {
@@ -32,8 +67,10 @@ public class MineObject : ItemObject, IMineable
         if (++nowChopCount >= item.ChopCount)
         {
             NSY.Player.PlayerInput.OnPressFDown = null;
-            Destroy(gameObject);
             DropItems();
+            ChangeMineState(1);
+            StartCoroutine(Respawn());
+            //Destroy(gameObject);
         }
         else
         {
