@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class MineObject : ItemObject, IMineable
+public class MineObject : ItemObject, IMineable,ISpeechBubbleCollectable
 {
     int nowChopCount;
     [SerializeField] float respawnTime = 5;
     [SerializeField] float time = 0;
     int state = 0;//0 성장완료 1미완료
+
+    [SerializeField] GameObject glassSpeechBubble;
 
     BoxCollider boxcol;
 
@@ -95,6 +97,22 @@ public class MineObject : ItemObject, IMineable
         }
     }
 
+    public void InstantiateBubble()
+    {
+        glassSpeechBubble.SetActive(true);
+    }
+    public bool CheckBubble(Item handitem, Animator animator)
+    {
+        if (handitem.InItemType != toolType)
+        {
+            print("다른 도구로 시도해주십쇼.");
+            return false;
+        }
+        glassSpeechBubble.SetActive(false);
+        ObjectManager.CheckBubble();
+        //확률로 레시피 획득 구문
+        return true;
+    }
 }
 [System.Serializable]
 public class DropItem

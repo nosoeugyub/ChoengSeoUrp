@@ -77,6 +77,15 @@ namespace NSY.Player
             switch (handItem.OutItemType)
             {
                 case OutItemType.Tool://손에 도구를 들고 있으면
+                    ISpeechBubbleCollectable bubbleCollectable = interactable.ReturnTF().GetComponent<ISpeechBubbleCollectable>();
+                    if (bubbleCollectable != null)
+                    {
+                        if (!bubbleCollectable.CheckBubble())
+                        {
+                            isAnimating = false;
+                        }
+                        return;
+                    }
                     IMineable mineable = interactable.ReturnTF().GetComponent<IMineable>();
                     if (mineable != null)
                     {

@@ -33,3 +33,9 @@ public interface IBuildable : IInteractble
 {
     void Demolish();
 }
+public interface ISpeechBubbleCollectable : IInteractble
+{
+    void InstantiateBubble();
+    bool CheckBubble(Item handitem, Animator animator);
+}
+
