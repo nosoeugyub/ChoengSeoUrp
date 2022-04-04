@@ -3,7 +3,7 @@
 public class ObjectManager : MonoBehaviour
 {
     public static bool isBubbleOn = false;
-    float cooldown = 18;
+    float cooldown = 8;
     float tick = 0;
     public void Start()
     {
