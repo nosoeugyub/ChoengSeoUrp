@@ -73,7 +73,6 @@ namespace NSY.Player
 
             if (!handItem) return;
 
-            isAnimating = true;
             switch (handItem.OutItemType)
             {
                 case OutItemType.Tool://손에 도구를 들고 있으면
@@ -82,9 +81,13 @@ namespace NSY.Player
                     {
                         if (!bubbleCollectable.CheckBubble(handItem, playerAnimator.animator))
                         {
-                        isAnimating = false;
+                            isAnimating = false;
                         }
-                        return;
+                        else
+                        {
+                            isAnimating = true;
+                            return;
+                        }
                     }
                     IMineable mineable = interactable.ReturnTF().GetComponent<IMineable>();
                     if (mineable != null)
@@ -93,7 +96,11 @@ namespace NSY.Player
                         {
                             isAnimating = false;
                         }
-                        return;
+                        else
+                        {
+                            isAnimating = true;
+                            return;
+                        }
                     }
                     BuildingBlock buildAreaObject = interactable.ReturnTF().GetComponent<BuildingBlock>();
                     //IBuildable buildable = interactable.ReturnTF().GetComponent<IBuildable>();
@@ -107,6 +114,7 @@ namespace NSY.Player
                     //IBuildable buildable = interactable.ReturnTF().GetComponent<IBuildable>();
                     if (buildMat != null)
                     {
+                        isAnimating = false;
                         buildMat.Demolish();
                         return;
                     }
@@ -157,19 +165,8 @@ namespace NSY.Player
             }
             ///////////test Input/////////
             ///
-            if (CanActing())
-            {
-                playerAnimator.animator.SetBool("isMining", false);
-                playerAnimator.animator.SetBool("isAxing", false);
-                playerAnimator.animator.SetBool("isEating", false);
-                playerAnimator.animator.SetBool("isMagnifying", false);
-            }
-            else
-            {
-                return;
-            }
 
-            if (!canInteract || isAnimating)
+            if (!canInteract || IsAnimating())
             {
                 foreach (var button in buildingButtons)
                 {
@@ -216,9 +213,9 @@ namespace NSY.Player
             }
         }
 
-        public bool CanActing()
+        public bool IsAnimating()
         {
-            return !isAnimating;
+            return isAnimating;
         }
 
         public bool IsInteracted(IInteractble it)

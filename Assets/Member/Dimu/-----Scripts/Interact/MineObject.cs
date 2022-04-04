@@ -60,7 +60,7 @@ public class MineObject : ItemObject, IMineable,ISpeechBubbleCollectable
             print("다른 도구로 시도해주세요.");
             return false;
         }
-        //print(nowChopCount);
+        print(nowChopCount);
         Interact();
 
         if (handitem.InItemType == InItemType.Pickaxe)

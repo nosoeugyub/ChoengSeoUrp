@@ -1,6 +1,4 @@
 ﻿using NSY.Player;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAnimator : MonoBehaviour
@@ -16,5 +14,9 @@ public class PlayerAnimator : MonoBehaviour
     {
         //print("EndAnimation");
         playerInteract.isAnimating = false;
+        animator.SetBool("isMining", false);
+        animator.SetBool("isAxing", false);
+        animator.SetBool("isEating", false);
+        animator.SetBool("isMagnifying", false);
     }
 }
