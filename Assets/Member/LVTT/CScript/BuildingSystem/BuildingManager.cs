@@ -39,7 +39,7 @@ namespace TT.BuildSystem
 
         // public GameObject SpawnBuildItem;
 
-        public bool isBuildMode = false;
+        public static bool isBuildMode = false;
         private void Awake()
         {
             TheUI = FindObjectOfType<UIOnOff>();
@@ -71,7 +71,7 @@ namespace TT.BuildSystem
             CamManager.ChangeFollowTarger(nowBuildingBlock.gameObject.transform, 2);
             CamManager.ChangeFollowTarger(nowBuildingBlock.gameObject.transform, 3);
 
-            SlotManager.AssignBuildItemSpawnPos(nowBuildingBlock.HouseBuild, nowBuildingBlock.gameObject.transform);
+            //SlotManager.AssignBuildItemSpawnPos(nowBuildingBlock.HouseBuild, nowBuildingBlock.gameObject.transform);
 
             TheUI.IsBuildMode = true;
             isBuildMode = true;

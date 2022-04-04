@@ -46,6 +46,33 @@ namespace TT.BuildSystem
             CurBlock.CurFrontItemzPos = spawnPos.z;
         }
 
+        public void BtnSpawnHouseBuildItem(GameObject spawnObj)
+        {
+            BuildingBlock CurBlock = FindObjectOfType<BuildingManager>().nowBuildingBlock;
+            Vector3 spawnPos = CurBlock.HouseBuild.transform.position;
+            spawnPos.y = spawnPos.y + SpawnOffsetY;
+            if (this.isWall)
+            {
+                spawnPos.z = spawnPos.z - SpawnOffsetZ;// when the building is facing South
+                CurBlock.CurWallItemzPos = spawnPos.z;
+                CurBlock.hasWall = true;
+
+            }
+            else
+            {
+                spawnPos.z = spawnPos.z - SpawnOffsetZ - (BuildItemGap * CurBlock.BuildItemList.Count);// when the building is facing South
+                if (CurBlock.BuildItemList.Count == 1)
+                {
+                    CurBlock.MaxBackItemzPos = spawnPos.z;
+                }
+            }
+            GameObject newPrefab = Instantiate(spawnObj, spawnPos, Quaternion.identity, CurBlock.HouseBuild.transform);
+            newPrefab.name = spawnObj.name;
+            CurBlock.AddBuildItemToList(newPrefab);
+            CurBlock.CurFrontItemzPos = spawnPos.z;
+        }
+
+
         public void BtnSpawnGardenBuildItem()
         {
             Vector3 spawnPos = SpawnParent.transform.position;
