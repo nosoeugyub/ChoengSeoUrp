@@ -93,7 +93,7 @@ public class PopUpManager : MonoBehaviour
 
 
     //단축키 팝업 의 입력에따라
-    private void ToggleKeyDownAction(in KeyCode key, PopupUI popup)
+    public void ToggleKeyDownAction(in KeyCode key, PopupUI popup)
     {
         if (Input.GetKeyDown(key))
         {
@@ -103,7 +103,7 @@ public class PopUpManager : MonoBehaviour
 
     }
     //팝업의 상태에따라 열거다나 닫기
-    private void ToggleOpenClosePopup(PopupUI popup)
+    public void ToggleOpenClosePopup(PopupUI popup)
     {
         if (!popup.gameObject.activeSelf) OpenPopup(popup);
         else ClosePopup(popup);
@@ -117,7 +117,7 @@ public class PopUpManager : MonoBehaviour
     }
 
     //팝업창 닫기 링크드리스트에서 제거
-    private void ClosePopup(PopupUI popup)
+    public void ClosePopup(PopupUI popup)
     {
         _activePopupList.Remove(popup);
         popup.gameObject.SetActive(false);

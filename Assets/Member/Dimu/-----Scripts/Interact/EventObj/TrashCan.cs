@@ -1,6 +1,17 @@
-﻿public class TrashCan : ItemObject, IEventable
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+public class TrashCan : ItemObject, IEventable
 {
     bool isInvenOn = false;
+    //NSY 추가 코드
+    
+    GameObject popupmanager;
+    private void Start()
+    {
+        popupmanager = GameObject.Find("PopUpUi Contain");
+    }
     public new string CanInteract()
     {
         return "쓰레기통 인벤열기";
@@ -15,11 +26,16 @@
         if (isInvenOn)
         {
             print("인벤닫기");
+            //nsy
+            popupmanager.GetComponent<PopUpManager>().ClosePopup(popupmanager.GetComponent<PopUpManager>()._ivenPopup);
             isInvenOn = false;
         }
         else
         {
+
             print("인벤열기");
+            //nsy
+            popupmanager.GetComponent<PopUpManager>().OpenPopup(popupmanager.GetComponent<PopUpManager>()._ivenPopup);
             isInvenOn = true;
         }
     }
