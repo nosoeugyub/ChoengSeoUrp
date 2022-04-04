@@ -12,7 +12,7 @@ public class PlayerAnimator : MonoBehaviour
     //Animation Event
     public void EndAnimation()
     {
-        //print("EndAnimation");
+        print("EndAnimation");
         playerInteract.isAnimating = false;
         animator.SetBool("isMining", false);
         animator.SetBool("isAxing", false);
