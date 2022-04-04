@@ -80,9 +80,9 @@ namespace NSY.Player
                     ISpeechBubbleCollectable bubbleCollectable = interactable.ReturnTF().GetComponent<ISpeechBubbleCollectable>();
                     if (bubbleCollectable != null)
                     {
-                        if (!bubbleCollectable.CheckBubble())
+                        if (!bubbleCollectable.CheckBubble(handItem, playerAnimator.animator))
                         {
-                            isAnimating = false;
+                        isAnimating = false;
                         }
                         return;
                     }
@@ -110,20 +110,6 @@ namespace NSY.Player
                         buildMat.Demolish();
                         return;
                     }
-                    break;
-                //case OutItemType.Food://음식 들고있으면
-                //    IEatable eatable = interactable.ReturnTF().GetComponent<IEatable>();
-                //    if (eatable != null)
-                //    {
-                //        eatable.Eat();
-                //    }
-                //    break;
-                //case OutItemType.Etc://이벤트아이템 들고있으면
-
-                //    //기타 아이템을 NPC에 전달하는 기능이 있다면 여기 추가
-                //    break;
-
-                default:
                     break;
             }
             isAnimating = false;
@@ -176,6 +162,7 @@ namespace NSY.Player
                 playerAnimator.animator.SetBool("isMining", false);
                 playerAnimator.animator.SetBool("isAxing", false);
                 playerAnimator.animator.SetBool("isEating", false);
+                playerAnimator.animator.SetBool("isMagnifying", false);
             }
             else
             {

@@ -18,6 +18,8 @@ public class MineObject : ItemObject, IMineable,ISpeechBubbleCollectable
     private void Awake()
     {
         base.Awake();
+        glassSpeechBubble = Instantiate(Resources.Load("Object/glassSpeechBubble") as GameObject, this.transform);
+        glassSpeechBubble.SetActive(false);
         boxcol = GetComponent<BoxCollider>();
     }
     private void OnEnable()
@@ -55,7 +57,7 @@ public class MineObject : ItemObject, IMineable,ISpeechBubbleCollectable
     {
         if (handitem.InItemType != toolType)
         {
-            print("다른 도구로 시도해주십쇼.");
+            print("다른 도구로 시도해주세요.");
             return false;
         }
         //print(nowChopCount);
@@ -103,11 +105,17 @@ public class MineObject : ItemObject, IMineable,ISpeechBubbleCollectable
     }
     public bool CheckBubble(Item handitem, Animator animator)
     {
-        if (handitem.InItemType != toolType)
+        if (handitem.InItemType != InItemType.MagnifyingGlass)
         {
-            print("다른 도구로 시도해주십쇼.");
+            print("다른 도구로 시도해주세요.");
             return false;
         }
+        if (!glassSpeechBubble.activeSelf)
+        {
+            print("돋보기가 활성화되지 않았습니다.");
+            return false;
+        }
+        animator.SetBool("isMagnifying", true);
         glassSpeechBubble.SetActive(false);
         ObjectManager.CheckBubble();
         //확률로 레시피 획득 구문
