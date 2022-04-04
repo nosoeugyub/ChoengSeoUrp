@@ -7,28 +7,28 @@ namespace NSY.Player
 {
     public class PlayerInteract : MonoBehaviour
     {
-        [SerializeField] List<IInteractable> interacts = new List<IInteractable>();//상호작용 범위 내 있는 IInteractable오브젝트 리스트
+        [SerializeField] List<IInteractble> interacts = new List<IInteractble>();//상호작용 범위 내 있는 IInteractable오브젝트 리스트
         //[SerializeField] Dictionary<IInteractable, T> interactss= new Dictionary<IInteractable>();//상호작용 범위 내 있는 IInteractable오브젝트 리스트
         [SerializeField] Button[] buildingButtons;
         //IInteractable closestObj;//가장 가까운 친구
         public GameObject interactUI;//띄울 UI
         public Text interactUiText;//띄울 UI
 
-        [SerializeField]//임시
-        Item handItem;
+        [SerializeField] Item handItem;
 
-        [SerializeField]
-        PlayerController playerController;
+        [SerializeField] SpriteRenderer handItemObj;
+
+        [SerializeField] PlayerAnimator playerAnimator;
+
+        [SerializeField] Item[] testToolItems;
 
         RaycastHit hit;
         Ray ray;
-        IInteractable nowInteractable;
+        IInteractble nowInteractable;
         bool canInteract = false;
         int layerMask;   // Player 레이어만 충돌 체크함
 
-        [SerializeField] float interactCooltime;
-        [SerializeField] float interactTime;
-
+        public bool isAnimating = false;
 
         ////열매 상태
         //FrutStateManager state;
@@ -41,37 +41,16 @@ namespace NSY.Player
 
         public void OnTriggerEnter(Collider other)
         {
-            IInteractable interactable = other.GetComponent<IInteractable>();
+            ReliableOnTriggerExit.NotifyTriggerEnter(other, gameObject, OnTriggerExit);
+            IInteractble interactable = other.GetComponent<IInteractble>();
             if (interactable != null)
             {
-                Debug.Log("interact true");
+                //Debug.Log("interact true");
                 canInteract = true;
                 interacts.Add(interactable);
             }
-
-            //////////초반 튜토리얼 오브젝트와 충돌 판정
-            //if (other.CompareTag("FristPost"))
-            //{
-            //    Debug.Log("첫 번째 표지판 부딪히고 유아이 띄우셈");
-            //    EventManager._Instace.StartFirstPost();
-
-            //}
-            //if (other.CompareTag("FristTree"))
-            //{
-            //    Debug.Log("첫 번째 나무 부딪히고 사과 떨어짐");
-            //    EventManager._Instace.StartFirstTree();
-
-            //}
-            ////과일나무랑 만남
-            //if (other.CompareTag("FruitTree"))
-            //{
-
-            //    //이벤트 함수 적어놀예정
-            //    EventManager._Instace.PlayerActiveFruitTree();
-            //    Debug.Log("열매 떨어져!");
-            //}
         }
-        private void InvokeInteract(IInteractable interactable)
+        private void InvokeInteract(IInteractble interactable)
         {
             ICollectable collectable = interactable.ReturnTF().GetComponent<ICollectable>();
             if (collectable != null)
@@ -82,7 +61,7 @@ namespace NSY.Player
             ITalkable talkable = interactable.ReturnTF().GetComponent<ITalkable>();
             if (talkable != null)
             {
-                talkable.Talk();
+                talkable.Talk(handItem);
                 return;
             }
             IEventable eventable = interactable.ReturnTF().GetComponent<IEventable>();
@@ -91,84 +70,103 @@ namespace NSY.Player
                 eventable.EtcEvent(handItem);
                 return;
             }
+
+            if (!handItem) return;
+
+            switch (handItem.OutItemType)
+            {
+                case OutItemType.Tool://손에 도구를 들고 있으면
+                    ISpeechBubbleCollectable bubbleCollectable = interactable.ReturnTF().GetComponent<ISpeechBubbleCollectable>();
+                    if (bubbleCollectable != null)
+                    {
+                        if (!bubbleCollectable.CheckBubble(handItem, playerAnimator.animator))
+                        {
+                            isAnimating = false;
+                        }
+                        else
+                        {
+                            isAnimating = true;
+                            return;
+                        }
+                    }
+                    IMineable mineable = interactable.ReturnTF().GetComponent<IMineable>();
+                    if (mineable != null)
+                    {
+                        if (!mineable.Mine(handItem, playerAnimator.animator))
+                        {
+                            isAnimating = false;
+                        }
+                        else
+                        {
+                            isAnimating = true;
+                            return;
+                        }
+                    }
+                    BuildingBlock buildAreaObject = interactable.ReturnTF().GetComponent<BuildingBlock>();
+                    //IBuildable buildable = interactable.ReturnTF().GetComponent<IBuildable>();
+                    if (buildAreaObject != null)
+                    {
+                        isAnimating = false;
+                        buildAreaObject.OnBuildMode(buildingButtons, interactUI);
+                        return;
+                    }
+                    IBuildable buildMat = interactable.ReturnTF().GetComponent<IBuildable>();
+                    //IBuildable buildable = interactable.ReturnTF().GetComponent<IBuildable>();
+                    if (buildMat != null)
+                    {
+                        isAnimating = false;
+                        buildMat.Demolish();
+                        return;
+                    }
+                    break;
+            }
+            isAnimating = false;
+
+
             ItemObject itemObject = interactable.ReturnTF().GetComponent<ItemObject>();
             if (itemObject != null)
             {
                 itemObject.Interact();
                 return;
             }
-            if (!handItem) return;
-
-            switch (handItem.OutItemType)
-            {
-                case OutItemType.Tool://손에 도구를 들고 있으면
-                    IMineable mineable = interactable.ReturnTF().GetComponent<IMineable>();
-                    if (mineable != null)
-                    {
-                        mineable.Mine(handItem);
-                    }
-                    BuildingBlock buildAreaObject = interactable.ReturnTF().GetComponent<BuildingBlock>();
-                    //IBuildable buildable = interactable.ReturnTF().GetComponent<IBuildable>();
-                    if (buildAreaObject != null)
-                    {
-                        buildAreaObject.OnBuildMode(buildingButtons);
-                    }
-                    break;
-                //case OutItemType.Food://음식 들고있으면
-                //    IEatable eatable = interactable.ReturnTF().GetComponent<IEatable>();
-                //    if (eatable != null)
-                //    {
-                //        eatable.Eat();
-                //    }
-                //    break;
-                //case OutItemType.Etc://이벤트아이템 들고있으면
-
-                //    //기타 아이템을 NPC에 전달하는 기능이 있다면 여기 추가
-                //    break;
-
-                default://어느 타입도 아닌 맨손>> 인벤에 넣을 수 있는 아이템이라면 인벤에 넣기. 대화도 걸기
-                    //ICollectable collectable = interactable.ReturnTF().GetComponent<ICollectable>();
-                    //if (collectable != null)
-                    //{
-                    //    collectable.Collect();
-                    //    break;
-                    //}
-                    //ITalkable talkable = interactable.ReturnTF().GetComponent<ITalkable>();
-                    //if (talkable != null)
-                    //{
-                    //    talkable.Talk();
-                    //    break;
-                    //}
-                    //ItemObject item= interactable.ReturnTF().GetComponent<ItemObject>();
-                    //item.
-                    break;
-            }
         }
 
         public void OnTriggerExit(Collider other)
         {
-            IInteractable interactable = other.GetComponent<IInteractable>();
+            ReliableOnTriggerExit.NotifyTriggerExit(other, gameObject);
+            IInteractble interactable = other.GetComponent<IInteractble>();
             if (interactable != null)
             {
                 Debug.Log("interact false");
                 canInteract = false;
                 interacts.Remove(interactable);
             }
-
-            //if (other.CompareTag("FristTree"))
-            //{
-            //    Debug.Log("나무 이벤트 끝");
-            //    EventManager._Instace.EndFirstTree();
-            //}
-            //if (other.CompareTag("FristPost"))
-            //{
-            //    Debug.Log("표지판 이벤트 끝");
-            //    EventManager._Instace.EndFirstPost();
-            //}
         }
+
+
         private void Update()
         {
-            if (!canInteract)
+            ///////////test Input/////////
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                SetHandItem(testToolItems[0]);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                SetHandItem(testToolItems[1]);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                SetHandItem(testToolItems[2]);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                SetHandItem(testToolItems[3]);
+            }
+            ///////////test Input/////////
+            ///
+
+            if (!canInteract || IsAnimating())
             {
                 foreach (var button in buildingButtons)
                 {
@@ -185,7 +183,7 @@ namespace NSY.Player
             if (Physics.Raycast(ray, out hit, 10000, layerMask))
             {
                 //print(hit.collider.name);
-                nowInteractable = hit.collider.GetComponent<IInteractable>();
+                nowInteractable = hit.collider.GetComponent<IInteractble>();
                 if (nowInteractable != null && IsInteracted(nowInteractable))// 클릭한 옵젝이 닿은 옵젝 리스트에 있다면 통과
                 {
                     interactUI.SetActive(true);
@@ -196,36 +194,31 @@ namespace NSY.Player
             }
             else
             {
-                //foreach (var button in buildingButtons)
-                //{
-                //    button.gameObject.SetActive(false);
-                //}
                 interactUI.SetActive(false);
             }
 
-            if (interactTime <= interactCooltime)
-            {
-                interactTime += Time.deltaTime;
-                return;
-            }
+
 
             if (Input.GetMouseButton(0))
             {
                 if (Physics.Raycast(ray, out hit, 10000, layerMask))
                 {
-                    nowInteractable = hit.collider.GetComponent<IInteractable>();
+                    nowInteractable = hit.collider.GetComponent<IInteractble>();
                     if (nowInteractable != null && IsInteracted(nowInteractable))
                     {
-                        print(hit.collider.name);
+                        Debug.Log("상호작용한 물체: " + hit.collider.name);
                         InvokeInteract(nowInteractable);
-                        interactTime = 0;
-                        //interactable.Interact();
                     }
                 }
             }
         }
 
-        public bool IsInteracted(IInteractable it)
+        public bool IsAnimating()
+        {
+            return isAnimating;
+        }
+
+        public bool IsInteracted(IInteractble it)
         {
             return interacts.Contains(it);
         }
@@ -233,6 +226,7 @@ namespace NSY.Player
         public void SetHandItem(Item item)
         {
             handItem = item;
+            handItemObj.sprite = handItem.ItemSprite;
             //애니메이션 변경
         }
 
@@ -267,6 +261,7 @@ namespace NSY.Player
         //        }
         //    }
         //}
+
     }
 
 }

@@ -20,14 +20,14 @@ namespace NSY.Player
         internal PlayerMoveMent playermove;
        
         [SerializeField]
-        internal PlayerInteract playercollision;
+        internal PlayerInteract playerinteract;
 
         //Player 상태
-        [SerializeField]
+        //[SerializeField]
         internal CharacterController characterCtrl;
         [SerializeField]
         internal Camera maincamera;
-        internal Animator anim;
+        //internal Animator anim;
 
         //Player 정보
         public float PlayerSpeed;
@@ -36,7 +36,6 @@ namespace NSY.Player
         //스프라이트 애니메이션
 
        public Animator SpritePlayerAnim;
-       public Animator GamePlayerAnim;
 
         //피로도
         public int Tired;
@@ -46,19 +45,20 @@ namespace NSY.Player
         void Start()
         {
             characterCtrl = GetComponent<CharacterController>();
-            anim = GetComponent<Animator>();
+            //anim = GetComponent<Animator>();
         }
 
-        internal void ChageState(string newState)
+        internal void ChangeState(string newState)
         {
             if (newState != CurrentState)
             {
-                anim.Play(newState);
+                SpritePlayerAnim.Play(newState);
+                SpritePlayerAnim.speed = 1;
                 CurrentState = newState;
             }
         }
         
-     
+        
        
     }
 }

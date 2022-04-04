@@ -11,6 +11,7 @@ namespace NSY.Iven
         bool AddItem(Item item);
         bool CanAddItem(Item item , int amount = 1);
         void Clear();
+
     }
 
 }

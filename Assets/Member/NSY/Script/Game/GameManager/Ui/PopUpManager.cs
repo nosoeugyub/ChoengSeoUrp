@@ -26,6 +26,9 @@ public class PopUpManager : MonoBehaviour
     public KeyCode inventoryKey = KeyCode.I;
     public KeyCode MiniMapKey = KeyCode.M;
     public KeyCode BuildKey = KeyCode.B;
+
+
+  
     private void Awake()
     {
         _activePopupList = new LinkedList<PopupUI>();

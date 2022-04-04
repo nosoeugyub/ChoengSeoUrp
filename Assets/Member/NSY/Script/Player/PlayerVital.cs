@@ -14,7 +14,7 @@ namespace NSY.Player
         PlayerController playerController;
 
         [Header("건강")]
-        public Image PlayerHealth_imgae;
+        public Image PlayerHealth_image;
         public int Health { get; set; }
         public int MaxHealth;
         public int healthDislatetime = 200;
@@ -22,7 +22,7 @@ namespace NSY.Player
 
         private void Start()
         {
-            PlayerHealth_imgae.fillAmount = Health;
+            PlayerHealth_image.fillAmount = Health;
             Health = 50;
         }
 
@@ -56,7 +56,7 @@ namespace NSY.Player
         }
         void GaugeUpdate()
         {
-            PlayerHealth_imgae.fillAmount = (float)Health / MaxHealth;
+            PlayerHealth_image.fillAmount = (float)Health / MaxHealth;
         }
 
     }

@@ -1,15 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using NSY.Manager;
+﻿using UnityEngine;
 
 
 namespace Game.NPC
 {
-    
 
 
-    public  class NPC : MonoBehaviour
+
+    public class NPC : MonoBehaviour
     {
         [SerializeField]
         Character characterType;
@@ -26,13 +23,13 @@ namespace Game.NPC
 
         protected virtual void Start()
         {
-            
+
 
         }
 
         protected virtual void Update()
         {
-          
+
         }
         public NPC()
         {
@@ -42,17 +39,14 @@ namespace Game.NPC
         }
         protected virtual void AddID(int NPCid, bool NPCisID)
         {
-        
+
         }
-        public void PlayDialog()
-        {
-           SuperManager.Instance.dialogueManager.FirstShowDialog((int)characterType, transform);
-        }
-        
-      
+
+
+
 
     }
 
- 
+
 }
 
