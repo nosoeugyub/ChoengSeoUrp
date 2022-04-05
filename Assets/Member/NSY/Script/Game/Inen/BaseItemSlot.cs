@@ -177,7 +177,7 @@ namespace NSY.Iven
                 }
                 if (item is Item )
                 {
-                //    tooltip.ShowItemTooltip(item);
+                    tooltip.ShowItemTooltip(item);
                 }
 
             }

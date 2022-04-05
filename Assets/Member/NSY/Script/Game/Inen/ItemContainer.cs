@@ -9,7 +9,7 @@ namespace NSY.Iven
 {
     public abstract class ItemContainer : MonoBehaviour, IItemContainer
     {
-      //  public ItemSlot[] itemSlots;
+        public CraftManager craftslots;
         public List<ItemSlot> ItemSlots;
         
        
@@ -65,6 +65,47 @@ namespace NSY.Iven
                 }
             }
             return freeSpaces >= amount;
+        }
+
+        public bool entireItem(Item item)
+        {
+            for (int i = 0; i < ItemSlots.Count; i++)
+            {
+                if (ItemSlots[i].CanAddStack(item))
+                {
+                    ItemSlots[i].item = item;
+                    for (int j = 0; j < craftslots.CratfingSlots.Count; j++)
+                    {
+                      
+                        if (ItemSlots[i].item == craftslots.CratfingSlots[j].item)
+                        {
+                            ItemSlots[i].Amount += craftslots.CratfingSlots[j].Amount;
+                           
+                        }
+                    }
+                   
+                    
+                    PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.GetItem, PlayerData.ItemData, ((int)ItemBehaviorEnum.length));
+
+                    return true;
+                }
+
+
+            }
+            for (int i = 0; i < ItemSlots.Count; i++)
+            {
+                if (ItemSlots[i].item == null)
+                {
+                    ItemSlots[i].item = item;
+                    ItemSlots[i].Amount++;
+                    PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.GetItem, PlayerData.ItemData, ((int)ItemBehaviorEnum.length));
+
+                    return true;
+                }
+
+
+            }
+            return false;
         }
 
         public virtual bool AddItem(Item item)

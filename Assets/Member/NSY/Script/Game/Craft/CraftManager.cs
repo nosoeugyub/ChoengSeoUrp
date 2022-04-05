@@ -7,7 +7,7 @@ using System;
 
 namespace NSY.Iven
 {
-    public class CraftManager : MonoBehaviour
+    public class CraftManager : MonoBehaviour ,ICraft
     {
      
         Item CurrentItem;
@@ -16,8 +16,7 @@ namespace NSY.Iven
         
        
        
-        [SerializeField] RectTransform arrowParent;
-        public int slotIndex = 0;
+       
 
         [Header("레시피 컴포넌트")]
         [SerializeField] RecipeListPanel RecipelistPanel;
@@ -39,8 +38,9 @@ namespace NSY.Iven
         Item NullRecpie;
 
         private Item craftingRecipe;
-      
 
+        //아이템슬롯
+        [SerializeField] InventoryNSY inven;
 
 
         public event Action<BaseItemSlot> OnPointerEnterEvent;
@@ -53,7 +53,7 @@ namespace NSY.Iven
 
         private void OnValidate()
         {
-            //CratfingSlots = CraftingSlotsParent.GetComponentsInChildren<CraftSlot>();
+         //   CratfingSlots = CraftingSlotsParent.GetComponentsInChildren<CraftSlot>();
         }
 
         private void Start()
@@ -86,10 +86,6 @@ namespace NSY.Iven
                     CratfingSlots[i].item = item;
                     CratfingSlots[i].Amount++;
                   //  CratfingSlots[i]._item.recipe[i].item = item;
-                   
-
-                  
-                  
 
                     return true;
                 }
@@ -196,7 +192,7 @@ namespace NSY.Iven
        public Item SetCraftingRecipe()
         {
          
-            bool isRecipe0; //1번째 레시피 ...
+            bool isRecipe0; //
             bool isRecipe1;
             bool isRecipe2;
             
@@ -219,8 +215,11 @@ namespace NSY.Iven
                                isRecipe1 = true;
                                 isRecipe2 = true;
                         }
-
-                        for (int k = 0; k < CratfingSlots.Count; k++)//새로만들 조합대
+                    else if (RecipelistPanel.RecipeList[i].recipe.Length == 0)
+                    {
+                        isRecipe0 = true;
+                    }
+                    for (int k = 0; k < CratfingSlots.Count; k++)//현재 조합식이랑 레시피 조합식 비교
                         {
                         
                            if (RecipelistPanel.RecipeList[i].recipe[j].item == CratfingSlots[k].item && RecipelistPanel.RecipeList[i].recipe[j].Count == CratfingSlots[k].Amount)
@@ -251,8 +250,8 @@ namespace NSY.Iven
                                 return RecipelistPanel.RecipeList[i];
                                }
                                 else
-                               {
-                                ResultSlot.item = null;
+                                {
+                                      ResultSlot.item = null;
                                 }
 
                         }
@@ -268,13 +267,58 @@ namespace NSY.Iven
                
                     
                 }
-            return NullRecpie;// 맞지않다 
+            return null;// 맞지않다 
 
 
        }
         
-  
+        public  bool RestSlot( )
+        {
 
+            for (int i = 0; i < CratfingSlots.Count; i++)
+            {
+               
+                if (CratfingSlots[i].item != null)
+                {
+                    for (int j = 0; j < inven.ItemSlots.Count; j++)
+                    {
+                        if (CratfingSlots[i].item != inven.ItemSlots[j].item && inven.ItemSlots[j] != null)
+                        {
+                            Debug.Log("1개짜리는 되돌려");
+
+                             inven.entireItem(CratfingSlots[i].item.GetCopy());
+                          
+
+                            CratfingSlots[i].item = null;
+                      
+
+                          
+                            return true;
+                        }
+                      
+                    }
+
+                    for (int j = 0; j < inven.ItemSlots.Count; j++)
+                    {
+                        if (CratfingSlots[i].item == inven.ItemSlots[j].item)
+                        {
+                            Debug.Log("갯수 남은거채워");
+                            inven.ItemSlots[j].Amount += CratfingSlots[i].Amount;
+
+                            CratfingSlots[i].item = null;
+                            CratfingSlots[i].Amount = 0;
+                        }
+                    }
+                   
+
+                }
+
+
+            }
+            return false;
+
+        }
+      
     }
 
 }

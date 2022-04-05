@@ -26,19 +26,19 @@ namespace NSY.Iven
         [SerializeField] QuestionDialog questionDialog;
         //조합 필요한 컴포넌트들
         CraftSlot craftslot;
-        Item currntitem;
+     
       //레시피
       [Header("레시피 레퍼런스")]
         private CraftingRecipe carftingRecipe;
         [SerializeField] CraftSlot[] CraftSlot;
         //우편
         [SerializeField] PostPanel postpanel;
-     
-       
-       
-       
 
-
+        //조합
+        [SerializeField] CraftManager Craftmanager;
+        [SerializeField] GameObject Craftmgr;
+        public int Craftindex = 0;
+        public bool isAdd = true;
         private BaseItemSlot dragitemSlot;
 
        
@@ -77,23 +77,49 @@ namespace NSY.Iven
 
             carftingRecipe = new CraftingRecipe();
         }
+
+        private void Update()
+        {
+
+            if (Craftmgr.activeSelf ==false)
+            {
+                CloseCraftPanel();
+            }
+            
+        }
+        //조합창 중지
+        Item currntitem;
+        public void CloseCraftPanel()
+        {
+          
+            Craftmanager.RestSlot();
+        }
+
+
         //우편 버튼 눌렀을때.
         private void ClickPostButton(PostSlot postslot)
         {
-            Debug.Log("버튼클릭함");
+            //Debug.Log("버튼클릭함");
         }
 
         private void InventoryRightClick(BaseItemSlot itemslot)
         {
+          
             if (itemslot.item is Item && btniven.Craft == true)
             {
-
-                
-                craftPanel.CraftAddItem(itemslot.item.GetCopy());
-                itemslot.Amount--;
-                UpdateRecipe();
-
-                Debug.Log(" 탐색");
+                if (isAdd)
+                {
+                    craftPanel.CraftAddItem(itemslot.item.GetCopy());
+                    itemslot.Amount--;
+                    UpdateRecipe();
+                    Craftindex++;
+                }
+                if (Craftindex == 3)
+                {
+                    isAdd = false;
+                }
+              
+              
 
             }
 
@@ -125,8 +151,12 @@ namespace NSY.Iven
                 iventorynsy.AddItem(itemslot.item.GetCopy());
                 itemslot.Amount--;
                 UpdateRecipe();
-               
+                Craftindex--;
 
+            }
+            if (Craftindex < 3)
+            {
+                isAdd = true;
             }
         }
         void UpdateRecipe()
