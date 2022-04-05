@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MailBox : ItemObject, IEventable
 {
-    [SerializeField] Post MailPost //우편함에 추가될 우편 메일 스크립터블오브젝트
+    [SerializeField] Post MailPost; //우편함에 추가될 우편 메일 스크립터블오브젝트
     [SerializeField] Item mailBoxMessage;
     public new string CanInteract()
     {
