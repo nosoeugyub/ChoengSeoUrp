@@ -18,6 +18,7 @@ namespace NSY.Iven
         public event Action<BaseItemSlot> OnPointerExitEvent;
         public event Action<BaseItemSlot> OnRightClickEvent;
         public event Action<BaseItemSlot> OnLeftClickEvent;
+        public event Action<BaseItemSlot> OnDubleClickEvent;
         public event Action<BaseItemSlot> OnBeginDragEvent;
         public event Action<BaseItemSlot> OnEndDragEvent;
         public event Action<BaseItemSlot> OnDragEvent;
@@ -34,6 +35,7 @@ namespace NSY.Iven
                 ItemSlots[i].OnPointerExitEvent += slot => EventHelper(slot, OnPointerExitEvent);
                 ItemSlots[i].OnRightClickEvent += slot => EventHelper(slot, OnRightClickEvent);
                 ItemSlots[i].OnLeftClickEvent += slot => EventHelper(slot, OnLeftClickEvent);
+                ItemSlots[i].OnDubleClickEvent += slot => EventHelper(slot, OnDubleClickEvent);
                 ItemSlots[i].OnBeginDragEvent += slot => EventHelper(slot, OnBeginDragEvent);
                 ItemSlots[i].OnEndDragEvent += slot => EventHelper(slot, OnEndDragEvent);
                 ItemSlots[i].OnDragEvent += slot => EventHelper(slot, OnDragEvent);

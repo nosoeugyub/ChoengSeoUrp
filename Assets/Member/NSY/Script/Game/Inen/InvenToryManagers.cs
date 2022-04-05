@@ -41,10 +41,23 @@ namespace NSY.Iven
         public bool isAdd = true;
         private BaseItemSlot dragitemSlot;
 
-       
+
+        //더블클릭
+        private float firstClickTime, timeBetweenClicks;
+        private bool coroutineAllowed;
+        private int clickCounter;
 
         private void Awake()
         {
+            firstClickTime = 0f;
+            timeBetweenClicks = 0.2f;
+            clickCounter = 0;
+            coroutineAllowed = true;
+
+
+
+
+
             btniven.OnPostEvent += ClickPostSlotUi;
 
 
@@ -52,6 +65,8 @@ namespace NSY.Iven
 
 
             //인벤토리 클레스 이벤트
+            iventorynsy.OnDubleClickEvent += OnDoubleClickEvent;
+
             iventorynsy.OnRightClickEvent += InventoryRightClick;
            // iventorynsy.OnLeftClickEvent += InventoryLeftClick;
             equipPanel.OnRightClickEvent += EquipmentPanelRightClick;
@@ -85,8 +100,22 @@ namespace NSY.Iven
             {
                 CloseCraftPanel();
             }
-            
+            //duble Click
+
         }
+
+
+
+
+
+        //더블클릭
+        public void OnDoubleClickEvent(BaseItemSlot itemslot)
+        {
+            Debug.Log("더블클릭따땅");
+        }
+
+
+
         //조합창 중지
         Item currntitem;
         public void CloseCraftPanel()

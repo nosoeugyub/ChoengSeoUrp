@@ -8,9 +8,10 @@ using System;
 
 namespace NSY.Iven
 {
-    public class BaseItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
+    public class BaseItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler , IPointerClickHandler
     {
         [SerializeField]public Image itemImage;
+        float ClickTime = 0;
 
         [SerializeField]
         ItemTooltip tooltip;
@@ -25,7 +26,7 @@ namespace NSY.Iven
         public event Action<BaseItemSlot> OnLeftClickEvent;
         public event Action<BaseItemSlot> OnPointerEnterEvent;
         public event Action<BaseItemSlot> OnPointerExitEvent;
-       
+        public event Action<BaseItemSlot> OnDubleClickEvent;
       //  public event Action<BaseItemSlot> OnLeftClickEvent;
 
         public Item _item;
@@ -181,6 +182,22 @@ namespace NSY.Iven
                 }
 
             }
+        }
+
+        void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
+        {
+            if (Mathf.Abs(Time.time - ClickTime) < 0.75f)
+            {
+                if (OnDubleClickEvent != null)
+                {
+                    OnDubleClickEvent(this);
+                }
+            }
+            else
+            {
+                ClickTime = Time.time ;
+            }
+           
         }
     }
 
