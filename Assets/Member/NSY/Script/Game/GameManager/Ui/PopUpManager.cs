@@ -109,7 +109,7 @@ public class PopUpManager : MonoBehaviour
         else ClosePopup(popup);
     }
     //팝업을 열고 리스트의 상단에추가
-    private void OpenPopup(PopupUI popup)
+    public void OpenPopup(PopupUI popup)
     {
         _activePopupList.AddFirst(popup);
         popup.gameObject.SetActive(true);
