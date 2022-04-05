@@ -47,12 +47,13 @@ namespace NSY.Iven
         private bool coroutineAllowed;
         private int clickCounter;
 
+
+        //버리기
+        public Text ScriptTxt;
+        int discount = 1;
         private void Awake()
         {
-            firstClickTime = 0f;
-            timeBetweenClicks = 0.2f;
-            clickCounter = 0;
-            coroutineAllowed = true;
+            ScriptTxt.text = "1";
 
 
 
@@ -260,6 +261,7 @@ namespace NSY.Iven
         //버리기
         private void DropItemOutsideUI()
         {
+            discount = 0;
             if (dragitemSlot == null)
             {
                 return;
@@ -271,10 +273,24 @@ namespace NSY.Iven
 
 
         }
+        public void PlusBtn()
+        {
+            discount += 1;
+            ScriptTxt.text = discount.ToString();
+        }
+        public void MiuseBtn()
+        {
+            discount -= 1;
+            ScriptTxt.text = discount.ToString();
+        }
         private void DestroyItem(BaseItemSlot baseitemslot)//버릴떄 쓰는 로직
         {
-            baseitemslot.item.Destroy();
-            baseitemslot.item = null;
+            baseitemslot.Amount -= discount;
+            if (baseitemslot.Amount <= 0)
+            {
+                baseitemslot.item = null;
+            }
+          //  
         }
 
        
