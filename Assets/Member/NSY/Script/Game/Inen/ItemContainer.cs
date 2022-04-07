@@ -31,6 +31,7 @@ namespace NSY.Iven
         {
             for (int i = 0; i < ItemSlots.Count; i++)
             {
+               
                 ItemSlots[i].OnPointerEnterEvent += slot => EventHelper(slot,OnPointerEnterEvent);
                 ItemSlots[i].OnPointerExitEvent += slot => EventHelper(slot, OnPointerExitEvent);
                 ItemSlots[i].OnRightClickEvent += slot => EventHelper(slot, OnRightClickEvent);

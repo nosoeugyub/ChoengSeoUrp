@@ -18,18 +18,18 @@ namespace NSY.Iven
 		
 		private void OnValidate()
 		{
-			Init();
+			//Init();
 		}
 
 		private void Start()
 		{
-			Init();
+		//	Init();
 
 		}
 
 		private void Init()
 		{
-			recipeUIParent.GetComponentsInChildren<CraftManager>(includeInactive: true, result: craftingRecipeUIs);
+		//	recipeUIParent.GetComponentsInChildren<CraftManager>(includeInactive: true, result: craftingRecipeUIs);
 			UpdateCraftingRecipes();
 		}
 

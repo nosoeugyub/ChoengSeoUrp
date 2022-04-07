@@ -161,7 +161,7 @@ namespace NSY.Iven
             {
                 if (OnRightClickEvent != null)
                 {
-
+                   
                     OnRightClickEvent(this);
                 }
             }
@@ -169,7 +169,7 @@ namespace NSY.Iven
             {
                 if (OnLeftClickEvent != null)
                 {
-
+                  
                     OnLeftClickEvent(this);
                 }
                 if (item is EquippableItem)

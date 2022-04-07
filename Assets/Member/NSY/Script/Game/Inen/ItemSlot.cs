@@ -46,10 +46,10 @@ namespace NSY.Iven
        
         public void OnDrag(PointerEventData eventData)
         {
-            //드레그
-            // itemImage.transform.position = Input.mousePosition;
+         
             if (OnDragEvent != null)
             {
+              
                 OnDragEvent(this);
             }
         }
@@ -83,8 +83,8 @@ namespace NSY.Iven
 
         public void OnDrop(PointerEventData eventData)
         {
-            
-            
+
+            Debug.Log("씨발련아");
             if (OnDropEvent != null)
             {
                 OnDropEvent(this);

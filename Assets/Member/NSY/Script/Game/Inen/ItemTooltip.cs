@@ -24,7 +24,7 @@ namespace NSY.Iven
         }
         public void ShowItemTooltip(Item item)
         {
-            Debug.Log("이거 됨");
+          
             ItemNameTex.text = item.ItemName;
             ItemSlotTex.text = item.InItemType.ToString();
             ItemStatsTex.text = item.ItemDescription;

@@ -91,7 +91,7 @@ namespace NSY.Iven
             Dropitemarea.OnDropEvent += DropItemOutsideUI;
 
 
-            carftingRecipe = new CraftingRecipe();
+            //carftingRecipe = new CraftingRecipe();
         }
 
         private void Update()
@@ -99,9 +99,10 @@ namespace NSY.Iven
 
             if (Craftmgr.activeSelf ==false)
             {
+                Debug.Log("미치녀");
                 CloseCraftPanel();
             }
-            //duble Click
+           
 
         }
 
@@ -129,7 +130,7 @@ namespace NSY.Iven
         //우편 버튼 눌렀을때.
         private void ClickPostButton(PostSlot postslot)
         {
-            //Debug.Log("버튼클릭함");
+           Debug.Log("버튼클릭함");
         }
 
         private void InventoryRightClick(BaseItemSlot itemslot)
@@ -216,6 +217,7 @@ namespace NSY.Iven
         {
             if (itemslot.item != null)
             {
+                Debug.Log("드래그시작함");
                 dragitemSlot = itemslot;
                 draggableitem.sprite = itemslot.item.ItemSprite;
                 draggableitem.transform.position = Input.mousePosition;
@@ -239,9 +241,9 @@ namespace NSY.Iven
        
         private void Drop(BaseItemSlot dropitemslot)
         {
-          
 
-          
+            Debug.Log("드래그시작함");
+
 
             if (dragitemSlot == null) return;
 

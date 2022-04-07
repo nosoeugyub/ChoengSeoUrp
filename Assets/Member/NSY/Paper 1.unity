@@ -29695,6 +29695,7 @@ MonoBehaviour:
   questmanager: {fileID: 1064878618}
   dialogueManager: {fileID: 1484550632}
   spawnmanager: {fileID: 0}
+  inventoryManager: {fileID: 0}
 --- !u!4 &1159110406
 Transform:
   m_ObjectHideFlags: 0
@@ -33639,6 +33640,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 5c0ce520b87fc884e811748dd46c7244, type: 2}
+  quad: {fileID: 0}
 --- !u!1 &1271928056
 GameObject:
   m_ObjectHideFlags: 3
@@ -56986,6 +56988,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cffdc964f3e57fe44874057f2b93cbb1, type: 3}
+--- !u!114 &2080450002 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1100152799861453545, guid: 2626c9f0bf9014343b52638586e20f5b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1301960619059001896}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6287918f93294e848a219fbd98c1231f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2088304508 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7004645043901100337, guid: cffdc964f3e57fe44874057f2b93cbb1,
@@ -58932,7 +58946,7 @@ PrefabInstance:
         type: 3}
       propertyPath: craftingRecipeUIs.Array.data[0]
       value: 
-      objectReference: {fileID: 1301960619059001898}
+      objectReference: {fileID: 2080450002}
     - target: {fileID: 19685709090480395, guid: bc9dafba953700647a66de4bbd455d63,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -60029,18 +60043,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1301960619059001896}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1301960619059001898 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5559076329020254442, guid: 2626c9f0bf9014343b52638586e20f5b,
-    type: 3}
-  m_PrefabInstance: {fileID: 1301960619059001896}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6287918f93294e848a219fbd98c1231f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &3185242557379118901
 PrefabInstance:
   m_ObjectHideFlags: 0
