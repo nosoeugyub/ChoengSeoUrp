@@ -35,16 +35,18 @@ Shader "Unlit/BlackHole"
                 v2f vert(appdata v)
                 {
                     v2f o;
+                 
                     o.vertex = UnityObjectToClipPos(v.vertex);
                     o.uv = v.uv;
                     return o;
                 }
 
                 sampler2D _MainTex;
-                uniform float _Twirl;
+                 float _Twirl;
 
-                fixed4 frag(v2f i) : SV_Target
-                {
+                 fixed4 frag(v2f i) : SV_Target
+                 {
+                     
                     // center UV coords
                     float2 uv = i.uv - 0.5;
                     // get angle from the center to uv coordinate
@@ -54,6 +56,7 @@ Shader "Unlit/BlackHole"
                     // offset angle based on twirl strength and distance from the center.
                     // affect the center the most
                     a += (0.5 - d) * _Twirl;
+                  
                     // recalculate new uv coordinate with new angle.
                     uv.x = cos(a) * d;
                     uv.y = sin(a) * d;
