@@ -1,14 +1,13 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class MineObject : ItemObject, IMineable,ISpeechBubbleCollectable
+public class MineObject : ItemObject, IMineable
 {
     int nowChopCount;
     [SerializeField] float respawnTime = 5;
     [SerializeField] float time = 0;
     int state = 0;//0 성장완료 1미완료
 
-    [SerializeField] GameObject glassSpeechBubble;
 
     BoxCollider boxcol;
 
@@ -18,8 +17,7 @@ public class MineObject : ItemObject, IMineable,ISpeechBubbleCollectable
     private void Awake()
     {
         base.Awake();
-        glassSpeechBubble = Instantiate(Resources.Load("Object/glassSpeechBubble") as GameObject, this.transform);
-        glassSpeechBubble.SetActive(false);
+
         boxcol = GetComponent<BoxCollider>();
     }
     private void OnEnable()
@@ -99,28 +97,6 @@ public class MineObject : ItemObject, IMineable,ISpeechBubbleCollectable
         }
     }
 
-    public void InstantiateBubble()
-    {
-        glassSpeechBubble.SetActive(true);
-    }
-    public bool CheckBubble(Item handitem, Animator animator)
-    {
-        if (handitem.InItemType != InItemType.MagnifyingGlass)
-        {
-            print("다른 도구로 시도해주세요.");
-            return false;
-        }
-        if (!glassSpeechBubble.activeSelf)
-        {
-            print("돋보기가 활성화되지 않았습니다.");
-            return false;
-        }
-        animator.SetBool("isMagnifying", true);
-        glassSpeechBubble.SetActive(false);
-        ObjectManager.CheckBubble();
-        //확률로 레시피 획득 구문
-        return true;
-    }
 }
 [System.Serializable]
 public class DropItem

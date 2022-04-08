@@ -90,6 +90,8 @@ public enum InItemType
     tree = 50000, Stone,
     //이벤트오브젝트
     Trashcan = 60000, Mailbox,
+    //돋보기 아이템
+    MagnifyObject = 70000,
 }
 //public static Dictionary<int, BuildingBehavior> BuildBuildingData = new Dictionary<int, BuildingBehavior>();//
 //public static Dictionary<int, ItemBehavior> ItemData = new Dictionary<int, ItemBehavior>();

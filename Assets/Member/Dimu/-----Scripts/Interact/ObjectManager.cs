@@ -12,12 +12,12 @@ public class ObjectManager : MonoBehaviour
 
     public void InstantiateBubble()
     {
-        MineObject[] mineObjects = FindObjectsOfType<MineObject>();
-        int randnum = Random.Range(0, mineObjects.Length);
-        mineObjects[randnum].InstantiateBubble();
+        MagnifyObject[] magnifyObjects = FindObjectsOfType<MagnifyObject>();
+        int randnum = Random.Range(0, magnifyObjects.Length);
+        magnifyObjects[randnum].InstantiateBubble();
         isBubbleOn = true;
         tick = 0;
-        Debug.Log(mineObjects[randnum].name);
+        Debug.Log(magnifyObjects[randnum].name);
     }
     public static void CheckBubble()
     {
