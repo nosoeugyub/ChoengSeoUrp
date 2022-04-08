@@ -234,9 +234,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4020fbad4516dd14c849bff8229d35aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CurBuildMode: 0
   Player: {fileID: 0}
   GuideObjOffsetY: 5
   GuideObjCorner: {fileID: 7958858302155548800}
+  GuideObj: {fileID: 0}
+  HalfGuideObjWidth: 0
+  HalfGuideObjHeight: 0
   BuildItemDragIndex: 0
   OnBuildItemDrag: 0
   curDragObj: {fileID: 0}
@@ -246,7 +250,6 @@ MonoBehaviour:
   - {fileID: 317872887972883175}
   - {fileID: 317872887612667703}
   nowBuildingBlock: {fileID: 0}
-  isBuildMode: 0
 --- !u!1 &317872889411382967
 GameObject:
   m_ObjectHideFlags: 0

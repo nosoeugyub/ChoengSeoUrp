@@ -84,7 +84,6 @@ namespace NSY.Iven
         public void OnDrop(PointerEventData eventData)
         {
 
-            Debug.Log("씨발련아");
             if (OnDropEvent != null)
             {
                 OnDropEvent(this);
