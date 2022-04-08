@@ -53,6 +53,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd1ed67dfce6ff1428d97e1f214dcd97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  craftslots: {fileID: 0}
   ItemSlots:
   - {fileID: 19685709819969364}
   - {fileID: 19685709071305586}
@@ -7239,8 +7240,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6287918f93294e848a219fbd98c1231f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrowParent: {fileID: 19685709004730573}
-  slotIndex: 0
   RecipelistPanel: {fileID: 19685709095706472}
   CraftingSlotsParent: {fileID: 19685709004730573}
   CratfingSlots:
@@ -7250,6 +7249,7 @@ MonoBehaviour:
   ResultSlot: {fileID: 19685708728880328}
   ivenTory: {fileID: 19685707724712652}
   NullRecpie: {fileID: 11400000, guid: 893584c5e1b53a241b44f4177b7d7592, type: 2}
+  inven: {fileID: 0}
 --- !u!1 &19685709034936496
 GameObject:
   m_ObjectHideFlags: 0
@@ -7491,6 +7491,11 @@ MonoBehaviour:
   questionDialog: {fileID: 19685708216449626}
   CraftSlot: []
   postpanel: {fileID: 0}
+  Craftmanager: {fileID: 0}
+  Craftmgr: {fileID: 0}
+  Craftindex: 0
+  isAdd: 1
+  ScriptTxt: {fileID: 0}
 --- !u!114 &19685709075681896
 MonoBehaviour:
   m_ObjectHideFlags: 0
