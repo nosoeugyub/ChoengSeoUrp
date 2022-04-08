@@ -58,7 +58,6 @@ namespace TT.BuildSystem
 
         public void BuildModeOn(BuildingBlock buildingBlock, UnityEngine.UI.Button[] buttons, GameObject interactUI)
         {
-            //remove all current listener when click on any button on the BuildInteracMenu 
             foreach (var button in buttons)
             {
                 button.gameObject.SetActive(false);
@@ -75,13 +74,12 @@ namespace TT.BuildSystem
             CamManager.ChangeFollowTarger(nowBuildingBlock.gameObject.transform, 2);
             CamManager.ChangeFollowTarger(nowBuildingBlock.gameObject.transform, 3);
 
-            SlotManager.AssignBuildItemSpawnPos(nowBuildingBlock.HouseBuild, nowBuildingBlock.gameObject.transform);
+            //SlotManager.AssignBuildItemSpawnPos(nowBuildingBlock.HouseBuild, nowBuildingBlock.gameObject.transform);
 
-            //TheUI.IsBuildMode = true;
+            TheUI.IsBuildMode = true;
             isBuildMode = true;
-            SetBuildMode(BuildMode.BuildHouseMode);
-
-            TheUI.TurnOnUI(0);
+            TheUI.TurnOffUI(0);
+            TheUI.TurnOnUI(1);
 
             CamManager.ActiveSubCamera(1);
 
@@ -114,7 +112,7 @@ namespace TT.BuildSystem
             CamManager.ChangeFollowTarger(nowBuildingBlock.gameObject.transform, 2);
             CamManager.ChangeFollowTarger(nowBuildingBlock.gameObject.transform, 3);
 
-            SlotManager.AssignBuildItemSpawnPos(nowBuildingBlock.HouseBuild, nowBuildingBlock.gameObject.transform);
+            //SlotManager.AssignBuildItemSpawnPos(nowBuildingBlock.HouseBuild, nowBuildingBlock.gameObject.transform);
 
             // TheUI.IsBuildMode = true;
             isBuildDemolishMode = true;
@@ -221,4 +219,4 @@ namespace TT.BuildSystem
 }
 public enum BuildState { NotFinish, Finish }
 
-public enum BuildMode {None,BuildHouseMode,DemolishMode }
+public enum BuildMode { None, BuildHouseMode, DemolishMode }
