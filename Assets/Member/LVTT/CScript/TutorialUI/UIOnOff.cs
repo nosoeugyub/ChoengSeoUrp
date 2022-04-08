@@ -10,7 +10,7 @@ namespace TT.Test
     public class UIOnOff : MonoBehaviour
     {
         [SerializeField] GameObject[] UIList;
-       // public Button[] BuildMenuButtonList;
+        // public Button[] BuildMenuButtonList;
         [HideInInspector] public Transform CurBuilding;
         [SerializeField] Vector3 SetOffsetPos;
         [HideInInspector]
@@ -27,7 +27,10 @@ namespace TT.Test
         }
         void Update()
         {
-
+            //if (Input.GetKeyDown("K"))
+            //{
+            //    TurnOnUI(0);
+            //}
         }
 
         public void TurnOnUI(int UINum)
@@ -42,15 +45,16 @@ namespace TT.Test
 
         public void CloseBuildMenu()
         {
+            TurnOffUI(0);
             BuildingBlock CurBlock = CurBuilding.GetComponent<BuildingBlock>();
-            //BuildAreaObject CurBuildObj = CurBuilding.GetComponent<BuildAreaObject>();
-            //UIList[1].SetActive(false);
-            TurnOffUI(1);
-            if (IsBuildMode)
+
+
+
+            if (BuildingManager.isBuildMode || BuildingManager.isBuildDemolishMode)
             {
                 if (CurBlock.buildState == BuildState.NotFinish)
                 {
-                    TurnOnUI(4);
+                    TurnOnUI(1);
                     CamManager.DeactiveSubCamera(1);
                     CamManager.ActiveSubCamera(3);
                 }
@@ -59,7 +63,7 @@ namespace TT.Test
                     //CurBlock.ExitBuildMode();
                 }
             }
-            
+
         }
 
         //public void BtnBuildBuilding()
@@ -80,8 +84,8 @@ namespace TT.Test
         public void BtnCompleteandExit()
         {
             BuildingBlock CurBlock = CurBuilding.GetComponent<BuildingBlock>();
-            TurnOffUI(4);
-            TurnOnUI(1);
+            TurnOffUI(1);
+            TurnOnUI(0);
             BuildManager.BuildModeOff();
             //CurBlock.CompleteBuilding();
             //CurBlock.ExitBuildMode();
@@ -89,13 +93,13 @@ namespace TT.Test
         public void BtnReturntoBuildMode()
         {
             BuildingBlock CurBlock = CurBuilding.GetComponent<BuildingBlock>();
-            TurnOffUI(4);
-            TurnOnUI(1);
+            TurnOffUI(1);
+            TurnOnUI(0);
             //CurBlock.BuildBuilding();
 
             CamManager.DeactiveSubCamera(3);
             CamManager.ActiveSubCamera(1);
-           // InventorySlot.SetInventoryPos(SetOffsetPos);
+            // InventorySlot.SetInventoryPos(SetOffsetPos);
         }
 
     }
