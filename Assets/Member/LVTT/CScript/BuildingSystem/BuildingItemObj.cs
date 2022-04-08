@@ -16,8 +16,9 @@ namespace TT.BuildSystem
         public float xDragOffset = 2f;
         public float MaxScale;
         public float MinScale;
+        public int breakPoint;
 
-       float zOffset;
+        float zOffset;
         private float BuildItemGap = 0.01f;
         private Vector3 mOffset;
         private float mZCoord;
@@ -48,18 +49,19 @@ namespace TT.BuildSystem
 
         private void Update()
         {
-
-
-            if (!itemisSet)
+   
+            if (BuildManager.CurBuildMode==BuildMode.BuildHouseMode)
             {
-                ItemMove();
+                if (!itemisSet)
+                {
+                    ItemMove();
+                }
             }
-
 
         }
         void HouseBuildAreaCal()
         {
-           ObjOriginPos = gameObject.transform.position;
+            ObjOriginPos = gameObject.transform.position;
             MaxX = gameObject.transform.position.x + xDragOffset;
             MinX = gameObject.transform.position.x - xDragOffset;
             MaxY = gameObject.transform.position.y + yDragOffset;
@@ -68,31 +70,42 @@ namespace TT.BuildSystem
             ObjOriginHeight = BuildManager.HalfGuideObjHeight - yDragOffset;
             curObjWidth = ObjOriginWidth;
             curObjHeight = ObjOriginHeight;
-            
+
         }
         private void OnMouseDown()
         {
-            //mZCoord = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
-            //Store offset = gameobject worldpos - mouse world pos
-            mOffset = gameObject.transform.position - GetMouseWorldPos();
-            switch (itemisSet)
+            if (BuildingManager.isBuildMode)
             {
-                case true:
-                    if (canTouch)
-                    {
-                        if (this.ItemKind == BuildItemKind.Wall)
-                        { }
-                        else
-                        { BringItemTotheBack(); }
-                        itemisSet = false;
-                        print("itemisSet = false");
-                    }
-                    break;
-                case false:
-                    SetItemPos();
-                    HouseBuildReCal();
-                    break;
+                mOffset = gameObject.transform.position - GetMouseWorldPos();
+                switch (itemisSet)
+                {
+                    case true:
+                        if (canTouch)
+                        {
+                            if (this.ItemKind == BuildItemKind.Wall)
+                            { }
+                            else
+                            { BringItemTotheBack(); }
+                            itemisSet = false;
+                            print("itemisSet = false");
+                        }
+                        break;
+                    case false:
+                        SetItemPos();
+                        break;
+                }
             }
+            else if (BuildManager.CurBuildMode==BuildMode.DemolishMode)
+            {
+                mOffset = gameObject.transform.position - GetMouseWorldPos();
+                if (canTouch)
+                {
+                    breakPoint -= 1;
+                    if (breakPoint <= 0)
+                    { DemolishBuildItem(); }
+                }
+            }
+
         }
 
         void SetItemPos()
@@ -100,11 +113,14 @@ namespace TT.BuildSystem
             transform.position = GetMouseWorldPos() + mOffset;
             itemisSet = true;
             canTouch = false;
-          //  print("itemisSet = true, canTouch = false");
+            //  print("itemisSet = true, canTouch = false");
             BuildManager.OnBuildItemDrag = false;
-          
-        }
 
+        }
+        void DemolishBuildItem()
+        {
+            Destroy(gameObject);
+        }
         Vector3 GetMouseWorldPos()
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -114,7 +130,7 @@ namespace TT.BuildSystem
                 {
 
                     if (!BuildManager.OnBuildItemDrag)
-                    { 
+                    {
                         canTouch = true;
                         print("canTouch = true");
                     }
@@ -158,7 +174,7 @@ namespace TT.BuildSystem
             //print("BuildManager.OnBuildItemDrag = true");
             BuildManager.curDragObj = this.GetComponent<BuildingItemObj>();
             Vector3 DragPos = GetMouseWorldPos() + mOffset;
-           // HouseBuildReCal();
+            HouseBuildReCal();
             if (DragPos.x >= MaxX)
             {
                 DragPos.x = MaxX;
@@ -191,7 +207,7 @@ namespace TT.BuildSystem
         }
         public void SetBuildItemScale(Vector3 scalenum)
         {
-           if(scalenum.x>=MaxScale)
+            if (scalenum.x >= MaxScale)
             {
                 scalenum.x = MaxScale;
             }
@@ -208,27 +224,26 @@ namespace TT.BuildSystem
                 scalenum.y = MinScale;
             }
             transform.localScale = scalenum;
-            curObjWidth = curObjWidth * transform.localScale.x;
+            curObjWidth = ObjOriginWidth * transform.localScale.x;
             Debug.Log("curobjWidth = " + curObjWidth);
-            //Debug.Log(ObjOriginWidth);
-            curObjHeight = curObjHeight * transform.localScale.y;
-            //Debug.Log(curObjHeight);
-            //Debug.Log(ObjOriginHeight);
+
+            curObjHeight = ObjOriginHeight * transform.localScale.y;
+
         }
 
         void HouseBuildReCal()
         {
-            //Debug.Log("MaX = " + MaxX);
-            //float tempMaxX = ObjOriginPos.x + (BuildManager.HalfGuideObjWidth - curObjWidth);
-            //Debug.Log("ObjoriginX" + ObjOriginPos.x);
-            //Debug.Log("HalfGuideWidth" + BuildManager.HalfGuideObjWidth);
-            //Debug.Log("TempMax=" + tempMaxX);
-            //MaxX = ObjOriginPos.x + (BuildManager.HalfGuideObjWidth -curObjWidth);
-            //Debug.Log(MaxX);
-            //MinX = ObjOriginPos.x - (BuildManager.HalfGuideObjWidth - curObjWidth);
-            //Debug.Log(MinX);
-            //MaxY = ObjOriginPos.y + (BuildManager.HalfGuideObjHeight - curObjHeight);
-            //MinY = ObjOriginPos.y - (BuildManager.HalfGuideObjHeight - curObjHeight);
+            Debug.Log("MaX = " + MaxX);
+            float tempMaxX = ObjOriginPos.x + (BuildManager.HalfGuideObjWidth - curObjWidth);
+            Debug.Log("ObjoriginX" + ObjOriginPos.x);
+            Debug.Log("HalfGuideWidth" + BuildManager.HalfGuideObjWidth);
+            Debug.Log("TempMax=" + tempMaxX);
+            MaxX = ObjOriginPos.x + (BuildManager.HalfGuideObjWidth - curObjWidth);
+            Debug.Log(MaxX);
+            MinX = ObjOriginPos.x - (BuildManager.HalfGuideObjWidth - curObjWidth);
+            Debug.Log(MinX);
+            MaxY = ObjOriginPos.y + (BuildManager.HalfGuideObjHeight - curObjHeight);
+            MinY = ObjOriginPos.y - (BuildManager.HalfGuideObjHeight - curObjHeight);
         }
         public string CanInteract()
         {

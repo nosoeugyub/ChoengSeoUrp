@@ -8,6 +8,7 @@ namespace TT.BuildSystem
 {
     public class BuildingManager : MonoBehaviour
     {
+        public BuildMode CurBuildMode;
         //[SerializeField] public Transform CurBuilding;
         public GameObject Player;
         //GuideObj
@@ -18,8 +19,8 @@ namespace TT.BuildSystem
         public float HalfGuideObjWidth;
         [HideInInspector]
         public float HalfGuideObjHeight;
-       
-        
+
+
         [HideInInspector]
         public int BuildItemDragIndex = 0;
         [HideInInspector]
@@ -39,21 +40,63 @@ namespace TT.BuildSystem
 
         // public GameObject SpawnBuildItem;
 
-        public bool isBuildMode = false;
+        public static bool isBuildMode = false;
+        public static bool isBuildDemolishMode = false;
         private void Awake()
         {
             TheUI = FindObjectOfType<UIOnOff>();
             SlotManager = FindObjectOfType<BuildItemInventorySlot>();
             CamManager = FindObjectOfType<CameraManager>();
-           
+
         }
 
         private void Start()
         {
             GuideObjCal();
+            SetBuildMode(BuildMode.None);
         }
 
-        public void BuildModeOn(BuildingBlock buildingBlock, UnityEngine.UI.Button[] buttons,GameObject interactUI)
+        public void BuildModeOn(BuildingBlock buildingBlock, UnityEngine.UI.Button[] buttons, GameObject interactUI)
+        {
+            //remove all current listener when click on any button on the BuildInteracMenu 
+            foreach (var button in buttons)
+            {
+                button.gameObject.SetActive(false);
+                button.onClick.RemoveAllListeners();
+            }
+
+            buildingBlock.buildButtonFuncAdded = false;
+            interactUI.SetActive(false);
+            nowBuildingBlock = buildingBlock;
+
+            TheUI.CurBuilding = nowBuildingBlock.gameObject.transform;
+
+            CamManager.ChangeFollowTarger(nowBuildingBlock.gameObject.transform, 1);
+            CamManager.ChangeFollowTarger(nowBuildingBlock.gameObject.transform, 2);
+            CamManager.ChangeFollowTarger(nowBuildingBlock.gameObject.transform, 3);
+
+            SlotManager.AssignBuildItemSpawnPos(nowBuildingBlock.HouseBuild, nowBuildingBlock.gameObject.transform);
+
+            //TheUI.IsBuildMode = true;
+            isBuildMode = true;
+            SetBuildMode(BuildMode.BuildHouseMode);
+
+            TheUI.TurnOnUI(0);
+
+            CamManager.ActiveSubCamera(1);
+
+            Player.SetActive(false);
+
+            //SlotManager.MoveInventToRight();
+
+            ViewGuideObject(0);
+            ViewGuideObject(2);
+            UnViewGuideObject(1);
+
+
+        }
+
+        public void BuildDemolishModeOn(BuildingBlock buildingBlock, UnityEngine.UI.Button[] buttons, GameObject interactUI)
         {
             foreach (var button in buttons)
             {
@@ -73,48 +116,52 @@ namespace TT.BuildSystem
 
             SlotManager.AssignBuildItemSpawnPos(nowBuildingBlock.HouseBuild, nowBuildingBlock.gameObject.transform);
 
-            TheUI.IsBuildMode = true;
-            isBuildMode = true;
-            TheUI.TurnOffUI(0);
-            TheUI.TurnOnUI(1);
+            // TheUI.IsBuildMode = true;
+            isBuildDemolishMode = true;
+            SetBuildMode(BuildMode.DemolishMode);
+            //isBuildMode = true;
+
+            TheUI.TurnOnUI(0);
 
             CamManager.ActiveSubCamera(1);
 
             Player.SetActive(false);
 
-            //SlotManager.MoveInventToRight();
-
             ViewGuideObject(0);
             ViewGuideObject(2);
             UnViewGuideObject(1);
+            //foreach (Transform child in buildingBlock.HouseBuild)
+            //{
+            //    GameObject.Destroy(child.gameObject);
+            //}    
 
-         
         }
 
         public void BuildModeOff()
         {
-            TheUI.IsBuildMode = false;
-            TheUI.TurnOffUI(1);
+            BuildingManager.isBuildMode = false;
+            BuildingManager.isBuildDemolishMode = false;
+            TheUI.TurnOffUI(0);
             isBuildMode = false;
-
+            SetBuildMode(BuildMode.None);
             CamManager.DeactiveSubCamera(1);
             CamManager.DeactiveSubCamera(2);
             CamManager.DeactiveSubCamera(3);
 
             Player.SetActive(true);
 
-           // SlotManager.ResetInventPos();
+            // SlotManager.ResetInventPos();
 
             UnViewGuideObject(0);
             UnViewGuideObject(2);
-            
+
         }
 
         void ViewGuideObject(int ObjNum)
         {
             BuildBlockObjList[ObjNum].SetActive(true);
             Vector3 GuidePos = nowBuildingBlock.HouseBuild.transform.position;
-            GuidePos.y =GuidePos.y+GuideObjOffsetY;
+            GuidePos.y = GuidePos.y + GuideObjOffsetY;
             BuildBlockObjList[ObjNum].transform.position = GuidePos;
         }
         void UnViewGuideObject(int ObjNum)
@@ -130,7 +177,7 @@ namespace TT.BuildSystem
                 var.x += BuildItemScaleVar;
                 var.y += BuildItemScaleVar;
                 curDragObj.SetBuildItemScale(var);
-               // Debug.Log("Mouse is Scrolling up");
+                // Debug.Log("Mouse is Scrolling up");
             }
             else if (Input.GetAxis("Mouse ScrollWheel") < 0)
             {
@@ -138,13 +185,17 @@ namespace TT.BuildSystem
                 var.x -= BuildItemScaleVar;
                 var.y -= BuildItemScaleVar;
                 curDragObj.SetBuildItemScale(var);
-               // Debug.Log("Mouse is Scrolling down");
+                // Debug.Log("Mouse is Scrolling down");
             }
         }
-
+        public void SetBuildMode(BuildMode buildmode)
+        {
+            CurBuildMode = buildmode;
+            Debug.Log("curBuildMode is" + buildmode);
+        }
         void GuideObjCal()
         {
-           // Debug.Log("GuideObjCalculate");
+            // Debug.Log("GuideObjCalculate");
             HalfGuideObjHeight = GuideObjCorner.transform.position.y - GuideObj.transform.position.y;
             HalfGuideObjWidth = GuideObjCorner.transform.position.x - GuideObj.transform.position.x;
             //Debug.Log(HalfGuideObjHeight);
@@ -152,13 +203,22 @@ namespace TT.BuildSystem
         }
         private void Update()
         {
-           
-
-            if (OnBuildItemDrag)
+            if (BuildingManager.isBuildDemolishMode)
             {
-                ScaleBuildItem();
+                nowBuildingBlock.RemoveDemolishedBuildItem();
             }
+
+            if (BuildingManager.isBuildMode)
+            {
+                if (OnBuildItemDrag)
+                {
+                    ScaleBuildItem();
+                }
+            }
+
         }
     }
 }
 public enum BuildState { NotFinish, Finish }
+
+public enum BuildMode {None,BuildHouseMode,DemolishMode }
