@@ -195,7 +195,7 @@ namespace NSY.Iven
             bool isRecipe0; //
             bool isRecipe1;
             bool isRecipe2;
-            
+          
             
                 for (int i = 0; i < RecipelistPanel.RecipeList.Count; i++)//레시피 검사
                 {
@@ -213,46 +213,46 @@ namespace NSY.Iven
                         else if(RecipelistPanel.RecipeList[i].recipe.Length == 1)
                         {
                                isRecipe1 = true;
-                                isRecipe2 = true;
+                               // isRecipe2 = true;
                         }
-                    else if (RecipelistPanel.RecipeList[i].recipe.Length == 0)
-                    {
-                        isRecipe0 = true;
-                    }
-                    for (int k = 0; k < CratfingSlots.Count; k++)//현재 조합식이랑 레시피 조합식 비교
+                        else if (RecipelistPanel.RecipeList[i].recipe.Length == 0)
                         {
-                        
-                           if (RecipelistPanel.RecipeList[i].recipe[j].item == CratfingSlots[k].item && RecipelistPanel.RecipeList[i].recipe[j].Count == CratfingSlots[k].Amount)
+                             isRecipe0 = true;
+                        }
+                           for (int k = 0; k < CratfingSlots.Count; k++)//현재 조합식이랑 레시피 조합식 비교
                            {
-                               if (j == 0)
-                               {
-                                isRecipe0 = true;
-                               }
-                               else if (j == 1)
-                               {
-                                isRecipe1 = true;
-                               }
-                               else if (j == 2)
-                               {
-                                isRecipe2 = true;
-                               }
+                        
+                              if (RecipelistPanel.RecipeList[i].recipe[j].item == CratfingSlots[k].item && RecipelistPanel.RecipeList[i].recipe[j].Count == CratfingSlots[k].Amount)
+                              {
+                                  if (j == 0)
+                                  {
+                                    isRecipe0 = true;
+                                  }
+                                  else if (j == 1)
+                                  {
+                                  isRecipe1 = true;
+                                  }
+                                  else if (j == 2)
+                                  {
+                                  isRecipe2 = true;
+                                  }
 
-                               if (isRecipe1 && isRecipe2 && isRecipe0)
-                               {
-                                Debug.Log("레시피 맞음");
-                                ResultSlot.UpdateResult(craftingRecipes);
-                                ResultSlot.item = RecipelistPanel.RecipeList[i];
+                                     if (isRecipe1 && isRecipe2 && isRecipe0)
+                                     {
+                                         Debug.Log("레시피 맞음");
+                                         ResultSlot.UpdateResult(craftingRecipes);
+                                         ResultSlot.item = RecipelistPanel.RecipeList[i];
                                 
-                                Color color = ResultSlot.GetComponent<Image>().color;
-                                color.a = 1.0f;
-                                ResultSlot.GetComponent<Image>().color = color;
+                                          Color color = ResultSlot.GetComponent<Image>().color;
+                                           color.a = 1.0f;
+                                          ResultSlot.GetComponent<Image>().color = color;
 
-                                return RecipelistPanel.RecipeList[i];
-                               }
-                                else
-                                {
+                                          return RecipelistPanel.RecipeList[i];
+                                     }
+                                    else if(!isRecipe1 && !isRecipe2 && !isRecipe0)
+                                    {
                                       ResultSlot.item = null;
-                                }
+                                    }
 
                         }
                           
