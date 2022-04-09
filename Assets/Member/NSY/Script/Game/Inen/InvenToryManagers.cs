@@ -145,20 +145,14 @@ namespace NSY.Iven
           
             if (itemslot.item is Item && btniven.Craft == true)
             {
-                if (isAdd)
+                if (craftPanel.DonthaveCraft())
                 {
                     craftPanel.CraftAddItem(itemslot.item.GetCopy());
                     itemslot.Amount--;
                     UpdateRecipe();
-                    Craftindex++;
                 }
-                if (Craftindex == 3)
-                {
-                    isAdd = false;
-                }
-              
-              
-
+                   
+                   
             }
 
             if (itemslot.item is EquippableItem && btniven.isInven == true)
@@ -189,13 +183,10 @@ namespace NSY.Iven
                 iventorynsy.AddItem(itemslot.item.GetCopy());
                 itemslot.Amount--;
                 UpdateRecipe();
-                Craftindex--;
+               
 
             }
-            if (Craftindex < 3)
-            {
-                isAdd = true;
-            }
+            
         }
         void UpdateRecipe()
         {//탐색

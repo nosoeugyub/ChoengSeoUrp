@@ -213,7 +213,7 @@ namespace NSY.Iven
                         else if(RecipelistPanel.RecipeList[i].recipe.Length == 1)
                         {
                                isRecipe1 = true;
-                               // isRecipe2 = true;
+                                isRecipe2 = true;
                         }
                         else if (RecipelistPanel.RecipeList[i].recipe.Length == 0)
                         {
@@ -226,8 +226,10 @@ namespace NSY.Iven
                               {
                                   if (j == 0)
                                   {
-                                    isRecipe0 = true;
+                               
+                                isRecipe0 = true;
                                   }
+
                                   else if (j == 1)
                                   {
                                   isRecipe1 = true;
@@ -249,17 +251,20 @@ namespace NSY.Iven
 
                                           return RecipelistPanel.RecipeList[i];
                                      }
-                                    else if(!isRecipe1 && !isRecipe2 && !isRecipe0)
-                                    {
-                                      ResultSlot.item = null;
-                                    }
+                           
 
+                              }
+                        if (RecipelistPanel.RecipeList[i].recipe[j].item != CratfingSlots[k].item || RecipelistPanel.RecipeList[i].recipe[j].Count != CratfingSlots[k].Amount)
+                        {
+                            
+                           
+                            ResultSlot.item = null;
+                            Debug.Log("레시피가 맞는게 업성요");
                         }
-                          
 
 
 
-                        }
+                           }
                         
                     
                          
@@ -267,7 +272,7 @@ namespace NSY.Iven
                
                     
                 }
-            return null;// 맞지않다 
+            return NullRecpie;// 맞지않다 
 
 
        }
@@ -284,7 +289,7 @@ namespace NSY.Iven
                     {
                         if (CratfingSlots[i].item != inven.ItemSlots[j].item && inven.ItemSlots[j] != null)
                         {
-                            Debug.Log("1개짜리는 되돌려");
+                           
 
                              inven.entireItem(CratfingSlots[i].item.GetCopy());
                           
@@ -302,7 +307,7 @@ namespace NSY.Iven
                     {
                         if (CratfingSlots[i].item == inven.ItemSlots[j].item)
                         {
-                            Debug.Log("갯수 남은거채워");
+                            
                             inven.ItemSlots[j].Amount += CratfingSlots[i].Amount;
 
                             CratfingSlots[i].item = null;
@@ -319,6 +324,26 @@ namespace NSY.Iven
 
         }
       
+
+
+        public bool DonthaveCraft()
+        {
+            for (int i = 0; i < CratfingSlots.Count; i++)
+            {
+                if (CratfingSlots[2].item != null)
+                {
+                          return false;
+                 }
+               
+            }
+           
+            return true;
+        }
+             
+               
+           
+           
+        
     }
 
 }
