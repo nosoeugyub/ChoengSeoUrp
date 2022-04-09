@@ -14,7 +14,7 @@ public class MineObject : ItemObject, IMineable
     [Tooltip("이 오브젝트를 채집할 수 있는 도구 타입")]
     [SerializeField] InItemType toolType;
 
-    private void Awake()
+    private new void Awake()
     {
         base.Awake();
 

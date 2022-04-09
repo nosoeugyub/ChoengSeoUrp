@@ -41,8 +41,6 @@ namespace NSY.Iven
         public bool isAdd = true;
         private BaseItemSlot dragitemSlot;
 
-        [SerializeField] BuildingItemSpawn buildingItemSpawn;
-
         //더블클릭
         private float firstClickTime, timeBetweenClicks;
         private bool coroutineAllowed;
@@ -110,9 +108,9 @@ namespace NSY.Iven
 
         private void BuildingLeftClick(BaseItemSlot obj)
         {
-            if (BuildingManager.isBuildMode)
+            if (BuildingBlock.isBuildMode)
             {
-                buildingItemSpawn.BtnSpawnHouseBuildItem(obj.item);
+                BuildingBlock.nowBuildingBlock.BtnSpawnHouseBuildItem(obj.item);
             }
         }
 

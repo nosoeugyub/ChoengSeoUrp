@@ -21,7 +21,6 @@ namespace TT.BuildSystem
         float MaxZ;
         float MinZ;
 
-        BuildingManager BuildingManager;
         private void Start()
         {
             // BuildingManager = FindObjectOfType<BuildingManager>();

@@ -16,13 +16,9 @@ namespace TT.Test
         [HideInInspector]
         public bool IsBuildMode;
         CameraManager CamManager;
-        BuildingManager BuildManager;
-        BuildItemInventorySlot InventorySlot;
         void Start()
         {
-            InventorySlot = FindObjectOfType<BuildItemInventorySlot>();
             CamManager = FindObjectOfType<CameraManager>();
-            BuildManager = FindObjectOfType<BuildingManager>();
             IsBuildMode = false;
         }
         void Update()
@@ -33,38 +29,38 @@ namespace TT.Test
             //}
         }
 
-        public void TurnOnUI(int UINum)
-        {
-            UIList[UINum].SetActive(true);
-        }
+        //public void TurnOnUI(int UINum)
+        //{
+        //    UIList[UINum].SetActive(true);
+        //}
 
-        public void TurnOffUI(int UINum)
-        {
-            UIList[UINum].SetActive(false);
-        }
+        //public void TurnOffUI(int UINum)
+        //{
+        //    UIList[UINum].SetActive(false);
+        //}
 
-        public void CloseBuildMenu()
-        {
-            TurnOffUI(0);
-            BuildingBlock CurBlock = CurBuilding.GetComponent<BuildingBlock>();
-
-
-
-            if (BuildingManager.isBuildMode || BuildingManager.isBuildDemolishMode)
-            {
-                if (CurBlock.buildState == BuildState.NotFinish)
-                {
-                    TurnOnUI(1);
-                    CamManager.DeactiveSubCamera(1);
-                    CamManager.ActiveSubCamera(3);
-                }
-                else
-                {
-                    //CurBlock.ExitBuildMode();
-                }
-            }
-
-        }
+        //public void CloseBuildMenu()
+        //{
+        //    TurnOffUI(0);
+        //    BuildingBlock CurBlock = CurBuilding.GetComponent<BuildingBlock>();
+        //
+        //
+        //
+        //    if (BuildingManager.isBuildMode || BuildingManager.isBuildDemolishMode)
+        //    {
+        //        if (CurBlock.buildState == BuildState.NotFinish)
+        //        {
+        //            TurnOnUI(1);
+        //            CamManager.DeactiveSubCamera(1);
+        //            CamManager.ActiveSubCamera(3);
+        //        }
+        //        else
+        //        {
+        //            //CurBlock.ExitBuildMode();
+        //        }
+        //    }
+        //
+        //}
 
         //public void BtnBuildBuilding()
         //{
@@ -81,26 +77,25 @@ namespace TT.Test
         //    BuildingBlock CurBlock = CurBuilding.GetComponent<BuildingBlock>();
         //    //CurBlock.CompleteBuilding();
         //}
-        public void BtnCompleteandExit()
-        {
-            BuildingBlock CurBlock = CurBuilding.GetComponent<BuildingBlock>();
-            TurnOffUI(1);
-            TurnOnUI(0);
-            BuildManager.BuildModeOff();
-            //CurBlock.CompleteBuilding();
-            //CurBlock.ExitBuildMode();
-        }
-        public void BtnReturntoBuildMode()
-        {
-            BuildingBlock CurBlock = CurBuilding.GetComponent<BuildingBlock>();
-            TurnOffUI(1);
-            TurnOnUI(0);
-            //CurBlock.BuildBuilding();
+        //public void BtnCompleteandExit()
+        //{
+        //    BuildingBlock CurBlock = CurBuilding.GetComponent<BuildingBlock>();
+        //    TurnOffUI(1);
+        //    TurnOnUI(0);
+        //    //CurBlock.CompleteBuilding();
+        //    //CurBlock.ExitBuildMode();
+        //}
+        //public void BtnReturntoBuildMode()
+        //{
+        //    BuildingBlock CurBlock = CurBuilding.GetComponent<BuildingBlock>();
+        //    TurnOffUI(1);
+        //    TurnOnUI(0);
+        //    //CurBlock.BuildBuilding();
 
-            CamManager.DeactiveSubCamera(3);
-            CamManager.ActiveSubCamera(1);
-            // InventorySlot.SetInventoryPos(SetOffsetPos);
-        }
+        //    CamManager.DeactiveSubCamera(3);
+        //    CamManager.ActiveSubCamera(1);
+        //    // InventorySlot.SetInventoryPos(SetOffsetPos);
+        //}
 
     }
 }
