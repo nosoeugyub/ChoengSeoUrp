@@ -169,7 +169,7 @@ Transform:
   m_LocalScale: {x: 50, y: 50, z: 1}
   m_Children: []
   m_Father: {fileID: 4123280054577332983}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4123280054561734942
 MeshFilter:
@@ -247,7 +247,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4123280054577332983
 Transform:
   m_ObjectHideFlags: 0
@@ -259,11 +259,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4123280055967156641}
   - {fileID: 4123280056344860218}
   - {fileID: 4123280054561734939}
   m_Father: {fileID: 4123280055350815964}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4123280054628325710
 GameObject:
@@ -1003,6 +1002,7 @@ Transform:
   - {fileID: 4123280055626430901}
   - {fileID: 4123280056203766432}
   - {fileID: 4123280054969960020}
+  - {fileID: 4123280055967156641}
   - {fileID: 4123280054577332983}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -1032,13 +1032,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83250eade0b79f5429b6c83f68c1f5f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CurBuildMode: 0
   HouseBuild: {fileID: 4123280055626430901}
   BuildItemList: []
+  CurWallItemzPos: 0
   CurFrontItemzPos: 0
   MaxBackItemzPos: 0
   buildState: 0
   buildingId: 0
   toolType: 0
+  buildButtonFuncAdded: 0
+  hasWall: 0
+  HalfGuideObjWidth: 0
+  HalfGuideObjHeight: 0
+  curDragObj: {fileID: 0}
+  BuildItemScaleVar: 0.1
+  OnBuildItemDrag: 0
+  SpawnOffsetY: 0
+  SpawnOffsetZ: 0
 --- !u!1 &4123280055626430900
 GameObject:
   m_ObjectHideFlags: 0
@@ -1125,13 +1136,13 @@ GameObject:
   - component: {fileID: 4123280055967156644}
   - component: {fileID: 4123280055967156643}
   - component: {fileID: 4123280055967156642}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: HouseBuildArea-Blue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4123280055967156641
 Transform:
   m_ObjectHideFlags: 0
@@ -1139,12 +1150,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4123280055967156640}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 3.6, z: -1.2}
   m_LocalScale: {x: 8.77, y: 10.86, z: 1}
   m_Children: []
-  m_Father: {fileID: 4123280054577332983}
-  m_RootOrder: 0
+  m_Father: {fileID: 4123280055350815964}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4123280055967156644
 MeshFilter:
@@ -1272,7 +1283,7 @@ Transform:
   m_LocalScale: {x: 0.9, y: 1, z: 0.5}
   m_Children: []
   m_Father: {fileID: 4123280054577332983}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4123280056344860221
 MeshFilter:

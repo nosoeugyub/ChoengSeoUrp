@@ -1,7 +1,7 @@
-﻿using NSY.Manager;
+﻿using Game.Cam;
+using NSY.Manager;
 using System.Collections.Generic;
 using UnityEngine;
-using Game.Cam;
 public enum BuildItemKind { Wall, Roof, Door, Window, Signboard, Etc }
 public enum BuildState { NotFinish, Finish }
 public enum BuildMode { None, BuildHouseMode, DemolishMode }
@@ -30,7 +30,7 @@ namespace TT.BuildSystem
         public bool buildButtonFuncAdded;
         [HideInInspector]
         public bool hasWall = false;
-        internal bool hasSign =  false;
+        internal bool hasSign = false;
 
         public static bool isBuildMode = false;
         public static bool isBuildDemolishMode = false;
@@ -48,18 +48,62 @@ namespace TT.BuildSystem
         [HideInInspector]
         public bool OnBuildItemDrag = false;
 
-        private float BuildItemGap = 0.000001f;
+        private float BuildItemGap = 0.00005f;
         public float SpawnOffsetY;
         public float SpawnOffsetZ;
 
+        RaycastHit hit;
+        Ray ray;
+        int layerMask;   // Player 레이어만 충돌 체크함
+        Vector3 movePos;
+        Vector3 movePos1;
         ////////////////////////////////////////////////////////
         void Start()
         {
+            layerMask = 1 << LayerMask.NameToLayer("Interactable");
             buildButtonFuncAdded = false;
             CamManager = FindObjectOfType<CameraManager>();
             //hasWall = false; 
-        }   
+        }
+        private void Update()
+        {
+            if (CurBuildMode == BuildMode.BuildHouseMode)
+            {
+                ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue, 0.3f);
 
+                if (Input.GetMouseButtonDown(0))
+                {
+                    if (curDragObj == null) return;
+                    if (Physics.Raycast(ray, out hit, 10000, layerMask))
+                    {
+                        print(hit.collider.name);
+                        if (hit.collider.GetComponent<BuildingItemObj>() == null) return;
+
+                        if (curDragObj.IsitemSet())
+                        {
+                            curDragObj = hit.collider.GetComponent<BuildingItemObj>();
+                            curDragObj.SetItemState(false);
+                            print("itemisSet = false; " + curDragObj);
+                        }
+                        else
+                        {
+                            print("itemisSet = true;");
+                            curDragObj.SetItemState(true);
+                        }
+                    }
+                    else if (!curDragObj.IsitemSet())
+                    {
+                        curDragObj.SetItemState(true);
+                        print("itemisSet = true;");
+                    }
+                }
+
+                if (curDragObj && !curDragObj.IsitemSet())
+                    ScaleBuildItem();
+            }
+
+        }
         public void AddBuildItemToList(GameObject Item)
         {
             BuildItemList.Add(Item);
@@ -92,7 +136,7 @@ namespace TT.BuildSystem
                 {
                     buttons[0].onClick.AddListener(() =>
                     {
-                        BuildModeOn( interactUI);
+                        BuildModeOn(interactUI);
                         playerTf.gameObject.SetActive(false);
                         ResetButtonEvents(buttons);
                         print("1. Build Building");
@@ -146,7 +190,7 @@ namespace TT.BuildSystem
             }
         }
 
-        public void BuildModeOn( GameObject interactUI)
+        public void BuildModeOn(GameObject interactUI)
         {
             buildButtonFuncAdded = false;
             interactUI.SetActive(false);
@@ -165,7 +209,7 @@ namespace TT.BuildSystem
             //Inventory UI On + Can't turn Off while in build mode + Press X button, Invoke BuildModeOff method
         }
 
-        public void BuildDemolishModeOn( GameObject interactUI)
+        public void BuildDemolishModeOn(GameObject interactUI)
         {
             buildButtonFuncAdded = false;
             interactUI.SetActive(false);
@@ -180,6 +224,7 @@ namespace TT.BuildSystem
 
             CamManager.ActiveSubCamera(1);
         }
+
         public void BuildModeOff()
         {
             CamManager.DeactiveSubCamera(1);
@@ -198,7 +243,7 @@ namespace TT.BuildSystem
             CurBuildMode = buildmode;
             Debug.Log("curBuildMode is" + buildmode);
         }
-            void ScaleBuildItem()
+        void ScaleBuildItem()
         {
             if (Input.GetAxis("Mouse ScrollWheel") > 0)
             {
