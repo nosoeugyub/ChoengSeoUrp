@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using DM.Inven;
 using NSY.Player;
 using System;
-
+using TT.BuildSystem;
 
 namespace NSY.Iven
 {
@@ -41,6 +41,7 @@ namespace NSY.Iven
         public bool isAdd = true;
         private BaseItemSlot dragitemSlot;
 
+        [SerializeField] BuildingItemSpawn buildingItemSpawn;
 
         //더블클릭
         private float firstClickTime, timeBetweenClicks;
@@ -67,7 +68,7 @@ namespace NSY.Iven
 
             //인벤토리 클레스 이벤트
             iventorynsy.OnDubleClickEvent += OnDoubleClickEvent;
-
+            iventorynsy.OnLeftClickEvent += BuildingLeftClick;
             iventorynsy.OnRightClickEvent += InventoryRightClick;
            // iventorynsy.OnLeftClickEvent += InventoryLeftClick;
             equipPanel.OnRightClickEvent += EquipmentPanelRightClick;
@@ -99,7 +100,7 @@ namespace NSY.Iven
 
             if (Craftmgr.activeSelf ==false)
             {
-                Debug.Log("미치녀");
+                //Debug.Log("미치녀");
                 CloseCraftPanel();
             }
            
@@ -107,7 +108,13 @@ namespace NSY.Iven
         }
 
 
-
+        private void BuildingLeftClick(BaseItemSlot obj)
+        {
+            if (BuildingManager.isBuildMode)
+            {
+                buildingItemSpawn.BtnSpawnHouseBuildItem(obj.item);
+            }
+        }
 
 
         //더블클릭

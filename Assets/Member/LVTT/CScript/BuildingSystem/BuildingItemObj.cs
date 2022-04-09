@@ -2,7 +2,6 @@
 
 namespace TT.BuildSystem
 {
-    public enum BuildItemKind { Wall, Roof, Door, Window, Signboard, Etc }
 
     public class BuildingItemObj : ItemObject, IBuildable
     {
@@ -113,9 +112,8 @@ namespace TT.BuildSystem
             transform.position = GetMouseWorldPos() + mOffset;
             itemisSet = true;
             canTouch = false;
-            //  print("itemisSet = true, canTouch = false");
+             print("itemisSet = true, canTouch = false");
             BuildManager.OnBuildItemDrag = false;
-
         }
         void DemolishBuildItem()
         {
@@ -198,7 +196,7 @@ namespace TT.BuildSystem
 
             if (this.ItemKind == BuildItemKind.Wall)
             {
-                DragPos.z = CurBlock.CurWallItemzPos;
+                //DragPos.z = CurBlock.CurWallItemzPos;
             }
             else
             { DragPos.z = CurBlock.CurFrontItemzPos; }
@@ -225,7 +223,7 @@ namespace TT.BuildSystem
             }
             transform.localScale = scalenum;
             curObjWidth = ObjOriginWidth * transform.localScale.x;
-            Debug.Log("curobjWidth = " + curObjWidth);
+            //Debug.Log("curobjWidth = " + curObjWidth);
 
             curObjHeight = ObjOriginHeight * transform.localScale.y;
 
@@ -233,15 +231,15 @@ namespace TT.BuildSystem
 
         void HouseBuildReCal()
         {
-            Debug.Log("MaX = " + MaxX);
+            //Debug.Log("MaX = " + MaxX);
             float tempMaxX = ObjOriginPos.x + (BuildManager.HalfGuideObjWidth - curObjWidth);
-            Debug.Log("ObjoriginX" + ObjOriginPos.x);
-            Debug.Log("HalfGuideWidth" + BuildManager.HalfGuideObjWidth);
-            Debug.Log("TempMax=" + tempMaxX);
+            //Debug.Log("ObjoriginX" + ObjOriginPos.x);
+            //Debug.Log("HalfGuideWidth" + BuildManager.HalfGuideObjWidth);
+            //Debug.Log("TempMax=" + tempMaxX);
             MaxX = ObjOriginPos.x + (BuildManager.HalfGuideObjWidth - curObjWidth);
-            Debug.Log(MaxX);
+            //Debug.Log(MaxX);
             MinX = ObjOriginPos.x - (BuildManager.HalfGuideObjWidth - curObjWidth);
-            Debug.Log(MinX);
+            //Debug.Log(MinX);
             MaxY = ObjOriginPos.y + (BuildManager.HalfGuideObjHeight - curObjHeight);
             MinY = ObjOriginPos.y - (BuildManager.HalfGuideObjHeight - curObjHeight);
         }

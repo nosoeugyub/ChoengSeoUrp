@@ -69,7 +69,7 @@ public class Behavior
 }
 public enum OutItemType
 {
-    Talk, Tool, Mineral, Food, Collect, Build, Etc
+    Talk, Tool, Mineral, Food, Collect, BuildWall, BuildSign, BuildNormal, Etc,
 }
 public enum InItemType
 {
@@ -92,6 +92,8 @@ public enum InItemType
     Trashcan = 60000, Mailbox,
     //돋보기 아이템
     MagnifyObject = 70000,
+    //1차 건축자재
+    
 }
 //public static Dictionary<int, BuildingBehavior> BuildBuildingData = new Dictionary<int, BuildingBehavior>();//
 //public static Dictionary<int, ItemBehavior> ItemData = new Dictionary<int, ItemBehavior>();

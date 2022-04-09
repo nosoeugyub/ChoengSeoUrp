@@ -42,8 +42,6 @@ namespace NSY.Iven
                 OnEndDrag(null);
             }
         }
-
-       
         public void OnDrag(PointerEventData eventData)
         {
          

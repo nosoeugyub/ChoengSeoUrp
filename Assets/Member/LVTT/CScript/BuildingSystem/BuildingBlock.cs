@@ -24,6 +24,8 @@ namespace TT.BuildSystem
         public bool buildButtonFuncAdded;
         [HideInInspector]
         public bool hasWall = false;
+        internal bool hasSign =  false;
+
         ////////////////////////////////////////////////////////
         void Start()
         {

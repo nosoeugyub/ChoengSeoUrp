@@ -22,6 +22,7 @@ namespace NSY.Iven
 
         private Color normalColor = Color.white;
         private Color disabledColor = new Color(1, 1, 1, 0);
+        private Color cantInteractColor = new Color(1, 0.3f, 0.3f, 0.5f);
         public event Action<BaseItemSlot> OnRightClickEvent;
         public event Action<BaseItemSlot> OnLeftClickEvent;
         public event Action<BaseItemSlot> OnPointerEnterEvent;
@@ -122,6 +123,21 @@ namespace NSY.Iven
                 OnPointerExit(null);
             }
         }
+        public void Interactble(bool canInteractable)
+        {
+
+            if (canInteractable)
+            {
+                itemImage.color = normalColor;
+            }
+            else
+            {
+                itemImage.color = cantInteractColor;
+            }
+
+
+        }
+
         public virtual bool CanAddStack(Item Item, int amount = 1)
         {
             return item != null && item.ItemName == Item.ItemName;

@@ -1,9 +1,7 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
+using TT.BuildSystem;
 using UnityEngine;
-using DM.Inven;
-using System;
-using UnityEngine.Serialization;
 
 namespace NSY.Iven
 {
@@ -11,8 +9,8 @@ namespace NSY.Iven
     {
         public CraftManager craftslots;
         public List<ItemSlot> ItemSlots;
-        
-       
+
+
 
         public event Action<BaseItemSlot> OnPointerEnterEvent;
         public event Action<BaseItemSlot> OnPointerExitEvent;
@@ -31,8 +29,8 @@ namespace NSY.Iven
         {
             for (int i = 0; i < ItemSlots.Count; i++)
             {
-               
-                ItemSlots[i].OnPointerEnterEvent += slot => EventHelper(slot,OnPointerEnterEvent);
+
+                ItemSlots[i].OnPointerEnterEvent += slot => EventHelper(slot, OnPointerEnterEvent);
                 ItemSlots[i].OnPointerExitEvent += slot => EventHelper(slot, OnPointerExitEvent);
                 ItemSlots[i].OnRightClickEvent += slot => EventHelper(slot, OnRightClickEvent);
                 ItemSlots[i].OnLeftClickEvent += slot => EventHelper(slot, OnLeftClickEvent);
@@ -42,7 +40,7 @@ namespace NSY.Iven
                 ItemSlots[i].OnDragEvent += slot => EventHelper(slot, OnDragEvent);
                 ItemSlots[i].OnDropEvent += slot => EventHelper(slot, OnDropEvent);
             }
-           
+
         }
 
         protected virtual void OnValidate()
@@ -56,7 +54,7 @@ namespace NSY.Iven
         }
 
 
-        public virtual bool CanAddItem(Item item , int amount = 1)
+        public virtual bool CanAddItem(Item item, int amount = 1)
         {
             int freeSpaces = 0;
 
@@ -69,7 +67,56 @@ namespace NSY.Iven
             }
             return freeSpaces >= amount;
         }
+        public virtual void CheckCanBuildItem(BuildingBlock buildingBlock)//당장 건축 가능한 자재인지 아닌지 판단.
+        {
+            if (!buildingBlock) //임시 처리 정확한 기획 없음
+            {
+                foreach (ItemSlot itemSlot in ItemSlots)
+                {
+                    itemSlot.Interactble(true);
+                }
+                return;
+            }
 
+            foreach (ItemSlot itemSlot in ItemSlots)
+            {
+                if (itemSlot.item == null) continue;
+
+                if (!buildingBlock.hasWall)// 벽이 없다면 벽만 설치 가능하도록
+                {
+                    if (itemSlot.item.OutItemType == OutItemType.BuildWall)//벽이면
+                    {
+                        itemSlot.Interactble(true);
+                    }
+                    else
+                    {
+                        itemSlot.Interactble(false);
+                    }
+                }
+                //else if (!buildingBlock.hasSign)
+                //{
+                //    if (itemSlot.item.OutItemType == OutItemType.BuildSign)//벽이면
+                //    {
+                //        itemSlot.Interactble(true);
+                //    }
+                //    else
+                //    {
+                //        itemSlot.Interactble(false);
+                //    }
+                //}
+                else
+                {
+                    if (itemSlot.item.OutItemType == OutItemType.BuildSign || (itemSlot.item.OutItemType != OutItemType.BuildWall&& itemSlot.item.OutItemType != OutItemType.BuildNormal))//벽이면
+                    {
+                        itemSlot.Interactble(false);
+                    }
+                    else
+                    {
+                        itemSlot.Interactble(true);
+                    }
+                }
+            }
+        }
         public bool entireItem(Item item)
         {
             for (int i = 0; i < ItemSlots.Count; i++)
@@ -79,15 +126,15 @@ namespace NSY.Iven
                     ItemSlots[i].item = item;
                     for (int j = 0; j < craftslots.CratfingSlots.Count; j++)
                     {
-                      
+
                         if (ItemSlots[i].item == craftslots.CratfingSlots[j].item)
                         {
                             ItemSlots[i].Amount += craftslots.CratfingSlots[j].Amount;
-                           
+
                         }
                     }
-                   
-                    
+
+
                     PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.GetItem, PlayerData.ItemData, ((int)ItemBehaviorEnum.length));
 
                     return true;
@@ -150,7 +197,7 @@ namespace NSY.Iven
                 if (ItemSlots[i].item == item)
                 {
                     ItemSlots[i].Amount--;
-                   
+
 
                     return true;
                 }
@@ -169,7 +216,7 @@ namespace NSY.Iven
                 if (item != null && item.ItemName == itemID)
                 {
                     ItemSlots[i].Amount--;
-                    
+
                     return item;
                 }
 
@@ -185,10 +232,10 @@ namespace NSY.Iven
             for (int i = 0; i < ItemSlots.Count; i++)
             {
                 Item item = ItemSlots[i].item;
-                if (item != null &&item.ItemName == itemID)
+                if (item != null && item.ItemName == itemID)
                 {
                     number += ItemSlots[i].Amount;
-                   // number++;
+                    // number++;
                 }
 
 
@@ -209,7 +256,7 @@ namespace NSY.Iven
             }
         }
 
-       
+
 
     }
 

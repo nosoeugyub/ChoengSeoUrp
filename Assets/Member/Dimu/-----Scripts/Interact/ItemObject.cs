@@ -9,11 +9,11 @@ public class ItemObject : MonoBehaviour//, IInteractable
 
     public void Awake()
     {
-        inventoryNSY=FindObjectOfType<InventoryNSY>();
-        quad = transform.GetChild(0).GetComponent<MeshRenderer>();
     }
     private void OnEnable()
     {
+        inventoryNSY=FindObjectOfType<InventoryNSY>();
+        quad = transform.GetChild(0).GetComponent<MeshRenderer>();
         if(item.ItemMaterial)
             quad.material = item.ItemMaterial;
     }

@@ -1,4 +1,5 @@
 ﻿using Game.Cam;
+using NSY.Iven;
 using TT.Test;
 using UnityEngine;
 
@@ -6,6 +7,8 @@ using UnityEngine;
 
 namespace TT.BuildSystem
 {
+    public enum BuildItemKind {  Wall, Roof, Door, Window, Signboard, Etc }
+
     public class BuildingManager : MonoBehaviour
     {
         public BuildMode CurBuildMode;
@@ -20,6 +23,7 @@ namespace TT.BuildSystem
         [HideInInspector]
         public float HalfGuideObjHeight;
 
+        public InventoryNSY inventoryNSY;
 
         [HideInInspector]
         public int BuildItemDragIndex = 0;
@@ -47,6 +51,7 @@ namespace TT.BuildSystem
             TheUI = FindObjectOfType<UIOnOff>();
             SlotManager = FindObjectOfType<BuildItemInventorySlot>();
             CamManager = FindObjectOfType<CameraManager>();
+            inventoryNSY = FindObjectOfType<InventoryNSY>();
 
         }
 
@@ -77,6 +82,8 @@ namespace TT.BuildSystem
             //SlotManager.AssignBuildItemSpawnPos(nowBuildingBlock.HouseBuild, nowBuildingBlock.gameObject.transform);
 
             TheUI.IsBuildMode = true;
+            SetBuildMode(BuildMode.BuildHouseMode);
+
             isBuildMode = true;
             TheUI.TurnOffUI(0);
             TheUI.TurnOnUI(1);
@@ -91,7 +98,7 @@ namespace TT.BuildSystem
             ViewGuideObject(2);
             UnViewGuideObject(1);
 
-
+            inventoryNSY.CheckCanBuildItem(nowBuildingBlock);
         }
 
         public void BuildDemolishModeOn(BuildingBlock buildingBlock, UnityEngine.UI.Button[] buttons, GameObject interactUI)
@@ -153,6 +160,7 @@ namespace TT.BuildSystem
             UnViewGuideObject(0);
             UnViewGuideObject(2);
 
+            inventoryNSY.CheckCanBuildItem(null);
         }
 
         void ViewGuideObject(int ObjNum)
@@ -201,12 +209,12 @@ namespace TT.BuildSystem
         }
         private void Update()
         {
-            if (BuildingManager.isBuildDemolishMode)
+            if (isBuildDemolishMode)
             {
                 nowBuildingBlock.RemoveDemolishedBuildItem();
             }
 
-            if (BuildingManager.isBuildMode)
+            if (isBuildMode)
             {
                 if (OnBuildItemDrag)
                 {
@@ -214,6 +222,8 @@ namespace TT.BuildSystem
                 }
             }
 
+            if(Input.GetKeyDown(KeyCode.T))
+            { BuildModeOff(); }
         }
     }
 }

@@ -21,7 +21,7 @@ namespace TT.BuildSystem
         public bool isWall;
         [SerializeField] public CItemType ItemType;
 
-        private float BuildItemGap = 0.01f;
+        private float BuildItemGap = 0.000001f;
         BuildingManager BuildManager;
 
         private void Start()
@@ -56,16 +56,17 @@ namespace TT.BuildSystem
             CurBlock.CurFrontItemzPos = spawnPos.z;
         }
 
-        public void BtnSpawnHouseBuildItem(GameObject spawnObj)
+        public void BtnSpawnHouseBuildItem(Item spawnObj)
         {
             BuildingBlock CurBlock = FindObjectOfType<BuildingManager>().nowBuildingBlock;
             Vector3 spawnPos = CurBlock.HouseBuild.transform.position;
             spawnPos.y = spawnPos.y + SpawnOffsetY;
-            if (this.isWall)
+            if (spawnObj.OutItemType == OutItemType.BuildWall)
             {
                 spawnPos.z = spawnPos.z - SpawnOffsetZ;// when the building is facing South
                 CurBlock.CurWallItemzPos = spawnPos.z;
                 CurBlock.hasWall = true;
+                BuildManager.inventoryNSY.CheckCanBuildItem(BuildManager.nowBuildingBlock);
 
             }
             else
@@ -76,7 +77,8 @@ namespace TT.BuildSystem
                     CurBlock.MaxBackItemzPos = spawnPos.z;
                 }
             }
-            GameObject newPrefab = Instantiate(spawnObj, spawnPos, Quaternion.identity, CurBlock.HouseBuild.transform);
+            Debug.Log(spawnPos);
+            GameObject newPrefab = Instantiate(spawnObj.ItemPrefab, spawnPos, Quaternion.identity, CurBlock.HouseBuild.transform);
             newPrefab.name = spawnObj.name;
             CurBlock.AddBuildItemToList(newPrefab);
             CurBlock.CurFrontItemzPos = spawnPos.z;
