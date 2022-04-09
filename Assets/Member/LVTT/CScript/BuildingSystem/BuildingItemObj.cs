@@ -54,7 +54,7 @@ namespace TT.BuildSystem
                 var movePos = Input.mousePosition;
                 movePos.z = Camera.main.WorldToScreenPoint(transform.position).z;
                 movePos = Camera.main.ScreenToWorldPoint(movePos);
-
+                HouseBuildAreaCal();
                 if (movePos.x >= MaxX)
                 {
                     movePos.x = MaxX;
@@ -89,20 +89,21 @@ namespace TT.BuildSystem
             Debug.Log("SetParent");
             parentBuildArea = pb;
             parentBuildArea.curDragObj = this;
-            HouseBuildAreaCal();
+            ObjOriginPos = gameObject.transform.position;
+            //HouseBuildAreaCal();
         }
 
         void HouseBuildAreaCal()
         {
-            ObjOriginPos = gameObject.transform.position;
-            MaxX = gameObject.transform.position.x + quad.transform.localScale.x/2;
-            MinX = gameObject.transform.position.x - quad.transform.localScale.x / 2;
-            MaxY = gameObject.transform.position.y + quad.transform.localScale.y / 2;
-            MinY = gameObject.transform.position.y - quad.transform.localScale.y / 2;
-            ObjOriginWidth = parentBuildArea.HalfGuideObjWidth - quad.transform.localScale.x / 2;
-            ObjOriginHeight = parentBuildArea.HalfGuideObjHeight - quad.transform.localScale.x / 2;
-            curObjWidth = ObjOriginWidth;
-            curObjHeight = ObjOriginHeight;
+            MaxX = ObjOriginPos.x + parentBuildArea.areaWidthsize / 2 - (quad.transform.localScale.x * transform.localScale.x) / 2;
+            MinX = ObjOriginPos.x - parentBuildArea.areaWidthsize / 2 + (quad.transform.localScale.x * transform.localScale.x) / 2;
+            MaxY = ObjOriginPos.y + parentBuildArea.areaHeightsize / 2 - quad.transform.localScale.y * transform.localScale.y / 2;
+            MinY = ObjOriginPos.y - parentBuildArea.areaHeightsize / 2 + quad.transform.localScale.y * transform.localScale.y / 2;
+            Debug.Log("MaxX: " + MaxX + "MaxY" + MaxY);
+            //ObjOriginWidth = parentBuildArea.HalfGuideObjWidth - quad.transform.localScale.x / 2;
+            //ObjOriginHeight = parentBuildArea.HalfGuideObjHeight - quad.transform.localScale.x / 2;
+            //curObjWidth = ObjOriginWidth;
+            //curObjHeight = ObjOriginHeight;
             //ObjOriginPos = gameObject.transform.position;
             //MaxX = gameObject.transform.position.x + xDragOffset;
             //MinX = gameObject.transform.position.x - xDragOffset;
@@ -272,17 +273,17 @@ namespace TT.BuildSystem
 
         void HouseBuildReCal()
         {
-            //Debug.Log("MaX = " + MaxX);
-            float tempMaxX = ObjOriginPos.x + (parentBuildArea.HalfGuideObjWidth - curObjWidth);
-            //Debug.Log("ObjoriginX" + ObjOriginPos.x);
-            //Debug.Log("HalfGuideWidth" + BuildManager.HalfGuideObjWidth);
-            //Debug.Log("TempMax=" + tempMaxX);
-            MaxX = ObjOriginPos.x + (parentBuildArea.HalfGuideObjWidth - curObjWidth);
-            //Debug.Log(MaxX);
-            MinX = ObjOriginPos.x - (parentBuildArea.HalfGuideObjWidth - curObjWidth);
-            //Debug.Log(MinX);
-            MaxY = ObjOriginPos.y + (parentBuildArea.HalfGuideObjHeight - curObjHeight);
-            MinY = ObjOriginPos.y - (parentBuildArea.HalfGuideObjHeight - curObjHeight);
+            ////Debug.Log("MaX = " + MaxX);
+            //float tempMaxX = ObjOriginPos.x + (parentBuildArea.HalfGuideObjWidth - curObjWidth);
+            ////Debug.Log("ObjoriginX" + ObjOriginPos.x);
+            ////Debug.Log("HalfGuideWidth" + BuildManager.HalfGuideObjWidth);
+            ////Debug.Log("TempMax=" + tempMaxX);
+            //MaxX = ObjOriginPos.x + (parentBuildArea.HalfGuideObjWidth - curObjWidth);
+            ////Debug.Log(MaxX);
+            //MinX = ObjOriginPos.x - (parentBuildArea.HalfGuideObjWidth - curObjWidth);
+            ////Debug.Log(MinX);
+            //MaxY = ObjOriginPos.y + (parentBuildArea.HalfGuideObjHeight - curObjHeight);
+            //MinY = ObjOriginPos.y - (parentBuildArea.HalfGuideObjHeight - curObjHeight);
         }
         public string CanInteract()
         {

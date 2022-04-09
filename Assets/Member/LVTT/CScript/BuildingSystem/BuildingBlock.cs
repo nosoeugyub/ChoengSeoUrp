@@ -38,8 +38,11 @@ namespace TT.BuildSystem
 
         CameraManager CamManager;
 
-        public float HalfGuideObjWidth;
-        public float HalfGuideObjHeight;
+        public float areaWidthsize;
+        public float areaHeightsize;
+
+        //public float HalfGuideObjWidth;
+        //public float HalfGuideObjHeight;
 
         //BuildItemObj
         public BuildingItemObj curDragObj;
@@ -265,7 +268,7 @@ namespace TT.BuildSystem
         public void BtnSpawnHouseBuildItem(Item spawnObj)
         {
             Vector3 spawnPos = HouseBuild.transform.position;
-            spawnPos.y = spawnPos.y + SpawnOffsetY;
+            spawnPos.y = HouseBuild.transform.position.y+ areaHeightsize / 2;
             if (spawnObj.OutItemType == OutItemType.BuildWall)
             {
                 spawnPos.z = spawnPos.z - SpawnOffsetZ;// when the building is facing South
