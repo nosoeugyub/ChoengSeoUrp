@@ -44,7 +44,7 @@ namespace TT.BuildSystem
         [HideInInspector]
         public bool OnBuildItemDrag = false;
 
-        private float BuildItemGap = 0.00005f;
+        private float BuildItemGap = 1f;
         public float SpawnOffsetY;
         public float SpawnOffsetZ;
 
@@ -81,36 +81,54 @@ namespace TT.BuildSystem
                         print(hit.collider.name);
                         if (hit.collider.GetComponent<BuildingItemObj>() == null)
                         {
-                            if (!curDragObj.IsitemSet())
+                            if (!curDragObj.ItemisSet && !curDragObj.IsFirstDrop)
                             {
-                                curDragObj.SetItemState(true);
+                                curDragObj.ItemisSet = true;
                             }
+                            else
+                                curDragObj.IsFirstDrop = false;
+
                             return;
                         }
-                        if (curDragObj.IsitemSet())
+                        if (curDragObj.ItemisSet)
                         {
                             curDragObj = hit.collider.GetComponent<BuildingItemObj>();
-                            curDragObj.SetItemState(false);
+                            curDragObj.ItemisSet = false;
+                            BuildingItemObjAndSorting();
                             print("itemisSet = false; " + curDragObj);
                         }
                         else
                         {
                             print("itemisSet = true;");
-                            curDragObj.SetItemState(true);
+                            curDragObj.ItemisSet = true;
                         }
                     }
-                    else if (!curDragObj.IsitemSet())
+                    else if (!curDragObj.ItemisSet)
                     {
-                        curDragObj.SetItemState(true);
+                        curDragObj.ItemisSet = true;
                         print("itemisSet = true;");
                     }
                 }
 
-                if (curDragObj && !curDragObj.IsitemSet())
+                if (curDragObj && !curDragObj.ItemisSet)
                     ScaleBuildItem();
+            }
+            else if (CurBuildMode == BuildMode.DemolishMode)
+            {
+                ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue, 0.3f);
+
+                if (Input.GetMouseButtonDown(0))
+                {
+                    if (Physics.Raycast(ray, out hit, 10000, layerMask))
+                    {
+
+                    }
+                }
             }
 
         }
+
         public void AddBuildItemToList(GameObject Item)
         {
             BuildItemList.Add(Item);
@@ -278,26 +296,90 @@ namespace TT.BuildSystem
         {
             Vector3 spawnPos = HouseBuild.transform.position;
             spawnPos.y = HouseBuild.transform.position.y + areaHeightsize / 2;
-            if (spawnObj.OutItemType == OutItemType.BuildWall)
+
+            if (BuildItemList.Count == 0)
             {
-                spawnPos.z = spawnPos.z - SpawnOffsetZ;// when the building is facing South
+            }
+            else if (spawnObj.OutItemType == OutItemType.BuildWall)
+            {
+                float bigZinWalls = 999999;
+                foreach (GameObject item in BuildItemList)
+                {
+                    if (item.GetComponent<BuildingItemObj>().GetOutItemType() == OutItemType.BuildWall)
+                    {
+                        if (bigZinWalls > item.transform.position.z)
+                        {
+                            bigZinWalls = item.transform.position.z;
+                        }
+
+                        item.transform.position
+                         = new Vector3(item.transform.position.x, item.transform.position.y, item.transform.position.z + BuildItemGap / 2);
+                    }
+                    if (item.GetComponent<BuildingItemObj>().GetOutItemType() == OutItemType.BuildNormal)
+                    {
+                        item.transform.position
+                         = new Vector3(item.transform.position.x, item.transform.position.y, item.transform.position.z - BuildItemGap / 2);
+                    }
+                }
+                spawnPos.z = bigZinWalls - BuildItemGap / 2;// when the building is facing South
                 hasWall = true;
                 SuperManager.Instance.inventoryManager.CheckCanBuildItem(nowBuildingBlock);
-
             }
             else
             {
-                spawnPos.z = spawnPos.z - SpawnOffsetZ - (BuildItemGap * BuildItemList.Count);// when the building is facing South
-                if (BuildItemList.Count == 1)
+                foreach (GameObject item in BuildItemList)
                 {
-                    MaxBackItemzPos = spawnPos.z;
+                    item.transform.position
+                        = new Vector3(item.transform.position.x, item.transform.position.y, item.transform.position.z + BuildItemGap / 2);
                 }
+
+                spawnPos.z = spawnPos.z - (BuildItemGap / 2 * BuildItemList.Count);// when the building is facing South
+                //- SpawnOffsetZ - SpawnOffsetZ
             }
-            Debug.Log(spawnPos);
             GameObject newPrefab = Instantiate(spawnObj.ItemPrefab, spawnPos, Quaternion.identity, HouseBuild.transform);
             newPrefab.GetComponent<BuildingItemObj>().SetParentBuildArea(nowBuildingBlock);
             newPrefab.name = spawnObj.name;
             AddBuildItemToList(newPrefab);
+        }
+        void BuildingItemObjAndSorting()
+        {
+            foreach (GameObject item in BuildItemList)
+            {
+                float bigZinWalls = curDragObj.transform.position.z;//클릭한 오브젝트의 z값
+
+                if (bigZinWalls < item.transform.position.z) continue;//선택한게 다른 옵젝보다 더 가깝다면 검사 패스
+
+
+                if (item.GetComponent<BuildingItemObj>().GetOutItemType() == OutItemType.BuildWall)
+                {
+                    if (bigZinWalls > item.transform.position.z)
+                    {
+                        bigZinWalls = item.transform.position.z;
+                    }
+
+                    item.transform.position
+                     = new Vector3(item.transform.position.x, item.transform.position.y, item.transform.position.z + BuildItemGap / 2);
+                }
+                if (item.GetComponent<BuildingItemObj>().GetOutItemType() == OutItemType.BuildNormal)
+                {
+                    item.transform.position
+                     = new Vector3(item.transform.position.x, item.transform.position.y, item.transform.position.z - BuildItemGap / 2);
+                }
+
+                BuildingItemObj ItemObj = item.GetComponent<BuildingItemObj>();
+                Vector3 MoveBackPos = item.transform.position;
+                if (ItemObj.ItemKind == BuildItemKind.Wall)
+                {
+                    MoveBackPos.z = item.transform.position.z + BuildItemGap;
+                }
+                else
+                {
+
+                    MoveBackPos.z = item.transform.position.z + BuildItemGap;
+                }
+                item.transform.position = MoveBackPos;
+
+            }
         }
         ////////////////////////////////////////////////////////
         public void Interact()

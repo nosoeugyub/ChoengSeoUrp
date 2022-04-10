@@ -11,19 +11,16 @@ namespace TT.BuildSystem
 
         [SerializeField] private LayerMask mouseColliderLayerMask = new LayerMask();
 
-        public float yDragOffset = 2.5f;
-        public float xDragOffset = 2f;
         public float MaxScale;
         public float MinScale;
-        public int breakPoint;
+        public int breakCount;
 
         float zOffset;
         private float BuildItemGap = 0.01f;
         private Vector3 mOffset;
         private float mZCoord;
-        private bool itemisSet;
-        bool canTouch;
-
+        [SerializeField] private bool itemisSet;
+        [SerializeField] private bool isFirstDrop;
 
         float MaxX;
         float MinX;
@@ -31,20 +28,37 @@ namespace TT.BuildSystem
         float MinY;
 
         Vector3 ObjOriginPos;
-        float ObjOriginWidth;
-        float ObjOriginHeight;
-        float curObjWidth;
-        float curObjHeight;
 
         BuildingBlock parentBuildArea;
 
 
-
-        private void Awake()
+        public bool IsFirstDrop
         {
-            //parentBuildArea = FindObjectOfType<BuildingBlock>();
-            itemisSet = true;
-            canTouch = false;
+            get
+            {
+                return isFirstDrop;
+            }
+            set
+            {
+                isFirstDrop = value;
+            }
+        }
+        public bool ItemisSet
+        {
+            get
+            {
+                return itemisSet;
+            }
+            set
+            {
+                itemisSet = value;
+            }
+        }
+        private new void Awake()
+        {
+            base.Awake();
+            itemisSet = false;
+            isFirstDrop = true;
             zOffset = transform.position.z;
         }
         private void Update()
@@ -75,14 +89,6 @@ namespace TT.BuildSystem
 
                 transform.position = movePos;
             }
-        }
-        public void SetItemState(bool isSet)
-        {
-            itemisSet = isSet;
-        }
-        public bool IsitemSet()
-        {
-            return itemisSet;
         }
         public void SetParentBuildArea(BuildingBlock pb)
         {
@@ -135,28 +141,28 @@ namespace TT.BuildSystem
         //    }
         //}
 
-        void BringItemTotheBack()
-        {
-            foreach (GameObject item in parentBuildArea.BuildItemList)
-            {
-                BuildingItemObj ItemObj = item.GetComponent<BuildingItemObj>();
-                if (ItemObj.ItemKind == BuildItemKind.Wall)
-                {//Do nothing
-                }
-                else
-                {
+        //void BringItemTotheBack()
+        //{
+        //    foreach (GameObject item in parentBuildArea.BuildItemList)
+        //    {
+        //        BuildingItemObj ItemObj = item.GetComponent<BuildingItemObj>();
+        //        if (ItemObj.ItemKind == BuildItemKind.Wall)
+        //        {//Do nothing
+        //        }
+        //        else
+        //        {
 
-                    Vector3 MoveBackPos = item.transform.position;
-                    MoveBackPos.z = item.transform.position.z + BuildItemGap;
-                    if (MoveBackPos.z <= parentBuildArea.MaxBackItemzPos)
-                    {
-                        MoveBackPos.z = parentBuildArea.MaxBackItemzPos;
-                    }
-                    item.transform.position = MoveBackPos;
-                }
+        //            Vector3 MoveBackPos = item.transform.position;
+        //            MoveBackPos.z = item.transform.position.z + BuildItemGap;
+        //            if (MoveBackPos.z <= parentBuildArea.MaxBackItemzPos)
+        //            {
+        //                MoveBackPos.z = parentBuildArea.MaxBackItemzPos;
+        //            }
+        //            item.transform.position = MoveBackPos;
+        //        }
 
-            }
-        }
+        //    }
+        //}
         //void ItemMove()
         //{
 

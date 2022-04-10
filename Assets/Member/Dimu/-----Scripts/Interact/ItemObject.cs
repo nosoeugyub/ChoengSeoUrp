@@ -14,7 +14,6 @@ public class ItemObject : MonoBehaviour//, IInteractable
     }
     private void OnEnable()
     {
-        quad = transform.GetChild(0).GetComponent<MeshRenderer>();
         if(item.ItemMaterial)
             quad.material = item.ItemMaterial;
     }
@@ -22,7 +21,10 @@ public class ItemObject : MonoBehaviour//, IInteractable
     {
         return transform;
     }
-
+    public OutItemType GetOutItemType()
+    {
+        return item.OutItemType;
+    }
     public string CanInteract()
     {
         return "상호작용하기";
