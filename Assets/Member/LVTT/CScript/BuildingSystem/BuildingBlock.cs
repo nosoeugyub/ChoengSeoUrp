@@ -343,43 +343,59 @@ namespace TT.BuildSystem
         }
         void BuildingItemObjAndSorting()
         {
-            foreach (GameObject item in BuildItemList)
+            if (curDragObj.GetOutItemType() == OutItemType.BuildWall)//현재오브젝트가 벽일때
             {
-                float bigZinWalls = curDragObj.transform.position.z;//클릭한 오브젝트의 z값
-
-                if (bigZinWalls < item.transform.position.z) continue;//선택한게 다른 옵젝보다 더 가깝다면 검사 패스
-
-
-                if (item.GetComponent<BuildingItemObj>().GetOutItemType() == OutItemType.BuildWall)
+                int frontCount = 0;
+                foreach (GameObject item in BuildItemList)
                 {
-                    if (bigZinWalls > item.transform.position.z)
+                    if (item.GetComponent<BuildingItemObj>().GetOutItemType() != OutItemType.BuildWall) continue;//선택한게 벽이 아니라면
+
+                    float bigZinWalls = curDragObj.transform.position.z;//클릭한 오브젝트의 z값
+                    if (bigZinWalls <= item.transform.position.z) continue;//선택한게 다른 옵젝보다 더 가깝다면 검사 패스
+
+                    //if (item.GetComponent<BuildingItemObj>().GetOutItemType() == OutItemType.BuildWall)//아이템이 벽이라면
                     {
-                        bigZinWalls = item.transform.position.z;
+                        item.transform.position
+                         = new Vector3(item.transform.position.x, item.transform.position.y, item.transform.position.z + BuildItemGap);
+                        frontCount++;
                     }
-
-                    item.transform.position
-                     = new Vector3(item.transform.position.x, item.transform.position.y, item.transform.position.z + BuildItemGap / 2);
                 }
-                if (item.GetComponent<BuildingItemObj>().GetOutItemType() == OutItemType.BuildNormal)
-                {
-                    item.transform.position
-                     = new Vector3(item.transform.position.x, item.transform.position.y, item.transform.position.z - BuildItemGap / 2);
-                }
-
-                BuildingItemObj ItemObj = item.GetComponent<BuildingItemObj>();
-                Vector3 MoveBackPos = item.transform.position;
-                if (ItemObj.ItemKind == BuildItemKind.Wall)
-                {
-                    MoveBackPos.z = item.transform.position.z + BuildItemGap;
-                }
-                else
-                {
-
-                    MoveBackPos.z = item.transform.position.z + BuildItemGap;
-                }
-                item.transform.position = MoveBackPos;
-
+                curDragObj.transform.position = 
+                    new Vector3(curDragObj.transform.position.x, curDragObj.transform.position.y, curDragObj.transform.position.z - (BuildItemGap * frontCount));
             }
+            else //일반 오브젝트일 때
+            {
+                int frontCount = 0;
+                foreach (GameObject item in BuildItemList)
+                {
+                    if (item.GetComponent<BuildingItemObj>().GetOutItemType() != OutItemType.BuildNormal) continue;//선택한게 일반이 아니라면
+
+                    float bigZinNors = curDragObj.transform.position.z;//클릭한 오브젝트의 z값
+                    if (bigZinNors <= item.transform.position.z) continue;//선택한게 다른 옵젝보다 더 가깝다면 검사 패스
+
+                    //if (item.GetComponent<BuildingItemObj>().GetOutItemType() == OutItemType.BuildNormal)//아이템이 벽이라면
+                    {
+                        item.transform.position
+                         = new Vector3(item.transform.position.x, item.transform.position.y, item.transform.position.z + BuildItemGap);
+                        frontCount++;
+                    }
+                }
+                curDragObj.transform.position =
+                    new Vector3(curDragObj.transform.position.x, curDragObj.transform.position.y, curDragObj.transform.position.z - (BuildItemGap * frontCount));
+            }
+            //BuildingItemObj ItemObj = item.GetComponent<BuildingItemObj>();
+            //Vector3 MoveBackPos = item.transform.position;
+            //if (ItemObj.ItemKind == BuildItemKind.Wall)
+            //{
+            //    MoveBackPos.z = item.transform.position.z + BuildItemGap;
+            //}
+            //else
+            //{
+
+            //    MoveBackPos.z = item.transform.position.z + BuildItemGap;
+            //}
+            //item.transform.position = MoveBackPos;
+
         }
         ////////////////////////////////////////////////////////
         public void Interact()
