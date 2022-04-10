@@ -26,4 +26,8 @@ public class PlayerAnimator : MonoBehaviour
         print("Mine");
         Mine();
     }
+    public void DeleteAni()
+    {
+
+    }
 }

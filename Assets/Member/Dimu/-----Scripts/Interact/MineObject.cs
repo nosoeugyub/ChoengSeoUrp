@@ -1,16 +1,22 @@
 ﻿using System.Collections;
 using UnityEngine;
-
+public enum MineState { Normal, Trunk, Gone, }
 public class MineObject : ItemObject, IMineable
 {
+    public bool haveTruckState;
     int nowChopCount;
-    [SerializeField] float respawnTime = 5;
+    int truckChopCount;
+    [SerializeField] float respawnTime = 20;
     //[SerializeField] float time = 0;
-    //int state = 0;//0 성장완료 1미완료
+    MineState mineState = MineState.Normal;//0 성장완료 1미완료
 
-    Animator animator;
+    [SerializeField] Material nowMat;
+    [SerializeField] Material downMat;
+    [SerializeField] GameObject upObj;
 
-    BoxCollider boxcol;
+    [SerializeField] Animator animator;
+
+    [SerializeField] BoxCollider boxcol;
 
     [Tooltip("이 오브젝트를 채집할 수 있는 도구 타입")]
     [SerializeField] InItemType toolType;
@@ -18,7 +24,8 @@ public class MineObject : ItemObject, IMineable
     private new void Awake()
     {
         base.Awake();
-        animator = GetComponent<Animator>();//transform.Find("Quad").
+        nowMat = quad.material;
+        //animator = GetComponent<Animator>();//transform.Find("Quad").
         boxcol = GetComponent<BoxCollider>();
     }
     private void OnEnable()
@@ -29,23 +36,42 @@ public class MineObject : ItemObject, IMineable
     IEnumerator Respawn()
     {
         yield return new WaitForSeconds(respawnTime);
-        ChangeMineState(0);
+        ChangeMineState(MineState.Normal);
+        if (!haveTruckState) yield break;
+        yield return new WaitForSeconds(0.1f);
+        quad.transform.SetParent(animator.transform);
     }
-    private void ChangeMineState(int state)
+    private void ChangeMineState(MineState state)
     {
-        if (state == 0)
+        if (state == MineState.Normal)
         {
             Debug.Log("초기화");
+            if (haveTruckState)
+            {
+                animator.SetBool("IsFalling", false);
+                animator.SetTrigger("Finish");
+                upObj.SetActive(false);
+                nowChopCount = 0;
+            }
             boxcol.enabled = true;
-            nowChopCount = 0;
             //time = 0;
-            quad.material.color = new Color(1,1,1,1);
+            quad.material = nowMat;
+            quad.material.color = new Color(1, 1, 1, 1);
+
         }
-        else if(state == 1)
+        else if (state == MineState.Trunk)
         {
+            quad.material = downMat;
+            quad.transform.SetParent(transform);
+            upObj.SetActive(true);
+            nowChopCount = 0;
             //quad.material.color = new Color(1,1,1,0);
+            animator.SetBool("IsFalling", true);
+        }
+        else
+        {
             boxcol.enabled = false;
-            animator.SetBool("IsFalling",true);
+
         }
     }
     public new string CanInteract()
@@ -63,7 +89,6 @@ public class MineObject : ItemObject, IMineable
         Interact();
 
         animator.SetBool("IsFalling", false);
-        animator.SetBool("IsShaking", false);
 
         if (handitem.InItemType == InItemType.Pickaxe)
             playerAnimator.SetBool("isMining", true);
@@ -80,13 +105,19 @@ public class MineObject : ItemObject, IMineable
         {
             NSY.Player.PlayerInput.OnPressFDown = null;
             DropItems();
-            ChangeMineState(1);
-            StartCoroutine(Respawn());
-            //Destroy(gameObject);
+            if (!haveTruckState || mineState == MineState.Trunk)
+            {
+                ChangeMineState(MineState.Gone);
+            }
+            else if (mineState == MineState.Normal)
+            {
+                ChangeMineState(MineState.Trunk);
+                StartCoroutine(Respawn());
+            }
         }
         else
         {
-            animator.SetBool("IsShaking", true);
+            animator.SetTrigger("Shaking");
             //내구도 하락...
         }
     }
