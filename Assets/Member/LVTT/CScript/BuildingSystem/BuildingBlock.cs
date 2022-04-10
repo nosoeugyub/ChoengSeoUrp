@@ -14,8 +14,6 @@ namespace TT.BuildSystem
 
         public Transform HouseBuild;
         public List<GameObject> BuildItemList;
-        [HideInInspector]
-        public float MaxBackItemzPos;
 
         [SerializeField] public BuildState buildState;
         [SerializeField] int buildingId;
@@ -41,12 +39,7 @@ namespace TT.BuildSystem
         public BuildingItemObj curDragObj;
         public float BuildItemScaleVar = 0.1f;
 
-        [HideInInspector]
-        public bool OnBuildItemDrag = false;
-
-        private float BuildItemGap = 1f;
-        public float SpawnOffsetY;
-        public float SpawnOffsetZ;
+        private float BuildItemGap = 0.0001f;
 
         Transform player;
 
@@ -59,7 +52,6 @@ namespace TT.BuildSystem
             layerMask = 1 << LayerMask.NameToLayer("Interactable");
             buildButtonFuncAdded = false;
             CamManager = FindObjectOfType<CameraManager>();
-            //hasWall = false; 
         }
         private void Update()
         {
@@ -271,7 +263,6 @@ namespace TT.BuildSystem
         public void SetBuildMode(BuildMode buildmode)
         {
             CurBuildMode = buildmode;
-            Debug.Log("curBuildMode is" + buildmode);
         }
         void ScaleBuildItem()
         {
@@ -281,7 +272,6 @@ namespace TT.BuildSystem
                 var.x += BuildItemScaleVar;
                 var.y += BuildItemScaleVar;
                 curDragObj.SetBuildItemScale(var);
-                // Debug.Log("Mouse is Scrolling up");
             }
             else if (Input.GetAxis("Mouse ScrollWheel") < 0)
             {
@@ -289,7 +279,6 @@ namespace TT.BuildSystem
                 var.x -= BuildItemScaleVar;
                 var.y -= BuildItemScaleVar;
                 curDragObj.SetBuildItemScale(var);
-                // Debug.Log("Mouse is Scrolling down");
             }
         }
         public void BtnSpawnHouseBuildItem(Item spawnObj)
@@ -332,9 +321,7 @@ namespace TT.BuildSystem
                     item.transform.position
                         = new Vector3(item.transform.position.x, item.transform.position.y, item.transform.position.z + BuildItemGap / 2);
                 }
-
                 spawnPos.z = spawnPos.z - (BuildItemGap / 2 * BuildItemList.Count);// when the building is facing South
-                //- SpawnOffsetZ - SpawnOffsetZ
             }
             GameObject newPrefab = Instantiate(spawnObj.ItemPrefab, spawnPos, Quaternion.identity, HouseBuild.transform);
             newPrefab.GetComponent<BuildingItemObj>().SetParentBuildArea(nowBuildingBlock);
@@ -367,43 +354,6 @@ namespace TT.BuildSystem
                     new Vector3(curDragObj.transform.position.x, curDragObj.transform.position.y, curDragObj.transform.position.z - (BuildItemGap * frontCount));
         }
 
-        void BuildingItemObjAndSorting1()
-        {
-            if (curDragObj.GetOutItemType() == OutItemType.BuildWall)//현재오브젝트가 벽일때
-            {
-                int frontCount = 0;
-                foreach (GameObject item in BuildItemList)
-                {
-                    if (item.GetComponent<BuildingItemObj>().GetOutItemType() != OutItemType.BuildWall) continue;//선택한게 벽이 아니라면
-
-                    float bigZinWalls = curDragObj.transform.position.z;//클릭한 오브젝트의 z값
-                    if (bigZinWalls <= item.transform.position.z) continue;//선택한게 다른 옵젝보다 더 가깝다면 검사 패스
-
-                    item.transform.position
-                     = new Vector3(item.transform.position.x, item.transform.position.y, item.transform.position.z + BuildItemGap);
-                    frontCount++;
-                }
-                curDragObj.transform.position =
-                    new Vector3(curDragObj.transform.position.x, curDragObj.transform.position.y, curDragObj.transform.position.z - (BuildItemGap * frontCount));
-            }
-            else //일반 오브젝트일 때
-            {
-                int frontCount = 0;
-                foreach (GameObject item in BuildItemList)
-                {
-                    if (item.GetComponent<BuildingItemObj>().GetOutItemType() != OutItemType.BuildNormal) continue;//선택한게 일반이 아니라면
-
-                    float bigZinNors = curDragObj.transform.position.z;//클릭한 오브젝트의 z값
-                    if (bigZinNors <= item.transform.position.z) continue;//선택한게 다른 옵젝보다 더 가깝다면 검사 패스
-
-                    item.transform.position
-                     = new Vector3(item.transform.position.x, item.transform.position.y, item.transform.position.z + BuildItemGap);
-                    frontCount++;
-                }
-                curDragObj.transform.position =
-                    new Vector3(curDragObj.transform.position.x, curDragObj.transform.position.y, curDragObj.transform.position.z - (BuildItemGap * frontCount));
-            }
-        }
         ////////////////////////////////////////////////////////
         public void Interact()
         {

@@ -9,16 +9,10 @@ namespace TT.BuildSystem
         [Tooltip("이 오브젝트를 채집할 수 있는 도구 타입")]
         [SerializeField] InItemType toolType;
 
-        [SerializeField] private LayerMask mouseColliderLayerMask = new LayerMask();
-
         public float MaxScale;
         public float MinScale;
         public int breakCount;
 
-        float zOffset;
-        private float BuildItemGap = 0.01f;
-        private Vector3 mOffset;
-        private float mZCoord;
         [SerializeField] private bool itemisSet;
         [SerializeField] private bool isFirstDrop;
 
@@ -30,7 +24,6 @@ namespace TT.BuildSystem
         Vector3 ObjOriginPos;
 
         BuildingBlock parentBuildArea;
-
 
         public bool IsFirstDrop
         {
@@ -59,7 +52,6 @@ namespace TT.BuildSystem
             base.Awake();
             itemisSet = false;
             isFirstDrop = true;
-            zOffset = transform.position.z;
         }
         private void Update()
         {
