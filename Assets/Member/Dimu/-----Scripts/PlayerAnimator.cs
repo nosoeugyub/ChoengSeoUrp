@@ -1,13 +1,15 @@
 ﻿using NSY.Player;
+using System;
 using UnityEngine;
 
 public class PlayerAnimator : MonoBehaviour
 {
     public Animator animator;
     [SerializeField] PlayerInteract playerInteract;
+    public Action Mine;
     private void Awake()
     {
-        animator = GetComponent<Animator>();
+        //animator = GetComponent<Animator>();
     }
     //Animation Event
     public void EndAnimation()
@@ -18,5 +20,10 @@ public class PlayerAnimator : MonoBehaviour
         animator.SetBool("isAxing", false);
         animator.SetBool("isEating", false);
         animator.SetBool("isMagnifying", false);
+    }
+    public void MineAnimation()
+    {
+        print("Mine");
+        Mine();
     }
 }

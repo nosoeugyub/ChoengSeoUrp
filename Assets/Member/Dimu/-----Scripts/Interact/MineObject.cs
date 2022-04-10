@@ -8,7 +8,7 @@ public class MineObject : ItemObject, IMineable
     //[SerializeField] float time = 0;
     //int state = 0;//0 성장완료 1미완료
 
-    
+    Animator animator;
 
     BoxCollider boxcol;
 
@@ -18,7 +18,7 @@ public class MineObject : ItemObject, IMineable
     private new void Awake()
     {
         base.Awake();
-
+        animator = GetComponent<Animator>();//transform.Find("Quad").
         boxcol = GetComponent<BoxCollider>();
     }
     private void OnEnable()
@@ -43,16 +43,16 @@ public class MineObject : ItemObject, IMineable
         }
         else if(state == 1)
         {
-            quad.material.color = new Color(1,1,1,0);
+            //quad.material.color = new Color(1,1,1,0);
             boxcol.enabled = false;
-
+            animator.SetBool("IsFalling",true);
         }
     }
     public new string CanInteract()
     {
         return "캐기";
     }
-    public bool Mine(Item handitem, Animator animator)
+    public bool Mine(Item handitem, Animator playerAnimator)
     {
         if (handitem.InItemType != toolType)
         {
@@ -62,11 +62,20 @@ public class MineObject : ItemObject, IMineable
         print(nowChopCount);
         Interact();
 
-        if (handitem.InItemType == InItemType.Pickaxe)
-            animator.SetBool("isMining", true);
-        else if (handitem.InItemType == InItemType.Axe)
-            animator.SetBool("isAxing", true);
+        animator.SetBool("IsFalling", false);
+        animator.SetBool("IsShaking", false);
 
+        if (handitem.InItemType == InItemType.Pickaxe)
+            playerAnimator.SetBool("isMining", true);
+        else if (handitem.InItemType == InItemType.Axe)
+            playerAnimator.SetBool("isAxing", true);
+
+        playerAnimator.GetComponent<PlayerAnimator>().Mine = UpdateMineState;
+        return true;
+    }
+
+    private void UpdateMineState()
+    {
         if (++nowChopCount >= item.ChopCount)
         {
             NSY.Player.PlayerInput.OnPressFDown = null;
@@ -77,9 +86,9 @@ public class MineObject : ItemObject, IMineable
         }
         else
         {
+            animator.SetBool("IsShaking", true);
             //내구도 하락...
         }
-        return true;
     }
 
     public void DropItems()

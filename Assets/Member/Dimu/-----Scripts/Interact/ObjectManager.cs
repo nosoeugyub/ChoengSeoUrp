@@ -13,6 +13,7 @@ public class ObjectManager : MonoBehaviour
     public void InstantiateBubble()
     {
         MagnifyObject[] magnifyObjects = FindObjectsOfType<MagnifyObject>();
+        if (magnifyObjects.Length == 0) return;
         int randnum = Random.Range(0, magnifyObjects.Length);
         magnifyObjects[randnum].InstantiateBubble();
         isBubbleOn = true;

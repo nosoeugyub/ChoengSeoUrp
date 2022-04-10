@@ -40,7 +40,7 @@ public class CreateAsset : MonoBehaviour
 
             variantRootChild.GetComponent<MeshRenderer>().material = material;
             variantRoot.GetComponent<BoxCollider>().size = new Vector3(texture.width * 0.01f, texture.height * 0.01f,1);
-            variantRootChild.localScale = new Vector2(texture.width*0.01f, texture.height*0.01f);
+            variantRootChild.localScale = new Vector3(texture.width*0.01f, texture.height*0.01f, 1);
 
             Debug.Log(AssetDatabase.GetAssetPath(material));
             //return;
