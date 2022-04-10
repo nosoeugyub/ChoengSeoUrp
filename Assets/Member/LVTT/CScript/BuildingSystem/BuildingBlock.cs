@@ -36,7 +36,7 @@ namespace TT.BuildSystem
         public float areaHeightsize;
 
         //BuildItemObj
-        public BuildingItemObj curDragObj;
+        public BuildingItemObj curInteractObj;
         public float BuildItemScaleVar = 0.1f;
 
         private float BuildItemGap = 0.0001f;
@@ -67,42 +67,39 @@ namespace TT.BuildSystem
 
                 if (Input.GetMouseButtonDown(0))
                 {
-                    if (curDragObj == null) return;
+                    if (curInteractObj == null) return;
                     if (Physics.Raycast(ray, out hit, 10000, layerMask))
                     {
                         print(hit.collider.name);
                         if (hit.collider.GetComponent<BuildingItemObj>() == null)
                         {
-                            if (!curDragObj.ItemisSet && !curDragObj.IsFirstDrop)
+                            if (!curInteractObj.ItemisSet && !curInteractObj.IsFirstDrop)
                             {
-                                curDragObj.ItemisSet = true;
+                                curInteractObj.ItemisSet = true;
                             }
                             else
-                                curDragObj.IsFirstDrop = false;
+                                curInteractObj.IsFirstDrop = false;
 
                             return;
                         }
-                        if (curDragObj.ItemisSet)
+                        if (curInteractObj.ItemisSet)
                         {
-                            curDragObj = hit.collider.GetComponent<BuildingItemObj>();
-                            curDragObj.ItemisSet = false;
+                            curInteractObj = hit.collider.GetComponent<BuildingItemObj>();
+                            curInteractObj.ItemisSet = false;
                             BuildingItemObjAndSorting();
-                            print("itemisSet = false; " + curDragObj);
                         }
                         else
                         {
-                            print("itemisSet = true;");
-                            curDragObj.ItemisSet = true;
+                            curInteractObj.ItemisSet = true;
                         }
                     }
-                    else if (!curDragObj.ItemisSet)
+                    else if (!curInteractObj.ItemisSet)
                     {
-                        curDragObj.ItemisSet = true;
-                        print("itemisSet = true;");
+                        curInteractObj.ItemisSet = true;
                     }
                 }
 
-                if (curDragObj && !curDragObj.ItemisSet)
+                if (curInteractObj && !curInteractObj.ItemisSet)
                     ScaleBuildItem();
             }
             else if (CurBuildMode == BuildMode.DemolishMode)
@@ -114,7 +111,10 @@ namespace TT.BuildSystem
                 {
                     if (Physics.Raycast(ray, out hit, 10000, layerMask))
                     {
+                        if (hit.collider.GetComponent<BuildingItemObj>() == null) return;
+                        curInteractObj = hit.collider.GetComponent<BuildingItemObj>();
 
+                        curInteractObj.Demolish();
                     }
                 }
             }
@@ -124,6 +124,10 @@ namespace TT.BuildSystem
         public void AddBuildItemToList(GameObject Item)
         {
             BuildItemList.Add(Item);
+        }
+        public void RemoveBuildItemToList(GameObject Item)
+        {
+            BuildItemList.Remove(Item);
         }
         public void RemoveDemolishedBuildItem()
         {
@@ -144,7 +148,6 @@ namespace TT.BuildSystem
             }
             nowBuildingBlock = this;
             player = playerTf;
-            //건축물 상호작용 인덱스 체크
             Interact();
             //Set Event Methods
             if (buildState == BuildState.NotFinish)
@@ -156,7 +159,6 @@ namespace TT.BuildSystem
                         BuildModeOn(interactUI);
                         player.gameObject.SetActive(false);
                         ResetButtonEvents(buttons);
-                        print("1. Build Building");
                         //1. Build Building
                     });
                     buttons[1].onClick.AddListener(() =>
@@ -164,17 +166,14 @@ namespace TT.BuildSystem
                         BuildDemolishModeOn(interactUI);
                         player.gameObject.SetActive(false);
                         ResetButtonEvents(buttons);
-                        print("2. break Building");
                         //2. break Building
                     });
                     buttons[2].onClick.AddListener(() =>
                     {
-                        print("3. Finish Building");
                         //3. Finish Building
                     });
                     this.buildButtonFuncAdded = true;
                 }
-
             }
             else if (buildState == BuildState.Finish)
             {
@@ -233,6 +232,8 @@ namespace TT.BuildSystem
             buildButtonFuncAdded = false;
             interactUI.SetActive(false);
 
+            GetComponent<BoxCollider>().enabled = false;
+
             CamManager.ChangeFollowTarger(gameObject.transform, 1);
             CamManager.ChangeFollowTarger(gameObject.transform, 2);
             CamManager.ChangeFollowTarger(gameObject.transform, 3);
@@ -246,7 +247,7 @@ namespace TT.BuildSystem
 
         public void BuildModeOff()
         {
-            if (!isBuildMode || isBuildDemolishMode) return;
+            if (!isBuildMode && !isBuildDemolishMode) return;
             CamManager.DeactiveSubCamera(1);
             CamManager.DeactiveSubCamera(2);
             CamManager.DeactiveSubCamera(3);
@@ -268,19 +269,21 @@ namespace TT.BuildSystem
         {
             if (Input.GetAxis("Mouse ScrollWheel") > 0)
             {
-                Vector3 var = curDragObj.transform.localScale;
+                Vector3 var = curInteractObj.transform.localScale;
                 var.x += BuildItemScaleVar;
                 var.y += BuildItemScaleVar;
-                curDragObj.SetBuildItemScale(var);
+                curInteractObj.SetBuildItemScale(var);
             }
             else if (Input.GetAxis("Mouse ScrollWheel") < 0)
             {
-                Vector3 var = curDragObj.transform.localScale;
+                Vector3 var = curInteractObj.transform.localScale;
                 var.x -= BuildItemScaleVar;
                 var.y -= BuildItemScaleVar;
-                curDragObj.SetBuildItemScale(var);
+                curInteractObj.SetBuildItemScale(var);
             }
         }
+        /// <summary>
+        /// //////////BuildObj Sorting
         public void BtnSpawnHouseBuildItem(Item spawnObj)
         {
             Vector3 spawnPos = HouseBuild.transform.position;
@@ -334,25 +337,26 @@ namespace TT.BuildSystem
             int frontCount = 0;
             foreach (GameObject item in BuildItemList)
             {
-                if (curDragObj.GetOutItemType() == OutItemType.BuildWall)//현재오브젝트가 벽일때
+                if (curInteractObj.GetOutItemType() == OutItemType.BuildWall)//현재오브젝트가 벽일때
                 {
                     if (item.GetComponent<BuildingItemObj>().GetOutItemType() != OutItemType.BuildWall) continue;//선택한게 벽이 아니라면
                 }
-                else if (curDragObj.GetOutItemType() == OutItemType.BuildNormal)//현재오브젝트가 벽일때
+                else if (curInteractObj.GetOutItemType() == OutItemType.BuildNormal)//현재오브젝트가 벽일때
                 {
                     if (item.GetComponent<BuildingItemObj>().GetOutItemType() != OutItemType.BuildNormal) continue;//선택한게 일반이 아니라면
                 }
 
-                float bigZinWalls = curDragObj.transform.position.z;//클릭한 오브젝트의 z값
+                float bigZinWalls = curInteractObj.transform.position.z;//클릭한 오브젝트의 z값
                 if (bigZinWalls <= item.transform.position.z) continue;//선택한게 다른 옵젝보다 더 가깝다면 검사 패스
 
                 item.transform.position
                  = new Vector3(item.transform.position.x, item.transform.position.y, item.transform.position.z + BuildItemGap);
                 frontCount++;
             }
-            curDragObj.transform.position =
-                    new Vector3(curDragObj.transform.position.x, curDragObj.transform.position.y, curDragObj.transform.position.z - (BuildItemGap * frontCount));
+            curInteractObj.transform.position =
+                    new Vector3(curInteractObj.transform.position.x, curInteractObj.transform.position.y, curInteractObj.transform.position.z - (BuildItemGap * frontCount));
         }
+        /// </summary>
 
         ////////////////////////////////////////////////////////
         public void Interact()

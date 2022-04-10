@@ -5,9 +5,10 @@ public class MineObject : ItemObject, IMineable
 {
     int nowChopCount;
     [SerializeField] float respawnTime = 5;
-    [SerializeField] float time = 0;
-    int state = 0;//0 성장완료 1미완료
+    //[SerializeField] float time = 0;
+    //int state = 0;//0 성장완료 1미완료
 
+    
 
     BoxCollider boxcol;
 
@@ -37,7 +38,7 @@ public class MineObject : ItemObject, IMineable
             Debug.Log("초기화");
             boxcol.enabled = true;
             nowChopCount = 0;
-            time = 0;
+            //time = 0;
             quad.material.color = new Color(1,1,1,1);
         }
         else if(state == 1)
