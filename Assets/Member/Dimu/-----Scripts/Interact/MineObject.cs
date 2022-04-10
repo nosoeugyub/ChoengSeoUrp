@@ -47,7 +47,7 @@ public class MineObject : ItemObject, IMineable
 
         }
     }
-    public string CanInteract()
+    public new string CanInteract()
     {
         return "캐기";
     }

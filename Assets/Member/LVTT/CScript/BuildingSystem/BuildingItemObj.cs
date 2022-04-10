@@ -90,7 +90,6 @@ namespace TT.BuildSystem
             parentBuildArea = pb;
             parentBuildArea.curDragObj = this;
             ObjOriginPos = gameObject.transform.position;
-            //HouseBuildAreaCal();
         }
 
         void HouseBuildAreaCal()
@@ -100,91 +99,41 @@ namespace TT.BuildSystem
             MaxY = ObjOriginPos.y + parentBuildArea.areaHeightsize / 2 - quad.transform.localScale.y * transform.localScale.y / 2;
             MinY = ObjOriginPos.y - parentBuildArea.areaHeightsize / 2 + quad.transform.localScale.y * transform.localScale.y / 2;
             Debug.Log("MaxX: " + MaxX + "MaxY" + MaxY);
-            //ObjOriginWidth = parentBuildArea.HalfGuideObjWidth - quad.transform.localScale.x / 2;
-            //ObjOriginHeight = parentBuildArea.HalfGuideObjHeight - quad.transform.localScale.x / 2;
-            //curObjWidth = ObjOriginWidth;
-            //curObjHeight = ObjOriginHeight;
-            //ObjOriginPos = gameObject.transform.position;
-            //MaxX = gameObject.transform.position.x + xDragOffset;
-            //MinX = gameObject.transform.position.x - xDragOffset;
-            //MaxY = gameObject.transform.position.y + yDragOffset;
-            //MinY = gameObject.transform.position.y - yDragOffset;
-            //ObjOriginWidth = parentBuildArea.HalfGuideObjWidth - xDragOffset;
-            //ObjOriginHeight = parentBuildArea.HalfGuideObjHeight - yDragOffset;
-            //curObjWidth = ObjOriginWidth;
-            //curObjHeight = ObjOriginHeight;
-
         }
-        // private void OnMouseDown() //마우스를 눌렸을 때
-        // {
-        //     print("OnMouseDown");
-        //     if (BuildingBlock.isBuildMode)
-        //     {
-        //         mOffset = gameObject.transform.position - GetMouseWorldPos();
-        //         switch (itemisSet)
-        //         {
-        //             case true://아이템이 세팅되어 있는가?
-        //                 if (canTouch)
-        //                 {
-        //                     if (this.ItemKind == BuildItemKind.Wall)
-        //                     { }
-        //                     else
-        //                     { BringItemTotheBack(); }
-        //                     itemisSet = false;
-        //                 }
-        //                 break;
-        //             case false://아이템을 마우스가 들고 있는가?
-        //                 SetItemPos();//자리에 세팅
-        //                 break;
-        //         }
-        //     }
-        //     else if (parentBuildArea.CurBuildMode == BuildMode.DemolishMode)
-        //     {
-        //         mOffset = gameObject.transform.position - GetMouseWorldPos();
-        //         if (canTouch)
-        //         {
-        //             breakPoint -= 1;
-        //             if (breakPoint <= 0)
-        //             { DemolishBuildItem(); }
-        //         }
-        //     }
-        //
-        // }
 
-        void SetItemPos()
-        {
-            transform.position = GetMouseWorldPos() + mOffset;
-            itemisSet = true;
-            canTouch = false;
-            print("itemisSet = true, canTouch = false");
-            parentBuildArea.OnBuildItemDrag = false;
-        }
+        //void SetItemPos()
+        //{
+        //    transform.position = GetMouseWorldPos() + mOffset;
+        //    itemisSet = true;
+        //    canTouch = false;
+        //    print("itemisSet = true, canTouch = false");
+        //    parentBuildArea.OnBuildItemDrag = false;
+        //}
         void DemolishBuildItem()
         {
             Destroy(gameObject);
         }
-        Vector3 GetMouseWorldPos()
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, mouseColliderLayerMask))
-            {
-                if (raycastHit.collider.gameObject)
-                {
+        //Vector3 GetMouseWorldPos()
+        //{
+        //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //    if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, mouseColliderLayerMask))
+        //    {
+        //        if (raycastHit.collider.gameObject)
+        //        {
 
-                    if (!parentBuildArea.OnBuildItemDrag)
-                    {
-                        canTouch = true;
-                        print("canTouch = true");
-                    }
-                }
-                //return Camera.main.ScreenToWorldPoint(raycastHit.point);
-                return raycastHit.point;
-            }
-            else
-            {
-                return Vector3.zero;
-            }
-        }
+        //            if (!parentBuildArea.OnBuildItemDrag)
+        //            {
+        //                canTouch = true;
+        //                print("canTouch = true");
+        //            }
+        //        }
+        //        return raycastHit.point;
+        //    }
+        //    else
+        //    {
+        //        return Vector3.zero;
+        //    }
+        //}
 
         void BringItemTotheBack()
         {
@@ -208,43 +157,43 @@ namespace TT.BuildSystem
 
             }
         }
-        void ItemMove()
-        {
+        //void ItemMove()
+        //{
 
-            parentBuildArea.OnBuildItemDrag = true;
-            //print("BuildManager.OnBuildItemDrag = true");
-            parentBuildArea.curDragObj = this.GetComponent<BuildingItemObj>();
-            Vector3 DragPos = GetMouseWorldPos() + mOffset;
-            HouseBuildReCal();
-            if (DragPos.x >= MaxX)
-            {
-                DragPos.x = MaxX;
+        //    parentBuildArea.OnBuildItemDrag = true;
+        //    //print("BuildManager.OnBuildItemDrag = true");
+        //    parentBuildArea.curDragObj = this.GetComponent<BuildingItemObj>();
+        //    Vector3 DragPos = GetMouseWorldPos() + mOffset;
+        //    HouseBuildReCal();
+        //    if (DragPos.x >= MaxX)
+        //    {
+        //        DragPos.x = MaxX;
 
-            }
-            if (DragPos.x <= MinX)
-            {
-                DragPos.x = MinX;
-            }
-            if (DragPos.y >= MaxY)
-            {
-                DragPos.y = MaxY;
+        //    }
+        //    if (DragPos.x <= MinX)
+        //    {
+        //        DragPos.x = MinX;
+        //    }
+        //    if (DragPos.y >= MaxY)
+        //    {
+        //        DragPos.y = MaxY;
 
-            }
-            if (DragPos.y <= MinY)
-            {
-                DragPos.y = MinY;
-            }
+        //    }
+        //    if (DragPos.y <= MinY)
+        //    {
+        //        DragPos.y = MinY;
+        //    }
 
 
-            if (this.ItemKind == BuildItemKind.Wall)
-            {
-                DragPos.z = parentBuildArea.CurWallItemzPos;
-            }
-            else
-            { DragPos.z = parentBuildArea.CurFrontItemzPos; }
+        //    if (this.ItemKind == BuildItemKind.Wall)
+        //    {
+        //        DragPos.z = parentBuildArea.CurWallItemzPos;
+        //    }
+        //    else
+        //    { DragPos.z = parentBuildArea.CurFrontItemzPos; }
 
-            transform.position = DragPos;
-        }
+        //    transform.position = DragPos;
+        //}
         public void SetBuildItemScale(Vector3 scalenum)
         {
             if (scalenum.x >= MaxScale)
@@ -264,36 +213,31 @@ namespace TT.BuildSystem
                 scalenum.y = MinScale;
             }
             transform.localScale = scalenum;
-            curObjWidth = ObjOriginWidth * transform.localScale.x;
-            //Debug.Log("curobjWidth = " + curObjWidth);
 
-            curObjHeight = ObjOriginHeight * transform.localScale.y;
+            //curObjWidth = ObjOriginWidth * transform.localScale.x;
+            //curObjHeight = ObjOriginHeight * transform.localScale.y;
 
         }
 
-        void HouseBuildReCal()
-        {
-            ////Debug.Log("MaX = " + MaxX);
-            //float tempMaxX = ObjOriginPos.x + (parentBuildArea.HalfGuideObjWidth - curObjWidth);
-            ////Debug.Log("ObjoriginX" + ObjOriginPos.x);
-            ////Debug.Log("HalfGuideWidth" + BuildManager.HalfGuideObjWidth);
-            ////Debug.Log("TempMax=" + tempMaxX);
-            //MaxX = ObjOriginPos.x + (parentBuildArea.HalfGuideObjWidth - curObjWidth);
-            ////Debug.Log(MaxX);
-            //MinX = ObjOriginPos.x - (parentBuildArea.HalfGuideObjWidth - curObjWidth);
-            ////Debug.Log(MinX);
-            //MaxY = ObjOriginPos.y + (parentBuildArea.HalfGuideObjHeight - curObjHeight);
-            //MinY = ObjOriginPos.y - (parentBuildArea.HalfGuideObjHeight - curObjHeight);
-        }
+        //void HouseBuildReCal()
+        //{
+        //    ////Debug.Log("MaX = " + MaxX);
+        //    //float tempMaxX = ObjOriginPos.x + (parentBuildArea.HalfGuideObjWidth - curObjWidth);
+        //    ////Debug.Log("ObjoriginX" + ObjOriginPos.x);
+        //    ////Debug.Log("HalfGuideWidth" + BuildManager.HalfGuideObjWidth);
+        //    ////Debug.Log("TempMax=" + tempMaxX);
+        //    //MaxX = ObjOriginPos.x + (parentBuildArea.HalfGuideObjWidth - curObjWidth);
+        //    ////Debug.Log(MaxX);
+        //    //MinX = ObjOriginPos.x - (parentBuildArea.HalfGuideObjWidth - curObjWidth);
+        //    ////Debug.Log(MinX);
+        //    //MaxY = ObjOriginPos.y + (parentBuildArea.HalfGuideObjHeight - curObjHeight);
+        //    //MinY = ObjOriginPos.y - (parentBuildArea.HalfGuideObjHeight - curObjHeight);
+        //}
         public string CanInteract()
         {
             return "BuildItemObj";
         }
 
-        public Transform ReturnTF()
-        {
-            return transform;
-        }
 
         public void Demolish()
         {

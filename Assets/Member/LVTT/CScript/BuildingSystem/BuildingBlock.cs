@@ -15,10 +15,6 @@ namespace TT.BuildSystem
         public Transform HouseBuild;
         public List<GameObject> BuildItemList;
         [HideInInspector]
-        public float CurWallItemzPos;
-        [HideInInspector]
-        public float CurFrontItemzPos;
-        [HideInInspector]
         public float MaxBackItemzPos;
 
         [SerializeField] public BuildState buildState;
@@ -41,9 +37,6 @@ namespace TT.BuildSystem
         public float areaWidthsize;
         public float areaHeightsize;
 
-        //public float HalfGuideObjWidth;
-        //public float HalfGuideObjHeight;
-
         //BuildItemObj
         public BuildingItemObj curDragObj;
         public float BuildItemScaleVar = 0.1f;
@@ -55,11 +48,11 @@ namespace TT.BuildSystem
         public float SpawnOffsetY;
         public float SpawnOffsetZ;
 
+        Transform player;
+
         RaycastHit hit;
         Ray ray;
         int layerMask;   // Player 레이어만 충돌 체크함
-        Vector3 movePos;
-        Vector3 movePos1;
         ////////////////////////////////////////////////////////
         void Start()
         {
@@ -70,6 +63,11 @@ namespace TT.BuildSystem
         }
         private void Update()
         {
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                BuildModeOff();
+            }
+
             if (CurBuildMode == BuildMode.BuildHouseMode)
             {
                 ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -81,8 +79,14 @@ namespace TT.BuildSystem
                     if (Physics.Raycast(ray, out hit, 10000, layerMask))
                     {
                         print(hit.collider.name);
-                        if (hit.collider.GetComponent<BuildingItemObj>() == null) return;
-
+                        if (hit.collider.GetComponent<BuildingItemObj>() == null)
+                        {
+                            if (!curDragObj.IsitemSet())
+                            {
+                                curDragObj.SetItemState(true);
+                            }
+                            return;
+                        }
                         if (curDragObj.IsitemSet())
                         {
                             curDragObj = hit.collider.GetComponent<BuildingItemObj>();
@@ -129,7 +133,7 @@ namespace TT.BuildSystem
                 button.gameObject.SetActive(true);
             }
             nowBuildingBlock = this;
-
+            player = playerTf;
             //건축물 상호작용 인덱스 체크
             Interact();
             //Set Event Methods
@@ -140,7 +144,7 @@ namespace TT.BuildSystem
                     buttons[0].onClick.AddListener(() =>
                     {
                         BuildModeOn(interactUI);
-                        playerTf.gameObject.SetActive(false);
+                        player.gameObject.SetActive(false);
                         ResetButtonEvents(buttons);
                         print("1. Build Building");
                         //1. Build Building
@@ -148,7 +152,7 @@ namespace TT.BuildSystem
                     buttons[1].onClick.AddListener(() =>
                     {
                         BuildDemolishModeOn(interactUI);
-                        playerTf.gameObject.SetActive(false);
+                        player.gameObject.SetActive(false);
                         ResetButtonEvents(buttons);
                         print("2. break Building");
                         //2. break Building
@@ -198,6 +202,8 @@ namespace TT.BuildSystem
             buildButtonFuncAdded = false;
             interactUI.SetActive(false);
 
+            GetComponent<BoxCollider>().enabled = false;
+
             CamManager.ChangeFollowTarger(gameObject.transform, 1);
             CamManager.ChangeFollowTarger(gameObject.transform, 2);
             CamManager.ChangeFollowTarger(gameObject.transform, 3);
@@ -230,12 +236,15 @@ namespace TT.BuildSystem
 
         public void BuildModeOff()
         {
+            if (!isBuildMode || isBuildDemolishMode) return;
             CamManager.DeactiveSubCamera(1);
             CamManager.DeactiveSubCamera(2);
             CamManager.DeactiveSubCamera(3);
 
+            GetComponent<BoxCollider>().enabled = true;
             SetBuildMode(BuildMode.None);
 
+            player.gameObject.SetActive(true);
             isBuildMode = false;
             isBuildDemolishMode = false;
 
@@ -268,11 +277,10 @@ namespace TT.BuildSystem
         public void BtnSpawnHouseBuildItem(Item spawnObj)
         {
             Vector3 spawnPos = HouseBuild.transform.position;
-            spawnPos.y = HouseBuild.transform.position.y+ areaHeightsize / 2;
+            spawnPos.y = HouseBuild.transform.position.y + areaHeightsize / 2;
             if (spawnObj.OutItemType == OutItemType.BuildWall)
             {
                 spawnPos.z = spawnPos.z - SpawnOffsetZ;// when the building is facing South
-                CurWallItemzPos = spawnPos.z;
                 hasWall = true;
                 SuperManager.Instance.inventoryManager.CheckCanBuildItem(nowBuildingBlock);
 
@@ -290,17 +298,7 @@ namespace TT.BuildSystem
             newPrefab.GetComponent<BuildingItemObj>().SetParentBuildArea(nowBuildingBlock);
             newPrefab.name = spawnObj.name;
             AddBuildItemToList(newPrefab);
-            CurFrontItemzPos = spawnPos.z;
         }
-
-        //void GuideObjCal()
-        //{
-        //    // Debug.Log("GuideObjCalculate");
-        //    HalfGuideObjHeight = GuideObjCorner.transform.position.y - GuideObj.transform.position.y;
-        //    HalfGuideObjWidth = GuideObjCorner.transform.position.x - GuideObj.transform.position.x;
-        //    //Debug.Log(HalfGuideObjHeight);
-        //    //Debug.Log(HalfGuideObjWidth);
-        //}
         ////////////////////////////////////////////////////////
         public void Interact()
         {
@@ -318,14 +316,6 @@ namespace TT.BuildSystem
         public void SetBuildingState(BuildState buildstate)
         {
             buildState = buildstate;
-        }
-
-        void BuildButtonsListenerRemove(UnityEngine.UI.Button[] buttons)
-        {
-            foreach (var button in buttons)
-            {
-                button.onClick.RemoveAllListeners();
-            }
         }
     }
 }
