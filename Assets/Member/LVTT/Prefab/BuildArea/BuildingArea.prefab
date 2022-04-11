@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4123280054350793678}
   - component: {fileID: 4123280054350793677}
   - component: {fileID: 4123280054350793676}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,7 +104,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4123280054433368081}
   - component: {fileID: 4123280054433368082}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: BoundFront
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -150,7 +150,7 @@ GameObject:
   - component: {fileID: 4123280054561734942}
   - component: {fileID: 4123280054561734941}
   - component: {fileID: 4123280054561734940}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: LayerMaskWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -247,7 +247,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4123280054577332983
 Transform:
   m_ObjectHideFlags: 0
@@ -274,7 +274,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4123280054628325711}
   - component: {fileID: 4123280054630016688}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: BoundBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -321,7 +321,7 @@ GameObject:
   - component: {fileID: 4123280054969960023}
   - component: {fileID: 4123280054969960022}
   - component: {fileID: 4123280054969960021}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Road
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -935,7 +935,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4123280055118334128}
   - component: {fileID: 4123280055118334129}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: BoundLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -994,7 +994,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4123280055350815963}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -3.8199997, z: 1.2000122}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1035,21 +1035,15 @@ MonoBehaviour:
   CurBuildMode: 0
   HouseBuild: {fileID: 4123280055626430901}
   BuildItemList: []
-  CurWallItemzPos: 0
-  CurFrontItemzPos: 0
-  MaxBackItemzPos: 0
   buildState: 0
   buildingId: 0
   toolType: 0
   buildButtonFuncAdded: 0
   hasWall: 0
-  HalfGuideObjWidth: 0
-  HalfGuideObjHeight: 0
-  curDragObj: {fileID: 0}
+  areaWidthsize: 10
+  areaHeightsize: 10
+  curInteractObj: {fileID: 0}
   BuildItemScaleVar: 0.1
-  OnBuildItemDrag: 0
-  SpawnOffsetY: 0
-  SpawnOffsetZ: 0
 --- !u!1 &4123280055626430900
 GameObject:
   m_ObjectHideFlags: 0
@@ -1059,7 +1053,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4123280055626430901}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: HouseBuild
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1090,7 +1084,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4123280055655279821}
   - component: {fileID: 4123280055655279822}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: BoundRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1151,8 +1145,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4123280055967156640}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.6, z: -1.2}
-  m_LocalScale: {x: 8.77, y: 10.86, z: 1}
+  m_LocalPosition: {x: 0, y: 5, z: 0}
+  m_LocalScale: {x: 10, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 4123280055350815964}
   m_RootOrder: 4
@@ -1227,7 +1221,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4123280056203766432}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Bound
   m_TagString: Untagged
   m_Icon: {fileID: 0}

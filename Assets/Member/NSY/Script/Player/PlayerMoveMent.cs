@@ -7,7 +7,7 @@ namespace NSY.Player
     {
         //플립
         [SerializeField]
-        SpriteRenderer spriterender;
+        Transform meshrender;
 
         [SerializeField]
         PlayerController playerController;
@@ -176,11 +176,11 @@ namespace NSY.Player
             facingRight = !facingRight;
             if (FlipMove>0)
             {
-                spriterender.flipX = false;
+                meshrender.eulerAngles = new Vector3(0,0,0);
             }
             else if(FlipMove< 0)
             {
-                spriterender.flipX = true;
+                meshrender.eulerAngles = new Vector3(0,180,0);
             }
            
         }
