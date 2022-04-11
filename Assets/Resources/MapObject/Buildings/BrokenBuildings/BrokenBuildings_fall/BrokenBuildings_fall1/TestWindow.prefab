@@ -1,5 +1,26 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &7168450206094316045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8414553665257895614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aa875259ddfa2d45b7c9198ba4160a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: 4a4fa3951a7c31a4f9037fba06a73aaa, type: 2}
+  quad: {fileID: 0}
+  ItemKind: 3
+  toolType: 40003
+  MaxScale: 2
+  MinScale: 0.3
+  breakCount: 0
+  itemisSet: 0
+  isFirstDrop: 0
 --- !u!60 &4104225435044172716
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -30,30 +51,6 @@ PolygonCollider2D:
       - {x: -0.45, y: -0.46}
       - {x: 0.44, y: -0.46}
       - {x: 0.45, y: 0.46}
---- !u!114 &7168450206094316045
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8414553665257895614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1aa875259ddfa2d45b7c9198ba4160a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: 4a4fa3951a7c31a4f9037fba06a73aaa, type: 2}
-  quad: {fileID: 0}
-  ItemKind: 3
-  toolType: 40003
-  mouseColliderLayerMask:
-    serializedVersion: 2
-    m_Bits: 1024
-  yDragOffset: 2.5
-  xDragOffset: 2
-  MaxScale: 0
-  MinScale: 0
-  breakPoint: 1
 --- !u!1001 &2707657898765657159
 PrefabInstance:
   m_ObjectHideFlags: 0

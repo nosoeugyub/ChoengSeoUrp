@@ -9,8 +9,8 @@ namespace TT.BuildSystem
         [Tooltip("이 오브젝트를 채집할 수 있는 도구 타입")]
         [SerializeField] InItemType toolType;
 
-        public float MaxScale;
-        public float MinScale;
+        public float MaxScale = 1.5f;
+        public float MinScale = 0.3f;
         public int breakCount;
 
         [SerializeField] private bool itemisSet;
