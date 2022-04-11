@@ -10,7 +10,8 @@ public class ItemObject : MonoBehaviour//, IInteractable
     public void Awake()
     {
         inventoryNSY=FindObjectOfType<InventoryNSY>();
-        //quad = transform.Find("Quad").GetComponent<MeshRenderer>();
+        if(!quad)
+        quad = transform.Find("Quad").GetComponent<MeshRenderer>();
     }
     private void OnEnable()
     {

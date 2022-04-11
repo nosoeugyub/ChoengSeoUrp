@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TT.MapTravel;
 using Game.Cam;
+using TT.BuildSystem;
+
 public class PopUpManager : MonoBehaviour
 {
     //미니맵 컴포넌트
@@ -122,6 +124,9 @@ public class PopUpManager : MonoBehaviour
         _activePopupList.Remove(popup);
         popup.gameObject.SetActive(false);
         RefreshAllPopupDepth();
+        if(BuildingBlock.isBuildMode|| BuildingBlock.isBuildDemolishMode)
+        BuildingBlock.nowBuildingBlock.BuildModeOff();
+
     }
     /// <summary> 링크드리스트 내 모든 팝업의 자식 순서 재배치 </summary>
     private void RefreshAllPopupDepth()
