@@ -10,6 +10,7 @@ public class CollectObject : ItemObject, ICollectable
 
     public void Collect()
     {
+        inventoryNSY=FindObjectOfType<InventoryNSY>();
         Item itemCopy = item.GetCopy();
         if (inventoryNSY.AddItem(itemCopy))
         {
