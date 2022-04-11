@@ -73,6 +73,7 @@ namespace NSY.Iven
             {
                 foreach (ItemSlot itemSlot in ItemSlots)
                 {
+                    if(itemSlot.item == null) continue;
                     itemSlot.Interactble(true);
                 }
                 return;

@@ -39,7 +39,7 @@ namespace TT.BuildSystem
         public BuildingItemObj curInteractObj;
         public float BuildItemScaleVar = 0.1f;
 
-        private float BuildItemGap = 0.0001f;
+        private float BuildItemGap = 0.0002f;
 
         Transform player;
 
@@ -55,7 +55,7 @@ namespace TT.BuildSystem
         }
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.T))
+            if (Input.GetKeyDown(KeyCode.T) && CurBuildMode == BuildMode.DemolishMode)
             {
                 BuildModeOff();
             }
@@ -70,31 +70,38 @@ namespace TT.BuildSystem
                     if (curInteractObj == null) return;
                     if (Physics.Raycast(ray, out hit, 10000, layerMask))
                     {
-                        print(hit.collider.name);
                         if (hit.collider.GetComponent<BuildingItemObj>() == null)
                         {
                             if (!curInteractObj.ItemisSet && !curInteractObj.IsFirstDrop)
                             {
+                                print("ItemisSet = true 1 ");
                                 curInteractObj.ItemisSet = true;
                             }
                             else
+                            {
+                                print("ItemisSet = false");
                                 curInteractObj.IsFirstDrop = false;
+                            }
 
                             return;
                         }
+
                         if (curInteractObj.ItemisSet)
                         {
+                                print("ItemisSet = false 2");
                             curInteractObj = hit.collider.GetComponent<BuildingItemObj>();
                             curInteractObj.ItemisSet = false;
                             BuildingItemObjAndSorting();
                         }
                         else
                         {
+                                print("ItemisSet = true 2 ");
                             curInteractObj.ItemisSet = true;
                         }
                     }
                     else if (!curInteractObj.ItemisSet)
                     {
+                                print("ItemisSet = true 3 ");
                         curInteractObj.ItemisSet = true;
                     }
                 }
@@ -327,6 +334,7 @@ namespace TT.BuildSystem
                 }
                 spawnPos.z = spawnPos.z - (BuildItemGap / 2 * BuildItemList.Count);// when the building is facing South
             }
+            print(spawnPos.z);
             GameObject newPrefab = Instantiate(spawnObj.ItemPrefab, spawnPos, Quaternion.identity, HouseBuild.transform);
             newPrefab.GetComponent<BuildingItemObj>().SetParentBuildArea(nowBuildingBlock);
             newPrefab.name = spawnObj.name;
@@ -356,6 +364,7 @@ namespace TT.BuildSystem
             }
             curInteractObj.transform.position =
                     new Vector3(curInteractObj.transform.position.x, curInteractObj.transform.position.y, curInteractObj.transform.position.z - (BuildItemGap * frontCount));
+            print("sorting");
         }
         /// </summary>
 
