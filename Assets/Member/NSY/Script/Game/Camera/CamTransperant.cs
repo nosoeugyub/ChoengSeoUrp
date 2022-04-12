@@ -6,25 +6,45 @@ namespace NSY.Cam
 {
     public class CamTransperant : MonoBehaviour
     {
-        SpriteRenderer ObstacleRenderer;
+        Renderer ObstacleRenderer;
 
         public GameObject Character;
 
-       public Material defaultMat;
-        public Material TargetMat;
-    
+        public Material defaultShader;
+        public Material targetShader;
 
 
         // 가리는 오브젝트 리스트
         public List<GameObject> transparentObjs = new List<GameObject>();
 
-   
+        public void Awake()
+        { 
+           // defaultShader = Shader.Find("Universal Render Pipeline/Unlit");
+           // targetShader = Material.Find("Transperants");
+        }
 
 
-        
+        IEnumerator returnObjs()
+        {
+            for (int i = 0; i < transparentObjs.Count; i++)
+            {
+                defaultShader = transparentObjs[i].GetComponentInChildren<Renderer>().material ;
+                Material Mat = transparentObjs[i].GetComponentInChildren<Renderer>().material;
+
+                Color matColor = Mat.color;
+                matColor.a = 1f;
+                Mat.color = matColor;
+                
+            }
+
+            transparentObjs.Clear();
 
 
-        void FixedUpdate()
+            yield return null;
+        }
+
+
+        void Update()
 
         {
             float Distance = Vector3.Distance(transform.position, Character.transform.position);
@@ -50,51 +70,28 @@ namespace NSY.Cam
 
 
                 // 레이에 맞았다면 오브젝트 가져오기
-                ObstacleRenderer = hit.transform.gameObject.GetComponentInChildren<SpriteRenderer>();
+                ObstacleRenderer = hit.transform.gameObject.GetComponentInChildren<Renderer>();
 
 
                 // 이미 반투명 상태라면 리턴
-               // if (ObstacleRenderer.material == TargetMat) return;
+                if (ObstacleRenderer.material.shader == targetShader) return;
 
 
                 if (ObstacleRenderer != null)
 
                 {
-                     ObstacleRenderer.material = TargetMat;
+                    ObstacleRenderer.material = targetShader;
                     transparentObjs.Add(hit.transform.gameObject);
                     Material Mat = ObstacleRenderer.material;
 
-
                     Color matColor = Mat.color;
-                    matColor.a = 0.5f;
-                   Mat.color = matColor;
+                    matColor.a = 0.3f;
+                    Mat.color = matColor;
+                  
                 }
 
-
-
-
-
             }
-            
-        }
-        //되돌리기
-        IEnumerator returnObjs()
-        {
-            for (int i = 0; i < transparentObjs.Count; i++)
-            {
-                transparentObjs[i].GetComponentInChildren<SpriteRenderer>().material = defaultMat;
-                Material Mat = transparentObjs[i].GetComponentInChildren<SpriteRenderer>().material;
-
-             //   Color matColor = Mat;
-            //    matColor.a = 1f;
-            //    Mat = matColor;
-            }
-
-            transparentObjs.Clear();
-
-
-            yield return null;
         }
     }
-}
+    }
 

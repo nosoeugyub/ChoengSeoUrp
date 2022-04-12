@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -6044,7 +6044,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.8325282, y: 1}
+    m_SensorSize: {x: 1.9333333, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -6620,6 +6620,8 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: 8657bcb0ad43f3043983099c87115d3b, type: 2}
   quad: {fileID: 0}
   amount: 1
+  power: 0.3
+  canMove: 0
 --- !u!54 &117139594
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -24917,6 +24919,8 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: 8657bcb0ad43f3043983099c87115d3b, type: 2}
   quad: {fileID: 0}
   amount: 1
+  power: 0.3
+  canMove: 0
 --- !u!54 &527755485
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -37264,6 +37268,8 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: 8657bcb0ad43f3043983099c87115d3b, type: 2}
   quad: {fileID: 0}
   amount: 1
+  power: 0.3
+  canMove: 0
 --- !u!54 &773038490
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -44238,6 +44244,8 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: 8657bcb0ad43f3043983099c87115d3b, type: 2}
   quad: {fileID: 0}
   amount: 1
+  power: 0.3
+  canMove: 0
 --- !u!54 &898530734
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -50725,6 +50733,8 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: 8657bcb0ad43f3043983099c87115d3b, type: 2}
   quad: {fileID: 0}
   amount: 1
+  power: 0.3
+  canMove: 0
 --- !u!54 &1065147467
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -62088,6 +62098,8 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: 8657bcb0ad43f3043983099c87115d3b, type: 2}
   quad: {fileID: 0}
   amount: 1
+  power: 0.3
+  canMove: 0
 --- !u!54 &1274322103
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -78159,6 +78171,8 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: 8657bcb0ad43f3043983099c87115d3b, type: 2}
   quad: {fileID: 0}
   amount: 1
+  power: 0.3
+  canMove: 0
 --- !u!54 &1593673251
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -82731,6 +82745,8 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: 8657bcb0ad43f3043983099c87115d3b, type: 2}
   quad: {fileID: 0}
   amount: 1
+  power: 0.3
+  canMove: 0
 --- !u!54 &1692233187
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -82882,6 +82898,8 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: 8657bcb0ad43f3043983099c87115d3b, type: 2}
   quad: {fileID: 0}
   amount: 1
+  power: 0.3
+  canMove: 0
 --- !u!54 &1701005002
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -84794,6 +84812,8 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: 8657bcb0ad43f3043983099c87115d3b, type: 2}
   quad: {fileID: 0}
   amount: 1
+  power: 0.3
+  canMove: 0
 --- !u!54 &1737129437
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -90884,6 +90904,7 @@ GameObject:
   - component: {fileID: 1855820733}
   - component: {fileID: 1855820732}
   - component: {fileID: 1855820731}
+  - component: {fileID: 1855820736}
   m_Layer: 8
   m_Name: Controller Camera
   m_TagString: MainCamera
@@ -91029,6 +91050,22 @@ Transform:
   m_Father: {fileID: 1997759436}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1855820736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1855820729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b595a7a53b0444343809a8cb630c752e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Character: {fileID: 2094746712}
+  defaultShader: {fileID: 0}
+  targetShader: {fileID: 2100000, guid: 0d792c18c01baa94eba2e6a5930bbe3d, type: 2}
+  transparentObjs: []
 --- !u!1001 &1857651378
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -100522,6 +100559,36 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1100152800923254228, guid: 2626c9f0bf9014343b52638586e20f5b,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100152800923254228, guid: 2626c9f0bf9014343b52638586e20f5b,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100152800923254228, guid: 2626c9f0bf9014343b52638586e20f5b,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100152800923254228, guid: 2626c9f0bf9014343b52638586e20f5b,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100152800923254228, guid: 2626c9f0bf9014343b52638586e20f5b,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100152800923254228, guid: 2626c9f0bf9014343b52638586e20f5b,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1100152801131047147, guid: 2626c9f0bf9014343b52638586e20f5b,
         type: 3}
       propertyPath: m_IsActive
@@ -106467,19 +106534,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4020fbad4516dd14c849bff8229d35aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurBuildMode: 0
-  Player: {fileID: 0}
-  GuideObjOffsetY: 0
-  GuideObjCorner: {fileID: 0}
-  GuideObj: {fileID: 0}
-  HalfGuideObjWidth: 0
-  HalfGuideObjHeight: 0
-  BuildItemDragIndex: 0
-  OnBuildItemDrag: 0
-  curDragObj: {fileID: 0}
-  BuildItemScaleVar: 0.1
-  BuildBlockObjList: []
-  nowBuildingBlock: {fileID: 0}
 --- !u!1 &2139934591
 GameObject:
   m_ObjectHideFlags: 0
