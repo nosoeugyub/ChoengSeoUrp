@@ -46,6 +46,11 @@ public class CreateAsset : MonoBehaviour
             //return;
         }
     }
+    [MenuItem("Assets/CreateMaterials")]
+    static void CreateMaterials()
+    {
+
+    }
 
     [MenuItem("Assets/CreateAssets_Tree")]
     static void CreateAssets_Tree()
@@ -61,6 +66,8 @@ public class CreateAsset : MonoBehaviour
             //count++;
 
             string path = AssetDatabase.GetAssetPath(texture);
+            string filename = path.Substring(0, path.Length - 7);//falltree_L_1 @ _v0.png 7자
+            string upMatname = path.Substring(0, path.Length - 7);//falltree_L @ _up_1_v0.png 12자 
 
             TextureImporter textureImporter = AssetImporter.GetAtPath(path) as TextureImporter;
 
@@ -70,16 +77,17 @@ public class CreateAsset : MonoBehaviour
             AssetDatabase.ImportAsset(path);
 
 
-            material = new Material(Resources.Load<Material>("BaseMat")); ;
+            material = new Material(Resources.Load<Material>("BaseMat"));
 
             var modelRootGO = Resources.Load<GameObject>("TreeTest");//(GameObject)AssetDatabase.LoadMainAssetAtPath("Assets/Resources/ItemBase.prefab");
             var instanceRoot = PrefabUtility.InstantiatePrefab(modelRootGO);
-            GameObject variantRoot = PrefabUtility.SaveAsPrefabAsset((GameObject)instanceRoot, string.Format("{0}.prefab", path.Substring(0, path.Length - 7)));
+            GameObject variantRoot = PrefabUtility.SaveAsPrefabAsset((GameObject)instanceRoot, string.Format("{0}.prefab", filename));
             Transform variantRootChild = variantRoot.transform.Find("GameObject/Quad");
+            Transform variantRootChild2 = variantRoot.transform.Find("GameObject/Up");
 
             //PrefabUtility.SaveAsPrefabAssetAndConnect(Resources.Load<GameObject>("ItemBase"), path, InteractionMode.UserAction);
 
-            AssetDatabase.CreateAsset(material, string.Format("{0}.mat", path.Substring(0, path.Length - 7)));
+            AssetDatabase.CreateAsset(material, string.Format("{0}.mat", filename));
             material.SetTexture("_BaseMap", texture);
 
             variantRootChild.GetComponent<MeshRenderer>().material = material;
