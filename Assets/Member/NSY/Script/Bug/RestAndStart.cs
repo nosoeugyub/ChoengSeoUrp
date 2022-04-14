@@ -5,19 +5,19 @@ using UnityEngine;
 
 namespace NSY.Bug
 {
-    public class RestAndStart : Bugstats//날아다니는 벌래들이 앉는 상태   
+    public class RestAndStart : Bugstats
     {
-        public override void Enter( )
+        public override void Enter(Bug_fly bugfly)
         {
             throw new System.NotImplementedException();
         }
 
-        public override void Execute( )
+        public override void Execute(Bug_fly bugfly)
         {
             throw new System.NotImplementedException();
         }
 
-        public override void Exit( )
+        public override void Exit(Bug_fly bugfly)
         {
             throw new System.NotImplementedException();
         }
