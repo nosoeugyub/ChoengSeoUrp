@@ -3,42 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace NSY.BUGS
+namespace NSY.Bug
 {
-    public class BugStats : MonoBehaviour
+    public abstract class Bugstats 
     {
-        private GameObject Bugs { get; set; }
-        private string BugsNames { get; set; }
-        private bool BoolBug { get; set; }
-        //속성값
-        private float Range;
+        public abstract void Enter(Bug_fly bugfly);
+        public abstract void Execute(Bug_fly bugfly);
 
-
-
-        //애니메이션
-        Animator BugAnim;
-        bool isAction;
-
-
-
-
-
-        private void Start()
-        {
-            BugAnim = GetComponent<Animator>();
-        }
-
-        protected virtual void Update()
-        {
-
-        }
-        public BugStats()
-        {
-            Bugs = null;
-            BugsNames = "BUG";
-            BoolBug = false;
-        }
-
+             public abstract void Exit(Bug_fly bugfly);
 
 
     }
