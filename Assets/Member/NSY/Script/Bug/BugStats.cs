@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace NSY.Bug
 {
-    public abstract class Bugstats 
+    public abstract class Bugstats : MonoBehaviour
     {
         public abstract void Enter(Bug_fly bugfly);
         public abstract void Execute(Bug_fly bugfly);

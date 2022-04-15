@@ -7,10 +7,12 @@ namespace NSY.Bug
     public class BugBehavior : MonoBehaviour
     {
         [SerializeField]
-        private GameObject[] arrayBugs;
-        [SerializeField]
-      //  private GameObject studntPrefab;
+        private string[] arrayBugs;
 
+        [SerializeField]
+        private GameObject BugPrefabs;
+
+        [SerializeField]
         private List<BaseGameBug> BaseBug;
 
         private void Awake()
@@ -19,8 +21,9 @@ namespace NSY.Bug
 
             for (int i = 0; i < arrayBugs.Length; i++)
             {
-                GameObject ClneBug = Instantiate(arrayBugs[i]);
+                GameObject ClneBug = Instantiate(BugPrefabs);
                 Bug_fly bugfly = ClneBug.GetComponent<Bug_fly>();
+                bugfly.SetUpBugData(arrayBugs[i]);
 
                 BaseBug.Add(bugfly);
             }
