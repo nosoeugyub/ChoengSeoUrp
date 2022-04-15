@@ -82,7 +82,7 @@ public class CreateAsset : MonoBehaviour
             AssetDatabase.ImportAsset(path);
 
 
-            material = new Material(Resources.Load<Material>("Shader GP/Test"));
+            material = new Material(Resources.Load<Material>("Shader GP/wind"));
             Debug.Log(upMatname.Substring(17, upMatname.Length - 17));
 
             material2 = AssetDatabase.LoadAssetAtPath<Material>(string.Format("{0}.mat", upMatname));//new Material(Resources.Load<Material>("MapObject/OutLine/Fall/tree/falltree_L_up_0"));//new Material(Resources.Load<Material>("MapObject/OutLine/Fall/tree/falltree_L_up_0"));
@@ -111,8 +111,8 @@ public class CreateAsset : MonoBehaviour
             variantRootChild.localScale = new Vector3(texture.width * 0.01f, texture.height * 0.01f, 1);
             variantRootChild2.localScale = new Vector3(texture.width * 0.01f, texture.height * 0.01f, 1);
 
-            variantRootChild.position = new Vector3(variantRootChild.position.x, texture.height * 0.01f / 2, variantRootChild.position.z);
-            variantRootChild2.position = new Vector3(variantRootChild2.position.x, texture.height * 0.01f / 2, variantRootChild2.position.z);
+            variantRootChild.position = new Vector3(variantRoot.transform.position.x, texture.height * 0.01f / 2, variantRoot.transform.position.z);
+            variantRootChild2.position = new Vector3(variantRoot.transform.position.x, texture.height * 0.01f / 2, variantRoot.transform.position.z);
 
             Debug.Log(AssetDatabase.GetAssetPath(material));
             Debug.Log(AssetDatabase.GetAssetPath(material2));
