@@ -85,7 +85,7 @@ public class CreateAsset : MonoBehaviour
             string path = AssetDatabase.GetAssetPath(texture);
             string filename = path.Substring(0, path.Length - 7);//falltree_L_1 @ _v0.png 7자
             string upMatname = path.Substring(0, path.Length - 8) + "up_" + filename.Substring(filename.Length - 1, 1);
-            string downMatname = path.Substring(0, path.Length - 8) + "up_" + filename.Substring(filename.Length - 1, 1);
+            string downMatname = path.Substring(0, path.Length - 8) + "down_" + filename.Substring(filename.Length - 1, 1);
 
             TextureImporter textureImporter = AssetImporter.GetAtPath(path) as TextureImporter;
 

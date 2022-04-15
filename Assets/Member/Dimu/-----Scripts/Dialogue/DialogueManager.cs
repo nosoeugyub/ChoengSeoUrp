@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
 
 public enum Character
 { CheongSeo, Ejang, Hen, Walrus, Bee, Rabbit, Deer, Milkcow, Sheep, Length }
@@ -29,6 +30,12 @@ namespace DM.Dialog
         [Header("DialogInfos")]
         public List<DialogList> questDialogLists; //퀘스트 있는 대화
         public List<DialogList> dailydialogLists; //퀘스트 없는 대화
+
+        [Header("InstanciatePrefab")]
+        public GameObject textboxFab;//대화창 프리펩 //쪽지로 변하는것임!!
+        Image textboxFabImg;//대화창 프리펩 //쪽지로 변하는것임!!
+        TextMeshProUGUI textboxFabText;//대화창 프리펩 //쪽지로 변하는것임!!
+
 
         public int nowPartner = -1; //일단 이장 고정
         MainNpc nowNpc;
@@ -175,11 +182,15 @@ namespace DM.Dialog
         {
             if (sentences[nowSentenceIdx].eventIdx > 0)
                 EventManager.EventAction += EventManager.EventActions[sentences[nowSentenceIdx].eventIdx];
-            
-            
-           // DOTween.
-            dialogText.DOText(sentences[nowSentenceIdx].sentence,1);
+
+            GameObject fab =  Instantiate(textboxFab, partnerTf);
+            textboxFabImg = fab.transform.Find("Image").GetComponent<Image>();
+            textboxFabText = fab.transform.Find("Text").GetComponent<TextMeshProUGUI>();
+            // DOTween.
+            //textboxFabText.DOText(sentences[nowSentenceIdx].sentence,1);
             //dialogText.text = sentences[nowSentenceIdx].sentence;
+
+            textboxFabText.text = sentences[nowSentenceIdx].sentence;
             nameText.text = questDialogLists[sentences[nowSentenceIdx++].characterId].charName;
         }
 
