@@ -2,6 +2,7 @@
 using TT.BuildSystem;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace NSY.Player
 {
@@ -11,7 +12,8 @@ namespace NSY.Player
  
         [SerializeField] Button[] buildingButtons;
         public GameObject interactUI;//띄울 UI
-        public Text interactUiText;//띄울 UI
+        //public Text interactUiText;//띄울 UI
+        public TextMeshProUGUI interactUiText2;
 
         [SerializeField] Item handItem;
 
@@ -148,7 +150,7 @@ namespace NSY.Player
                 if (nowInteractable != null && IsInteracted(nowInteractable))// 클릭한 옵젝이 닿은 옵젝 리스트에 있다면 통과
                 {
                     interactUI.SetActive(true);
-                    interactUiText.text = nowInteractable.CanInteract();
+                    interactUiText2.text = nowInteractable.CanInteract();
                     Vector3 uiPos = new Vector3(nowInteractable.ReturnTF().position.x, nowInteractable.ReturnTF().position.y + 2, nowInteractable.ReturnTF().position.z);
                     interactUI.transform.position = Camera.main.WorldToScreenPoint(uiPos);
                 }

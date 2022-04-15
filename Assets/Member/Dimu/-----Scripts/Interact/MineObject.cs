@@ -28,6 +28,10 @@ public class MineObject : ItemObject, IMineable
         //animator = GetComponent<Animator>();//transform.Find("Quad").
         boxcol = GetComponent<BoxCollider>();
     }
+    public void SetDownMat(Material material)
+    {
+        downMat = material;
+    }
     private void OnEnable()
     {
         nowChopCount = 0;

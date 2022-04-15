@@ -4,6 +4,7 @@ using NSY.Manager;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public enum Character
 { CheongSeo, Ejang, Hen, Walrus, Bee, Rabbit, Deer, Milkcow, Sheep, Length }
@@ -174,8 +175,11 @@ namespace DM.Dialog
         {
             if (sentences[nowSentenceIdx].eventIdx > 0)
                 EventManager.EventAction += EventManager.EventActions[sentences[nowSentenceIdx].eventIdx];
-
-            dialogText.text = sentences[nowSentenceIdx].sentence;
+            
+            
+           // DOTween.
+            dialogText.DOText(sentences[nowSentenceIdx].sentence,1);
+            //dialogText.text = sentences[nowSentenceIdx].sentence;
             nameText.text = questDialogLists[sentences[nowSentenceIdx++].characterId].charName;
         }
 
