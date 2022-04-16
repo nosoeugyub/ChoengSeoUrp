@@ -9,11 +9,13 @@ public class TextBox : MonoBehaviour
     Image textboxFabImg;//대화창 프리펩 //쪽지로 변하는것임!!
     TextMeshProUGUI textboxFabText;//대화창 프리펩 //쪽지로 변하는것임!!
     Button textboxFabNextButton;//대화창 프리펩 //쪽지로 변하는것임!!
+    [SerializeField] GameObject boomParticle;//대화창 프리펩 //쪽지로 변하는것임!!
     private void Awake()
     {
         textboxFabImg = transform.Find("Image").GetComponent<Image>();
         textboxFabText = transform.Find("Text").GetComponent<TextMeshProUGUI>();
         textboxFabNextButton = transform.Find("Button").GetComponent<Button>();
+        //boomParticle = transform.Find("BOom").GetComponent<GameObject>();
         rect = GetComponent<RectTransform>();
     }
     public Button GetNextButton => textboxFabNextButton;
@@ -28,7 +30,20 @@ public class TextBox : MonoBehaviour
     public void DestroyTextBox()
     {
         GameObject newNote = Instantiate(note, transform.parent);
-        newNote.transform.position = transform.position;//아이템오브젝트 부모로 설정해야함
-        Destroy(this.gameObject);//풀링
+        newNote.transform.position = new Vector3(transform.position.x - Random.Range(0.5f, -0.5f), transform.position.y, transform.position.z-Random.Range(0.5f,-0.5f));//아이템오브젝트 부모로 설정해야함
+        textboxFabImg.gameObject.SetActive(false);
+        textboxFabText.gameObject.SetActive(false);
+        textboxFabNextButton.gameObject.SetActive(false);
+        Invoke("Destroy", 0.5f);
+        boomParticle.SetActive(true);
+    }
+
+    public void Init()
+    {
+    }
+
+    public void Destroy()
+    {
+        Destroy(this.gameObject);
     }
 }
