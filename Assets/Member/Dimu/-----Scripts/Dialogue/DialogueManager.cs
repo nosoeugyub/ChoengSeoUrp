@@ -4,8 +4,6 @@ using NSY.Manager;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening;
-using TMPro;
 
 public enum Character
 { CheongSeo, Ejang, Hen, Walrus, Bee, Rabbit, Deer, Milkcow, Sheep, Length }
@@ -22,7 +20,7 @@ namespace DM.Dialog
         public Transform partnerTf;
 
         [Header("UI")]
-        public GameObject dialogUI;//대화창 조상
+        //public GameObject dialogUI;//대화창 조상
         public Button nextButton; //다음 버튼
         public Text dialogText;
         public Text nameText;
@@ -33,9 +31,8 @@ namespace DM.Dialog
 
         [Header("InstanciatePrefab")]
         public GameObject textboxFab;//대화창 프리펩 //쪽지로 변하는것임!!
-        Image textboxFabImg;//대화창 프리펩 //쪽지로 변하는것임!!
-        TextMeshProUGUI textboxFabText;//대화창 프리펩 //쪽지로 변하는것임!!
 
+        GameObject nowOnFab;
 
         public int nowPartner = -1; //일단 이장 고정
         MainNpc nowNpc;
@@ -80,9 +77,9 @@ namespace DM.Dialog
             //현재 진행중인 퀘스트에서 자신과 상호작용 하는 내용의 퀘스트가 있는지?
             //있다면 해당 퀘스트의 CanClear 검사
             //클리어할 수 있다면 해당 퀘스트 클리어 처리 후 완료 대사를 ss에 넣는다.
-            dialogUI.SetActive(true);
+            //dialogUI.SetActive(true);
             Vector3 uiPos = new Vector3(partnerTf.position.x, partnerTf.position.y + 6, partnerTf.position.z);
-            dialogUI.transform.position = Camera.main.WorldToScreenPoint(uiPos);
+            //dialogUI.transform.position = Camera.main.WorldToScreenPoint(uiPos);
 
             QuestData qd = questManager.ReturnCanClearQuestRequireNpc(nowPartner);
 
@@ -124,7 +121,7 @@ namespace DM.Dialog
                 if (canStartDialogs.Count <= 0)
                 {
                     Debug.LogError("StartShowDialog :: nothing else");
-                    dialogUI.SetActive(false);
+                    //dialogUI.SetActive(false);
                     isTalking = false;
                     return;
                 }
@@ -135,11 +132,11 @@ namespace DM.Dialog
                 dialogLength = nowDialogData.acceptSentenceInfo.Length;
             }
 
-            nextButton.onClick.RemoveAllListeners();
-            nextButton.onClick.AddListener(() =>
-            {
-                UpdateDialog(ss, sentenceState);
-            });
+            //nextButton.onClick.RemoveAllListeners();
+            //nextButton.onClick.AddListener(() =>
+            //{
+            //    UpdateDialog(ss, sentenceState);
+            //});
             UpdateDialog(ss, sentenceState);
         }
 
@@ -173,33 +170,55 @@ namespace DM.Dialog
 
         public void UpdateDialog(Sentence[] sentences, int sentenceState)
         {
-            UpdateDialogText(sentences);
+            UpdateDialogText(sentences, sentenceState);
             if (dialogLength == nowSentenceIdx)
                 LastDialog(sentenceState);
         }
 
-        private void UpdateDialogText(Sentence[] sentences)
+        private void UpdateDialogText(Sentence[] sentences, int sentenceState)
         {
             if (sentences[nowSentenceIdx].eventIdx > 0)
                 EventManager.EventAction += EventManager.EventActions[sentences[nowSentenceIdx].eventIdx];
 
-            GameObject fab =  Instantiate(textboxFab, partnerTf);
-            textboxFabImg = fab.transform.Find("Image").GetComponent<Image>();
-            textboxFabText = fab.transform.Find("Text").GetComponent<TextMeshProUGUI>();
+            if (nowOnFab)
+            {
+                Debug.Log("nowOnFab Destroy");
+                nowOnFab.GetComponent<TextBox>().DestroyTextBox();
+                nextButton = null;
+            }
+
+            nowOnFab = Instantiate(textboxFab, partnerTf);
+
+            Debug.Log("nextButton Update");
+
+            if (!nextButton)
+            {
+                nextButton = nowOnFab.GetComponent<TextBox>().GetNextButton;
+                nextButton.onClick.RemoveAllListeners();
+                nextButton.onClick.AddListener(() =>
+                {
+                    UpdateDialog(sentences, sentenceState);
+                    //nowOnFab.GetComponent<TextBox>().DestroyTextBox();
+                });
+            }
+
             // DOTween.
             //textboxFabText.DOText(sentences[nowSentenceIdx].sentence,1);
             //dialogText.text = sentences[nowSentenceIdx].sentence;
-
-            textboxFabText.text = sentences[nowSentenceIdx].sentence;
+            nowOnFab.GetComponent<TextBox>().SetTextandPosition(sentences[nowSentenceIdx].sentence, partnerTf);
             nameText.text = questDialogLists[sentences[nowSentenceIdx++].characterId].charName;
         }
 
         //마지막 대사일 때 작동
         private void LastDialog(int sentenceState)
         {
+            Debug.Log("lastd");
             nextButton.onClick.RemoveAllListeners();
             nextButton.onClick.AddListener(() =>
             {
+                Debug.Log("TextBox");
+                nowOnFab.GetComponent<TextBox>().DestroyTextBox();
+                nowOnFab = null;
                 CloseDialog();
                 isTalking = false;
             });
@@ -222,7 +241,7 @@ namespace DM.Dialog
 
         private void CloseDialog()
         {
-            dialogUI.SetActive(false);
+            // dialogUI.SetActive(false);
         }
 
         public bool CanTalkWith(int questId, int npcID)//대화 진행 가능한지?
