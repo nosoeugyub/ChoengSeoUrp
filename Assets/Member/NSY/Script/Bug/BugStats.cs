@@ -1,10 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using NSY.Bug;
 
 
-namespace NSY.Bug
-{
     public abstract class Bugstats : MonoBehaviour
     {
         public abstract void Enter(Bug_fly bugfly);
@@ -16,5 +15,4 @@ namespace NSY.Bug
     }
 
 
-}
 

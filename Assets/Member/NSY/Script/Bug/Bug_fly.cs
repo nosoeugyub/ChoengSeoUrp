@@ -3,98 +3,73 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //상태 eum
-public enum Bug_FlyStats { Patol = 0 , fly , Sit }
+public enum Bug_BugStats { RestAndStart = 0, Sit, fly  }
 
 
-namespace NSY.Bug
-{
+
     public class Bug_fly : BaseGameBug
     {
-        private float distance;
-        private Vector3 spanVec;
-        private GameObject spawnObject;
-        private Bug_FlyStats currentFlyStats;
+		private int distance;          // 거리
+	
+		private Locations currentLocation;  // 현재 위치
 
-        private Bugstats[] bugflystats;
-        private Bugstats currentState;
+		// Student가 가지고 있는 모든 상태, 현재 상태
+		private Bugstats[] states;
+		private Bugstats currentState;
 
-        public float Distance
-        {
-            set => distance = Mathf.Max(0, value);
-            get => distance;
-        }
-        public Vector3 SpanVec
-        {
-            set => spanVec =value;
-            get => spanVec;
-        }
-        public GameObject SpawnObject
-        {
-            set => spawnObject = value;
-            get => spawnObject;
-        }
-        public Bug_FlyStats CurrentFlyStats
-        {
-            set => currentFlyStats = value;
-            get => currentFlyStats;
-        }
+		public int Distance
+		{
+			set => distance = Mathf.Max(0, value);
+			get => distance;
+		}
+	
+	
+
+		public override void Setup(string name)
+		{
+			// 기반 클래스의 Setup 메소드 호출 (ID, 이름, 색상 설정)
+			base.Setup(name);
+
+			// 생성되는 오브젝트 이름 설정
+			gameObject.name = $"{BugID:D2} {name}";
+
+			// Student가 가질 수 있는 상태 개수만큼 메모리 할당, 각 상태에 클래스 메모리 할당
+			states = new Bugstats[2];
+			states[(int)Bug_BugStats.RestAndStart] = new NSY.Bug.RestAndStart();
+			states[(int)Bug_BugStats.Sit] = new NSY.Bug.Sit();
+		
+
+			// 현재 상태를 집에서 쉬는 "RestAndSleep" 상태로 설정
+			ChangeState(Bug_BugStats.RestAndStart);
+			Debug.Log(" aaa");
+			distance = 0;
+		}
+
+		public override void Updated()
+		{
+			if (currentState != null)
+			{
+				Debug.Log("  간다.");
+				currentState.Execute(this);
+			}
+		}
+
+		public void ChangeState(Bug_BugStats newState)
+		{
+			// 새로 바꾸려는 상태가 비어있으면 상태를 바꾸지 않는다
+			if (states[(int)newState] == null) return;
+
+			// 현재 재생중인 상태가 있으면 Exit() 메소드 호출
+			if (currentState != null)
+			{
+				currentState.Exit(this);
+			}
+
+			// 새로운 상태로 변경하고, 새로 바뀐 상태의 Enter() 메소드 호출
+			currentState = states[(int)newState];
+			currentState.Enter(this);
+		}
+	}
 
 
-
-
-        public override void SetUpBugData(string name)
-        {
-            base.SetUpBugData(name); //버츄얼 함수 호출
-            gameObject.name = $"{BugiD:D2} Bug_{name}";
-
-            //상태 등록해야 enter간아옴
-            bugflystats = new Bugstats[3];
-            bugflystats[(int)Bug_FlyStats.Patol] = new RestAndStart();
-            bugflystats[(int)Bug_FlyStats.Sit] = new FindandSit();
-            currentState = bugflystats[(int)Bug_FlyStats.Patol];//초기상태는 배회하기
-           
-
-             
-
-            //초기화
-            distance = 0;
-            spanVec = new Vector3(0, 0, 0);
-            spawnObject = null;
-            currentFlyStats = Bug_FlyStats.Patol;
-
-
-        }
-
-
-
-        public override void Update()
-        {
-            if (currentState != null)
-            {
-                currentState.Execute(this);
-
-            }
-            //현재 재생중인 상태가 있으면 Exit
-          
-
-        }
-
-        public void ChangState(Bug_FlyStats newState)
-        {
-            if (bugflystats[(int)newState] == null)
-            {
-                return; //새로바꾸려는 상태가 비어있으면 상태를 나둠
-            }
-            if (currentState != null )
-            {
-                currentState.Exit(this);//현재 재생중인 상태가 있으면 나가
-            }
-
-            //새로운 상태로 변경하고 새로 바뀐상태의 enter호출
-            currentState = bugflystats[(int)newState];
-            currentState.Enter(this);
-        }
-    }
-
-}
 
