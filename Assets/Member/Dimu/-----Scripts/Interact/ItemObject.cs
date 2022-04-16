@@ -33,7 +33,7 @@ public class ItemObject : MonoBehaviour//, IInteractable
     public void Interact()
     {
         //상호작용 인덱스 체크
-        //print(string.Format( "AddData : {0}", item.ItemName));
+        print(string.Format( "AddData : {0}", item.ItemName));
         PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.InteractItem, PlayerData.ItemData, (int)ItemBehaviorEnum.length);
     }
 }

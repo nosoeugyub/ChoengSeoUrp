@@ -18,6 +18,7 @@ namespace DM.Dialog
         int dialogLength;
         int nowSentenceIdx;
         public Transform partnerTf;
+        public Transform[] npcTfs;
 
         [Header("UI")]
         //public GameObject dialogUI;//대화창 조상
@@ -33,7 +34,7 @@ namespace DM.Dialog
         public GameObject textboxFab;//대화창 프리펩 //쪽지로 변하는것임!!
 
         GameObject nowOnFab;
-
+        QuestData canClearqd;
         public int nowPartner = -1; //일단 이장 고정
         MainNpc nowNpc;
         bool isTalking = false;
@@ -57,7 +58,11 @@ namespace DM.Dialog
 
         public void FirstShowDialog(MainNpc npc, Item handitem) //첫 상호작용 시 호출. 어떤 대화를 호출할지 결정
         {
-            if (isTalking) return;
+            if (isTalking)
+            {
+                Debug.Log("대화중입니다.");
+                return;
+            }
 
             isTalking = true;
             nowPartner = npc.GetCharacterType();  //대화하는 대상을 현재 파트너로 지정
@@ -78,10 +83,10 @@ namespace DM.Dialog
             //있다면 해당 퀘스트의 CanClear 검사
             //클리어할 수 있다면 해당 퀘스트 클리어 처리 후 완료 대사를 ss에 넣는다.
             //dialogUI.SetActive(true);
-            Vector3 uiPos = new Vector3(partnerTf.position.x, partnerTf.position.y + 6, partnerTf.position.z);
+            //Vector3 uiPos = new Vector3(partnerTf.position.x, partnerTf.position.y + 6, partnerTf.position.z);
             //dialogUI.transform.position = Camera.main.WorldToScreenPoint(uiPos);
 
-            QuestData qd = questManager.ReturnCanClearQuestRequireNpc(nowPartner);
+            canClearqd = questManager.ReturnCanClearQuestRequireNpc(nowPartner);
 
             //List<QuestData> isAcceptedQuests = questManager.GetIsAcceptedQuestList(nowPartner);//진행중인 퀘스트
             //List<QuestData> canAcceptQuests = questManager.GetCanAcceptQuestList(nowPartner);//수락가능 퀘스트
@@ -89,9 +94,9 @@ namespace DM.Dialog
             List<DialogData> canStartDialogs = GetCanAcceptDialogList(nowPartner, true);//시작가능 대화
 
             //완료자가 nowPartner(현재 대화 상대)인 퀘스트 받아옴. 제공자는 같을 수도,  다를 수 있음.
-            if (qd != null && questManager.ClearQuest(qd.questID, qd.npcID))//있거나 클리어할 수 있다면
+            if (canClearqd != null && questManager.ClearQuest(canClearqd.questID, canClearqd.npcID))//있거나 클리어할 수 있다면
             {
-                nowDialogData = questDialogLists[qd.npcID].dialogList[qd.questID];
+                nowDialogData = questDialogLists[canClearqd.npcID].dialogList[canClearqd.questID];
 
                 ss = nowDialogData.clearSentenceInfo;
                 dialogLength = nowDialogData.clearSentenceInfo.Length;
@@ -187,7 +192,7 @@ namespace DM.Dialog
                 nextButton = null;
             }
 
-            nowOnFab = Instantiate(textboxFab, partnerTf);
+            nowOnFab = Instantiate(textboxFab, npcTfs[sentences[nowSentenceIdx].characterId]);
 
             Debug.Log("nextButton Update");
 
@@ -216,10 +221,10 @@ namespace DM.Dialog
             nextButton.onClick.RemoveAllListeners();
             nextButton.onClick.AddListener(() =>
             {
-                Debug.Log("TextBox");
                 nowOnFab.GetComponent<TextBox>().DestroyTextBox();
                 nowOnFab = null;
                 CloseDialog();
+                Debug.Log("isTalking false");
                 isTalking = false;
             });
             //만약 대화데이터에 퀘스트가 있다면

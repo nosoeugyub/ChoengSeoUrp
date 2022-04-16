@@ -68,7 +68,7 @@ namespace DM.Quest
 
             foreach (QuestTask item in tasks.items)
             {
-                PlayerData.AddDictionary(item.objType, PlayerData.ItemData,(int)ItemBehaviorEnum.length);
+                PlayerData.AddDictionary(item.objType, PlayerData.ItemData, (int)ItemBehaviorEnum.length);
                 item.initData = PlayerData.ItemData[item.objType].amounts[item.behaviorType];
             }
         }
@@ -137,6 +137,7 @@ namespace DM.Quest
                     //}
                 }
             }
+            Debug.Log("해당 사항 없음");
             return true;
         }
         public bool CanAccept()

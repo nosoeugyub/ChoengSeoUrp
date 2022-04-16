@@ -20,7 +20,7 @@ public class MailBox : ItemObject, IEventable
         //편지함 열리기 라던가 어떠한 상호작용 필요
         FindObjectOfType<InventoryNSY>().AddItem(mailBoxMessage);
         //NSY 추가코드 
-        FindObjectOfType<PostPanel>().AddPost(MailPost);
+       // FindObjectOfType<PostPanel>().AddPost(MailPost);
     }
 
     //메서드 자유 추가
