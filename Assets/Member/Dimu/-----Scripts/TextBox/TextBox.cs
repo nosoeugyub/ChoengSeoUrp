@@ -29,13 +29,19 @@ public class TextBox : MonoBehaviour
     }
     public void DestroyTextBox()
     {
-        GameObject newNote = Instantiate(note, transform.parent);
-        newNote.transform.position = new Vector3(transform.position.x - Random.Range(0.5f, -0.5f), transform.position.y, transform.position.z-Random.Range(0.5f,-0.5f));//아이템오브젝트 부모로 설정해야함
+        if (Random.Range(0, 100) < 50)
+            InstactiateNote();
         textboxFabImg.gameObject.SetActive(false);
         textboxFabText.gameObject.SetActive(false);
         textboxFabNextButton.gameObject.SetActive(false);
         Invoke("Destroy", 0.5f);
         boomParticle.SetActive(true);
+    }
+
+    private void InstactiateNote()
+    {
+        GameObject newNote = Instantiate(note, transform.parent);
+        newNote.transform.position = new Vector3(transform.position.x - Random.Range(0.5f, -0.5f), transform.position.y, transform.position.z - Random.Range(0.5f, -0.5f));//아이템오브젝트 부모로 설정해야함
     }
 
     public void Init()
