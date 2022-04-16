@@ -6,6 +6,7 @@ public class TextBox : MonoBehaviour
 {
     [SerializeField] GameObject note;
     [SerializeField] GameObject boomParticle;
+    [SerializeField] Sprite[] textboxFabImgs;
 
     RectTransform rect;
     Image textboxFabImg;
@@ -20,10 +21,11 @@ public class TextBox : MonoBehaviour
         rect = GetComponent<RectTransform>();
     }
     public Button GetNextButton => textboxFabNextButton;
-    public void SetTextandPosition(string sentence, Transform tf)
+    public void SetTextbox(string sentence, Transform tf, TextboxType textboxType)
     {
         textboxFabText.text = sentence;
-        rect.anchoredPosition3D = new Vector3(2, 7, 0);
+        rect.anchoredPosition3D = Vector3.zero;
+        textboxFabImg.sprite = textboxFabImgs[(int)textboxType];
     }
     public void DestroyTextBox()
     {
@@ -38,7 +40,7 @@ public class TextBox : MonoBehaviour
 
     private void InstactiateNote()
     {
-        GameObject newNote = Instantiate(note, transform.parent);
+        GameObject newNote = Instantiate(note, transform.parent.parent.parent.parent);
         newNote.transform.position = new Vector3(transform.position.x - Random.Range(0.5f, -0.5f), transform.position.y, transform.position.z - Random.Range(0.5f, -0.5f));//아이템오브젝트 부모로 설정해야함
     }
 

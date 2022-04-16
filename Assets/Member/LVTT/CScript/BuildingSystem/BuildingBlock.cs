@@ -3,29 +3,30 @@ using NSY.Manager;
 using System.Collections.Generic;
 using UnityEngine;
 public enum BuildItemKind { Wall, Roof, Door, Window, Signboard, Etc }
-public enum BuildState { NotFinish, Finish }
+public enum BuildState { None, NotFinish, Finish }
 public enum BuildMode { None, BuildHouseMode, DemolishMode }
 
 namespace TT.BuildSystem
 {
     public class BuildingBlock : MonoBehaviour, IInteractble
     {
-        public BuildMode CurBuildMode;
+        [SerializeField] int buildingId;
+        [SerializeField] BuildMode CurBuildMode;
+        [SerializeField] Character livingCharacter;
 
-        public Transform HouseBuild;
-        public List<GameObject> BuildItemList;
+        [SerializeField] Transform HouseBuild;
+        [SerializeField] List<GameObject> BuildItemList;
 
         [SerializeField] public BuildState buildState;
-        [SerializeField] int buildingId;
 
         [Tooltip("이 오브젝트를 채집할 수 있는 도구 타입")]
         [SerializeField] InItemType toolType;
-        [HideInInspector]
-        public bool buildButtonFuncAdded;
-        [HideInInspector]
+        private bool buildButtonFuncAdded;
         public bool hasWall = false;
-        internal bool hasSign = false;
+        public bool hasDoor = false;
+        public bool hasSign = false;
 
+        //static
         public static bool isBuildMode = false;
         public static bool isBuildDemolishMode = false;
         public static BuildingBlock nowBuildingBlock;
@@ -36,8 +37,9 @@ namespace TT.BuildSystem
         public float areaHeightsize;
 
         //BuildItemObj
+        [HideInInspector]
         public BuildingItemObj curInteractObj;
-        public float BuildItemScaleVar = 0.1f;
+        private float BuildItemScaleVar = 0.1f;
 
         private float BuildItemGap = 0.0002f;
 
@@ -46,6 +48,19 @@ namespace TT.BuildSystem
         RaycastHit hit;
         Ray ray;
         int layerMask;   // Player 레이어만 충돌 체크함
+
+        public int BuildingID
+        {
+            get
+            {
+                return buildingId;
+            }
+            set
+            {
+                buildingId = value;
+            }
+        }
+
         ////////////////////////////////////////////////////////
         void Start()
         {
@@ -88,20 +103,20 @@ namespace TT.BuildSystem
 
                         if (curInteractObj.ItemisSet)
                         {
-                                print("ItemisSet = false 2");
+                            print("ItemisSet = false 2");
                             curInteractObj = hit.collider.GetComponent<BuildingItemObj>();
                             curInteractObj.ItemisSet = false;
                             BuildingItemObjAndSorting();
                         }
                         else
                         {
-                                print("ItemisSet = true 2 ");
+                            print("ItemisSet = true 2 ");
                             curInteractObj.ItemisSet = true;
                         }
                     }
                     else if (!curInteractObj.ItemisSet)
                     {
-                                print("ItemisSet = true 3 ");
+                        print("ItemisSet = true 3 ");
                         curInteractObj.ItemisSet = true;
                     }
                 }
@@ -157,51 +172,51 @@ namespace TT.BuildSystem
             player = playerTf;
             Interact();
             //Set Event Methods
-            if (buildState == BuildState.NotFinish)
+            //if (buildState == BuildState.NotFinish)
+            //{
+            if (!this.buildButtonFuncAdded)
             {
-                if (!this.buildButtonFuncAdded)
+                buttons[0].onClick.AddListener(() =>
                 {
-                    buttons[0].onClick.AddListener(() =>
-                    {
-                        BuildModeOn(interactUI);
-                        player.gameObject.SetActive(false);
-                        ResetButtonEvents(buttons);
-                        //1. Build Building
-                    });
-                    buttons[1].onClick.AddListener(() =>
-                    {
-                        BuildDemolishModeOn(interactUI);
-                        player.gameObject.SetActive(false);
-                        ResetButtonEvents(buttons);
-                        //2. break Building
-                    });
-                    buttons[2].onClick.AddListener(() =>
-                    {
-                        //3. Finish Building
-                    });
-                    this.buildButtonFuncAdded = true;
-                }
-            }
-            else if (buildState == BuildState.Finish)
-            {
-                if (!this.buildButtonFuncAdded)
+                    BuildModeOn(interactUI);
+                    player.gameObject.SetActive(false);
+                    ResetButtonEvents(buttons);
+                    //1. Build Building
+                });
+                buttons[1].onClick.AddListener(() =>
                 {
-                    buttons[0].onClick.AddListener(() =>
-                    {
-                        //BuildBuilding();
-                        print("1. Repair Building");
-                        //1. Repair Building
-                    });
-                    buttons[1].onClick.AddListener(() =>
-                    {
-                        //DemolishBuidling();
-                        print("2. break Building");
-                        //2. break Building
-                    });
-                    buttons[2].gameObject.SetActive(false);
-                    this.buildButtonFuncAdded = true;
-                }
+                    BuildDemolishModeOn(interactUI);
+                    player.gameObject.SetActive(false);
+                    ResetButtonEvents(buttons);
+                    //2. break Building
+                });
+                buttons[2].onClick.AddListener(() =>
+                {
+                    //3. Finish Building
+                });
+                this.buildButtonFuncAdded = true;
             }
+            //}
+            //else if (buildState == BuildState.Finish)
+            //{
+            //    if (!this.buildButtonFuncAdded)
+            //    {
+            //        buttons[0].onClick.AddListener(() =>
+            //        {
+            //            //BuildBuilding();
+            //            print("1. Repair Building");
+            //            //1. Repair Building
+            //        });
+            //        buttons[1].onClick.AddListener(() =>
+            //        {
+            //            //DemolishBuidling();
+            //            print("2. break Building");
+            //            //2. break Building
+            //        });
+            //        buttons[2].gameObject.SetActive(false);
+            //        this.buildButtonFuncAdded = true;
+            //    }
+            //}
         }
 
         private static void ResetButtonEvents(UnityEngine.UI.Button[] buttons)
@@ -263,12 +278,36 @@ namespace TT.BuildSystem
             GetComponent<BoxCollider>().enabled = true;
             SetBuildMode(BuildMode.None);
 
+            if (IsCompleteBuilding())
+            {
+                SetBuildingState(BuildState.Finish);
+                FindObjectOfType<BuildingManager>().AddBuilding(nowBuildingBlock);
+            }
+            else
+                SetBuildingState(BuildState.NotFinish);
+
             player.gameObject.SetActive(true);
             isBuildMode = false;
             isBuildDemolishMode = false;
 
             SuperManager.Instance.inventoryManager.CheckCanBuildItem(null);
         }
+
+        public bool IsCompleteBuilding()//벽과 문이 있다면 건설 완료 처리
+        {
+            if (buildState == BuildState.Finish) return true;
+            if (hasWall)
+            {
+                if (PlayerData.BuildBuildingData[BuildingID].amounts[(int)BuildingBehaviorEnum.CompleteBuild] < 1)
+                {
+                    PlayerData.AddValue(BuildingID, (int)BuildingBehaviorEnum.CompleteBuild, PlayerData.BuildBuildingData, ((int)BuildingBehaviorEnum.length));
+                    Debug.Log(PlayerData.BuildBuildingData[BuildingID].amounts[(int)BuildingBehaviorEnum.CompleteBuild]);
+                }
+                return true;
+            }
+            else return false;
+        }
+
         public void SetBuildMode(BuildMode buildmode)
         {
             CurBuildMode = buildmode;
@@ -299,6 +338,8 @@ namespace TT.BuildSystem
 
             if (BuildItemList.Count == 0)
             {
+                if (spawnObj.OutItemType == OutItemType.BuildWall)
+                    hasWall = true;
             }
             else if (spawnObj.OutItemType == OutItemType.BuildWall)
             {
@@ -327,6 +368,8 @@ namespace TT.BuildSystem
             }
             else
             {
+                if (spawnObj.OutItemType == OutItemType.BuildWall) hasDoor = true;
+
                 foreach (GameObject item in BuildItemList)
                 {
                     item.transform.position

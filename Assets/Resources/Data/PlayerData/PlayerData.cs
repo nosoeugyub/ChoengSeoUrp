@@ -4,6 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PlayerData", menuName = "PlayerData/new PlayerData", order = 0)]
 public class PlayerData : ScriptableObject
 {
+
     public static Dictionary<int, Behavior> BuildBuildingData = new Dictionary<int, Behavior>();//
     public static Dictionary<int, Behavior> ItemData = new Dictionary<int, Behavior>();
     public static Dictionary<int, Behavior> npcData = new Dictionary<int, Behavior>();
@@ -44,7 +45,7 @@ public enum ItemBehaviorEnum//아이템에는 드랍아이템, 맵 아이템이 
 }
 public enum BuildingBehaviorEnum //건축 지역
 {
-    Interact, StartBuild, CompleteBuild, length
+    Interact, StartBuild, CompleteBuild, GodBuildingCount, length
 }
 public enum NpcBehaviorEnum
 {

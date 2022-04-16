@@ -48,6 +48,8 @@ namespace DM.Dialog
         void Start()
         {
             EventManager.EventActions[1] = Test;
+
+            FirstShowDialog(npcTfs[(int)Character.CheongSeo].parent.GetComponent<MainNpc>(),null);
         }
         public void Test()
         {
@@ -210,7 +212,7 @@ namespace DM.Dialog
             // DOTween.
             //textboxFabText.DOText(sentences[nowSentenceIdx].sentence,1);
             //dialogText.text = sentences[nowSentenceIdx].sentence;
-            nowOnFab.GetComponent<TextBox>().SetTextandPosition(sentences[nowSentenceIdx].sentence, partnerTf);
+            nowOnFab.GetComponent<TextBox>().SetTextbox(sentences[nowSentenceIdx].sentence, npcTfs[sentences[nowSentenceIdx].characterId], sentences[nowSentenceIdx].textboxType);
             nameText.text = questDialogLists[sentences[nowSentenceIdx++].characterId].charName;
         }
 

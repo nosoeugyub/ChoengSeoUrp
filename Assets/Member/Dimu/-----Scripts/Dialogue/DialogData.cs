@@ -45,6 +45,7 @@ public class DialogData : ScriptableObject
     }
 
 }
+public enum TextboxType { Normal, Cloud, Sharp }
 
 [System.Serializable]
 public class Sentence
@@ -52,6 +53,7 @@ public class Sentence
     public string sentence;
     public int characterId;
     public int eventIdx;
+    public TextboxType textboxType;
 
     public Sentence(string sentence_, int characterId_)
     { sentence = sentence_; characterId = characterId_; }

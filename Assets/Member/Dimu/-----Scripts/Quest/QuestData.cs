@@ -37,6 +37,14 @@ namespace DM.Quest
             public int finishData;
             public int initData;
         }
+        [System.Serializable]
+        //public class QuestTask_Build
+        //{
+        //    public int npcType; //특정 NPC의 집
+        //    public BuildingBehaviorEnum behaviorType;//
+        //    public int finishData;
+        //    public int initData;
+        //}
         public class QuestInfo
         {
             public int questId;
