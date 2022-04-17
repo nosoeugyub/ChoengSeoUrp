@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public enum Character
-{ CheongSeo, Ejang, Hen, Walrus, Bee, Rabbit, Deer, Milkcow, Sheep, Length }
+{ CheongSeo, Ejang, Walrus,Hen,  Bee, Rabbit, Deer, Milkcow, Sheep, Length }
 //청서 곰 닭 바코 벌 토끼 사슴 젖소 양
 
 namespace DM.Dialog
@@ -150,14 +150,14 @@ namespace DM.Dialog
 
         private List<DialogData> GetCanAcceptDialogList(int npcID, bool isQuestList)
         {
-            List<DialogData> canAcceptQuests = new List<DialogData>();
+            List<DialogData> canAcceptDialogs = new List<DialogData>();
             if (isQuestList)
             {
                 foreach (var dialogData in questDialogLists[npcID].dialogList)//퀘스트 가진 리스트 중에서 검사
                 {
                     if (dialogData.CanStartTalk())
                     {
-                        canAcceptQuests.Add(dialogData);
+                        canAcceptDialogs.Add(dialogData);
                     }
                 }
             }
@@ -167,12 +167,12 @@ namespace DM.Dialog
                 {
                     if (dialogData.CanStartTalk())
                     {
-                        canAcceptQuests.Add(dialogData);
+                        canAcceptDialogs.Add(dialogData);
                     }
                 }
             }
 
-            return canAcceptQuests;
+            return canAcceptDialogs;
         }
 
         public void UpdateDialog(Sentence[] sentences, int sentenceState)
@@ -189,14 +189,11 @@ namespace DM.Dialog
 
             if (nowOnFab)
             {
-                Debug.Log("nowOnFab Destroy");
                 nowOnFab.GetComponent<TextBox>().DestroyTextBox();
                 nextButton = null;
             }
 
             nowOnFab = Instantiate(textboxFab, npcTfs[sentences[nowSentenceIdx].characterId]);
-
-            Debug.Log("nextButton Update");
 
             if (!nextButton)
             {
@@ -219,12 +216,12 @@ namespace DM.Dialog
         //마지막 대사일 때 작동
         private void LastDialog(int sentenceState)
         {
-            Debug.Log("lastd");
             nextButton.onClick.RemoveAllListeners();
             nextButton.onClick.AddListener(() =>
             {
                 nowOnFab.GetComponent<TextBox>().DestroyTextBox();
                 nowOnFab = null;
+                nowDialogData.isTalkingOver = true;
                 CloseDialog();
                 Debug.Log("isTalking false");
                 isTalking = false;

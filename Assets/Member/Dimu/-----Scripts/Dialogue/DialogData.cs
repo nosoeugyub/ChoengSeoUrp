@@ -37,6 +37,22 @@ public class DialogData : ScriptableObject
         {
             //빌딩매니저에서 해당 건축물이 어느 집에 설치되어있을 때..
         }
+        foreach (var item in dialogTasks.haveToEndDialog)
+        {
+            if(!item.isTalkingOver)
+            {
+                return false;
+
+            }
+        }
+        foreach (var item in dialogTasks.DonthaveToEndDialog)
+        {
+            if (item.isTalkingOver)
+            {
+                return false;
+
+            }
+        }
         //if( dialogTasks.itemIndexToHand == 
         //{
         //    //플레이어의 hand 체크
@@ -63,7 +79,9 @@ public class Sentence
 public class DialogTask
 {
     public QuestIndexSet[] haveToClearQuest; //클리어 해야 하는 퀘스트
+    public DialogData[] haveToEndDialog;
     public QuestIndexSet[] DonthaveToClearQuest; //클리어 하지 말아야 하는 퀘스트
+    public DialogData[] DonthaveToEndDialog;
     public QuestIndexSet[] haveToDoingQuest; //진행중이어야 하는 퀘스트
     public BuildBuilding[] buildBuildings;
     public int itemIndexToHand;//손에 들고 있어야 하는 아이템 인덱스

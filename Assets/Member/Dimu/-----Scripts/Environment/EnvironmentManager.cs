@@ -84,8 +84,6 @@ public class EnvironmentManager : MonoBehaviour
         d2.intensity = ((goodIntensity_d2 - badIntensity_d2) / 100 * Cleanliness) + badIntensity_d2;
         d3.intensity = ((goodIntensity_d3 - badIntensity_d3) / 100 * Cleanliness) + badIntensity_d3;
 
-        print(d1.intensity);
-
         skyBox.SetColor("_SkyColor", _skyColor);
         skyBox.SetColor("_EquatorColor", _equatorColor);
         skyBox.SetColor("_GroundColor", _groundColor);
