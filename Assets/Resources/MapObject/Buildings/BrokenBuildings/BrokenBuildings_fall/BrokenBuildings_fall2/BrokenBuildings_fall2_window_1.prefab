@@ -1,5 +1,27 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &7644125800597654405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8521213518536982867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e98edd9d888073048bd342c2bd77217d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 0}
+  quad: {fileID: 0}
+  haveTruckState: 0
+  respawnTime: 20
+  nowMat: {fileID: 0}
+  downMat: {fileID: 0}
+  upObj: {fileID: 0}
+  animator: {fileID: 0}
+  boxcol: {fileID: 0}
+  toolType: 0
 --- !u!1001 &2816044951399961514
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21,6 +43,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Size.y
       value: 2.52
+      objectReference: {fileID: 0}
+    - target: {fileID: 2527683101836964441, guid: 1ff8cb4505dce054082ec4fdaae2665f,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2635912312698621711, guid: 1ff8cb4505dce054082ec4fdaae2665f,
         type: 3}
@@ -92,10 +119,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 2.52
       objectReference: {fileID: 0}
-    - target: {fileID: 6345924180120497873, guid: 1ff8cb4505dce054082ec4fdaae2665f,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ff8cb4505dce054082ec4fdaae2665f, type: 3}
+--- !u!1 &8521213518536982867 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5860862596338242297, guid: 1ff8cb4505dce054082ec4fdaae2665f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2816044951399961514}
+  m_PrefabAsset: {fileID: 0}

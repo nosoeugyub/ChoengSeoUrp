@@ -25,8 +25,7 @@ public class CreateAsset : MonoBehaviour
             textureImporter.filterMode = FilterMode.Trilinear;
             AssetDatabase.ImportAsset(path);
 
-
-            material = new Material(Resources.Load<Material>("BaseMat")); ;
+            material = AssetDatabase.LoadAssetAtPath<Material>(string.Format("{0}.mat", path.Substring(0, path.Length - 7)));
 
             var modelRootGO = Resources.Load<GameObject>("ItemBase");//(GameObject)AssetDatabase.LoadMainAssetAtPath("Assets/Resources/ItemBase.prefab");
             var instanceRoot = PrefabUtility.InstantiatePrefab(modelRootGO);
@@ -35,8 +34,8 @@ public class CreateAsset : MonoBehaviour
 
             //PrefabUtility.SaveAsPrefabAssetAndConnect(Resources.Load<GameObject>("ItemBase"), path, InteractionMode.UserAction);
 
-            AssetDatabase.CreateAsset(material, string.Format("{0}.mat", path.Substring(0, path.Length - 7)));
-            material.SetTexture("_BaseMap", texture);
+            //AssetDatabase.CreateAsset(material, string.Format("{0}.mat", path.Substring(0, path.Length - 7)));
+            //material.SetTexture("_BaseMap", texture);
 
             variantRootChild.GetComponent<MeshRenderer>().material = material;
             variantRoot.GetComponent<BoxCollider>().size = new Vector3(texture.width * 0.01f, texture.height * 0.01f, 1);

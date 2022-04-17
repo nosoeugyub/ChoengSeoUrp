@@ -215,6 +215,7 @@ namespace NSY.Player
         public void OnTriggerEnter(Collider other)
         {
             ReliableOnTriggerExit.NotifyTriggerEnter(other, gameObject, OnTriggerExit);
+
             IInteractble interactable = other.GetComponent<IInteractble>();
             if (interactable != null)
             {
@@ -225,12 +226,15 @@ namespace NSY.Player
         public void OnTriggerExit(Collider other)
         {
             ReliableOnTriggerExit.NotifyTriggerExit(other, gameObject);
+
             IInteractble interactable = other.GetComponent<IInteractble>();
             if (interactable != null)
             {
                 canInteract = false;
                 interacts.Remove(interactable);
             }
+
+
         }
     }
 
