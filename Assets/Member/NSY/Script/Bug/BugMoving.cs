@@ -22,6 +22,9 @@ namespace NSY.Bug
             tempPos.y = Mathf.Sin(Time.realtimeSinceStartup * Y) * height;
             transform.position = tempPos;
         }
+
+
+        
     }
 }
 
