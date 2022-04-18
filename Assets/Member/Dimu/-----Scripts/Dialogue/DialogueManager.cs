@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public enum Character
-{ CheongSeo, Ejang, Walrus,Hen,  Bee, Rabbit, Deer, Milkcow, Sheep, Length }
+{ CheongSeo, Ejang, Walrus, Hen, Bee, Rabbit, Deer, Milkcow, Sheep, Length }
 //청서 곰 닭 바코 벌 토끼 사슴 젖소 양
 
 namespace DM.Dialog
@@ -49,7 +49,7 @@ namespace DM.Dialog
         {
             EventManager.EventActions[1] = Test;
 
-            FirstShowDialog(npcTfs[(int)Character.CheongSeo].parent.GetComponent<MainNpc>(),null);
+            FirstShowDialog(npcTfs[(int)Character.CheongSeo].parent.GetComponent<MainNpc>(), null);
         }
         public void Test()
         {
@@ -62,7 +62,7 @@ namespace DM.Dialog
         {
             if (isTalking)
             {
-                Debug.Log("대화중입니다.");
+                //Debug.Log("대화중입니다.");
                 return;
             }
 
@@ -178,8 +178,13 @@ namespace DM.Dialog
         public void UpdateDialog(Sentence[] sentences, int sentenceState)
         {
             UpdateDialogText(sentences, sentenceState);
-            if (dialogLength == nowSentenceIdx)
-                LastDialog(sentenceState);
+            //if (dialogLength == nowSentenceIdx)
+            //  LastDialog(sentenceState);
+
+            //if (dialogLength == nowSentenceIdx)
+            //{
+            //    LastDialog(sentenceState);
+            //}
         }
 
         private void UpdateDialogText(Sentence[] sentences, int sentenceState)
@@ -190,42 +195,50 @@ namespace DM.Dialog
             if (nowOnFab)
             {
                 nowOnFab.GetComponent<TextBox>().DestroyTextBox();
-                nextButton = null;
             }
 
             nowOnFab = Instantiate(textboxFab, npcTfs[sentences[nowSentenceIdx].characterId]);
+            nextButton = nowOnFab.GetComponent<TextBox>().GetNextButton;
 
-            if (!nextButton)
+            nowOnFab.GetComponent<TextBox>().SetTextbox(sentences[nowSentenceIdx].sentence, npcTfs[sentences[nowSentenceIdx].characterId], sentences[nowSentenceIdx].textboxType);
+            nameText.text = questDialogLists[sentences[nowSentenceIdx++].characterId].charName;
+
+
+            if (dialogLength == nowSentenceIdx)
             {
-                nextButton = nowOnFab.GetComponent<TextBox>().GetNextButton;
-                nextButton.onClick.RemoveAllListeners();
+                LastDialog(sentenceState);
+            }
+            else
+            {
                 nextButton.onClick.AddListener(() =>
                 {
                     UpdateDialog(sentences, sentenceState);
                     //nowOnFab.GetComponent<TextBox>().DestroyTextBox();
                 });
             }
-
             // DOTween.
             //textboxFabText.DOText(sentences[nowSentenceIdx].sentence,1);
             //dialogText.text = sentences[nowSentenceIdx].sentence;
-            nowOnFab.GetComponent<TextBox>().SetTextbox(sentences[nowSentenceIdx].sentence, npcTfs[sentences[nowSentenceIdx].characterId], sentences[nowSentenceIdx].textboxType);
-            nameText.text = questDialogLists[sentences[nowSentenceIdx++].characterId].charName;
         }
 
         //마지막 대사일 때 작동
         private void LastDialog(int sentenceState)
         {
             nextButton.onClick.RemoveAllListeners();
+            print("Remove_Last");
+
             nextButton.onClick.AddListener(() =>
             {
+                Debug.Log("isTalking false");
                 nowOnFab.GetComponent<TextBox>().DestroyTextBox();
                 nowOnFab = null;
                 nowDialogData.isTalkingOver = true;
                 CloseDialog();
-                Debug.Log("isTalking false");
                 isTalking = false;
             });
+
+
+
             //만약 대화데이터에 퀘스트가 있다면
             if (nowDialogData.questId > -1)
             {

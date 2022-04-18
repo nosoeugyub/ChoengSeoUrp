@@ -58,7 +58,7 @@ public class CollectObject : ItemObject, ICollectable
     {
         if (other.CompareTag("Ground"))
         {
-            print("ground");
+            //print("ground");
             canMove = false;
         }
     }
