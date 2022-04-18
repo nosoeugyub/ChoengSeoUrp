@@ -87,7 +87,7 @@ namespace TT.BuildSystem
 
         public void SetParentBuildArea(BuildingBlock pb)
         {
-            Debug.Log("SetParent");
+            //Debug.Log("SetParent");
             parentBuildArea = pb;
             parentBuildArea.curInteractObj = this;
             ObjOriginPos = gameObject.transform.position;

@@ -1,5 +1,5 @@
 ﻿using DM.Quest;
-using Game.NPC;
+using DM.NPC;
 using NSY.Manager;
 using System.Collections.Generic;
 using UnityEngine;

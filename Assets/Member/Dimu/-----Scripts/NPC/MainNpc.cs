@@ -4,7 +4,7 @@ using TT.BuildSystem;
 using UnityEngine;
 
 
-namespace Game.NPC
+namespace DM.NPC
 {
     public class MainNpc : NPC, ITalkable
     {

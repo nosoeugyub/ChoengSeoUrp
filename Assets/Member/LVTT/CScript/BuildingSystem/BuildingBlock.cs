@@ -1,5 +1,5 @@
 ﻿using Game.Cam;
-using Game.NPC;
+using DM.NPC;
 using NSY.Manager;
 using System.Collections.Generic;
 using UnityEngine;
@@ -154,9 +154,9 @@ namespace TT.BuildSystem
         }
         public List<Item> GetBuildItemList()
         {
-            if(isBuildMode ||isBuildDemolishMode)return null;
 
             List<Item> items = new List<Item>();
+            if(isBuildMode ||isBuildDemolishMode)return items;
 
             foreach (var item in BuildItemList)
             {
@@ -399,7 +399,7 @@ namespace TT.BuildSystem
                 }
                 spawnPos.z = spawnPos.z - (BuildItemGap / 2 * BuildItemList.Count);// when the building is facing South
             }
-            print(spawnPos.z);
+            //print(spawnPos.z);
             GameObject newPrefab = Instantiate(spawnObj.ItemPrefab, spawnPos, Quaternion.identity, HouseBuild.transform);
             newPrefab.GetComponent<BuildingItemObj>().SetParentBuildArea(nowBuildingBlock);
             newPrefab.name = spawnObj.name;

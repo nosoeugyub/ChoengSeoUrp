@@ -9,8 +9,13 @@ public class MineObject : ItemObject, IMineable
     [SerializeField] float respawnTime = 20;
     //[SerializeField] float time = 0;
     MineState mineState = MineState.Normal;//0 성장완료 1미완료
-
     [SerializeField] Material nowMat;
+
+    [Tooltip("이 오브젝트를 채집할 수 있는 도구 타입")]
+    [SerializeField] InItemType toolType;
+
+    [Header("If haveTruckState True, Set Plz")]
+
     [SerializeField] Material downMat;
     [SerializeField] GameObject upObj;
 
@@ -18,15 +23,12 @@ public class MineObject : ItemObject, IMineable
 
     [SerializeField] BoxCollider boxcol;
 
-    [Tooltip("이 오브젝트를 채집할 수 있는 도구 타입")]
-    [SerializeField] InItemType toolType;
+
 
     private new void Awake()
     {
         base.Awake();
-        nowMat = quad.material;
-        //animator = GetComponent<Animator>();//transform.Find("Quad").
-        boxcol = GetComponent<BoxCollider>();
+
     }
     public void SetDownMat(Material material)
     {
@@ -35,6 +37,9 @@ public class MineObject : ItemObject, IMineable
     private void OnEnable()
     {
         nowChopCount = 0;
+        nowMat = quad.material;
+        animator = quad.transform.parent.GetComponent<Animator>();//transform.Find("Quad").
+        boxcol = GetComponent<BoxCollider>();
     }
 
     IEnumerator Respawn()
@@ -109,6 +114,8 @@ public class MineObject : ItemObject, IMineable
         {
             NSY.Player.PlayerInput.OnPressFDown = null;
             DropItems();
+            PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.MineItem, PlayerData.ItemData, ((int)ItemBehaviorEnum.length));
+
             if (!haveTruckState || mineState == MineState.Trunk)
             {
                 ChangeMineState(MineState.Gone);

@@ -41,7 +41,7 @@ public class PlayerData : ScriptableObject
 
 public enum ItemBehaviorEnum//아이템에는 드랍아이템, 맵 아이템이 있다. (나뭇가지, 쓰레기, 쓰레기통, 나무, 돌, 음식, 건축자재)
 {
-    GetItem, DropItem, EatItem, InteractItem, length
+    GetItem, DropItem, EatItem, InteractItem, MineItem, length
 }
 public enum BuildingBehaviorEnum //건축 지역
 {
@@ -88,13 +88,14 @@ public enum InItemType
     //도구
     Axe = 40000, Pickaxe, MagnifyingGlass, Hammer,
     //미네랄
-    tree = 50000, Stone,
+    tree = 50000, Stone, Broken,
     //이벤트오브젝트
-    Trashcan = 60000, Mailbox,
+    Trashcan = 60000, Mailbox, Lighthouse,
     //돋보기 아이템
     MagnifyObject = 70000,
     //1차 건축자재
     
+    //간이 건축물
 }
 //public static Dictionary<int, BuildingBehavior> BuildBuildingData = new Dictionary<int, BuildingBehavior>();//
 //public static Dictionary<int, ItemBehavior> ItemData = new Dictionary<int, ItemBehavior>();

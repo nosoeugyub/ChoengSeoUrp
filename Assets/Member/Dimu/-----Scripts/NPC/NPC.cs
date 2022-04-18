@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Game.NPC
+namespace DM.NPC
 {
     public class NPC : MonoBehaviour
     {
