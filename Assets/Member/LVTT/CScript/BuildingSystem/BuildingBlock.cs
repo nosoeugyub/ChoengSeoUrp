@@ -69,7 +69,10 @@ namespace TT.BuildSystem
             buildButtonFuncAdded = false;
             CamManager = FindObjectOfType<CameraManager>();
         }
-
+        public MainNpc GetLivingChar()
+        {
+            return livingCharacter;
+        }
         public void SetLivingChar(MainNpc mainNpc)
         {
             livingCharacter = mainNpc;

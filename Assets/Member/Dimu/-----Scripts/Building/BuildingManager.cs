@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using DM.NPC;
+using System.Collections.Generic;
 using TT.BuildSystem;
 using UnityEngine;
 
@@ -22,6 +23,17 @@ public class BuildingManager : MonoBehaviour
 
         }
         return -1;
+    }
+    public BuildingBlock GetNPCsHouse(Character npctype)
+    {
+        foreach (var item in buildings)//
+        {
+            if(item.GetLivingChar().GetCharacterType()==npctype)
+            {
+                return item;
+            }
+        }
+        return null;
     }
     public List<BuildingBlock> GetCompleteBuildings()
     {

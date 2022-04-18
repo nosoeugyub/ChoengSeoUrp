@@ -18,6 +18,7 @@ namespace DM.NPC
         private void Start()
         {
             EventManager.EventActions[2] += MoveToMyHome;
+            EventManager.EventActions[3] += MoveToHisHome;
 
         }
         private void Update()
@@ -97,10 +98,19 @@ namespace DM.NPC
             if (myHouse)
             {
                 Vector3 vec = new Vector3(myHouse.transform.position.x, myHouse.transform.position.y, myHouse.transform.position.z);
-                vec += myHouse.transform.forward *-7;//집 앞
+                vec += myHouse.transform.forward * -7;//집 앞
                 MoveTo(vec, GetCharacterType());
             }
             EventManager.EventAction -= EventManager.EventActions[2];
+        }
+        public void MoveToHisHome()
+        {
+            if (GetCharacterType() != Character.Walrus) return;
+            BuildingBlock buildingBlock = buildingManager.GetNPCsHouse(Character.Ejang);
+            Vector3 vec = new Vector3(buildingBlock.transform.position.x, buildingBlock.transform.position.y, buildingBlock.transform.position.z);
+            vec += buildingBlock.transform.forward * -9;//집 앞
+            MoveTo(vec, GetCharacterType());
+            EventManager.EventAction -= EventManager.EventActions[3];
         }
     }
     [System.Serializable]

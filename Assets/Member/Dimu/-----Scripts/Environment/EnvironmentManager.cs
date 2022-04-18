@@ -62,12 +62,12 @@ public class EnvironmentManager : MonoBehaviour
     private void Start()
     {
         //fogColor = RenderSettings.fogColor;
-        Cleanliness = 10;
+        //Cleanliness = 10;
     }
     private void Update()
     {
         //RenderSettings.fogColor = fogColor;
-        Cleanliness = _cleanliness;
+        //Cleanliness = _cleanliness;
 
         _fogColor = ((goodFogColor - badFogColor) / 100 * Cleanliness) + badFogColor;
         RenderSettings.fogColor = _fogColor;

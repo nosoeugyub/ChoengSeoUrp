@@ -24,7 +24,6 @@ public class MineObject : ItemObject, IMineable
     [SerializeField] BoxCollider boxcol;
 
 
-
     private new void Awake()
     {
         base.Awake();
@@ -116,6 +115,7 @@ public class MineObject : ItemObject, IMineable
             NSY.Player.PlayerInput.OnPressFDown = null;
             DropItems();
             PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.MineItem, PlayerData.ItemData, ((int)ItemBehaviorEnum.length));
+            FindObjectOfType<EnvironmentManager>().Cleanliness += item.CleanAmount;
 
             if (!haveTruckState || mineState == MineState.Trunk)
             {

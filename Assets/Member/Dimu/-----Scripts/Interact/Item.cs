@@ -12,6 +12,7 @@ public class Item : ScriptableObject
     [SerializeField] private string itemDescription;
     [SerializeField] private Sprite itemSprite;
     [SerializeField] private Material itemMaterial;
+    [SerializeField] int cleanAmount;
     //[Header("Combination")]
     //[SerializeField] private ingredientNeeded[] necessaryIngredient;
     [Header("MineItemVariable")]
@@ -27,6 +28,7 @@ public class Item : ScriptableObject
     public OutItemType OutItemType => outItemType;
     public Sprite ItemSprite => itemSprite;
     public Material ItemMaterial => itemMaterial;
+    public int CleanAmount => cleanAmount;
     //public ingredientNeeded[] NnecessaryIngredient => necessaryIngredient;
     public DropItem[] DropItems => dropItems;
     public int ChopCount => chopCount;
