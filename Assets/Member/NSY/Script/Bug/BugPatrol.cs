@@ -17,7 +17,10 @@ public class BugPatrol : MonoBehaviour
     {
         waitTime = startWaitTime;
         randomSpot = Random.Range(0, moveSpots.Length);
+      //  render = GetComponentInChildren<SpriteRenderer>();
     }
+
+    public SpriteRenderer render;
 
     private void FixedUpdate()
     {
@@ -50,13 +53,15 @@ public class BugPatrol : MonoBehaviour
         if (pointXValue < enemyXValue)
         {
             // Flip Sprite on the X Axis
-            transform.localScale = new Vector3(1f, 1f, 1f);
+            render.flipX = false;
+            transform.localScale = new Vector3(-1f, 1f, 1f);
         }
         // PatrolPoint is to the Right
         else if (pointXValue > enemyXValue)
         {
+            render.flipX = true ;
             // Flip Sprite back on the X Axis
-            transform.localScale = new Vector3(-1f, 1f, 1f);
+            transform.localScale = new Vector3(1f, 1f, 1f);
         }
     }
 }
