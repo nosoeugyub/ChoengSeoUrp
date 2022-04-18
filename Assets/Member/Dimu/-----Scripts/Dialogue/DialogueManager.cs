@@ -67,12 +67,12 @@ namespace DM.Dialog
             }
 
             isTalking = true;
-            nowPartner = npc.GetCharacterType();  //대화하는 대상을 현재 파트너로 지정
+            nowPartner = (int)npc.GetCharacterType();  //대화하는 대상을 현재 파트너로 지정
             nowNpc = npc;
             partnerTf = npc.transform;
             nowSentenceIdx = 0;
 
-            PlayerData.AddValue(npc.GetCharacterType(), (int)NpcBehaviorEnum.Interact, PlayerData.npcData, (int)NpcBehaviorEnum.length);
+            PlayerData.AddValue((int)npc.GetCharacterType(), (int)NpcBehaviorEnum.Interact, PlayerData.npcData, (int)NpcBehaviorEnum.length);
 
             StartShowDialog(handitem); //파트너와 진행해야 하는 순서의 대화를 진행
         }
@@ -235,24 +235,22 @@ namespace DM.Dialog
                 nowDialogData.isTalkingOver = true;
                 CloseDialog();
                 isTalking = false;
-            });
 
-
-
-            //만약 대화데이터에 퀘스트가 있다면
-            if (nowDialogData.questId > -1)
-            {
-                //완료 상태 아니라면 강제수락
-                print(sentenceState);
-                switch (sentenceState)
+                //만약 대화데이터에 퀘스트가 있다면
+                if (nowDialogData.questId > -1)
                 {
-                    case 0://수락 상태라면?
-                        questManager.AcceptQuest(nowDialogData.questId, nowPartner);
-                        break;
-                    default:
-                        break;
+                    //완료 상태 아니라면 강제수락
+                    print(sentenceState);
+                    switch (sentenceState)
+                    {
+                        case 0://수락 상태라면?
+                            questManager.AcceptQuest(nowDialogData.questId, nowPartner);
+                            break;
+                        default:
+                            break;
+                    }
                 }
-            }
+            });
             //수락 시 이벤트가 있다면 진행
         }
 

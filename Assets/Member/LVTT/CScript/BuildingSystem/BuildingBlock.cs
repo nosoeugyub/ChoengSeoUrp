@@ -1,4 +1,5 @@
 ﻿using Game.Cam;
+using Game.NPC;
 using NSY.Manager;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,7 @@ namespace TT.BuildSystem
     {
         [SerializeField] int buildingId;
         [SerializeField] BuildMode CurBuildMode;
-        [SerializeField] Character livingCharacter;
+        [SerializeField] MainNpc livingCharacter;
 
         [SerializeField] Transform HouseBuild;
         [SerializeField] List<GameObject> BuildItemList;
@@ -67,6 +68,15 @@ namespace TT.BuildSystem
             layerMask = 1 << LayerMask.NameToLayer("Interactable");
             buildButtonFuncAdded = false;
             CamManager = FindObjectOfType<CameraManager>();
+        }
+
+        public void SetLivingChar(MainNpc mainNpc)
+        {
+            livingCharacter = mainNpc;
+        }
+        public bool HaveLivingChar()
+        {
+            return livingCharacter;
         }
         private void Update()
         {
@@ -142,7 +152,19 @@ namespace TT.BuildSystem
             }
 
         }
+        public List<Item> GetBuildItemList()
+        {
+            if(isBuildMode ||isBuildDemolishMode)return null;
 
+            List<Item> items = new List<Item>();
+
+            foreach (var item in BuildItemList)
+            {
+                items.Add(item.GetComponent<BuildingItemObj>().GetItem());
+            }
+
+            return items;
+        }
         public void AddBuildItemToList(GameObject Item)
         {
             BuildItemList.Add(Item);

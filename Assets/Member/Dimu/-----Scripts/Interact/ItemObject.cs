@@ -22,6 +22,10 @@ public class ItemObject : MonoBehaviour//, IInteractable
     {
         return transform;
     }
+    public Item GetItem()
+    {
+        return item;
+    }
     public OutItemType GetOutItemType()
     {
         return item.OutItemType;
