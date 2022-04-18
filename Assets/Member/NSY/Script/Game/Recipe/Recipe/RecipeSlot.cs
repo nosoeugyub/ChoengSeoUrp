@@ -59,7 +59,7 @@ namespace NSY.Iven
 
                 for (int i = 0; i < _RecipeItem.recipe.Length; i++)
                 {
-                    AmountImage[i].text = _RecipeItem.recipe[i].Count.ToString();
+                    AmountImage[i].text = _RecipeItem.recipe[i].count.ToString();
                  
 
 

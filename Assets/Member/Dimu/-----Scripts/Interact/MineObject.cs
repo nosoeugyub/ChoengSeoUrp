@@ -80,6 +80,7 @@ public class MineObject : ItemObject, IMineable
         else
         {
             boxcol.enabled = false;
+            animator.SetBool("IsFalling", true);
 
         }
     }

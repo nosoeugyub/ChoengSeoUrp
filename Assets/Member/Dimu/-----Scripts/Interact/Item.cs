@@ -12,8 +12,8 @@ public class Item : ScriptableObject
     [SerializeField] private string itemDescription;
     [SerializeField] private Sprite itemSprite;
     [SerializeField] private Material itemMaterial;
-    [Header("Combination")]
-    [SerializeField] private ingredientNeeded[] necessaryIngredient;
+    //[Header("Combination")]
+    //[SerializeField] private ingredientNeeded[] necessaryIngredient;
     [Header("MineItemVariable")]
     [SerializeField] private int chopCount;
     [SerializeField] private DropItem[] dropItems;
@@ -27,7 +27,7 @@ public class Item : ScriptableObject
     public OutItemType OutItemType => outItemType;
     public Sprite ItemSprite => itemSprite;
     public Material ItemMaterial => itemMaterial;
-    public ingredientNeeded[] NnecessaryIngredient => necessaryIngredient;
+    //public ingredientNeeded[] NnecessaryIngredient => necessaryIngredient;
     public DropItem[] DropItems => dropItems;
     public int ChopCount => chopCount;
     public GameObject ItemPrefab => itemPrefab;
@@ -45,6 +45,15 @@ public class Item : ScriptableObject
         //Destroy(this);
     }
 
+    public int GetNeedCountw(int i)
+    {
+        return recipe[i].count;
+    }
+    public Item GetIngredientNeededsItemType(int i)
+    {
+        return recipe[i].item;
+    }
+
     [Header("레시피")]
     [SerializeField]
     public RecipeIteminfo[] recipe;
@@ -57,18 +66,18 @@ public class RecipeIteminfo
    
     public Item item;
 
-    public int Count;
+    public int count;
     
 }
 
 
 
-[System.Serializable]
-public class ingredientNeeded
-{
-    [SerializeField]
-    public Item item;
+//[System.Serializable]
+//public class ingredientNeeded
+//{
+//    [SerializeField]
+//    public Item item;
 
-    [SerializeField]
-    public int count;
-}
+//    [SerializeField]
+//    public int count;
+//}

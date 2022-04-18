@@ -7,7 +7,7 @@ namespace DM.Building
     public class BuildingInfo : ScriptableObject
     {
         [SerializeField]
-        public ingredientNeeded[] ingredientNeededs;
+        public RecipeIteminfo[] ingredientNeededs;
         [SerializeField]
         private int buildID; 
         

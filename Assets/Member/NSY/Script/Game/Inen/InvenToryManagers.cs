@@ -6,6 +6,7 @@ using DM.Inven;
 using NSY.Player;
 using System;
 using TT.BuildSystem;
+using DM.Building;
 
 namespace NSY.Iven
 {
@@ -111,6 +112,14 @@ namespace NSY.Iven
             if (BuildingBlock.isBuildMode)
             {
                 BuildingBlock.nowBuildingBlock.BtnSpawnHouseBuildItem(obj.item);
+            }
+            else
+            {
+                if(obj.item.OutItemType == OutItemType.Etc)
+                {
+                    //간이 건축 
+                    FindObjectOfType<BuildingPlace>().OnBuildMode(obj.item.ItemPrefab);
+                }
             }
         }
 

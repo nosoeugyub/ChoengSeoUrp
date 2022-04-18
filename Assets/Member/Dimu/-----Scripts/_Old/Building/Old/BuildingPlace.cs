@@ -6,9 +6,9 @@ namespace DM.Building
     {
         public bool isBuildMode = false;
         GameObject instanceObj;
-        public GameObject buildingUI;
-        public GameObject buildingCancelUI;
-        public GameObject decideBuildingPopup;
+        //public GameObject buildingUI;
+        //public GameObject buildingCancelUI;
+        //public GameObject decideBuildingPopup;
         public void Update()
         {
             if (isBuildMode)
@@ -25,9 +25,9 @@ namespace DM.Building
                 else
                     return;
 
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonUp(0))
                 {
-                    Debug.Log("클릭");
+                    Debug.Log("클릭업");
                     OffBuildMode();
                 }
             }
@@ -40,9 +40,9 @@ namespace DM.Building
         public void OffBuildMode()
         {
             isBuildMode = false;
-            buildingUI.SetActive(true);
-            decideBuildingPopup.SetActive(false);
-            buildingCancelUI.SetActive(false);
+            //buildingUI.SetActive(true);
+            //decideBuildingPopup.SetActive(false);
+            //buildingCancelUI.SetActive(false);
 
             BuildingObject instB= instanceObj.transform.GetChild(0).GetComponent<BuildingObject>();
             instB.StartBuild();
@@ -52,8 +52,8 @@ namespace DM.Building
         {
             isBuildMode = true;
             instanceObj = Instantiate(fab) as GameObject;
-            buildingUI.SetActive(false);
-            buildingCancelUI.SetActive(true);
+            //buildingUI.SetActive(false);
+            //buildingCancelUI.SetActive(true);
             //상태 UI 제외 모든 UI 끄기로 업그레이드 해야 함.
         }
     }

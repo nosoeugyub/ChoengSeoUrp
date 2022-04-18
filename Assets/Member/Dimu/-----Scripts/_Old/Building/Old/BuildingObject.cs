@@ -1,4 +1,4 @@
-﻿using DM.Inven;
+﻿using NSY.Iven;
 using UnityEngine;
 
 namespace DM.Building
@@ -10,9 +10,9 @@ namespace DM.Building
     public class BuildingObject : MonoBehaviour//, IInteractable
     {
         [SerializeField]
-        private BuildingInfo buildingInfo; //집마다 1개. 필요 재료 타입과 양이 들어있다.
+        private Item buildingInfo; //집마다 1개. 필요 재료 타입과 양이 들어있다.
         [SerializeField]
-        private ingredientNeeded[] gotIngredient;
+        private RecipeIteminfo[] gotIngredient;
         [SerializeField]
         private IngredientUI[] uiFabs; //생성된 uiFab
         [SerializeField]
@@ -31,19 +31,19 @@ namespace DM.Building
         private void Awake()
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
-            gotIngredient = new ingredientNeeded[buildingInfo.GetIngredientNeededsLength()];
-            isClear = new bool[buildingInfo.ingredientNeededs.Length];
+            gotIngredient = new RecipeIteminfo[buildingInfo.recipe.Length];
+            isClear = new bool[buildingInfo.recipe.Length];
         }
         private void OnEnable()
         {
             InitCount();//데이터 저장 시 호출 위치 바꿔야 함. 데이터 초기화 함수임
-            
+
         }
         public void InitCount()
         {
-            for (int i = 0; i < buildingInfo.ingredientNeededs.Length; i++)
+            for (int i = 0; i < buildingInfo.recipe.Length; i++)
             {
-                gotIngredient[i] = new ingredientNeeded
+                gotIngredient[i] = new RecipeIteminfo
                 {
                     count = 0
                 };
@@ -54,7 +54,7 @@ namespace DM.Building
         public void InstantiateUIs()
         {
             GetIGDdelegate dg = new GetIGDdelegate(GetIngredient);
-            for (int i = 0; i < buildingInfo.ingredientNeededs.Length; i++)
+            for (int i = 0; i < buildingInfo.recipe.Length; i++)
             {
                 uiFabs[i].InitUIs(dg, i);
 
@@ -67,16 +67,18 @@ namespace DM.Building
         {
             Debug.Log("GetIngredient " + ingredientype);
 
-            for (int i = 0; i < buildingInfo.ingredientNeededs.Length; i++)
+            for (int i = 0; i < buildingInfo.recipe.Length; i++)
             {
                 if (gotIngredient[i].item.InItemType == ingredientype && !IsTypeClear(i))
                 {
-                    InventoryManager ivt = FindObjectOfType<InventoryManager>();
-                    if (ivt.GetItemValue(gotIngredient[i].item) <= 0)
-                    { print("인벤에 재료가 없어요"); return; }
+                    InventoryNSY ivt = FindObjectOfType<InventoryNSY>();//아이템 넣기
+                    //if (ivt.AddItem(gotIngredient[i].item))
+                    //{
+                    //    print("인벤에 재료가 없어요"); return;
+                    //}
 
                     ++gotIngredient[i].count;
-                    ivt.DeleteItem(gotIngredient[i].item, 1);
+                    //ivt.DeleteItem(gotIngredient[i].item, 1);
 
                     if (IsTypeClear(i))
                     {
@@ -95,16 +97,16 @@ namespace DM.Building
         public void ChangeFinishImg()
         {
             spriteRenderer.sprite = finishSprite;
-            PlayerData.AddValue(BuildID(),(int)BuildingBehaviorEnum.CompleteBuild, PlayerData.BuildBuildingData,((int)BuildingBehaviorEnum.length));
+            PlayerData.AddValue(BuildID(), (int)BuildingBehaviorEnum.CompleteBuild, PlayerData.BuildBuildingData, ((int)BuildingBehaviorEnum.length));
         }
         public void StartBuild()
         {
-            PlayerData.AddValue(BuildID(),(int)BuildingBehaviorEnum.StartBuild, PlayerData.BuildBuildingData, ((int)BuildingBehaviorEnum.length));
+            PlayerData.AddValue(BuildID(), (int)BuildingBehaviorEnum.StartBuild, PlayerData.BuildBuildingData, ((int)BuildingBehaviorEnum.length));
             spriteRenderer.sprite = underConstructionSprite;
             ingredientUI.SetActive(true);
             InstantiateUIs();
         }
-        
+
         private bool IsBuildClear()
         {
             for (int i = 0; i < isClear.Length; i++)
@@ -115,7 +117,7 @@ namespace DM.Building
         }
         public int BuildID()
         {
-            return buildingInfo.BuildingID();
+            return (int)buildingInfo.InItemType;
         }
         private bool IsTypeClear(int idx)
         {

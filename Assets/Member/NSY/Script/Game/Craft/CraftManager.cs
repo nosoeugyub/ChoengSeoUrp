@@ -176,7 +176,7 @@ namespace NSY.Iven
                 {
                     for (int k = 0; k < CratfingSlots.Count; k++)
                     {
-                        CratfingSlots[k].Amount -= RecipelistPanel.RecipeList[i].recipe[j].Count;
+                        CratfingSlots[k].Amount -= RecipelistPanel.RecipeList[i].recipe[j].count;
                     }
 
 
@@ -222,7 +222,7 @@ namespace NSY.Iven
                            for (int k = 0; k < CratfingSlots.Count; k++)//현재 조합식이랑 레시피 조합식 비교
                            {
                         
-                              if (RecipelistPanel.RecipeList[i].recipe[j].item == CratfingSlots[k].item && RecipelistPanel.RecipeList[i].recipe[j].Count == CratfingSlots[k].Amount)
+                              if (RecipelistPanel.RecipeList[i].recipe[j].item == CratfingSlots[k].item && RecipelistPanel.RecipeList[i].recipe[j].count == CratfingSlots[k].Amount)
                               {
                                   if (j == 0)
                                   {
@@ -254,7 +254,7 @@ namespace NSY.Iven
                            
 
                               }
-                        if (RecipelistPanel.RecipeList[i].recipe[j].item != CratfingSlots[k].item || RecipelistPanel.RecipeList[i].recipe[j].Count != CratfingSlots[k].Amount)
+                        if (RecipelistPanel.RecipeList[i].recipe[j].item != CratfingSlots[k].item || RecipelistPanel.RecipeList[i].recipe[j].count != CratfingSlots[k].Amount)
                         {
                             
                            
