@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 [ExecuteInEditMode]
@@ -46,6 +47,8 @@ public class EnvironmentManager : MonoBehaviour
     [SerializeField] Light d3;
     [SerializeField] float goodIntensity_d3;
     [SerializeField] float badIntensity_d3;
+
+    [SerializeField] VolumeProfile volume;
     //[SerializeField] Image fatiGageImage;
     public float Cleanliness
     {
@@ -88,6 +91,8 @@ public class EnvironmentManager : MonoBehaviour
         skyBox.SetColor("_EquatorColor", _equatorColor);
         skyBox.SetColor("_GroundColor", _groundColor);
         skyBox.SetColor("_CloudsLightColor", _cloudColor);
+
+        UnityEngine.Rendering.Universal.ColorAdjustments colorAdjustments;
     }
     public void SetFog()
     {
