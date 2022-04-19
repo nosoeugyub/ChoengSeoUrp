@@ -112,17 +112,18 @@ namespace NSY.Iven
             if (BuildingBlock.isBuildMode)
             {
                 BuildingBlock.nowBuildingBlock.BtnSpawnHouseBuildItem(obj.item);
+                obj.Amount--;
             }
             else
             {
-                if(obj.item.OutItemType == OutItemType.Etc)
+                if (obj.item.OutItemType == OutItemType.Etc)
                 {
                     //간이 건축 
                     FindObjectOfType<BuildingPlace>().OnBuildMode(obj.item.ItemPrefab);
+                    obj.Amount--;
                 }
             }
         }
-
 
         //더블클릭
         public void OnDoubleClickEvent(BaseItemSlot itemslot)

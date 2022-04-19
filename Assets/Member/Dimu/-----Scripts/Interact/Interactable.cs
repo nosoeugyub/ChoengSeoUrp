@@ -15,6 +15,9 @@ public interface ITalkable : IInteractble
 public interface IMineable :IInteractble
 {
     bool Mine(Item handitem, Animator animator);
+}
+public interface IDropable : IInteractble
+{
     void DropItems();
 }
 public interface IEatable : IInteractble

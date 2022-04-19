@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 public enum MineState { Normal, Trunk, Gone, }
-public class MineObject : ItemObject, IMineable
+public class MineObject : ItemObject, IMineable, IDropable
 {
     public bool haveTruckState;
     int nowChopCount;
@@ -69,6 +69,7 @@ public class MineObject : ItemObject, IMineable
         }
         else if (state == MineState.Trunk)
         {
+            boxcol.enabled = false;
             quad.material = downMat;
             quad.transform.SetParent(transform);
             upObj.SetActive(true);

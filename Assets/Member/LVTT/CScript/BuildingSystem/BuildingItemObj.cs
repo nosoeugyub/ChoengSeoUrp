@@ -3,7 +3,7 @@
 namespace TT.BuildSystem
 {
 
-    public class BuildingItemObj : ItemObject, IBuildable
+    public class BuildingItemObj : ItemObject, IBuildable, IDropable
     {
         [SerializeField] public BuildItemKind ItemKind;
         [Tooltip("이 오브젝트를 채집할 수 있는 도구 타입")]
@@ -118,8 +118,25 @@ namespace TT.BuildSystem
                 else if (item.OutItemType == OutItemType.BuildSign)
                     parentBuildArea.hasSign = false;
                 //파괴 임시 처리
+                DropItems();
                 parentBuildArea.RemoveBuildItemToList(gameObject);
                 Destroy(gameObject);
+            }
+        }
+
+        public void DropItems()
+        {
+            GameObject instantiateItem;
+            foreach (DropItem item in item.DropItems)
+            {
+                //print("spawn" + 2);
+                for (int i = 0; i < item.count; ++i)
+                {
+                    instantiateItem = Instantiate(item.itemObj) as GameObject;
+                    Vector3 randVec = new Vector3(Random.Range(-1.5f, 1.5f), 0, Random.Range(-1.5f, 1.5f));
+                    instantiateItem.transform.position = gameObject.transform.position + randVec;
+                    //print("spawn" + instantiateItem.name);
+                }
             }
         }
     }
