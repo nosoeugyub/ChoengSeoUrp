@@ -114,15 +114,6 @@ namespace NSY.Iven
                 BuildingBlock.nowBuildingBlock.BtnSpawnHouseBuildItem(obj.item);
                 obj.Amount--;
             }
-            else
-            {
-                if (obj.item.OutItemType == OutItemType.Etc)
-                {
-                    //간이 건축 
-                    FindObjectOfType<BuildingPlace>().OnBuildMode(obj.item.ItemPrefab);
-                    obj.Amount--;
-                }
-            }
         }
 
         //더블클릭
