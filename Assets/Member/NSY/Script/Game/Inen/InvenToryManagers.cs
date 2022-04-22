@@ -15,8 +15,8 @@ namespace NSY.Iven
         //케릭터 속성
         public int Vital = 100;
 
-     //   [SerializeField] PostEvent PostEvent;
-    //    [SerializeField] BtnIven btniven;
+        [SerializeField] ItemTooltip itemTooltip;
+        //    [SerializeField] BtnIven btniven;
         [SerializeField] InventoryNSY iventorynsy;
         [SerializeField] EquipPanel equipPanel;
        // [SerializeField] CraftManager craftPanel;
@@ -56,14 +56,12 @@ namespace NSY.Iven
         {
            ScriptTxt.text = "1";
 
-
-
-
-
-            //     btniven.OnPostEvent += ClickPostSlotUi;
-
-
-
+            //툴립
+            iventorynsy.OnPointerEnterEvent += ShowToolTip;
+            equipPanel.OnPointerEnterEvent += ShowToolTip;
+            //
+            iventorynsy.OnPointerExitEvent += HideTootip;
+            equipPanel.OnPointerExitEvent += HideTootip;
 
 
             //인벤토리 클레스 이벤트
@@ -94,6 +92,23 @@ namespace NSY.Iven
 
 
             //carftingRecipe = new CraftingRecipe();
+        }
+
+        private void HideTootip(BaseItemSlot itemSlot)
+        {
+            if (itemTooltip.gameObject.activeSelf)
+            {
+                itemTooltip.HideTooltip();
+            }
+        }
+
+        private void ShowToolTip(BaseItemSlot itemSlot)
+        {
+            if (itemSlot.item != null)
+            {
+                itemTooltip.ShowItemTooltip(itemSlot.item);
+                itemTooltip.tooltipTransform.position = new Vector3(itemSlot.transform.position.x +60, itemSlot.transform.position.y + 30, itemSlot.transform.position.z);
+            }
         }
 
         private void ResultClick(BaseItemSlot obj)
