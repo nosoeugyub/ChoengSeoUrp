@@ -8,7 +8,7 @@ namespace DM.NPC
 {
     public class MainNpc : NPC, ITalkable
     {
-        [SerializeField] PreferItem[] preferBuildItemObjList;
+        //[SerializeField] PreferItem[] preferBuildItemObjList;
         [SerializeField] BuildingBlock myHouse;
         public Condition[] wantToBuildCondition;
         BuildingManager buildingManager;
@@ -25,21 +25,17 @@ namespace DM.NPC
             BuildingBlock.UpdateBuildingInfos += FindLikeHouse;
 
         }
-        private void Update()
-        {
-            if (!myHouse)
-            {
-                FindLikeHouse();
-            }
-        }
         public void FindLikeHouse()
         {
             BuildingBlock buildingBlock = null;
             float highScore = 0;
-            foreach (var item in buildingManager.GetCompleteBuildings())
+            foreach (BuildingBlock item in buildingManager.GetCompleteBuildings())
             {
                 if (item.HaveLivingChar()) continue;
+
                 float nowScore = GetBuildingLikeable(item);
+                print(nowScore);
+
                 if (50 < nowScore)
                 {
                     if (highScore < nowScore)
@@ -61,19 +57,120 @@ namespace DM.NPC
         public float GetBuildingLikeable(BuildingBlock buildingBlock)
         {
             float score = 0;
-            List<Item> buildItemList = buildingBlock.GetBuildItemList();
+            List<BuildingItemObj> buildItemList = buildingBlock.GetBuildItemList();
 
-            foreach (var item in buildItemList)
+            foreach (BuildingItemObj buildItem in buildItemList)//건축자재 하나씩
             {
-                foreach (var preferObj in preferBuildItemObjList)
+                foreach (Condition preferCondition in wantToBuildCondition)
                 {
-                    if (preferObj.item == item)
+                    bool canContinue = false;
+
+                    foreach (var kind in preferCondition.buildItemKind)
                     {
-                        score += preferObj.likeable;
+                        if (kind == buildItem.GetAttribute().buildItemKind)
+                        {
+                            print(kind.ToString());
+                            canContinue = true;
+                            break;
+                        }
                     }
+
+                    if (!canContinue) break;
+
+                    foreach (var kind in preferCondition.buildHPos)
+                    {
+                    canContinue = false;
+                        if (kind == buildItem.GetAttribute().buildHPos)
+                        {
+                            print(kind.ToString());
+                            canContinue = true;
+                            break;
+                        }
+                    }
+
+                    if (!canContinue) break;
+
+                    foreach (var kind in preferCondition.buildVPos)
+                    {
+                    canContinue = false;
+                        if (kind == buildItem.GetAttribute().buildVPos)
+                        {
+                            print(kind.ToString());
+                            canContinue = true;
+                            break;
+                        }
+                    }
+
+                    if (!canContinue) break;
+
+                    foreach (var kind in preferCondition.buildSize)
+                    {
+                    canContinue = false;
+                        if (kind == buildItem.GetAttribute().buildSize)
+                        {
+                            print(kind.ToString());
+                            canContinue = true;
+                            break;
+                        }
+                    }
+
+                    if (!canContinue) break;
+
+                    foreach (var kind in preferCondition.buildColor)
+                    {
+                    canContinue = false;
+                        if (kind == buildItem.GetAttribute().buildColor)
+                        {
+                            print(kind.ToString());
+                            canContinue = true;
+                            break;
+                        }
+                    }
+
+                    if (!canContinue) break;
+
+                    foreach (var kind in preferCondition.buildShape)
+                    {
+                    canContinue = false;
+                        if (kind == buildItem.GetAttribute().buildShape)
+                        {
+                            print(kind.ToString());
+                            canContinue = true;
+                            break;
+                        }
+                    }
+
+                    if (!canContinue) break;
+
+                    foreach (var kind in preferCondition.buildThema)
+                    {
+                    canContinue = false;
+                        foreach (var thema in buildItem.GetAttribute().buildThema)
+                        {
+                            print(kind.ToString());
+                            if (kind == thema)
+                            {
+                                canContinue = true;
+                                break;
+                            }
+                        }
+                        if (canContinue) break;
+                    }
+
+                    if (!canContinue) break;
+
+                    //해당 건축자재가 설치된 개수 가져오기
+                    foreach (var kind in preferCondition.buildCount)
+                    {
+                    canContinue = false;
+                        //개수와 비교하기
+                    }
+
+                    if (!canContinue) break;
+
+                    score += preferCondition.likeable;
                 }
             }
-            print(score);
             return score;
         }
 

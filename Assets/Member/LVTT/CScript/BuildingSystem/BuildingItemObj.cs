@@ -48,6 +48,10 @@ namespace TT.BuildSystem
                 itemisSet = value;
             }
         }
+        public BuildObjAttribute GetAttribute()
+        {
+            return attributes;
+        }
         private new void Awake()
         {
             base.Awake();

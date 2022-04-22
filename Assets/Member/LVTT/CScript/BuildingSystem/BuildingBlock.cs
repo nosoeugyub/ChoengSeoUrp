@@ -131,12 +131,14 @@ namespace TT.BuildSystem
                         {
                             print("ItemisSet = true 2 ");
                             curInteractObj.ItemisSet = true;
+                            curInteractObj.PutDownBuildingItemObj(areaWidthsize, areaHeightsize);
                         }
                     }
                     else if (!curInteractObj.ItemisSet)
                     {
                         print("ItemisSet = true 3 ");
                         curInteractObj.ItemisSet = true;
+                            curInteractObj.PutDownBuildingItemObj(areaWidthsize, areaHeightsize);
                     }
                 }
 
@@ -161,15 +163,15 @@ namespace TT.BuildSystem
             }
 
         }
-        public List<Item> GetBuildItemList()
+        public List<BuildingItemObj> GetBuildItemList()
         {
 
-            List<Item> items = new List<Item>();
+            List<BuildingItemObj> items = new List<BuildingItemObj>();
             if (isBuildMode || isBuildDemolishMode) return items;
 
             foreach (var item in BuildItemList)
             {
-                items.Add(item.GetComponent<BuildingItemObj>().GetItem());
+                items.Add(item.GetComponent<BuildingItemObj>());
             }
 
             return items;
@@ -320,7 +322,6 @@ namespace TT.BuildSystem
             player.gameObject.SetActive(true);
             isBuildMode = false;
             isBuildDemolishMode = false;
-            curInteractObj.PutDownBuildingItemObj(areaWidthsize, areaHeightsize);
             SuperManager.Instance.inventoryManager.CheckCanBuildItem(null);
         }
 
