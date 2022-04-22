@@ -10,13 +10,13 @@ namespace NSY.Iven
 {
     public class BaseItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler , IPointerClickHandler
     {
-        [SerializeField]public Image itemImage;
+        public Image itemImage;
         float ClickTime = 0;
 
         [SerializeField]
         ItemTooltip tooltip;
         //슬롯갯수
-        [SerializeField] public Text amountText;
+        public Text amountText;
 
         protected bool isPointerOver;
 

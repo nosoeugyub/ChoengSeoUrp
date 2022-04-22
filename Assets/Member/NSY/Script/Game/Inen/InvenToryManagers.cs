@@ -12,16 +12,14 @@ namespace NSY.Iven
 {
     public class InvenToryManagers : MonoBehaviour
     {
-        
-
         //케릭터 속성
         public int Vital = 100;
 
-        [SerializeField] PostEvent PostEvent;
-        [SerializeField] BtnIven btniven;
+     //   [SerializeField] PostEvent PostEvent;
+    //    [SerializeField] BtnIven btniven;
         [SerializeField] InventoryNSY iventorynsy;
         [SerializeField] EquipPanel equipPanel;
-        [SerializeField] CraftManager craftPanel;
+       // [SerializeField] CraftManager craftPanel;
         [SerializeField] Image draggableitem;
         [SerializeField] DropItemArea Dropitemarea;
         [SerializeField] QuestionDialog questionDialog;
@@ -31,81 +29,89 @@ namespace NSY.Iven
       //레시피
       [Header("레시피 레퍼런스")]
         private CraftingRecipe carftingRecipe;
-        [SerializeField] CraftSlot[] CraftSlot;
-        //우편
-        [SerializeField] PostPanel postpanel;
+      //  [SerializeField] CraftSlot[] CraftSlot;
+       
 
         //조합
-        [SerializeField] CraftManager Craftmanager;
-        [SerializeField] GameObject Craftmgr;
-        public int Craftindex = 0;
-        public bool isAdd = true;
+      //  [SerializeField] CraftManager Craftmanager;
+     //   [SerializeField] GameObject Craftmgr;
+    //    public int Craftindex = 0;
+     //   public bool isAdd = true;
         private BaseItemSlot dragitemSlot;
+        public ReSultSlot resultslot;
 
         //더블클릭
         private float firstClickTime, timeBetweenClicks;
         private bool coroutineAllowed;
         private int clickCounter;
 
-
+        //Ui Rect
+        public RectTransform BaseCharcterPanel;
+      public  bool isUp ;
+      public  bool isDown ;
         //버리기
         public Text ScriptTxt;
         int discount = 1;
         private void Awake()
         {
-            ScriptTxt.text = "1";
+           ScriptTxt.text = "1";
 
 
 
 
 
-            btniven.OnPostEvent += ClickPostSlotUi;
+            //     btniven.OnPostEvent += ClickPostSlotUi;
 
 
 
 
 
             //인벤토리 클레스 이벤트
+            equipPanel.OnRightClickEvents += ResultClick;
             iventorynsy.OnDubleClickEvent += OnDoubleClickEvent;
             iventorynsy.OnLeftClickEvent += BuildingLeftClick;
             iventorynsy.OnRightClickEvent += InventoryRightClick;
            // iventorynsy.OnLeftClickEvent += InventoryLeftClick;
             equipPanel.OnRightClickEvent += EquipmentPanelRightClick;
-            craftPanel.OnLeftClickEvent += CraftPanelLeftClick;
+          //  craftPanel.OnLeftClickEvent += CraftPanelLeftClick;
             //드래그 시작
             iventorynsy.OnBeginDragEvent += BeginDrag;
             equipPanel.OnBeginDragEvent += BeginDrag;
-            craftPanel.OnBeginDragEvent += BeginDrag;
+         //   craftPanel.OnBeginDragEvent += BeginDrag;
             //드래그 끝
             iventorynsy.OnEndDragEvent += EndDrag;
             equipPanel.OnEndDragEvent += EndDrag;
-            craftPanel.OnEndDragEvent += EndDrag;
+         //   craftPanel.OnEndDragEvent += EndDrag;
             //드래그
             iventorynsy.OnDragEvent += Drag;
             equipPanel.OnDragEvent += Drag;
-            craftPanel.OnDragEvent += Drag;
+        //    craftPanel.OnDragEvent += Drag;
             //드롭
             iventorynsy.OnDropEvent += Drop;
             equipPanel.OnDropEvent += Drop;
-            craftPanel.OnDropEvent += Drop;
+       //     craftPanel.OnDropEvent += Drop;
             Dropitemarea.OnDropEvent += DropItemOutsideUI;
 
 
             //carftingRecipe = new CraftingRecipe();
         }
 
-        private void Update()
+        private void ResultClick(BaseItemSlot obj)
         {
-
-            if (Craftmgr.activeSelf ==false)
+            if (obj.item is EquippableItem)
             {
-                //Debug.Log("미치녀");
-                CloseCraftPanel();
-            }
-           
+                rudtn((EquippableItem)obj.item);
 
+            }
         }
 
+        private void rudtn(EquippableItem item)
+        {
+            Debug.Log("되냐");
+          
+           
+                equipPanel.RemoveResultItem(item);
+        }
 
         private void BuildingLeftClick(BaseItemSlot obj)
         {
@@ -126,11 +132,11 @@ namespace NSY.Iven
 
         //조합창 중지
         Item currntitem;
-        public void CloseCraftPanel()
-        {
+     //   public void CloseCraftPanel()
+      //  {
           
-            Craftmanager.RestSlot();
-        }
+     //       Craftmanager.RestSlot();
+      //  }
 
 
         //우편 버튼 눌렀을때.
@@ -142,24 +148,24 @@ namespace NSY.Iven
         private void InventoryRightClick(BaseItemSlot itemslot)
         {
           
-            if (itemslot.item is Item && btniven.Craft == true)
+            if (itemslot.item is Item )
             {
-                if (craftPanel.DonthaveCraft())
-                {
-                    craftPanel.CraftAddItem(itemslot.item.GetCopy());
-                    itemslot.Amount--;
-                    UpdateRecipe();
-                }
+               // if (craftPanel.DonthaveCraft())
+                //{
+                  //  craftPanel.CraftAddItem(itemslot.item.GetCopy());
+                   // itemslot.Amount--;
+                   // UpdateRecipe();
+               // }
                    
                    
             }
 
-            if (itemslot.item is EquippableItem && btniven.isInven == true)
+            if (itemslot.item is EquippableItem )
             {
                 Equip((EquippableItem)itemslot.item);
              
             }
-            else if (itemslot.item is UseableItem && btniven.isInven == true)
+            else if (itemslot.item is UseableItem )
             {
                 UseableItem usableitem = (UseableItem)itemslot.item;
                 usableitem.Use(this);
@@ -177,7 +183,7 @@ namespace NSY.Iven
       
         private void CraftPanelLeftClick(BaseItemSlot itemslot)
         {
-            if (itemslot.item is Item && btniven.Craft == true)
+            if (itemslot.item is Item)
             {
                 iventorynsy.AddItem(itemslot.item.GetCopy());
                 itemslot.Amount--;
@@ -191,7 +197,7 @@ namespace NSY.Iven
         {//탐색
             Item Recipe;
 
-            Recipe = craftPanel.SetCraftingRecipe();
+          //  Recipe = craftPanel.SetCraftingRecipe();
             
 
 
@@ -204,9 +210,10 @@ namespace NSY.Iven
         private void EquipmentPanelRightClick(BaseItemSlot itemslot)
         {
            
-            if (itemslot.item is EquippableItem && btniven.isInven)
+            if (itemslot.item is EquippableItem )
             {
-                Unequip((EquippableItem)itemslot.item);
+                  Unequip((EquippableItem)itemslot.item);
+               
             }
         }
         
@@ -239,7 +246,7 @@ namespace NSY.Iven
         private void Drop(BaseItemSlot dropitemslot)
         {
 
-            Debug.Log("드래그시작함");
+           
 
 
             if (dragitemSlot == null) return;
@@ -307,25 +314,33 @@ namespace NSY.Iven
                     if (previousitem != null)
                     {
                         iventorynsy.AddItem(previousitem);
+                        //equipPanel.AddItem(item, out previousitem);
                     }
                    
                     
                 }
+              
                 else
                 {
                     iventorynsy.AddItem(item);
                 }
             }
         }
-        public void Unequip(EquippableItem item)
+        public void Unequip(EquippableItem item)//장착
         {
-            if (iventorynsy.CanAddItem(item) && equipPanel.RemoveItem(item))
+            
+            if (equipPanel.AddResultItem(item))
             {
-                iventorynsy.AddItem(item);
+                Debug.Log("후..");
+             //   equipPanel.changeItem(item);
             }
+            
+            
         }
-      
-       
+ 
+        
+
+
 
         private void AddStacks(BaseItemSlot dropitemslot)
         {
@@ -420,9 +435,38 @@ namespace NSY.Iven
         {
           
             Debug.Log("버튼누름");
-            PostEvent.BtnClickPost();
+           
 
         }
+
+        public void Open_CloseBtn()
+        {
+         
+          
+            if (isUp == true)
+            {
+                Up();
+            }
+            else
+            {
+                Down();
+            }
+        }
+        private void Up()
+        {
+          
+            BaseCharcterPanel.anchoredPosition = new Vector3(0, 0, 0);
+            isUp = false;
+            isDown = true;
+        }
+        void Down()
+        {
+           
+            BaseCharcterPanel.anchoredPosition = new Vector3(0, -240, 0);
+            isUp = true;
+            isDown = false;
+        }
+      
     }
 
 }
