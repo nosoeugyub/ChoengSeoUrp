@@ -5,9 +5,10 @@ using DM.Inven;
 
 namespace NSY.Iven
 {
+   
     public enum EquipmentType
     {
-        Tool
+       Tool
     }
 
     [CreateAssetMenu]

@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -2751,6 +2751,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterType: 1
+  preferBuildItemObjList: []
+  myHouse: {fileID: 0}
 --- !u!1 &89883807
 GameObject:
   m_ObjectHideFlags: 0
@@ -2857,18 +2859,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 89883807}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &91534627 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8085508565591837286, guid: 1b4fa8d7f6875f2438cf4d1ff583c6a1,
-    type: 3}
-  m_PrefabInstance: {fileID: 1683935433}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 484f8a8bb044ae6478eb275a5009dfe1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &91534628 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8085508565591837285, guid: 1b4fa8d7f6875f2438cf4d1ff583c6a1,
@@ -29635,7 +29625,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uimanager: {fileID: 202234847}
-  tutorialManager: {fileID: 91534627}
   questmanager: {fileID: 1064878618}
   dialogueManager: {fileID: 1484550632}
   spawnmanager: {fileID: 0}
@@ -32873,6 +32862,7 @@ Transform:
   - {fileID: 459226238}
   - {fileID: 2056136592}
   - {fileID: 1622331482}
+  - {fileID: 1315706208}
   - {fileID: 526076715}
   - {fileID: 183879593}
   - {fileID: 1044245328}
@@ -32882,7 +32872,6 @@ Transform:
   - {fileID: 297031800}
   - {fileID: 1881424618}
   - {fileID: 821790996}
-  - {fileID: 1315706208}
   - {fileID: 923238737}
   - {fileID: 1926330736}
   - {fileID: 239632013}
@@ -34438,7 +34427,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1240210043}
-  m_RootOrder: 19
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1315706209
 SpriteRenderer:
@@ -36286,7 +36275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3afcd7951f4ce244e810025bd5501a43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingInfo: {fileID: 11400000, guid: de57985436c70f84eb26ccdded6ab4aa, type: 2}
+  buildingInfo: {fileID: 0}
   gotIngredient: []
   uiFabs: []
   clearButton: {fileID: 0}
@@ -50252,7 +50241,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.9333333, y: 1}
+    m_SensorSize: {x: 2.1880999, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -50449,8 +50438,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Character: {fileID: 1292222738}
-  defaultMat: {fileID: 0}
-  TargetMat: {fileID: 2100000, guid: 0d792c18c01baa94eba2e6a5930bbe3d, type: 2}
+  defaultShader: {fileID: 0}
+  targetShader: {fileID: 0}
   transparentObjs: []
 --- !u!1 &1863837367
 GameObject:
@@ -52848,7 +52837,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.9333333, y: 1}
+    m_SensorSize: {x: 2.1880999, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -54653,7 +54642,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.9333333, y: 1}
+    m_SensorSize: {x: 1.9921976, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -55439,7 +55428,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.9333333, y: 1}
+    m_SensorSize: {x: 1.9921976, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -59195,6 +59184,26 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1100152799967988791, guid: 2626c9f0bf9014343b52638586e20f5b,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100152799967988791, guid: 2626c9f0bf9014343b52638586e20f5b,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100152799967988791, guid: 2626c9f0bf9014343b52638586e20f5b,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100152799967988791, guid: 2626c9f0bf9014343b52638586e20f5b,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1100152800040800016, guid: 2626c9f0bf9014343b52638586e20f5b,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -59285,6 +59294,26 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1100152800189779881, guid: 2626c9f0bf9014343b52638586e20f5b,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100152800189779881, guid: 2626c9f0bf9014343b52638586e20f5b,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100152800189779881, guid: 2626c9f0bf9014343b52638586e20f5b,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100152800189779881, guid: 2626c9f0bf9014343b52638586e20f5b,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1100152800330680662, guid: 2626c9f0bf9014343b52638586e20f5b,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -59313,6 +59342,26 @@ PrefabInstance:
     - target: {fileID: 1100152800330680662, guid: 2626c9f0bf9014343b52638586e20f5b,
         type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100152800349332270, guid: 2626c9f0bf9014343b52638586e20f5b,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100152800349332270, guid: 2626c9f0bf9014343b52638586e20f5b,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100152800349332270, guid: 2626c9f0bf9014343b52638586e20f5b,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100152800349332270, guid: 2626c9f0bf9014343b52638586e20f5b,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1100152800351347113, guid: 2626c9f0bf9014343b52638586e20f5b,
