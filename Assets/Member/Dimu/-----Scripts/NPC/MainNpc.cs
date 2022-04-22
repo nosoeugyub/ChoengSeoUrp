@@ -79,7 +79,7 @@ namespace DM.NPC
 
                     foreach (var kind in preferCondition.buildHPos)
                     {
-                    canContinue = false;
+                        canContinue = false;
                         if (kind == buildItem.GetAttribute().buildHPos)
                         {
                             print(kind.ToString());
@@ -92,7 +92,7 @@ namespace DM.NPC
 
                     foreach (var kind in preferCondition.buildVPos)
                     {
-                    canContinue = false;
+                        canContinue = false;
                         if (kind == buildItem.GetAttribute().buildVPos)
                         {
                             print(kind.ToString());
@@ -105,7 +105,7 @@ namespace DM.NPC
 
                     foreach (var kind in preferCondition.buildSize)
                     {
-                    canContinue = false;
+                        canContinue = false;
                         if (kind == buildItem.GetAttribute().buildSize)
                         {
                             print(kind.ToString());
@@ -118,7 +118,7 @@ namespace DM.NPC
 
                     foreach (var kind in preferCondition.buildColor)
                     {
-                    canContinue = false;
+                        canContinue = false;
                         if (kind == buildItem.GetAttribute().buildColor)
                         {
                             print(kind.ToString());
@@ -131,7 +131,7 @@ namespace DM.NPC
 
                     foreach (var kind in preferCondition.buildShape)
                     {
-                    canContinue = false;
+                        canContinue = false;
                         if (kind == buildItem.GetAttribute().buildShape)
                         {
                             print(kind.ToString());
@@ -144,7 +144,7 @@ namespace DM.NPC
 
                     foreach (var kind in preferCondition.buildThema)
                     {
-                    canContinue = false;
+                        canContinue = false;
                         foreach (var thema in buildItem.GetAttribute().buildThema)
                         {
                             print(kind.ToString());
@@ -162,7 +162,7 @@ namespace DM.NPC
                     //해당 건축자재가 설치된 개수 가져오기
                     foreach (var kind in preferCondition.buildCount)
                     {
-                    canContinue = false;
+                        canContinue = false;
                         //개수와 비교하기
                     }
 
