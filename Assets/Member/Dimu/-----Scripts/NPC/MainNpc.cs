@@ -10,7 +10,9 @@ namespace DM.NPC
     {
         [SerializeField] PreferItem[] preferBuildItemObjList;
         [SerializeField] BuildingBlock myHouse;
+        public Condition[] wantToBuildCondition;
         BuildingManager buildingManager;
+
         private void Awake()
         {
             buildingManager = FindObjectOfType<BuildingManager>();
@@ -19,6 +21,8 @@ namespace DM.NPC
         {
             EventManager.EventActions[2] += MoveToMyHome;
             EventManager.EventActions[3] += MoveToHisHome;
+
+            BuildingBlock.UpdateBuildingInfos += FindLikeHouse;
 
         }
         private void Update()
@@ -119,4 +123,6 @@ namespace DM.NPC
         public Item item;
         public float likeable;
     }
+
+
 }

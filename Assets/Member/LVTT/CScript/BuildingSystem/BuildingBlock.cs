@@ -1,9 +1,10 @@
-﻿using Game.Cam;
-using DM.NPC;
+﻿using DM.NPC;
+using Game.Cam;
 using NSY.Manager;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-public enum BuildItemKind { Wall, Roof, Door, Window, Signboard, Etc }
+
 public enum BuildState { None, NotFinish, Finish }
 public enum BuildMode { None, BuildHouseMode, DemolishMode }
 
@@ -31,6 +32,7 @@ namespace TT.BuildSystem
         public static bool isBuildMode = false;
         public static bool isBuildDemolishMode = false;
         public static BuildingBlock nowBuildingBlock;
+        static public Action UpdateBuildingInfos;//임시선언
 
         CameraManager CamManager;
 
@@ -83,6 +85,10 @@ namespace TT.BuildSystem
         }
         private void Update()
         {
+            if (Input.GetKeyDown(KeyCode.B))
+            {
+                UpdateBuildingInfos();
+            }
             if (Input.GetKeyDown(KeyCode.T) && CurBuildMode == BuildMode.DemolishMode)
             {
                 BuildModeOff();
@@ -159,7 +165,7 @@ namespace TT.BuildSystem
         {
 
             List<Item> items = new List<Item>();
-            if(isBuildMode ||isBuildDemolishMode)return items;
+            if (isBuildMode || isBuildDemolishMode) return items;
 
             foreach (var item in BuildItemList)
             {
@@ -206,19 +212,19 @@ namespace TT.BuildSystem
                     BuildModeOn(interactUI);
                     player.gameObject.SetActive(false);
                     ResetButtonEvents(buttons);
-                    //1. Build Building
-                });
+                        //1. Build Building
+                    });
                 buttons[1].onClick.AddListener(() =>
                 {
                     BuildDemolishModeOn(interactUI);
                     player.gameObject.SetActive(false);
                     ResetButtonEvents(buttons);
-                    //2. break Building
-                });
+                        //2. break Building
+                    });
                 buttons[2].onClick.AddListener(() =>
                 {
-                    //3. Finish Building
-                });
+                        //3. Finish Building
+                    });
                 this.buildButtonFuncAdded = true;
             }
             //}
@@ -314,7 +320,7 @@ namespace TT.BuildSystem
             player.gameObject.SetActive(true);
             isBuildMode = false;
             isBuildDemolishMode = false;
-
+            curInteractObj.PutDownBuildingItemObj(areaWidthsize, areaHeightsize);
             SuperManager.Instance.inventoryManager.CheckCanBuildItem(null);
         }
 

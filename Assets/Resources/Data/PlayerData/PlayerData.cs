@@ -70,7 +70,8 @@ public class Behavior
 }
 public enum OutItemType
 {
-    Talk, Tool, Mineral, Food, Collect, BuildWall, BuildSign, BuildNormal, Etc,
+    Talk, Tool, Mineral, Food, Collect,
+    BuildWall, BuildSign, BuildNormal, Etc,
 }
 public enum InItemType
 {
