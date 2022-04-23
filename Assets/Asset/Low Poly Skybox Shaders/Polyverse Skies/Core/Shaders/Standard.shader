@@ -7,11 +7,11 @@ Shader "BOXOPHOBIC/Polyverse Skies/Standard"
 		[StyledBanner(Polyverse Skies Standard)]_Banner("< Banner >", Float) = 1
 		[StyledCategory(Background, 5, 10)]_BackgroundCat("[ Background Cat ]", Float) = 1
 		[KeywordEnum(Colors,Cubemap,Combined)] _BackgroundMode("Background Mode", Float) = 0
-		[Space(10)]_SkyColor("Sky Color", Color) = (0.4980392,0.7450981,1,1)
-		_EquatorColor("Equator Color", Color) = (1,0.747,0,1)
-		_GroundColor("Ground Color", Color) = (0.4980392,0.497,0,1)
-		_EquatorHeight("Equator Height", Range( 0 , 1)) = 0.5
-		_EquatorSmoothness("Equator Smoothness", Range( 0.01 , 1)) = 0.5
+		[Space(10)]_SkyColor("SkyColor", Color) = (0.4980392,0.7450981,1,1)
+		_EquatorColor("EquatorColor", Color) = (1,0.747,0,1)
+		_GroundColor("GroundColor", Color) = (0.4980392,0.497,0,1)
+		_EquatorHeight("EquatorHeight", Range( 0 , 1)) = 0.5
+		_EquatorSmoothness("EquatorSmoothness", Range( 0.01 , 1)) = 0.5
 		[NoScaleOffset][Space(10)][StyledTextureSingleLine]_BackgroundCubemap("Background Cubemap", CUBE) = "black" {}
 		[Space(10)]_BackgroundExposure("Background Exposure", Range( 0 , 8)) = 1
 		[StyledCategory(Pattern)]_PatternCat("[ Pattern Cat ]", Float) = 1
