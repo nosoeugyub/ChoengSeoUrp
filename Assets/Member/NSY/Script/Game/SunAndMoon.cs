@@ -89,14 +89,16 @@ public class SunAndMoon : MonoBehaviour
             sun_2.gameObject.SetActive(true);
             RenderSettings.skybox = DaySkyBox;
 
-            float fxckyou = 0f;
-            //RenderSettings.skybox.SetFloat("EquatorHeight", fxckyou);
-            DaySkyBox.SetFloat("EquatorHeight", fxckyou);
-            //   Debug.Log("김띠용" + fxckyou);
-            Debug.Log(DaySkyBox.GetFloat("EquatorHeight"));
+          
+          
+      
         }
-       
-     
+        DaySkyBox.GetFloat("EquatorHeight");
+        DaySkyBox.SetFloat("EquatorHeight", DayMayColor);
+        RenderSettings.skybox.GetFloat("EquatorHeight");
+        RenderSettings.skybox.SetFloat("EquatorHeight", DayMayColor);
+        Debug.Log(DaySkyBox.GetFloat("EquatorHeight"));
+
         if (Moon.intensity < 0.25f && Moon.gameObject.activeInHierarchy && Moon_2.intensity < 0.25f && Moon_2.gameObject.activeInHierarchy)
         {
             Moon.gameObject.SetActive(false);
