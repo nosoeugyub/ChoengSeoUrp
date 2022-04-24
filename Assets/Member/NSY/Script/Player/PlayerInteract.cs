@@ -3,6 +3,7 @@ using TT.BuildSystem;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DM.NPC;
 
 namespace NSY.Player
 {
@@ -22,6 +23,8 @@ namespace NSY.Player
         [SerializeField] PlayerAnimator playerAnimator;
 
         [SerializeField] Item[] testToolItems;
+
+        [SerializeField] MainNpc followNpc;
 
         RaycastHit hit;
         Ray ray;
@@ -55,6 +58,10 @@ namespace NSY.Player
             InteractWithObjects();
         }
 
+        public void SetNpc(MainNpc npc)
+        {
+            followNpc = npc;
+        }
 
 
         private void InvokeInteract(IInteractble interactable)
@@ -114,6 +121,12 @@ namespace NSY.Player
                     if (buildAreaObject != null)
                     {
                         isAnimating = false;
+
+                        if(followNpc)
+                        {
+                            followNpc.FindLikeHouse();
+                        }
+                        else
                         buildAreaObject.OnBuildMode(buildingButtons, interactUI, transform.parent);
                         return;
                     }
@@ -162,7 +175,7 @@ namespace NSY.Player
 
 
 
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButtonDown(0))
             {
                 if (Physics.Raycast(ray, out hit, 10000, layerMask))
                 {

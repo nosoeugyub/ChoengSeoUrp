@@ -1,5 +1,5 @@
-﻿using DM.Quest;
-using DM.NPC;
+﻿using DM.NPC;
+using DM.Quest;
 using NSY.Manager;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,34 +22,41 @@ namespace DM.Dialog
 
         [Header("UI")]
         //public GameObject dialogUI;//대화창 조상
-        public Button nextButton; //다음 버튼
+        public Button nextButton; //다음 버튼 >> 별로다
         public Text dialogText;
         public Text nameText;
 
         [Header("DialogInfos")]
         public List<DialogList> questDialogLists; //퀘스트 있는 대화
         public List<DialogList> dailydialogLists; //퀘스트 없는 대화
+        public List<DialogList> buildDialogLists; //건축 피드백 대화
 
         [Header("InstanciatePrefab")]
         public GameObject textboxFab;//대화창 프리펩 //쪽지로 변하는것임!!
 
         GameObject nowOnFab;
         QuestData canClearqd;
-        public int nowPartner = -1; //일단 이장 고정
         MainNpc nowNpc;
         bool isTalking = false;
         float times = 0;
+
         QuestManager questManager;
+        BuildingManager buildingManager;
 
         private void Awake()
         {
             questManager = SuperManager.Instance.questmanager;
+            buildingManager = FindObjectOfType<BuildingManager>();
         }
         void Start()
         {
             EventManager.EventActions[1] = Test;
 
-            FirstShowDialog(npcTfs[(int)Character.CheongSeo].parent.GetComponent<MainNpc>(), null);
+            FirstShowDialog(npcTfs[(int)Character.CheongSeo].parent.GetComponent<MainNpc>(), null, false, -1);
+        }
+        public MainNpc GetNowNpc()
+        {
+            return nowNpc;
         }
         public void Test()
         {
@@ -57,26 +64,25 @@ namespace DM.Dialog
             times += Time.deltaTime;
             if (times > 3) { EventManager.EventAction -= EventManager.EventActions[1]; }
         }
-
-        public void FirstShowDialog(MainNpc npc, Item handitem) //첫 상호작용 시 호출. 어떤 대화를 호출할지 결정
+        public void FirstShowDialog(MainNpc npc, Item handitem, bool isFollowPlayer, int isLike) //첫 상호작용 시 호출. 어떤 대화를 호출할지 결정
         {
             if (isTalking)
             {
-                //Debug.Log("대화중입니다.");
+                Debug.Log("대화중입니다.");
                 return;
             }
 
             isTalking = true;
-            nowPartner = (int)npc.GetCharacterType();  //대화하는 대상을 현재 파트너로 지정
             nowNpc = npc;
             partnerTf = npc.transform;
             nowSentenceIdx = 0;
 
             PlayerData.AddValue((int)npc.GetCharacterType(), (int)NpcBehaviorEnum.Interact, PlayerData.npcData, (int)NpcBehaviorEnum.length);
 
-            StartShowDialog(handitem); //파트너와 진행해야 하는 순서의 대화를 진행
+            StartShowDialog(handitem, isFollowPlayer, isLike); //파트너와 진행해야 하는 순서의 대화를 진행
         }
-        public void StartShowDialog(Item handitem)
+
+        public void StartShowDialog(Item handitem, bool isFollowPlayer, int isLike)
         {
             Sentence[] ss = null;//대화뭉치를 담을 변수
             int sentenceState = -1;//대화뭉치 타입(수락0, 진행중1, 완료2)
@@ -88,57 +94,67 @@ namespace DM.Dialog
             //Vector3 uiPos = new Vector3(partnerTf.position.x, partnerTf.position.y + 6, partnerTf.position.z);
             //dialogUI.transform.position = Camera.main.WorldToScreenPoint(uiPos);
 
-            canClearqd = questManager.ReturnCanClearQuestRequireNpc(nowPartner);
-
-            //List<QuestData> isAcceptedQuests = questManager.GetIsAcceptedQuestList(nowPartner);//진행중인 퀘스트
-            //List<QuestData> canAcceptQuests = questManager.GetCanAcceptQuestList(nowPartner);//수락가능 퀘스트
-            List<QuestData> isAcceptedQuests = questManager.GetIsAcceptedQuestList(nowPartner);//진행중인 대화 
-            List<DialogData> canStartDialogs = GetCanAcceptDialogList(nowPartner, true);//시작가능 대화
-
-            //완료자가 nowPartner(현재 대화 상대)인 퀘스트 받아옴. 제공자는 같을 수도,  다를 수 있음.
-            if (canClearqd != null && questManager.ClearQuest(canClearqd.questID, canClearqd.npcID))//있거나 클리어할 수 있다면
+            if (isFollowPlayer)
             {
-                nowDialogData = questDialogLists[canClearqd.npcID].dialogList[canClearqd.questID];
+                if (isLike == (int)BuildingLike.None) return;
 
-                ss = nowDialogData.clearSentenceInfo;
-                dialogLength = nowDialogData.clearSentenceInfo.Length;
-                sentenceState = 2;//클리어
-            }
-
-            else if (isAcceptedQuests.Count > 0) // 진행중인 대화가 있다면?
-            {
-                nowDialogData = questDialogLists[nowPartner].dialogList[isAcceptedQuests[0].questID];
-
-                ss = nowDialogData.proceedingSentenceInfo;
-                dialogLength = nowDialogData.proceedingSentenceInfo.Length;
-                sentenceState = 1;//진행중
-            }
-            else if (canStartDialogs.Count > 0)//시작가능 대화가 있다면?
-            {
-                //nowDialogData = questDialogLists[nowPartner].dialogList[canStartDialogs[0].questId];
-                nowDialogData = canStartDialogs[0];
-
+                nowDialogData = buildDialogLists[(int)nowNpc.GetCharacterType()].dialogList[isLike];
                 ss = nowDialogData.acceptSentenceInfo;
-                dialogLength = nowDialogData.acceptSentenceInfo.Length;
-                sentenceState = 0;//수락
+                sentenceState = -1;//클리어
             }
-            else //아무것도 없다면?
+            else
             {
-                canStartDialogs = GetCanAcceptDialogList(nowPartner, false);
-                if (canStartDialogs.Count <= 0)
+                canClearqd = questManager.ReturnCanClearQuestRequireNpc((int)nowNpc.GetCharacterType());
+
+                //List<QuestData> isAcceptedQuests = questManager.GetIsAcceptedQuestList(nowPartner);//진행중인 퀘스트
+                //List<QuestData> canAcceptQuests = questManager.GetCanAcceptQuestList(nowPartner);//수락가능 퀘스트
+                List<QuestData> isAcceptedQuests = questManager.GetIsAcceptedQuestList((int)nowNpc.GetCharacterType());//진행중인 대화 
+                List<DialogData> canStartDialogs = GetCanAcceptDialogList((int)nowNpc.GetCharacterType(), true);//시작가능 대화
+
+                //완료자가 nowPartner(현재 대화 상대)인 퀘스트 받아옴. 제공자는 같을 수도,  다를 수 있음.
+                if (canClearqd != null && questManager.ClearQuest(canClearqd.questID, canClearqd.npcID))//있거나 클리어할 수 있다면
                 {
-                    Debug.LogError("StartShowDialog :: nothing else");
-                    //dialogUI.SetActive(false);
-                    isTalking = false;
-                    return;
+                    nowDialogData = questDialogLists[canClearqd.npcID].dialogList[FindDialogIndex(canClearqd)];
+
+                    ss = nowDialogData.clearSentenceInfo;
+                    dialogLength = nowDialogData.clearSentenceInfo.Length;
+                    sentenceState = 2;//클리어
                 }
 
-                nowDialogData = canStartDialogs[0];
+                else if (isAcceptedQuests.Count > 0) // 진행중인 대화가 있다면?
+                {
+                    nowDialogData = questDialogLists[(int)nowNpc.GetCharacterType()].dialogList[FindDialogIndex(isAcceptedQuests[0])];
 
-                ss = nowDialogData.acceptSentenceInfo;
-                dialogLength = nowDialogData.acceptSentenceInfo.Length;
+                    ss = nowDialogData.proceedingSentenceInfo;
+                    dialogLength = nowDialogData.proceedingSentenceInfo.Length;
+                    sentenceState = 1;//진행중
+                }
+                else if (canStartDialogs.Count > 0)//시작가능 대화가 있다면?
+                {
+                    //nowDialogData = questDialogLists[nowPartner].dialogList[canStartDialogs[0].questId];
+                    nowDialogData = canStartDialogs[0];
+
+                    ss = nowDialogData.acceptSentenceInfo;
+                    dialogLength = nowDialogData.acceptSentenceInfo.Length;
+                    sentenceState = 0;//수락
+                }
+                else //아무것도 없다면?
+                {
+                    canStartDialogs = GetCanAcceptDialogList((int)nowNpc.GetCharacterType(), false);
+                    if (canStartDialogs.Count <= 0)
+                    {
+                        Debug.LogError("StartShowDialog :: nothing else");
+                        //dialogUI.SetActive(false);
+                        isTalking = false;
+                        return;
+                    }
+
+                    nowDialogData = canStartDialogs[0];
+
+                    ss = nowDialogData.acceptSentenceInfo;
+                    dialogLength = nowDialogData.acceptSentenceInfo.Length;
+                }
             }
-
             //nextButton.onClick.RemoveAllListeners();
             //nextButton.onClick.AddListener(() =>
             //{
@@ -146,8 +162,20 @@ namespace DM.Dialog
             //});
             UpdateDialog(ss, sentenceState);
         }
+        public int FindDialogIndex(QuestData questData)
+        {
+            for (int i = 0; i < questDialogLists[questData.npcID].dialogList.Length; ++i)
+            {
 
+                if (questDialogLists[questData.npcID].dialogList[i].questId == questData.questID)
+                {
 
+                    return i;
+                }
+            }
+            print("FindDialogIndex return -1");
+            return -1;
+        }
         private List<DialogData> GetCanAcceptDialogList(int npcID, bool isQuestList)
         {
             List<DialogData> canAcceptDialogs = new List<DialogData>();
@@ -155,7 +183,7 @@ namespace DM.Dialog
             {
                 foreach (var dialogData in questDialogLists[npcID].dialogList)//퀘스트 가진 리스트 중에서 검사
                 {
-                    if (dialogData.CanStartTalk())
+                    if (CanStartTalk(dialogData))
                     {
                         canAcceptDialogs.Add(dialogData);
                     }
@@ -165,7 +193,7 @@ namespace DM.Dialog
             {
                 foreach (var dialogData in dailydialogLists[npcID].dialogList)//일반대화 리스트 중에서 검사
                 {
-                    if (dialogData.CanStartTalk())
+                    if (CanStartTalk(dialogData))
                     {
                         canAcceptDialogs.Add(dialogData);
                     }
@@ -174,7 +202,58 @@ namespace DM.Dialog
 
             return canAcceptDialogs;
         }
+        public bool CanStartTalk(DialogData dialogData)
+        {
+            if (dialogData.haveToHaveAndLikeHouse)//입주 필수 인가?
+            {
+                if (buildingManager.GetNPCsHouse(dialogData.subjectCharacterID) == null) return false;//그렇다면 이 npc는 집을 갖고 있는가?
+                if (nowNpc.GetMyHouseScore() <= 50) return false;//그렇다면 집의 점수가 50점 초과인가?
+            }
+            if (dialogData.dontHaveToHaveAndLikeHouse)//미입주 필수 인가?
+            {
+                if (buildingManager.GetNPCsHouse(dialogData.subjectCharacterID) != null) return false;// 집이 없는가 ?
+            }
 
+
+
+            foreach (var item in dialogData.dialogTasks.haveToClearQuest)
+            {
+                if (!SuperManager.Instance.questmanager.IsQuestCleared(item.questdata))
+                    return false;
+            }
+            foreach (var item in dialogData.dialogTasks.DonthaveToClearQuest)
+            {
+                if (SuperManager.Instance.questmanager.IsQuestCleared(item.questdata))
+                    return false;
+            }
+            foreach (var item in dialogData.dialogTasks.haveToDoingQuest)
+            {
+                if (!SuperManager.Instance.questmanager.IsQuestAccepted(item.questdata))
+                    return false;
+
+            }
+            foreach (var item in dialogData.dialogTasks.buildBuildings)
+            {
+                //빌딩매니저에서 해당 건축물이 어느 집에 설치되어있을 때..
+            }
+            foreach (var item in dialogData.dialogTasks.haveToEndDialog)
+            {
+                if (!item.isTalkingOver)
+                {
+                    return false;
+
+                }
+            }
+            foreach (var item in dialogData.dialogTasks.DonthaveToEndDialog)
+            {
+                if (item.isTalkingOver)
+                {
+                    return false;
+
+                }
+            }
+            return true;
+        }
         public void UpdateDialog(Sentence[] sentences, int sentenceState)
         {
             UpdateDialogText(sentences, sentenceState);
@@ -244,7 +323,7 @@ namespace DM.Dialog
                     switch (sentenceState)
                     {
                         case 0://수락 상태라면?
-                            questManager.AcceptQuest(nowDialogData.questId, nowPartner);
+                            questManager.AcceptQuest(nowDialogData.questId, (int)nowNpc.GetCharacterType());
                             break;
                         default:
                             break;
@@ -259,12 +338,6 @@ namespace DM.Dialog
             // dialogUI.SetActive(false);
         }
 
-        public bool CanTalkWith(int questId, int npcID)//대화 진행 가능한지?
-        {
-
-
-            return false;
-        }
         public bool IsQuestCleared(int questId, int npcID)//클리어한 대화인지?
         {
             if (questDialogLists[npcID].dialogList[questId].isTalkingOver) return true;

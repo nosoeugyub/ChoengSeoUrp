@@ -32,7 +32,7 @@ namespace TT.BuildSystem
         public static bool isBuildMode = false;
         public static bool isBuildDemolishMode = false;
         public static BuildingBlock nowBuildingBlock;
-        static public Action UpdateBuildingInfos;//임시선언
+        //static public Action UpdateBuildingInfos;//임시선언
 
         CameraManager CamManager;
 
@@ -87,7 +87,7 @@ namespace TT.BuildSystem
         {
             if (Input.GetKeyDown(KeyCode.B))
             {
-                UpdateBuildingInfos();
+                //UpdateBuildingInfos();
             }
             if (Input.GetKeyDown(KeyCode.T) && CurBuildMode == BuildMode.DemolishMode)
             {
@@ -197,6 +197,8 @@ namespace TT.BuildSystem
 
         public void OnBuildMode(UnityEngine.UI.Button[] buttons, GameObject interactUI, Transform playerTf)
         {
+
+
             foreach (var button in buttons)
             {
                 button.gameObject.SetActive(true);

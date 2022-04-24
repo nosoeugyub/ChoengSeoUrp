@@ -23,11 +23,12 @@ public class BuildingManager : MonoBehaviour
         }
         return -1;
     }
-    public BuildingBlock GetNPCsHouse(Character npctype)
+    public BuildingBlock GetNPCsHouse(int npctype)
     {
         foreach (var item in buildings)//
         {
-            if (item.GetLivingChar().GetCharacterType() == npctype)
+            if (item.GetLivingChar() == null) continue;
+            if ((int)item.GetLivingChar().GetCharacterType() == npctype)
             {
                 return item;
             }

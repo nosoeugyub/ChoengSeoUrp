@@ -71,6 +71,7 @@ public class EnvironmentManager : MonoBehaviour
     {
         //RenderSettings.fogColor = fogColor;
         //Cleanliness = _cleanliness;
+        Cleanliness +=Time.deltaTime*20;
 
         _fogColor = ((goodFogColor - badFogColor) / 100 * Cleanliness) + badFogColor;
         RenderSettings.fogColor = _fogColor;
