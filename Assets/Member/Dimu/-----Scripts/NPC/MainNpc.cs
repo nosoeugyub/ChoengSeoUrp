@@ -256,7 +256,7 @@ namespace DM.NPC
         {
             if (myHouse)
             {
-                Vector3 vec = new Vector3(myHouse.transform.position.x-5, transform.transform.position.y, myHouse.transform.position.z + myHouse.transform.forward.z * -7);
+                Vector3 vec = new Vector3(myHouse.transform.position.x-4, transform.transform.position.y, myHouse.transform.position.z + myHouse.transform.forward.z * -6);
                 //vec = new Vector3(myHouse.transform.position.x, myHouse.transform.position.y, myHouse.transform.position.z);// myHouse.transform.forward * -7;//집 앞
                 MoveTo(vec);
             }

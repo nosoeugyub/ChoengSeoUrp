@@ -5,6 +5,8 @@ using UnityEngine;
 public class BuildingManager : MonoBehaviour
 {
     public List<BuildingBlock> buildings = new List<BuildingBlock>();
+
+    [SerializeField] GameObject cancleUi;
     public void AddBuilding(BuildingBlock buildingBlock)
     {
         if (!buildings.Contains(buildingBlock))
@@ -46,7 +48,10 @@ public class BuildingManager : MonoBehaviour
         return buildingBlocks;
     }
 
-
+    public void CancleUIState(bool isOn)
+    {
+        cancleUi.SetActive(isOn);
+    }
 }
 
 public enum BuildVPos { Top, Mid, Bottom, Length }

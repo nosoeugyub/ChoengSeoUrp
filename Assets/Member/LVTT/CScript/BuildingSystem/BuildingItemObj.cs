@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using NSY.Manager;
+using UnityEngine;
 
 namespace TT.BuildSystem
 {
@@ -64,6 +65,15 @@ namespace TT.BuildSystem
             {
                 ItemMove();
             }
+            if(IsFirstDrop)
+            {
+                print("isFirstDrop");
+
+                if (Input.GetMouseButtonDown(1))
+                {
+                    BackToInventory();
+                }
+            }
         }
         /// <summary>
         /////////////////////////Update
@@ -89,7 +99,13 @@ namespace TT.BuildSystem
         }
         /// 
         /// </summary>
-
+        public void BackToInventory()
+        {
+            parentBuildArea.CancleUI(false);
+            SuperManager.Instance.inventoryManager.AddItem(item);
+            parentBuildArea.RemoveBuildItemToList(gameObject);
+            Destroy(gameObject);
+        }
         public void SetParentBuildArea(BuildingBlock pb)
         {
             //Debug.Log("SetParent");

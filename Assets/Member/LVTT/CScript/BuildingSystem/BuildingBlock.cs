@@ -1,7 +1,6 @@
 ﻿using DM.NPC;
 using Game.Cam;
 using NSY.Manager;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -35,6 +34,7 @@ namespace TT.BuildSystem
         //static public Action UpdateBuildingInfos;//임시선언
 
         CameraManager CamManager;
+        BuildingManager buildManager;
 
         public float areaWidthsize;
         public float areaHeightsize;
@@ -70,6 +70,7 @@ namespace TT.BuildSystem
             layerMask = 1 << LayerMask.NameToLayer("Interactable");
             buildButtonFuncAdded = false;
             CamManager = FindObjectOfType<CameraManager>();
+            buildManager = FindObjectOfType<BuildingManager>();
         }
         public MainNpc GetLivingChar()
         {
@@ -97,44 +98,42 @@ namespace TT.BuildSystem
 
                 if (Input.GetMouseButtonDown(0))
                 {
+                    print("MouseDown");
                     if (curInteractObj == null) return;
                     if (Physics.Raycast(ray, out hit, 10000, layerMask))
                     {
-                        if (hit.collider.GetComponent<BuildingItemObj>() == null)
+                        if (hit.collider.GetComponent<BuildingItemObj>() == null) //자재가 아닌걸 클릭 시
                         {
                             if (!curInteractObj.ItemisSet && !curInteractObj.IsFirstDrop)
                             {
                                 print("ItemisSet = true 1 ");
-                                curInteractObj.ItemisSet = true;
+                                SetBuildingItemObj();
                             }
-                            else
+                            else //처음 생성 시
                             {
-                                print("ItemisSet = false");
-                                curInteractObj.IsFirstDrop = false;
+                                print("ItemisSet = false 1");
                             }
 
                             return;
                         }
 
-                        if (curInteractObj.ItemisSet)
+                        if (curInteractObj.ItemisSet) //자재 클릭 + 세팅된 자재일 때
                         {
                             print("ItemisSet = false 2");
                             curInteractObj = hit.collider.GetComponent<BuildingItemObj>();
                             curInteractObj.ItemisSet = false;
                             BuildingItemObjAndSorting();
                         }
-                        else
+                        else //자재 클릭 + 무빙중일 때
                         {
                             print("ItemisSet = true 2 ");
-                            curInteractObj.ItemisSet = true;
-                            curInteractObj.PutDownBuildingItemObj(areaWidthsize, areaHeightsize);
+                            SetBuildingItemObj();
                         }
                     }
-                    else if (!curInteractObj.ItemisSet)
+                    else if (!curInteractObj.ItemisSet) //무빙중 일때
                     {
                         print("ItemisSet = true 3 ");
-                        curInteractObj.ItemisSet = true;
-                            curInteractObj.PutDownBuildingItemObj(areaWidthsize, areaHeightsize);
+                        SetBuildingItemObj();
                     }
                 }
 
@@ -159,6 +158,15 @@ namespace TT.BuildSystem
             }
 
         }
+
+        private void SetBuildingItemObj()
+        {
+            curInteractObj.ItemisSet = true;
+            curInteractObj.IsFirstDrop = false;
+            CancleUI(false);
+            curInteractObj.PutDownBuildingItemObj(areaWidthsize, areaHeightsize);
+        }
+
         public List<BuildingItemObj> GetBuildItemList()
         {
 
@@ -212,19 +220,19 @@ namespace TT.BuildSystem
                     BuildModeOn(interactUI);
                     player.gameObject.SetActive(false);
                     ResetButtonEvents(buttons);
-                        //1. Build Building
-                    });
+                    //1. Build Building
+                });
                 buttons[1].onClick.AddListener(() =>
                 {
                     BuildDemolishModeOn(interactUI);
                     player.gameObject.SetActive(false);
                     ResetButtonEvents(buttons);
-                        //2. break Building
-                    });
+                    //2. break Building
+                });
                 buttons[2].onClick.AddListener(() =>
                 {
-                        //3. Finish Building
-                    });
+                    //3. Finish Building
+                });
                 this.buildButtonFuncAdded = true;
             }
             //}
@@ -312,7 +320,7 @@ namespace TT.BuildSystem
             if (IsCompleteBuilding())
             {
                 SetBuildingState(BuildState.Finish);
-                FindObjectOfType<BuildingManager>().AddBuilding(nowBuildingBlock);
+                buildManager.AddBuilding(nowBuildingBlock);
             }
             else
                 SetBuildingState(BuildState.NotFinish);
@@ -323,6 +331,10 @@ namespace TT.BuildSystem
             SuperManager.Instance.inventoryManager.CheckCanBuildItem(null);
         }
 
+        public void CancleUI(bool on)
+        {
+            buildManager.CancleUIState(on);
+        }
         public bool IsCompleteBuilding()//벽과 문이 있다면 건설 완료 처리
         {
             if (buildState == BuildState.Finish) return true;
@@ -408,6 +420,7 @@ namespace TT.BuildSystem
                 spawnPos.z = spawnPos.z - (BuildItemGap / 2 * BuildItemList.Count);// when the building is facing South
             }
             //print(spawnPos.z);
+            CancleUI(true);
             GameObject newPrefab = Instantiate(spawnObj.ItemPrefab, spawnPos, Quaternion.identity, HouseBuild.transform);
             newPrefab.GetComponent<BuildingItemObj>().SetParentBuildArea(nowBuildingBlock);
             newPrefab.name = spawnObj.name;
