@@ -22,17 +22,17 @@ public class EnvironmentManager : MonoBehaviour
 
     [SerializeField] Color goodSkyColor;//     = new Color(90, 167, 255); //90 167 255
     [SerializeField] Color badSkyColor;//    = new Color(25, 30 ,48);//25 30 48
-                                           //
+                                       //
     [SerializeField] Color goodEquatorColor;//        = new Color(158, 241, 255); //158 241 255
     [SerializeField] Color badEquatorColor;//    = new Color(69, 69, 77); //69 69 77
-                                          //
+                                           //
     [SerializeField] Color goodGroundColor;//= new Color(90, 167, 255);//90 167 255
     [SerializeField] Color badGroundColor;//= new Color(173, 186, 202); //173 186 202
-                                           //
+                                          //
     [SerializeField] Color goodCloudColor;// = new Color(255, 255, 255);//90 167 255
     [SerializeField] Color badCloudColor;//= new Color(155, 155, 155); //173 186 202
 
-    [SerializeField] Color _fogColor; 
+    [SerializeField] Color _fogColor;
     [SerializeField] Color _skyColor;
     [SerializeField] Color _equatorColor;
     [SerializeField] Color _groundColor;
@@ -65,13 +65,13 @@ public class EnvironmentManager : MonoBehaviour
     private void Start()
     {
         //fogColor = RenderSettings.fogColor;
-        //Cleanliness = 10;
+        Cleanliness = 0;
     }
     private void Update()
     {
         //RenderSettings.fogColor = fogColor;
         //Cleanliness = _cleanliness;
-        Cleanliness +=Time.deltaTime*20;
+        //Cleanliness +=Time.deltaTime*20;
 
         _fogColor = ((goodFogColor - badFogColor) / 100 * Cleanliness) + badFogColor;
         RenderSettings.fogColor = _fogColor;

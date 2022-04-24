@@ -100,6 +100,7 @@ namespace DM.Dialog
 
                 nowDialogData = buildDialogLists[(int)nowNpc.GetCharacterType()].dialogList[isLike];
                 ss = nowDialogData.acceptSentenceInfo;
+                dialogLength = nowDialogData.acceptSentenceInfo.Length;
                 sentenceState = -1;//클리어
             }
             else
