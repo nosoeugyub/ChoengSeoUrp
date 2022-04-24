@@ -17,53 +17,58 @@ public class DialogData : ScriptableObject
     public bool haveToHaveAndLikeHouse; //집을 가져야  하는지
     public bool dontHaveToHaveAndLikeHouse; //집을 가지지 말아야 하는지
 
+    private void OnEnable()
+    {
+        isTalkingOver = false;
+    }
+    
     //public bool CanStartTalk()
     //{
-        ////입주 필수 인가?  haveToHaveAndLikeHouse
-        ////그렇다면 집을 갖고 있는가?
-        ////그렇다면 집의 점수가 50점 초과인가?
+    ////입주 필수 인가?  haveToHaveAndLikeHouse
+    ////그렇다면 집을 갖고 있는가?
+    ////그렇다면 집의 점수가 50점 초과인가?
 
-        //foreach (var item in dialogTasks.haveToClearQuest)
-        //{
-        //    if (!SuperManager.Instance.questmanager.IsQuestCleared(item.questdata))
-        //        return false;
-        //}
-        //foreach (var item in dialogTasks.DonthaveToClearQuest)
-        //{
-        //    if (SuperManager.Instance.questmanager.IsQuestCleared(item.questdata))
-        //        return false;
-        //}
-        //foreach (var item in dialogTasks.haveToDoingQuest)
-        //{
-        //    if (!SuperManager.Instance.questmanager.IsQuestAccepted(item.questdata))
-        //        return false;
+    //foreach (var item in dialogTasks.haveToClearQuest)
+    //{
+    //    if (!SuperManager.Instance.questmanager.IsQuestCleared(item.questdata))
+    //        return false;
+    //}
+    //foreach (var item in dialogTasks.DonthaveToClearQuest)
+    //{
+    //    if (SuperManager.Instance.questmanager.IsQuestCleared(item.questdata))
+    //        return false;
+    //}
+    //foreach (var item in dialogTasks.haveToDoingQuest)
+    //{
+    //    if (!SuperManager.Instance.questmanager.IsQuestAccepted(item.questdata))
+    //        return false;
 
-        //}
-        //foreach (var item in dialogTasks.buildBuildings)
-        //{
-        //    //빌딩매니저에서 해당 건축물이 어느 집에 설치되어있을 때..
-        //}
-        //foreach (var item in dialogTasks.haveToEndDialog)
-        //{
-        //    if(!item.isTalkingOver)
-        //    {
-        //        return false;
+    //}
+    //foreach (var item in dialogTasks.buildBuildings)
+    //{
+    //    //빌딩매니저에서 해당 건축물이 어느 집에 설치되어있을 때..
+    //}
+    //foreach (var item in dialogTasks.haveToEndDialog)
+    //{
+    //    if(!item.isTalkingOver)
+    //    {
+    //        return false;
 
-        //    }
-        //}
-        //foreach (var item in dialogTasks.DonthaveToEndDialog)
-        //{
-        //    if (item.isTalkingOver)
-        //    {
-        //        return false;
+    //    }
+    //}
+    //foreach (var item in dialogTasks.DonthaveToEndDialog)
+    //{
+    //    if (item.isTalkingOver)
+    //    {
+    //        return false;
 
-        //    }
-        //}
-        ////if( dialogTasks.itemIndexToHand == 
-        ////{
-        ////    //플레이어의 hand 체크
-        ////}
-        //return true;
+    //    }
+    //}
+    ////if( dialogTasks.itemIndexToHand == 
+    ////{
+    ////    //플레이어의 hand 체크
+    ////}
+    //return true;
     //}
 
 }
