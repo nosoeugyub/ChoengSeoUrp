@@ -58,47 +58,42 @@ namespace DM.NPC
                 MoveTo(vector3);
             }
         }
-        public void FindLikeHouse()
+        public void FindLikeHouse(BuildingBlock buildAreaObject)
         {
-            float highScore = 0;
-            BuildingBlock highBuildingBlock = GetHighScoreHouse(ref highScore);
+            float highScore = GetBuildingLikeable(buildAreaObject);
 
             if (50 < highScore)
-            {
-                SetMyHouse(highBuildingBlock);
-            }
+                SetMyHouse(buildAreaObject);
             else
-            {
                 SetMyHouse(null);
-            }
         }
         public float GetMyHouseScore()
         {
-           return GetBuildingLikeable(myHouse);
+            return GetBuildingLikeable(myHouse);
         }
-        public BuildingBlock GetHighScoreHouse(ref float highScore) //가장 높은 점수를 가진 건축물
-        {
-            BuildingBlock buildingBlock = null;
+        //public BuildingBlock GetHighScoreHouse(BuildingBlock buildAreaObject, ref float highScore) //가장 높은 점수를 가진 건축물
+        //{
+        //    //BuildingBlock buildingBlock = null;
 
-            foreach (BuildingBlock item in buildingManager.GetCompleteBuildings())
-            {
-                print("item" + item.name);
-                if (item.HaveLivingChar()) continue;
+        //    // foreach (BuildingBlock item in buildingManager.GetCompleteBuildings())
+        //    {
+        //        print("item" + buildAreaObject.name);
+        //        if (buildAreaObject.HaveLivingChar()) ;// continue;
 
-                float nowScore = GetBuildingLikeable(item);
-                print(nowScore);
+        //        float nowScore = GetBuildingLikeable(buildAreaObject);
+        //        print(nowScore);
 
-                {
-                    if (highScore < nowScore)
-                    {
-                        highScore = nowScore;
-                        buildingBlock = item;
-                    }
-                }
-            }
+        //        {
+        //            if (highScore < nowScore)
+        //            {
+        //                highScore = nowScore;
+        //                //buildingBlock = buildAreaObject;
+        //            }
+        //        }
+        //    }
 
-            return buildingBlock;
-        }
+        //    //return buildingBlock;
+        //}
         public void SetMyHouse(BuildingBlock block)
         {
             if (!block)
@@ -231,6 +226,7 @@ namespace DM.NPC
                     score += preferCondition.likeable;
                 }
             }
+            print(score);
             return score;
         }
 

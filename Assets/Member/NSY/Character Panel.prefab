@@ -2274,6 +2274,8 @@ MonoBehaviour:
   equipmentSlotsParent: {fileID: 19685708134289151}
   equipmentSlots:
   - {fileID: 19685708479226916}
+  ResultEquip: {fileID: 0}
+  chage: {fileID: 0}
 --- !u!1 &19685708137223196
 GameObject:
   m_ObjectHideFlags: 0
@@ -7481,20 +7483,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Vital: 100
-  PostEvent: {fileID: 0}
-  btniven: {fileID: 19685709075681942}
+  itemTooltip: {fileID: 0}
   iventorynsy: {fileID: 19685707724712652}
   equipPanel: {fileID: 19685708134289150}
-  craftPanel: {fileID: 19685709004730572}
   draggableitem: {fileID: 19685708358003812}
   Dropitemarea: {fileID: 19685709231101465}
   questionDialog: {fileID: 19685708216449626}
-  CraftSlot: []
-  postpanel: {fileID: 0}
-  Craftmanager: {fileID: 0}
-  Craftmgr: {fileID: 0}
-  Craftindex: 0
-  isAdd: 1
+  resultslot: {fileID: 0}
+  BaseCharcterPanel: {fileID: 0}
+  isUp: 0
+  isDown: 0
   ScriptTxt: {fileID: 0}
 --- !u!114 &19685709075681896
 MonoBehaviour:
@@ -10964,8 +10962,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemNameTex: {fileID: 19685708799930534}
-  ItemSlotTex: {fileID: 19685708848500020}
   ItemStatsTex: {fileID: 19685708451079931}
+  tooltipTransform: {fileID: 0}
 --- !u!1 &19685709807640383
 GameObject:
   m_ObjectHideFlags: 0

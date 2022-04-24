@@ -85,10 +85,6 @@ namespace TT.BuildSystem
         }
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.B))
-            {
-                //UpdateBuildingInfos();
-            }
             if (Input.GetKeyDown(KeyCode.T) && CurBuildMode == BuildMode.DemolishMode)
             {
                 BuildModeOff();

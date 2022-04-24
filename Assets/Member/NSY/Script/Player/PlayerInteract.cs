@@ -124,7 +124,7 @@ namespace NSY.Player
 
                         if(followNpc)
                         {
-                            followNpc.FindLikeHouse();
+                            followNpc.FindLikeHouse(buildAreaObject);
                         }
                         else
                         buildAreaObject.OnBuildMode(buildingButtons, interactUI, transform.parent);

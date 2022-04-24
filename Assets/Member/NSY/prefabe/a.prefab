@@ -578,14 +578,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Vital: 100
-  btniven: {fileID: 0}
+  itemTooltip: {fileID: 0}
   iventorynsy: {fileID: 5396240171014167178}
   equipPanel: {fileID: 5396240170873028280}
-  craftPanel: {fileID: 5396240170134241418}
   draggableitem: {fileID: 5396240171588901922}
   Dropitemarea: {fileID: 5396240169776211551}
   questionDialog: {fileID: 5396240170923051548}
-  CraftSlot: []
+  resultslot: {fileID: 0}
+  BaseCharcterPanel: {fileID: 0}
+  isUp: 0
+  isDown: 0
+  ScriptTxt: {fileID: 0}
 --- !u!114 &5396240169662734894
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -619,9 +622,14 @@ MonoBehaviour:
   iventroy: {fileID: 0}
   ListBG: {fileID: 0}
   ToolBtn: {fileID: 0}
+  postPanel: {fileID: 0}
+  ClosePost: {fileID: 0}
+  PostpanelBG: {fileID: 0}
+  postPenl: {fileID: 0}
   isInven: 0
   Craft: 0
   Recipe: 0
+  Post: 0
 --- !u!1 &5396240169667115826
 GameObject:
   m_ObjectHideFlags: 0
@@ -2451,8 +2459,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6287918f93294e848a219fbd98c1231f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrowParent: {fileID: 0}
-  slotIndex: 0
   RecipelistPanel: {fileID: 0}
   CraftingSlotsParent: {fileID: 5396240170134241419}
   CratfingSlots:
@@ -2463,6 +2469,7 @@ MonoBehaviour:
   ResultSlot: {fileID: 5396240171350146190}
   ivenTory: {fileID: 0}
   NullRecpie: {fileID: 0}
+  inven: {fileID: 0}
 --- !u!1 &5396240170189433293
 GameObject:
   m_ObjectHideFlags: 0
@@ -3300,8 +3307,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemNameTex: {fileID: 5396240169936388320}
-  ItemSlotTex: {fileID: 5396240169889856882}
   ItemStatsTex: {fileID: 5396240171627419325}
+  tooltipTransform: {fileID: 0}
 --- !u!1 &5396240170317513382
 GameObject:
   m_ObjectHideFlags: 0
@@ -4963,6 +4970,8 @@ MonoBehaviour:
   equipmentSlots:
   - {fileID: 5396240171733947490}
   - {fileID: 5396240170359408241}
+  ResultEquip: {fileID: 0}
+  chage: {fileID: 0}
 --- !u!1 &5396240170923051546
 GameObject:
   m_ObjectHideFlags: 0
@@ -5190,6 +5199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd1ed67dfce6ff1428d97e1f214dcd97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  craftslots: {fileID: 0}
   ItemSlots:
   - {fileID: 5396240170394783506}
   - {fileID: 5396240169667115828}
