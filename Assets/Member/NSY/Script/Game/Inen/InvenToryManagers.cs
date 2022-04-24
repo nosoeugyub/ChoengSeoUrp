@@ -16,10 +16,10 @@ namespace NSY.Iven
         public int Vital = 100;
 
         [SerializeField] ItemTooltip itemTooltip;
-        [SerializeField] BtnIven btniven;
+       // [SerializeField] BtnIven btniven;
         [SerializeField] InventoryNSY iventorynsy;
         [SerializeField] EquipPanel equipPanel;
-        [SerializeField] CraftManager craftPanel;
+    //    [SerializeField] CraftManager craftPanel;
         [SerializeField] Image draggableitem;
         [SerializeField] DropItemArea Dropitemarea;
         [SerializeField] QuestionDialog questionDialog;
@@ -28,13 +28,13 @@ namespace NSY.Iven
      
       //레시피
       [Header("레시피 레퍼런스")]
-        private CraftingRecipe carftingRecipe;
-       [SerializeField] CraftSlot[] CraftSlot;
+    //    private CraftingRecipe carftingRecipe;
+      // [SerializeField] CraftSlot[] CraftSlot;
        
 
         //조합
-        [SerializeField] CraftManager Craftmanager;
-        [SerializeField] GameObject Craftmgr;
+     //   [SerializeField] CraftManager Craftmanager;
+     //   [SerializeField] GameObject Craftmgr;
         public int Craftindex = 0;
       public bool isAdd = true;
         private BaseItemSlot dragitemSlot;
@@ -71,23 +71,23 @@ namespace NSY.Iven
             iventorynsy.OnRightClickEvent += InventoryRightClick;
            // iventorynsy.OnLeftClickEvent += InventoryLeftClick;
             equipPanel.OnRightClickEvent += EquipmentPanelRightClick;
-            craftPanel.OnLeftClickEvent += CraftPanelLeftClick;
+         //   craftPanel.OnLeftClickEvent += CraftPanelLeftClick;
             //드래그 시작
             iventorynsy.OnBeginDragEvent += BeginDrag;
             equipPanel.OnBeginDragEvent += BeginDrag;
-            craftPanel.OnBeginDragEvent += BeginDrag;
+          //  craftPanel.OnBeginDragEvent += BeginDrag;
             //드래그 끝
             iventorynsy.OnEndDragEvent += EndDrag;
             equipPanel.OnEndDragEvent += EndDrag;
-            craftPanel.OnEndDragEvent += EndDrag;
+         //   craftPanel.OnEndDragEvent += EndDrag;
             //드래그
             iventorynsy.OnDragEvent += Drag;
             equipPanel.OnDragEvent += Drag;
-            craftPanel.OnDragEvent += Drag;
+         //   craftPanel.OnDragEvent += Drag;
             //드롭
             iventorynsy.OnDropEvent += Drop;
             equipPanel.OnDropEvent += Drop;
-            craftPanel.OnDropEvent += Drop;
+         //   craftPanel.OnDropEvent += Drop;
             Dropitemarea.OnDropEvent += DropItemOutsideUI;
 
 
@@ -150,7 +150,7 @@ namespace NSY.Iven
         public void CloseCraftPanel()
         {
           
-            Craftmanager.RestSlot();
+       //     Craftmanager.RestSlot();
         }
 
 
@@ -165,12 +165,12 @@ namespace NSY.Iven
           
             if (itemslot.item is Item )
             {
-                if (craftPanel.DonthaveCraft())
-                {
-                    craftPanel.CraftAddItem(itemslot.item.GetCopy());
-                   itemslot.Amount--;
-                    UpdateRecipe();
-                }
+              //  if (craftPanel.DonthaveCraft())
+            //    {
+               //     craftPanel.CraftAddItem(itemslot.item.GetCopy());
+              //     itemslot.Amount--;
+              //      UpdateRecipe();
+             //   }
                    
                    
             }
@@ -212,7 +212,7 @@ namespace NSY.Iven
         {//탐색
             Item Recipe;
 
-           Recipe = craftPanel.SetCraftingRecipe();
+        //   Recipe = craftPanel.SetCraftingRecipe();
             
 
 
