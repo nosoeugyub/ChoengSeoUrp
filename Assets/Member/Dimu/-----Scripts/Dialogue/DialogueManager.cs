@@ -231,7 +231,6 @@ namespace DM.Dialog
             {
                 if (!SuperManager.Instance.questmanager.IsQuestAccepted(item.questdata))
                     return false;
-
             }
             foreach (var item in dialogData.dialogTasks.buildBuildings)
             {
@@ -242,7 +241,6 @@ namespace DM.Dialog
                 if (!item.isTalkingOver)
                 {
                     return false;
-
                 }
             }
             foreach (var item in dialogData.dialogTasks.DonthaveToEndDialog)
@@ -250,7 +248,6 @@ namespace DM.Dialog
                 if (item.isTalkingOver)
                 {
                     return false;
-
                 }
             }
             return true;

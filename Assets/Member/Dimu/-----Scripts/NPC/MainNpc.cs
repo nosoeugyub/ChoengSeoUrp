@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using TT.BuildSystem;
 using UnityEngine;
 
-public enum BuildingLike { Like, Unlike, None, }
+public enum BuildingLike { Like, Unlike, Cant, None, }
 
 namespace DM.NPC
 {
@@ -60,6 +60,12 @@ namespace DM.NPC
         }
         public void FindLikeHouse(BuildingBlock buildAreaObject)
         {
+            if (buildAreaObject.HaveLivingChar())
+            {
+                like = BuildingLike.Cant;
+                SettingBuildingTalk();
+                return;
+            }
             float highScore = GetBuildingLikeable(buildAreaObject);
 
             if (50 < highScore)
@@ -71,29 +77,6 @@ namespace DM.NPC
         {
             return GetBuildingLikeable(myHouse);
         }
-        //public BuildingBlock GetHighScoreHouse(BuildingBlock buildAreaObject, ref float highScore) //가장 높은 점수를 가진 건축물
-        //{
-        //    //BuildingBlock buildingBlock = null;
-
-        //    // foreach (BuildingBlock item in buildingManager.GetCompleteBuildings())
-        //    {
-        //        print("item" + buildAreaObject.name);
-        //        if (buildAreaObject.HaveLivingChar()) ;// continue;
-
-        //        float nowScore = GetBuildingLikeable(buildAreaObject);
-        //        print(nowScore);
-
-        //        {
-        //            if (highScore < nowScore)
-        //            {
-        //                highScore = nowScore;
-        //                //buildingBlock = buildAreaObject;
-        //            }
-        //        }
-        //    }
-
-        //    //return buildingBlock;
-        //}
         public void SetMyHouse(BuildingBlock block)
         {
             if (!block)
@@ -106,6 +89,7 @@ namespace DM.NPC
                 myHouse = block;
                 myHouse.SetLivingChar(this);
                 print("Find My House");
+                MoveToMyHome();
             }
             SettingBuildingTalk();
         }
@@ -272,8 +256,8 @@ namespace DM.NPC
         {
             if (myHouse)
             {
-                Vector3 vec = new Vector3(myHouse.transform.position.x, myHouse.transform.position.y, myHouse.transform.position.z);
-                vec += myHouse.transform.forward * -7;//집 앞
+                Vector3 vec = new Vector3(myHouse.transform.position.x-5, transform.transform.position.y, myHouse.transform.position.z + myHouse.transform.forward.z * -7);
+                //vec = new Vector3(myHouse.transform.position.x, myHouse.transform.position.y, myHouse.transform.position.z);// myHouse.transform.forward * -7;//집 앞
                 MoveTo(vec);
             }
             EventManager.EventAction -= EventManager.EventActions[2];
