@@ -23,9 +23,9 @@ namespace NSY.Iven
 
 
         [SerializeField] Transform CraftingSlotsParent;
-        [SerializeField] public List<CraftSlot>  CratfingSlots;
+       public List<CraftSlot>  CratfingSlots;
         
-        [SerializeField]public CraftSlot ResultSlot;
+       public CraftSlot ResultSlot;
       
         Item craftingRecipes;
 
