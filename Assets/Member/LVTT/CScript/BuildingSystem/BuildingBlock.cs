@@ -286,7 +286,7 @@ namespace TT.BuildSystem
 
             SuperManager.Instance.inventoryManager.CheckCanBuildItem(nowBuildingBlock);
             //Inventory UI On + Can't turn Off while in build mode + Press X button, Invoke BuildModeOff method
-            //FindObjectOfType<PopUpManager>().OpenPopup(FindObjectOfType<PopUpManager>()._ivenPopup);
+            FindObjectOfType<PopUpManager>().OpenPopup(FindObjectOfType<PopUpManager>()._ivenPopup);
         }
 
         public void BuildDemolishModeOn(GameObject interactUI)

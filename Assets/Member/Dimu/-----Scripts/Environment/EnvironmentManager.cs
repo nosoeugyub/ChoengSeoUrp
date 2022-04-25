@@ -70,7 +70,7 @@ public class EnvironmentManager : MonoBehaviour
     private void Update()
     {
         //RenderSettings.fogColor = fogColor;
-        //Cleanliness = _cleanliness;
+        Cleanliness = _cleanliness;
         //Cleanliness +=Time.deltaTime*20;
 
         _fogColor = ((goodFogColor - badFogColor) / 100 * Cleanliness) + badFogColor;

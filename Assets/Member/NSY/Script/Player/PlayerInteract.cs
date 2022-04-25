@@ -42,16 +42,20 @@ namespace NSY.Player
         private void Update()
         {
             TestInputs();
-
-            if (!canInteract || IsAnimating())
+            foreach (var item in interacts)
             {
-                foreach (var button in buildingButtons)
-                {
-                    button.gameObject.SetActive(false);
-                }
-                interactUI.SetActive(false);
-                return;
+                print(item.ReturnTF().name);
             }
+
+            //if (!canInteract || IsAnimating())
+            //{
+            //    foreach (var button in buildingButtons)
+            //    {
+            //        button.gameObject.SetActive(false);
+            //    }
+            //    interactUI.SetActive(false);
+            //    return;
+            //}
 
 
 
@@ -158,7 +162,7 @@ namespace NSY.Player
 
             if (Physics.Raycast(ray, out hit, 10000, layerMask))
             {
-                //print(hit.collider.name);
+                print(hit.collider.name);
                 nowInteractable = hit.collider.GetComponent<IInteractble>();
                 if (nowInteractable != null && IsInteracted(nowInteractable))// 클릭한 옵젝이 닿은 옵젝 리스트에 있다면 통과
                 {
@@ -166,6 +170,14 @@ namespace NSY.Player
                     interactUiText2.text = nowInteractable.CanInteract();
                     Vector3 uiPos = new Vector3(nowInteractable.ReturnTF().position.x, nowInteractable.ReturnTF().position.y + 2, nowInteractable.ReturnTF().position.z);
                     interactUI.transform.position = Camera.main.WorldToScreenPoint(uiPos);
+                }
+                else
+                {
+                    interactUI.SetActive(false);
+                     foreach (var button in buildingButtons)
+                     {
+                         button.gameObject.SetActive(false);
+                     }
                 }
             }
             else
@@ -232,7 +244,7 @@ namespace NSY.Player
             IInteractble interactable = other.GetComponent<IInteractble>();
             if (interactable != null)
             {
-                canInteract = true;
+                //canInteract = true;
                 interacts.Add(interactable);
             }
         }
@@ -243,8 +255,9 @@ namespace NSY.Player
             IInteractble interactable = other.GetComponent<IInteractble>();
             if (interactable != null)
             {
-                canInteract = false;
                 interacts.Remove(interactable);
+                //if(interacts.Count <= 1)
+                //canInteract = false;
             }
 
 
