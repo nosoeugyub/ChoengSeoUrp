@@ -198,6 +198,7 @@ GameObject:
   m_Component:
   - component: {fileID: 317872889060726238}
   - component: {fileID: 317872889060726233}
+  - component: {fileID: 845625289}
   m_Layer: 0
   m_Name: BuildManager
   m_TagString: Untagged
@@ -234,22 +235,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4020fbad4516dd14c849bff8229d35aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurBuildMode: 0
-  Player: {fileID: 0}
-  GuideObjOffsetY: 5
-  GuideObjCorner: {fileID: 7958858302155548800}
-  GuideObj: {fileID: 0}
-  HalfGuideObjWidth: 0
-  HalfGuideObjHeight: 0
-  BuildItemDragIndex: 0
-  OnBuildItemDrag: 0
-  curDragObj: {fileID: 0}
-  BuildItemScaleVar: 0.1
-  BuildBlockObjList:
-  - {fileID: 317872889411382967}
-  - {fileID: 317872887972883175}
-  - {fileID: 317872887612667703}
-  nowBuildingBlock: {fileID: 0}
+  buildings: []
+  cancleUi: {fileID: 0}
+--- !u!114 &845625289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 317872889060726239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eeeefcad320544547b95ea2eeefba364, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UIList:
+  - {fileID: 0}
+  - {fileID: 0}
+  CurBuilding: {fileID: 0}
+  SetOffsetPos: {x: -460, y: 0, z: 0}
+  IsBuildMode: 0
 --- !u!1 &317872889411382967
 GameObject:
   m_ObjectHideFlags: 0
@@ -268,7 +273,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &317872889411382966
 Transform:
   m_ObjectHideFlags: 0

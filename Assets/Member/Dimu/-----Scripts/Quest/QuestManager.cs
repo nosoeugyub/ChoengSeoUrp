@@ -95,10 +95,10 @@ namespace DM.Quest
             if (acceptQuests.ContainsKey(questData)) return true;
             else return false;
         }
-        public bool CanAcceptQuest(int questId, int npcID)//퀘스트 수락 가능한지?
-        {
-            return questLists[npcID].questList[questId].CanAccept();
-        }
+        //public bool CanAcceptQuest(int questId, int npcID)//퀘스트 수락 가능한지?
+        //{
+        //    return questLists[npcID].questList[questId].CanAccept();
+        //}
         public bool IsQuestCleared(QuestData questData)//클리어한 퀘스트인지?
         {
             return clearQuestLists.Contains(questData);
@@ -134,20 +134,20 @@ namespace DM.Quest
 
             return canAcceptQuests;
         }
-        public List<QuestData> GetCanAcceptQuestList(int npcID)
-        {
-            List<QuestData> canAcceptQuests = new List<QuestData>();
+        //public List<QuestData> GetCanAcceptQuestList(int npcID)
+        //{
+        //    List<QuestData> canAcceptQuests = new List<QuestData>();
 
-            for (int i = 0; i < questLists[npcID].questList.Length; i++)
-            {
-                if (CanAcceptQuest(i, npcID))
-                {
-                    canAcceptQuests.Add(questLists[npcID].questList[i]);
-                }
-            }
+        //    for (int i = 0; i < questLists[npcID].questList.Length; i++)
+        //    {
+        //        if (CanAcceptQuest(i, npcID))
+        //        {
+        //            canAcceptQuests.Add(questLists[npcID].questList[i]);
+        //        }
+        //    }
 
-            return canAcceptQuests;
-        }
+        //    return canAcceptQuests;
+        //}
     }
     [System.Serializable]
     public class QuestList

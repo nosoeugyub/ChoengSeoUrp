@@ -21,18 +21,61 @@ public class Item : ScriptableObject
     [SerializeField] private int durability;
     [SerializeField] private GameObject itemPrefab;
 
-
+    public Sprite ItemSprite
+    {
+        get
+        {
+            return itemSprite;
+        }
+        set
+        {
+            itemSprite = value;
+        }
+    }
+    public Material ItemMaterial
+    {
+        get
+        {
+            return itemMaterial;
+        }
+        set
+        {
+            itemMaterial = value;
+        }
+    }
+    public GameObject ItemPrefab
+    {
+        get
+        {
+            return itemPrefab;
+        }
+        set
+        {
+            itemPrefab = value;
+        }
+    }
+    public OutItemType OutItemType
+    {
+        get
+        {
+            return outItemType;
+        }
+        set
+        {
+            outItemType = value;
+        }
+    }
     public string ItemName => itemName;
     public string ItemDescription => itemDescription;
     public InItemType InItemType => inItemType;
-    public OutItemType OutItemType => outItemType;
-    public Sprite ItemSprite => itemSprite;
-    public Material ItemMaterial => itemMaterial;
+    //public OutItemType OutItemType => outItemType;
+    //public Sprite ItemSprite => itemSprite;
+    //public Material ItemMaterial => itemMaterial;
     public int CleanAmount => cleanAmount;
     //public ingredientNeeded[] NnecessaryIngredient => necessaryIngredient;
     public DropItem[] DropItems => dropItems;
     public int ChopCount => chopCount;
-    public GameObject ItemPrefab => itemPrefab;
+    //public GameObject ItemPrefab => itemPrefab;
 
     //NSY추가 
     public int MaximumStacks = 1;

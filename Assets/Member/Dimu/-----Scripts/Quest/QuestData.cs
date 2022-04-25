@@ -14,14 +14,14 @@ namespace DM.Quest
         public string description;
         public Sprite[] TaskImg;
         public Task tasks;
-        public Requirements requirements;
+        //public Requirements requirements;
         public Rewards[] rewards;
 
 
         [System.Serializable]
         public class Task
         {
-            [SerializeField] public QuestTask[] builds; //건물 짓기, 철거하기 등
+            [SerializeField] public QuestTask_Build[] builds; //건물 짓기, 철거하기 등
             [SerializeField] public QuestTask[] items; //아이템 얻기 버리기 등
             [SerializeField] public QuestTask[] npcs; //npc 상호작용 등
             [SerializeField] public QuestTask[] locations; //지역 상호작용 등
@@ -38,13 +38,12 @@ namespace DM.Quest
             public int initData;
         }
         [System.Serializable]
-        //public class QuestTask_Build
-        //{
-        //    public int npcType; //특정 NPC의 집
-        //    public BuildingBehaviorEnum behaviorType;//
-        //    public int finishData;
-        //    public int initData;
-        //}
+        public class QuestTask_Build
+        {
+            //public int npcType; //특정 NPC의 집
+            public Condition buildCondition; //특정 NPC의 집
+            public BuildingBehaviorEnum behaviorType;//
+        }
         public class QuestInfo
         {
             public int questId;
@@ -68,10 +67,10 @@ namespace DM.Quest
         public void InitData() //퀘스트에 필요한 항목을 현재 플레이어 데이터 값으로 초기화
         {
 
-            foreach (QuestTask building in tasks.builds)
+            foreach (QuestTask_Build building in tasks.builds)
             {
-                PlayerData.AddDictionary(building.objType, PlayerData.BuildBuildingData, (int)BuildingBehaviorEnum.length);
-                building.initData = PlayerData.BuildBuildingData[building.objType].amounts[building.behaviorType];
+                //PlayerData.AddDictionary(building.objType, PlayerData.BuildBuildingData, (int)BuildingBehaviorEnum.length);
+                //building.initData = PlayerData.BuildBuildingData[building.objType].amounts[building.behaviorType];
             }
 
             foreach (QuestTask item in tasks.items)
@@ -84,15 +83,9 @@ namespace DM.Quest
         {
             if (tasks.builds.Length > 0)
             {
-                foreach (QuestTask building in tasks.builds)
+                foreach (QuestTask_Build building in tasks.builds)
                 {
-                    PlayerData.AddDictionary(building.objType, PlayerData.BuildBuildingData, (int)BuildingBehaviorEnum.length);
-                    Debug.Log(string.Format("fin: {0}, now: {1}", building.finishData, PlayerData.BuildBuildingData[building.objType].amounts[building.behaviorType] - building.initData));
-
-                    if (building.finishData > PlayerData.BuildBuildingData[building.objType].amounts[building.behaviorType] - building.initData)
-                    {
-                        return false;
-                    }
+                    //building.buildCondition
                 }
             }
             if (tasks.items.Length > 0)
@@ -148,27 +141,28 @@ namespace DM.Quest
             Debug.Log("해당 사항 없음");
             return true;
         }
-        public bool CanAccept()
-        {
-            //레벨이 충족되었는가?
-            //if(requirements.requirementLevel > 현재 레벨)
-            //{
-            //   return false;
-            //}
-            //선행퀘스트가 있는가?
-            foreach (QuestData requireQuest in requirements.requireQuests)
-            {
-                //선행퀘스트가 클리어 퀘스트 목록에 하나라도 없으면
-                if (SuperManager.Instance.questmanager.IsQuestCleared(requireQuest))
-                {
-                    Debug.Log("선행퀘스트를 클리어해야 합니다.");
-                    return false;
-                }
-            }
-            Debug.Log("퀘스트를 받을 수 있습니다.");
 
-            return true;
-        }
+        //public bool CanAccept()
+        //{
+        //    //레벨이 충족되었는가?
+        //    //if(requirements.requirementLevel > 현재 레벨)
+        //    //{
+        //    //   return false;
+        //    //}
+        //    //선행퀘스트가 있는가?
+        //    foreach (QuestData requireQuest in requirements.requireQuests)
+        //    {
+        //        //선행퀘스트가 클리어 퀘스트 목록에 하나라도 없으면
+        //        if (SuperManager.Instance.questmanager.IsQuestCleared(requireQuest))
+        //        {
+        //            Debug.Log("선행퀘스트를 클리어해야 합니다.");
+        //            return false;
+        //        }
+        //    }
+        //    Debug.Log("퀘스트를 받을 수 있습니다.");
+
+        //    return true;
+        //}
 
         public int QuestID => questID;
     }
