@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class SunAndMoon : MonoBehaviour
 {
+    //반딧불이
+    [SerializeField] GameObject FireFlyEffect ;
+
     [Range(0.0f, 1.0f)]  [Header("현재 시간 1.0이되면 하루 끝")] public float time; 
     [Header("하루 총시간")] public float fullDayLength;
     [Header("시작 시간")] public float startTime = 0.3f;
@@ -133,12 +136,13 @@ public class SunAndMoon : MonoBehaviour
             Moon.gameObject.SetActive(true);
             Moon_2.gameObject.SetActive(true);
             //밤에서 다시 아침으로
-           
+            FireFlyEffect.SetActive(true);
         }
         else
         {
             Moon.gameObject.SetActive(false);
             Moon_2.gameObject.SetActive(false);
+            FireFlyEffect.SetActive(false) ;
         }
         _NightlerpColor = Color.Lerp(_NightSkyColor, _DaySkyColor, 0.3f);
         _NightlerptorColor = Color.Lerp(_NghitequatorColor, _DayequatorColor, time);
