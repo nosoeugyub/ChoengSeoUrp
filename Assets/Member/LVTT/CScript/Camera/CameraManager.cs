@@ -12,7 +12,8 @@ namespace Game.Cam
         //private GameObject[] MainCamera = null;
         public bool LookIn;
         public bool IsZoom;
-
+        [SerializeField]
+        public GameObject MainCamera;
         [Header("SideCameraList")]
         [SerializeField]
         private GameObject[] SideCamera = null;
@@ -22,6 +23,9 @@ namespace Game.Cam
         [Header("SubCameraList")]
         [SerializeField]
         private GameObject[] virtualCamera = null;
+        [SerializeField]
+        bool IsMoveRight;
+       
         //[SerializeField]
         //private CinemachineVirtualCamera [] virtualCamera = null;
 
@@ -34,9 +38,41 @@ namespace Game.Cam
         }
         void Update()
         {
-            
+            MoveDirectionCheck();
+
+            //if (!MainCamera.activeSelf)
+            //{
+            //    MainCamRotate();
+            //}
+
+
         }
 
+        void MoveDirectionCheck()
+        {
+            float XMovevalue = Input.GetAxisRaw("Horizontal");
+            if(XMovevalue>0)
+            {
+                IsMoveRight = true;
+            }
+
+            if (XMovevalue < 0)
+            {
+                IsMoveRight = false;
+            }
+        }
+
+        public void MainCamRotate()
+        {
+            if(IsMoveRight)
+            {
+                MainCamera.transform.rotation= Quaternion.Euler(10, 0, 0);
+            }
+            else
+            {
+                MainCamera.transform.rotation = Quaternion.Euler(10, 90, 0);
+            }
+        }
         void DeactiveAllSideCam()
         {
             for(int i=0;i<SideCamera.Length;i++)
@@ -74,6 +110,10 @@ namespace Game.Cam
         {
             CinemachineVirtualCamera virtualCam = virtualCamera[camNum].GetComponent<CinemachineVirtualCamera>();
             virtualCam.Follow = newTarget;
+            float TargetYRot=newTarget.rotation.eulerAngles.y;
+          
+            virtualCamera[camNum].transform.rotation = Quaternion.Euler(0,TargetYRot, 0);
+          
         }
         public void ChangeLookTarger(Transform newTarget, int camNum)//배열있는 SubCamera의 LookAt target가 바꿈
         {

@@ -260,6 +260,7 @@ namespace TT.BuildSystem
 
             GetComponent<BoxCollider>().enabled = false;
 
+          
             CamManager.ChangeFollowTarger(gameObject.transform, 1);
             CamManager.ChangeFollowTarger(gameObject.transform, 2);
             CamManager.ChangeFollowTarger(gameObject.transform, 3);
@@ -281,6 +282,8 @@ namespace TT.BuildSystem
             interactUI.SetActive(false);
 
             GetComponent<BoxCollider>().enabled = false;
+
+           
 
             CamManager.ChangeFollowTarger(gameObject.transform, 1);
             CamManager.ChangeFollowTarger(gameObject.transform, 2);

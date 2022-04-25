@@ -16,9 +16,8 @@ namespace Game.Cam
         //private GameObject virtualCamera2;
         [SerializeField]
         private GameObject MainCam;
-        //[SerializeField]
-        //bool FixedZone;
-        bool CanSwitchCam;
+        [SerializeField]
+        bool CornerZone;
         CameraManager CamManager;
         void Start()
         {
@@ -39,7 +38,7 @@ namespace Game.Cam
             //}
 
             
-            
+           
 
         }
 
@@ -60,15 +59,18 @@ namespace Game.Cam
         //    }
 
         //}
+
+     
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))
             {
 
-                //CanSwitchCam = true;
+               
 
                 MainCam.SetActive(false);
                 virtualCamera.SetActive(true);
+                
                 // switch (CamManager.LookIn)
                 //{
                 //    case true:
@@ -82,15 +84,23 @@ namespace Game.Cam
             }
         }
 
+   
         private void OnTriggerStay(Collider other)
         {
             if (other.CompareTag("Player"))
             {
                 MainCam.SetActive(false);
+                
+               
             }
+
+         
+
+
         }
         private void OnTriggerExit(Collider other)
         {
+            
             if (other.CompareTag("Player"))
             {
                 //CanSwitchCam = false;

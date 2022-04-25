@@ -7,23 +7,26 @@ namespace Game.Cam
 {
     public class CameraController : MonoBehaviour
     {
-        [Header("X Rotate Area")]
+        [Header("Corner Rotate Option")]
         public float MinRotX;
         public float MaxRotX; 
-        [Header("X Rotation Option")]
-        public float StartCamXRot;
+        [Header("Rotate Right away Option")]
+        public float CamYRot;
         public float RotateXSpeed;
         public Transform target;
        // public Vector3 offset;
         float XRotangle;
         public bool reverseRotation;
+        [SerializeField] bool RotatewhileMove ;
+        [SerializeField] bool AutoRotateMainCam;
+
 
 
         CameraManager CamManager;
         void Start()
         {
             CamManager = FindObjectOfType<CameraManager>();
-           // SetStartCamPos();
+           SetStartCamPos();
 
         }
 
@@ -38,26 +41,44 @@ namespace Game.Cam
             //{
             //    CameraRotate();
             //}    
-            
-            //플레이어가 X방향 이동할 때 카메라 자동 회전해당 
-            
-                        if (reverseRotation)
-                        {
-                            CameraRotate();
-                        }
 
-                        if (!reverseRotation)
-                        {
-                            CameraCornerRotate();
-                        } 
+            //플레이어가 X방향 이동할 때 카메라 자동 회전해당 
+            if (this.RotatewhileMove)
+            {
+                if (this.reverseRotation)
+                {
+                    //CameraRotate();
+                   
+                }
+
+                if (!this.reverseRotation)
+                {
+                    CameraCornerRotate();
+                }
+            }
+            if (!this.RotatewhileMove)
+            {
+                //if (AutoRotateMainCam)
+                //{
+                //    CamManager.MainCamRotate();
+                //}
+            }
+
+                       
         }
 
         void SetStartCamPos()
         {
-            transform.localRotation = Quaternion.Euler(0, StartCamXRot, 0);
-            XRotangle = StartCamXRot;
+            transform.localRotation = Quaternion.Euler(0, CamYRot, 0);
+            XRotangle = CamYRot;
         }
         
+        void CharfaceCam()
+        {
+            target.localRotation = Quaternion.Euler(10,CamYRot,0);
+        }
+
+
 
         void CameraRotate()
         {
@@ -74,9 +95,13 @@ namespace Game.Cam
             //XRotangle += Input.GetAxis("Mouse X") * RotateXSpeed * -Time.deltaTime;
             XRotangle += Input.GetAxisRaw("Horizontal") * (RotateXSpeed) * -Time.deltaTime;
             transform.localRotation = Quaternion.AngleAxis(XRotangle, Vector3.up);
+            CamManager.MainCamera.transform.localRotation = Quaternion.Euler(10, XRotangle, 0);
+            //CamManager.MainCamera.transform.localRotation = Quaternion.AngleAxis(XRotangle, RotVector);
             XRotangle = Mathf.Clamp(XRotangle, MinRotX, MaxRotX);
 
-            target.localRotation = Quaternion.AngleAxis(XRotangle, Vector3.up);
+          
+          
+           // target.localRotation = Quaternion.AngleAxis(XRotangle, Vector3.up);
         }
         //private void OnTriggerEnter(Collider other)
         //{
