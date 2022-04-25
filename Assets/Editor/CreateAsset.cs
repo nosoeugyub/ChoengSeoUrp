@@ -137,7 +137,7 @@ public class CreateAsset : MonoBehaviour
             variantRootChild.localScale = new Vector3(texture.width * 0.01f, texture.height * 0.01f, 1);
             variantRootChild2.localScale = new Vector3(texture.width * 0.01f, texture.height * 0.01f, 1);
 
-            variantRootChild.position = new Vector3(variantRoot.transform.position.x, texture.height * 0.01f / 2, variantRoot.transform.position.z);
+            variantRootChild.position = new Vector3(variantRoot.transform.position.x, texture.height * 0.01f / 2 + 0.001f, variantRoot.transform.position.z);
             variantRootChild2.position = new Vector3(variantRoot.transform.position.x, texture.height * 0.01f / 2, variantRoot.transform.position.z);
 
             //return;
