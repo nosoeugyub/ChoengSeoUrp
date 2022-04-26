@@ -11,19 +11,28 @@ namespace Game.Cam
         public float MinRotX;
         public float MaxRotX; 
         [Header("X Rotation Option")]
-        public float StartCamXRot;
+        public float CamYRot;
         public float RotateXSpeed;
         public Transform target;
-       // public Vector3 offset;
+        [Header("Corner StartYRot")]
+        public float YRotMoveRight;
+        public float YRotMoveLeft;
+        // public Vector3 offset;
         float XRotangle;
         public bool reverseRotation;
+        [SerializeField] bool RotatewhileMove ;
+        //[SerializeField] bool AutoRotateMainCam;
+
+
 
 
         CameraManager CamManager;
         void Start()
         {
             CamManager = FindObjectOfType<CameraManager>();
-           // SetStartCamPos();
+
+            SetCamRot(CamYRot);
+
 
         }
 
@@ -38,26 +47,41 @@ namespace Game.Cam
             //{
             //    CameraRotate();
             //}    
-            
-            //플레이어가 X방향 이동할 때 카메라 자동 회전해당 
-            
-                        if (reverseRotation)
-                        {
-                            CameraRotate();
-                        }
 
-                        if (!reverseRotation)
-                        {
-                            CameraCornerRotate();
-                        } 
+            if (this.RotatewhileMove)
+            {
+                if (this.reverseRotation)
+                {
+                    //CameraRotate();
+
+                }
+
+                if (!this.reverseRotation)
+                {
+                    CameraCornerRotate();
+                }
+            }
         }
 
-        void SetStartCamPos()
-        {
-            transform.localRotation = Quaternion.Euler(0, StartCamXRot, 0);
-            XRotangle = StartCamXRot;
-        }
+        //void SetStartCamPos()
+        //{
+        //    transform.localRotation = Quaternion.Euler(0, StartCamXRot, 0);
+        //    XRotangle = StartCamXRot;
+        //}
         
+
+        public void SetCamRot(float YRot)
+        {
+            transform.localRotation = Quaternion.Euler(0, YRot, 0);
+            this.XRotangle = YRot;
+        }
+        void CharfaceCam()
+        {
+            target.localRotation = Quaternion.Euler(10,CamYRot,0);
+        }
+
+
+
 
         void CameraRotate()
         {
