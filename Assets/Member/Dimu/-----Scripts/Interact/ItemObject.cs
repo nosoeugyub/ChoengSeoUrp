@@ -35,9 +35,9 @@ public class ItemObject : MonoBehaviour//, IInteractable
     {
         item = item_;
     }
-    public OutItemType GetOutItemType()
+    public InItemType GetInItemType()
     {
-        return item.OutItemType;
+        return item.InItemType;
     }
     public string CanInteract()
     {

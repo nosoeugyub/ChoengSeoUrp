@@ -18,6 +18,8 @@ namespace TT.BuildSystem
         [SerializeField] private bool itemisSet;
         [SerializeField] private bool isFirstDrop;
 
+        [SerializeField] private ParticleSystem particle;
+
         float MaxX;
         float MinX;
         float MaxY;
@@ -131,12 +133,14 @@ namespace TT.BuildSystem
             breakCount--;
             Debug.Log("뚜가" + breakCount);
             //이펙트 등
+            particle.Play();
+
             if (breakCount == 0)
             {
                 Debug.Log("파괴");
-                if (item.OutItemType == OutItemType.BuildWall)
+                if (item.InItemType == InItemType.BuildWall)
                     parentBuildArea.hasWall = false;
-                else if (item.OutItemType == OutItemType.BuildSign)
+                else if (item.InItemType == InItemType.BuildSign)
                     parentBuildArea.hasSign = false;
                 //파괴 임시 처리
                 DropItems();

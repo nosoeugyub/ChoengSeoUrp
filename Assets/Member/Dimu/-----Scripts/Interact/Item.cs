@@ -65,9 +65,20 @@ public class Item : ScriptableObject
             outItemType = value;
         }
     }
+    public InItemType InItemType
+    {
+        get
+        {
+            return inItemType;
+        }
+        set
+        {
+            inItemType = value;
+        }
+    }
     public string ItemName => itemName;
     public string ItemDescription => itemDescription;
-    public InItemType InItemType => inItemType;
+    //public InItemType InItemType => inItemType;
     //public OutItemType OutItemType => outItemType;
     //public Sprite ItemSprite => itemSprite;
     //public Material ItemMaterial => itemMaterial;

@@ -70,8 +70,8 @@ public class Behavior
 }
 public enum OutItemType
 {
-    Talk, Tool, Mineral, Food, Collect,
-    BuildWall, BuildSign, BuildNormal, Etc,
+    Talk, Tool, Mineral, Food, Collect, BuildingItemObj, BuildingItemObj_Mini,
+     Etc,
 }
 public enum InItemType
 {
@@ -95,7 +95,7 @@ public enum InItemType
     //돋보기 아이템
     MagnifyObject = 70000,
     //1차 건축자재
-    
+    BuildWall, BuildSign, BuildNormal,
     //간이 건축물
 }
 //public static Dictionary<int, BuildingBehavior> BuildBuildingData = new Dictionary<int, BuildingBehavior>();//

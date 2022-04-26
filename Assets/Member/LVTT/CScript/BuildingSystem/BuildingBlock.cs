@@ -380,15 +380,15 @@ namespace TT.BuildSystem
 
             if (BuildItemList.Count == 0)
             {
-                if (spawnObj.OutItemType == OutItemType.BuildWall)
+                if (spawnObj.InItemType == InItemType.BuildWall)
                     hasWall = true;
             }
-            else if (spawnObj.OutItemType == OutItemType.BuildWall)
+            else if (spawnObj.InItemType == InItemType.BuildWall)
             {
                 float bigZinWalls = 999999;
                 foreach (GameObject item in BuildItemList)
                 {
-                    if (item.GetComponent<BuildingItemObj>().GetOutItemType() == OutItemType.BuildWall)
+                    if (item.GetComponent<BuildingItemObj>().GetInItemType() == InItemType.BuildWall)
                     {
                         if (bigZinWalls > item.transform.position.z)
                         {
@@ -398,7 +398,7 @@ namespace TT.BuildSystem
                         item.transform.position
                          = new Vector3(item.transform.position.x, item.transform.position.y, item.transform.position.z + BuildItemGap / 2);
                     }
-                    if (item.GetComponent<BuildingItemObj>().GetOutItemType() == OutItemType.BuildNormal)
+                    if (item.GetComponent<BuildingItemObj>().GetInItemType() == InItemType.BuildNormal)
                     {
                         item.transform.position
                          = new Vector3(item.transform.position.x, item.transform.position.y, item.transform.position.z - BuildItemGap / 2);
@@ -410,7 +410,7 @@ namespace TT.BuildSystem
             }
             else
             {
-                if (spawnObj.OutItemType == OutItemType.BuildWall) hasDoor = true;
+                if (spawnObj.InItemType == InItemType.BuildWall) hasDoor = true;
 
                 foreach (GameObject item in BuildItemList)
                 {
@@ -432,13 +432,13 @@ namespace TT.BuildSystem
             int frontCount = 0;
             foreach (GameObject item in BuildItemList)
             {
-                if (curInteractObj.GetOutItemType() == OutItemType.BuildWall)//현재오브젝트가 벽일때
+                if (curInteractObj.GetInItemType() == InItemType.BuildWall)//현재오브젝트가 벽일때
                 {
-                    if (item.GetComponent<BuildingItemObj>().GetOutItemType() != OutItemType.BuildWall) continue;//선택한게 벽이 아니라면
+                    if (item.GetComponent<BuildingItemObj>().GetInItemType() != InItemType.BuildWall) continue;//선택한게 벽이 아니라면
                 }
-                else if (curInteractObj.GetOutItemType() == OutItemType.BuildNormal)//현재오브젝트가 벽일때
+                else if (curInteractObj.GetInItemType() == InItemType.BuildNormal)//현재오브젝트가 벽일때
                 {
-                    if (item.GetComponent<BuildingItemObj>().GetOutItemType() != OutItemType.BuildNormal) continue;//선택한게 일반이 아니라면
+                    if (item.GetComponent<BuildingItemObj>().GetInItemType() != InItemType.BuildNormal) continue;//선택한게 일반이 아니라면
                 }
 
                 float bigZinWalls = curInteractObj.transform.position.z;//클릭한 오브젝트의 z값

@@ -135,6 +135,14 @@ namespace NSY.Iven
                 BuildingBlock.nowBuildingBlock.BtnSpawnHouseBuildItem(obj.item);
                 obj.Amount--;
             }
+            else
+            {
+                Debug.Log("BuildingLeftClick");
+                if(obj.item.OutItemType == OutItemType.BuildingItemObj_Mini)
+                {
+
+                }
+            }
         }
 
         //더블클릭

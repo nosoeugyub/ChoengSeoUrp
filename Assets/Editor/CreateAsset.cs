@@ -199,7 +199,7 @@ public class CreateAsset : MonoBehaviour
             so.ItemPrefab = testg;
 
             so.MaximumStacks = 5;
-            so.OutItemType = OutItemType.BuildNormal;
+            so.InItemType = InItemType.BuildNormal;
 
             AssetDatabase.CreateAsset(so, string.Format("{0}.asset", filename));
 

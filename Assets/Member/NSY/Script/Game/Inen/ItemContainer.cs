@@ -85,7 +85,7 @@ namespace NSY.Iven
 
                 if (!buildingBlock.hasWall)// 벽이 없다면 벽만 설치 가능하도록
                 {
-                    if (itemSlot.item.OutItemType == OutItemType.BuildWall)//벽이면
+                    if (itemSlot.item.InItemType == InItemType.BuildWall)//벽이면
                     {
                         itemSlot.Interactble(true);
                     }
@@ -107,7 +107,7 @@ namespace NSY.Iven
                 //}
                 else
                 {
-                    if (itemSlot.item.OutItemType == OutItemType.BuildSign || (itemSlot.item.OutItemType != OutItemType.BuildWall&& itemSlot.item.OutItemType != OutItemType.BuildNormal))//벽이면
+                    if (itemSlot.item.InItemType == InItemType.BuildSign || (itemSlot.item.InItemType != InItemType.BuildWall&& itemSlot.item.InItemType != InItemType.BuildNormal))//벽이면
                     {
                         itemSlot.Interactble(false);
                     }
