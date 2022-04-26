@@ -27,28 +27,7 @@ namespace Game.Cam
             {
                 //Debug.Log("TouchWestArea");
                 CamManager.ChangeCamRotToArea(this.Area);
-                //foreach (GameObject cam in CamManager.CornerCamera)
-                //    switch (this.Area)
-                //{
-                //    case MapArea.South:
-                //        {
-                //            CamManager.ChangeCamRotToArea(MapArea.South);
-                //            break;
-                //        }
-                //    case MapArea.East:
-                //        {
-                //            break;
-                //        }
-                //    case MapArea.North:
-                //        {
-                //            break;
-                //        }
-                //    case MapArea.West:
-                //        {
-                //            break;
-                //        }
-
-                //}
+                
 
             }
         }

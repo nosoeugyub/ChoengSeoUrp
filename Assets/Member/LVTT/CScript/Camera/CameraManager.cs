@@ -46,7 +46,7 @@ namespace Game.Cam
 
         public void ChangeCamRotToArea(MapArea Area)
         {
-            Debug.Log("TouchWestArea");
+            //Debug.Log("TouchWestArea");
             List<CameraController> CornerCamControl = new List<CameraController>();
             foreach (GameObject cam in CornerCamera)
             {

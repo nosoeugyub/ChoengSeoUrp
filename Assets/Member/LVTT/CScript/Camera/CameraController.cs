@@ -98,9 +98,9 @@ namespace Game.Cam
             //XRotangle += Input.GetAxis("Mouse X") * RotateXSpeed * -Time.deltaTime;
             XRotangle += Input.GetAxisRaw("Horizontal") * (RotateXSpeed) * -Time.deltaTime;
             transform.localRotation = Quaternion.AngleAxis(XRotangle, Vector3.up);
+            CamManager.MainCamera.transform.localRotation = Quaternion.Euler(10, XRotangle, 0);
             XRotangle = Mathf.Clamp(XRotangle, MinRotX, MaxRotX);
-
-            target.localRotation = Quaternion.AngleAxis(XRotangle, Vector3.up);
+            // target.localRotation = Quaternion.AngleAxis(XRotangle, Vector3.up);
         }
         //private void OnTriggerEnter(Collider other)
         //{
