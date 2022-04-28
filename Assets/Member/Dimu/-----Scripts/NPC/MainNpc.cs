@@ -58,7 +58,7 @@ namespace DM.NPC
                 MoveTo(vector3);
             }
         }
-        public void FindLikeHouse(BuildingBlock buildAreaObject)
+        public void FindLikeHouse(BuildingBlock buildAreaObject) //해당 건축물에 입주 가능한지.
         {
             if (buildAreaObject.HaveLivingChar())
             {
@@ -66,14 +66,14 @@ namespace DM.NPC
                 SettingBuildingTalk();
                 return;
             }
-            float highScore = GetBuildingLikeable(buildAreaObject);
+            bool canGet = GetBuildingLikeable(buildAreaObject); //점수 
 
-            if (50 < highScore)
+            if (canGet)
                 SetMyHouse(buildAreaObject);
             else
                 SetMyHouse(null);
         }
-        public float GetMyHouseScore()
+        public bool CanMyHouse()
         {
             return GetBuildingLikeable(myHouse);
         }
@@ -93,22 +93,25 @@ namespace DM.NPC
             }
             SettingBuildingTalk();
         }
-        public float GetBuildingLikeable(BuildingBlock buildingBlock)
+        public bool GetBuildingLikeable(BuildingBlock buildingBlock) //bool형
         {
-            float score = 0;
             List<BuildingItemObj> buildItemList = buildingBlock.GetBuildItemList();
+
+            int[] ints = new int[wantToBuildCondition.Length];
 
             foreach (BuildingItemObj buildItem in buildItemList)//건축자재 하나씩
             {
-                foreach (Condition preferCondition in wantToBuildCondition)
+
+                for (int i = 0; i < wantToBuildCondition.Length; i++)
                 {
                     bool canContinue = false;
 
-                    foreach (var kind in preferCondition.buildItemKind)
+                    foreach (var preferkind in wantToBuildCondition[i].buildItemKind)
                     {
-                        if (kind == buildItem.GetAttribute().buildItemKind)
+                        //희망 조건에 있는 종류와 설치된 자재와 같은지
+                        if (preferkind == buildItem.GetAttribute().buildItemKind)
                         {
-                            print(kind.ToString());
+                            print(preferkind.ToString());
                             canContinue = true;
                             break;
                         }
@@ -116,7 +119,7 @@ namespace DM.NPC
 
                     if (!canContinue) break;
 
-                    foreach (var kind in preferCondition.buildHPos)
+                    foreach (var kind in wantToBuildCondition[i].buildHPos)
                     {
                         canContinue = false;
                         if (kind == buildItem.GetAttribute().buildHPos)
@@ -129,7 +132,7 @@ namespace DM.NPC
 
                     if (!canContinue) break;
 
-                    foreach (var kind in preferCondition.buildVPos)
+                    foreach (var kind in wantToBuildCondition[i].buildVPos)
                     {
                         canContinue = false;
                         if (kind == buildItem.GetAttribute().buildVPos)
@@ -142,7 +145,7 @@ namespace DM.NPC
 
                     if (!canContinue) break;
 
-                    foreach (var kind in preferCondition.buildSize)
+                    foreach (var kind in wantToBuildCondition[i].buildSize)
                     {
                         canContinue = false;
                         if (kind == buildItem.GetAttribute().buildSize)
@@ -155,7 +158,7 @@ namespace DM.NPC
 
                     if (!canContinue) break;
 
-                    foreach (var kind in preferCondition.buildColor)
+                    foreach (var kind in wantToBuildCondition[i].buildColor)
                     {
                         canContinue = false;
                         if (kind == buildItem.GetAttribute().buildColor)
@@ -168,7 +171,7 @@ namespace DM.NPC
 
                     if (!canContinue) break;
 
-                    foreach (var kind in preferCondition.buildShape)
+                    foreach (var kind in wantToBuildCondition[i].buildShape)
                     {
                         canContinue = false;
                         if (kind == buildItem.GetAttribute().buildShape)
@@ -181,7 +184,7 @@ namespace DM.NPC
 
                     if (!canContinue) break;
 
-                    foreach (var kind in preferCondition.buildThema)
+                    foreach (var kind in wantToBuildCondition[i].buildThema)
                     {
                         canContinue = false;
                         foreach (var thema in buildItem.GetAttribute().buildThema)
@@ -198,20 +201,37 @@ namespace DM.NPC
 
                     if (!canContinue) break;
 
-                    //해당 건축자재가 설치된 개수 가져오기
-                    foreach (var kind in preferCondition.buildCount)
-                    {
-                        canContinue = false;
-                        //개수와 비교하기
-                    }
+                    ////해당 건축자재가 설치된 개수 가져오기
+                    //foreach (var kind in wantToBuildCondition[i].buildCount)
+                    //{
+                    //    canContinue = false;
+                    //    //개수와 비교하기
 
-                    if (!canContinue) break;
+                    //}
 
-                    score += preferCondition.likeable;
+                    //if (!canContinue) break;
+
+                    ints[i]++;
+                    //score += preferCondition.likeable;
                 }
             }
-            print(score);
-            return score;
+
+            for (int i = 0; i < wantToBuildCondition.Length; i++)
+            {
+                if(wantToBuildCondition[i].buildCount > ints[i]) 
+                {
+                    return false; // false
+                }
+            }
+
+            for (int i = 0; i < wantToBuildCondition.Length; i++)
+            {
+                if (wantToBuildCondition[i].buildPerfactCount > ints[i])
+                {
+                    return false; // false
+                }
+            }
+            return true;
         }
 
         public string CanInteract()
@@ -256,7 +276,7 @@ namespace DM.NPC
         {
             if (myHouse)
             {
-                Vector3 vec = new Vector3(myHouse.transform.position.x-5, transform.transform.position.y, myHouse.transform.position.z + myHouse.transform.forward.z * -7);
+                Vector3 vec = new Vector3(myHouse.transform.position.x - 5, transform.transform.position.y, myHouse.transform.position.z + myHouse.transform.forward.z * -7);
                 //vec = new Vector3(myHouse.transform.position.x, myHouse.transform.position.y, myHouse.transform.position.z);// myHouse.transform.forward * -7;//집 앞
                 MoveTo(vec);
             }

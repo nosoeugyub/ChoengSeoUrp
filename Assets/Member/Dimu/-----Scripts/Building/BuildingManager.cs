@@ -58,20 +58,26 @@ public enum BuildVPos { Top, Mid, Bottom, Length }
 public enum BuildHPos { Left, Right, Mid, Length }
 
 public enum BuildSize { Small, Normal, Big, Length }
-public enum BuildColor { None, Red, Orange, Yellow, Green, Blue, Navy, Pupple, White, Black, Length }
-public enum BuildThema { Wood, Stone, Brick, StainedGlass, Concrete, Emptylot, Herringbone, Plain, Steelplate, Stripe, Tile, Length }
+public enum BuildColor { None, Red, Orange, Yellow, Green, Blue, Mint, Pupple, White, Black, Length }
+public enum BuildMaterial//타이어
+{
+    Wood, Stone, Paper, Iron, Gold, Silver, Rubber, Wax, Sand, Grass, Honey, Stick,
+    Brick, StainedGlass, Herringbone, Plain, Slate, Truss, Kiwa, Thatched, Length
+}
 public enum BuildShape
 {
     //Wall
-    Square, Square_Width, Square_Height, Pentagon,
+    Square_Wall, Square_Width_Wall, Square_Height_Wall, Pentagon_Wall, Circle_Wall, Triangle_Wall,
     //Door
-    Circle_Door = 1000,
+    Circle_Door = 1000, Square_Door,
     //Roof
-    Laugh = 2000, Triangle,
+    Laugh_Roof = 2000, Triangle_Roof, Square_Roof, Line_Roof,
     //Window
-    Circle_Window = 3000, Square_Window,
+    Circle_Window = 3000, CircleTwo_Window, Square_Window, SquareTwo_Window, Rectangle_Width_Window, Rectangle_Height_Window,
+    Triangle_Window, TriangleTwo_Window, Half_Circle_Window, Half_CircleTwo_Window, Ellipse_Window, Sunting_Window,
     //Etc
-    Flower = 4000, Clock, Light, Ribbon, Box,
+    Flower = 4000, Fence, PostBox, Fountain, Flowerpot, Balloon, Bell, Alphabet, Clock, Light, Ribbon, GiftBox,
+    Terrace, DreamCatcher, Moss, Vine, Stairs, Button, EggPlate, Snack, MiniBulb,
 
 
     Length
@@ -82,17 +88,18 @@ public enum BuildItemKind { Wall, Roof, Door, Window, Signboard, Etc, Length }
 [System.Serializable]
 public class Condition
 {
-    public List< BuildItemKind> buildItemKind;
+    public List<BuildItemKind> buildItemKind;
 
     public BuildVPos[] buildVPos;
     public BuildHPos[] buildHPos;
     public BuildSize[] buildSize;
 
     public BuildColor[] buildColor;
-    public BuildThema[] buildThema;
+    public BuildMaterial[] buildThema;
     public BuildShape[] buildShape;
 
-    public BuildCount[] buildCount;
+    public int buildCount;
+    public int buildPerfactCount;
 
     public float likeable;
 }
@@ -107,5 +114,5 @@ public class BuildObjAttribute
 
     public BuildColor buildColor;
     public BuildShape buildShape;
-    public BuildThema[] buildThema;
+    public BuildMaterial[] buildThema;
 }
