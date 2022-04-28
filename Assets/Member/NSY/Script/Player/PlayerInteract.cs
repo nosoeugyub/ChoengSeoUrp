@@ -174,6 +174,8 @@ namespace NSY.Player
                 else
                 {
                     interactUI.SetActive(false);
+
+                    //분리 필요
                      foreach (var button in buildingButtons)
                      {
                          button.gameObject.SetActive(false);

@@ -229,33 +229,8 @@ namespace TT.BuildSystem
                     ResetButtonEvents(buttons);
                     //2. break Building
                 });
-                buttons[2].onClick.AddListener(() =>
-                {
-                    //3. Finish Building
-                });
                 this.buildButtonFuncAdded = true;
             }
-            //}
-            //else if (buildState == BuildState.Finish)
-            //{
-            //    if (!this.buildButtonFuncAdded)
-            //    {
-            //        buttons[0].onClick.AddListener(() =>
-            //        {
-            //            //BuildBuilding();
-            //            print("1. Repair Building");
-            //            //1. Repair Building
-            //        });
-            //        buttons[1].onClick.AddListener(() =>
-            //        {
-            //            //DemolishBuidling();
-            //            print("2. break Building");
-            //            //2. break Building
-            //        });
-            //        buttons[2].gameObject.SetActive(false);
-            //        this.buildButtonFuncAdded = true;
-            //    }
-            //}
         }
 
         private static void ResetButtonEvents(UnityEngine.UI.Button[] buttons)
