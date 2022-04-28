@@ -17,6 +17,7 @@ namespace NSY.Iven
         ItemTooltip tooltip;
         //슬롯갯수
         public Text amountText;
+      
 
         protected bool isPointerOver;
 
@@ -94,7 +95,7 @@ namespace NSY.Iven
 
             }
         }
-
+       
         // 이미지 텍스트
         protected virtual void OnValidate() //이미지가 비어있으면 찾아서 등록
         {
