@@ -129,7 +129,7 @@ public class SunAndMoon : MonoBehaviour
             Debug.Log("낮임");
         }
 
-
+       
         if (sun.gameObject.activeSelf == false)
         {
             RenderSettings.skybox = NightSkyBox;
