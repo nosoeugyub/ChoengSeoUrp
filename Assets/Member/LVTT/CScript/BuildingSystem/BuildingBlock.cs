@@ -235,7 +235,8 @@ namespace DM.Building
         public void BuildModeOn()
         {
             buildButtonFuncAdded = false;
-            //interactUI.SetActive(false);
+            TutoUI(true);
+
 
             nowBuildingBlock.GetComponent<BoxCollider>().enabled = false;
 
@@ -278,8 +279,16 @@ namespace DM.Building
             CamManager.DeactiveSubCamera(1);
             CamManager.DeactiveSubCamera(2);
             CamManager.DeactiveSubCamera(3);
+            TutoUI(false);
 
             nowBuildingBlock.GetComponent<BoxCollider>().enabled = true;
+
+            if (curInteractObj)
+            {
+                curInteractObj.ItemisSet = true;
+                curInteractObj.IsFirstDrop = false;
+            }
+            CancleUI(false);
             SetBuildMode(BuildMode.None);
 
             if (IsCompleteBuilding())
@@ -299,6 +308,10 @@ namespace DM.Building
         public void CancleUI(bool on)
         {
             buildManager.CancleUIState(on);
+        }
+        public void TutoUI(bool on)
+        {
+            buildManager.TutoUIState(on);
         }
         public bool IsCompleteBuilding()//벽과 문이 있다면 건설 완료 처리
         {

@@ -52,7 +52,7 @@ namespace DM.NPC
         }
         public bool IsHaveHouse()
         {
-            return myHouse!=null;
+            return myHouse;
         }
         public void FollowPlayer()
         {
@@ -78,7 +78,7 @@ namespace DM.NPC
             else
                 SetMyHouse(null);
         }
-        public bool CanMyHouse()
+        public bool CanGetMyHouse()
         {
             return GetBuildingLikeable(myHouse);
         }
@@ -100,6 +100,7 @@ namespace DM.NPC
         }
         public bool GetBuildingLikeable(BuildingBlock buildingBlock) //bool형
         {
+            if (!buildingBlock) return false;
             List<BuildingItemObj> buildItemList = buildingBlock.GetBuildItemList();
 
             int[] ints = new int[wantToBuildCondition.Length];

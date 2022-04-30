@@ -110,7 +110,6 @@ public class EnvironmentManager : MonoBehaviour
         Cleanliness += cleanAmount;
         if (cleanLevels[cleanLevel] <= Cleanliness)//0레벨기준 10 >= 현재클린 10
         {
-            ++cleanLevel;
             ComeToPort();
         }
     }
@@ -127,6 +126,7 @@ public class EnvironmentManager : MonoBehaviour
         npcTfs[randnum].Npctf.gameObject.SetActive(true);
         npcTfs[randnum].Npctf.position = PortPos.position;
         npcTfs[randnum].IsField = true;
+        ++cleanLevel;
     }
     private void LeaveFromPort(int num)
     {
