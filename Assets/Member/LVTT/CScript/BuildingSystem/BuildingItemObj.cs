@@ -82,6 +82,7 @@ namespace DM.Building
         private void ItemMove()
         {
             var movePos = Input.mousePosition;
+            print(Camera.main.WorldToScreenPoint(transform.position).z);
             movePos.z = Camera.main.WorldToScreenPoint(transform.position).z;
             movePos = Camera.main.ScreenToWorldPoint(movePos);
             HouseBuildAreaCal();

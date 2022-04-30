@@ -17,7 +17,7 @@ public class Billboard : MonoBehaviour
     }
     void LateUpdate()
     {
-       
+        MainCam = Camera.main;
         if (!useStaticLookCam)
         {
             cameraDir = MainCam.transform.forward;
