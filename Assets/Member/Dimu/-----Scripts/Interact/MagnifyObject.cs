@@ -36,4 +36,8 @@ public class MagnifyObject : ItemObject, ISpeechBubbleCollectable
         //확률로 레시피 획득 구문
         return true;
     }
+
+    public void EndInteract()
+    {
+    }
 }

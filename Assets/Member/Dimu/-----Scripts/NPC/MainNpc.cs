@@ -1,4 +1,5 @@
-﻿using DM.Dialog;
+﻿using DM.Building;
+using DM.Dialog;
 using NSY.Manager;
 using NSY.Player;
 using System.Collections.Generic;
@@ -48,6 +49,10 @@ namespace DM.NPC
                 player.SetNpc(this);
                 EventManager.EventAction -= EventManager.EventActions[4];
             }
+        }
+        public bool IsHaveHouse()
+        {
+            return myHouse!=null;
         }
         public void FollowPlayer()
         {
@@ -282,6 +287,7 @@ namespace DM.NPC
             }
             EventManager.EventAction -= EventManager.EventActions[2];
         }
+        //텔포기능 추가
         public void MoveToHisHome()
         {
             if (GetCharacterType() != Character.Walrus) return;
@@ -290,6 +296,10 @@ namespace DM.NPC
             vec += buildingBlock.transform.forward * -9;//집 앞
             MoveTo(vec);
             EventManager.EventAction -= EventManager.EventActions[3];
+        }
+
+        public void EndInteract()
+        {
         }
     }
     [System.Serializable]

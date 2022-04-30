@@ -116,7 +116,7 @@ public class MineObject : ItemObject, IMineable, IDropable
             NSY.Player.PlayerInput.OnPressFDown = null;
             DropItems();
             PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.MineItem, PlayerData.ItemData, ((int)ItemBehaviorEnum.length));
-            FindObjectOfType<EnvironmentManager>().Cleanliness += item.CleanAmount;
+            FindObjectOfType<EnvironmentManager>().ChangeCleanliness(item.CleanAmount);
 
             if (!haveTruckState || mineState == MineState.Trunk)
             {
@@ -151,6 +151,9 @@ public class MineObject : ItemObject, IMineable, IDropable
         }
     }
 
+    public void EndInteract()
+    {
+    }
 }
 [System.Serializable]
 public class DropItem

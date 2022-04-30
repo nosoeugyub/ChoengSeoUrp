@@ -1,13 +1,15 @@
-﻿using DM.NPC;
+﻿using DM.Building;
+using DM.NPC;
 using Game.Cam;
 using NSY.Manager;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public enum BuildState { None, NotFinish, Finish }
 public enum BuildMode { None, BuildHouseMode, DemolishMode }
 
-namespace TT.BuildSystem
+namespace DM.Building
 {
     public class BuildingBlock : MonoBehaviour, IInteractble
     {
@@ -42,11 +44,11 @@ namespace TT.BuildSystem
         //BuildItemObj
         [HideInInspector]
         public BuildingItemObj curInteractObj;
-        private float BuildItemScaleVar = 0.1f;
+        private float BuildItemScaleVar = 0.01f;
+        private float BuildItemRotationVar = 1;
 
         private float BuildItemGap = 0.0002f;
 
-        Transform player;
 
         RaycastHit hit;
         Ray ray;
@@ -138,7 +140,10 @@ namespace TT.BuildSystem
                 }
 
                 if (curInteractObj && !curInteractObj.ItemisSet)
+                {
                     ScaleBuildItem();
+                    RotateBuildItem();
+                }
             }
             else if (CurBuildMode == BuildMode.DemolishMode)
             {
@@ -199,36 +204,21 @@ namespace TT.BuildSystem
             }
         }
 
-        public void OnBuildMode(UnityEngine.UI.Button[] buttons, GameObject interactUI, Transform playerTf)
+        public void OnBuildMode()
         {
 
+            buildManager.BuildingInteractButtonOnOff(true);
 
-            foreach (var button in buttons)
-            {
-                button.gameObject.SetActive(true);
-            }
             nowBuildingBlock = this;
-            player = playerTf;
             Interact();
-            //Set Event Methods
-            //if (buildState == BuildState.NotFinish)
-            //{
+
+            Action buildModeOn = BuildModeOn;
+            Action buildDemolishModeOn = BuildDemolishModeOn;
+
             if (!this.buildButtonFuncAdded)
             {
-                buttons[0].onClick.AddListener(() =>
-                {
-                    BuildModeOn(interactUI);
-                    player.gameObject.SetActive(false);
-                    ResetButtonEvents(buttons);
-                    //1. Build Building
-                });
-                buttons[1].onClick.AddListener(() =>
-                {
-                    BuildDemolishModeOn(interactUI);
-                    player.gameObject.SetActive(false);
-                    ResetButtonEvents(buttons);
-                    //2. break Building
-                });
+                buildManager.SetBuildButtonEvents(buildModeOn, buildDemolishModeOn);
+
                 this.buildButtonFuncAdded = true;
             }
         }
@@ -242,12 +232,12 @@ namespace TT.BuildSystem
             }
         }
 
-        public void BuildModeOn(GameObject interactUI)
+        public void BuildModeOn()
         {
             buildButtonFuncAdded = false;
-            interactUI.SetActive(false);
+            //interactUI.SetActive(false);
 
-            GetComponent<BoxCollider>().enabled = false;
+            nowBuildingBlock.GetComponent<BoxCollider>().enabled = false;
 
             CamManager.ChangeFollowTarger(gameObject.transform, 1);
             CamManager.ChangeFollowTarger(gameObject.transform, 2);
@@ -264,12 +254,12 @@ namespace TT.BuildSystem
             FindObjectOfType<PopUpManager>().OpenPopup(FindObjectOfType<PopUpManager>()._ivenPopup);
         }
 
-        public void BuildDemolishModeOn(GameObject interactUI)
+        public void BuildDemolishModeOn()
         {
             buildButtonFuncAdded = false;
-            interactUI.SetActive(false);
+            //interactUI.SetActive(false);
 
-            GetComponent<BoxCollider>().enabled = false;
+            nowBuildingBlock.GetComponent<BoxCollider>().enabled = false;
 
             CamManager.ChangeFollowTarger(gameObject.transform, 1);
             CamManager.ChangeFollowTarger(gameObject.transform, 2);
@@ -289,7 +279,7 @@ namespace TT.BuildSystem
             CamManager.DeactiveSubCamera(2);
             CamManager.DeactiveSubCamera(3);
 
-            GetComponent<BoxCollider>().enabled = true;
+            nowBuildingBlock.GetComponent<BoxCollider>().enabled = true;
             SetBuildMode(BuildMode.None);
 
             if (IsCompleteBuilding())
@@ -300,7 +290,7 @@ namespace TT.BuildSystem
             else
                 SetBuildingState(BuildState.NotFinish);
 
-            player.gameObject.SetActive(true);
+            buildManager.PlayerOnOff(true);
             isBuildMode = false;
             isBuildDemolishMode = false;
             SuperManager.Instance.inventoryManager.CheckCanBuildItem(null);
@@ -331,19 +321,30 @@ namespace TT.BuildSystem
         }
         void ScaleBuildItem()
         {
-            if (Input.GetAxis("Mouse ScrollWheel") > 0)
+            if (Input.GetKey(buildManager.scaleUpKey))
             {
                 Vector3 var = curInteractObj.transform.localScale;
                 var.x += BuildItemScaleVar;
                 var.y += BuildItemScaleVar;
                 curInteractObj.SetBuildItemScale(var);
             }
-            else if (Input.GetAxis("Mouse ScrollWheel") < 0)
+            else if (Input.GetKey(buildManager.scaleDownKey))
             {
                 Vector3 var = curInteractObj.transform.localScale;
                 var.x -= BuildItemScaleVar;
                 var.y -= BuildItemScaleVar;
                 curInteractObj.SetBuildItemScale(var);
+            }
+        }
+        void RotateBuildItem()
+        {
+            if (Input.GetKey(buildManager.rotateLeftKey))
+            {
+                curInteractObj.SetBuildItemRotation(+BuildItemRotationVar);
+            }
+            else if (Input.GetKey(buildManager.rotateRightKey))
+            {
+                curInteractObj.SetBuildItemRotation(-BuildItemRotationVar);
             }
         }
         /// <summary>
@@ -400,6 +401,8 @@ namespace TT.BuildSystem
             newPrefab.GetComponent<BuildingItemObj>().SetParentBuildArea(nowBuildingBlock);
             newPrefab.name = spawnObj.name;
             AddBuildItemToList(newPrefab);
+            FindObjectOfType<EnvironmentManager>().ChangeCleanliness(newPrefab.GetComponent<BuildingItemObj>().GetItem().CleanAmount);
+
         }
 
         void BuildingItemObjAndSorting()
@@ -446,6 +449,11 @@ namespace TT.BuildSystem
         public void SetBuildingState(BuildState buildstate)
         {
             buildState = buildstate;
+        }
+
+        public void EndInteract()
+        {
+           buildManager.BuildingInteractButtonOnOff(false);
         }
     }
 }

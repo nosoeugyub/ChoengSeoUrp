@@ -1,7 +1,7 @@
 ﻿using NSY.Manager;
 using UnityEngine;
 
-namespace TT.BuildSystem
+namespace DM.Building
 {
 
     public class BuildingItemObj : ItemObject, IBuildable, IDropable
@@ -67,7 +67,7 @@ namespace TT.BuildSystem
             {
                 ItemMove();
             }
-            if(IsFirstDrop)
+            if (IsFirstDrop)
             {
                 print("isFirstDrop");
 
@@ -75,6 +75,9 @@ namespace TT.BuildSystem
                 {
                     BackToInventory();
                 }
+
+
+
             }
         }
         /// <summary>
@@ -123,7 +126,11 @@ namespace TT.BuildSystem
             if (scalenum.y <= MinScale) scalenum.y = MinScale;
             transform.localScale = scalenum;
         }
-
+        public void SetBuildItemRotation(float scalenum)
+        {
+            transform.Rotate(new Vector3(0, 0, scalenum));
+            print(transform.rotation);
+        }
         public string CanInteract()
         {
             return "BuildItemObj";
@@ -145,6 +152,7 @@ namespace TT.BuildSystem
                 //파괴 임시 처리
                 DropItems();
                 parentBuildArea.RemoveBuildItemToList(gameObject);
+                FindObjectOfType<EnvironmentManager>().ChangeCleanliness(-GetItem().CleanAmount);
                 Destroy(gameObject);
             }
         }
@@ -205,6 +213,10 @@ namespace TT.BuildSystem
 
             print(attributes.buildSize.ToString());
 
+        }
+
+        public void EndInteract()
+        {
         }
     }
 

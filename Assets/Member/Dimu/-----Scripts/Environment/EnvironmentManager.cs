@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 
@@ -6,6 +7,13 @@ using UnityEngine.UI;
 public class EnvironmentManager : MonoBehaviour
 {
     float cleanliness; //0~100
+
+    [SerializeField] List<int> cleanLevels;
+    int cleanLevel;
+    public NPCField[] npcTfs;
+    public Transform PortPos;
+
+    [SerializeField] bool canChange;
     [Range(0, 100)]
     [SerializeField] float _cleanliness; //0~100
     [SerializeField] Image cleanGageImage;
@@ -70,7 +78,8 @@ public class EnvironmentManager : MonoBehaviour
     private void Update()
     {
         //RenderSettings.fogColor = fogColor;
-        Cleanliness = _cleanliness;
+        if (canChange)
+            Cleanliness = _cleanliness;
         //Cleanliness +=Time.deltaTime*20;
 
         _fogColor = ((goodFogColor - badFogColor) / 100 * Cleanliness) + badFogColor;
@@ -95,8 +104,41 @@ public class EnvironmentManager : MonoBehaviour
 
         UnityEngine.Rendering.Universal.ColorAdjustments colorAdjustments;
     }
-    public void SetFog()
+
+    public void ChangeCleanliness(int cleanAmount)
     {
-        RenderSettings.fogColor = badFogColor;
+        Cleanliness += cleanAmount;
+        if (cleanLevels[cleanLevel] <= Cleanliness)//0레벨기준 10 >= 현재클린 10
+        {
+            ++cleanLevel;
+            ComeToPort();
+        }
     }
+
+    private void ComeToPort()
+    {
+        int randnum = UnityEngine.Random.Range(0, npcTfs.Length);
+
+        while (npcTfs[randnum].IsField == true)
+        {
+            randnum = UnityEngine.Random.Range(0, npcTfs.Length);
+        }
+        print(randnum);
+        npcTfs[randnum].Npctf.gameObject.SetActive(true);
+        npcTfs[randnum].Npctf.position = PortPos.position;
+        npcTfs[randnum].IsField = true;
+    }
+    private void LeaveFromPort(int num)
+    {
+        npcTfs[num].IsField = false;
+
+    }
+}
+[System.Serializable]
+public class NPCField
+{
+    private bool isField;
+    [SerializeField] private Transform npctf;
+    public bool IsField { get { return isField; } set { isField = value; } }
+    public Transform Npctf { get { return npctf; } set { npctf = value; } }
 }
