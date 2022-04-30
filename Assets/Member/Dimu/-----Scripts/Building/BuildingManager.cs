@@ -19,6 +19,8 @@ namespace DM.Building
         [SerializeField] Transform player;
 
         [SerializeField] GameObject cancleUi;
+        [SerializeField] GameObject buildingTutorialImg;
+
         public void AddBuilding(BuildingBlock buildingBlock)
         {
             if (!buildings.Contains(buildingBlock))
@@ -96,6 +98,10 @@ namespace DM.Building
         public void CancleUIState(bool isOn)
         {
             cancleUi.SetActive(isOn);
+        }
+        public void TutoUIState(bool isOn)
+        {
+            buildingTutorialImg.SetActive(isOn);
         }
     }
 }

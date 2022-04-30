@@ -75,9 +75,6 @@ namespace DM.Building
                 {
                     BackToInventory();
                 }
-
-
-
             }
         }
         /// <summary>
