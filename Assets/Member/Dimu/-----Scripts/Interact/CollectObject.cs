@@ -62,4 +62,8 @@ public class CollectObject : ItemObject, ICollectable
             canMove = false;
         }
     }
+
+    public void EndInteract()
+    {
+    }
 }

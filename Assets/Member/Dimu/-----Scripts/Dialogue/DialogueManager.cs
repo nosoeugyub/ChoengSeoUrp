@@ -18,7 +18,7 @@ namespace DM.Dialog
         int dialogLength;
         int nowSentenceIdx;
         public Transform partnerTf;
-        public Transform[] npcTfs;
+        public Transform[] npcTalkBubbleTfs;
 
         [Header("UI")]
         //public GameObject dialogUI;//대화창 조상
@@ -41,18 +41,16 @@ namespace DM.Dialog
         float times = 0;
 
         QuestManager questManager;
-        BuildingManager buildingManager;
 
         private void Awake()
         {
             questManager = SuperManager.Instance.questmanager;
-            buildingManager = FindObjectOfType<BuildingManager>();
         }
         void Start()
         {
             EventManager.EventActions[1] = Test;
 
-            FirstShowDialog(npcTfs[(int)Character.CheongSeo].parent.GetComponent<MainNpc>(), null, false, -1);
+            FirstShowDialog(npcTalkBubbleTfs[(int)Character.CheongSeo].parent.GetComponent<MainNpc>(), null, false, -1);
         }
         public MainNpc GetNowNpc()
         {
@@ -207,12 +205,14 @@ namespace DM.Dialog
         {
             if (dialogData.haveToHaveAndLikeHouse)//입주 필수 인가?
             {
-                if (buildingManager.GetNPCsHouse(dialogData.subjectCharacterID) == null) return false;//그렇다면 이 npc는 집을 갖고 있는가?
+                if (nowNpc.IsHaveHouse()) return false;//그렇다면 이 npc는 집을 갖고 있는가?
+                //if (buildingManager.GetNPCsHouse(dialogData.subjectCharacterID) == null) return false;//그렇다면 이 npc는 집을 갖고 있는가?
                 if (nowNpc.CanMyHouse()) return false;//그렇다면 집에 입주 가능 조건 충족했는가?
             }
             if (dialogData.dontHaveToHaveAndLikeHouse)//미입주 필수 인가?
             {
-                if (buildingManager.GetNPCsHouse(dialogData.subjectCharacterID) != null) return false;// 집이 없는가 ?
+                if (nowNpc.IsHaveHouse()) return false;// 집이 없는가 ?
+                //if (buildingManager.GetNPCsHouse(dialogData.subjectCharacterID) != null) return false;// 집이 없는가 ?
             }
 
 
@@ -274,10 +274,10 @@ namespace DM.Dialog
                 nowOnFab.GetComponent<TextBox>().DestroyTextBox();
             }
 
-            nowOnFab = Instantiate(textboxFab, npcTfs[sentences[nowSentenceIdx].characterId]);
+            nowOnFab = Instantiate(textboxFab, npcTalkBubbleTfs[sentences[nowSentenceIdx].characterId]);
             nextButton = nowOnFab.GetComponent<TextBox>().GetNextButton;
 
-            nowOnFab.GetComponent<TextBox>().SetTextbox(sentences[nowSentenceIdx].sentence, npcTfs[sentences[nowSentenceIdx].characterId], sentences[nowSentenceIdx].textboxType);
+            nowOnFab.GetComponent<TextBox>().SetTextbox(sentences[nowSentenceIdx].sentence, npcTalkBubbleTfs[sentences[nowSentenceIdx].characterId], sentences[nowSentenceIdx].textboxType);
             nameText.text = questDialogLists[sentences[nowSentenceIdx++].characterId].charName;
 
 

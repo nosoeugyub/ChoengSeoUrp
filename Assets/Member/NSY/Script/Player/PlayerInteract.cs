@@ -1,17 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using DM.Building;
+using DM.NPC;
+using System.Collections.Generic;
+using TMPro;
 using TT.BuildSystem;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
-using DM.NPC;
 
 namespace NSY.Player
 {
     public class PlayerInteract : MonoBehaviour
     {
         [SerializeField] List<IInteractble> interacts = new List<IInteractble>();//상호작용 범위 내 있는 IInteractable오브젝트 리스트
- 
-        [SerializeField] Button[] buildingButtons;
+
         public GameObject interactUI;//띄울 UI
         //public Text interactUiText;//띄울 UI
         public TextMeshProUGUI interactUiText2;
@@ -42,10 +41,10 @@ namespace NSY.Player
         private void Update()
         {
             TestInputs();
-            foreach (var item in interacts)
-            {
-                print(item.ReturnTF().name);
-            }
+            //foreach (var item in interacts)
+            //{
+            //    print(item.ReturnTF().name);
+            //}
 
             //if (!canInteract || IsAnimating())
             //{
@@ -126,12 +125,15 @@ namespace NSY.Player
                     {
                         isAnimating = false;
 
-                        if(followNpc)
+                        if (followNpc)
                         {
                             followNpc.FindLikeHouse(buildAreaObject);
                         }
                         else
-                        buildAreaObject.OnBuildMode(buildingButtons, interactUI, transform.parent);
+                        {
+                            print(buildAreaObject.name);
+                            buildAreaObject.OnBuildMode();
+                        }
                         return;
                     }
                     IBuildable buildMat = interactable.ReturnTF().GetComponent<IBuildable>();
@@ -167,6 +169,8 @@ namespace NSY.Player
                 if (nowInteractable != null && IsInteracted(nowInteractable))// 클릭한 옵젝이 닿은 옵젝 리스트에 있다면 통과
                 {
                     interactUI.SetActive(true);
+                    Debug.Log("interactUI.SetActive(true)");
+
                     interactUiText2.text = nowInteractable.CanInteract();
                     Vector3 uiPos = new Vector3(nowInteractable.ReturnTF().position.x, nowInteractable.ReturnTF().position.y + 2, nowInteractable.ReturnTF().position.z);
                     interactUI.transform.position = Camera.main.WorldToScreenPoint(uiPos);
@@ -176,10 +180,10 @@ namespace NSY.Player
                     interactUI.SetActive(false);
 
                     //분리 필요
-                     foreach (var button in buildingButtons)
-                     {
-                         button.gameObject.SetActive(false);
-                     }
+                    //foreach (var button in buildingButtons)
+                    //{
+                    //    button.gameObject.SetActive(false);
+                    //}
                 }
             }
             else
@@ -258,8 +262,7 @@ namespace NSY.Player
             if (interactable != null)
             {
                 interacts.Remove(interactable);
-                //if(interacts.Count <= 1)
-                //canInteract = false;
+                interactable.EndInteract();
             }
 
 

@@ -10,6 +10,11 @@ public class MailBox : ItemObject, IEventable
     {
         return "편지 받기";
     }
+
+    public void EndInteract()
+    {
+    }
+
     public void EtcEvent(Item handItem)
     {
         GetMessage();

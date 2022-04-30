@@ -40,5 +40,9 @@ public class TrashCan : ItemObject, IEventable
         }
     }
 
+    public void EndInteract()
+    {
+    }
+
     //메서드 자유 추가
 }
