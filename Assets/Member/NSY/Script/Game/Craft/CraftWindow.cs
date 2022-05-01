@@ -1,54 +1,75 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using DM.Inven;
+
+
 
 namespace NSY.Iven
 {
 	public class CraftWindow : MonoBehaviour
 	{
-		[Header("References")]
-		[SerializeField] CraftManager recipeUIPrefab;
-		[SerializeField] RectTransform recipeUIParent;
-		[SerializeField] List<CraftManager> craftingRecipeUIs;
+        public Sprite reimage;
+        public Text RecipeCurrentAmount;
+        public Text RecipeHaverAmount;
 
-		[Header("Public Variables")]
-		public ItemContainer ItemContainer;
-		public List<CraftingRecipe> CraftingRecipes;
+        private void OnValidate()
+        {
+            Item = _item;
+            RecipeAmount = _RecipeAmount;
+            HaveAmount = _haveAmount;
+        }
 
-		
-		private void OnValidate()
-		{
-			//Init();
-		}
 
-		private void Start()
-		{
-		//	Init();
+        public Item _item;
+		public Item Item
+        {
+            get
+            {
+                return _item;
+            }
+            set
+            {
+                _item = value;
+                reimage = _item.ItemSprite;
+            }
+        }
 
-		}
+      
+        public int _RecipeAmount;
+        public int RecipeAmount
+        {
+            get
+            {
+                return _RecipeAmount;
+            }
+            set
+            {
+                _RecipeAmount = value;
+                   RecipeCurrentAmount.text = _RecipeAmount.ToString();
+            }
+        }
+       // [SerializeField]
+        public int _haveAmount;
+        public int HaveAmount
+        {
+            get
+            {
+                return _haveAmount;
+            }
+            set
+            {
+                _haveAmount = value;
+                RecipeHaverAmount.text = _haveAmount.ToString();
+            }
+        }
 
-		private void Init()
-		{
-		//	recipeUIParent.GetComponentsInChildren<CraftManager>(includeInactive: true, result: craftingRecipeUIs);
-			UpdateCraftingRecipes();
-		}
-
-		public void UpdateCraftingRecipes()
-		{
-			for (int i = 0; i < CraftingRecipes.Count; i++)
-			{
-				
-
-				craftingRecipeUIs[i].itemContainer = ItemContainer;
-				//craftingRecipeUIs[i].CraftingRecipe = CraftingRecipes[i];
-			}
-
-			for (int i = CraftingRecipes.Count; i < craftingRecipeUIs.Count; i++)
-			{
-				//craftingRecipeUIs[i].CraftingRecipe = null;
-			}
-		}
-	}
+       public void MiuseBtn()
+        {
+            _haveAmount -= 1;
+        }
+    }
 
 }
 

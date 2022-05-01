@@ -4,55 +4,83 @@ using UnityEngine;
 using DM.Inven;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System;
 
 namespace NSY.Iven
 {
-    public class CraftSlot : ItemSlot
+    public class CraftSlot : MonoBehaviour , IPointerDownHandler
     {
-      
-        Item Recipe;
-        Image ResultSprite;
-
-       public int index;
+        [Header("재료 갯수")]
        
 
-        public InItemType itemtype;
-
-        protected override void OnValidate()
-        {
-            base.OnValidate();
-            ResultSprite = gameObject.GetComponent<Image>();
-            gameObject.name = itemtype.ToString() + " Slot";
-           
-        }
-        public override bool CanReceiveItem(Item item)
-        {
-            if (item == null)
-            {
-                return true;
-            }
-            Item craftitem = item ;
-            return craftitem != null && craftitem.InItemType == itemtype;
-        }
-
-
-       public void UpdateResult(Item MadeRecipe)
-        {
-            Recipe = MadeRecipe;
-
-            if (Recipe = null)
-            {
-                ResultSprite.enabled = false;
-
-            }
-            else if(Recipe != null)
-            {
-                ResultSprite.enabled = true ;
-               
-            }
+        [Header("현재 흭득한 갯수")]
+        public Text[] ReCipeamountText;
         
+
+        [Header("결과 이미지")]
+        public Image ResultSlotListImage;
+        public Image ResultSlotImage;
+
+        [Header("재료 이미지")]
+        public Image[] RecipeSlot;
+       
+        [Header("결과 이름")]
+        public Text RecipeName;
+
+
+       
+        public Text reamountText;
+        public Text HaveAmount;
+
+
+        public event Action<CraftSlot> OnLeftClickEventss;
+         [SerializeField]
+        private Item _recipeItem;
+
+
+        public Item RecipeItem
+        {
+            get
+            {
+                return _recipeItem;
+            }
+            set
+            {
+                _recipeItem = value;
+                
+
+            }
         }
 
+
+      
+       
+
+
+        private void OnValidate()
+        {
+            RecipeItem = _recipeItem;
+        }
+
+
+        void Update()
+        {
+
+        }
+       
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+         
+            if (eventData != null && eventData.button == PointerEventData.InputButton.Left)
+            {
+                if (OnLeftClickEventss != null)
+                {
+                 
+                    OnLeftClickEventss(this);
+                }
+            }
+        }
     }
 
 }

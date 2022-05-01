@@ -1291,7 +1291,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd1ed67dfce6ff1428d97e1f214dcd97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  craftslots: {fileID: 6796473155176345329}
   ItemSlots:
   - {fileID: 6796473155974799721}
   - {fileID: 6796473155381335375}
@@ -1308,6 +1307,7 @@ MonoBehaviour:
   - {fileID: 6796473154543342365}
   - {fileID: 6796473155894441235}
   - {fileID: 6796473155567272140}
+  Craftslot: []
   startingitems:
   - {fileID: 11400000, guid: bf2e58205a4b1f345bbff4b9bf8eca3a, type: 2}
   - {fileID: 11400000, guid: c977c9f102d087e409cf45b7c9776feb, type: 2}
@@ -1497,12 +1497,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dfe93994b2b59e418c3a1d54251a0f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemImage: {fileID: 6796473154053194529}
-  tooltip: {fileID: 6796473156001652693}
-  amountText: {fileID: 6796473154097782989}
-  _item: {fileID: 0}
-  index: 1
-  itemtype: 0
+  ReCipeamountText: []
+  ResultSlotListImage: {fileID: 6796473154053194529}
+  ResultSlotImage: {fileID: 6796473154053194529}
+  RecipeSlot: []
+  RecipeName: {fileID: 0}
+  reamountText: {fileID: 0}
+  HaveAmount: {fileID: 0}
+  _recipeItem: {fileID: 0}
 --- !u!114 &6796473154053194531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1620,12 +1622,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dfe93994b2b59e418c3a1d54251a0f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemImage: {fileID: 6796473154054023845}
-  tooltip: {fileID: 6796473156001652693}
-  amountText: {fileID: 6796473154210753543}
-  _item: {fileID: 0}
-  index: 2
-  itemtype: 0
+  ReCipeamountText: []
+  ResultSlotListImage: {fileID: 6796473154054023845}
+  ResultSlotImage: {fileID: 6796473154054023845}
+  RecipeSlot: []
+  RecipeName: {fileID: 0}
+  reamountText: {fileID: 0}
+  HaveAmount: {fileID: 0}
+  _recipeItem: {fileID: 0}
 --- !u!114 &6796473154054023847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1821,12 +1825,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dfe93994b2b59e418c3a1d54251a0f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemImage: {fileID: 6796473154153082572}
-  tooltip: {fileID: 6796473156001652693}
-  amountText: {fileID: 6796473154945822181}
-  _item: {fileID: 0}
-  index: 0
-  itemtype: 0
+  ReCipeamountText: []
+  ResultSlotListImage: {fileID: 6796473154153082572}
+  ResultSlotImage: {fileID: 6796473154153082572}
+  RecipeSlot: []
+  RecipeName: {fileID: 0}
+  reamountText: {fileID: 0}
+  HaveAmount: {fileID: 0}
+  _recipeItem: {fileID: 0}
 --- !u!114 &6796473154153082562
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4417,7 +4423,7 @@ MonoBehaviour:
   - {fileID: 6796473154373598829}
   - {fileID: 6796473154220806938}
   - {fileID: 6796473155734090318}
-  _RecipeItem: {fileID: 11400000, guid: 1160ea679dfed884a86da4e6662b0c6c, type: 2}
+  _RecipeItem: {fileID: 0}
   _RecipeAmount: 0
 --- !u!1 &6796473154515497600
 GameObject:
@@ -6237,7 +6243,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 407901e7977e6d44fb9d0c107659163e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b161b2086b9219544a2be1571e8787bd, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6601,12 +6607,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dfe93994b2b59e418c3a1d54251a0f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemImage: {fileID: 6796473154916881098}
-  tooltip: {fileID: 6796473156001652693}
-  amountText: {fileID: 6796473154434475443}
-  _item: {fileID: 0}
-  index: 3
-  itemtype: 0
+  ReCipeamountText: []
+  ResultSlotListImage: {fileID: 6796473154916881098}
+  ResultSlotImage: {fileID: 6796473154916881098}
+  RecipeSlot: []
+  RecipeName: {fileID: 0}
+  reamountText: {fileID: 0}
+  HaveAmount: {fileID: 0}
+  _recipeItem: {fileID: 0}
 --- !u!1 &6796473154936084523
 GameObject:
   m_ObjectHideFlags: 0
@@ -8175,16 +8183,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6287918f93294e848a219fbd98c1231f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RecipelistPanel: {fileID: 6796473155355296085}
-  CraftingSlotsParent: {fileID: 6796473155176345328}
-  CratfingSlots:
-  - {fileID: 6796473154153082563}
-  - {fileID: 6796473154053194528}
-  - {fileID: 6796473154054023844}
-  ResultSlot: {fileID: 6796473154916881141}
-  ivenTory: {fileID: 6796473154034611441}
-  NullRecpie: {fileID: 11400000, guid: 893584c5e1b53a241b44f4177b7d7592, type: 2}
-  inven: {fileID: 6796473154034611441}
 --- !u!1 &6796473155184829315
 GameObject:
   m_ObjectHideFlags: 0
@@ -9010,11 +9008,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6d3e06416c08d964891db98811159d69, type: 2}
   - {fileID: 11400000, guid: 4a4fa3951a7c31a4f9037fba06a73aaa, type: 2}
   NoneRecipeList:
-  - {fileID: 11400000, guid: d116b4386d5259441b9ecaf63b936907, type: 2}
+  - {fileID: 0}
   - {fileID: 11400000, guid: 4f38e51d9e174fe4abdd1d4917068fac, type: 2}
-  - {fileID: 11400000, guid: 8d9dc745746b8ea45a01157921a76a7f, type: 2}
-  - {fileID: 11400000, guid: 1160ea679dfed884a86da4e6662b0c6c, type: 2}
-  testitem: {fileID: 11400000, guid: 1160ea679dfed884a86da4e6662b0c6c, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  testitem: {fileID: 0}
   Recipeslot:
   - {fileID: 6796473154541165621}
   - {fileID: 6796473154379692427}

@@ -55,6 +55,9 @@ namespace NSY.Iven
         private void Awake()
         {
            ScriptTxt.text = "1";
+            //조합
+            
+
 
             //툴립
             iventorynsy.OnPointerEnterEvent += ShowToolTip;
@@ -218,7 +221,7 @@ namespace NSY.Iven
         }
         void UpdateRecipe()
         {//탐색
-            Item Recipe;
+          //  Item Recipe;
 
           //  Recipe = craftPanel.SetCraftingRecipe();
             

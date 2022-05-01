@@ -113,8 +113,9 @@ public class Item : ScriptableObject
     [Header("레시피")]
     [SerializeField]
     public RecipeIteminfo[] recipe;
-    [SerializeField]
-    public int RecipeCode;//레시피 아이템의 코드
+  
+   
+  
 }
 [System.Serializable]
 public class RecipeIteminfo
