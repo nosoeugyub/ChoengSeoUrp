@@ -20,6 +20,8 @@ public class NewInventUIManager : MonoBehaviour
     {
         Craftlist.OnLeftClickEventss += ShowRecipe;
     }
+
+  
     private void OnDisable()
     {
         Craftlist.OnLeftClickEventss -= ShowRecipe;
@@ -30,9 +32,9 @@ public class NewInventUIManager : MonoBehaviour
         obj.ResultSlotImage.sprite = obj.RecipeItem.ItemSprite;
         obj.RecipeName.text = obj.RecipeItem.ItemName;
 
-     
 
-        for (int i = 0; i < Craftlist.craftwind.Length ; i++)
+
+        for (int i = 0; i < Craftlist.craftwind.Length; i++)
         {
             Craftlist.craftwind[i]._item = obj.RecipeItem.recipe[i].item;
             Craftlist.craftwind[i].reimage = obj.RecipeItem.recipe[i].item.ItemSprite;
@@ -60,8 +62,6 @@ public class NewInventUIManager : MonoBehaviour
     public void FixedUpdate()
     {
 
-
-
         for (int i = 0; i < Craftlist.craftwind.Length; i++)
         {
 
@@ -82,7 +82,7 @@ public class NewInventUIManager : MonoBehaviour
 
     public void BtnSolutino( )
     {
-        addresults();
+       
         for (int i = 0; i < Craftlist.craftwind.Length; i++)
         {
             for (int j = 0; j < iven.ItemSlots.Count; j++)
@@ -91,6 +91,7 @@ public class NewInventUIManager : MonoBehaviour
                 {
                     if (Craftlist.craftwind[i]._item == iven.ItemSlots[j].item)
                     {
+                        addresults();
                         iven.ItemSlots[j].Amount -= Craftlist.craftwind[i].RecipeAmount;
                         Craftlist.craftwind[i].HaveAmount = iven.ItemSlots[j].Amount;  
                         Craftlist.craftwind[i].RecipeHaverAmount.text = iven.ItemSlots[j].Amount.ToString(); ;
@@ -109,12 +110,15 @@ public class NewInventUIManager : MonoBehaviour
     {
         foreach (CraftSlot item in Craftlist.Craftslot)
         {
-            if (item.ResultSlotListImage.sprite == item.ResultSlotImage.sprite)
-            {
-               
-                iven.AddItem(item.RecipeItem);
-               
-            }
+           
+                if (item.ResultSlotListImage.sprite == item.ResultSlotImage.sprite)
+                {
+
+                    iven.AddItem(item.RecipeItem);
+
+                }
+            
+            
             
         }
        
