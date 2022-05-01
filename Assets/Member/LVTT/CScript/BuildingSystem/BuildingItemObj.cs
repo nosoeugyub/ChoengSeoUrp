@@ -80,22 +80,35 @@ namespace DM.Building
         /// <summary>
         /////////////////////////Update
         private void ItemMove()
-        {
+        {  
             var movePos = Input.mousePosition;
-            print(Camera.main.WorldToScreenPoint(transform.position).z);
-            movePos.z = Camera.main.WorldToScreenPoint(transform.position).z;
+            movePos.z = parentBuildArea.DistanceFromHouseBuildTo(Camera.main.transform.position);
             movePos = Camera.main.ScreenToWorldPoint(movePos);
+             
             HouseBuildAreaCal();
-            if (movePos.x >= MaxX) movePos.x = MaxX;
-            if (movePos.x <= MinX) movePos.x = MinX;
+
             if (movePos.y >= MaxY) movePos.y = MaxY;
             if (movePos.y <= MinY) movePos.y = MinY;
 
-            transform.position = movePos;
+            if(parentBuildArea.DistanceFromHouseBuildTo(movePos) > MaxX)
+            {
+                print(" 여어 멈추라고");
+                movePos.x = transform.position.x;
+                movePos.z = transform.position.z;
+            }
+
+            
+            //if (movePos.x >= MaxX) movePos.x = MaxX;
+            //if (movePos.x <= MinX) movePos.x = MinX;
+
+
+                //print(parentBuildArea.DistanceFromHouseBuildTo(movePos));
+                transform.position = movePos;
         }
         void HouseBuildAreaCal()
         {
-            MaxX = ObjOriginPos.x + parentBuildArea.areaWidthsize / 2 - (quad.transform.localScale.x * transform.localScale.x) / 2;
+            //원래 위치 + 건축영역가로 반 길이 - 스케일 길이 
+            MaxX = /*ObjOriginPos.x + */ parentBuildArea.areaWidthsize / 2 - (quad.transform.localScale.x * transform.localScale.x) / 2;
             MinX = ObjOriginPos.x - parentBuildArea.areaWidthsize / 2 + (quad.transform.localScale.x * transform.localScale.x) / 2;
             MaxY = ObjOriginPos.y + parentBuildArea.areaHeightsize / 2 - quad.transform.localScale.y * transform.localScale.y / 2;
             MinY = ObjOriginPos.y - parentBuildArea.areaHeightsize / 2 + quad.transform.localScale.y * transform.localScale.y / 2;

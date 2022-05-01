@@ -1,5 +1,4 @@
-﻿using DM.Building;
-using DM.NPC;
+﻿using DM.NPC;
 using Game.Cam;
 using NSY.Manager;
 using System;
@@ -411,6 +410,7 @@ namespace DM.Building
             //print(spawnPos.z);
             CancleUI(true);
             GameObject newPrefab = Instantiate(spawnObj.ItemPrefab, spawnPos, Quaternion.identity, HouseBuild.transform);
+            newPrefab.transform.localRotation = Quaternion.Euler(0, 0, 0);
             newPrefab.GetComponent<BuildingItemObj>().SetParentBuildArea(nowBuildingBlock);
             newPrefab.name = spawnObj.name;
             AddBuildItemToList(newPrefab);
@@ -463,10 +463,16 @@ namespace DM.Building
         {
             buildState = buildstate;
         }
+        public float DistanceFromHouseBuildTo(Vector3 movePos)
+        {
+            Vector3 VecY = new Vector3(HouseBuild.transform.position.x, 0, HouseBuild.transform.position.z);
+            Vector3 moveposY = new Vector3(movePos.x, 0, movePos.z);
+            return Vector3.Distance(moveposY, VecY);
 
+        }
         public void EndInteract()
         {
-           buildManager.BuildingInteractButtonOnOff(false);
+            buildManager.BuildingInteractButtonOnOff(false);
         }
     }
 }
