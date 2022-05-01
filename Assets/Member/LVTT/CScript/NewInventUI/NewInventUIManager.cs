@@ -13,7 +13,7 @@ public class NewInventUIManager : MonoBehaviour
 
     [SerializeField] CraftList Craftlist;
     [SerializeField] InventoryNSY iven;
-
+    private int Sum = 0;
 
     // Start is called before the first frame update
     void Awake()
@@ -24,7 +24,7 @@ public class NewInventUIManager : MonoBehaviour
     {
         Craftlist.OnLeftClickEventss -= ShowRecipe;
     }
-    private void ShowRecipe(CraftSlot obj)
+    public void ShowRecipe(CraftSlot obj)
     {
         Debug.Log("나오셈");
         obj.ResultSlotImage.sprite = obj.RecipeItem.ItemSprite;
@@ -44,7 +44,10 @@ public class NewInventUIManager : MonoBehaviour
             Craftlist.craftwind[i].RecipeAmount = obj.RecipeItem.recipe[i].count;
             Craftlist.craftwind[i].RecipeCurrentAmount.text = obj.RecipeItem.recipe[i].count.ToString();
             //현재  가지고 있는 갯수
-           
+            foreach (ItemSlot item in iven.ItemSlots)
+            {
+                Craftlist.craftwind[i].HaveAmount = item.Amount;
+            }
 
             if (obj.RecipeItem.recipe[i].item == null)
             {
@@ -54,10 +57,14 @@ public class NewInventUIManager : MonoBehaviour
 
 
     }
-    public void Update()
+    public void FixedUpdate()
     {
+
+
+
         for (int i = 0; i < Craftlist.craftwind.Length; i++)
         {
+
             for (int j = 0; j < iven.ItemSlots.Count; j++)
             {
                 if (Craftlist.craftwind[i]._item == iven.ItemSlots[j].item)
@@ -76,7 +83,26 @@ public class NewInventUIManager : MonoBehaviour
     public void BtnSolutino( )
     {
         addresults();
-        removeitem();
+        for (int i = 0; i < Craftlist.craftwind.Length; i++)
+        {
+            for (int j = 0; j < iven.ItemSlots.Count; j++)
+            {
+                if (Craftlist.craftwind[i].RecipeAmount % Craftlist.craftwind[i].HaveAmount == Sum)
+                {
+                    if (Craftlist.craftwind[i]._item == iven.ItemSlots[j].item)
+                    {
+                        iven.ItemSlots[j].Amount -= Craftlist.craftwind[i].RecipeAmount;
+                        Craftlist.craftwind[i].HaveAmount = iven.ItemSlots[j].Amount;
+                        Craftlist.craftwind[i].RecipeHaverAmount.text = iven.ItemSlots[j].Amount.ToString(); ;
+
+                    }
+                }
+                else
+                    return;
+               
+
+            }
+        }
     }
 
     private void addresults()
@@ -87,17 +113,16 @@ public class NewInventUIManager : MonoBehaviour
             {
                
                 iven.AddItem(item.RecipeItem);
-                
+               
             }
             
         }
+       
+         
+        
     }
 
-    private void removeitem()
-    {
-
-    }
-
+ 
     public void BtnTabSelect(int TabNum)
     {
         for (int i=0;i<TabUI.Length;i++)

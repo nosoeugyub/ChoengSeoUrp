@@ -14,6 +14,13 @@ namespace NSY.Iven
         public Text RecipeCurrentAmount;
         public Text RecipeHaverAmount;
 
+        private void OnValidate()
+        {
+            Item = _item;
+            RecipeAmount = _RecipeAmount;
+            HaveAmount = _haveAmount;
+        }
+
 
         public Item _item;
 		public Item Item
@@ -29,7 +36,8 @@ namespace NSY.Iven
             }
         }
 
-        private int _RecipeAmount;
+      
+        public int _RecipeAmount;
         public int RecipeAmount
         {
             get
@@ -42,8 +50,8 @@ namespace NSY.Iven
                    RecipeCurrentAmount.text = _RecipeAmount.ToString();
             }
         }
-
-        private int _haveAmount;
+       // [SerializeField]
+        public int _haveAmount;
         public int HaveAmount
         {
             get
@@ -55,6 +63,11 @@ namespace NSY.Iven
                 _haveAmount = value;
                 RecipeHaverAmount.text = _haveAmount.ToString();
             }
+        }
+
+       public void MiuseBtn()
+        {
+            _haveAmount -= 1;
         }
     }
 
