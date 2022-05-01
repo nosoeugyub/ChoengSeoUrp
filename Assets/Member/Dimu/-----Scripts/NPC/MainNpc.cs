@@ -17,12 +17,14 @@ namespace DM.NPC
         public Condition[] wantToBuildCondition;
         BuildingManager buildingManager;
         DialogueManager dialogueManager;
+        EnvironmentManager environmentManager;
         public PlayerInteract player;
         [SerializeField] float speed;
         [SerializeField] bool isFollowPlayer;
         BuildingLike like = BuildingLike.None;
         private void Awake()
         {
+            environmentManager = FindObjectOfType<EnvironmentManager>();
             buildingManager = FindObjectOfType<BuildingManager>();
             dialogueManager = FindObjectOfType<DialogueManager>();
             player = FindObjectOfType<PlayerInteract>();
@@ -93,6 +95,7 @@ namespace DM.NPC
                 like = BuildingLike.Like;
                 myHouse = block;
                 myHouse.SetLivingChar(this);
+                environmentManager.PortToHouse();
                 print("Find My House");
                 MoveToMyHome();
             }

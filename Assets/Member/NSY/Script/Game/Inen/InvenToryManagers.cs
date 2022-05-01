@@ -488,7 +488,7 @@ namespace NSY.Iven
         void Down()
         {
            
-            BaseCharcterPanel.anchoredPosition = new Vector3(0, -240, 0);
+            BaseCharcterPanel.anchoredPosition = new Vector3(0, -190, 0);
             isUp = true;
             isDown = false;
         }

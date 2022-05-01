@@ -13,6 +13,7 @@ public class NewInventUIManager : MonoBehaviour
 
     [SerializeField] CraftList Craftlist;
     [SerializeField] InventoryNSY iven;
+    [SerializeField] Item nowSelectItem;
     private int Sum = 0;
 
     // Start is called before the first frame update
@@ -29,6 +30,7 @@ public class NewInventUIManager : MonoBehaviour
     public void ShowRecipe(CraftSlot obj)
     {
         Debug.Log("나오셈");
+        nowSelectItem = obj.RecipeItem;
         obj.ResultSlotImage.sprite = obj.RecipeItem.ItemSprite;
         obj.RecipeName.text = obj.RecipeItem.ItemName;
 
@@ -87,7 +89,7 @@ public class NewInventUIManager : MonoBehaviour
         {
             for (int j = 0; j < iven.ItemSlots.Count; j++)
             {
-                if (Craftlist.craftwind[i].RecipeAmount % Craftlist.craftwind[i].HaveAmount == Sum)
+                if (Craftlist.craftwind[i].RecipeAmount <= Craftlist.craftwind[i].HaveAmount)///////////////
                 {
                     if (Craftlist.craftwind[i]._item == iven.ItemSlots[j].item)
                     {
@@ -108,13 +110,13 @@ public class NewInventUIManager : MonoBehaviour
 
     private void addresults()
     {
-        foreach (CraftSlot item in Craftlist.Craftslot)
+        //foreach (CraftSlot item in Craftlist.Craftslot)
         {
            
-                if (item.ResultSlotListImage.sprite == item.ResultSlotImage.sprite)
+                //if (item.ResultSlotListImage.sprite == item.ResultSlotImage.sprite)
                 {
 
-                    iven.AddItem(item.RecipeItem);
+                    iven.AddItem(nowSelectItem);
 
                 }
             

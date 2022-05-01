@@ -12,6 +12,8 @@ public class EnvironmentManager : MonoBehaviour
     int cleanLevel;
     public NPCField[] npcTfs;
     public Transform PortPos;
+    public NPCField nowNpcStandAtPort;
+    int days = 0;
 
     [SerializeField] bool canChange;
     [Range(0, 100)]
@@ -78,6 +80,13 @@ public class EnvironmentManager : MonoBehaviour
     private void Update()
     {
         //RenderSettings.fogColor = fogColor;
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            days++;
+            ComeToPort();
+
+        }
+
         if (canChange)
             Cleanliness = _cleanliness;
         //Cleanliness +=Time.deltaTime*20;
@@ -108,30 +117,35 @@ public class EnvironmentManager : MonoBehaviour
     public void ChangeCleanliness(int cleanAmount)
     {
         Cleanliness += cleanAmount;
+    }
+
+    private void ComeToPort()//아침이 왔다
+    {
         if (cleanLevels[cleanLevel] <= Cleanliness)//0레벨기준 10 >= 현재클린 10
         {
-            ComeToPort();
+            if (nowNpcStandAtPort != null)
+            {
+                nowNpcStandAtPort.Npctf.position = new Vector3(0, 0, 0);
+                nowNpcStandAtPort.IsField = false;
+            }
+
+            int randnum = UnityEngine.Random.Range(0, npcTfs.Length);
+            while (npcTfs[randnum].IsField == true)
+                randnum = UnityEngine.Random.Range(0, npcTfs.Length);
+
+            nowNpcStandAtPort = npcTfs[randnum];
+
+            npcTfs[randnum].Npctf.gameObject.SetActive(true);
+            npcTfs[randnum].Npctf.position = PortPos.position;
+            npcTfs[randnum].IsField = true;
+            ++cleanLevel;
         }
     }
 
-    private void ComeToPort()
+    public void PortToHouse()
     {
-        int randnum = UnityEngine.Random.Range(0, npcTfs.Length);
-
-        while (npcTfs[randnum].IsField == true)
-        {
-            randnum = UnityEngine.Random.Range(0, npcTfs.Length);
-        }
-        print(randnum);
-        npcTfs[randnum].Npctf.gameObject.SetActive(true);
-        npcTfs[randnum].Npctf.position = PortPos.position;
-        npcTfs[randnum].IsField = true;
-        ++cleanLevel;
-    }
-    private void LeaveFromPort(int num)
-    {
-        npcTfs[num].IsField = false;
-
+        nowNpcStandAtPort = null;
+        print("Leave");
     }
 }
 [System.Serializable]
