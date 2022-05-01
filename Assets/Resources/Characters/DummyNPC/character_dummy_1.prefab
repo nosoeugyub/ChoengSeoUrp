@@ -12,7 +12,82 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f771d70b6b47d1d4a96de6e59845f85d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterType: 2
+  characterType: 3
+  myHouse: {fileID: 0}
+  wantToBuildCondition:
+  - buildItemKind: 0200000003000000
+    buildVPos: 
+    buildHPos: 
+    buildSize: 01000000
+    buildColor: 02000000
+    buildThema: 
+    buildShape: 
+    buildCount: 1
+    buildPerfactCount: 0
+    likeable: 0
+  - buildItemKind: 01000000
+    buildVPos: 
+    buildHPos: 
+    buildSize: 01000000
+    buildColor: 01000000
+    buildThema: 
+    buildShape: d1070000
+    buildCount: 3
+    buildPerfactCount: 0
+    likeable: 0
+  - buildItemKind: 00000000
+    buildVPos: 
+    buildHPos: 
+    buildSize: 01000000
+    buildColor: 03000000
+    buildThema: 
+    buildShape: 00000000
+    buildCount: 3
+    buildPerfactCount: 0
+    likeable: 0
+  - buildItemKind: 03000000
+    buildVPos: 
+    buildHPos: 
+    buildSize: 
+    buildColor: 
+    buildThema: 
+    buildShape: be0b0000bf0b0000
+    buildCount: 4
+    buildPerfactCount: 0
+    likeable: 0
+  - buildItemKind: 05000000
+    buildVPos: 
+    buildHPos: 
+    buildSize: 
+    buildColor: 
+    buildThema: 
+    buildShape: a10f0000
+    buildCount: 2
+    buildPerfactCount: 0
+    likeable: 0
+  - buildItemKind: 05000000
+    buildVPos: 
+    buildHPos: 
+    buildSize: 
+    buildColor: 
+    buildThema: 15000000
+    buildShape: 
+    buildCount: 3
+    buildPerfactCount: 0
+    likeable: 0
+  - buildItemKind: 05000000
+    buildVPos: 
+    buildHPos: 
+    buildSize: 
+    buildColor: 
+    buildThema: 
+    buildShape: b20f0000
+    buildCount: 3
+    buildPerfactCount: 0
+    likeable: 0
+  player: {fileID: 0}
+  speed: 1
+  isFollowPlayer: 0
 --- !u!1 &7476757731385918392
 GameObject:
   m_ObjectHideFlags: 0
@@ -73,17 +148,17 @@ PrefabInstance:
     - target: {fileID: 2635912312698621711, guid: 1ff8cb4505dce054082ec4fdaae2665f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 160.52153
+      value: 116.86496
       objectReference: {fileID: 0}
     - target: {fileID: 2635912312698621711, guid: 1ff8cb4505dce054082ec4fdaae2665f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 111.499725
+      value: 15.86
       objectReference: {fileID: 0}
     - target: {fileID: 2635912312698621711, guid: 1ff8cb4505dce054082ec4fdaae2665f,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 82.99689
+      value: 60.6937
       objectReference: {fileID: 0}
     - target: {fileID: 2635912312698621711, guid: 1ff8cb4505dce054082ec4fdaae2665f,
         type: 3}
