@@ -101,8 +101,12 @@ namespace DM.Building
                 {
                     print("MouseDown");
                     if (curInteractObj == null) return;
-                    if (Physics.Raycast(ray, out hit, 10000, layerMask))
+
+                    if (Physics.Raycast(ray, out hit, 10000))
                     {
+
+                        print(hit.collider.name);
+
                         if (hit.collider.GetComponent<BuildingItemObj>() == null) //자재가 아닌걸 클릭 시
                         {
                             if (!curInteractObj.ItemisSet && !curInteractObj.IsFirstDrop)
@@ -131,10 +135,10 @@ namespace DM.Building
                             SetBuildingItemObj();
                         }
                     }
-                    else if (!curInteractObj.ItemisSet) //무빙중 일때
+                    else
                     {
                         print("ItemisSet = true 3 ");
-                        SetBuildingItemObj();
+
                     }
                 }
 
@@ -251,7 +255,7 @@ namespace DM.Building
 
             SuperManager.Instance.inventoryManager.CheckCanBuildItem(nowBuildingBlock);
             //Inventory UI On + Can't turn Off while in build mode + Press X button, Invoke BuildModeOff method
-            FindObjectOfType<PopUpManager>().OpenPopup(FindObjectOfType<PopUpManager>()._ivenPopup);
+            //FindObjectOfType<PopUpManager>().OpenPopup(FindObjectOfType<PopUpManager>()._ivenPopup);
         }
 
         public void BuildDemolishModeOn()
