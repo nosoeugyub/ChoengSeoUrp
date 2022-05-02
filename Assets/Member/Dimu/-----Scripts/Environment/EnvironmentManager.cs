@@ -83,6 +83,7 @@ public class EnvironmentManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.P))
         {
             days++;
+            print(days);
             ComeToPort();
 
         }
@@ -123,10 +124,13 @@ public class EnvironmentManager : MonoBehaviour
     {
         if (cleanLevels[cleanLevel] <= Cleanliness)//0레벨기준 10 >= 현재클린 10
         {
-            if (nowNpcStandAtPort != null)
+            if (nowNpcStandAtPort != null) //널문제
             {
-                nowNpcStandAtPort.Npctf.position = new Vector3(0, 0, 0);
-                nowNpcStandAtPort.IsField = false;
+                if (nowNpcStandAtPort.Npctf != null)
+                {
+                    nowNpcStandAtPort.Npctf.position = new Vector3(0, 0, 0);
+                    nowNpcStandAtPort.IsField = false;
+                }
             }
 
             int randnum = UnityEngine.Random.Range(0, npcTfs.Length);
@@ -138,14 +142,14 @@ public class EnvironmentManager : MonoBehaviour
             npcTfs[randnum].Npctf.gameObject.SetActive(true);
             npcTfs[randnum].Npctf.position = PortPos.position;
             npcTfs[randnum].IsField = true;
-            ++cleanLevel;
+            
         }
     }
 
     public void PortToHouse()
     {
         nowNpcStandAtPort = null;
-        print("Leave");
+        print("Leave"); ++cleanLevel;
     }
 }
 [System.Serializable]
