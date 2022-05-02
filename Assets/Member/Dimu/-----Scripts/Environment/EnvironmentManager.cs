@@ -83,6 +83,9 @@ public class EnvironmentManager : MonoBehaviour
     private void Update()
     {
         d1.transform.rotation = Quaternion.Euler(d1.transform.eulerAngles.x, maincamera.transform.eulerAngles.y, d1.transform.eulerAngles.z);
+        d3.transform.rotation = Quaternion.Euler(d3.transform.eulerAngles.x, maincamera.transform.eulerAngles.y + 180, d3.transform.eulerAngles.z);
+
+
         //RenderSettings.fogColor = fogColor;
         if (Input.GetKeyDown(KeyCode.P))
         {
