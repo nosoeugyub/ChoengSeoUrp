@@ -176,11 +176,11 @@ namespace NSY.Player
             facingRight = !facingRight;
             if (FlipMove>0)
             {
-                meshrender.eulerAngles = new Vector3(0,0,0);
+                meshrender.localEulerAngles = new Vector3(0,0,0);
             }
             else if(FlipMove< 0)
             {
-                meshrender.eulerAngles = new Vector3(0,180,0);
+                meshrender.localEulerAngles = new Vector3(0,180,0);
             }
            
         }
