@@ -15,17 +15,17 @@ public class NewInventUIManager : MonoBehaviour
     [SerializeField] CraftList Craftlist;
     [SerializeField] InventoryNSY iven;
     [SerializeField] Item nowSelectItem;
-    private int Sum = 0;
-
+    public int Sum = 0;
+    public int num = 0;
+    public int hum = 0;
     [Header("열고 닫고 체인지")]
     public bool isOpen;
-    public bool isCloese;
-    public bool isChange;
+      public bool isChange;
     public int TabuiNumber ;
     // Start is called before the first frame update
     void Awake()
     {
-        isCloese = true;
+    
 
 
         Craftlist.OnLeftClickEventss += ShowRecipe;
@@ -144,54 +144,72 @@ public class NewInventUIManager : MonoBehaviour
     public void BtnTabSelect(int TabNum)
     {
 
+        
+        Open();
         for (TabuiNumber = 0; TabuiNumber < TabUI.Length; TabuiNumber++)
         {
-
-
-            TabuiNumber = TabNum;
+         
             TabUI[TabuiNumber].SetActive(false);
-           
-           
+            
         }
-        isCloese = false;
-        isOpen = true;
-        Open();
-      
-         TabUI[TabNum].SetActive(true);
-
-        if (isCloese == false && TabuiNumber == TabNum)
+        TabuiNumber = TabNum;
+    
+        TabUI[TabNum].SetActive(true);
+        
+        if (TabUI[0].activeSelf == true)
         {
-            close();
+            Sum += 2;
+            if (Sum == 4)
+            {
+                Sum = 0;
+                close();
+            }
+        }
+        if (TabUI[1].activeSelf == true)
+        {
+            num += 3;
+            if (Sum == 6)
+            {
+                Sum = 0;
+                close();
+            }
+        }
+        if (TabUI[2].activeSelf == true)
+        {
+            hum += 4;
+            if (hum == 8)
+            {
+                hum = 0;
+                close();
+            }
         }
         TopRect.content = TabUI[TabNum].GetComponent<RectTransform>();
-    
        
+
+
+
     }
- 
+
     public void Open()
     {
-        if (isOpen)
+
+       
+        if (isOpen == false)
         {
-            
-           isCloese = false;
             BG.DOLocalMoveX(707, 1).SetEase(Ease.OutQuart);
             invenBtn.DOLocalMoveX(1294, 1).SetEase(Ease.OutQuart);
-           
+            isOpen = true;
         }
-
-         
-        
+      
+       
     }
+    int a = 0;
     public void close()
     {
-        if (isOpen)
-        {
-            Debug.Log("춥다");
-            BG.DOLocalMoveX(1212.46f, 1).SetEase(Ease.OutQuart);
-            invenBtn.DOLocalMoveX(1797.24f, 1).SetEase(Ease.OutQuart);
-            isOpen = false;
-            isCloese = true;
-        }
+                    BG.DOLocalMoveX(1212.46f, 1).SetEase(Ease.OutQuart);
+                    invenBtn.DOLocalMoveX(1797.24f, 1).SetEase(Ease.OutQuart);
+        isOpen = false;
+
     }
 }
   
