@@ -1,17 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using DG.Tweening;
+﻿using UnityEngine;
 
 public class SunAndMoon : MonoBehaviour
 {
     //반딧불이
-    [SerializeField] GameObject FireFlyEffect ;
+    [SerializeField] GameObject FireFlyEffect;
 
-    [Range(0.0f, 1.0f)]  [Header("현재 시간 1.0이되면 하루 끝")] public float time; 
+    [Range(0.0f, 1.0f)] [Header("현재 시간 1.0이되면 하루 끝")] public float time;
     [Header("하루 총시간")] public float fullDayLength;
     [Header("시작 시간")] public float startTime = 0.3f;
-    [Header(" 걸리는 시간")]  private float timeRate;
+    [Header(" 걸리는 시간")] private float timeRate;
     public Vector3 SunMoonRotate;
     public Vector3 SunMoonRotate_2;
     [Header("낮")]
@@ -51,7 +48,7 @@ public class SunAndMoon : MonoBehaviour
     [Header("하늘 스카이박스")]
     public Material DaySkyBox;
     public Material NightSkyBox;
-    [Header("하늘 어두워지기 정도")][SerializeField]  AnimationCurve EquatorHeight;
+    [Header("하늘 어두워지기 정도")] [SerializeField] AnimationCurve EquatorHeight;
     [Header("하늘 밝아지기 정도")] [SerializeField] AnimationCurve DayEquatorHeight;
     [Header("노을의 지기 정도")] public float startTimes = 0.0f;
     public float DayMayColor;
@@ -59,29 +56,29 @@ public class SunAndMoon : MonoBehaviour
     private void Start()
     {
         //머테리얼 등록
-       
+
 
 
 
         timeRate = 1.0f / fullDayLength;
         time = startTime;
-     
-     
+
+
 
     }
 
     private void FixedUpdate()
     {
-      
+
         time += timeRate * Time.deltaTime;
-       
-     
 
 
-        if (time >= 1.0 )
+
+
+        if (time >= 1.0)
         {
             time = 0.0f;
-           
+
         }
         //해와 달의 회전
         sun.transform.eulerAngles = (time - 0.15f) * SunMoonRotate * 4.0f;
@@ -104,8 +101,8 @@ public class SunAndMoon : MonoBehaviour
         Moon.color = MoonColor.Evaluate(time);
         Moon_2.color = MoonColor.Evaluate(time);
 
-       
-     
+
+
         _DaylerpColor = Color.Lerp(_DaySkyColor, _NightSkyColor, time);
         _DaylerptorColor = Color.Lerp(_DayequatorColor, _NghitequatorColor, time);
         _DaylerpgoundColor = Color.Lerp(_DaygroundColor, _NghitgroundColor, time);
@@ -116,7 +113,7 @@ public class SunAndMoon : MonoBehaviour
 
         if (sun.intensity <= 0.1f && sun.gameObject.activeInHierarchy && sun_2.intensity <= 0.1f && sun_2.gameObject.activeInHierarchy)
         {
-            
+
             sun.gameObject.SetActive(false);
             sun_2.gameObject.SetActive(false);
             Debug.Log("밤임");
@@ -130,7 +127,7 @@ public class SunAndMoon : MonoBehaviour
             Debug.Log("낮임");
         }
 
-       
+
         if (sun.gameObject.activeSelf == false)
         {
             RenderSettings.skybox = NightSkyBox;
@@ -143,7 +140,7 @@ public class SunAndMoon : MonoBehaviour
         {
             Moon.gameObject.SetActive(false);
             Moon_2.gameObject.SetActive(false);
-            FireFlyEffect.SetActive(false) ;
+            FireFlyEffect.SetActive(false);
         }
         _NightlerpColor = Color.Lerp(_NightSkyColor, _DaySkyColor, 0.3f);
         _NightlerptorColor = Color.Lerp(_NghitequatorColor, _DayequatorColor, time);
@@ -159,6 +156,6 @@ public class SunAndMoon : MonoBehaviour
 
 
     }
-   
- 
+
+
 }

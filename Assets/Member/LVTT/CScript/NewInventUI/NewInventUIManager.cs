@@ -1,14 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using DG.Tweening;
+using NSY.Iven;
 using UnityEngine;
 using UnityEngine.UI;
-using NSY.Iven;
-using System;
-using DG.Tweening;
 public class NewInventUIManager : MonoBehaviour
 {
     [Header("오픈될 오브젝트")] [SerializeField] RectTransform BG, invenBtn;
-    [SerializeField] GameObject [] TabUI;
+    [SerializeField] GameObject[] TabUI;
     [SerializeField] ScrollRect TopRect;
 
 
@@ -20,19 +17,19 @@ public class NewInventUIManager : MonoBehaviour
     public int hum = 0;
     [Header("열고 닫고 체인지")]
     public bool isOpen;
-      public bool isChange;
-    public int TabuiNumber ;
+    public bool isChange;
+    public int TabuiNumber;
     // Start is called before the first frame update
     void Awake()
     {
-    
-
-
-        Craftlist.OnLeftClickEventss += ShowRecipe;
+       
+            Craftlist.OnLeftClickEventss += ShowRecipe;
+        
+       
     }
     private void Start()
     {
-     
+
     }
 
     private void OnDisable()
@@ -41,7 +38,7 @@ public class NewInventUIManager : MonoBehaviour
     }
     public void ShowRecipe(CraftSlot obj)
     {
-        Debug.Log("나오셈");
+
         nowSelectItem = obj.RecipeItem;
         obj.ResultSlotImage.sprite = obj.RecipeItem.ItemSprite;
         obj.RecipeName.text = obj.RecipeItem.ItemName;
@@ -95,16 +92,16 @@ public class NewInventUIManager : MonoBehaviour
                         Craftlist.craftwind[i].RecipeHaverAmount.text = " ";
                     }
                 }
-              
+
             }
         }
     }
-    
 
 
-    public void BtnSolutino( )
+
+    public void BtnSolutino()
     {
-       
+
         for (int i = 0; i < Craftlist.craftwind.Length; i++)
         {
             for (int j = 0; j < iven.ItemSlots.Count; j++)
@@ -115,14 +112,14 @@ public class NewInventUIManager : MonoBehaviour
                     {
                         addresults();
                         iven.ItemSlots[j].Amount -= Craftlist.craftwind[i].RecipeAmount;
-                        Craftlist.craftwind[i].HaveAmount = iven.ItemSlots[j].Amount;  
+                        Craftlist.craftwind[i].HaveAmount = iven.ItemSlots[j].Amount;
                         Craftlist.craftwind[i].RecipeHaverAmount.text = iven.ItemSlots[j].Amount.ToString(); ;
 
                     }
                 }
                 else
                     return;
-               
+
 
             }
         }
@@ -132,38 +129,38 @@ public class NewInventUIManager : MonoBehaviour
     {
         //foreach (CraftSlot item in Craftlist.Craftslot)
         {
-           
-                //if (item.ResultSlotListImage.sprite == item.ResultSlotImage.sprite)
-                {
 
-                    iven.AddItem(nowSelectItem);
+            //if (item.ResultSlotListImage.sprite == item.ResultSlotImage.sprite)
+            {
 
-                }
-            
-            
-            
+                iven.AddItem(nowSelectItem);
+
+            }
+
+
+
         }
-       
-         
-        
+
+
+
     }
 
- 
+
     public void BtnTabSelect(int TabNum)
     {
 
-        
+
         Open();
         for (TabuiNumber = 0; TabuiNumber < TabUI.Length; TabuiNumber++)
         {
-         
+
             TabUI[TabuiNumber].SetActive(false);
-            
+
         }
         TabuiNumber = TabNum;
-    
+
         TabUI[TabNum].SetActive(true);
-        
+
         if (TabUI[0].activeSelf == true)
         {
             Sum += 2;
@@ -192,7 +189,7 @@ public class NewInventUIManager : MonoBehaviour
             }
         }
         TopRect.content = TabUI[TabNum].GetComponent<RectTransform>();
-       
+
 
 
 
@@ -201,23 +198,22 @@ public class NewInventUIManager : MonoBehaviour
     public void Open()
     {
 
-       
+
         if (isOpen == false)
         {
             BG.DOLocalMoveX(707, 1).SetEase(Ease.OutQuart);
             invenBtn.DOLocalMoveX(1294, 1).SetEase(Ease.OutQuart);
             isOpen = true;
         }
-      
-       
+
+
     }
     int a = 0;
     public void close()
     {
-                    BG.DOLocalMoveX(1212.46f, 1).SetEase(Ease.OutQuart);
-                    invenBtn.DOLocalMoveX(1797.24f, 1).SetEase(Ease.OutQuart);
+        BG.DOLocalMoveX(1212.46f, 1).SetEase(Ease.OutQuart);
+        invenBtn.DOLocalMoveX(1797.24f, 1).SetEase(Ease.OutQuart);
         isOpen = false;
 
     }
 }
-  

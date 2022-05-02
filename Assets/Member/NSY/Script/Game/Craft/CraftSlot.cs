@@ -94,15 +94,18 @@ namespace NSY.Iven
 
         public void OnPointerDown(PointerEventData eventData)
         {
-         
-            if (eventData != null && eventData.button == PointerEventData.InputButton.Left)
+            if (isHaveRecipeItem == true)
             {
-                if (OnLeftClickEventss != null)
+                if (eventData != null && eventData.button == PointerEventData.InputButton.Left)
                 {
-                 
-                    OnLeftClickEventss(this);
+                    if (OnLeftClickEventss != null)
+                    {
+
+                        OnLeftClickEventss(this);
+                    }
                 }
             }
+           
         }
     }
 
