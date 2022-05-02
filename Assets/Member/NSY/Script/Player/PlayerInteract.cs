@@ -169,7 +169,7 @@ namespace NSY.Player
                 if (nowInteractable != null && IsInteracted(nowInteractable))// 클릭한 옵젝이 닿은 옵젝 리스트에 있다면 통과
                 {
                     interactUI.SetActive(true);
-                    Debug.Log("interactUI.SetActive(true)");
+                    //Debug.Log("interactUI.SetActive(true)");
 
                     interactUiText2.text = nowInteractable.CanInteract();
                     Vector3 uiPos = new Vector3(nowInteractable.ReturnTF().position.x, nowInteractable.ReturnTF().position.y + 2, nowInteractable.ReturnTF().position.z);

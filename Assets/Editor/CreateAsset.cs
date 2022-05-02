@@ -144,6 +144,41 @@ public class CreateAsset : MonoBehaviour
             //return;
         }
     }
+    [MenuItem("Assets/CreateAssets_MagnifyObj")]
+    static void CreateAssets_MagnifyObj()
+    {
+        Object[] _textures = Selection.GetFiltered(typeof(Texture2D), SelectionMode.DeepAssets);
+        Material material;
+        Item so;
+
+        foreach (Texture2D texture in _textures)
+        {
+            string path = AssetDatabase.GetAssetPath(texture);
+
+            AssetDatabase.ImportAsset(path);
+
+            material = AssetDatabase.LoadAssetAtPath<Material>(string.Format("{0}.mat", path.Substring(0, path.Length - 7)));
+
+            var modelRootGO = Resources.Load<GameObject>("MagnifyObjBase");
+            var instanceRoot = PrefabUtility.InstantiatePrefab(modelRootGO);
+
+            GameObject variantRoot = PrefabUtility.SaveAsPrefabAsset((GameObject)instanceRoot, string.Format("{0}.prefab", path.Substring(0, path.Length - 7)));
+            variantRoot.GetComponent<BoxCollider>().size = new Vector3(texture.width * 0.01f, texture.height * 0.01f, 1);
+            variantRoot.GetComponent<BoxCollider>().center = new Vector3(0, texture.height * 0.01f / 2 + 0.001f, 0);
+
+            so = AssetDatabase.LoadAssetAtPath(string.Format(string.Format("{0}.asset", path.Substring(0, path.Length - 7))), typeof(Item)) as Item;
+            variantRoot.GetComponent<MagnifyObject>().SetItem(so);
+
+            Transform variantRootChild = variantRoot.transform.GetChild(0);
+            variantRootChild.GetComponent<MeshRenderer>().material = material;
+            variantRootChild.position = new Vector3(variantRoot.transform.position.x, texture.height * 0.01f / 2 + 0.001f, variantRoot.transform.position.z);
+            variantRootChild.localScale = new Vector3(texture.width * 0.01f, texture.height * 0.01f, 1);
+
+            Debug.Log(AssetDatabase.GetAssetPath(material));
+            AssetDatabase.Refresh();
+
+        }
+    }
     [MenuItem("Assets/CreateAssets_BuildObj")]
     static void CreateAssets_BuildObj()
     {
