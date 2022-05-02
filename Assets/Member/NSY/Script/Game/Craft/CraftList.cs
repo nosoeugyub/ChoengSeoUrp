@@ -10,6 +10,7 @@ namespace NSY.Iven
     {
         [Header("위에 아이템 슬롯 신경 ㄴㄴ 레시피 리스트 목록")]
         public CraftWindow[] craftwind;
+        [Header("모든 아이템")]
        public Item[] Craftingitems;
         [SerializeField] Transform itemsParent; //this
 

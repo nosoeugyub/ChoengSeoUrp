@@ -37,7 +37,7 @@ namespace NSY.Iven
          [SerializeField]
         private Item _recipeItem;
 
-
+        //지금 갖고있는아이템
         public Item RecipeItem
         {
             get
@@ -52,14 +52,37 @@ namespace NSY.Iven
             }
         }
 
+        [SerializeField]
+        private bool _isHaverecipeItem;
+        public bool isHaveRecipeItem
+        {
+            get
+            {
+                return _isHaverecipeItem;
+            }
+            set
+            {
+                _isHaverecipeItem = value;
+                if (_isHaverecipeItem == false)
+                {
+                    ResultSlotListImage.color = new Color(0.5f, 0.5f, 0.5f);
+                }
+                else
+                {
+                    ResultSlotListImage.color = new Color(1f, 1f, 1f);
+                }
+            }
+        }
 
-      
-       
+
+
+
 
 
         private void OnValidate()
         {
             RecipeItem = _recipeItem;
+            isHaveRecipeItem = _isHaverecipeItem;
         }
 
 
