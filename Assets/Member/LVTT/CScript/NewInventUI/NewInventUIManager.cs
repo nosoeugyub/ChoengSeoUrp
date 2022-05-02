@@ -4,9 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using NSY.Iven;
 using System;
-
+using DG.Tweening;
 public class NewInventUIManager : MonoBehaviour
 {
+    [Header("오픈될 오브젝트")] [SerializeField] RectTransform BG, invenBtn;
     [SerializeField] GameObject [] TabUI;
     [SerializeField] ScrollRect TopRect;
 
@@ -16,13 +17,24 @@ public class NewInventUIManager : MonoBehaviour
     [SerializeField] Item nowSelectItem;
     private int Sum = 0;
 
+    [Header("열고 닫고 체인지")]
+    public bool isOpen;
+    public bool isCloese;
+    public bool isChange;
+    public int TabuiNumber ;
     // Start is called before the first frame update
     void Awake()
     {
+        isCloese = true;
+
+
         Craftlist.OnLeftClickEventss += ShowRecipe;
     }
+    private void Start()
+    {
+     
+    }
 
-  
     private void OnDisable()
     {
         Craftlist.OnLeftClickEventss -= ShowRecipe;
@@ -131,11 +143,55 @@ public class NewInventUIManager : MonoBehaviour
  
     public void BtnTabSelect(int TabNum)
     {
-        for (int i=0;i<TabUI.Length;i++)
+
+        for (TabuiNumber = 0; TabuiNumber < TabUI.Length; TabuiNumber++)
         {
-            TabUI[i].SetActive(false);
+
+
+            TabuiNumber = TabNum;
+            TabUI[TabuiNumber].SetActive(false);
+           
+           
         }
-        TabUI[TabNum].SetActive(true);
+        isCloese = false;
+        isOpen = true;
+        Open();
+      
+         TabUI[TabNum].SetActive(true);
+
+        if (isCloese == false && TabuiNumber == TabNum)
+        {
+            close();
+        }
         TopRect.content = TabUI[TabNum].GetComponent<RectTransform>();
+    
+       
+    }
+ 
+    public void Open()
+    {
+        if (isOpen)
+        {
+            
+           isCloese = false;
+            BG.DOLocalMoveX(707, 1).SetEase(Ease.OutQuart);
+            invenBtn.DOLocalMoveX(1294, 1).SetEase(Ease.OutQuart);
+           
+        }
+
+         
+        
+    }
+    public void close()
+    {
+        if (isOpen)
+        {
+            Debug.Log("춥다");
+            BG.DOLocalMoveX(1212.46f, 1).SetEase(Ease.OutQuart);
+            invenBtn.DOLocalMoveX(1797.24f, 1).SetEase(Ease.OutQuart);
+            isOpen = false;
+            isCloese = true;
+        }
     }
 }
+  
