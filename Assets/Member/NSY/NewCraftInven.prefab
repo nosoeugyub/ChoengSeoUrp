@@ -158,7 +158,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c9b4315b533e153458b2541e9801e954, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1882,7 +1882,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b363663ad562df04496921bf37b953e0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b74ef314d7163204b9f786b50174d938, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2010,7 +2010,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: flowerA
+  m_Text: 
 --- !u!1 &1834768808289366689
 GameObject:
   m_ObjectHideFlags: 0
@@ -2334,7 +2334,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: ' '
 --- !u!1 &1834768808316350489
 GameObject:
   m_ObjectHideFlags: 0
@@ -2585,7 +2585,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b363663ad562df04496921bf37b953e0, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3078,7 +3078,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1834768808189369007}
   m_HandleRect: {fileID: 1834768808189369000}
   m_Direction: 3
-  m_Value: 1.0000006
+  m_Value: 1.0000013
   m_Size: 0.6666668
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -3392,7 +3392,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: ' '
 --- !u!1 &1834768808605999318
 GameObject:
   m_ObjectHideFlags: 0
@@ -3432,7 +3432,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 699, y: 0}
+  m_AnchoredPosition: {x: 1212.46, y: 0}
   m_SizeDelta: {x: 500, y: 700}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1834768808605999322
@@ -3499,6 +3499,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6287918f93294e848a219fbd98c1231f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _item: {fileID: 0}
 --- !u!1 &1834768808611868965
 GameObject:
   m_ObjectHideFlags: 0
@@ -3659,7 +3660,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4f7c14b4ecb2d61428155cac3e7892d7, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3883,6 +3884,7 @@ GameObject:
   - component: {fileID: 1834768808721532479}
   - component: {fileID: 1834768808721532472}
   - component: {fileID: 1834768808721532477}
+  - component: {fileID: 1192698180}
   m_Layer: 0
   m_Name: NewCraftInven
   m_TagString: Untagged
@@ -3983,8 +3985,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ec931673756b6b4c818fe5cca2b025b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BG: {fileID: 0}
-  invenBtn: {fileID: 0}
+  BG: {fileID: 1834768808605999317}
+  invenBtn: {fileID: 1834768809805267902}
   TabUI:
   - {fileID: 1834768809830252398}
   - {fileID: 1834768809381667267}
@@ -3999,6 +4001,25 @@ MonoBehaviour:
   isOpen: 0
   isChange: 0
   TabuiNumber: 0
+--- !u!95 &1192698180
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1834768808721532474}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 743aec2225180934da2165b8d5f0f488, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1834768808807534928
 GameObject:
   m_ObjectHideFlags: 0
@@ -6624,7 +6645,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b161b2086b9219544a2be1571e8787bd, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7691,7 +7712,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1794.5, y: 0}
+  m_AnchoredPosition: {x: 1797.24, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1834768809830215555
@@ -7808,7 +7829,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -95.000015}
+  m_AnchoredPosition: {x: 0, y: -95.000114}
   m_SizeDelta: {x: 100, y: 570}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1834768809830252307
@@ -8788,7 +8809,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: ' '
 --- !u!1 &3261260049114764081
 GameObject:
   m_ObjectHideFlags: 0
@@ -8855,7 +8876,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 60c4dbe9e87500a4480a6214bdc5cc87, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9dc72110f239ac648a0fe34b28f3b308, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -9095,7 +9116,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: ' '
 --- !u!1 &3965228671636532099
 GameObject:
   m_ObjectHideFlags: 0
@@ -9353,7 +9374,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: ' '
 --- !u!1 &6051962534220438905
 GameObject:
   m_ObjectHideFlags: 0
@@ -9545,4 +9566,4 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: ' '
