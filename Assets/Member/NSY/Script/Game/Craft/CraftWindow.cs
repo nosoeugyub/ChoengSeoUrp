@@ -48,6 +48,10 @@ namespace NSY.Iven
             {
                 _RecipeAmount = value;
                    RecipeCurrentAmount.text = _RecipeAmount.ToString();
+                if (_RecipeAmount == 0)
+                {
+
+                }
             }
         }
        // [SerializeField]
