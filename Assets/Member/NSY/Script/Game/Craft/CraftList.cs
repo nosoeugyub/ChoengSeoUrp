@@ -27,7 +27,7 @@ namespace NSY.Iven
 
             if (!Application.isPlaying)
             {
-                SetStartingTiems();
+              //  SetStartingTiems();
             }
         }
 
@@ -37,8 +37,8 @@ namespace NSY.Iven
             {
                 Craftslot[i].OnLeftClickEventss += OnLeftClickEventss;
             }
-
-            SetStartingTiems();
+////
+          //  SetStartingTiems();
         }
        
         private void SetStartingTiems()//아이템 슬롯과 리스트가 일치하게 돌려주는 함수 
