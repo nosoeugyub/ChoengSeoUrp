@@ -90,7 +90,10 @@ public class NewInventUIManager : MonoBehaviour
                 {
                     Craftlist.craftwind[i].HaveAmount = iven.ItemSlots[j].Amount;
                     Craftlist.craftwind[i].RecipeHaverAmount.text = iven.ItemSlots[j].Amount.ToString(); ;
-
+                    if (iven.ItemSlots[j].Amount == 0)
+                    {
+                        Craftlist.craftwind[i].RecipeHaverAmount.text = " ";
+                    }
                 }
               
             }
