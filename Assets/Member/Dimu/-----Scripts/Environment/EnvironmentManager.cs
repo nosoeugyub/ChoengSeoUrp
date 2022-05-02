@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Game.Cam;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
@@ -59,6 +60,8 @@ public class EnvironmentManager : MonoBehaviour
     [SerializeField] float badIntensity_d3;
 
     [SerializeField] VolumeProfile volume;
+    [SerializeField] Camera maincamera;
+    Vector3 lookForward;
     //[SerializeField] Image fatiGageImage;
     public float Cleanliness
     {
@@ -79,6 +82,7 @@ public class EnvironmentManager : MonoBehaviour
     }
     private void Update()
     {
+        d1.transform.rotation = Quaternion.Euler(d1.transform.eulerAngles.x, maincamera.transform.eulerAngles.y, d1.transform.eulerAngles.z);
         //RenderSettings.fogColor = fogColor;
         if (Input.GetKeyDown(KeyCode.P))
         {
