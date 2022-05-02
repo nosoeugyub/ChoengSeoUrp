@@ -59,6 +59,11 @@ public class NewInventUIManager : MonoBehaviour
             //갯수
             Craftlist.craftwind[i].RecipeAmount = obj.RecipeItem.recipe[i].count;
             Craftlist.craftwind[i].RecipeCurrentAmount.text = obj.RecipeItem.recipe[i].count.ToString();
+            if (obj.RecipeItem.recipe[i].count == 0)
+            {
+                Craftlist.craftwind[i].RecipeCurrentAmount.text = " ";
+                Craftlist.craftwind[i].RecipeHaverAmount.text = " ";
+            }
             //현재  가지고 있는 갯수
             foreach (ItemSlot item in iven.ItemSlots)
             {
