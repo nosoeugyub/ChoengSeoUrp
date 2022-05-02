@@ -47,8 +47,8 @@ namespace NSY.Iven
             set
             {
                 _recipeItem = value;
-                
 
+                ResultSlotListImage.sprite = _recipeItem.ItemSprite;
             }
         }
 
