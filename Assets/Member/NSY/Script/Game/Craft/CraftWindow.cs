@@ -32,7 +32,12 @@ namespace NSY.Iven
             set
             {
                 _item = value;
-                reimage = _item.ItemSprite;
+             
+                if (_item == null)
+                {
+                    reimage = null;
+                }
+               
             }
         }
 
@@ -48,6 +53,10 @@ namespace NSY.Iven
             {
                 _RecipeAmount = value;
                    RecipeCurrentAmount.text = _RecipeAmount.ToString();
+                if (_RecipeAmount == 0)
+                {
+                    RecipeCurrentAmount.text = " ";
+                }
             }
         }
        // [SerializeField]
@@ -62,6 +71,10 @@ namespace NSY.Iven
             {
                 _haveAmount = value;
                 RecipeHaverAmount.text = _haveAmount.ToString();
+                if (_haveAmount == 0)
+                {
+                    RecipeHaverAmount.text = " ";
+                }
             }
         }
 

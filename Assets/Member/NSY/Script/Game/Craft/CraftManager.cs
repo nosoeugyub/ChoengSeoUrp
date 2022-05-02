@@ -9,8 +9,27 @@ namespace NSY.Iven
 {
     public class CraftManager : MonoBehaviour 
     {
-     
-     
+
+        public Item _item;
+        public Item Item
+        {
+            get
+            {
+                return _item;
+            }
+            set
+            {
+                _item = value;
+
+                if (_item == null)
+                {
+                   
+                }
+
+            }
+        }
+
+
 
     }
 
