@@ -4,7 +4,7 @@ using NSY.Manager;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using DG.Tweening;
 public enum Character
 { CheongSeo, Ejang, Walrus, Hen, Bee, Rabbit, Deer, Milkcow, Sheep, Length }
 //청서 곰 닭 바코 벌 토끼 사슴 젖소 양
@@ -294,7 +294,7 @@ namespace DM.Dialog
                 });
             }
             // DOTween.
-            //textboxFabText.DOText(sentences[nowSentenceIdx].sentence,1);
+            //nameText.DOText(sentences[nowSentenceIdx].sentence,1);
             //dialogText.text = sentences[nowSentenceIdx].sentence;
         }
 

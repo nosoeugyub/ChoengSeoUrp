@@ -28,8 +28,9 @@ namespace NSY.Iven
         [Header("결과 이름")]
         public Text RecipeName;
 
+        [Header("결과 설명")]
+        public Text RecipeExplain;
 
-       
         public Text reamountText;
         public Text HaveAmount;
 
