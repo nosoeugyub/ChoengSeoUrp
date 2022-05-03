@@ -73,6 +73,11 @@ namespace NSY.Iven
                 RecipeHaverAmount.text = _haveAmount.ToString();
                 if (_haveAmount <= 0)
                 {
+                    _haveAmount = 0;
+                   
+                }
+                if (_haveAmount == 0  && Item != null )
+                {
                     RecipeHaverAmount.text = " ";
                 }
             }

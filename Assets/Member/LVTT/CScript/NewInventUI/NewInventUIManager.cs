@@ -89,7 +89,7 @@ public class NewInventUIManager : MonoBehaviour
 
             for (int j = 0; j < iven.ItemSlots.Count; j++)
             {
-                if (Craftlist.craftwind[i]._item == iven.ItemSlots[j].item)
+                if (Craftlist.craftwind[i].Item == iven.ItemSlots[j].item)
                 {
                     Craftlist.craftwind[i].HaveAmount = iven.ItemSlots[j].Amount;
                     Craftlist.craftwind[i].RecipeHaverAmount.text = iven.ItemSlots[j].Amount.ToString(); ;
@@ -112,16 +112,13 @@ public class NewInventUIManager : MonoBehaviour
         {
             for (int j = 0; j < iven.ItemSlots.Count; j++)
             {
-                if (Craftlist.craftwind[i].RecipeAmount <= Craftlist.craftwind[i].HaveAmount)///////////////
+                if (Craftlist.craftwind[i].RecipeAmount <= Craftlist.craftwind[i].HaveAmount &&
+                    Craftlist.craftwind[i]._item == iven.ItemSlots[j].item)///////////////
                 {
-                    if (Craftlist.craftwind[i]._item == iven.ItemSlots[j].item)
-                    {
                         addresults();
                         iven.ItemSlots[j].Amount -= Craftlist.craftwind[i].RecipeAmount;
                         Craftlist.craftwind[i].HaveAmount = iven.ItemSlots[j].Amount;
-                        Craftlist.craftwind[i].RecipeHaverAmount.text = iven.ItemSlots[j].Amount.ToString(); ;
-
-                    }
+                        Craftlist.craftwind[i].RecipeHaverAmount.text = iven.ItemSlots[j].Amount.ToString(); 
                 }
                 else
                     return;
@@ -133,22 +130,7 @@ public class NewInventUIManager : MonoBehaviour
 
     private void addresults()
     {
-        //foreach (CraftSlot item in Craftlist.Craftslot)
-        {
-
-            //if (item.ResultSlotListImage.sprite == item.ResultSlotImage.sprite)
-            {
-                print("add");
-
                 iven.AddItem(nowSelectItem);
-            }
-
-
-
-        }
-
-
-
     }
 
 
@@ -170,28 +152,37 @@ public class NewInventUIManager : MonoBehaviour
         if (TabUI[0].activeSelf == true)
         {
             Sum += 2;
+            num = 0;
+            hum = 0;
             if (Sum == 4)
             {
-                Sum = 0;
+               
                 close();
+              
             }
         }
         if (TabUI[1].activeSelf == true)
         {
+            Sum = 0;
             num += 3;
+            hum = 0;
             if (num == 6)
             {
-                num = 0;
+               
                 close();
+                
             }
         }
         if (TabUI[2].activeSelf == true)
         {
+            Sum = 0;
+            num = 0;
             hum += 4;
             if (hum == 8)
             {
-                hum = 0;
+               
                 close();
+               
             }
         }
         TopRect.content = TabUI[TabNum].GetComponent<RectTransform>();
@@ -217,6 +208,9 @@ public class NewInventUIManager : MonoBehaviour
     int a = 0;
     public void close()
     {
+        Sum = 0;
+        num = 0;
+        hum = 0;
         BG.DOLocalMoveX(1212.46f, 1).SetEase(Ease.OutQuart);
         invenBtn.DOLocalMoveX(1797.24f, 1).SetEase(Ease.OutQuart);
         isOpen = false;
