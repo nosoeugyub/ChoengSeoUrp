@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NSY.Player;
+using System;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -22,6 +23,8 @@ namespace TT.Sound
     {
         public Sound[] BGM;
         public Sound[] SFX;
+
+        [SerializeField] PlayerMoveMent playerMoveMent;
         void Awake()
         {
             foreach (Sound s in BGM)
@@ -44,8 +47,14 @@ namespace TT.Sound
                 s.source.outputAudioMixerGroup = s.output;
 
             }
-        }
 
+        }
+        private void Start()
+        {
+            playerMoveMent.SoundEvent = PlaySFX;
+
+            PlayBGM("SummerLine");
+        }
         public void PlayBGM(string name)
         {
             Sound s = Array.Find(BGM, sound => sound.name == name);
@@ -70,7 +79,7 @@ namespace TT.Sound
         public void PlaySFX(string name)
         {
             Sound s = Array.Find(SFX, sound => sound.name == name);
-            if (s == null)
+            if (s == null || s.source.isPlaying)
             {
                 return;
             }
