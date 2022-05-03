@@ -24,8 +24,8 @@ public class NewInventUIManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-       
-            Craftlist.OnLeftClickEventss += ShowRecipe;
+
+        Craftlist.OnLeftClickEventss += ShowRecipe;
         Craftlist1.OnLeftClickEventss += ShowRecipe;
         Craftlist2.OnLeftClickEventss += ShowRecipe;
 
@@ -54,7 +54,11 @@ public class NewInventUIManager : MonoBehaviour
         for (int i = 0; i < Craftlist.craftwind.Length; i++)
         {
             Craftlist.craftwind[i]._item = obj.RecipeItem.recipe[i].item;
-            Craftlist.craftwind[i].reimage = obj.RecipeItem.recipe[i].item.ItemSprite;
+            if (obj.RecipeItem.recipe[i].item)
+                Craftlist.craftwind[i].reimage = obj.RecipeItem.recipe[i].item.ItemSprite;
+            else
+                Craftlist.craftwind[i].reimage = null;
+
             Craftlist.craftwind[i].GetComponent<Image>().sprite = Craftlist.craftwind[i].reimage;
 
 
@@ -92,7 +96,7 @@ public class NewInventUIManager : MonoBehaviour
                 if (Craftlist.craftwind[i].Item == iven.ItemSlots[j].item)
                 {
                     Craftlist.craftwind[i].HaveAmount = iven.ItemSlots[j].Amount;
-                    Craftlist.craftwind[i].RecipeHaverAmount.text = iven.ItemSlots[j].Amount.ToString(); ;
+                    Craftlist.craftwind[i].RecipeHaverAmount.text = iven.ItemSlots[j].Amount.ToString();
                     if (iven.ItemSlots[j].Amount == 0)
                     {
                         Craftlist.craftwind[i].RecipeHaverAmount.text = " ";
@@ -105,7 +109,7 @@ public class NewInventUIManager : MonoBehaviour
 
 
 
-    public void BtnSolutino()
+    public void BtnSolution()
     {
 
         for (int i = 0; i < Craftlist.craftwind.Length; i++)
@@ -115,13 +119,14 @@ public class NewInventUIManager : MonoBehaviour
                 if (Craftlist.craftwind[i].RecipeAmount <= Craftlist.craftwind[i].HaveAmount &&
                     Craftlist.craftwind[i]._item == iven.ItemSlots[j].item)///////////////
                 {
-                        addresults();
-                        iven.ItemSlots[j].Amount -= Craftlist.craftwind[i].RecipeAmount;
-                        Craftlist.craftwind[i].HaveAmount = iven.ItemSlots[j].Amount;
-                        Craftlist.craftwind[i].RecipeHaverAmount.text = iven.ItemSlots[j].Amount.ToString(); 
-                }
-                else
+                    addresults();
+                    iven.ItemSlots[j].Amount -= Craftlist.craftwind[i].RecipeAmount;
+                    Craftlist.craftwind[i].HaveAmount = iven.ItemSlots[j].Amount;
+                    Craftlist.craftwind[i].RecipeHaverAmount.text = iven.ItemSlots[j].Amount.ToString();
                     return;
+                }
+                //else
+                    //return;
 
 
             }
@@ -130,7 +135,7 @@ public class NewInventUIManager : MonoBehaviour
 
     private void addresults()
     {
-                iven.AddItem(nowSelectItem);
+        iven.AddItem(nowSelectItem);
     }
 
 
@@ -156,9 +161,9 @@ public class NewInventUIManager : MonoBehaviour
             hum = 0;
             if (Sum == 4)
             {
-               
+
                 close();
-              
+
             }
         }
         if (TabUI[1].activeSelf == true)
@@ -168,9 +173,9 @@ public class NewInventUIManager : MonoBehaviour
             hum = 0;
             if (num == 6)
             {
-               
+
                 close();
-                
+
             }
         }
         if (TabUI[2].activeSelf == true)
@@ -180,9 +185,9 @@ public class NewInventUIManager : MonoBehaviour
             hum += 4;
             if (hum == 8)
             {
-               
+
                 close();
-               
+
             }
         }
         TopRect.content = TabUI[TabNum].GetComponent<RectTransform>();

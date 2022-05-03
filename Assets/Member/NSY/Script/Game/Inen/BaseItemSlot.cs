@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using DM.Inven;
 using UnityEngine.EventSystems;
 using System;
+using TMPro;
 
 namespace NSY.Iven
 {
@@ -16,8 +17,9 @@ namespace NSY.Iven
         [SerializeField]
         ItemTooltip tooltip;
         //슬롯갯수
-        public Text amountText;
-      
+        public TextMeshProUGUI amountText;
+        //public Text amountText;
+
 
         protected bool isPointerOver;
 
@@ -111,7 +113,7 @@ namespace NSY.Iven
 
             if (amountText == null)
             {
-                amountText = GetComponentInChildren<Text>();
+                amountText = GetComponentInChildren<TextMeshProUGUI>();
             }
             item = _item;
             Amount = _amount;
