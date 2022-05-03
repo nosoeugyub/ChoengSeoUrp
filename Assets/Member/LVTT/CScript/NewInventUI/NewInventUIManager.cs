@@ -10,6 +10,8 @@ public class NewInventUIManager : MonoBehaviour
 
 
     [SerializeField] CraftList Craftlist;
+    [SerializeField] CraftList Craftlist1;
+    [SerializeField] CraftList Craftlist2;
     [SerializeField] InventoryNSY iven;
     [SerializeField] Item nowSelectItem;
     public int Sum = 0;
@@ -24,8 +26,10 @@ public class NewInventUIManager : MonoBehaviour
     {
        
             Craftlist.OnLeftClickEventss += ShowRecipe;
-        
-       
+        Craftlist1.OnLeftClickEventss += ShowRecipe;
+        Craftlist2.OnLeftClickEventss += ShowRecipe;
+
+
     }
     private void Start()
     {
