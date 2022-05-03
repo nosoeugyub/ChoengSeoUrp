@@ -1,4 +1,13 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using DM.Inven;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using System;
+
+using DG.Tweening;
+
 
 public class SunAndMoon : MonoBehaviour
 {
@@ -47,7 +56,7 @@ public class SunAndMoon : MonoBehaviour
     [Space(10)]
     [Header("하늘 스카이박스")]
     public Material DaySkyBox;
-    public Material NightSkyBox;
+    
     [Header("하늘 어두워지기 정도")] [SerializeField] AnimationCurve EquatorHeight;
     [Header("하늘 밝아지기 정도")] [SerializeField] AnimationCurve DayEquatorHeight;
     [Header("노을의 지기 정도")] public float startTimes = 0.0f;
@@ -111,7 +120,7 @@ public class SunAndMoon : MonoBehaviour
         DaySkyBox.SetColor("_GroundColor", _DaylerpgoundColor);
         DaySkyBox.SetFloat("_EquatorHeight", EquatorHeight.Evaluate(time));
 
-        if (sun.intensity <= 0.1f && sun.gameObject.activeInHierarchy && sun_2.intensity <= 0.1f && sun_2.gameObject.activeInHierarchy)
+        if (sun.intensity <= 0.13f && sun.gameObject.activeInHierarchy && sun_2.intensity <= 0.13f && sun_2.gameObject.activeInHierarchy)
         {
 
             sun.gameObject.SetActive(false);
@@ -119,9 +128,9 @@ public class SunAndMoon : MonoBehaviour
             Debug.Log("밤임");
 
         }
-        else if (sun.intensity > 0.1f && !sun.gameObject.activeInHierarchy && sun_2.intensity > 0.1f && !sun_2.gameObject.activeInHierarchy)
+        else if (sun.intensity > 0.3f && !sun.gameObject.activeInHierarchy && sun_2.intensity > 0.3f && !sun_2.gameObject.activeInHierarchy)
         {
-            RenderSettings.skybox = DaySkyBox;
+            
             sun.gameObject.SetActive(true);
             sun_2.gameObject.SetActive(true);
             Debug.Log("낮임");
@@ -130,7 +139,7 @@ public class SunAndMoon : MonoBehaviour
 
         if (sun.gameObject.activeSelf == false)
         {
-            RenderSettings.skybox = NightSkyBox;
+           
             Moon.gameObject.SetActive(true);
             Moon_2.gameObject.SetActive(true);
             //밤에서 다시 아침으로
@@ -142,13 +151,14 @@ public class SunAndMoon : MonoBehaviour
             Moon_2.gameObject.SetActive(false);
             FireFlyEffect.SetActive(false);
         }
-        _NightlerpColor = Color.Lerp(_NightSkyColor, _DaySkyColor, 0.3f);
-        _NightlerptorColor = Color.Lerp(_NghitequatorColor, _DayequatorColor, time);
+         _NightlerpColor = Color.Lerp(_NightSkyColor, _DaySkyColor, time);
+        
+         _NightlerptorColor = Color.Lerp(_NghitequatorColor, _DayequatorColor, time);
         _NightlerpgoundColor = Color.Lerp(_NghitgroundColor, _DaygroundColor, time);
-        NightSkyBox.SetColor("_SkyColor", _NightlerpColor);
-        NightSkyBox.SetColor("_EquatorColor", _NightlerptorColor);
-        NightSkyBox.SetColor("_GroundColor", _NightlerpgoundColor);
-        NightSkyBox.SetFloat("_EquatorHeight", EquatorHeight.Evaluate(time));
+        DaySkyBox.SetColor("_SkyColor", _NightlerpColor);
+        DaySkyBox.SetColor("_EquatorColor", _NightlerptorColor);
+        DaySkyBox.SetColor("_GroundColor", _NightlerpgoundColor);
+        DaySkyBox.SetFloat("_EquatorHeight", EquatorHeight.Evaluate(time));
 
 
         RenderSettings.ambientIntensity = LightingIntensityMultiplier.Evaluate(time);
