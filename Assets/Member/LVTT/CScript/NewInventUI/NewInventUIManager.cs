@@ -38,10 +38,12 @@ public class NewInventUIManager : MonoBehaviour
     }
     public void ShowRecipe(CraftSlot obj)
     {
+        print("OnLeftClickEventss");
 
         nowSelectItem = obj.RecipeItem;
         obj.ResultSlotImage.sprite = obj.RecipeItem.ItemSprite;
         obj.RecipeName.text = obj.RecipeItem.ItemName;
+        obj.RecipeExplain.text = obj.RecipeItem.ItemDescription;
 
 
 

@@ -1,4 +1,5 @@
 ﻿using Game.Cam;
+using NSY.Iven;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -62,6 +63,9 @@ public class EnvironmentManager : MonoBehaviour
     [SerializeField] VolumeProfile volume;
     [SerializeField] Camera maincamera;
     Vector3 lookForward;
+
+
+    [SerializeField] CraftSlot a;
     //[SerializeField] Image fatiGageImage;
     public float Cleanliness
     {
@@ -89,9 +93,10 @@ public class EnvironmentManager : MonoBehaviour
         //RenderSettings.fogColor = fogColor;
         if (Input.GetKeyDown(KeyCode.P))
         {
-            days++;
-            print(days);
-            ComeToPort();
+            a.isHaveRecipeItem = true;
+            //days++;
+            //print(days);
+            //ComeToPort();
 
         }
 
