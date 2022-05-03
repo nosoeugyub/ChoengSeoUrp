@@ -102,7 +102,7 @@ namespace DM.Building
                     print("MouseDown");
                     if (curInteractObj == null) return;
 
-                    if (Physics.Raycast(ray, out hit, 10000))
+                    if (Physics.Raycast(ray, out hit, 10000, layerMask))
                     {
 
                         print(hit.collider.name);

@@ -138,9 +138,9 @@ public class NewInventUIManager : MonoBehaviour
 
             //if (item.ResultSlotListImage.sprite == item.ResultSlotImage.sprite)
             {
+                print("add");
 
                 iven.AddItem(nowSelectItem);
-
             }
 
 
