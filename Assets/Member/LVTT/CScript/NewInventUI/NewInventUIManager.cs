@@ -179,9 +179,9 @@ public class NewInventUIManager : MonoBehaviour
         if (TabUI[1].activeSelf == true)
         {
             num += 3;
-            if (Sum == 6)
+            if (num == 6)
             {
-                Sum = 0;
+                num = 0;
                 close();
             }
         }
