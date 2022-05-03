@@ -93,10 +93,10 @@ public class EnvironmentManager : MonoBehaviour
         //RenderSettings.fogColor = fogColor;
         if (Input.GetKeyDown(KeyCode.P))
         {
-            a.isHaveRecipeItem = true;
-            //days++;
-            //print(days);
-            //ComeToPort();
+            //a.isHaveRecipeItem = true;
+            days++;
+            print(days);
+            ComeToPort();
 
         }
 
