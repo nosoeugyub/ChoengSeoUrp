@@ -16,6 +16,7 @@ namespace TT.Sound
         [Range(.1f, 3f)]
         public float pitch;
         public bool loop;
+        public bool playInit;
         [HideInInspector]
         public AudioSource source;
     }
@@ -51,8 +52,6 @@ namespace TT.Sound
         }
         private void Start()
         {
-            playerMoveMent.SoundEvent = PlaySFX;
-
             PlayBGM("SummerLine");
         }
         public void PlayBGM(string name)
@@ -79,10 +78,11 @@ namespace TT.Sound
         public void PlaySFX(string name)
         {
             Sound s = Array.Find(SFX, sound => sound.name == name);
-            if (s == null || s.source.isPlaying)
+            if (s == null || (s.source.isPlaying && !s.playInit)) //playInit false :  다시 재생 안함
             {
                 return;
             }
+            //playInit true
             s.source.Play();
         }
 

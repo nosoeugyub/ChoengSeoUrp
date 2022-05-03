@@ -1,5 +1,7 @@
-﻿using Game.Cam;
+﻿using DG.Tweening;
 using NSY.Iven;
+using NSY.Manager;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -14,6 +16,7 @@ public class EnvironmentManager : MonoBehaviour
     int cleanLevel;
     public NPCField[] npcTfs;
     public Transform PortPos;
+    public Transform portInformUI;
     public NPCField nowNpcStandAtPort;
     int days = 0;
 
@@ -64,6 +67,7 @@ public class EnvironmentManager : MonoBehaviour
     [SerializeField] Camera maincamera;
     Vector3 lookForward;
 
+    Coroutine nowCor;
 
     [SerializeField] CraftSlot a;
     //[SerializeField] Image fatiGageImage;
@@ -144,20 +148,40 @@ public class EnvironmentManager : MonoBehaviour
                     nowNpcStandAtPort.IsField = false;
                 }
             }
-
+            SuperManager.Instance.soundManager.PlaySFX("NPCShip");
             int randnum = UnityEngine.Random.Range(0, npcTfs.Length);
             while (npcTfs[randnum].IsField == true)
                 randnum = UnityEngine.Random.Range(0, npcTfs.Length);
-
+            ComeToPortUIAction(true);
             nowNpcStandAtPort = npcTfs[randnum];
 
             npcTfs[randnum].Npctf.gameObject.SetActive(true);
             npcTfs[randnum].Npctf.position = PortPos.position;
             npcTfs[randnum].IsField = true;
-            
+
+        }
+    }
+    private void ComeToPortUIAction(bool isOn)
+    {
+        if (isOn)
+        {
+            portInformUI.DOLocalMoveY(500, 1).SetEase(Ease.OutQuart);
+            if (nowCor != null)
+                StopCoroutine(nowCor);
+            nowCor = StartCoroutine(ComeToPortCor());
+        }
+        else
+        {
+            portInformUI.DOLocalMoveY(550, 1).SetEase(Ease.OutQuart);
         }
     }
 
+    IEnumerator ComeToPortCor()
+    {
+
+        yield return new WaitForSeconds(3f);
+        ComeToPortUIAction(false);
+    }
     public void PortToHouse()
     {
         nowNpcStandAtPort = null;

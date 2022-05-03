@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using NSY.Manager;
+using System.Collections;
 using UnityEngine;
 public enum MineState { Normal, Trunk, Gone, }
 public class MineObject : ItemObject, IMineable, IDropable
@@ -23,7 +24,7 @@ public class MineObject : ItemObject, IMineable, IDropable
 
     [SerializeField] BoxCollider boxcol;
 
-
+    Item handitem;
     private new void Awake()
     {
         base.Awake();
@@ -88,9 +89,10 @@ public class MineObject : ItemObject, IMineable, IDropable
     {
         return "캐기";
     }
-    public bool Mine(Item handitem, Animator playerAnimator)
+    public bool Mine(Item _handitem, Animator playerAnimator)
     {
-        if (handitem.InItemType != toolType)
+        handitem = _handitem;
+        if (_handitem.InItemType != toolType)
         {
             print("다른 도구로 시도해주세요.");
             return false;
@@ -100,9 +102,9 @@ public class MineObject : ItemObject, IMineable, IDropable
 
         animator.SetBool("IsFalling", false);
 
-        if (handitem.InItemType == InItemType.Pickaxe)
+        if (_handitem.InItemType == InItemType.Pickaxe)
             playerAnimator.SetBool("isMining", true);
-        else if (handitem.InItemType == InItemType.Axe)
+        else if (_handitem.InItemType == InItemType.Axe)
             playerAnimator.SetBool("isAxing", true);
 
         playerAnimator.GetComponent<PlayerAnimator>().Mine = UpdateMineState;
@@ -111,6 +113,7 @@ public class MineObject : ItemObject, IMineable, IDropable
 
     private void UpdateMineState()
     {
+        SuperManager.Instance.soundManager.PlaySFX(handitem.UsingToolSoundName); 
         if (++nowChopCount >= item.ChopCount)
         {
             NSY.Player.PlayerInput.OnPressFDown = null;

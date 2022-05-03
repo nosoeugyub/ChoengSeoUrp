@@ -1,4 +1,5 @@
 ﻿using Game.Cam;
+using NSY.Manager;
 using TT.MapTravel;
 using UnityEngine;
 namespace NSY.Player
@@ -27,8 +28,6 @@ namespace NSY.Player
         MapTravel MapTravel;
         CameraManager CamManager;
 
-        public delegate void SoundEventDg(string soundName);
-        public SoundEventDg SoundEvent;
 
         //////End of "Zess's code"//////
         private void Start()
@@ -68,7 +67,7 @@ namespace NSY.Player
 
             if (isMove)
             {
-                SoundEvent("FootstepGrass01");
+                SuperManager.Instance.soundManager.PlaySFX("FootstepGrass01");
 
                 LookRight = new Vector3(playerController.maincamera.transform.right.x, 0f, playerController.maincamera.transform.right.z).normalized; //보는방향을 평면화
                 MoveVec = (lookForward * MoveDelta.y + LookRight * MoveDelta.x).normalized;

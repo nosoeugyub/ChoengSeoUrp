@@ -20,6 +20,7 @@ public class Item : ScriptableObject
     [SerializeField] private DropItem[] dropItems;
     [SerializeField] private int durability;
     [SerializeField] private GameObject itemPrefab;
+    [SerializeField] private string usingToolSoundName;
 
     public Sprite ItemSprite
     {
@@ -86,6 +87,7 @@ public class Item : ScriptableObject
     //public ingredientNeeded[] NnecessaryIngredient => necessaryIngredient;
     public DropItem[] DropItems => dropItems;
     public int ChopCount => chopCount;
+    public string UsingToolSoundName => usingToolSoundName;
     //public GameObject ItemPrefab => itemPrefab;
 
     //NSY추가 
