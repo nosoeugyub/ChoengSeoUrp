@@ -23,13 +23,13 @@ namespace NSY.Player
         private void Start()
         {
             PlayerHealth_image.fillAmount = Tired;
-            Tired = 50;
+            Tired = 20;
         }
 
         private void Update()
         {
             StartCoroutine(disVital());
-            GaugeUpdate();
+            //GaugeUpdate();
         }
 
         IEnumerator disVital()
@@ -45,9 +45,11 @@ namespace NSY.Player
                 {
                     Tired--;
                     healthcurrentTime = 0;
+                    GaugeUpdate();
                 }
             }
-
+            else
+                FindObjectOfType<SceneChangeManager>().LoadSceneString("EndScene");
 
             yield return null;
 
