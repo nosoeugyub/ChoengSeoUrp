@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using NSY.Manager;
+﻿using UnityEngine;
 public class PaperTrash : MonoBehaviour
 {
 
@@ -14,8 +11,8 @@ public class PaperTrash : MonoBehaviour
     private void OnDisable()
     {
         ObjectPooler.ReturnToPool(gameObject);
-     //   SuperManager.Instance.spawnmanager.Count--; //스폰 카운트감소
+        //   SuperManager.Instance.spawnmanager.Count--; //스폰 카운트감소
         CancelInvoke();
-        
+
     }
 }

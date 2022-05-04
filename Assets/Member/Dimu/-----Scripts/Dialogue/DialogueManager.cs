@@ -273,11 +273,13 @@ namespace DM.Dialog
             {
                 nowOnFab.GetComponent<TextBox>().DestroyTextBox();
             }
+            nowOnFab = ObjectPooler.SpawnFromPool("TextBox", gameObject.transform.position);
+            nowOnFab.transform.SetParent(npcTalkBubbleTfs[sentences[nowSentenceIdx].characterId]);
+            nowOnFab.GetComponent<TextBox>().SetTextbox(sentences[nowSentenceIdx].sentence, npcTalkBubbleTfs[sentences[nowSentenceIdx].characterId], sentences[nowSentenceIdx].textboxType);
 
-            nowOnFab = Instantiate(textboxFab, npcTalkBubbleTfs[sentences[nowSentenceIdx].characterId]);
+            //nowOnFab = Instantiate(textboxFab, npcTalkBubbleTfs[sentences[nowSentenceIdx].characterId]);
             nextButton = nowOnFab.GetComponent<TextBox>().GetNextButton;
 
-            nowOnFab.GetComponent<TextBox>().SetTextbox(sentences[nowSentenceIdx].sentence, npcTalkBubbleTfs[sentences[nowSentenceIdx].characterId], sentences[nowSentenceIdx].textboxType);
             nameText.text = questDialogLists[sentences[nowSentenceIdx++].characterId].charName;
 
 
