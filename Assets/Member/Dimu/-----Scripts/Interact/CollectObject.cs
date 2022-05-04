@@ -37,7 +37,12 @@ public class CollectObject : ItemObject, ICollectable
         power -= Time.deltaTime * 0.5f;
     }
 
-    public void Collect()
+    public void Collect(Animator animator)
+    {
+        animator.GetComponent<PlayerAnimator>().PickUp = UpdateCollect;
+        animator.SetBool("isPickingUp", true);
+    }
+    public void UpdateCollect()
     {
         inventoryNSY = FindObjectOfType<InventoryNSY>();
         Item itemCopy = item.GetCopy();
@@ -50,11 +55,9 @@ public class CollectObject : ItemObject, ICollectable
         {
             itemCopy.Destroy();
         }
-
         Interact();
         Destroy(this.gameObject);
     }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Ground"))

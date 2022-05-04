@@ -54,7 +54,7 @@ public class MineObject : ItemObject, IMineable, IDropable
     {
         if (state == MineState.Normal)
         {
-            Debug.Log("초기화");
+            //Debug.Log("초기화");
             if (haveTruckState)
             {
                 animator.SetBool("IsFalling", false);
@@ -97,7 +97,7 @@ public class MineObject : ItemObject, IMineable, IDropable
             print("다른 도구로 시도해주세요.");
             return false;
         }
-        print(nowChopCount);
+        //print(nowChopCount);
         Interact();
 
         animator.SetBool("IsFalling", false);

@@ -38,7 +38,7 @@ namespace NSY.Player
        public Animator SpritePlayerAnim;
 
         //피로도
-        public int Tired;
+        //internal int tired;
 
        
         // Start is called before the first frame update
