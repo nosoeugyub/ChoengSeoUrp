@@ -23,6 +23,7 @@ namespace NSY.Iven
         [SerializeField] Image draggableitem;
         [SerializeField] DropItemArea Dropitemarea;
         [SerializeField] QuestionDialog questionDialog;
+        [SerializeField] PlayerEat PlayerEat;
         //조합 필요한 컴포넌트들
         CraftSlot craftslot;
      
@@ -152,6 +153,8 @@ namespace NSY.Iven
         public void OnDoubleClickEvent(BaseItemSlot itemslot)
         {
             Debug.Log("더블클릭따땅");
+            if(itemslot.item.OutItemType == OutItemType.Food)
+            PlayerEat.Eat(itemslot.item);
         }
 
 

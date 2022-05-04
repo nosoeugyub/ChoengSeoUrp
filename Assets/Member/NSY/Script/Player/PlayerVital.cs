@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,23 +6,24 @@ namespace NSY.Player
 {
     public class PlayerVital : MonoBehaviour
     {
-      public  int MaxVital = 100;
-      public  int CurVital;
+        public int MaxVital = 100;
+        public int CurVital;
 
+        public int Tired { get; set; }
         [SerializeField]
         PlayerController playerController;
 
         [Header("건강")]
         public Image PlayerHealth_image;
-        public int Health { get; set; }
+        //public int Health { get; set; }
         public int MaxHealth;
         public int healthDislatetime = 200;
         private int healthcurrentTime;
 
         private void Start()
         {
-            PlayerHealth_image.fillAmount = Health;
-            Health = 50;
+            PlayerHealth_image.fillAmount = Tired;
+            Tired = 50;
         }
 
         private void Update()
@@ -35,7 +35,7 @@ namespace NSY.Player
         IEnumerator disVital()
         {
 
-            if (Health > 0)
+            if (Tired > 0)
             {
                 if (healthcurrentTime <= healthDislatetime)
                 {
@@ -43,7 +43,7 @@ namespace NSY.Player
                 }
                 else
                 {
-                    Health--;
+                    Tired--;
                     healthcurrentTime = 0;
                 }
             }
@@ -56,7 +56,7 @@ namespace NSY.Player
         }
         void GaugeUpdate()
         {
-            PlayerHealth_image.fillAmount = (float)Health / MaxHealth;
+            PlayerHealth_image.fillAmount = (float)Tired / MaxHealth;
         }
 
     }

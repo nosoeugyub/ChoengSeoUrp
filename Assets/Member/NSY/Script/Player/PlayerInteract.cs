@@ -66,14 +66,26 @@ namespace NSY.Player
             followNpc = npc;
         }
 
+        public void SetIsAnimation(bool isTrue)
+        {
+            isAnimating = isTrue;
+        }
 
         private void InvokeInteract(IInteractble interactable)
         {
+            //PlayerEat playerInteract = interactable.ReturnTF().GetComponent<PlayerEat>();
+            //if (playerInteract != null)
+            //{
+            //    //playerInteract.Eat(playerAnimator.animator);
+            //    //isAnimating = true;
+            //    return;
+            //}
+
             ICollectable collectable = interactable.ReturnTF().GetComponent<ICollectable>();
             if (collectable != null)
             {
                 collectable.Collect(playerAnimator.animator);
-                isAnimating = true;
+                SetIsAnimation(true);
                 return;
             }
             ITalkable talkable = interactable.ReturnTF().GetComponent<ITalkable>();
@@ -99,11 +111,11 @@ namespace NSY.Player
                     {
                         if (!bubbleCollectable.CheckBubble(handItem, playerAnimator.animator))
                         {
-                            isAnimating = false;
+                            SetIsAnimation(false);
                         }
                         else
                         {
-                            isAnimating = true;
+                            SetIsAnimation(true);
                             return;
                         }
                     }
@@ -112,12 +124,11 @@ namespace NSY.Player
                     {
                         if (!mineable.Mine(handItem, playerAnimator.animator))
                         {
-                            isAnimating = false;
+                            SetIsAnimation(false);
                         }
                         else
                         {
-                        Debug.Log("ㅣ애니메이션 츠루");
-                            isAnimating = true;
+                            SetIsAnimation(true);
                             return;
                         }
                     }
@@ -125,7 +136,7 @@ namespace NSY.Player
                     //IBuildable buildable = interactable.ReturnTF().GetComponent<IBuildable>();
                     if (buildAreaObject != null)
                     {
-                        isAnimating = false;
+                        SetIsAnimation(false);
 
                         if (followNpc)
                         {
@@ -142,13 +153,13 @@ namespace NSY.Player
                     //IBuildable buildable = interactable.ReturnTF().GetComponent<IBuildable>();
                     if (buildMat != null)
                     {
-                        isAnimating = false;
+                        SetIsAnimation(false);
                         buildMat.Demolish();
                         return;
                     }
                     break;
             }
-            isAnimating = false;
+            SetIsAnimation(false);
 
 
             ItemObject itemObject = interactable.ReturnTF().GetComponent<ItemObject>();
