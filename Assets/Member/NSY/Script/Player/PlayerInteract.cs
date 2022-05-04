@@ -72,7 +72,8 @@ namespace NSY.Player
             ICollectable collectable = interactable.ReturnTF().GetComponent<ICollectable>();
             if (collectable != null)
             {
-                collectable.Collect();
+                collectable.Collect(playerAnimator.animator);
+                isAnimating = true;
                 return;
             }
             ITalkable talkable = interactable.ReturnTF().GetComponent<ITalkable>();
@@ -115,6 +116,7 @@ namespace NSY.Player
                         }
                         else
                         {
+                        Debug.Log("ㅣ애니메이션 츠루");
                             isAnimating = true;
                             return;
                         }
@@ -164,7 +166,7 @@ namespace NSY.Player
 
             if (Physics.Raycast(ray, out hit, 10000, layerMask))
             {
-                print(hit.collider.name);
+                //print(hit.collider.name);
                 nowInteractable = hit.collider.GetComponent<IInteractble>();
                 if (nowInteractable != null && IsInteracted(nowInteractable))// 클릭한 옵젝이 닿은 옵젝 리스트에 있다면 통과
                 {

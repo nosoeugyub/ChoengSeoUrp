@@ -26,7 +26,7 @@ public interface IEatable : IInteractble
 }
 public interface ICollectable : IInteractble
 {
-    void Collect();
+    void Collect(Animator animator);
 }
 public interface IEventable : IInteractble
 {

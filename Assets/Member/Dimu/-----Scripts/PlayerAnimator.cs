@@ -7,6 +7,7 @@ public class PlayerAnimator : MonoBehaviour
     public Animator animator;
     [SerializeField] PlayerInteract playerInteract;
     public Action Mine;
+    public Action PickUp;
     private void Awake()
     {
         //animator = GetComponent<Animator>();
@@ -24,8 +25,12 @@ public class PlayerAnimator : MonoBehaviour
     }
     public void MineAnimation()
     {
-        print("Mine");
+        //print("Mine");
         Mine();
+    }
+    public void PickUpAnimation()
+    {
+        PickUp();
     }
     public void DeleteAni()
     {
