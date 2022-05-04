@@ -24,7 +24,7 @@ public class NewInventUIManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-
+       
         Craftlist.OnLeftClickEventss += ShowRecipe;
         Craftlist1.OnLeftClickEventss += ShowRecipe;
         Craftlist2.OnLeftClickEventss += ShowRecipe;
@@ -74,7 +74,7 @@ public class NewInventUIManager : MonoBehaviour
             //현재  가지고 있는 갯수
             foreach (ItemSlot item in iven.ItemSlots)
             {
-                Craftlist.craftwind[i].HaveAmount = item.Amount;
+                Craftlist.craftwind[i].HaveAmount += item.item.GetCountItems; 
             }
 
             if (obj.RecipeItem.recipe[i].item == null)
@@ -95,8 +95,10 @@ public class NewInventUIManager : MonoBehaviour
             {
                 if (Craftlist.craftwind[i].Item == iven.ItemSlots[j].item)
                 {
-                    Craftlist.craftwind[i].HaveAmount = iven.ItemSlots[j].Amount;
-                    Craftlist.craftwind[i].RecipeHaverAmount.text = iven.ItemSlots[j].Amount.ToString();
+                    //  Craftlist.craftwind[i].HaveAmount = iven.ItemSlots[j].Amount; 슬롯에서 참조
+                    //   Craftlist.craftwind[i].RecipeHaverAmount.text = iven.ItemSlots[j].Amount.ToString();
+                    Craftlist.craftwind[i].HaveAmount = iven.ItemSlots[j].item.GetCountItems;
+                    Craftlist.craftwind[i].RecipeHaverAmount.text = iven.ItemSlots[j].item.GetCountItems.ToString();
                     if (iven.ItemSlots[j].Amount == 0)
                     {
                         Craftlist.craftwind[i].RecipeHaverAmount.text = " ";
@@ -106,7 +108,14 @@ public class NewInventUIManager : MonoBehaviour
             }
         }
     }
-
+    private bool HasIvenMat()//인벤에 도감이랑 아이템이 1개라도있냐
+    {
+        foreach (ItemSlot itemslot in iven.ItemSlots)
+        {
+           
+        }
+        return true;
+    }
 
 
     public void BtnSolution()
@@ -114,19 +123,29 @@ public class NewInventUIManager : MonoBehaviour
 
         for (int i = 0; i < Craftlist.craftwind.Length; i++)
         {
+            foreach (ItemSlot itemslot in iven.ItemSlots)
+            {
+                if (Craftlist.craftwind[i].RecipeAmount % Craftlist.craftwind[i].HaveAmount != 1)
+                {
+
+                }
+            }
+
             for (int j = 0; j < iven.ItemSlots.Count; j++)
             {
                 if (Craftlist.craftwind[i].RecipeAmount <= Craftlist.craftwind[i].HaveAmount &&
                     Craftlist.craftwind[i]._item == iven.ItemSlots[j].item)///////////////
                 {
                     addresults();
+                   
                     iven.ItemSlots[j].Amount -= Craftlist.craftwind[i].RecipeAmount;
+                    iven.ItemSlots[j].item.GetCountItems -= Craftlist.craftwind[i].RecipeAmount;
+
                     Craftlist.craftwind[i].HaveAmount = iven.ItemSlots[j].Amount;
                     Craftlist.craftwind[i].RecipeHaverAmount.text = iven.ItemSlots[j].Amount.ToString();
                     return;
                 }
-                //else
-                    //return;
+             
 
 
             }
