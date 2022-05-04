@@ -110,27 +110,18 @@ public class NewInventUIManager : MonoBehaviour
 
     public void BtnSolution()
     {
-
-        for (int i = 0; i < Craftlist.craftwind.Length; i++)
+        foreach (ItemSlot itemSlots in iven.ItemSlots)
         {
-           
-            foreach (ItemSlot itemslot in iven.ItemSlots)
+            for (int i = 0; i < Craftlist.craftwind.Length; i++)
             {
-                if (Craftlist.craftwind[i].HaveAmount / Craftlist.craftwind[i].RecipeAmount > 0 && Craftlist.craftwind[i]._item == itemslot.item)//조합 조건
+                if (itemSlots.item.ItemName == Craftlist.craftwind[i].Item.ItemName)
                 {
-
-                    // 목록갯수에서 빼기
-
-                    itemslot.Amount -= Craftlist.craftwind[i].RecipeAmount;
-                                           iven.AddItem(nowSelectItem);
-                    
+                    itemSlots.Amount -= Craftlist.craftwind[i].RecipeAmount;
                 }
             }
-
-          
         }
     }
-    //제거 하는함수
+    
    
 
 
