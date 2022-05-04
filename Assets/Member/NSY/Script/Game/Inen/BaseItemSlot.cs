@@ -119,7 +119,7 @@ namespace NSY.Iven
             }
             item = _item;
             Amount = _amount;
-            _item.GetCountItems = 0;
+            
         }
         protected virtual void OnDisable()
         {

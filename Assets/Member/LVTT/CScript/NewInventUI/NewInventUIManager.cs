@@ -110,16 +110,23 @@ public class NewInventUIManager : MonoBehaviour
 
     public void BtnSolution()
     {
-        foreach (ItemSlot itemSlots in iven.ItemSlots)
+       
+        foreach (CraftWindow itemwid in Craftlist.craftwind)
         {
-            for (int i = 0; i < Craftlist.craftwind.Length; i++)
+            for (int i = 0; i < iven.ItemSlots.Count; i++)
             {
-                if (itemSlots.item.ItemName == Craftlist.craftwind[i].Item.ItemName)
+                if (itemwid.Item == iven.ItemSlots[i].item)
                 {
-                    itemSlots.Amount -= Craftlist.craftwind[i].RecipeAmount;
+                    iven.ItemSlots[i].Amount--;
+                    Debug.Log("fasdf");
                 }
+               
             }
         }
+      
+           
+        
+       
     }
     
    
@@ -208,4 +215,5 @@ public class NewInventUIManager : MonoBehaviour
         isOpen = false;
 
     }
+
 }
