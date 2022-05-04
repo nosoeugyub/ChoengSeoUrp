@@ -97,6 +97,7 @@ public enum InItemType
     //1차 건축자재
     BuildWall, BuildSign, BuildNormal,
     //간이 건축물
+    BuildingItemObj_Essential, BuildingItemObj_Additional,
 }
 //public static Dictionary<int, BuildingBehavior> BuildBuildingData = new Dictionary<int, BuildingBehavior>();//
 //public static Dictionary<int, ItemBehavior> ItemData = new Dictionary<int, ItemBehavior>();
