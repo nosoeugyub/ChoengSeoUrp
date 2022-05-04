@@ -22,7 +22,7 @@ namespace NSY.Iven
 
         public void OnValidate()
         {
-          //  itemCopy.GetCountItems = 0;
+         
             if (inventory == null)
             {
                 inventory = FindObjectOfType<InventoryNSY>();
@@ -44,7 +44,7 @@ namespace NSY.Iven
             {
                 Item itemCopy = item.GetCopy();
                 
-                if (inventory.AddItem(itemCopy))
+                if (inventory.AddItem(item.GetCopy()))
                 {
 
                     itemCopy.GetCountItems++;

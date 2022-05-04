@@ -85,7 +85,7 @@ public class NewInventUIManager : MonoBehaviour
 
 
     }
-    public void FixedUpdate()
+    public void FixedUpdate()  //현재 갯수
     {
 
         for (int i = 0; i < Craftlist.craftwind.Length; i++)
@@ -95,8 +95,7 @@ public class NewInventUIManager : MonoBehaviour
             {
                 if (Craftlist.craftwind[i].Item == iven.ItemSlots[j].item)
                 {
-                    //  Craftlist.craftwind[i].HaveAmount = iven.ItemSlots[j].Amount; 슬롯에서 참조
-                    //   Craftlist.craftwind[i].RecipeHaverAmount.text = iven.ItemSlots[j].Amount.ToString();
+                
                     Craftlist.craftwind[i].HaveAmount = iven.ItemSlots[j].item.GetCountItems;
                     Craftlist.craftwind[i].RecipeHaverAmount.text = iven.ItemSlots[j].item.GetCountItems.ToString();
                     if (iven.ItemSlots[j].Amount == 0)
@@ -108,54 +107,32 @@ public class NewInventUIManager : MonoBehaviour
             }
         }
     }
-    private bool HasIvenMat()//인벤에 도감이랑 아이템이 1개라도있냐
-    {
-        foreach (ItemSlot itemslot in iven.ItemSlots)
-        {
-           
-        }
-        return true;
-    }
-
 
     public void BtnSolution()
     {
 
         for (int i = 0; i < Craftlist.craftwind.Length; i++)
         {
+           
             foreach (ItemSlot itemslot in iven.ItemSlots)
             {
-                if (Craftlist.craftwind[i].RecipeAmount % Craftlist.craftwind[i].HaveAmount != 1)
+                if (Craftlist.craftwind[i].HaveAmount / Craftlist.craftwind[i].RecipeAmount > 0 && Craftlist.craftwind[i]._item == itemslot.item)//조합 조건
                 {
 
+                    // 목록갯수에서 빼기
+
+                    itemslot.Amount -= Craftlist.craftwind[i].RecipeAmount;
+                                           iven.AddItem(nowSelectItem);
+                    
                 }
             }
 
-            for (int j = 0; j < iven.ItemSlots.Count; j++)
-            {
-                if (Craftlist.craftwind[i].RecipeAmount <= Craftlist.craftwind[i].HaveAmount &&
-                    Craftlist.craftwind[i]._item == iven.ItemSlots[j].item)///////////////
-                {
-                    addresults();
-                   
-                    iven.ItemSlots[j].Amount -= Craftlist.craftwind[i].RecipeAmount;
-                    iven.ItemSlots[j].item.GetCountItems -= Craftlist.craftwind[i].RecipeAmount;
-
-                    Craftlist.craftwind[i].HaveAmount = iven.ItemSlots[j].Amount;
-                    Craftlist.craftwind[i].RecipeHaverAmount.text = iven.ItemSlots[j].Amount.ToString();
-                    return;
-                }
-             
-
-
-            }
+          
         }
     }
+    //제거 하는함수
+   
 
-    private void addresults()
-    {
-        iven.AddItem(nowSelectItem);
-    }
 
 
     public void BtnTabSelect(int TabNum)
