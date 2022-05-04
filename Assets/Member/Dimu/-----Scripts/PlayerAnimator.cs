@@ -20,6 +20,7 @@ public class PlayerAnimator : MonoBehaviour
         animator.SetBool("isAxing", false);
         animator.SetBool("isEating", false);
         animator.SetBool("isMagnifying", false);
+        animator.SetBool("isPickingUp", false);
     }
     public void MineAnimation()
     {
