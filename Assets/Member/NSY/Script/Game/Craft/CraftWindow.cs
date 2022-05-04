@@ -82,8 +82,8 @@ namespace NSY.Iven
                 }
             }
         }
-
-       public void MiuseBtn()
+      
+        public void MiuseBtn()
         {
             _haveAmount -= 1;
         }

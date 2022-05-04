@@ -22,6 +22,22 @@ public class Item : ScriptableObject
     [SerializeField] private GameObject itemPrefab;
     [SerializeField] private string usingToolSoundName;
 
+    [SerializeField]
+    private int GetCountitems;
+    public int GetCountItems
+    {
+        get
+        {
+            return GetCountitems;
+        }
+        set
+        {
+            GetCountitems = value;
+           
+
+        }
+    }
+
     public Sprite ItemSprite
     {
         get
@@ -77,6 +93,9 @@ public class Item : ScriptableObject
             inItemType = value;
         }
     }
+
+ 
+
     public string ItemName => itemName;
     public string ItemDescription => itemDescription;
     //public InItemType InItemType => inItemType;
@@ -90,8 +109,13 @@ public class Item : ScriptableObject
     public string UsingToolSoundName => usingToolSoundName;
     //public GameObject ItemPrefab => itemPrefab;
 
+
+ 
+
     //NSY추가 
     public int MaximumStacks = 1;
+
+    
    
     public virtual Item GetCopy()
     {
@@ -102,7 +126,7 @@ public class Item : ScriptableObject
     {
         //Destroy(this);
     }
-
+  
     public int GetNeedCountw(int i)
     {
         return recipe[i].count;

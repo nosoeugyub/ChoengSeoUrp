@@ -40,6 +40,7 @@ namespace NSY.Iven
             set
             {
                 _item = value;
+                
                 if (_item == null && Amount != 0)
                 {
                     Amount = 0;
@@ -78,11 +79,12 @@ namespace NSY.Iven
                 _amount = value;
                 if (_amount < 0)
                 {
-                    
+                    item.GetCountItems = 0;
                     _amount = 0;
                 }
                 if (_amount == 0 && item != null)
                 {
+                    item.GetCountItems = 0;
                     item = null;
                 }
                 if (amountText != null) //&& _item.MaximumStacks > 1 
@@ -117,6 +119,7 @@ namespace NSY.Iven
             }
             item = _item;
             Amount = _amount;
+            _item.GetCountItems = 0;
         }
         protected virtual void OnDisable()
         {
