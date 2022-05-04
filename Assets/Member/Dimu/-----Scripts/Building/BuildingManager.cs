@@ -122,7 +122,7 @@ public enum BuildShape
     //Door
     Circle_Door = 1000, Square_Door,
     //Roof
-    Laugh_Roof = 2000, Triangle_Roof, Square_Roof, Line_Roof,
+    Laugh_Roof = 2000, Triangle_Roof, Square_Roof, Line_Roof, circle_Roof,
     //Window
     Circle_Window = 3000, CircleTwo_Window, Square_Window, SquareTwo_Window, Rectangle_Width_Window, Rectangle_Height_Window,
     Triangle_Window, TriangleTwo_Window, Half_Circle_Window, Half_CircleTwo_Window, Ellipse_Window, Sunting_Window,
