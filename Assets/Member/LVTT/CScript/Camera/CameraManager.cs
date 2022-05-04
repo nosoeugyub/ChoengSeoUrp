@@ -23,7 +23,7 @@ namespace Game.Cam
         [Header("SubCameraList")]
         [SerializeField]
         private GameObject[] virtualCamera = null;
-        [SerializeField]
+    
         bool IsMoveRight;
         //[SerializeField]
         //private CinemachineVirtualCamera [] virtualCamera = null;
@@ -188,7 +188,7 @@ namespace Game.Cam
         public IEnumerator AutoFocusObjectLocation(Transform focusObject, float stayTime, int camNum)
         {
             //카메라의 Followtarget가 원하는 Object로 바꿈
-            ChangeFollowTarger(focusObject, camNum);// camNum = 이 script에서 vísualcamera 배열의 있는 SubCamera 위치
+            ChangeFollowTarger(focusObject, camNum);// camNum = 이 script에서 visualcamera 배열의 있는 SubCamera 위치
             //카메라 뷰 바꿈
             ActiveSubCamera(camNum);
             IsZoom = true;
