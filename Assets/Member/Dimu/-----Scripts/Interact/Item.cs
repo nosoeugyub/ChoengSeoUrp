@@ -14,6 +14,7 @@ public class Item : ScriptableObject
     [SerializeField] private Material itemMaterial;
     [SerializeField] int cleanAmount;
     [SerializeField] int eatAmount;
+
     //[Header("Combination")]
     //[SerializeField] private ingredientNeeded[] necessaryIngredient;
     [Header("MineItemVariable")]
@@ -22,6 +23,23 @@ public class Item : ScriptableObject
     [SerializeField] private int durability;
     [SerializeField] private GameObject itemPrefab;
     [SerializeField] private string usingToolSoundName;
+
+
+    //NSY추가 및 조건 명시
+    //아이템 식별 넘버
+    [SerializeField]
+    private int _ItemNubering;
+    public int ItemNubering
+    {
+        get
+        {
+            return _ItemNubering;
+        }
+        set
+        {
+            _ItemNubering = value;
+        }
+    }
 
     [SerializeField]
     private int GetCountitems;
@@ -141,9 +159,11 @@ public class Item : ScriptableObject
     [Header("레시피")]
     [SerializeField]
     public RecipeIteminfo[] recipe;
-  
-   
-  
+
+    [Header("해제조건")]
+    [SerializeField]
+    public UnlcokIteminfo[] UnlcokIteminfos;
+
 }
 [System.Serializable]
 public class RecipeIteminfo
@@ -155,14 +175,15 @@ public class RecipeIteminfo
     
 }
 
+//해제 조건 아이템
+[System.Serializable]
+public class UnlcokIteminfo
+{
+
+    public Item item;
+
+    public int count;
+
+}
 
 
-//[System.Serializable]
-//public class ingredientNeeded
-//{
-//    [SerializeField]
-//    public Item item;
-
-//    [SerializeField]
-//    public int count;
-//}
