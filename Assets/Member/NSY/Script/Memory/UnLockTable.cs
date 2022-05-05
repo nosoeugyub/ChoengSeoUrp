@@ -7,7 +7,7 @@ using UnityEngine;
 public class UnLockTable : ScriptableObject
 {
     //언락에 성공한 아이템 식별자
-   
+     
 
 
 
