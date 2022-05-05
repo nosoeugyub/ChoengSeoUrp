@@ -79,12 +79,12 @@ namespace NSY.Iven
                 _amount = value;
                 if (_amount < 0)
                 {
-                    item.GetCountItems = 0;
+                    //item.GetCountItems = 0;
                     _amount = 0;
                 }
                 if (_amount == 0 && item != null)
                 {
-                    item.GetCountItems = 0;
+                    //item.GetCountItems = 0;
                     item = null;
                 }
                 if (amountText != null) //&& _item.MaximumStacks > 1 

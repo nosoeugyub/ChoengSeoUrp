@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using NSY.Iven;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 public class NewInventUIManager : MonoBehaviour
@@ -24,7 +25,7 @@ public class NewInventUIManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-       
+
         Craftlist.OnLeftClickEventss += ShowRecipe;
         Craftlist1.OnLeftClickEventss += ShowRecipe;
         Craftlist2.OnLeftClickEventss += ShowRecipe;
@@ -74,7 +75,8 @@ public class NewInventUIManager : MonoBehaviour
             //현재  가지고 있는 갯수
             foreach (ItemSlot item in iven.ItemSlots)
             {
-                Craftlist.craftwind[i].HaveAmount += item.item.GetCountItems; 
+                if (item.item == null) return;
+                Craftlist.craftwind[i].HaveAmount += item.item.GetCountItems;
             }
 
             if (obj.RecipeItem.recipe[i].item == null)
@@ -93,9 +95,8 @@ public class NewInventUIManager : MonoBehaviour
 
             for (int j = 0; j < iven.ItemSlots.Count; j++)
             {
-                if (Craftlist.craftwind[i].Item == iven.ItemSlots[j].item)
+                if (Craftlist.craftwind[i].Item != null && Craftlist.craftwind[i].Item == iven.ItemSlots[j].item)
                 {
-                
                     Craftlist.craftwind[i].HaveAmount = iven.ItemSlots[j].item.GetCountItems;
                     Craftlist.craftwind[i].RecipeHaverAmount.text = iven.ItemSlots[j].item.GetCountItems.ToString();
                     if (iven.ItemSlots[j].Amount == 0)
@@ -110,26 +111,96 @@ public class NewInventUIManager : MonoBehaviour
 
     public void BtnSolution()
     {
-       
+
         foreach (CraftWindow itemwid in Craftlist.craftwind)
         {
+            List<ItemSlot> itemSlots = new List<ItemSlot>();
             for (int i = 0; i < iven.ItemSlots.Count; i++)
             {
+                //특정 템 있는 슬롯 얻어옴
                 if (itemwid.Item == iven.ItemSlots[i].item)
                 {
-                    iven.ItemSlots[i].Amount--;
-                    Debug.Log("fasdf");
+                    if (itemwid.Item == null) return;
+                    if (itemwid.RecipeAmount > iven.ItemSlots[i].item.GetCountItems) return;
+                    itemSlots.Add(iven.ItemSlots[i]);
                 }
-               
             }
+
+            if (itemSlots.Count <= 0) return; //슬롯이 비었다면 취소
+
+            //슬롯 중 숫자가 제일 작은 슬롯 구해옴
+            int ra = itemwid.RecipeAmount;
+
+            //ItemSlot minSlot = itemSlots[0];
+
+            //foreach (var item in itemSlots)
+            //{
+            //    if (item.Amount < minSlot.Amount)
+            //    {
+            //        minSlot = item;
+            //    }
+            //}
+
+            ////계산함
+            //if (minSlot.Amount < ra)//칸 3개, 필요 5개일 경우
+            //{
+            //    minSlot.Amount = 0;
+            //    ra -= minSlot.Amount;
+
+            //    itemSlots.Remove(minSlot); //계산한 슬롯은 리스트에서 제외
+
+            //    minSlot = itemSlots[0]; //무조건 칸 하나 남게 되어있음.
+
+            //    foreach (var item in itemSlots) //다시 최소 슬롯 찾음
+            //    {
+            //        if (item.Amount < minSlot.Amount)
+            //            minSlot = item;
+            //    }
+            //    if (minSlot.Amount < ra)
+            //    {
+            //        minSlot.Amount = 0;
+            //        ra -= minSlot.Amount;
+            //    }
+            //    else
+            //        minSlot.Amount = ra;
+            //}
+            //else
+            //    minSlot.Amount = ra;
+
+            ItemSlot minSlot = itemSlots[itemSlots.Count - 1];
+
+            do
+            {
+                minSlot = itemSlots[itemSlots.Count - 1];
+
+                foreach (var item in itemSlots) //최소 슬롯 찾음
+                {
+                    if (item.Amount < minSlot.Amount)
+                    {
+                        minSlot = item;
+                    }
+                }
+
+                if (minSlot.Amount < ra) //전체 6  민 칸 1개, 필요 2개일 경우 
+                {
+                    minSlot.item.GetCountItems -= minSlot.Amount;//6- 1
+                    ra -= minSlot.Amount; //2 -= 1
+                    minSlot.Amount = 0;
+                    itemSlots.Remove(minSlot);
+                }
+                else
+                    break;
+            }
+            while (ra > 0);// 그런데도
+
+            minSlot.item.GetCountItems -= ra;
+            itemwid.RecipeHaverAmount.text = minSlot.item.GetCountItems.ToString();
+
+            minSlot.Amount -= ra;
         }
-      
-           
-        
-       
     }
-    
-   
+
+
 
 
 

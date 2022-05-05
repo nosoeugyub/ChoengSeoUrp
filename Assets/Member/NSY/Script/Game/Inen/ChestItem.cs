@@ -40,6 +40,7 @@ namespace NSY.Iven
 
         public void Update()
         {
+            isInRange = true;
             if (isInRange && Input.GetKeyDown(KeyCode.E))
             {
                 Item itemCopy = item.GetCopy();
@@ -50,7 +51,7 @@ namespace NSY.Iven
                     itemCopy.GetCountItems++;
                     if (itemCopy.CleanAmount == 0)
                     {
-                        spriteRenderer.color = emptyColor;
+                        //spriteRenderer.color = emptyColor;
                     }
                 }
                 else
