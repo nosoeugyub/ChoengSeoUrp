@@ -52,10 +52,10 @@ namespace NSY.Iven
             set
             {
                 _RecipeAmount = value;
-                   RecipeCurrentAmount.text = _RecipeAmount.ToString();
+                SetRecipeCurrentAmountText(_RecipeAmount.ToString());
                 if (_RecipeAmount == 0)
                 {
-                    RecipeCurrentAmount.text = " ";
+                    SetRecipeCurrentAmountText(" ");
                 }
             }
         }
@@ -70,7 +70,7 @@ namespace NSY.Iven
             set
             {
                 _haveAmount = value;
-                RecipeHaverAmount.text = _haveAmount.ToString();
+                SetRecipeHaverAmountText(_haveAmount.ToString());
                 if (_haveAmount <= 0)
                 {
                     _haveAmount = 0;
@@ -78,7 +78,7 @@ namespace NSY.Iven
                 }
                 if (_haveAmount == 0  && Item != null )
                 {
-                    RecipeHaverAmount.text = " ";
+                    SetRecipeHaverAmountText(" ");
                 }
             }
         }
@@ -86,6 +86,15 @@ namespace NSY.Iven
         public void MiuseBtn()
         {
             _haveAmount -= 1;
+        }
+
+        public void SetRecipeHaverAmountText(string str)
+        {
+            RecipeHaverAmount.text = str;
+        }
+        public void SetRecipeCurrentAmountText(string str)
+        {
+            RecipeCurrentAmount.text = str;
         }
     }
 

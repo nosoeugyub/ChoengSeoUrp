@@ -46,69 +46,47 @@ public class NewInventUIManager : MonoBehaviour
         print("OnLeftClickEventss");
 
         nowSelectItem = obj.RecipeItem;
-        obj.ResultSlotImage.sprite = obj.RecipeItem.ItemSprite;
+        obj.ResultSlotImage.sprite = obj.RecipeItem.ItemSprite; //결과 이미지
         obj.RecipeName.text = obj.RecipeItem.ItemName;
         obj.RecipeExplain.text = obj.RecipeItem.ItemDescription;
-
-
 
         for (int i = 0; i < Craftlist.craftwind.Length; i++)
         {
             Craftlist.craftwind[i]._item = obj.RecipeItem.recipe[i].item;
             if (obj.RecipeItem.recipe[i].item)
-                Craftlist.craftwind[i].reimage = obj.RecipeItem.recipe[i].item.ItemSprite;
+                Craftlist.craftwind[i].GetComponent<Image>().sprite = obj.RecipeItem.recipe[i].item.ItemSprite;
             else
-                Craftlist.craftwind[i].reimage = null;
-
-            Craftlist.craftwind[i].GetComponent<Image>().sprite = Craftlist.craftwind[i].reimage;
-
-
-
-            //갯수
-            Craftlist.craftwind[i].RecipeAmount = obj.RecipeItem.recipe[i].count;
-            Craftlist.craftwind[i].RecipeCurrentAmount.text = obj.RecipeItem.recipe[i].count.ToString();
-            if (obj.RecipeItem.recipe[i].count == 0)
-            {
-                Craftlist.craftwind[i].RecipeCurrentAmount.text = " ";
-                Craftlist.craftwind[i].RecipeHaverAmount.text = " ";
-            }
-            //현재  가지고 있는 갯수
-            foreach (ItemSlot item in iven.ItemSlots)
-            {
-                if (item.item == null) return;
-                Craftlist.craftwind[i].HaveAmount += item.item.GetCountItems;
-            }
-
-            if (obj.RecipeItem.recipe[i].item == null)
             {
                 Craftlist.craftwind[i].GetComponent<Image>().sprite = null;
+                Craftlist.craftwind[i].SetRecipeCurrentAmountText(" ");
+                Craftlist.craftwind[i].SetRecipeHaverAmountText(" ");
+                continue;
             }
+            //갯수
+            Craftlist.craftwind[i].RecipeAmount = obj.RecipeItem.recipe[i].count;
+            Craftlist.craftwind[i].SetRecipeHaverAmountText(obj.RecipeItem.recipe[i].item.GetCountItems.ToString());
         }
-
-
     }
     public void FixedUpdate()  //현재 갯수
     {
 
-        for (int i = 0; i < Craftlist.craftwind.Length; i++)
-        {
+        //for (int i = 0; i < Craftlist.craftwind.Length; i++)
+        //{
 
-            for (int j = 0; j < iven.ItemSlots.Count; j++)
-            {
-                if (Craftlist.craftwind[i].Item != null && Craftlist.craftwind[i].Item == iven.ItemSlots[j].item)
-                {
-                    Craftlist.craftwind[i].HaveAmount = iven.ItemSlots[j].item.GetCountItems;
-                    Craftlist.craftwind[i].RecipeHaverAmount.text = iven.ItemSlots[j].item.GetCountItems.ToString();
-                    if (iven.ItemSlots[j].Amount == 0)
-                    {
-                        Craftlist.craftwind[i].RecipeHaverAmount.text = " ";
-                    }
-                }
-
-            }
-        }
+        //    for (int j = 0; j < iven.ItemSlots.Count; j++)
+        //    {
+        //        if ( Craftlist.craftwind[i].Item == iven.ItemSlots[j].item)
+        //        {
+        //            //Craftlist.craftwind[i].HaveAmount = iven.ItemSlots[j].item.GetCountItems;
+        //            //Craftlist.craftwind[i].RecipeHaverAmount.text = iven.ItemSlots[j].item.GetCountItems.ToString();
+        //            if (iven.ItemSlots[j].Amount == 0)
+        //            {
+        //                Craftlist.craftwind[i].RecipeHaverAmount.text = " ";
+        //            }
+        //        }
+        //    }
+        //}
     }
-
     public void BtnSolution()
     {
 
@@ -130,42 +108,6 @@ public class NewInventUIManager : MonoBehaviour
 
             //슬롯 중 숫자가 제일 작은 슬롯 구해옴
             int ra = itemwid.RecipeAmount;
-
-            //ItemSlot minSlot = itemSlots[0];
-
-            //foreach (var item in itemSlots)
-            //{
-            //    if (item.Amount < minSlot.Amount)
-            //    {
-            //        minSlot = item;
-            //    }
-            //}
-
-            ////계산함
-            //if (minSlot.Amount < ra)//칸 3개, 필요 5개일 경우
-            //{
-            //    minSlot.Amount = 0;
-            //    ra -= minSlot.Amount;
-
-            //    itemSlots.Remove(minSlot); //계산한 슬롯은 리스트에서 제외
-
-            //    minSlot = itemSlots[0]; //무조건 칸 하나 남게 되어있음.
-
-            //    foreach (var item in itemSlots) //다시 최소 슬롯 찾음
-            //    {
-            //        if (item.Amount < minSlot.Amount)
-            //            minSlot = item;
-            //    }
-            //    if (minSlot.Amount < ra)
-            //    {
-            //        minSlot.Amount = 0;
-            //        ra -= minSlot.Amount;
-            //    }
-            //    else
-            //        minSlot.Amount = ra;
-            //}
-            //else
-            //    minSlot.Amount = ra;
 
             ItemSlot minSlot = itemSlots[itemSlots.Count - 1];
 
@@ -194,7 +136,10 @@ public class NewInventUIManager : MonoBehaviour
             while (ra > 0);// 그런데도
 
             minSlot.item.GetCountItems -= ra;
-            itemwid.RecipeHaverAmount.text = minSlot.item.GetCountItems.ToString();
+            itemwid.SetRecipeHaverAmountText(minSlot.item.GetCountItems.ToString());
+
+            nowSelectItem.GetCountItems++;
+            iven.AddItem(nowSelectItem);
 
             minSlot.Amount -= ra;
         }
