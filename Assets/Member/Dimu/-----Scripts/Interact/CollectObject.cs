@@ -21,6 +21,7 @@ public class CollectObject : ItemObject, ICollectable
         canMove = true;
         Invoke("MoveTrue", 0.5f);
     }
+    void DeactiveDelay() => gameObject.SetActive(false);
     public void MoveTrue()
     {
         box.enabled = true;
@@ -56,7 +57,7 @@ public class CollectObject : ItemObject, ICollectable
             itemCopy.Destroy();
         }
         Interact();
-        Destroy(this.gameObject);
+        DeactiveDelay();
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -69,5 +70,10 @@ public class CollectObject : ItemObject, ICollectable
 
     public void EndInteract()
     {
+    }
+    void OnDisable()
+    {
+        ObjectPooler.ReturnToPool(gameObject);  // 한 객체에 한번만
+        CancelInvoke();    // Monobehaviour에 Invoke가 있다면
     }
 }

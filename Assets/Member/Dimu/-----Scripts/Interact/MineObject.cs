@@ -28,7 +28,6 @@ public class MineObject : ItemObject, IMineable, IDropable
     private new void Awake()
     {
         base.Awake();
-
     }
     public void SetDownMat(Material material)
     {
@@ -40,6 +39,7 @@ public class MineObject : ItemObject, IMineable, IDropable
         nowMat = quad.material;
         animator = quad.transform.parent.GetComponent<Animator>();//transform.Find("Quad").
         boxcol = GetComponent<BoxCollider>();
+
     }
 
     IEnumerator Respawn()
@@ -146,9 +146,11 @@ public class MineObject : ItemObject, IMineable, IDropable
             //print("spawn" + 2);
             for (int i = 0; i < item.count; ++i)
             {
-                instantiateItem = Instantiate(item.itemObj) as GameObject;
                 Vector3 randVec = new Vector3(Random.Range(-1.5f, 1.5f), 0, Random.Range(-1.5f, 1.5f));
-                instantiateItem.transform.position = gameObject.transform.position + randVec;
+
+                //instantiateItem = Instantiate(item.itemObj) as GameObject;
+                instantiateItem = ObjectPooler.SpawnFromPool("Twigs", gameObject.transform.position + randVec);
+                //instantiateItem.transform.position = gameObject.transform.position + randVec;
                 //print("spawn" + instantiateItem.name);
             }
         }

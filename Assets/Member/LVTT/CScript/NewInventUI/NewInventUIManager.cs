@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using NSY.Iven;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 public class NewInventUIManager : MonoBehaviour
@@ -24,7 +25,7 @@ public class NewInventUIManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-       
+
         Craftlist.OnLeftClickEventss += ShowRecipe;
         Craftlist1.OnLeftClickEventss += ShowRecipe;
         Craftlist2.OnLeftClickEventss += ShowRecipe;
@@ -45,91 +46,106 @@ public class NewInventUIManager : MonoBehaviour
         print("OnLeftClickEventss");
 
         nowSelectItem = obj.RecipeItem;
-        obj.ResultSlotImage.sprite = obj.RecipeItem.ItemSprite;
+        obj.ResultSlotImage.sprite = obj.RecipeItem.ItemSprite; //결과 이미지
         obj.RecipeName.text = obj.RecipeItem.ItemName;
         obj.RecipeExplain.text = obj.RecipeItem.ItemDescription;
-
-
 
         for (int i = 0; i < Craftlist.craftwind.Length; i++)
         {
             Craftlist.craftwind[i]._item = obj.RecipeItem.recipe[i].item;
             if (obj.RecipeItem.recipe[i].item)
-                Craftlist.craftwind[i].reimage = obj.RecipeItem.recipe[i].item.ItemSprite;
+                Craftlist.craftwind[i].GetComponent<Image>().sprite = obj.RecipeItem.recipe[i].item.ItemSprite;
             else
-                Craftlist.craftwind[i].reimage = null;
-
-            Craftlist.craftwind[i].GetComponent<Image>().sprite = Craftlist.craftwind[i].reimage;
-
-
-
-            //갯수
-            Craftlist.craftwind[i].RecipeAmount = obj.RecipeItem.recipe[i].count;
-            Craftlist.craftwind[i].RecipeCurrentAmount.text = obj.RecipeItem.recipe[i].count.ToString();
-            if (obj.RecipeItem.recipe[i].count == 0)
-            {
-                Craftlist.craftwind[i].RecipeCurrentAmount.text = " ";
-                Craftlist.craftwind[i].RecipeHaverAmount.text = " ";
-            }
-            //현재  가지고 있는 갯수
-            foreach (ItemSlot item in iven.ItemSlots)
-            {
-                Craftlist.craftwind[i].HaveAmount += item.item.GetCountItems; 
-            }
-
-            if (obj.RecipeItem.recipe[i].item == null)
             {
                 Craftlist.craftwind[i].GetComponent<Image>().sprite = null;
+                Craftlist.craftwind[i].SetRecipeCurrentAmountText(" ");
+                Craftlist.craftwind[i].SetRecipeHaverAmountText(" ");
+                continue;
             }
+            //갯수
+            Craftlist.craftwind[i].RecipeAmount = obj.RecipeItem.recipe[i].count;
+            Craftlist.craftwind[i].SetRecipeHaverAmountText(obj.RecipeItem.recipe[i].item.GetCountItems.ToString());
         }
-
-
     }
     public void FixedUpdate()  //현재 갯수
     {
 
-        for (int i = 0; i < Craftlist.craftwind.Length; i++)
-        {
+        //for (int i = 0; i < Craftlist.craftwind.Length; i++)
+        //{
 
-            for (int j = 0; j < iven.ItemSlots.Count; j++)
+        //    for (int j = 0; j < iven.ItemSlots.Count; j++)
+        //    {
+        //        if ( Craftlist.craftwind[i].Item == iven.ItemSlots[j].item)
+        //        {
+        //            //Craftlist.craftwind[i].HaveAmount = iven.ItemSlots[j].item.GetCountItems;
+        //            //Craftlist.craftwind[i].RecipeHaverAmount.text = iven.ItemSlots[j].item.GetCountItems.ToString();
+        //            if (iven.ItemSlots[j].Amount == 0)
+        //            {
+        //                Craftlist.craftwind[i].RecipeHaverAmount.text = " ";
+        //            }
+        //        }
+        //    }
+        //}
+    }
+    public void BtnSolution()
+    {
+
+        foreach (CraftWindow itemwid in Craftlist.craftwind)
+        {
+            List<ItemSlot> itemSlots = new List<ItemSlot>();
+            for (int i = 0; i < iven.ItemSlots.Count; i++)
             {
-                if (Craftlist.craftwind[i].Item == iven.ItemSlots[j].item)
+                //특정 템 있는 슬롯 얻어옴
+                if (itemwid.Item == iven.ItemSlots[i].item)
                 {
-                
-                    Craftlist.craftwind[i].HaveAmount = iven.ItemSlots[j].item.GetCountItems;
-                    Craftlist.craftwind[i].RecipeHaverAmount.text = iven.ItemSlots[j].item.GetCountItems.ToString();
-                    if (iven.ItemSlots[j].Amount == 0)
+                    if (itemwid.Item == null) return;
+                    if (itemwid.RecipeAmount > iven.ItemSlots[i].item.GetCountItems) return;
+                    itemSlots.Add(iven.ItemSlots[i]);
+                }
+            }
+
+            if (itemSlots.Count <= 0) return; //슬롯이 비었다면 취소
+
+            //슬롯 중 숫자가 제일 작은 슬롯 구해옴
+            int ra = itemwid.RecipeAmount;
+
+            ItemSlot minSlot = itemSlots[itemSlots.Count - 1];
+
+            do
+            {
+                minSlot = itemSlots[itemSlots.Count - 1];
+
+                foreach (var item in itemSlots) //최소 슬롯 찾음
+                {
+                    if (item.Amount < minSlot.Amount)
                     {
-                        Craftlist.craftwind[i].RecipeHaverAmount.text = " ";
+                        minSlot = item;
                     }
                 }
 
+                if (minSlot.Amount < ra) //전체 6  민 칸 1개, 필요 2개일 경우 
+                {
+                    minSlot.item.GetCountItems -= minSlot.Amount;//6- 1
+                    ra -= minSlot.Amount; //2 -= 1
+                    minSlot.Amount = 0;
+                    itemSlots.Remove(minSlot);
+                }
+                else
+                    break;
             }
+            while (ra > 0);// 그런데도
+
+            minSlot.item.GetCountItems -= ra;
+            itemwid.SetRecipeHaverAmountText(minSlot.item.GetCountItems.ToString());
+
+            nowSelectItem.GetCountItems++;
+            iven.AddItem(nowSelectItem);
+
+            minSlot.Amount -= ra;
         }
     }
 
-    public void BtnSolution()
-    {
-       
-        foreach (CraftWindow itemwid in Craftlist.craftwind)
-        {
-            for (int i = 0; i < iven.ItemSlots.Count; i++)
-            {
-                if (itemwid.Item == iven.ItemSlots[i].item)
-                {
-                    iven.ItemSlots[i].Amount--;
-                    Debug.Log("fasdf");
-                }
-               
-            }
-        }
-      
-           
-        
-       
-    }
-    
-   
+
 
 
 
