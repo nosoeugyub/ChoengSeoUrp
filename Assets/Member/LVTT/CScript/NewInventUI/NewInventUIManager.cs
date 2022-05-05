@@ -10,9 +10,10 @@ public class NewInventUIManager : MonoBehaviour
     [SerializeField] ScrollRect TopRect;
 
 
-    [SerializeField] CraftList Craftlist;
-    [SerializeField] CraftList Craftlist1;
-    [SerializeField] CraftList Craftlist2;
+    [SerializeField] CraftList[] Craftlists;
+    [SerializeField] CraftWindow[] CraftWindows;
+    //[SerializeField] CraftList Craftlist1;
+    //[SerializeField] CraftList Craftlist2;
     [SerializeField] InventoryNSY iven;
     [SerializeField] Item nowSelectItem;
     public int Sum = 0;
@@ -25,10 +26,10 @@ public class NewInventUIManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-
-        Craftlist.OnLeftClickEventss += ShowRecipe;
-        Craftlist1.OnLeftClickEventss += ShowRecipe;
-        Craftlist2.OnLeftClickEventss += ShowRecipe;
+        foreach (var item in Craftlists)
+        {
+            item.OnLeftClickEventss += ShowRecipe;
+        }
 
 
     }
@@ -39,7 +40,10 @@ public class NewInventUIManager : MonoBehaviour
 
     private void OnDisable()
     {
-        Craftlist.OnLeftClickEventss -= ShowRecipe;
+        foreach (var item in Craftlists)
+        {
+            item.OnLeftClickEventss -= ShowRecipe;
+        }
     }
     public void ShowRecipe(CraftSlot obj)
     {
@@ -50,21 +54,24 @@ public class NewInventUIManager : MonoBehaviour
         obj.RecipeName.text = obj.RecipeItem.ItemName;
         obj.RecipeExplain.text = obj.RecipeItem.ItemDescription;
 
-        for (int i = 0; i < Craftlist.craftwind.Length; i++)
+        for (int i = 0; i < Craftlists[0].craftwind.Length; i++)
         {
-            Craftlist.craftwind[i]._item = obj.RecipeItem.recipe[i].item;
+            Craftlists[0].craftwind[i]._item = obj.RecipeItem.recipe[i].item;
             if (obj.RecipeItem.recipe[i].item)
-                Craftlist.craftwind[i].GetComponent<Image>().sprite = obj.RecipeItem.recipe[i].item.ItemSprite;
+            {
+                CraftWindows[i].GetComponent<Image>().enabled = true;
+                CraftWindows[i].GetComponent<Image>().sprite = obj.RecipeItem.recipe[i].item.ItemSprite;
+            }
             else
             {
-                Craftlist.craftwind[i].GetComponent<Image>().sprite = null;
-                Craftlist.craftwind[i].SetRecipeCurrentAmountText(" ");
-                Craftlist.craftwind[i].SetRecipeHaverAmountText(" ");
+                CraftWindows[i].GetComponent<Image>().enabled = false;
+                CraftWindows[i].SetRecipeCurrentAmountText(" ");
+                CraftWindows[i].SetRecipeHaverAmountText(" ");
                 continue;
             }
             //갯수
-            Craftlist.craftwind[i].RecipeAmount = obj.RecipeItem.recipe[i].count;
-            Craftlist.craftwind[i].SetRecipeHaverAmountText(obj.RecipeItem.recipe[i].item.GetCountItems.ToString());
+            CraftWindows[i].RecipeAmount = obj.RecipeItem.recipe[i].count;
+            CraftWindows[i].SetRecipeHaverAmountText(obj.RecipeItem.recipe[i].item.GetCountItems.ToString());
         }
     }
     public void FixedUpdate()  //현재 갯수
@@ -90,7 +97,7 @@ public class NewInventUIManager : MonoBehaviour
     public void BtnSolution()
     {
 
-        foreach (CraftWindow itemwid in Craftlist.craftwind)
+        foreach (CraftWindow itemwid in CraftWindows)
         {
             List<ItemSlot> itemSlots = new List<ItemSlot>();
             for (int i = 0; i < iven.ItemSlots.Count; i++)
