@@ -255,13 +255,6 @@ namespace DM.Dialog
         public void UpdateDialog(Sentence[] sentences, int sentenceState)
         {
             UpdateDialogText(sentences, sentenceState);
-            //if (dialogLength == nowSentenceIdx)
-            //  LastDialog(sentenceState);
-
-            //if (dialogLength == nowSentenceIdx)
-            //{
-            //    LastDialog(sentenceState);
-            //}
         }
 
         private void UpdateDialogText(Sentence[] sentences, int sentenceState)
@@ -289,6 +282,7 @@ namespace DM.Dialog
             }
             else
             {
+                nextButton.onClick.RemoveAllListeners();
                 nextButton.onClick.AddListener(() =>
                 {
                     UpdateDialog(sentences, sentenceState);
