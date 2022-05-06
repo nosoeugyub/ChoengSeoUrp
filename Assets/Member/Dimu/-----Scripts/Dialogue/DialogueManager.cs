@@ -205,9 +205,9 @@ namespace DM.Dialog
         {
             if (dialogData.haveToHaveAndLikeHouse)//입주 필수 인가?
             {
-                if (nowNpc.IsHaveHouse()) return false;//그렇다면 이 npc는 집을 갖고 있는가?
+                if (!nowNpc.IsHaveHouse()) return false;//그렇다면 이 npc는 집을 갖고 있는가?
                 //if (buildingManager.GetNPCsHouse(dialogData.subjectCharacterID) == null) return false;//그렇다면 이 npc는 집을 갖고 있는가?
-                if (nowNpc.CanGetMyHouse()) return false;//그렇다면 집에 입주 가능 조건 충족했는가?
+                if (!nowNpc.CanGetMyHouse()) return false;//그렇다면 집에 입주 가능 조건 충족했는가?
             }
             if (dialogData.dontHaveToHaveAndLikeHouse)//미입주 필수 인가?
             {

@@ -5,7 +5,8 @@ using UnityEngine;
 public class CollectObject : ItemObject, ICollectable
 {
     public int amount = 1;
-    public float power = 0.3f;
+    public float powerInit = 0.3f;
+    public float power;
     public bool canMove;
     [SerializeField] string soundName = "item_pick";
     BoxCollider box;
@@ -17,8 +18,10 @@ public class CollectObject : ItemObject, ICollectable
     {
         box = GetComponent<BoxCollider>();
         box.enabled = false;
-            SuperManager.Instance.soundManager.PlaySFX("item_drop");
+        SuperManager.Instance.soundManager.PlaySFX("item_drop");
         canMove = true;
+        amount = 0;
+        power = powerInit;
         Invoke("MoveTrue", 0.5f);
     }
     void DeactiveDelay() => gameObject.SetActive(false);
