@@ -15,7 +15,7 @@ public class NewInventUIManager : MonoBehaviour
     //[SerializeField] CraftList Craftlist1;
     //[SerializeField] CraftList Craftlist2;
     [SerializeField] InventoryNSY iven;
-    [SerializeField] Item nowSelectItem;
+    [SerializeField] CraftSlot nowSelectItem;
     public int Sum = 0;
     public int num = 0;
     public int hum = 0;
@@ -30,7 +30,7 @@ public class NewInventUIManager : MonoBehaviour
         {
             item.OnLeftClickEventss += ShowRecipe;
         }
-
+        iven.OnAddItemEvent += ShowRecipe;
 
     }
     private void Start()
@@ -45,11 +45,20 @@ public class NewInventUIManager : MonoBehaviour
             item.OnLeftClickEventss -= ShowRecipe;
         }
     }
+    public void ShowRecipe()
+    {
+        for (int i = 0; i < CraftWindows.Length; i++)
+        {
+            if(nowSelectItem!=null && nowSelectItem.RecipeItem.recipe[i].item !=null)
+            CraftWindows[i].SetRecipeHaverAmountText(nowSelectItem.RecipeItem.recipe[i].item.GetCountItems.ToString());
+
+        }
+    }
     public void ShowRecipe(CraftSlot obj)
     {
         print("OnLeftClickEventss");
 
-        nowSelectItem = obj.RecipeItem;
+        nowSelectItem = obj;
         obj.ResultSlotImage.sprite = obj.RecipeItem.ItemSprite; //결과 이미지
         obj.RecipeName.text = obj.RecipeItem.ItemName;
         obj.RecipeExplain.text = obj.RecipeItem.ItemDescription;
@@ -145,8 +154,8 @@ public class NewInventUIManager : MonoBehaviour
             minSlot.item.GetCountItems -= ra;
             itemwid.SetRecipeHaverAmountText(minSlot.item.GetCountItems.ToString());
 
-            nowSelectItem.GetCountItems++;
-            iven.AddItem(nowSelectItem);
+            nowSelectItem.RecipeItem.GetCountItems++;
+            iven.AddItem(nowSelectItem.RecipeItem);
 
             minSlot.Amount -= ra;
         }
