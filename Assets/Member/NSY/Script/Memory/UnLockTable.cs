@@ -9,7 +9,8 @@ using System;
 
 public class UnLockTable : ScriptableObject
 {
-   
+   [Header("식별자 모음")]
+
     //언락에 성공한 아이템 식별자
     [Header("item 스크립트의 numbering을 적으면 여기에나옴 \n" +
         "해금 레시피 아이템 식별 넘버임")]
@@ -20,11 +21,10 @@ public class UnLockTable : ScriptableObject
     public List<UnlcokIteminfo>  FindLockItem;
 
 
-    //언락에 필요한 아이템
+    //언락에 필요한 아이템 + 초기화
     [Header("해제 될 레시피")]
     [SerializeField]
     private Item _LockItem;
-
     public Item LockItem
     {
         get
@@ -35,13 +35,11 @@ public class UnLockTable : ScriptableObject
         set
         {
             _LockItem = value;
-            itemIdNubering = _LockItem.ItemNubering; //아잉템 넘버
+           
             if (_LockItem != null)
             {
-                FindLockItem.AddRange(_LockItem.UnlcokIteminfos);
-
-
-
+                itemIdNubering = _LockItem.ItemNubering; //아잉템 넘버
+                FindLockItem = new List<UnlcokIteminfo>(LockItem.UnlcokIteminfos);
             }
            
         }
@@ -66,5 +64,7 @@ public class UnLockTable : ScriptableObject
         QuestNubering = _QuestNubering;
         LockItem = _LockItem;
     }
+
+
 
 }
