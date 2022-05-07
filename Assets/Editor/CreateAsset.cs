@@ -240,6 +240,5 @@ public class CreateAsset : MonoBehaviour
             AssetDatabase.Refresh();
             //material.SetTexture("_MainTex", texture);
         }
-
     }
 }
