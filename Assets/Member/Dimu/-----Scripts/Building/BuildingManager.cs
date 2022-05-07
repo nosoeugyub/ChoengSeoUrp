@@ -151,7 +151,7 @@ public enum BuildItemKind { Wall, Roof, Door, Window, Signboard, Etc, Length }
 [System.Serializable]
 public class Condition
 {
-    public List<BuildItemKind> buildItemKind;
+    public BuildItemKind[] buildItemKind;
 
     public BuildVPos[] buildVPos;
     public BuildHPos[] buildHPos;

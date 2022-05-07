@@ -149,7 +149,7 @@ public class MineObject : ItemObject, IMineable, IDropable
                 Vector3 randVec = new Vector3(Random.Range(-1.5f, 1.5f), 0, Random.Range(-1.5f, 1.5f));
 
                 //instantiateItem = Instantiate(item.itemObj) as GameObject;
-                instantiateItem = ObjectPooler.SpawnFromPool("Twigs", gameObject.transform.position + randVec);
+                instantiateItem = ObjectPooler.SpawnFromPool(item.itemObj.name, gameObject.transform.position + randVec);
                 //instantiateItem.transform.position = gameObject.transform.position + randVec;
                 //print("spawn" + instantiateItem.name);
             }

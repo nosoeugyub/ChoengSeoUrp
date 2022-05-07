@@ -11,8 +11,6 @@ public class CreateAsset : MonoBehaviour
         //int count = 0;
         Object[] _textures = Selection.GetFiltered(typeof(Texture2D), SelectionMode.DeepAssets);
         Material material;// = new Material(Resources.Load<Material>("BaseMat"));
-        Material basematerial = new Material(Resources.Load<Material>("BaseMat"));// = new Material(Resources.Load<Material>("BaseMat"));
-        //prefabUtility = Resources.Load<GameObject>("ItemBase");
 
         foreach (Texture2D texture in _textures)
         {

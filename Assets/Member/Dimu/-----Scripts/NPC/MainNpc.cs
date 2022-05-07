@@ -3,10 +3,9 @@ using DM.Dialog;
 using NSY.Manager;
 using NSY.Player;
 using System.Collections.Generic;
-using TT.BuildSystem;
 using UnityEngine;
 
-public enum BuildingLike { Like, Unlike, Cant, None, }
+public enum BuildingLike { Like, Unlike_Shape, Unlike_Count, Unlike_Empty, Cant, None, }
 
 namespace DM.NPC
 {
@@ -73,26 +72,27 @@ namespace DM.NPC
                 SettingBuildingTalk();
                 return;
             }
-            bool canGet = GetBuildingLikeable(buildAreaObject); //점수 
+            BuildingLike canGet = GetBuildingLikeable(buildAreaObject); //점수 
 
-            if (canGet)
-                SetMyHouse(buildAreaObject);
-            else
-                SetMyHouse(null);
+            switch (canGet)
+            {
+                case BuildingLike.Like:
+                    SetMyHouse(buildAreaObject, BuildingLike.Like);
+                    break;
+                default:
+                    SetMyHouse(null, canGet);
+                    break;
+            }
         }
-        public bool CanGetMyHouse()
+        public BuildingLike CanGetMyHouse()
         {
             return GetBuildingLikeable(myHouse);
         }
-        public void SetMyHouse(BuildingBlock block)
+        public void SetMyHouse(BuildingBlock block, BuildingLike l)
         {
-            if (!block)
+            like = l;
+            if (block)
             {
-                like = BuildingLike.Unlike;
-            }
-            else
-            {
-                like = BuildingLike.Like;
                 myHouse = block;
                 myHouse.SetLivingChar(this);
                 environmentManager.PortToHouse();
@@ -101,16 +101,18 @@ namespace DM.NPC
             }
             SettingBuildingTalk();
         }
-        public bool GetBuildingLikeable(BuildingBlock buildingBlock) //bool형
+        public BuildingLike GetBuildingLikeable(BuildingBlock buildingBlock) //bool형
         {
-            if (!buildingBlock) return false;
+            if (!buildingBlock) return BuildingLike.None;
+            if(buildingBlock.GetBuildItemList().Count==0) return BuildingLike.Unlike_Empty;
+
             List<BuildingItemObj> buildItemList = buildingBlock.GetBuildItemList();
 
             int[] ints = new int[wantToBuildCondition.Length];
 
             foreach (BuildingItemObj buildItem in buildItemList)//건축자재 하나씩
             {
-
+                int count = 0;
                 for (int i = 0; i < wantToBuildCondition.Length; i++)
                 {
                     bool canContinue = false;
@@ -124,10 +126,13 @@ namespace DM.NPC
                             canContinue = true;
                             break;
                         }
+                        count++;
                     }
+                    if (wantToBuildCondition[i].buildItemKind.Length != 0 && count == wantToBuildCondition[i].buildItemKind.Length) return BuildingLike.Unlike_Shape;
 
                     if (!canContinue) break;
 
+                    count = 0;
                     foreach (var kind in wantToBuildCondition[i].buildHPos)
                     {
                         canContinue = false;
@@ -137,10 +142,13 @@ namespace DM.NPC
                             canContinue = true;
                             break;
                         }
+                        count++;
                     }
+                    if (wantToBuildCondition[i].buildHPos.Length != 0 && count == wantToBuildCondition[i].buildHPos.Length) return BuildingLike.Unlike_Shape;
 
                     if (!canContinue) break;
 
+                    count = 0;
                     foreach (var kind in wantToBuildCondition[i].buildVPos)
                     {
                         canContinue = false;
@@ -150,10 +158,13 @@ namespace DM.NPC
                             canContinue = true;
                             break;
                         }
+                        count++;
                     }
+                    if (wantToBuildCondition[i].buildVPos.Length != 0 && count == wantToBuildCondition[i].buildVPos.Length) return BuildingLike.Unlike_Shape;
 
                     if (!canContinue) break;
 
+                    count = 0;
                     foreach (var kind in wantToBuildCondition[i].buildSize)
                     {
                         canContinue = false;
@@ -163,10 +174,13 @@ namespace DM.NPC
                             canContinue = true;
                             break;
                         }
+                        count++;
                     }
+                    if (wantToBuildCondition[i].buildSize.Length != 0 && count == wantToBuildCondition[i].buildSize.Length) return BuildingLike.Unlike_Shape;
 
                     if (!canContinue) break;
 
+                    count = 0;
                     foreach (var kind in wantToBuildCondition[i].buildColor)
                     {
                         canContinue = false;
@@ -176,10 +190,13 @@ namespace DM.NPC
                             canContinue = true;
                             break;
                         }
+                        count++;
                     }
+                    if (wantToBuildCondition[i].buildColor.Length != 0 && count == wantToBuildCondition[i].buildColor.Length) return BuildingLike.Unlike_Shape;
 
                     if (!canContinue) break;
 
+                    count = 0;
                     foreach (var kind in wantToBuildCondition[i].buildShape)
                     {
                         canContinue = false;
@@ -189,10 +206,13 @@ namespace DM.NPC
                             canContinue = true;
                             break;
                         }
+                        count++;
                     }
+                    if (wantToBuildCondition[i].buildShape.Length != 0 && count == wantToBuildCondition[i].buildShape.Length) return BuildingLike.Unlike_Shape;
 
                     if (!canContinue) break;
 
+                    count = 0;
                     foreach (var kind in wantToBuildCondition[i].buildThema)
                     {
                         canContinue = false;
@@ -206,30 +226,21 @@ namespace DM.NPC
                             }
                         }
                         if (canContinue) break;
+                        count++;
                     }
+                    if (wantToBuildCondition[i].buildThema.Length != 0 && count == wantToBuildCondition[i].buildThema.Length) return BuildingLike.Unlike_Shape;
 
                     if (!canContinue) break;
 
-                    ////해당 건축자재가 설치된 개수 가져오기
-                    //foreach (var kind in wantToBuildCondition[i].buildCount)
-                    //{
-                    //    canContinue = false;
-                    //    //개수와 비교하기
-
-                    //}
-
-                    //if (!canContinue) break;
-
                     ints[i]++;
-                    //score += preferCondition.likeable;
                 }
             }
 
             for (int i = 0; i < wantToBuildCondition.Length; i++)
             {
-                if(wantToBuildCondition[i].buildCount > ints[i]) 
+                if (wantToBuildCondition[i].buildCount > ints[i])
                 {
-                    return false; // false
+                    return BuildingLike.Unlike_Count; // false
                 }
             }
 
@@ -237,10 +248,10 @@ namespace DM.NPC
             {
                 if (wantToBuildCondition[i].buildPerfactCount > ints[i])
                 {
-                    return false; // false
+                    return BuildingLike.Unlike_Count; // false
                 }
             }
-            return true;
+            return BuildingLike.Like;
         }
 
         public string CanInteract()

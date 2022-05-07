@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using DM.Building;
 using NSY.Iven;
 using NSY.Manager;
 using System.Collections;
@@ -139,6 +140,7 @@ public class EnvironmentManager : MonoBehaviour
 
     private void ComeToPort()//아침이 왔다
     {
+        //if (BuildingBlock.isBuildMode) return;
         if (cleanLevels[cleanLevel] <= Cleanliness)//0레벨기준 10 >= 현재클린 10
         {
             //if (nowNpcStandAtPort != null) //널문제
