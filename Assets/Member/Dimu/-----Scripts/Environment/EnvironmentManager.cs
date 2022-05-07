@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using DM.Building;
 using NSY.Iven;
 using NSY.Manager;
 using System.Collections;
@@ -98,11 +99,12 @@ public class EnvironmentManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.P))
         {
             //a.isHaveRecipeItem = true;
-            days++;
-            print(days);
-            ComeToPort();
+            Cleanliness +=3;
+            //days++;
+            //print(days);
 
         }
+        ComeToPort();
 
         if (canChange)
             Cleanliness = _cleanliness;
@@ -138,25 +140,26 @@ public class EnvironmentManager : MonoBehaviour
 
     private void ComeToPort()//아침이 왔다
     {
+        //if (BuildingBlock.isBuildMode) return;
         if (cleanLevels[cleanLevel] <= Cleanliness)//0레벨기준 10 >= 현재클린 10
         {
-            if (nowNpcStandAtPort != null) //널문제
-            {
-                if (nowNpcStandAtPort.Npctf != null)
-                {
-                    nowNpcStandAtPort.Npctf.position = new Vector3(0, 0, 0);
-                    nowNpcStandAtPort.IsField = false;
-                }
-            }
+            //if (nowNpcStandAtPort != null) //널문제
+            //{
+            //    if (nowNpcStandAtPort.Npctf != null)
+            //    {
+            //        nowNpcStandAtPort.Npctf.position = new Vector3(0, 0, 0);
+            //        nowNpcStandAtPort.IsField = false;
+            //    }
+            //}
             SuperManager.Instance.soundManager.PlaySFX("NPCShip");
             int randnum = UnityEngine.Random.Range(0, npcTfs.Length);
             while (npcTfs[randnum].IsField == true)
                 randnum = UnityEngine.Random.Range(0, npcTfs.Length);
             ComeToPortUIAction(true);
-            nowNpcStandAtPort = npcTfs[randnum];
-
+            //nowNpcStandAtPort = npcTfs[randnum];
+            cleanLevel++;
             npcTfs[randnum].Npctf.gameObject.SetActive(true);
-            npcTfs[randnum].Npctf.position = PortPos.position;
+            npcTfs[randnum].Npctf.position = PortPos.position;// * Random.Range(1f, 3f) ;
             npcTfs[randnum].IsField = true;
 
         }
@@ -178,13 +181,12 @@ public class EnvironmentManager : MonoBehaviour
 
     IEnumerator ComeToPortCor()
     {
-
         yield return new WaitForSeconds(3f);
         ComeToPortUIAction(false);
     }
     public void PortToHouse()
     {
-        nowNpcStandAtPort = null;
+        //nowNpcStandAtPort = null;
         print("Leave"); ++cleanLevel;
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using TT.BuildSystem;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,10 +15,19 @@ namespace DM.Building
         public KeyCode rotateRightKey = KeyCode.D;
 
         [SerializeField] Button[] buildingButtons;
+        [SerializeField] Button buildOffUi;
         [SerializeField] Transform player;
 
         [SerializeField] GameObject cancleUi;
         [SerializeField] GameObject buildingTutorialImg;
+
+
+        public void SetbuildOffButtonEvents(Action buildmodeOff)
+        {
+            // if (buildOffUi.onClick == null)
+            buildOffUi.onClick.RemoveAllListeners();
+                buildOffUi.onClick.AddListener(() => buildmodeOff());
+        }
 
         public void AddBuilding(BuildingBlock buildingBlock)
         {
@@ -99,6 +107,10 @@ namespace DM.Building
         {
             cancleUi.SetActive(isOn);
         }
+        public void BuildOffUiState(bool isOn)
+        {
+            buildOffUi.gameObject.SetActive(isOn);
+        }
         public void TutoUIState(bool isOn)
         {
             buildingTutorialImg.SetActive(isOn);
@@ -113,7 +125,7 @@ public enum BuildColor { None, Red, Orange, Yellow, Green, Blue, Mint, Pupple, W
 public enum BuildMaterial//타이어
 {
     Wood, Stone, Paper, Iron, Gold, Silver, Rubber, Wax, Sand, Grass, Honey, Stick,
-    Brick, StainedGlass, Herringbone, Plain, Slate, Truss, Kiwa, Thatched,Stroke,Cuty, Length
+    Brick, StainedGlass, Herringbone, Plain, Slate, Truss, Kiwa, Thatched, Stroke, Cuty, Length
 }
 public enum BuildShape
 {
@@ -139,7 +151,7 @@ public enum BuildItemKind { Wall, Roof, Door, Window, Signboard, Etc, Length }
 [System.Serializable]
 public class Condition
 {
-    public List<BuildItemKind> buildItemKind;
+    public BuildItemKind[] buildItemKind;
 
     public BuildVPos[] buildVPos;
     public BuildHPos[] buildHPos;

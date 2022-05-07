@@ -72,6 +72,7 @@ namespace DM.Building
             buildButtonFuncAdded = false;
             CamManager = FindObjectOfType<CameraManager>();
             buildManager = FindObjectOfType<BuildingManager>();
+            buildManager.SetbuildOffButtonEvents(BuildModeOff);
         }
         public MainNpc GetLivingChar()
         {
@@ -87,11 +88,6 @@ namespace DM.Building
         }
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.T))
-            {
-                BuildModeOff();
-            }
-
             if (CurBuildMode == BuildMode.BuildHouseMode)
             {
                 ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -240,7 +236,7 @@ namespace DM.Building
             buildButtonFuncAdded = false;
             TutoUI(true);
 
-
+            BuildOffUI(true);
             nowBuildingBlock.GetComponent<BoxCollider>().enabled = false;
 
             CamManager.ChangeFollowTarger(gameObject.transform, 1);
@@ -262,6 +258,7 @@ namespace DM.Building
         {
             buildButtonFuncAdded = false;
             //interactUI.SetActive(false);
+            BuildOffUI(true);
 
             nowBuildingBlock.GetComponent<BoxCollider>().enabled = false;
 
@@ -279,6 +276,7 @@ namespace DM.Building
         public void BuildModeOff()
         {
             if (!isBuildMode && !isBuildDemolishMode) return;
+
             CamManager.DeactiveSubCamera(1);
             CamManager.DeactiveSubCamera(2);
             CamManager.DeactiveSubCamera(3);
@@ -294,7 +292,7 @@ namespace DM.Building
             CancleUI(false);
             SetBuildMode(BuildMode.None);
 
-            if (IsCompleteBuilding())
+            if (nowBuildingBlock.IsCompleteBuilding())
             {
                 SetBuildingState(BuildState.Finish);
                 buildManager.AddBuilding(nowBuildingBlock);
@@ -302,6 +300,7 @@ namespace DM.Building
             else
                 SetBuildingState(BuildState.NotFinish);
 
+            BuildOffUI(false);
             buildManager.PlayerOnOff(true);
             isBuildMode = false;
             isBuildDemolishMode = false;
@@ -312,6 +311,10 @@ namespace DM.Building
         {
             buildManager.CancleUIState(on);
         }
+        public void BuildOffUI(bool on)
+        {
+            buildManager.BuildOffUiState(on);
+        }
         public void TutoUI(bool on)
         {
             buildManager.TutoUIState(on);
@@ -319,15 +322,18 @@ namespace DM.Building
         public bool IsCompleteBuilding()//벽과 문이 있다면 건설 완료 처리
         {
             if (buildState == BuildState.Finish) return true;
-            if (hasWall)
-            {
-                if (PlayerData.BuildBuildingData[BuildingID].amounts[(int)BuildingBehaviorEnum.CompleteBuild] < 1)
-                {
-                    PlayerData.AddValue(BuildingID, (int)BuildingBehaviorEnum.CompleteBuild, PlayerData.BuildBuildingData, ((int)BuildingBehaviorEnum.length));
-                    Debug.Log(PlayerData.BuildBuildingData[BuildingID].amounts[(int)BuildingBehaviorEnum.CompleteBuild]);
-                }
+
+            if (BuildItemList.Count > 0)
                 return true;
-            }
+            //if (hasWall)
+            //{
+            //    if (PlayerData.BuildBuildingData[BuildingID].amounts[(int)BuildingBehaviorEnum.CompleteBuild] < 1)
+            //    {
+            //        PlayerData.AddValue(BuildingID, (int)BuildingBehaviorEnum.CompleteBuild, PlayerData.BuildBuildingData, ((int)BuildingBehaviorEnum.length));
+            //        Debug.Log(PlayerData.BuildBuildingData[BuildingID].amounts[(int)BuildingBehaviorEnum.CompleteBuild]);
+            //    }
+            //    return true;
+            //}
             else return false;
         }
 

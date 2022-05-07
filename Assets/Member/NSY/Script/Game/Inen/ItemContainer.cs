@@ -21,6 +21,7 @@ namespace NSY.Iven
         public event Action<BaseItemSlot> OnEndDragEvent;
         public event Action<BaseItemSlot> OnDragEvent;
         public event Action<BaseItemSlot> OnDropEvent;
+        public event Action OnAddItemEvent;
 
 
         protected virtual void Awake()
@@ -167,9 +168,9 @@ namespace NSY.Iven
                     ItemSlots[i].item = item;
                     ItemSlots[i].Amount++;
                     ItemSlots[i].item.GetCountItems++;
+                    OnAddItemEvent();
 
                     PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.GetItem, PlayerData.ItemData, ((int)ItemBehaviorEnum.length));
-
                     return true;
                 }
             }
@@ -180,8 +181,9 @@ namespace NSY.Iven
                     ItemSlots[i].item = item;
                     ItemSlots[i].Amount++;
                     ItemSlots[i].item.GetCountItems++;
-                    PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.GetItem, PlayerData.ItemData, ((int)ItemBehaviorEnum.length));
+                    OnAddItemEvent();
 
+                    PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.GetItem, PlayerData.ItemData, ((int)ItemBehaviorEnum.length));
                     return true;
                 }
             }

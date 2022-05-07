@@ -10,14 +10,17 @@ public class NewInventUIManager : MonoBehaviour
     [SerializeField] ScrollRect TopRect;
 
 
-    [SerializeField] CraftList Craftlist;
-    [SerializeField] CraftList Craftlist1;
-    [SerializeField] CraftList Craftlist2;
+    [SerializeField] CraftList[] Craftlists;
+    [SerializeField] CraftWindow[] CraftWindows;
+    //[SerializeField] CraftList Craftlist1;
+    //[SerializeField] CraftList Craftlist2;
     [SerializeField] InventoryNSY iven;
-    [SerializeField] Item nowSelectItem;
-    public int Sum = 0;
-    public int num = 0;
-    public int hum = 0;
+    [SerializeField] CraftSlot nowSelectItem;
+
+    [SerializeField] Scrollbar scrollbar;
+
+    public int nowActiveTabIdx;
+
     [Header("열고 닫고 체인지")]
     public bool isOpen;
     public bool isChange;
@@ -25,72 +28,70 @@ public class NewInventUIManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-
-        Craftlist.OnLeftClickEventss += ShowRecipe;
-        Craftlist1.OnLeftClickEventss += ShowRecipe;
-        Craftlist2.OnLeftClickEventss += ShowRecipe;
-
+        foreach (var item in Craftlists)
+        {
+            item.OnLeftClickEventss += ShowRecipe;
+        }
+        iven.OnAddItemEvent += ShowRecipe;
 
     }
     private void Start()
     {
-
+        nowActiveTabIdx = -1;
     }
 
     private void OnDisable()
     {
-        Craftlist.OnLeftClickEventss -= ShowRecipe;
+        foreach (var item in Craftlists)
+        {
+            item.OnLeftClickEventss -= ShowRecipe;
+        }
+    }
+    public void ShowRecipe()
+    {
+        for (int i = 0; i < CraftWindows.Length; i++)
+        {
+            if (nowSelectItem != null && nowSelectItem.RecipeItem.recipe[i].item != null)
+                CraftWindows[i].SetRecipeHaverAmountText(nowSelectItem.RecipeItem.recipe[i].item.GetCountItems.ToString());
+        }
     }
     public void ShowRecipe(CraftSlot obj)
     {
         print("OnLeftClickEventss");
 
-        nowSelectItem = obj.RecipeItem;
+        nowSelectItem = obj;
         obj.ResultSlotImage.sprite = obj.RecipeItem.ItemSprite; //결과 이미지
         obj.RecipeName.text = obj.RecipeItem.ItemName;
         obj.RecipeExplain.text = obj.RecipeItem.ItemDescription;
 
-        for (int i = 0; i < Craftlist.craftwind.Length; i++)
+        for (int i = 0; i < Craftlists[0].craftwind.Length; i++)
         {
-            Craftlist.craftwind[i]._item = obj.RecipeItem.recipe[i].item;
+            Craftlists[0].craftwind[i]._item = obj.RecipeItem.recipe[i].item;
             if (obj.RecipeItem.recipe[i].item)
-                Craftlist.craftwind[i].GetComponent<Image>().sprite = obj.RecipeItem.recipe[i].item.ItemSprite;
+            {
+                CraftWindows[i].GetComponent<Image>().enabled = true;
+                CraftWindows[i].GetComponent<Image>().sprite = obj.RecipeItem.recipe[i].item.ItemSprite;
+            }
             else
             {
-                Craftlist.craftwind[i].GetComponent<Image>().sprite = null;
-                Craftlist.craftwind[i].SetRecipeCurrentAmountText(" ");
-                Craftlist.craftwind[i].SetRecipeHaverAmountText(" ");
+                CraftWindows[i].GetComponent<Image>().enabled = false;
+                CraftWindows[i].SetRecipeCurrentAmountText(" ");
+                CraftWindows[i].SetRecipeHaverAmountText(" ");
                 continue;
             }
             //갯수
-            Craftlist.craftwind[i].RecipeAmount = obj.RecipeItem.recipe[i].count;
-            Craftlist.craftwind[i].SetRecipeHaverAmountText(obj.RecipeItem.recipe[i].item.GetCountItems.ToString());
+            CraftWindows[i].RecipeAmount = obj.RecipeItem.recipe[i].count;
+            CraftWindows[i].SetRecipeHaverAmountText(obj.RecipeItem.recipe[i].item.GetCountItems.ToString());
         }
     }
     public void FixedUpdate()  //현재 갯수
     {
-
-        //for (int i = 0; i < Craftlist.craftwind.Length; i++)
-        //{
-
-        //    for (int j = 0; j < iven.ItemSlots.Count; j++)
-        //    {
-        //        if ( Craftlist.craftwind[i].Item == iven.ItemSlots[j].item)
-        //        {
-        //            //Craftlist.craftwind[i].HaveAmount = iven.ItemSlots[j].item.GetCountItems;
-        //            //Craftlist.craftwind[i].RecipeHaverAmount.text = iven.ItemSlots[j].item.GetCountItems.ToString();
-        //            if (iven.ItemSlots[j].Amount == 0)
-        //            {
-        //                Craftlist.craftwind[i].RecipeHaverAmount.text = " ";
-        //            }
-        //        }
-        //    }
-        //}
+        scrollbar.size = 0;
+        print(nowActiveTabIdx);
     }
     public void BtnSolution()
     {
-
-        foreach (CraftWindow itemwid in Craftlist.craftwind)
+        foreach (CraftWindow itemwid in CraftWindows)
         {
             List<ItemSlot> itemSlots = new List<ItemSlot>();
             for (int i = 0; i < iven.ItemSlots.Count; i++)
@@ -138,98 +139,61 @@ public class NewInventUIManager : MonoBehaviour
             minSlot.item.GetCountItems -= ra;
             itemwid.SetRecipeHaverAmountText(minSlot.item.GetCountItems.ToString());
 
-            nowSelectItem.GetCountItems++;
-            iven.AddItem(nowSelectItem);
+            nowSelectItem.RecipeItem.GetCountItems++;
+            iven.AddItem(nowSelectItem.RecipeItem);
 
             minSlot.Amount -= ra;
         }
     }
 
-
-
-
-
     public void BtnTabSelect(int TabNum)
     {
-
-
-        Open();
-        for (TabuiNumber = 0; TabuiNumber < TabUI.Length; TabuiNumber++)
+        foreach (var item in TabUI)
         {
-
-            TabUI[TabuiNumber].SetActive(false);
-
+            item.SetActive(false);
         }
-        TabuiNumber = TabNum;
-
         TabUI[TabNum].SetActive(true);
 
-        if (TabUI[0].activeSelf == true)
+
+        if (nowActiveTabIdx == TabNum)//같은탭을 눌렀다면
         {
-            Sum += 2;
-            num = 0;
-            hum = 0;
-            if (Sum == 4)
-            {
-
-                close();
-
-            }
+            //nowActiveTabIdx = -1;
+            if (isOpen == false) Open(); //닫혀있을 때는 열리기
+            else close();
         }
-        if (TabUI[1].activeSelf == true)
+        else //다르면
         {
-            Sum = 0;
-            num += 3;
-            hum = 0;
-            if (num == 6)
-            {
-
-                close();
-
-            }
-        }
-        if (TabUI[2].activeSelf == true)
-        {
-            Sum = 0;
-            num = 0;
-            hum += 4;
-            if (hum == 8)
-            {
-
-                close();
-
-            }
+            nowActiveTabIdx = TabNum;
+            if (isOpen == false) Open(); //닫혀있을 때는 열리기
         }
         TopRect.content = TabUI[TabNum].GetComponent<RectTransform>();
-
-
-
-
     }
 
     public void Open()
     {
-
-
         if (isOpen == false)
         {
-            BG.DOLocalMoveX(707, 1).SetEase(Ease.OutQuart);
-            invenBtn.DOLocalMoveX(1294, 1).SetEase(Ease.OutQuart);
+            BG.DOLocalMoveX(743, 1).SetEase(Ease.OutQuart);
+            invenBtn.DOLocalMoveX(458 + 25, 1).SetEase(Ease.OutQuart);
             isOpen = true;
         }
-
-
     }
-    int a = 0;
+
+    public void MoveTabs(int index)
+    {
+        for (int i = 0; i < invenBtn.childCount; i++)
+        {
+            if (index == i)
+                invenBtn.GetChild(i).DOLocalMoveX(0, 1).SetEase(Ease.OutQuart);
+            else
+                invenBtn.GetChild(i).DOLocalMoveX(25, 1).SetEase(Ease.OutQuart);
+        }
+    }
     public void close()
     {
-        Sum = 0;
-        num = 0;
-        hum = 0;
-        BG.DOLocalMoveX(1212.46f, 1).SetEase(Ease.OutQuart);
-        invenBtn.DOLocalMoveX(1797.24f, 1).SetEase(Ease.OutQuart);
+        BG.DOLocalMoveX(1182, 1).SetEase(Ease.OutQuart);
+        invenBtn.DOLocalMoveX(922, 1).SetEase(Ease.OutQuart);
         isOpen = false;
-
     }
 
 }

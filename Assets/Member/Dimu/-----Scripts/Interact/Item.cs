@@ -135,8 +135,10 @@ public class Item : ScriptableObject
     //NSY추가 
     public int MaximumStacks = 1;
 
-    
-   
+    private void OnEnable()
+    {
+        GetCountItems = 0;
+    }
     public virtual Item GetCopy()
     {
         return this;
