@@ -87,7 +87,7 @@ public class NewInventUIManager : MonoBehaviour
     public void FixedUpdate()  //현재 갯수
     {
         scrollbar.size = 0;
-        print(nowActiveTabIdx);
+
     }
     public void BtnSolution()
     {

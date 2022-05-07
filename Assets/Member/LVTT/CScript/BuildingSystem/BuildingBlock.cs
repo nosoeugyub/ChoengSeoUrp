@@ -46,7 +46,7 @@ namespace DM.Building
         private float BuildItemScaleVar = 0.01f;
         private float BuildItemRotationVar = 1;
 
-        private float BuildItemGap = 0.0002f;
+        private float BuildItemGap = 3f;
 
 
         RaycastHit hit;
@@ -95,7 +95,7 @@ namespace DM.Building
 
                 if (Input.GetMouseButtonDown(0))
                 {
-                    print("MouseDown");
+                    //print("MouseDown");
                     if (curInteractObj == null) return;
 
                     if (Physics.Raycast(ray, out hit, 10000, layerMask))
@@ -374,58 +374,58 @@ namespace DM.Building
         public void BtnSpawnHouseBuildItem(Item spawnObj)
         {
             Vector3 spawnPos = HouseBuild.transform.position;
-            spawnPos.y = HouseBuild.transform.position.y + areaHeightsize / 2;
 
-            if (BuildItemList.Count == 0)
-            {
-                if (spawnObj.InItemType == InItemType.BuildWall)
-                    hasWall = true;
-            }
-            else if (spawnObj.InItemType == InItemType.BuildWall)
-            {
-                float bigZinWalls = 999999;
-                foreach (GameObject item in BuildItemList)
-                {
-                    if (item.GetComponent<BuildingItemObj>().GetInItemType() == InItemType.BuildWall)
-                    {
-                        if (bigZinWalls > item.transform.position.z)
-                        {
-                            bigZinWalls = item.transform.position.z;
-                        }
+            //if (BuildItemList.Count == 0)
+            //{
+            //    if (spawnObj.InItemType == InItemType.BuildWall)
+            //        hasWall = true;
+            //}
+            //else if (spawnObj.InItemType == InItemType.BuildWall)
+            //{
+            //    float bigZinWalls = 999999;
+            //    foreach (GameObject item in BuildItemList)
+            //    {
+            //        if (item.GetComponent<BuildingItemObj>().GetInItemType() == InItemType.BuildWall)
+            //        {
+            //            if (bigZinWalls > item.transform.position.z)
+            //            {
+            //                bigZinWalls = item.transform.position.z;
+            //            }
 
-                        item.transform.position
-                         = new Vector3(item.transform.position.x, item.transform.position.y, item.transform.position.z + BuildItemGap / 2);
-                    }
-                    if (item.GetComponent<BuildingItemObj>().GetInItemType() == InItemType.BuildNormal)
-                    {
-                        item.transform.position
-                         = new Vector3(item.transform.position.x, item.transform.position.y, item.transform.position.z - BuildItemGap / 2);
-                    }
-                }
-                spawnPos.z = bigZinWalls - BuildItemGap / 2;// when the building is facing South
-                hasWall = true;
-                SuperManager.Instance.inventoryManager.CheckCanBuildItem(nowBuildingBlock);
-            }
-            else
-            {
-                if (spawnObj.InItemType == InItemType.BuildWall) hasDoor = true;
+            //            item.transform.position
+            //             = new Vector3(item.transform.position.x, item.transform.position.y, item.transform.position.z + BuildItemGap / 2);
+            //        }
+            //        if (item.GetComponent<BuildingItemObj>().GetInItemType() == InItemType.BuildNormal)
+            //        {
+            //            item.transform.position
+            //             = new Vector3(item.transform.position.x, item.transform.position.y, item.transform.position.z - BuildItemGap / 2);
+            //        }
+            //    }
+            //    spawnPos.z = bigZinWalls - BuildItemGap / 2;// when the building is facing South
+            //    hasWall = true;
+            //    SuperManager.Instance.inventoryManager.CheckCanBuildItem(nowBuildingBlock);
+            //}
+            //else
+            //{
+            //if (spawnObj.InItemType == InItemType.BuildWall) hasDoor = true;
 
-                foreach (GameObject item in BuildItemList)
-                {
-                    item.transform.position
-                        = new Vector3(item.transform.position.x, item.transform.position.y, item.transform.position.z + BuildItemGap / 2);
-                }
-                spawnPos.z = spawnPos.z - (BuildItemGap / 2 * BuildItemList.Count);// when the building is facing South
+            foreach (GameObject item in BuildItemList)
+            {
+                item.transform.position += item.transform.forward * BuildItemGap / 2;
+            print(item.transform.position.z);
+                //item.transform.position
+                //      = new Vector3(item.transform.position.x, item.transform.position.y, item.transform.position.z + BuildItemGap / 2);
             }
-            //print(spawnPos.z);
+            spawnPos += HouseBuild.forward * -(BuildItemGap/2 * BuildItemList.Count);// when the building is facing South
+            //}
             CancleUI(true);
+            spawnPos.y = HouseBuild.transform.position.y + areaHeightsize / 2;
             GameObject newPrefab = Instantiate(spawnObj.ItemPrefab, spawnPos, Quaternion.identity, HouseBuild.transform);
             newPrefab.transform.localRotation = Quaternion.Euler(0, 0, 0);
             newPrefab.GetComponent<BuildingItemObj>().SetParentBuildArea(nowBuildingBlock);
             newPrefab.name = spawnObj.name;
             AddBuildItemToList(newPrefab);
             FindObjectOfType<EnvironmentManager>().ChangeCleanliness(newPrefab.GetComponent<BuildingItemObj>().GetItem().CleanAmount);
-
         }
 
         void BuildingItemObjAndSorting()
@@ -433,25 +433,31 @@ namespace DM.Building
             int frontCount = 0;
             foreach (GameObject item in BuildItemList)
             {
-                if (curInteractObj.GetInItemType() == InItemType.BuildWall)//현재오브젝트가 벽일때
-                {
-                    if (item.GetComponent<BuildingItemObj>().GetInItemType() != InItemType.BuildWall) continue;//선택한게 벽이 아니라면
-                }
-                else if (curInteractObj.GetInItemType() == InItemType.BuildNormal)//현재오브젝트가 벽일때
-                {
-                    if (item.GetComponent<BuildingItemObj>().GetInItemType() != InItemType.BuildNormal) continue;//선택한게 일반이 아니라면
-                }
+                //if (curInteractObj.GetInItemType() == InItemType.BuildWall)//현재오브젝트가 벽일때
+                //{
+                //    if (item.GetComponent<BuildingItemObj>().GetInItemType() != InItemType.BuildWall) continue;//선택한게 벽이 아니라면
+                //}
+                //else if (curInteractObj.GetInItemType() == InItemType.BuildNormal)//현재오브젝트가 벽 아닐때
+                //{
+                //    if (item.GetComponent<BuildingItemObj>().GetInItemType() != InItemType.BuildNormal) continue;//선택한게 일반이 아니라면
+                //}
 
-                float bigZinWalls = curInteractObj.transform.position.z;//클릭한 오브젝트의 z값
-                if (bigZinWalls <= item.transform.position.z) continue;//선택한게 다른 옵젝보다 더 가깝다면 검사 패스
+                float bigZinWalls = curInteractObj.transform.localPosition.z;//클릭한 오브젝트의 z값
 
-                item.transform.position
-                 = new Vector3(item.transform.position.x, item.transform.position.y, item.transform.position.z + BuildItemGap);
+                //print(bigZinWalls +" / "+ item.transform.localPosition.z);
+
+                if (bigZinWalls <= item.transform.localPosition.z) continue;//선택한게 다른 옵젝보다 더 가깝다면 검사 패스 z가 크면 멀음
+
+                item.transform.position += item.transform.forward * BuildItemGap;
+
+                //item.transform.position = new Vector3(item.transform.position.x, item.transform.position.y, Mathf.Round((item.transform.position.z + BuildItemGap) *10000)*0.0001f);
                 frontCount++;
+                print(frontCount);
             }
-            curInteractObj.transform.position =
-                    new Vector3(curInteractObj.transform.position.x, curInteractObj.transform.position.y, curInteractObj.transform.position.z - (BuildItemGap * frontCount));
-            print("sorting");
+
+            curInteractObj.transform.position += curInteractObj.transform.forward * -(BuildItemGap * frontCount);
+            //curInteractObj.transform.position =
+            //new Vector3(curInteractObj.transform.position.x, curInteractObj.transform.position.y, curInteractObj.transform.position.z - (BuildItemGap * frontCount));
         }
         /// </summary>
 
@@ -473,11 +479,15 @@ namespace DM.Building
         {
             buildState = buildstate;
         }
-        public float DistanceFromHouseBuildTo(Vector3 movePos)
+        public float DistanceToNowBuildItem(Vector3 movePos)
         {
             Vector3 VecY = new Vector3(HouseBuild.transform.position.x, 0, HouseBuild.transform.position.z);
             Vector3 moveposY = new Vector3(movePos.x, 0, movePos.z);
-            return Vector3.Distance(moveposY, VecY);
+            float dist = Vector3.Distance(moveposY, VecY);
+            float disc = ((BuildItemList.Count - 1f) / 2f) * BuildItemGap;
+            dist -= disc;
+
+            return dist;
 
         }
         public void EndInteract()
