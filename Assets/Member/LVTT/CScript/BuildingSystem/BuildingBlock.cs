@@ -46,7 +46,7 @@ namespace DM.Building
         private float BuildItemScaleVar = 0.01f;
         private float BuildItemRotationVar = 1;
 
-        private float BuildItemGap = 3f;
+        private float BuildItemGap = 0.0001f;
 
 
         RaycastHit hit;
