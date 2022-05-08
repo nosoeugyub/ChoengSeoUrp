@@ -1,5 +1,7 @@
 ﻿using TT.BuildSystem;
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "New Item", menuName = "Item")]
 public class Item : ScriptableObject
@@ -159,13 +161,9 @@ public class Item : ScriptableObject
     }
 
     [Header("레시피")]
-    [SerializeField]
     public RecipeIteminfo[] recipe;
 
-    [Header("해제조건")]
-    [SerializeField]
-    public UnlcokIteminfo[] UnlcokIteminfos;
-
+    public UnlcokIteminfo[] UnlockItem;
 }
 [System.Serializable]
 public class RecipeIteminfo
@@ -181,9 +179,9 @@ public class RecipeIteminfo
 [System.Serializable]
 public class UnlcokIteminfo
 {
-
+    [Header("잠금해제할 아이템")]
     public Item item;
-
+    [Header("잠금해제할 아이템의 갯수")]
     public int count;
 
 }

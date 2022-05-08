@@ -4,66 +4,55 @@ using UnityEngine;
 using System;
 
 
+[System.Serializable]
+
+
+
 //조건상세테이블
 [CreateAssetMenu(fileName = "Lockitems", menuName = "LockItemDatatable")]
 
 public class UnLockTable : ScriptableObject
 {
-   [Header("식별자 모음")]
-
-    //언락에 성공한 아이템 식별자
-    [Header("item 스크립트의 numbering을 적으면 여기에나옴 \n" +
-        "해금 레시피 아이템 식별 넘버임")]
-    [Space(10)]
-    public int itemIdNubering;
-    [Space(10)]
-    [Header("해제에 필요한 아이템들")]
-    public List<UnlcokIteminfo>  FindLockItem;
-
-
-    //언락에 필요한 아이템 + 초기화
-    [Header("해제 될 레시피")]
+   
+   //언락에 필요한 아이템 + 초기화
+   [Header("잠겨있는  아이템")]
     [SerializeField]
-    private Item _LockItem;
-    public Item LockItem
+    public Item[] _LockItem;
+    public Item this[int itemIndex]
     {
         get
         {
-            return _LockItem;
+            if (itemIndex >= _LockItem.Length)
+            {
+                Debug.Log("아니 인덱스 개크다니깐");
+                return _LockItem[0];
+            }
+            else
+            {
+                return _LockItem[itemIndex];
+            }
+          
         }
 
         set
         {
-            _LockItem = value;
            
-            if (_LockItem != null)
+            if (itemIndex >= _LockItem.Length)
             {
-                itemIdNubering = _LockItem.ItemNubering; //아잉템 넘버
-                FindLockItem = new List<UnlcokIteminfo>(LockItem.UnlcokIteminfos);
+                Debug.Log("인덱스 너무 큼!");
+            }
+            else
+            {
+                _LockItem[itemIndex] = value;
             }
            
         }
     }
 
-        //언락 필요한 퀘스트 넘버 프로퍼티
-        private int _QuestNubering;
-        public int QuestNubering
-        {
-            get
-            {
-                return _QuestNubering;
-            }
-            set
-            {
-                _QuestNubering = value;
-            }
-        }
 
-    private void OnValidate()
-    {
-        QuestNubering = _QuestNubering;
-        LockItem = _LockItem;
-    }
+    
+
+
 
 
 
