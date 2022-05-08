@@ -234,6 +234,7 @@ public class CreateAsset : MonoBehaviour
 
             so.MaximumStacks = 5;
             so.InItemType = InItemType.BuildNormal;
+            so.recipe = new RecipeIteminfo[3];
 
             AssetDatabase.CreateAsset(so, string.Format("{0}.asset", filename));
 
@@ -241,4 +242,36 @@ public class CreateAsset : MonoBehaviour
             //material.SetTexture("_MainTex", texture);
         }
     }
+    //[MenuItem("Assets/FixAssets_BuildObj_ScriptableObj")]
+    //static void FixAssets_BuildObj_ScriptableObj()
+    //{
+    //    Object[] _textures = Selection.GetFiltered(typeof(Texture2D), SelectionMode.DeepAssets);
+    //    Item so;
+
+    //    foreach (Texture2D texture in _textures)
+    //    {
+    //        string path = AssetDatabase.GetAssetPath(texture);
+    //        string filename = path.Substring(0, path.Length - 7);
+
+    //        //so = ScriptableObject.CreateInstance<Item>();
+    //        so = AssetDatabase.LoadAssetAtPath(string.Format(path), typeof(Item)) as Item;
+    //        Debug.Log(so);
+    //        //so.ItemSprite = tests;
+
+    //        //Material testm = AssetDatabase.LoadAssetAtPath(string.Format(string.Format("{0}.mat", path.Substring(0, path.Length - 7))), typeof(Material)) as Material;
+    //        //so.ItemMaterial = testm;
+
+    //        //GameObject testg = AssetDatabase.LoadAssetAtPath(string.Format(string.Format("{0}.prefab", path.Substring(0, path.Length - 7))), typeof(GameObject)) as GameObject;
+    //        //so.ItemPrefab = testg;
+
+    //        so.MaximumStacks = 5;
+    //        //so.InItemType = InItemType.BuildNormal;
+    //        so.recipe = new RecipeIteminfo[3];
+
+    //        AssetDatabase.(so, string.Format("{0}.asset", filename));
+
+    //        AssetDatabase.Refresh();
+    //        //material.SetTexture("_MainTex", texture);
+    //    }
+    //}
 }

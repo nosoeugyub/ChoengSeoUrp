@@ -10,7 +10,7 @@ public class NewInventUIManager : MonoBehaviour
     [SerializeField] ScrollRect TopRect;
 
 
-    [SerializeField] CraftList[] Craftlists;
+    //[SerializeField] CraftList[] Craftlists;
     [SerializeField] CraftWindow[] CraftWindows;
     //[SerializeField] CraftList Craftlist1;
     //[SerializeField] CraftList Craftlist2;
@@ -28,12 +28,20 @@ public class NewInventUIManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        foreach (var item in Craftlists)
+        for (int i = 0; i < TabUI.Length; i++)
         {
-            item.OnLeftClickEventss += ShowRecipe;
+            for (int j = 1; j < TabUI[i].transform.childCount; j++)
+            {
+                TabUI[i].transform.GetChild(j).GetComponent<CraftList>().OnLeftClickEventss += ShowRecipe;
+            }
         }
-        iven.OnAddItemEvent += ShowRecipe;
 
+        //foreach (var item in Craftlists)
+        //{
+        //    item.OnLeftClickEventss += ShowRecipe;
+        //}
+
+        iven.OnAddItemEvent += ShowRecipe;
     }
     private void Start()
     {
@@ -42,9 +50,12 @@ public class NewInventUIManager : MonoBehaviour
 
     private void OnDisable()
     {
-        foreach (var item in Craftlists)
+       for (int i = 0; i < TabUI.Length; i++)
         {
-            item.OnLeftClickEventss -= ShowRecipe;
+            for (int j = 1; j < TabUI[i].transform.childCount; j++)
+            {
+                TabUI[i].transform.GetChild(j).GetComponent<CraftList>().OnLeftClickEventss -= ShowRecipe;
+            }
         }
     }
     public void ShowRecipe()
@@ -64,9 +75,9 @@ public class NewInventUIManager : MonoBehaviour
         obj.RecipeName.text = obj.RecipeItem.ItemName;
         obj.RecipeExplain.text = obj.RecipeItem.ItemDescription;
 
-        for (int i = 0; i < Craftlists[0].craftwind.Length; i++)
+        for (int i = 0; i < CraftWindows.Length; i++)
         {
-            Craftlists[0].craftwind[i]._item = obj.RecipeItem.recipe[i].item;
+            CraftWindows[i]._item = obj.RecipeItem.recipe[i].item;
             if (obj.RecipeItem.recipe[i].item)
             {
                 CraftWindows[i].GetComponent<Image>().enabled = true;
