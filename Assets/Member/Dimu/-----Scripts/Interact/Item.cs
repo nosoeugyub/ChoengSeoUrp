@@ -120,7 +120,8 @@ public class Item : ScriptableObject
     private void OnEnable()
     {
         GetCountItems = 0;
-
+        //itemName = itemPrefab.name;
+        //Debug.Log(itemName);
     }
     public virtual Item GetCopy()
     {

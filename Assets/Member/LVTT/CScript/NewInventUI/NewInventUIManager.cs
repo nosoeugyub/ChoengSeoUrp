@@ -50,7 +50,7 @@ public class NewInventUIManager : MonoBehaviour
 
     private void OnDisable()
     {
-       for (int i = 0; i < TabUI.Length; i++)
+        for (int i = 0; i < TabUI.Length; i++)
         {
             for (int j = 1; j < TabUI[i].transform.childCount; j++)
             {
@@ -102,32 +102,23 @@ public class NewInventUIManager : MonoBehaviour
     }
     public void BtnSolution()
     {
-        foreach (CraftWindow itemwid in CraftWindows)
-        {
-            List<ItemSlot> itemSlots = new List<ItemSlot>();
-            for (int i = 0; i < iven.ItemSlots.Count; i++)
-            {
-                //특정 템 있는 슬롯 얻어옴
-                if (itemwid.Item == iven.ItemSlots[i].item)
-                {
-                    if (itemwid.Item == null) return;
-                    if (itemwid.RecipeAmount > iven.ItemSlots[i].item.GetCountItems) return;
-                    itemSlots.Add(iven.ItemSlots[i]);
-                }
-            }
+        List<List<ItemSlot>> itemSlots = CanCraftItem();
+        if (itemSlots == null) return;
 
-            if (itemSlots.Count <= 0) return; //슬롯이 비었다면 취소
+        for (int i = 0; i < CraftWindows.Length; i++)
+        {
+            if(itemSlots[i].Count==0)continue;
 
             //슬롯 중 숫자가 제일 작은 슬롯 구해옴
-            int ra = itemwid.RecipeAmount;
+            int ra = CraftWindows[i].RecipeAmount;
 
-            ItemSlot minSlot = itemSlots[itemSlots.Count - 1];
+            ItemSlot minSlot = itemSlots[i][itemSlots[i].Count - 1];
 
             do
             {
-                minSlot = itemSlots[itemSlots.Count - 1];
+                minSlot = itemSlots[i][itemSlots[i].Count - 1];
 
-                foreach (var item in itemSlots) //최소 슬롯 찾음
+                foreach (var item in itemSlots[i]) //최소 슬롯 찾음
                 {
                     if (item.Amount < minSlot.Amount)
                     {
@@ -140,7 +131,7 @@ public class NewInventUIManager : MonoBehaviour
                     minSlot.item.GetCountItems -= minSlot.Amount;//6- 1
                     ra -= minSlot.Amount; //2 -= 1
                     minSlot.Amount = 0;
-                    itemSlots.Remove(minSlot);
+                    itemSlots[i].Remove(minSlot);
                 }
                 else
                     break;
@@ -148,13 +139,36 @@ public class NewInventUIManager : MonoBehaviour
             while (ra > 0);// 그런데도
 
             minSlot.item.GetCountItems -= ra;
-            itemwid.SetRecipeHaverAmountText(minSlot.item.GetCountItems.ToString());
-
-            nowSelectItem.RecipeItem.GetCountItems++;
-            iven.AddItem(nowSelectItem.RecipeItem);
+            CraftWindows[i].SetRecipeHaverAmountText(minSlot.item.GetCountItems.ToString());
 
             minSlot.Amount -= ra;
         }
+        iven.AddItem(nowSelectItem.RecipeItem);
+    }
+
+    private List<List<ItemSlot>> CanCraftItem()
+    {
+        List<List<ItemSlot>> itemSlots = new List<List<ItemSlot>>();
+
+        foreach (CraftWindow itemwid in CraftWindows)
+        {
+            List<ItemSlot> itemSlot1 = new List<ItemSlot>();
+            itemSlots.Add(itemSlot1);
+            if (itemwid.Item == null) continue;// 아이템이 널이면 다음 슬롯 검사로.
+
+            for (int i = 0; i < iven.ItemSlots.Count; i++)
+            {
+                //특정 템 있는 슬롯 얻어옴
+                if (itemwid.Item == iven.ItemSlots[i].item) // 필요 재료와 아이템 타입이 같다.
+                {
+                    if (itemwid.RecipeAmount > iven.ItemSlots[i].item.GetCountItems) return null; //개수가 모자라면 리턴시킴.
+                    itemSlots[itemSlots.Count-1].Add(iven.ItemSlots[i]);
+                    break;//개수 충족했다면 일단 다음.
+                }
+            }
+            if (itemSlots[itemSlots.Count-1].Count == 0) return null;
+        }
+        return itemSlots;
     }
 
     public void BtnTabSelect(int TabNum)
