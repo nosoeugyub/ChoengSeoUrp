@@ -113,7 +113,7 @@ public class MineObject : ItemObject, IMineable, IDropable
 
     private void UpdateMineState()
     {
-        SuperManager.Instance.soundManager.PlaySFX(handitem.UsingToolSoundName); 
+        SuperManager.Instance.soundManager.PlaySFX(handitem.UsingToolSoundName);
         if (++nowChopCount >= item.ChopCount)
         {
             NSY.Player.PlayerInput.OnPressFDown = null;
@@ -141,17 +141,30 @@ public class MineObject : ItemObject, IMineable, IDropable
     public void DropItems()
     {
         GameObject instantiateItem;
+
         foreach (DropItem item in item.DropItems)
         {
-            //print("spawn" + 2);
-            for (int i = 0; i < item.count; ++i)
+            float randnum = Random.Range(0, 100);//50( 10 30 60)
+            float sumtemp = 0;
+
+            if (item.percent < randnum)
+                continue;
+
+            randnum = Random.Range(0, 100);
+
+            int i = 0;
+            for (i = 0; i < item.itemObjs.Length; i++)
+            {
+                sumtemp += item.itemObjs[i].percent;
+                if (sumtemp >= randnum)
+                    break;
+            }
+            //i = 결정된 오브젝트
+
+            for (int j = 0; j < item.itemObjs[i].count; ++j)
             {
                 Vector3 randVec = new Vector3(Random.Range(-1.5f, 1.5f), 0, Random.Range(-1.5f, 1.5f));
-
-                //instantiateItem = Instantiate(item.itemObj) as GameObject;
-                instantiateItem = ObjectPooler.SpawnFromPool(item.itemObj.name, gameObject.transform.position + randVec);
-                //instantiateItem.transform.position = gameObject.transform.position + randVec;
-                //print("spawn" + instantiateItem.name);
+                instantiateItem = ObjectPooler.SpawnFromPool(item.itemObjs[i].itemObj.name, gameObject.transform.position + randVec);
             }
         }
     }
@@ -161,8 +174,17 @@ public class MineObject : ItemObject, IMineable, IDropable
     }
 }
 [System.Serializable]
-public class DropItem
+public class DropItem//이 안에서 확률계산해서 itemObjs 중 1개 뽑음.
+{
+    [Range(0, 100)]
+    public float percent; //itemObjs을 획득할지 안할지 결정
+    public PercentCalItems[] itemObjs;
+}
+[System.Serializable]
+public class PercentCalItems
 {
     public GameObject itemObj;
-    public int count;
+    [Range(0, 100)]
+    public float percent;
+    public int count; //당첨 시 개수
 }

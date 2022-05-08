@@ -154,7 +154,7 @@ public class NewInventUIManager : MonoBehaviour
 
             do
             {
-                print(itemSlots[i].Count - 1);
+                //print(itemSlots[i].Count - 1);
                 minSlot = itemSlots[i][itemSlots[i].Count - 1];
 
                 foreach (var item in itemSlots[i]) //최소 슬롯 찾음
