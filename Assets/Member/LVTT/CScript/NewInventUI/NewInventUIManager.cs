@@ -70,7 +70,44 @@ public class NewInventUIManager : MonoBehaviour
 
     private void UnlockingItem() //레시피 해금 여부
     {
-        throw new NotImplementedException();
+        for (int i = 0; i < iven.ItemSlots.Count; i++)
+        {
+            for (int r = 0; r < TabUI.Length; r++) //4 
+            {
+                for (int j = 1; j < TabUI[r].transform.childCount; j++)
+                {
+                    CraftList tempCL = TabUI[r].transform.GetChild(j).GetComponent<CraftList>();
+                    for (int k = 0; k < tempCL.Craftslot.Count; k++)
+                    {
+                        if (tempCL.Craftslot[k].RecipeItem != null)
+                        {
+                            for (int n = 0; n < tempCL.Craftslot[k].RecipeItem.UnlockItem.Length; n++) // 이벤토리 슬롯과 탭창의 아이템의 해금재료아이템을 검사
+                            {
+                                if (iven.ItemSlots[i].item != null)
+                                {
+                                    Debug.Log("뒤질래");
+                                    if (iven.ItemSlots[i].item.ItemName == tempCL.Craftslot[k].RecipeItem.UnlockItem[n].item.ItemName && //슬롯과 해료 이름이같으면
+                                       iven.ItemSlots[i].item.GetCountItems == tempCL.Craftslot[k].RecipeItem.UnlockItem[n].count &&    // 갯수도 같으면
+                                        tempCL.Craftslot[k].RecipeItem.UnlockItem[n].NeedCraftSlot.isHaveRecipeItem == true )     //추가 슬롯도필요하면                                                                                            // 다른 염료도 같으면
+                                    {
+
+                                        if (tempCL.Craftslot[k].isHaveRecipeItem == false )
+                                        {
+                                            tempCL.Craftslot[k].isHaveRecipeItem = true;
+                                        }
+                                        else
+                                        {
+                                            Debug.Log("왜안댕");
+                                            return;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
     private void CreateingItem()  //아이템 n개 제작 시 해금
     {
