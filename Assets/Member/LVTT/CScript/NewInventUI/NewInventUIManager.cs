@@ -85,12 +85,18 @@ public class NewInventUIManager : MonoBehaviour
                             {
                                 if (iven.ItemSlots[i].item != null)
                                 {
+                                    Debug.Log("뒤질래");
                                     if (iven.ItemSlots[i].item.ItemName == tempCL.Craftslot[k].RecipeItem.UnlockItem[n].item.ItemName && //슬롯과 해료 이름이같으면
-                                       iven.ItemSlots[i].item.GetCountItems >= tempCL.Craftslot[k].RecipeItem.UnlockItem[n].count) // 갯수도 같으면
+                                       iven.ItemSlots[i].item.GetCountItems == tempCL.Craftslot[k].RecipeItem.UnlockItem[n].count) // 갯수도 같으면
                                     {
+                                      
                                         if (tempCL.Craftslot[k].isHaveRecipeItem == false)
                                         {
                                             tempCL.Craftslot[k].isHaveRecipeItem = true;
+                                        }
+                                        else
+                                        {
+                                            Debug.Log("왜안댕");
                                         }
                                     }
                                 }
@@ -121,8 +127,8 @@ public class NewInventUIManager : MonoBehaviour
                             {
                                 if (iven.ItemSlots[i].item != null)
                                 {
-                                    if (iven.ItemSlots[r].item.ItemName == tempCL.Craftslot[k].RecipeItem.UnlockItem[n].item.ItemName && //슬롯과 해료 이름이같으면
-                                       iven.ItemSlots[r].item.GetCountItems == tempCL.Craftslot[k].RecipeItem.UnlockItem[n].count) // 갯수도 같으면
+                                    if (iven.ItemSlots[i].item.ItemName == tempCL.Craftslot[k].RecipeItem.UnlockItem[n].item.ItemName && //슬롯과 해료 이름이같으면
+                                       iven.ItemSlots[i].item.GetCountItems == tempCL.Craftslot[k].RecipeItem.UnlockItem[n].count) // 갯수도 같으면
                                     {
                                         if (tempCL.Craftslot[k].isHaveRecipeItem == false)
                                         {
@@ -130,7 +136,7 @@ public class NewInventUIManager : MonoBehaviour
                                         }
                                         else
                                         {
-                                            Debug.Log("왜안댕");
+                                            Debug.Log("");
                                         }
                                     }
                                 }
@@ -231,9 +237,10 @@ public class NewInventUIManager : MonoBehaviour
 
             minSlot.Amount -= ra;
         }
-        iven.AddItem(nowSelectItem.RecipeItem);
         
-       SuperManager.Instance.unlockmanager.GetInterectItemUnLocking();
+        iven.AddItem(nowSelectItem.RecipeItem);
+        SuperManager.Instance.unlockmanager.GetCreateItemUnLocking();
+
     }
 
     private List<List<ItemSlot>> CanCraftItem()
