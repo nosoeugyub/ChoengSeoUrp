@@ -77,6 +77,8 @@ public enum InItemType
 {
     //1차 재료
     None = 0, Twigs, Cutgrass, Rocks, Petal, leaf, Mud, Trash,
+    //1차 염료
+    Red = 9900, Orange, Yellow, Green, Mint, Blue, Pupple, White, Black,
     //1차 식량
     Seed = 10000, Apple,
     //2차재료

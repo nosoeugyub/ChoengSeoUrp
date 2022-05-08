@@ -120,6 +120,7 @@ public class Item : ScriptableObject
     private void OnEnable()
     {
         GetCountItems = 0;
+
     }
     public virtual Item GetCopy()
     {
