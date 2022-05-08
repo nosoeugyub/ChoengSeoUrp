@@ -1,11 +1,8 @@
 ﻿using DG.Tweening;
 using NSY.Iven;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using NSY.Manager;
-using System;
 public class NewInventUIManager : MonoBehaviour
 {
     [Header("오픈될 오브젝트")] [SerializeField] RectTransform BG, invenBtn;
@@ -38,8 +35,10 @@ public class NewInventUIManager : MonoBehaviour
                 TabUI[i].transform.GetChild(j).GetComponent<CraftList>().OnLeftClickEventss += ShowRecipe;
             }
         }
+
+        iven.OnAddItemEvent += ShowRecipe;
     }
-   
+
     private void Start()
     {
         nowActiveTabIdx = -1;
@@ -58,33 +57,42 @@ public class NewInventUIManager : MonoBehaviour
             }
         }
         UnLockManager.Unlockmanager.GetItemUnlocks -= InterectingItem;
+        
     }
-
     void InterectingItem()//아이템 n개 획득 시 해금  검사
     {
-
         for (int i = 0; i < iven.ItemSlots.Count; i++)
         {
-            for (int j = 0; j < Craftlists.Length; j++)
+            for (int r = 0; r < TabUI.Length; r++) //4 
             {
-                for (int k = 0; k < Craftlists[j].Craftslot.Count; k++)
+                for (int j = 1; j < TabUI[r].transform.childCount; j++)
                 {
-                    for (int n = 0; n < Craftlists[j].Craftslot[k].RecipeItem.UnlockItem.Length; n++) // 이벤토리 슬롯과 탭창의 아이템의 해금재료아이템을 검사
+                    CraftList tempCL = TabUI[r].transform.GetChild(j).GetComponent<CraftList>();
+                    for (int k = 0; k < tempCL.Craftslot.Count; k++)
                     {
-                        if (iven.ItemSlots[i].item.ItemName  == Craftlists[j].Craftslot[k].RecipeItem.UnlockItem[n].item.ItemName && //슬롯과 해료 이름이같으면
-                           iven.ItemSlots[i].item.GetCountItems >= Craftlists[j].Craftslot[k].RecipeItem.UnlockItem[n].count  ) // 갯수도 같으면
+                        if (tempCL.Craftslot[k].RecipeItem != null)
                         {
-                            if (Craftlists[j].Craftslot[k].isHaveRecipeItem == false)
+                            for (int n = 0; n < tempCL.Craftslot[k].RecipeItem.UnlockItem.Length; n++) // 이벤토리 슬롯과 탭창의 아이템의 해금재료아이템을 검사
                             {
-                                Craftlists[j].Craftslot[k].isHaveRecipeItem = true;
+                                if (iven.ItemSlots[i].item != null)
+                                {
+                                    if (iven.ItemSlots[i].item.ItemName == tempCL.Craftslot[k].RecipeItem.UnlockItem[n].item.ItemName && //슬롯과 해료 이름이같으면
+                                       iven.ItemSlots[i].item.GetCountItems >= tempCL.Craftslot[k].RecipeItem.UnlockItem[n].count) // 갯수도 같으면
+                                    {
+                                        if (tempCL.Craftslot[k].isHaveRecipeItem == false)
+                                        {
+                                            tempCL.Craftslot[k].isHaveRecipeItem = true;
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
         }
-       
-     
+
+
     }
 
     public void ShowRecipe()
@@ -137,7 +145,7 @@ public class NewInventUIManager : MonoBehaviour
 
         for (int i = 0; i < CraftWindows.Length; i++)
         {
-            if(itemSlots[i].Count==0)continue;
+            if (itemSlots[i].Count == 0) continue;
 
             //슬롯 중 숫자가 제일 작은 슬롯 구해옴
             int ra = CraftWindows[i].RecipeAmount;
@@ -193,11 +201,11 @@ public class NewInventUIManager : MonoBehaviour
                 if (itemwid.Item == iven.ItemSlots[i].item) // 필요 재료와 아이템 타입이 같다.
                 {
                     if (itemwid.RecipeAmount > iven.ItemSlots[i].item.GetCountItems) return null; //개수가 모자라면 리턴시킴.
-                    itemSlots[itemSlots.Count-1].Add(iven.ItemSlots[i]);
+                    itemSlots[itemSlots.Count - 1].Add(iven.ItemSlots[i]);
                     //break;//개수 충족했다면 일단 다음.
                 }
             }
-            if (itemSlots[itemSlots.Count-1].Count == 0) return null;
+            if (itemSlots[itemSlots.Count - 1].Count == 0) return null;
         }
         return itemSlots;
     }
