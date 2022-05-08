@@ -36,4 +36,16 @@ public class UnLockManager : MonoBehaviour
 
     }
 
+
+
+    public event Action GetUnlockUnlocks;
+    public void GetUnlockItemUnLocking()
+    {
+        if (GetUnlockUnlocks != null)
+        {
+            GetUnlockUnlocks();
+        }
+
+    }
+
 }

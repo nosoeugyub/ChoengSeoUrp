@@ -48,9 +48,10 @@ public class NewInventUIManager : MonoBehaviour
 
         UnLockManager.Unlockmanager.GetItemUnlocks += InterectingItem;
         UnLockManager.Unlockmanager.GetCreateUnlocks += CreateingItem;
+        UnLockManager.Unlockmanager.GetUnlockUnlocks += UnlockingItem;
     }
 
- 
+    
 
     private void OnDisable()
     {
@@ -63,11 +64,14 @@ public class NewInventUIManager : MonoBehaviour
         }
         UnLockManager.Unlockmanager.GetItemUnlocks -= InterectingItem;
         UnLockManager.Unlockmanager.GetCreateUnlocks -= CreateingItem;
-
+        UnLockManager.Unlockmanager.GetUnlockUnlocks -= UnlockingItem;
 
     }
 
-
+    private void UnlockingItem() //레시피 해금 여부
+    {
+        throw new NotImplementedException();
+    }
     private void CreateingItem()  //아이템 n개 제작 시 해금
     {
         for (int i = 0; i < iven.ItemSlots.Count; i++)
