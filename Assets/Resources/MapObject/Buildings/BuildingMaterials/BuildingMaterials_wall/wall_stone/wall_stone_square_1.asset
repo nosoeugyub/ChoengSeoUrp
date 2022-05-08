@@ -14,15 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outItemType: 0
   inItemType: 70003
-  itemName: 
+  itemName: wall_stone_square_1
   itemDescription: 
   itemSprite: {fileID: 21300000, guid: 327cf6bc1d4983e45a07e614df8ff1f1, type: 3}
   itemMaterial: {fileID: 2100000, guid: 3da8dd847ae0ad54299fcb3ff87e0740, type: 2}
   cleanAmount: 0
+  eatAmount: 0
   chopCount: 0
   dropItems: []
   durability: 0
   itemPrefab: {fileID: 2110587878857046007, guid: 32246cc3fcf11884d8ffb256c18f01fe,
     type: 3}
+  usingToolSoundName: 
+  GetCountitems: 0
   MaximumStacks: 5
-  recipe: []
+  recipe:
+  - item: {fileID: 11400000, guid: ef8aa99b0a2e2744688a08260021f5fc, type: 2}
+    count: 2
+  - item: {fileID: 0}
+    count: 0
+  - item: {fileID: 0}
+    count: 0

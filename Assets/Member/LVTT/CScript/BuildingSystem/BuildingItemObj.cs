@@ -82,7 +82,8 @@ namespace DM.Building
         private void ItemMove()
         {  
             var movePos = Input.mousePosition;
-            movePos.z = parentBuildArea.DistanceFromHouseBuildTo(Camera.main.transform.position);
+            movePos.z = parentBuildArea.DistanceToNowBuildItem(Camera.main.transform.position);
+            print(movePos.z);
             movePos = Camera.main.ScreenToWorldPoint(movePos);
              
             HouseBuildAreaCal();
@@ -90,9 +91,9 @@ namespace DM.Building
             if (movePos.y >= MaxY) movePos.y = MaxY;
             if (movePos.y <= MinY) movePos.y = MinY;
 
-            if(parentBuildArea.DistanceFromHouseBuildTo(movePos) > MaxX)
+            if(parentBuildArea.DistanceToNowBuildItem(movePos) > MaxX)
             {
-                print(" 여어 멈추라고");
+                //print(" 여어 멈추라고");
                 movePos.x = transform.position.x;
                 movePos.z = transform.position.z;
             }
@@ -115,6 +116,7 @@ namespace DM.Building
         }
         /// 
         /// </summary>
+        /// 
         public void BackToInventory()
         {
             parentBuildArea.CancleUI(false);
@@ -207,8 +209,8 @@ namespace DM.Building
             else
                 attributes.buildVPos = BuildVPos.Top;
 
-            print(attributes.buildHPos.ToString());
-            print(attributes.buildVPos.ToString());
+            //print(attributes.buildHPos.ToString());
+            //print(attributes.buildVPos.ToString());
 
             //크기 저장
             float scaleRange = MaxScale - MinScale; // 1.5 0.3     1.2
@@ -222,7 +224,7 @@ namespace DM.Building
             else
                 attributes.buildSize = BuildSize.Big;
 
-            print(attributes.buildSize.ToString());
+            //print(attributes.buildSize.ToString());
 
         }
 

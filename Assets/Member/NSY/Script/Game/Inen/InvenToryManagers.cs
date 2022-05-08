@@ -139,7 +139,7 @@ namespace NSY.Iven
             else
             {
                 Debug.Log("BuildingLeftClick");
-                if (obj.item.OutItemType == OutItemType.BuildingItemObj_Mini)
+                //if (obj.item.OutItemType == OutItemType.BuildingItemObj_Mini)
                 {
 
                 }

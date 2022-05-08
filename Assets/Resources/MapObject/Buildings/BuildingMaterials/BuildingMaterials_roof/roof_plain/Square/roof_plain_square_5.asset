@@ -12,18 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cc61efa26a84a64ea78939328250dd4, type: 3}
   m_Name: roof_plain_square_5
   m_EditorClassIdentifier: 
-  outItemType: 7
-  inItemType: 0
-  itemName: 
+  outItemType: 0
+  inItemType: 70003
+  itemName: roof_plain_square_5
   itemDescription: 
   itemSprite: {fileID: 21300000, guid: 3c9e8400bdf2572479980c6950af64ab, type: 3}
   itemMaterial: {fileID: 2100000, guid: 8882e170f1c1b1e4f9d175bacb910c61, type: 2}
   cleanAmount: 0
+  eatAmount: 0
   chopCount: 0
   dropItems: []
   durability: 0
   itemPrefab: {fileID: 7278275594526053699, guid: 3a03e83bf94aa6d41b7934ae13a0a3ce,
     type: 3}
   usingToolSoundName: 
+  GetCountitems: 0
   MaximumStacks: 5
-  recipe: []
+  recipe:
+  - item: {fileID: 11400000, guid: a1c058cc347db594ca9e0a2af21600d4, type: 2}
+    count: 1
+  - item: {fileID: 11400000, guid: cc16166cd9374cb4aa44c1ce4d8a6b5b, type: 2}
+    count: 1
+  - item: {fileID: 0}
+    count: 0
