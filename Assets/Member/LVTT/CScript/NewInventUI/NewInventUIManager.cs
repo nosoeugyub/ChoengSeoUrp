@@ -1,8 +1,11 @@
 ﻿using DG.Tweening;
 using NSY.Iven;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using NSY.Manager;
+using System;
 public class NewInventUIManager : MonoBehaviour
 {
     [Header("오픈될 오브젝트")] [SerializeField] RectTransform BG, invenBtn;
@@ -35,17 +38,14 @@ public class NewInventUIManager : MonoBehaviour
                 TabUI[i].transform.GetChild(j).GetComponent<CraftList>().OnLeftClickEventss += ShowRecipe;
             }
         }
-
-        //foreach (var item in Craftlists)
-        //{
-        //    item.OnLeftClickEventss += ShowRecipe;
-        //}
-
-        iven.OnAddItemEvent += ShowRecipe;
     }
+   
     private void Start()
     {
         nowActiveTabIdx = -1;
+        //조건 검사 as
+
+        UnLockManager.Unlockmanager.GetItemUnlocks += InterectingItem;
     }
 
     private void OnDisable()
@@ -57,7 +57,36 @@ public class NewInventUIManager : MonoBehaviour
                 TabUI[i].transform.GetChild(j).GetComponent<CraftList>().OnLeftClickEventss -= ShowRecipe;
             }
         }
+        UnLockManager.Unlockmanager.GetItemUnlocks -= InterectingItem;
     }
+
+    void InterectingItem()//아이템 n개 획득 시 해금  검사
+    {
+
+        for (int i = 0; i < iven.ItemSlots.Count; i++)
+        {
+            for (int j = 0; j < Craftlists.Length; j++)
+            {
+                for (int k = 0; k < Craftlists[j].Craftslot.Count; k++)
+                {
+                    for (int n = 0; n < Craftlists[j].Craftslot[k].RecipeItem.UnlockItem.Length; n++) // 이벤토리 슬롯과 탭창의 아이템의 해금재료아이템을 검사
+                    {
+                        if (iven.ItemSlots[i].item.ItemName  == Craftlists[j].Craftslot[k].RecipeItem.UnlockItem[n].item.ItemName && //슬롯과 해료 이름이같으면
+                           iven.ItemSlots[i].item.GetCountItems >= Craftlists[j].Craftslot[k].RecipeItem.UnlockItem[n].count  ) // 갯수도 같으면
+                        {
+                            if (Craftlists[j].Craftslot[k].isHaveRecipeItem == false)
+                            {
+                                Craftlists[j].Craftslot[k].isHaveRecipeItem = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+       
+     
+    }
+
     public void ShowRecipe()
     {
         for (int i = 0; i < CraftWindows.Length; i++)

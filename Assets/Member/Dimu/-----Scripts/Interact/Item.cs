@@ -1,5 +1,7 @@
 ﻿using TT.BuildSystem;
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "New Item", menuName = "Item")]
 public class Item : ScriptableObject
@@ -14,6 +16,7 @@ public class Item : ScriptableObject
     [SerializeField] private Material itemMaterial;
     [SerializeField] float cleanAmount;
     [SerializeField] int eatAmount;
+
     //[Header("Combination")]
     //[SerializeField] private ingredientNeeded[] necessaryIngredient;
     [Header("MineItemVariable")]
@@ -22,6 +25,23 @@ public class Item : ScriptableObject
     [SerializeField] private int durability;
     [SerializeField] private GameObject itemPrefab;
     [SerializeField] private string usingToolSoundName;
+
+
+    //NSY추가 및 조건 명시
+    //아이템 식별 넘버
+    [SerializeField]
+    private int _ItemNubering;
+    public int ItemNubering
+    {
+        get
+        {
+            return _ItemNubering;
+        }
+        set
+        {
+            _ItemNubering = value;
+        }
+    }
 
     [SerializeField]
     private int GetCountitems;
@@ -143,11 +163,9 @@ public class Item : ScriptableObject
     }
 
     [Header("레시피")]
-    [SerializeField]
     public RecipeIteminfo[] recipe;
-  
-   
-  
+
+    public UnlcokIteminfo[] UnlockItem;
 }
 [System.Serializable]
 public class RecipeIteminfo
@@ -159,14 +177,15 @@ public class RecipeIteminfo
     
 }
 
+//해제 조건 아이템
+[System.Serializable]
+public class UnlcokIteminfo
+{
+    [Header("잠금해제할 아이템")]
+    public Item item;
+    [Header("잠금해제할 아이템의 갯수")]
+    public int count;
+
+}
 
 
-//[System.Serializable]
-//public class ingredientNeeded
-//{
-//    [SerializeField]
-//    public Item item;
-
-//    [SerializeField]
-//    public int count;
-//}

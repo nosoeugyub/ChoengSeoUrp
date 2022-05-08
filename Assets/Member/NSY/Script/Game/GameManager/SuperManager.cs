@@ -26,7 +26,7 @@ namespace NSY.Manager
         public SpawnManager spawnmanager;
         public InventoryNSY inventoryManager;
         public SoundManager soundManager;
-
+        public UnLockManager unlockmanager;
 
         public static SuperManager Instance
         {
