@@ -47,7 +47,10 @@ public class NewInventUIManager : MonoBehaviour
         //조건 검사 as
 
         UnLockManager.Unlockmanager.GetItemUnlocks += InterectingItem;
+        UnLockManager.Unlockmanager.GetCreateUnlocks += CreatingItem;
     }
+
+   
 
     private void OnDisable()
     {
@@ -56,8 +59,21 @@ public class NewInventUIManager : MonoBehaviour
             item.OnLeftClickEventss -= ShowRecipe;
         }
         UnLockManager.Unlockmanager.GetItemUnlocks -= InterectingItem;
+        UnLockManager.Unlockmanager.GetCreateUnlocks -= CreatingItem;
     }
+    private void CreatingItem()//아이템 n개 제작 시 해금
+    {
+        for (int i = 0; i < iven.ItemSlots.Count; i++)
+        {
+            for (int j = 0; j < Craftlists[j].Craftslot.Count; j++)
+            {
+                for (int k = 0; k < Craftlists[j].Craftslot.Count; k++)
+                {
 
+                }
+            }
+        }
+    }
     void InterectingItem()//아이템 n개 획득 시 해금  검사
     {
 
