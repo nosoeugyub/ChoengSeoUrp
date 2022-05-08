@@ -104,6 +104,7 @@ public class NewInventUIManager : MonoBehaviour
     {
         List<List<ItemSlot>> itemSlots = CanCraftItem();
         if (itemSlots == null) return;
+        if (itemSlots[0].Count == 0) return;
 
         for (int i = 0; i < CraftWindows.Length; i++)
         {
@@ -116,6 +117,7 @@ public class NewInventUIManager : MonoBehaviour
 
             do
             {
+                print(itemSlots[i].Count - 1);
                 minSlot = itemSlots[i][itemSlots[i].Count - 1];
 
                 foreach (var item in itemSlots[i]) //최소 슬롯 찾음
@@ -163,7 +165,7 @@ public class NewInventUIManager : MonoBehaviour
                 {
                     if (itemwid.RecipeAmount > iven.ItemSlots[i].item.GetCountItems) return null; //개수가 모자라면 리턴시킴.
                     itemSlots[itemSlots.Count-1].Add(iven.ItemSlots[i]);
-                    break;//개수 충족했다면 일단 다음.
+                    //break;//개수 충족했다면 일단 다음.
                 }
             }
             if (itemSlots[itemSlots.Count-1].Count == 0) return null;

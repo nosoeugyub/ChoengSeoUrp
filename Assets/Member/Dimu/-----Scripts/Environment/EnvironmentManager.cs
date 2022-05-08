@@ -133,7 +133,7 @@ public class EnvironmentManager : MonoBehaviour
         UnityEngine.Rendering.Universal.ColorAdjustments colorAdjustments;
     }
 
-    public void ChangeCleanliness(int cleanAmount)
+    public void ChangeCleanliness(float cleanAmount)
     {
         Cleanliness += cleanAmount;
     }
