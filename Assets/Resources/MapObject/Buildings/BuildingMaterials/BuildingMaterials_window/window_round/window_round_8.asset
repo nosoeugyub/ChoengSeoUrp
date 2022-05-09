@@ -18,7 +18,7 @@ MonoBehaviour:
   itemDescription: 
   itemSprite: {fileID: 21300000, guid: d5b2ff46667dda54fab84d74c53b94ad, type: 3}
   itemMaterial: {fileID: 2100000, guid: 55d5d9ff7796b254bb9b53903004cf2f, type: 2}
-  cleanAmount: 0
+  cleanAmount: 0.5
   eatAmount: 0
   chopCount: 0
   dropItems: []
@@ -26,12 +26,14 @@ MonoBehaviour:
   itemPrefab: {fileID: 7192238143253707844, guid: 5d10ae715ca897f4a90b0d0ce0be182d,
     type: 3}
   usingToolSoundName: 
+  _ItemNubering: 0
   GetCountitems: 0
   MaximumStacks: 5
   recipe:
+  - item: {fileID: 11400000, guid: 3c0ed818846370b4ab079fc6ce622e9b, type: 2}
+    count: 1
+  - item: {fileID: 11400000, guid: c7c1b8047ad122f4293817a17a7a7621, type: 2}
+    count: 1
   - item: {fileID: 0}
     count: 0
-  - item: {fileID: 0}
-    count: 0
-  - item: {fileID: 0}
-    count: 0
+  UnlockItem: []

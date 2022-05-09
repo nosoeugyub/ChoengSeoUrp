@@ -69,7 +69,7 @@ namespace DM.Building
             }
             if (IsFirstDrop)
             {
-                print("isFirstDrop");
+               // print("isFirstDrop");
 
                 if (Input.GetMouseButtonDown(1))
                 {
@@ -83,7 +83,7 @@ namespace DM.Building
         {  
             var movePos = Input.mousePosition;
             movePos.z = parentBuildArea.DistanceToNowBuildItem(Camera.main.transform.position);
-            print(movePos.z);
+//            print(movePos.z);
             movePos = Camera.main.ScreenToWorldPoint(movePos);
              
             HouseBuildAreaCal();
@@ -172,15 +172,31 @@ namespace DM.Building
         public void DropItems()
         {
             GameObject instantiateItem;
+
+
             foreach (DropItem item in item.DropItems)
             {
-                //print("spawn" + 2);
-                for (int i = 0; i < item.count; ++i)
+                float randnum = Random.Range(0, 100);//50( 10 30 60)
+                float sumtemp = 0;
+
+                if (item.percent >= randnum)
+                    continue;
+
+                randnum = Random.Range(0, 100);
+
+                int i = 0;
+                for (i = 0; i < item.itemObjs.Length; i++)
                 {
-                    instantiateItem = Instantiate(item.itemObj) as GameObject;
+                    sumtemp += item.itemObjs[i].percent;
+                    if (sumtemp >= randnum)
+                        break;
+                }
+                //i = 결정된 오브젝트
+
+                for (int j = 0; j < item.itemObjs[i].count; ++j)
+                {
                     Vector3 randVec = new Vector3(Random.Range(-1.5f, 1.5f), 0, Random.Range(-1.5f, 1.5f));
-                    instantiateItem.transform.position = gameObject.transform.position + randVec;
-                    //print("spawn" + instantiateItem.name);
+                    instantiateItem = ObjectPooler.SpawnFromPool(item.itemObjs[i].itemObj.name, gameObject.transform.position + randVec);
                 }
             }
         }

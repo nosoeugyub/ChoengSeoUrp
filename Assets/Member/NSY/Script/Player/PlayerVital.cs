@@ -9,12 +9,14 @@ namespace NSY.Player
         public int MaxVital = 100;
         public int CurVital;
 
-        public int Tired { get; set; }
+        public float Tired { get; set; }
         [SerializeField]
         PlayerController playerController;
 
         [Header("건강")]
         public Image PlayerHealth_image;
+        public Image PlayerHealth_icon;
+        public Sprite[] playerHealth_sprites;
         //public int Health { get; set; }
         public int MaxHealth;
         public int healthDislatetime = 200;
@@ -22,13 +24,13 @@ namespace NSY.Player
 
         private void Start()
         {
+            Tired = 100;
             PlayerHealth_image.fillAmount = Tired;
-            Tired = 20;
         }
 
         private void Update()
         {
-            //StartCoroutine(disVital());
+            StartCoroutine(disVital());
             //GaugeUpdate();
         }
 
@@ -43,7 +45,7 @@ namespace NSY.Player
                 }
                 else
                 {
-                    Tired--;
+                    Tired-=0.2f;
                     healthcurrentTime = 0;
                     GaugeUpdate();
                 }
@@ -58,6 +60,12 @@ namespace NSY.Player
         }
         void GaugeUpdate()
         {
+            if (Tired > 70)
+                PlayerHealth_icon.sprite = playerHealth_sprites[0];
+            else if (Tired > 30)
+                PlayerHealth_icon.sprite = playerHealth_sprites[1];
+            else
+                PlayerHealth_icon.sprite = playerHealth_sprites[2];
             PlayerHealth_image.fillAmount = (float)Tired / MaxHealth;
         }
 
