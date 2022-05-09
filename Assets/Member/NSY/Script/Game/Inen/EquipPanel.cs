@@ -81,38 +81,51 @@ namespace NSY.Iven
                
                 if (equipmentSlots[i].item == item && ResultEquip.item == null)
                 {
-                    
-                    ResultEquip.item =  equipmentSlots[i].item;
+                    item = equipmentSlots[i].item;
+                    ResultEquip.item = item;
                     ResultEquip.Amount = 1;
                     equipmentSlots[i].item = null;
                     equipmentSlots[i].Amount = 0;
                     return true;
                 }
-                else if(ResultEquip.item != null)
+                if(ResultEquip.item != null && equipmentSlots[i].item == null)
                 {
-                    Debug.Log("라");
-                    chage.item = equipmentSlots[i].item;
+                    Debug.Log("바꾸라");
+                    item = equipmentSlots[i].item; //슬롯에서 아이템으로 
                     equipmentSlots[i].item = ResultEquip.item;
-                    equipmentSlots[i].Amount = 1;
-                    ResultEquip.item = chage.item;
-                    ResultEquip.Amount = 1;
-                    return true;
+                    ResultEquip.item = item;
+   
                 }
-               
+                if (ResultEquip.item != null && equipmentSlots[i+1].item == null)
+                {
+                    Debug.Log("바꾸라2");
+                    item = equipmentSlots[i+1].item; //슬롯에서 아이템으로 
+                    equipmentSlots[i+1].item = ResultEquip.item;
+                    ResultEquip.item = item;
+
+                }
+                if (ResultEquip.item != null && equipmentSlots[i + 2].item == null)
+                {
+                    Debug.Log("바꾸라3");
+                    item = equipmentSlots[i+1].item; //슬롯에서 아이템으로 
+                    equipmentSlots[i+1].item = ResultEquip.item;
+                    ResultEquip.item = item;
+
+                }
             }
             
             return false;
         }
 
 
-        public bool RemoveResultItem(Item item) //결과해제 
+        public bool RemoveResultItem(Item item) //장착한 아이템을 장비창으로 되돌림 
         {
             for (int i = 0; i < equipmentSlots.Length; i++)
             {
                 if (ResultEquip.item == item && equipmentSlots[i].item == null)
                 {
-                    Debug.Log("장착1");
-                    equipmentSlots[i].item = ResultEquip.item;
+                    Debug.Log("라자냐 쳐먹고싶다");
+                    equipmentSlots[i].item = item;
                     equipmentSlots[i].Amount = 1;
                     ResultEquip.item = null;
                     ResultEquip.Amount = 0;
@@ -120,17 +133,29 @@ namespace NSY.Iven
                    
                     return true;
                 }
-                 if (equipmentSlots[i].item != null && ResultEquip.item == item)
+                 if (ResultEquip.item == item && equipmentSlots[i+1].item == null)
                 {
-                    Debug.Log("장착1z");
-                    equipmentSlots[i + 1].item = ResultEquip.item;
-                    equipmentSlots[i + 1].Amount = 1;
+
+                    Debug.Log("권경수 바부");
+                    equipmentSlots[i+1].item = item;
+                    equipmentSlots[i+1].Amount = 1;
                     ResultEquip.item = null;
                     ResultEquip.Amount = 0;
-                    
-                    
+
+                    return true;
+
+                }
+                 if(ResultEquip.item == item && equipmentSlots[i+2].item == null)
+                {
+                    Debug.Log("권경수 tq");
+                    equipmentSlots[i + 2].item = item;
+                    equipmentSlots[i + 2].Amount = 1;
+                    ResultEquip.item = null;
+                    ResultEquip.Amount = 0;
+
                     return true;
                 }
+             
             }
                 
             

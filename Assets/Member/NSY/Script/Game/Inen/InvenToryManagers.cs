@@ -20,6 +20,7 @@ namespace NSY.Iven
         [SerializeField] DropItemArea Dropitemarea;
         [SerializeField] QuestionDialog questionDialog;
         [SerializeField] PlayerEat PlayerEat;
+        [SerializeField] PlayerInteract playerinterract;
         //조합 필요한 컴포넌트들
         CraftSlot craftslot;
 
@@ -112,9 +113,9 @@ namespace NSY.Iven
             }
         }
 
-        private void ResultClick(BaseItemSlot obj)
+        private void ResultClick(BaseItemSlot obj)//결과창에서 장착칸으로
         {
-            Debug.Log("되냐");
+
             if (obj.item.OutItemType == OutItemType.Tool)
             {
                 rudtn(obj.item);
@@ -122,11 +123,9 @@ namespace NSY.Iven
             }
         }
 
-        private void rudtn(Item item)
+        private void rudtn(Item item)// 장착아이템을 장비칸으로
         {
-            Debug.Log("되냐");
-
-
+        
             equipPanel.RemoveResultItem(item);
         }
 
@@ -272,13 +271,14 @@ namespace NSY.Iven
         {
             if (equipPanel.AddResultItem(item))
             {
+                playerinterract.SetHandItem(item);
                 Debug.Log("윌스미스마렵네");
-              //   equipPanel.changeItem(item);
+         
             }
 
         }
 
-        //인벤창에서 조합창으로
+        //인벤창에서 장착창으로
         public void Unequip(Item item)//
         {
 

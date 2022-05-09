@@ -125,15 +125,20 @@ public class EnvironmentManager : MonoBehaviour
     private void FixedUpdate()
     {
         //NSY 코드
+        time += timeRate * Time.deltaTime;
 
-         time += Mathf.PingPong(timeRate * Time.deltaTime, 1); // timeRate * Time.deltaTime;
-       // time = Mathf.PingPong(timeRate, 1);
+        if (time == 1.0)
+        {
+            time -= -timeRate * Time.deltaTime;
+
+        }
+        if (time == 0.0)
+        {
+            time += timeRate * Time.deltaTime;
+        }
 
 
-
-
-
-      _lerpColor = Color.Lerp(_DaySkyColor, _NightSkyColor, time );
+        _lerpColor = Color.Lerp(_DaySkyColor, _NightSkyColor, time );
         _lerptorColor = Color.Lerp(_DayequatorColor, _NghitequatorColor, time );
         _lerpgoundColor = Color.Lerp(_DaygroundColor, _NghitgroundColor, time );
         SkyMat.SetColor("_SkyColor", _lerpColor);
