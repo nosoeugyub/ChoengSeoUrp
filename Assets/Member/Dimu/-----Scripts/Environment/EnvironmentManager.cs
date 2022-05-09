@@ -136,6 +136,7 @@ public class EnvironmentManager : MonoBehaviour
     public void ChangeCleanliness(float cleanAmount)
     {
         Cleanliness += cleanAmount;
+        print(Cleanliness);
     }
 
     private void ComeToPort()//아침이 왔다

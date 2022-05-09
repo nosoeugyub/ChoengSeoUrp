@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3cc61efa26a84a64ea78939328250dd4, type: 3}
-  m_Name: Tree 1
+  m_Name: SpringTree_RedWhite
   m_EditorClassIdentifier: 
   outItemType: 2
   inItemType: 50000
@@ -22,18 +22,19 @@ MonoBehaviour:
   eatAmount: 0
   chopCount: 3
   dropItems:
-  - itemObj: {fileID: 6147660853366183241, guid: b9e2073a4d51ab24b84126a36d169e32,
-      type: 3}
-    count: 2
-  - itemObj: {fileID: 8923826871903050590, guid: 812c026c3ce95be429af865f1a17a52b,
-      type: 3}
-    count: 1
-  - itemObj: {fileID: 7875340127727919632, guid: 021c503a2d86b2c4999752343ea038d7,
-      type: 3}
-    count: 2
+  - percent: 100
+    itemObjs: []
+  - percent: 0
+    itemObjs: []
+  - percent: 0
+    itemObjs: []
+  - percent: 0
+    itemObjs: []
   durability: 0
   itemPrefab: {fileID: 0}
   usingToolSoundName: 
+  _ItemNubering: 0
   GetCountitems: 0
   MaximumStacks: 1
   recipe: []
+  UnlockItem: []
