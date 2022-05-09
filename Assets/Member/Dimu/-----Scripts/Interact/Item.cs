@@ -140,6 +140,7 @@ public class Item : ScriptableObject
     private void OnEnable()
     {
         GetCountItems = 0;
+        //MaximumStacks = 20;
         //itemName = itemPrefab.name;
         //Debug.Log(itemName);
     }
