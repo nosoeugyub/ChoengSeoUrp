@@ -51,7 +51,9 @@ namespace NSY.Iven
                     itemImage.sprite = null;
                     itemImage.color = disabledColor;
                 }
-                else
+                
+
+                if(_item != null)
                 {
                     itemImage.sprite = _item.ItemSprite;
                     itemImage.color = normalColor;
