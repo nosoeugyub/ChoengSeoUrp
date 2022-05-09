@@ -26,7 +26,26 @@ public class UnLockManager : MonoBehaviour
             }
  
     }
+    public event Action GetCreateUnlocks;
+    public void GetCreateItemUnLocking()
+    {
+        if (GetCreateUnlocks != null)
+        {
+            GetCreateUnlocks();
+        }
+
+    }
 
 
-   
+
+    public event Action GetUnlockUnlocks;
+    public void GetUnlockItemUnLocking()
+    {
+        if (GetUnlockUnlocks != null)
+        {
+            GetUnlockUnlocks();
+        }
+
+    }
+
 }
