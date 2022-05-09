@@ -4,11 +4,11 @@ namespace NSY.Player
 {
     public class PlayerEat : MonoBehaviour
     {
-       [SerializeField] PlayerController pc;
-       [SerializeField] PlayerInteract pi;
-       [SerializeField] Animator pa;
-        Item eatItem;
-        
+        [SerializeField] PlayerController pc;
+        [SerializeField] PlayerInteract pi;
+        [SerializeField] Animator pa;
+        [SerializeField] Item eatItem;
+
         public void Eat(Item _eatItem) //player Animator
         {
             eatItem = _eatItem;
@@ -23,8 +23,16 @@ namespace NSY.Player
             print(pc.playerVital.Tired);
             eatItem = null;
         }
+        public void Update()
+        {
+            if(Input.GetKeyDown(KeyCode.Z))
+            {
+                Eat(eatItem);
+            }
+        }
     }
+
 }
 //인벤매니저에 추가
-    //        if (itemslot.item.OutItemType == OutItemType.Food)
-    //PlayerEat.Eat(itemslot.item)
+//        if (itemslot.item.OutItemType == OutItemType.Food)
+//PlayerEat.Eat(itemslot.item)

@@ -95,7 +95,7 @@ namespace DM.Building
 
                 if (Input.GetMouseButtonDown(0))
                 {
-                    //print("MouseDown");
+                    print("MouseDown");
                     if (curInteractObj == null) return;
 
                     if (Physics.Raycast(ray, out hit, 10000, layerMask))
@@ -114,21 +114,21 @@ namespace DM.Building
                             {
                                 print("ItemisSet = false 1");
                             }
-
-                            return;
                         }
-
-                        if (curInteractObj.ItemisSet) //자재 클릭 + 세팅된 자재일 때
+                        else
                         {
-                            print("ItemisSet = false 2");
-                            curInteractObj = hit.collider.GetComponent<BuildingItemObj>();
-                            curInteractObj.ItemisSet = false;
-                            BuildingItemObjAndSorting();
-                        }
-                        else //자재 클릭 + 무빙중일 때
-                        {
-                            print("ItemisSet = true 2 ");
-                            SetBuildingItemObj();
+                            if (curInteractObj.ItemisSet) //자재 클릭 + 세팅된 자재일 때
+                            {
+                                print("ItemisSet = false 2");
+                                curInteractObj = hit.collider.GetComponent<BuildingItemObj>();
+                                curInteractObj.ItemisSet = false;
+                                BuildingItemObjAndSorting();
+                            }
+                            else //자재 클릭 + 무빙중일 때
+                            {
+                                print("ItemisSet = true 2 ");
+                                SetBuildingItemObj();
+                            }
                         }
                     }
                     else
@@ -249,7 +249,7 @@ namespace DM.Building
 
             CamManager.ActiveSubCamera(1);
 
-            SuperManager.Instance.inventoryManager.CheckCanBuildItem(nowBuildingBlock);
+            //SuperManager.Instance.inventoryManager.CheckCanBuildItem(nowBuildingBlock);
             //Inventory UI On + Can't turn Off while in build mode + Press X button, Invoke BuildModeOff method
             //FindObjectOfType<PopUpManager>().OpenPopup(FindObjectOfType<PopUpManager>()._ivenPopup);
         }
@@ -304,7 +304,7 @@ namespace DM.Building
             buildManager.PlayerOnOff(true);
             isBuildMode = false;
             isBuildDemolishMode = false;
-            SuperManager.Instance.inventoryManager.CheckCanBuildItem(null);
+            //SuperManager.Instance.inventoryManager.CheckCanBuildItem(null);
         }
 
         public void CancleUI(bool on)
@@ -425,7 +425,7 @@ namespace DM.Building
             newPrefab.GetComponent<BuildingItemObj>().SetParentBuildArea(nowBuildingBlock);
             newPrefab.name = spawnObj.name;
             AddBuildItemToList(newPrefab);
-            FindObjectOfType<EnvironmentManager>().ChangeCleanliness(newPrefab.GetComponent<BuildingItemObj>().GetItem().CleanAmount);
+            FindObjectOfType<EnvironmentManager>().ChangeCleanliness(newPrefab.GetComponent<BuildingItemObj>().GetItem().CleanAmount+ 1);
         }
 
         void BuildingItemObjAndSorting()

@@ -142,6 +142,7 @@ public class EnvironmentManager : MonoBehaviour
     private void ComeToPort()//아침이 왔다
     {
         //if (BuildingBlock.isBuildMode) return;
+        if (cleanLevel >= cleanLevels.Count) return;
         if (cleanLevels[cleanLevel] <= Cleanliness)//0레벨기준 10 >= 현재클린 10
         {
             //if (nowNpcStandAtPort != null) //널문제
@@ -159,6 +160,7 @@ public class EnvironmentManager : MonoBehaviour
             ComeToPortUIAction(true);
             //nowNpcStandAtPort = npcTfs[randnum];
             cleanLevel++;
+            print(cleanLevel);
             npcTfs[randnum].Npctf.gameObject.SetActive(true);
             npcTfs[randnum].Npctf.position = PortPos.position;// * Random.Range(1f, 3f) ;
             npcTfs[randnum].IsField = true;
