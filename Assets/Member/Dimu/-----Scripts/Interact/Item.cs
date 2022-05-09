@@ -2,8 +2,6 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using NSY.Manager;
-using NSY.Iven;
 
 [CreateAssetMenu(fileName = "New Item", menuName = "Item")]
 public class Item : ScriptableObject
@@ -184,13 +182,10 @@ public class RecipeIteminfo
 [System.Serializable]
 public class UnlcokIteminfo
 {
-    [Header("잠금해제에 필요한 아이템")]
+    [Header("잠금해제할 아이템")]
     public Item item;
     [Header("잠금해제할 아이템의 갯수")]
     public int count;
-
-    [Header("추가로 필요할 조합슬롯")]
-    public CraftSlot NeedCraftSlot;
 
 }
 

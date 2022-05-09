@@ -7,7 +7,7 @@ namespace NSY.Iven
 {
     public class EquipmentSlot : ItemSlot
     {
-        public OutItemType equipmentType;
+        public EquipmentType equipmentType;
 
         protected override void OnValidate()//개체의 이름을 지정
         {
@@ -22,7 +22,7 @@ namespace NSY.Iven
                 return true;
             }
             EquippableItem equippableitem = item as EquippableItem;
-            return item != null && item.OutItemType == equipmentType;
+            return equippableitem != null && equippableitem.equipmentType == equipmentType;
         }
     }
 }

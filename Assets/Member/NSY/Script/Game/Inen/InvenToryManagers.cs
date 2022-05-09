@@ -114,15 +114,14 @@ namespace NSY.Iven
 
         private void ResultClick(BaseItemSlot obj)
         {
-            Debug.Log("되냐");
-            if (obj.item.OutItemType == OutItemType.Tool)
+            if (obj.item is EquippableItem)
             {
-                rudtn(obj.item);
+                rudtn((EquippableItem)obj.item);
 
             }
         }
 
-        private void rudtn(Item item)
+        private void rudtn(EquippableItem item)
         {
             Debug.Log("되냐");
 
@@ -157,13 +156,39 @@ namespace NSY.Iven
 
 
 
+        //조합창 중지
+        Item currntitem;
+        //   public void CloseCraftPanel()
+        //  {
+
+        //       Craftmanager.RestSlot();
+        //  }
+
+
+        //우편 버튼 눌렀을때.
+        private void ClickPostButton(PostSlot postslot)
+        {
+            Debug.Log("버튼클릭함");
+        }
+
         private void InventoryRightClick(BaseItemSlot itemslot)
         {
 
-            if (itemslot.item.OutItemType == OutItemType.Tool)
+            if (itemslot.item is Item)
             {
-               
-                Unequip(itemslot.item);
+                // if (craftPanel.DonthaveCraft())
+                //{
+                //  craftPanel.CraftAddItem(itemslot.item.GetCopy());
+                // itemslot.Amount--;
+                // UpdateRecipe();
+                // }
+
+
+            }
+
+            if (itemslot.item is EquippableItem)
+            {
+                Equip((EquippableItem)itemslot.item);
 
             }
             else if (itemslot.item is UseableItem)
@@ -181,13 +206,41 @@ namespace NSY.Iven
 
         }
 
-        //장비슬롯에서 눌렀을때
+
+        private void CraftPanelLeftClick(BaseItemSlot itemslot)
+        {
+            if (itemslot.item is Item)
+            {
+                iventorynsy.AddItem(itemslot.item.GetCopy());
+                itemslot.Amount--;
+                UpdateRecipe();
+
+
+            }
+
+        }
+        void UpdateRecipe()
+        {//탐색
+         //  Item Recipe;
+
+            //  Recipe = craftPanel.SetCraftingRecipe();
+
+
+
+        }
+
+
+
+
+
         private void EquipmentPanelRightClick(BaseItemSlot itemslot)
         {
 
-            Equip(itemslot.item); //장비칸장착
+            if (itemslot.item is EquippableItem)
+            {
+                Unequip((EquippableItem)itemslot.item);
 
-            
+            }
         }
 
         private void BeginDrag(BaseItemSlot itemslot)
@@ -218,6 +271,10 @@ namespace NSY.Iven
 
         private void Drop(BaseItemSlot dropitemslot)
         {
+
+
+
+
             if (dragitemSlot == null) return;
 
             if (dropitemslot.CanAddStack(dragitemSlot.item))
@@ -228,6 +285,10 @@ namespace NSY.Iven
             {
                 Swapitems(dropitemslot);
             }
+
+
+
+
         }
         //버리기
         private void DropItemOutsideUI()
@@ -267,29 +328,39 @@ namespace NSY.Iven
 
 
 
-        //장비창에서 장착창으로
-        public void Equip(Item item)
+        //아이템 장착 해제
+        public void Equip(EquippableItem item)
         {
+
+            if (iventorynsy.RemoveItem(item))
+            {
+                EquippableItem previousitem;
+                if (equipPanel.AddItem(item, out previousitem))
+                {
+                    if (previousitem != null)
+                    {
+                        iventorynsy.AddItem(previousitem);
+                        //equipPanel.AddItem(item, out previousitem);
+                    }
+
+
+                }
+
+                else
+                {
+                    iventorynsy.AddItem(item);
+                }
+            }
+        }
+        public void Unequip(EquippableItem item)//장착
+        {
+
             if (equipPanel.AddResultItem(item))
             {
-                Debug.Log("윌스미스마렵네");
-              //   equipPanel.changeItem(item);
+                Debug.Log("후..");
+                //   equipPanel.changeItem(item);
             }
 
-        }
-
-        //인벤창에서 조합창으로
-        public void Unequip(Item item)//
-        {
-
-                if (equipPanel.AddItem(item))
-                {
-                if (iventorynsy.RemoveItem(item))
-                {
-                    Debug.Log("씨발아 왜안되는데 ");
-                }
-                
-                }
 
         }
 
@@ -381,6 +452,17 @@ namespace NSY.Iven
             itemContainer.OnEndDragEvent -= EndDrag;
             itemContainer.OnDragEvent -= Drag;
             itemContainer.OnDropEvent -= Drop;
+        }
+
+
+
+
+        public void ClickPostSlotUi()
+        {
+
+            Debug.Log("버튼누름");
+
+
         }
 
         public void Open_CloseBtn()
