@@ -69,26 +69,34 @@ public class EnvironmentManager : MonoBehaviour
     Vector3 lookForward;
 
     Coroutine nowCor;
-    //NSY의 추가 코드
+  
     [Header("하루 총시간 ")] 
     public float fullDayLength;
     [Range(0.0f, 1.0f)] [Header("현재 시간 1.0이되면 하루 끝")] public float time;
     [Header("시작 시간")] public float startTime = 0.3f;
     [Header(" 걸리는 시간")] private float timeRate;
+    //NSY의 추가 코드
+       public Material SkyMat;
     //아침 기본 컬러
     [Header("낮 컬러")] [SerializeField] Color _DaySkyColor;
     [SerializeField] Color _DayequatorColor;
     [SerializeField] Color _DaygroundColor;
+    public AnimationCurve sunIntensity; //밝아지기 정도
     //밤 기본 컬러
-
     [Header("밤 컬러")] [SerializeField] Color _NightSkyColor;
     [SerializeField] Color _NghitequatorColor;
     [SerializeField] Color _NghitgroundColor;
-
+    public AnimationCurve MoonIntensity;
+     
     [Header("보간  컬러")]
     [SerializeField] Color _lerpColor;
     [SerializeField] Color _lerptorColor;
     [SerializeField] Color _lerpgoundColor;
+
+    //빛
+    public AnimationCurve D1LightCruve;
+    public AnimationCurve D2LightCruve;
+    public AnimationCurve D3LightCruve;
 
     //반딧불이
     [SerializeField] GameObject FireFlyEffect;
@@ -116,17 +124,40 @@ public class EnvironmentManager : MonoBehaviour
     }
     private void FixedUpdate()
     {
-
-        time += timeRate * Time.deltaTime; // 시간감소
-
-        if (time >= 1.0)
+        //NSY 코드
+        if (time >= 0.0)
         {
-            time = 0.0f;
-
+            time += timeRate * Time.deltaTime; // 시간감소
+           
         }
+       
 
-        d1.transform.rotation = Quaternion.Euler(d1.transform.eulerAngles.x, maincamera.transform.eulerAngles.y, d1.transform.eulerAngles.z);
-        d3.transform.rotation = Quaternion.Euler(d3.transform.eulerAngles.x, maincamera.transform.eulerAngles.y + 180, d3.transform.eulerAngles.z);
+
+
+        _lerpColor = Color.Lerp(_DaySkyColor, _NightSkyColor, time );
+        _lerptorColor = Color.Lerp(_DayequatorColor, _NghitequatorColor, time );
+        _lerpgoundColor = Color.Lerp(_DaygroundColor, _NghitgroundColor, time );
+        SkyMat.SetColor("_SkyColor", _lerpColor);
+        SkyMat.SetColor("_EquatorColor", _lerptorColor);
+        SkyMat.SetColor("_GroundColor", _lerpgoundColor);
+        SkyMat.SetFloat("_EquatorHeight", sunIntensity.Evaluate(time));
+
+        //빛 
+        d1.intensity = D1LightCruve.Evaluate(time);
+        d2.intensity = D2LightCruve.Evaluate(time);
+        d3.intensity = D3LightCruve.Evaluate(time);
+
+        if (d1.intensity > 0.15f) //낮일때
+        {
+            Debug.Log("낮임");
+        }
+        else if(d1.intensity <= 0.15f)// 밤임
+        {
+            Debug.Log("밤임");
+        }
+        //이까지
+
+
 
 
         //RenderSettings.fogColor = fogColor;
@@ -144,11 +175,13 @@ public class EnvironmentManager : MonoBehaviour
             Cleanliness = _cleanliness;
         //Cleanliness +=Time.deltaTime*20;
 
-        //NSY 코두
+    
 
 
 
 
+
+        //
         _fogColor = ((goodFogColor - badFogColor) / 100 * Cleanliness) + badFogColor;
         RenderSettings.fogColor = _fogColor;
 
@@ -156,10 +189,7 @@ public class EnvironmentManager : MonoBehaviour
         RenderSettings.fogEndDistance = ((goodFogEndDis - badFogEndDis) / 100 * Cleanliness) + badFogEndDis;
 
        
-        skyBox.SetColor("_SkyColor", _skyColor);
-        skyBox.SetColor("_EquatorColor", _equatorColor);
-        skyBox.SetColor("_GroundColor", _groundColor);
-        skyBox.SetColor("_CloudsLightColor", _cloudColor);
+    
 
         
     }
@@ -233,6 +263,10 @@ public class NPCField
 
 
 /* 디무의 코드 보관함
+ * 
+ *   //    d1.transform.rotation = Quaternion.Euler(d1.transform.eulerAngles.x, maincamera.transform.eulerAngles.y, d1.transform.eulerAngles.z);
+     //   d3.transform.rotation = Quaternion.Euler(d3.transform.eulerAngles.x, maincamera.transform.eulerAngles.y + 180, d3.transform.eulerAngles.z);
+ * 
  _skyColor = ((goodSkyColor - badSkyColor) / 100 * Cleanliness) + badSkyColor;
         _equatorColor = ((goodEquatorColor - badEquatorColor) / 100 * Cleanliness) + badEquatorColor;
         _groundColor = ((goodGroundColor - badGroundColor) / 100 * Cleanliness) + badGroundColor;
@@ -242,4 +276,9 @@ public class NPCField
         d2.intensity = ((goodIntensity_d2 - badIntensity_d2) / 100 * Cleanliness) + badIntensity_d2;
         d3.intensity = ((goodIntensity_d3 - badIntensity_d3) / 100 * Cleanliness) + badIntensity_d3;
 
+
+        //  skyBox.SetColor("_SkyColor", _skyColor);
+      //  skyBox.SetColor("_EquatorColor", _equatorColor);
+      //  skyBox.SetColor("_GroundColor", _groundColor);
+      //  skyBox.SetColor("_CloudsLightColor", _cloudColor);
 */
