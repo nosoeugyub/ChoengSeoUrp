@@ -84,18 +84,20 @@ namespace DM.Building
                 button.onClick.RemoveAllListeners();
             }
         }
-        public void SetBuildButtonEvents(Action buildmodeOn, Action demomodeOn)
+        public void SetBuildButtonEvents(Action buildmodeOn, Action demomodeOn, GameObject interactUI)
         {
             buildingButtons[0].onClick.AddListener(() =>
             {
                 buildmodeOn();
                 PlayerOnOff(false);
+                interactUI.SetActive(false);
                 ResetButtonEvents();
             });
             buildingButtons[1].onClick.AddListener(() =>
             {
                 demomodeOn();
                 PlayerOnOff(false);
+                interactUI.SetActive(false);
                 ResetButtonEvents();
             });
         }

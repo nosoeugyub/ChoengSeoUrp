@@ -2,7 +2,6 @@
 using DM.NPC;
 using System.Collections.Generic;
 using TMPro;
-using TT.BuildSystem;
 using UnityEngine;
 
 namespace NSY.Player
@@ -147,7 +146,7 @@ namespace NSY.Player
                         else
                         {
                             print(buildAreaObject.name);
-                            buildAreaObject.OnBuildMode();
+                            buildAreaObject.OnBuildMode(interactUI);
                         }
                         return;
                     }
@@ -177,14 +176,13 @@ namespace NSY.Player
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue, 0.3f);
 
-            if (Physics.Raycast(ray, out hit, 10000, layerMask))
+            if (Physics.Raycast(ray, out hit, 10000, layerMask) && !BuildingBlock.isBuildMode)
             {
                 //print(hit.collider.name);
                 nowInteractable = hit.collider.GetComponent<IInteractable>();
                 if (nowInteractable != null && IsInteracted(nowInteractable))// 클릭한 옵젝이 닿은 옵젝 리스트에 있다면 통과
                 {
                     interactUI.SetActive(true);
-                    //Debug.Log("interactUI.SetActive(true)");
 
                     interactUiText2.text = nowInteractable.CanInteract();
                     Vector3 uiPos = new Vector3(nowInteractable.ReturnTF().position.x, nowInteractable.ReturnTF().position.y + 2, nowInteractable.ReturnTF().position.z);
@@ -200,10 +198,6 @@ namespace NSY.Player
                     //    button.gameObject.SetActive(false);
                     //}
                 }
-            }
-            else
-            {
-                interactUI.SetActive(false);
             }
 
 
@@ -283,37 +277,37 @@ namespace NSY.Player
 
         }
 
-        //가장 가까운 오브젝트 검출
-        public void LightClosestObj()
-        {
-            if (interacts.Count == 0)
-            {
-                interactUI.SetActive(false);
-                return;
-            }
-            interactUI.SetActive(true);
+        ////가장 가까운 오브젝트 검출
+        //public void LightClosestObj()
+        //{
+        //    if (interacts.Count == 0)
+        //    {
+        //        interactUI.SetActive(false);
+        //        return;
+        //    }
+        //    interactUI.SetActive(true);
 
-            DistChect();
-            closestObj.CanInteract();
+        //    DistChect();
+        //    closestObj.CanInteract();
 
-            Vector3 uiPos = new Vector3(closestObj.ReturnTF().position.x, closestObj.ReturnTF().position.y + 4, closestObj.ReturnTF().position.z);
-            interactUI.transform.position = Camera.main.WorldToScreenPoint(uiPos);
-        }
-        //거리 계산
-        public void DistChect()
-        {
-            float shortestDist = 1000000;
+        //    Vector3 uiPos = new Vector3(closestObj.ReturnTF().position.x, closestObj.ReturnTF().position.y + 4, closestObj.ReturnTF().position.z);
+        //    interactUI.transform.position = Camera.main.WorldToScreenPoint(uiPos);
+        //}
+        ////거리 계산
+        //public void DistChect()
+        //{
+        //    float shortestDist = 1000000;
 
-            foreach (var item in interacts)
-            {
-                float dist = Vector3.Distance(transform.position, item.ReturnTF().position);
-                if (dist < shortestDist)
-                {
-                    shortestDist = dist;
-                    closestObj = item;
-                }
-            }
-        }
+        //    foreach (var item in interacts)
+        //    {
+        //        float dist = Vector3.Distance(transform.position, item.ReturnTF().position);
+        //        if (dist < shortestDist)
+        //        {
+        //            shortestDist = dist;
+        //            closestObj = item;
+        //        }
+        //    }
+        //}
     }
 
 }

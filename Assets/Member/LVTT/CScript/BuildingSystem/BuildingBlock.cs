@@ -203,7 +203,7 @@ namespace DM.Building
             }
         }
 
-        public void OnBuildMode()
+        public void OnBuildMode(GameObject interactUI)
         {
 
             buildManager.BuildingInteractButtonOnOff(true);
@@ -211,12 +211,10 @@ namespace DM.Building
             nowBuildingBlock = this;
             Interact();
 
-            Action buildModeOn = BuildModeOn;
-            Action buildDemolishModeOn = BuildDemolishModeOn;
 
             if (!this.buildButtonFuncAdded)
             {
-                buildManager.SetBuildButtonEvents(buildModeOn, buildDemolishModeOn);
+                buildManager.SetBuildButtonEvents(BuildModeOn, BuildDemolishModeOn, interactUI);
 
                 this.buildButtonFuncAdded = true;
             }
