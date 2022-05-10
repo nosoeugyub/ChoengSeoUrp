@@ -101,12 +101,9 @@ public class EnvironmentManager : MonoBehaviour
 
 
     [Header("밤")]
-    [SerializeField] Light Ningtd1;
-    [SerializeField] Light Ningtd2;
-    [SerializeField] Light Ningtd3;
-    public Gradient moonColor;
-    public AnimationCurve moonIntensity;
+   
     public Material NightMat;
+    public float Waittime = 0.5f;
     [SerializeField] Color _NightSkyColor;
     [SerializeField] Color _NightEquatorColor;
     [SerializeField] Color _NightEquatorGroundColor;
@@ -147,7 +144,13 @@ public class EnvironmentManager : MonoBehaviour
         time += timeRate * Time.fixedDeltaTime;
         if (time >= 1.0f)
         {
-            time = 0.0f;
+            timeRate *= -1;
+        }
+      
+        if (time <= 0.02f)
+        {
+            timeRate *= -1;
+
 
         }
         //세기
@@ -155,75 +158,20 @@ public class EnvironmentManager : MonoBehaviour
         d2.intensity = sunintensity.Evaluate(time);
         d3.intensity = sunintensity.Evaluate(time);
 
-        Ningtd1.intensity = moonIntensity.Evaluate(time);
-       Ningtd2.intensity = moonIntensity.Evaluate(time);
-        Ningtd3.intensity = moonIntensity.Evaluate(time);
         //해의 색
         d1.color = sunColor.Evaluate(time);
         d2.color = sunColor.Evaluate(time);
         d3.color = sunColor.Evaluate(time);
 
-        Ningtd1.color = moonColor.Evaluate(time);
-        Ningtd2.color = moonColor.Evaluate(time);
-        Ningtd3.color = moonColor.Evaluate(time);
+      
 
         _lerpSkyColor = Color.Lerp(_DaySkyColor, _NightSkyColor, time);
         _lerpEquatorColor = Color.Lerp(_DayEquatorColor, _NightEquatorColor, time);
         _lerpEquatorGroundColor = Color.Lerp(_DayEquatorGroundColor, _NightEquatorGroundColor, time);
-        DayMat.SetColor("Sky Color", _lerpSkyColor);
-        DayMat.SetColor("Equator Color", _lerpEquatorColor);
-        DayMat.SetColor("Ground Color", _lerpEquatorGroundColor);
-        //낮
-        if (d1.intensity < 0.2f && d1.gameObject.activeInHierarchy &&
-            d2.intensity < 0.2f && d2.gameObject.activeInHierarchy &&
-            d3.intensity < 0.2f && d3.gameObject.activeInHierarchy)
-        {
-            d1.gameObject.SetActive(false);
-            d2.gameObject.SetActive(false);
-            d3.gameObject.SetActive(false);
-            RenderSettings.skybox = NightMat;//밤시작
+        DayMat.SetColor("_SkyColor", _lerpSkyColor);
+        DayMat.SetColor("_EquatorColor", _lerpEquatorColor);
+        DayMat.SetColor("_GroundColor", _lerpEquatorGroundColor);
 
-        }
-       else  if(d1.intensity >= 0.2f && !d1.gameObject.activeInHierarchy &&
-            d2.intensity >= 0.2f && !d2.gameObject.activeInHierarchy &&
-            d3.intensity >= 0.2f && !d3.gameObject.activeInHierarchy)
-        {
-            
-            d1.gameObject.SetActive(true);
-            d2.gameObject.SetActive(true);
-            d3.gameObject.SetActive(true);
-          
-
-          
-        }
-       
-
-
-
-        //밤
-        if (Ningtd1.intensity <  0.2f && Ningtd1.gameObject.activeInHierarchy &&
-          Ningtd2.intensity < 0.2f && Ningtd2.gameObject.activeInHierarchy &&
-          Ningtd3.intensity < 0.2f && Ningtd3.gameObject.activeInHierarchy)
-        {
-            Ningtd1.gameObject.SetActive(false);
-            Ningtd2.gameObject.SetActive(false);
-            Ningtd3.gameObject.SetActive(false);
-            RenderSettings.skybox = DayMat; //낮시작
-        }
-      else   if (Ningtd1.intensity >= 0.2f && !Ningtd1.gameObject.activeInHierarchy &&
-            Ningtd2.intensity >= 0.2f && !Ningtd2.gameObject.activeInHierarchy &&
-            Ningtd3.intensity >= 0.2f && !Ningtd3.gameObject.activeInHierarchy)
-        {
-            Ningtd1.gameObject.SetActive(true);
-            Ningtd2.gameObject.SetActive(true);
-            Ningtd3.gameObject.SetActive(true);
-            
-
-        }
-
-    
-          
-        
 
 
         //랜더
@@ -267,6 +215,15 @@ public class EnvironmentManager : MonoBehaviour
 
         
     }
+
+
+    IEnumerator Delay()
+    {
+        timeRate *= -1;
+        yield return null;
+    }
+
+
 
     public void ChangeCleanliness(float cleanAmount)
     {
