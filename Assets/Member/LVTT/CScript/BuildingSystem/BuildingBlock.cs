@@ -10,7 +10,7 @@ public enum BuildMode { None, BuildHouseMode, DemolishMode }
 
 namespace DM.Building
 {
-    public class BuildingBlock : MonoBehaviour, IInteractble
+    public class BuildingBlock : MonoBehaviour, IInteractable
     {
         [SerializeField] int buildingId;
         [SerializeField] BuildMode CurBuildMode;
@@ -340,6 +340,7 @@ namespace DM.Building
         public void SetBuildMode(BuildMode buildmode)
         {
             CurBuildMode = buildmode;
+            print(CurBuildMode + " " +nowBuildingBlock.name);
         }
         void ScaleBuildItem()
         {

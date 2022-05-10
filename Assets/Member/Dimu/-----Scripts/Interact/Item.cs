@@ -44,7 +44,7 @@ public class Item : ScriptableObject
     }
 
     [SerializeField]
-    private int GetCountitems;
+    private int GetCountitems = 0;
     public int GetCountItems
     {
         get

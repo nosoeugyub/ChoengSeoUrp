@@ -9,7 +9,9 @@ namespace NSY.Player
 {
     public class PlayerInteract : MonoBehaviour
     {
-        [SerializeField] List<IInteractble> interacts = new List<IInteractble>();//상호작용 범위 내 있는 IInteractable오브젝트 리스트
+        [SerializeField] List<IInteractable> interacts = new List<IInteractable>();//상호작용 범위 내 있는 IInteractable오브젝트 리스트
+        IInteractable closestObj;//가장 가까운 친구
+
 
         public GameObject interactUI;//띄울 UI
         //public Text interactUiText;//띄울 UI
@@ -27,7 +29,7 @@ namespace NSY.Player
 
         RaycastHit hit;
         Ray ray;
-        IInteractble nowInteractable;
+        IInteractable nowInteractable;
         bool canInteract = false;
         int layerMask;   // Player 레이어만 충돌 체크함
 
@@ -71,7 +73,7 @@ namespace NSY.Player
             isAnimating = isTrue;
         }
 
-        private void InvokeInteract(IInteractble interactable)
+        private void InvokeInteract(IInteractable interactable)
         {
             //PlayerEat playerInteract = interactable.ReturnTF().GetComponent<PlayerEat>();
             //if (playerInteract != null)
@@ -178,7 +180,7 @@ namespace NSY.Player
             if (Physics.Raycast(ray, out hit, 10000, layerMask))
             {
                 //print(hit.collider.name);
-                nowInteractable = hit.collider.GetComponent<IInteractble>();
+                nowInteractable = hit.collider.GetComponent<IInteractable>();
                 if (nowInteractable != null && IsInteracted(nowInteractable))// 클릭한 옵젝이 닿은 옵젝 리스트에 있다면 통과
                 {
                     interactUI.SetActive(true);
@@ -210,7 +212,7 @@ namespace NSY.Player
             {
                 if (Physics.Raycast(ray, out hit, 10000, layerMask))
                 {
-                    nowInteractable = hit.collider.GetComponent<IInteractble>();
+                    nowInteractable = hit.collider.GetComponent<IInteractable>();
                     if (nowInteractable != null && IsInteracted(nowInteractable))
                     {
                         Debug.Log("상호작용한 물체: " + hit.collider.name);
@@ -225,7 +227,7 @@ namespace NSY.Player
             return isAnimating;
         }
 
-        public bool IsInteracted(IInteractble it)
+        public bool IsInteracted(IInteractable it)
         {
             return interacts.Contains(it);
         }
@@ -260,7 +262,7 @@ namespace NSY.Player
         {
             ReliableOnTriggerExit.NotifyTriggerEnter(other, gameObject, OnTriggerExit);
 
-            IInteractble interactable = other.GetComponent<IInteractble>();
+            IInteractable interactable = other.GetComponent<IInteractable>();
             if (interactable != null)
             {
                 //canInteract = true;
@@ -271,7 +273,7 @@ namespace NSY.Player
         {
             ReliableOnTriggerExit.NotifyTriggerExit(other, gameObject);
 
-            IInteractble interactable = other.GetComponent<IInteractble>();
+            IInteractable interactable = other.GetComponent<IInteractable>();
             if (interactable != null)
             {
                 interacts.Remove(interactable);
@@ -280,40 +282,40 @@ namespace NSY.Player
 
 
         }
+
+        //가장 가까운 오브젝트 검출
+        public void LightClosestObj()
+        {
+            if (interacts.Count == 0)
+            {
+                interactUI.SetActive(false);
+                return;
+            }
+            interactUI.SetActive(true);
+
+            DistChect();
+            closestObj.CanInteract();
+
+            Vector3 uiPos = new Vector3(closestObj.ReturnTF().position.x, closestObj.ReturnTF().position.y + 4, closestObj.ReturnTF().position.z);
+            interactUI.transform.position = Camera.main.WorldToScreenPoint(uiPos);
+        }
+        //거리 계산
+        public void DistChect()
+        {
+            float shortestDist = 1000000;
+
+            foreach (var item in interacts)
+            {
+                float dist = Vector3.Distance(transform.position, item.ReturnTF().position);
+                if (dist < shortestDist)
+                {
+                    shortestDist = dist;
+                    closestObj = item;
+                }
+            }
+        }
     }
 
 }
 
 //[SerializeField] Dictionary<IInteractable, T> interactss= new Dictionary<IInteractable>();//상호작용 범위 내 있는 IInteractable오브젝트 리스트
-//IInteractable closestObj;//가장 가까운 친구
-////가장 가까운 오브젝트 검출
-//public void LightClosestObj()
-//{
-//    if (interacts.Count == 0)
-//    {
-//        collisionUI.SetActive(false);
-//        return;
-//    }
-//    collisionUI.SetActive(true);
-
-//    DistChect();
-//    closestObj.CanInteract();
-
-//    Vector3 uiPos = new Vector3(closestObj.ReturnTF().position.x, closestObj.ReturnTF().position.y + 4, closestObj.ReturnTF().position.z);
-//    collisionUI.transform.position = Camera.main.WorldToScreenPoint(uiPos);
-//}
-////거리 계산
-//public void DistChect()
-//{
-//    float shortestDist = 1000000;
-
-//    foreach (var item in interacts)
-//    {
-//        float dist = Vector3.Distance(transform.position, item.ReturnTF().position);
-//        if (dist < shortestDist)
-//        {
-//            shortestDist = dist;
-//            closestObj = item;
-//        }
-//    }
-//}

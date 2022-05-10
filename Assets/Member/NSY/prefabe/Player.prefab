@@ -429,7 +429,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 4
+  m_Radius: 2
   m_Height: 10
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -485,6 +485,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4b4bb0fcc6f87f4498a953801a3c8a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pc: {fileID: 0}
+  pi: {fileID: 0}
+  pa: {fileID: 0}
+  eatItem: {fileID: 0}
 --- !u!1 &4734001089623499144
 GameObject:
   m_ObjectHideFlags: 0
@@ -564,7 +568,6 @@ MonoBehaviour:
   maincamera: {fileID: 0}
   PlayerSpeed: 10
   SpritePlayerAnim: {fileID: 911088236287530421}
-  Tired: 0
 --- !u!114 &5777408093625932307
 MonoBehaviour:
   m_ObjectHideFlags: 0

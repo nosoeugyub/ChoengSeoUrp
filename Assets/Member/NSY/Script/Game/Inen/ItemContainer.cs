@@ -164,10 +164,10 @@ namespace NSY.Iven
             {
                 if (ItemSlots[i].CanAddStack(item))
                 {
-
                     ItemSlots[i].item = item;
                     ItemSlots[i].Amount++;
                     ItemSlots[i].item.GetCountItems++;
+                    if(OnAddItemEvent !=null)
                     OnAddItemEvent();
                     SuperManager.Instance.unlockmanager.GetInterectItemUnLocking();// 해금
                     PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.GetItem, PlayerData.ItemData, ((int)ItemBehaviorEnum.length));
@@ -181,9 +181,9 @@ namespace NSY.Iven
                     ItemSlots[i].item = item;
                     ItemSlots[i].Amount++;
                     ItemSlots[i].item.GetCountItems++;
+                    if(OnAddItemEvent !=null)
                     OnAddItemEvent();
                     SuperManager.Instance.unlockmanager.GetInterectItemUnLocking();
-
                     PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.GetItem, PlayerData.ItemData, ((int)ItemBehaviorEnum.length));
                     return true;
                 }

@@ -1,15 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using DM.Inven;
-using UnityEngine.EventSystems;
-using System;
+﻿using System;
 using TMPro;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace NSY.Iven
 {
-    public class BaseItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler , IPointerClickHandler
+    public class BaseItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerClickHandler
     {
         public Image itemImage;
         float ClickTime = 0;
@@ -31,7 +28,7 @@ namespace NSY.Iven
         public event Action<BaseItemSlot> OnPointerEnterEvent;
         public event Action<BaseItemSlot> OnPointerExitEvent;
         public event Action<BaseItemSlot> OnDubleClickEvent;
-      //  public event Action<BaseItemSlot> OnLeftClickEvent;
+        //  public event Action<BaseItemSlot> OnLeftClickEvent;
 
         public Item _item;
         public Item item
@@ -40,7 +37,7 @@ namespace NSY.Iven
             set
             {
                 _item = value;
-                
+
                 if (_item == null && Amount != 0)
                 {
                     Amount = 0;
@@ -65,7 +62,7 @@ namespace NSY.Iven
                     OnPointerEnter(null);
                 }
 
-              
+
             }
         }
 
@@ -73,7 +70,10 @@ namespace NSY.Iven
         private int _amount;
         public int Amount
         {
-            get { return _amount; }
+            get
+            {
+                return _amount;
+            }
             set
             {
                 _amount = value;
@@ -89,8 +89,8 @@ namespace NSY.Iven
                 }
                 if (amountText != null) //&& _item.MaximumStacks > 1 
                 {
-                    amountText.enabled = _item != null && _amount > 1 ;
-                    if(amountText.enabled)
+                    amountText.enabled = _item != null && _amount > 1;
+                    if (amountText.enabled)
                     {
                         amountText.text = _amount.ToString();
                     }
@@ -99,7 +99,7 @@ namespace NSY.Iven
 
             }
         }
-       
+
         // 이미지 텍스트
         protected virtual void OnValidate() //이미지가 비어있으면 찾아서 등록
         {
@@ -119,13 +119,13 @@ namespace NSY.Iven
             }
             item = _item;
             Amount = _amount;
-            
+
         }
         protected virtual void OnDisable()
         {
             if (isPointerOver)
             {
-              
+
                 OnPointerExit(null);
             }
         }
@@ -165,7 +165,7 @@ namespace NSY.Iven
             }
         }
 
-        public  void OnPointerExit(PointerEventData eventData)
+        public void OnPointerExit(PointerEventData eventData)
         {
 
             isPointerOver = false;
@@ -178,12 +178,12 @@ namespace NSY.Iven
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            
+
             if (eventData != null && eventData.button == PointerEventData.InputButton.Right)
             {
                 if (OnRightClickEvent != null)
                 {
-                   
+
                     OnRightClickEvent(this);
                 }
             }
@@ -191,14 +191,14 @@ namespace NSY.Iven
             {
                 if (OnLeftClickEvent != null)
                 {
-                  
+
                     OnLeftClickEvent(this);
                 }
                 if (item is EquippableItem)
                 {
                     tooltip.ShowEqulTooltip((EquippableItem)item);
                 }
-                if (item is Item )
+                if (item is Item)
                 {
                     tooltip.ShowItemTooltip(item);
                 }
@@ -217,9 +217,9 @@ namespace NSY.Iven
             }
             else
             {
-                ClickTime = Time.time ;
+                ClickTime = Time.time;
             }
-           
+
         }
     }
 

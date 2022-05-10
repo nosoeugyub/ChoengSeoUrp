@@ -89,7 +89,7 @@ namespace NSY.Iven
             iventorynsy.OnDropEvent += Drop;
             equipPanel.OnDropEvent += Drop;
             //     craftPanel.OnDropEvent += Drop;
-            Dropitemarea.OnDropEvent += DropItemOutsideUI;
+            //Dropitemarea.OnDropEvent += DropItemOutsideUI;
 
 
             //carftingRecipe = new CraftingRecipe();

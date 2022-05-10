@@ -24,7 +24,7 @@ namespace NSY.Player
 
         private void Start()
         {
-            Tired = 50;
+            Tired = 80;
             PlayerHealth_image.fillAmount = Tired;
         }
 
