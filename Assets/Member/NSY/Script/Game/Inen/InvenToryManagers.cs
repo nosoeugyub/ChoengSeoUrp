@@ -139,10 +139,22 @@ namespace NSY.Iven
             else
             {
                 Debug.Log("BuildingLeftClick");
-                //if (obj.item.OutItemType == OutItemType.BuildingItemObj_Mini)
+                BuildingHandyObjSpawn HandySpawnObj = FindObjectOfType<BuildingHandyObjSpawn>();
+                switch (obj.item.InItemType)
                 {
-
+                    case InItemType.BuildingItemObj_Essential:
+                        HandySpawnObj.HandySpawnBuildItem(obj.item);
+                        Debug.Log("SpawnEssentialItem");
+                        break;
+                    case InItemType.BuildingItemObj_Additional:
+                        HandySpawnObj.HandySpawnBuildItem(obj.item);
+                        Debug.Log("SpawnAdditionalItem");
+                        break;
                 }
+                ////if (obj.item.OutItemType == OutItemType.BuildingItemObj_Mini)
+                //{
+
+                //}
             }
         }
 
