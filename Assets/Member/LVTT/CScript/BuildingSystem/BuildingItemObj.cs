@@ -9,7 +9,7 @@ namespace DM.Building
         [SerializeField] BuildObjAttribute attributes;
 
         [Tooltip("이 오브젝트를 채집할 수 있는 도구 타입")]
-        [SerializeField] InItemType toolType;
+        public InItemType toolType;
 
         [SerializeField] float MaxScale = 1.5f;
         [SerializeField] float MinScale = 0.3f;
@@ -80,31 +80,46 @@ namespace DM.Building
         /// <summary>
         /////////////////////////Update
         private void ItemMove()
-        {  
-            var movePos = Input.mousePosition;
-            movePos.z = parentBuildArea.DistanceToNowBuildItem(Camera.main.transform.position);
-//            print(movePos.z);
-            movePos = Camera.main.ScreenToWorldPoint(movePos);
-             
-            HouseBuildAreaCal();
-
-            if (movePos.y >= MaxY) movePos.y = MaxY;
-            if (movePos.y <= MinY) movePos.y = MinY;
-
-            if(parentBuildArea.DistanceToNowBuildItem(movePos) > MaxX)
+        { //onBuildItem interact during BuildMode
+            if (BuildingBlock.isBuildMode)
             {
-                //print(" 여어 멈추라고");
-                movePos.x = transform.position.x;
-                movePos.z = transform.position.z;
-            }
+                var movePos = Input.mousePosition;
+                movePos.z = parentBuildArea.DistanceToNowBuildItem(Camera.main.transform.position);
+                //            print(movePos.z);
+                movePos = Camera.main.ScreenToWorldPoint(movePos);
 
-            
-            //if (movePos.x >= MaxX) movePos.x = MaxX;
-            //if (movePos.x <= MinX) movePos.x = MinX;
+                HouseBuildAreaCal();
+
+                if (movePos.y >= MaxY) movePos.y = MaxY;
+                if (movePos.y <= MinY) movePos.y = MinY;
+
+                if (parentBuildArea.DistanceToNowBuildItem(movePos) > MaxX)
+                {
+                    //print(" 여어 멈추라고");
+                    movePos.x = transform.position.x;
+                    movePos.z = transform.position.z;
+                }
+
+
+                //if (movePos.x >= MaxX) movePos.x = MaxX;
+                //if (movePos.x <= MinX) movePos.x = MinX;
 
 
                 //print(parentBuildArea.DistanceFromHouseBuildTo(movePos));
                 transform.position = movePos;
+            }
+
+            //onBuildItem interact when not in BuildMode
+            else
+            {
+                BuildingHandyObjSpawn SpawnHandyObjParent = FindObjectOfType<BuildingHandyObjSpawn>();
+                SpawnHandyObjParent.curInteractHandyObj.gameObject.GetComponent<Billboard>().enabled = true;
+                var movePos = Input.mousePosition;
+                movePos.z = SpawnHandyObjParent.DistanceFromCharacterTo(Camera.main.transform.position);
+                movePos = Camera.main.ScreenToWorldPoint(movePos);
+                transform.position = movePos;
+            }
+
         }
         void HouseBuildAreaCal()
         {
