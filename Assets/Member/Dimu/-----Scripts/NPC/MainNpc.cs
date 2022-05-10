@@ -91,6 +91,7 @@ namespace DM.NPC
         public void SetMyHouse(BuildingBlock block, BuildingLike l)
         {
             like = l;
+            if (!SettingBuildingTalk()) return;
             if (block)
             {
                 myHouse = block;
@@ -99,7 +100,6 @@ namespace DM.NPC
                 print("Find My House");
                 MoveToMyHome();
             }
-            SettingBuildingTalk();
         }
         public BuildingLike GetBuildingLikeable(BuildingBlock buildingBlock) //bool형
         {
@@ -262,16 +262,16 @@ namespace DM.NPC
         {
             return transform;
         }
-        public void SettingBuildingTalk()
+        public bool SettingBuildingTalk()
         {
             print("SettingBuildingTalk");
-            PlayDialog(null);
+            if (!PlayDialog(null)) return false;
             if (isFollowPlayer)
             {
                 player.SetNpc(null);
                 isFollowPlayer = false;
             }
-
+            return true;
         }
         public void Talk(Item handitem)
         {
@@ -284,9 +284,9 @@ namespace DM.NPC
             else
                 PlayDialog(handitem);
         }
-        public void PlayDialog(Item handitem)
+        public bool PlayDialog(Item handitem)
         {
-            SuperManager.Instance.dialogueManager.FirstShowDialog(this, handitem, isFollowPlayer, (int)like);
+            return SuperManager.Instance.dialogueManager.FirstShowDialog(this, handitem, isFollowPlayer, (int)like);
         }
         public void MoveTo(Vector3 pos)
         {
