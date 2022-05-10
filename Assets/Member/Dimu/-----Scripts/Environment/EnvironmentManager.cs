@@ -54,13 +54,13 @@ public class EnvironmentManager : MonoBehaviour
     [SerializeField] Color _groundColor;
     [SerializeField] Color _cloudColor;
 
-    [SerializeField] Light d1;
+    
     [SerializeField] float goodIntensity_d1;
     [SerializeField] float badIntensity_d1;
-    [SerializeField] Light d2;
+    
     [SerializeField] float goodIntensity_d2;
     [SerializeField] float badIntensity_d2;
-    [SerializeField] Light d3;
+    
     [SerializeField] float goodIntensity_d3;
     [SerializeField] float badIntensity_d3;
 
@@ -70,34 +70,51 @@ public class EnvironmentManager : MonoBehaviour
 
     Coroutine nowCor;
   
-    [Header("하루 총시간 ")] 
-    public float fullDayLength;
-    [Range(0.0f, 1.0f)] [Header("현재 시간 1.0이되면 하루 끝")] public float time;
-    [Header("시작 시간")] public float startTime = 0.3f;
-    [Header(" 걸리는 시간")] private float timeRate;
+ 
+
+
+
     //NSY의 추가 코드
-       public Material SkyMat;
-    //아침 기본 컬러
-    [Header("낮 컬러")] [SerializeField] Color _DaySkyColor;
-    [SerializeField] Color _DayequatorColor;
-    [SerializeField] Color _DaygroundColor;
-    public AnimationCurve sunIntensity; //밝아지기 정도
-    //밤 기본 컬러
-    [Header("밤 컬러")] [SerializeField] Color _NightSkyColor;
-    [SerializeField] Color _NghitequatorColor;
-    [SerializeField] Color _NghitgroundColor;
-    public AnimationCurve MoonIntensity;
-     
-    [Header("보간  컬러")]
-    [SerializeField] Color _lerpColor;
-    [SerializeField] Color _lerptorColor;
-    [SerializeField] Color _lerpgoundColor;
+    [Header("낮과 밤")]
+    [Header("하루 총시간 ")]
+    [Range(0.0f, 1.0f)] [Header("현재 시간 1.0이되면 하루 끝")] public float time;
+    public float fullDayLength;
+    [Header("시작 시간")] public float startTime = 0.35f;
+    [Header(" 걸리는 시간")] private float timeRate;
 
-    //빛
-    public AnimationCurve D1LightCruve;
-    public AnimationCurve D2LightCruve;
-    public AnimationCurve D3LightCruve;
 
+    [Header("낮")]
+    [SerializeField] Light d1;
+    [SerializeField] Light d2;
+    [SerializeField] Light d3;
+    public Gradient sunColor;
+    public AnimationCurve sunintensity;
+    public Material DayMat;
+    [SerializeField] Color _DaySkyColor;
+    [SerializeField] Color _DayEquatorColor;
+    [SerializeField] Color _DayEquatorGroundColor;
+
+    [Header("밤")]
+    [SerializeField] Color _lerpSkyColor;
+    [SerializeField] Color _lerpEquatorColor;
+    [SerializeField] Color _lerpEquatorGroundColor;
+
+
+    [Header("밤")]
+    [SerializeField] Light Ningtd1;
+    [SerializeField] Light Ningtd2;
+    [SerializeField] Light Ningtd3;
+    public Gradient moonColor;
+    public AnimationCurve moonIntensity;
+    public Material NightMat;
+    [SerializeField] Color _NightSkyColor;
+    [SerializeField] Color _NightEquatorColor;
+    [SerializeField] Color _NightEquatorGroundColor;
+
+
+    [Header("다른 빛조명")]
+    public AnimationCurve lighingIntensityMultipler;
+    public AnimationCurve refloectionsIntensityMultipler;
     //반딧불이
     [SerializeField] GameObject FireFlyEffect;
 
@@ -120,45 +137,98 @@ public class EnvironmentManager : MonoBehaviour
         timeRate = 1.0f / fullDayLength;
         time = startTime;
 
+
+
         Cleanliness = 0;
     }
     private void FixedUpdate()
     {
         //NSY 코드
-        time += timeRate * Time.deltaTime;
-
-        if (time == 1.0)
+        time += timeRate * Time.fixedDeltaTime;
+        if (time >= 1.0f)
         {
-            time -= -timeRate * Time.deltaTime;
+            time = 0.0f;
 
         }
-        if (time == 0.0)
+        //세기
+        d1.intensity = sunintensity.Evaluate(time);
+        d2.intensity = sunintensity.Evaluate(time);
+        d3.intensity = sunintensity.Evaluate(time);
+
+        Ningtd1.intensity = moonIntensity.Evaluate(time);
+       Ningtd2.intensity = moonIntensity.Evaluate(time);
+        Ningtd3.intensity = moonIntensity.Evaluate(time);
+        //해의 색
+        d1.color = sunColor.Evaluate(time);
+        d2.color = sunColor.Evaluate(time);
+        d3.color = sunColor.Evaluate(time);
+
+        Ningtd1.color = moonColor.Evaluate(time);
+        Ningtd2.color = moonColor.Evaluate(time);
+        Ningtd3.color = moonColor.Evaluate(time);
+
+        _lerpSkyColor = Color.Lerp(_DaySkyColor, _NightSkyColor, time);
+        _lerpEquatorColor = Color.Lerp(_DayEquatorColor, _NightEquatorColor, time);
+        _lerpEquatorGroundColor = Color.Lerp(_DayEquatorGroundColor, _NightEquatorGroundColor, time);
+        DayMat.SetColor("Sky Color", _lerpSkyColor);
+        DayMat.SetColor("Equator Color", _lerpEquatorColor);
+        DayMat.SetColor("Ground Color", _lerpEquatorGroundColor);
+        //낮
+        if (d1.intensity < 0.2f && d1.gameObject.activeInHierarchy &&
+            d2.intensity < 0.2f && d2.gameObject.activeInHierarchy &&
+            d3.intensity < 0.2f && d3.gameObject.activeInHierarchy)
         {
-            time += timeRate * Time.deltaTime;
+            d1.gameObject.SetActive(false);
+            d2.gameObject.SetActive(false);
+            d3.gameObject.SetActive(false);
+            RenderSettings.skybox = NightMat;//밤시작
+
+        }
+       else  if(d1.intensity >= 0.2f && !d1.gameObject.activeInHierarchy &&
+            d2.intensity >= 0.2f && !d2.gameObject.activeInHierarchy &&
+            d3.intensity >= 0.2f && !d3.gameObject.activeInHierarchy)
+        {
+            
+            d1.gameObject.SetActive(true);
+            d2.gameObject.SetActive(true);
+            d3.gameObject.SetActive(true);
+          
+
+          
+        }
+       
+
+
+
+        //밤
+        if (Ningtd1.intensity <  0.2f && Ningtd1.gameObject.activeInHierarchy &&
+          Ningtd2.intensity < 0.2f && Ningtd2.gameObject.activeInHierarchy &&
+          Ningtd3.intensity < 0.2f && Ningtd3.gameObject.activeInHierarchy)
+        {
+            Ningtd1.gameObject.SetActive(false);
+            Ningtd2.gameObject.SetActive(false);
+            Ningtd3.gameObject.SetActive(false);
+            RenderSettings.skybox = DayMat; //낮시작
+        }
+      else   if (Ningtd1.intensity >= 0.2f && !Ningtd1.gameObject.activeInHierarchy &&
+            Ningtd2.intensity >= 0.2f && !Ningtd2.gameObject.activeInHierarchy &&
+            Ningtd3.intensity >= 0.2f && !Ningtd3.gameObject.activeInHierarchy)
+        {
+            Ningtd1.gameObject.SetActive(true);
+            Ningtd2.gameObject.SetActive(true);
+            Ningtd3.gameObject.SetActive(true);
+            
+
         }
 
+    
+          
+        
 
-        _lerpColor = Color.Lerp(_DaySkyColor, _NightSkyColor, time );
-        _lerptorColor = Color.Lerp(_DayequatorColor, _NghitequatorColor, time );
-        _lerpgoundColor = Color.Lerp(_DaygroundColor, _NghitgroundColor, time );
-        SkyMat.SetColor("_SkyColor", _lerpColor);
-        SkyMat.SetColor("_EquatorColor", _lerptorColor);
-        SkyMat.SetColor("_GroundColor", _lerpgoundColor);
-        SkyMat.SetFloat("_EquatorHeight", sunIntensity.Evaluate(time));
 
-        //빛 
-        d1.intensity = D1LightCruve.Evaluate(time);
-        d2.intensity = D2LightCruve.Evaluate(time);
-        d3.intensity = D3LightCruve.Evaluate(time);
-
-        if (d1.intensity > 0.15f) //낮일때
-        {
-            Debug.Log("낮임");
-        }
-        else if(d1.intensity <= 0.15f)// 밤임
-        {
-            Debug.Log("밤임");
-        }
+        //랜더
+        RenderSettings.ambientIntensity = lighingIntensityMultipler.Evaluate(time);
+        RenderSettings.reflectionIntensity = refloectionsIntensityMultipler.Evaluate(time);
         //이까지
 
 
@@ -185,7 +255,7 @@ public class EnvironmentManager : MonoBehaviour
 
 
 
-        //
+        
         _fogColor = ((goodFogColor - badFogColor) / 100 * Cleanliness) + badFogColor;
         RenderSettings.fogColor = _fogColor;
 
