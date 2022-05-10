@@ -103,6 +103,7 @@ public class EnvironmentManager : MonoBehaviour
     [Header("밤")]
    
     public Material NightMat;
+    public float Waittime = 0.5f;
     [SerializeField] Color _NightSkyColor;
     [SerializeField] Color _NightEquatorColor;
     [SerializeField] Color _NightEquatorGroundColor;
@@ -145,9 +146,12 @@ public class EnvironmentManager : MonoBehaviour
         {
             timeRate *= -1;
         }
+      
         if (time <= 0.02f)
         {
             timeRate *= -1;
+
+
         }
         //세기
         d1.intensity = sunintensity.Evaluate(time);
@@ -168,12 +172,6 @@ public class EnvironmentManager : MonoBehaviour
         DayMat.SetColor("_EquatorColor", _lerpEquatorColor);
         DayMat.SetColor("_GroundColor", _lerpEquatorGroundColor);
 
-  
-
-
-    
-          
-        
 
 
         //랜더
@@ -217,6 +215,15 @@ public class EnvironmentManager : MonoBehaviour
 
         
     }
+
+
+    IEnumerator Delay()
+    {
+        timeRate *= -1;
+        yield return null;
+    }
+
+
 
     public void ChangeCleanliness(float cleanAmount)
     {
