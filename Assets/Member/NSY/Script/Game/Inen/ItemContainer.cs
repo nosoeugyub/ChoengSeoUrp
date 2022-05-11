@@ -169,6 +169,7 @@ namespace NSY.Iven
                     ItemSlots[i].item.GetCountItems++;
                     if(OnAddItemEvent !=null)
                     OnAddItemEvent();
+
                     SuperManager.Instance.unlockmanager.GetInterectItemUnLocking();// 해금
                     PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.GetItem, PlayerData.ItemData, ((int)ItemBehaviorEnum.length));
                     return true;
