@@ -20,6 +20,7 @@ public class NewInventUIManager : MonoBehaviour
     [SerializeField] Scrollbar scrollbar;
 
     public int nowActiveTabIdx;
+    bool isCreateMode = false;
 
     [Header("열고 닫고 체인지")]
     public bool isOpen;
@@ -57,7 +58,7 @@ public class NewInventUIManager : MonoBehaviour
             }
         }
         UnLockManager.Unlockmanager.GetItemUnlocks -= InterectingItem;
-        
+
     }
     void InterectingItem()//아이템 n개 획득 시 해금  검사
     {
@@ -137,11 +138,20 @@ public class NewInventUIManager : MonoBehaviour
         scrollbar.size = 0;
 
     }
+    public void CreateMode()
+    {
+        isCreateMode = !isCreateMode;
+        DebugText.Instance.SetText(string.Format("Creative 모드 {0}입니다.", isCreateMode.ToString()));
+    }
     public void BtnSolution()
     {
+        if (isCreateMode == true)
+        {
+            iven.AddItem(nowSelectItem.RecipeItem);
+            return;
+        }
         List<List<ItemSlot>> itemSlots = CanCraftItem();
-        if (itemSlots == null) return;
-        if (itemSlots[0].Count == 0) return;
+        if (itemSlots == null || itemSlots[0].Count == 0) return;
 
         for (int i = 0; i < CraftWindows.Length; i++)
         {
