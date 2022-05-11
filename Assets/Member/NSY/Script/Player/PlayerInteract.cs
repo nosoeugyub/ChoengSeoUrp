@@ -25,6 +25,7 @@ namespace NSY.Player
         [SerializeField] Item[] testToolItems;
 
         [SerializeField] MainNpc followNpc;
+        [SerializeField] Camera uiCamera;
 
         RaycastHit hit;
         Ray ray;
@@ -32,8 +33,9 @@ namespace NSY.Player
         bool canInteract = false;
         int layerMask;   // Player 레이어만 충돌 체크함
 
+        public RectTransform targetRectTr;
         public bool isAnimating = false;
-
+        private Vector2 screenPoint;
         private void Awake()
         {
             layerMask = 1 << LayerMask.NameToLayer("Interactable");
@@ -150,14 +152,14 @@ namespace NSY.Player
                         }
                         return;
                     }
-                    IBuildable buildMat = interactable.ReturnTF().GetComponent<IBuildable>();
-                    //IBuildable buildable = interactable.ReturnTF().GetComponent<IBuildable>();
-                    if (buildMat != null)
-                    {
-                        SetIsAnimation(false);
-                        buildMat.Demolish();
-                        return;
-                    }
+                    //IBuildable buildMat = interactable.ReturnTF().GetComponent<IBuildable>();
+                    ////IBuildable buildable = interactable.ReturnTF().GetComponent<IBuildable>();
+                    //if (buildMat != null)
+                    //{
+                    //    SetIsAnimation(false);
+                    //    buildMat.Demolish();
+                    //    return;
+                    //}
                     break;
             }
             SetIsAnimation(false);
@@ -186,7 +188,16 @@ namespace NSY.Player
 
                     interactUiText2.text = nowInteractable.CanInteract();
                     Vector3 uiPos = new Vector3(nowInteractable.ReturnTF().position.x, nowInteractable.ReturnTF().position.y + 2, nowInteractable.ReturnTF().position.z);
-                    interactUI.transform.position = Camera.main.WorldToScreenPoint(uiPos);
+                    interactUI.transform.position = uiCamera.WorldToScreenPoint(uiPos);
+
+                    var position = uiCamera.WorldToScreenPoint(uiPos);
+                    position.z = (interactUI.transform.position - uiCamera.transform.position).magnitude;
+                    //interactUI.transform.position = Camera.main.ScreenToWorldPoint(position);
+
+                    RectTransformUtility.ScreenPointToLocalPointInRectangle(targetRectTr, Input.mousePosition, uiCamera, out screenPoint);
+                    interactUI.GetComponent<RectTransform>().localPosition = screenPoint;
+
+                    //interactUI.transform.position = RectTransformUtility.WorldToScreenPoint(Camera.main, interactUI.transform.position);
                 }
                 else
                 {

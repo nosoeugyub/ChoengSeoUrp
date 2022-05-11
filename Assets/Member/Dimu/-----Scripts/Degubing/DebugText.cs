@@ -39,7 +39,7 @@ public class DebugText : MonoBehaviour
     {
         spawnPos = transform.position;
         spawnPos.y += space* textlist.Count;
-        print(spawnPos);
+        //print(spawnPos);
         GameObject fab = Instantiate(initFab, spawnPos, Quaternion.identity, transform);
         textlist.Add(fab);
         StartCoroutine(enumerator(fab));
@@ -49,6 +49,7 @@ public class DebugText : MonoBehaviour
     {
         yield return new WaitForSeconds(10);
         spawnPos.y -= space;
+        textlist.Remove(go);
         Destroy(go);
     }
     private void Update()

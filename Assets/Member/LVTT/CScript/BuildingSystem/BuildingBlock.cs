@@ -1,7 +1,5 @@
 ﻿using DM.NPC;
 using Game.Cam;
-using NSY.Manager;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -214,6 +212,7 @@ namespace DM.Building
 
             if (!this.buildButtonFuncAdded)
             {
+
                 buildManager.SetBuildButtonEvents(BuildModeOn, BuildDemolishModeOn, interactUI);
 
                 this.buildButtonFuncAdded = true;
@@ -241,7 +240,7 @@ namespace DM.Building
             CamManager.ChangeFollowTarger(gameObject.transform, 2);
             CamManager.ChangeFollowTarger(gameObject.transform, 3);
 
-            SetBuildMode(BuildMode.BuildHouseMode);
+            nowBuildingBlock.SetBuildMode(BuildMode.BuildHouseMode);
 
             isBuildMode = true;
 
@@ -264,7 +263,7 @@ namespace DM.Building
             CamManager.ChangeFollowTarger(gameObject.transform, 2);
             CamManager.ChangeFollowTarger(gameObject.transform, 3);
 
-            SetBuildMode(BuildMode.DemolishMode);
+            nowBuildingBlock.SetBuildMode(BuildMode.DemolishMode);
 
             isBuildDemolishMode = true;
 
@@ -288,7 +287,7 @@ namespace DM.Building
                 curInteractObj.IsFirstDrop = false;
             }
             CancleUI(false);
-            SetBuildMode(BuildMode.None);
+            nowBuildingBlock.SetBuildMode(BuildMode.None);
 
             if (nowBuildingBlock.IsCompleteBuilding())
             {
@@ -338,7 +337,7 @@ namespace DM.Building
         public void SetBuildMode(BuildMode buildmode)
         {
             CurBuildMode = buildmode;
-            print(CurBuildMode + " " +nowBuildingBlock.name);
+            DebugText.Instance.SetText(string.Format("CurBuildMode: {0}", CurBuildMode.ToString()));
         }
         void ScaleBuildItem()
         {
@@ -411,11 +410,11 @@ namespace DM.Building
             foreach (GameObject item in BuildItemList)
             {
                 item.transform.position += item.transform.forward * BuildItemGap / 2;
-            print(item.transform.position.z);
+                print(item.transform.position.z);
                 //item.transform.position
                 //      = new Vector3(item.transform.position.x, item.transform.position.y, item.transform.position.z + BuildItemGap / 2);
             }
-            spawnPos += HouseBuild.forward * -(BuildItemGap/2 * BuildItemList.Count);// when the building is facing South
+            spawnPos += HouseBuild.forward * -(BuildItemGap / 2 * BuildItemList.Count);// when the building is facing South
             //}
             CancleUI(true);
             spawnPos.y = HouseBuild.transform.position.y + areaHeightsize / 2;
@@ -424,7 +423,7 @@ namespace DM.Building
             newPrefab.GetComponent<BuildingItemObj>().SetParentBuildArea(nowBuildingBlock);
             newPrefab.name = spawnObj.name;
             AddBuildItemToList(newPrefab);
-            FindObjectOfType<EnvironmentManager>().ChangeCleanliness(newPrefab.GetComponent<BuildingItemObj>().GetItem().CleanAmount+ 1);
+            FindObjectOfType<EnvironmentManager>().ChangeCleanliness(newPrefab.GetComponent<BuildingItemObj>().GetItem().CleanAmount + 1);
         }
 
         void BuildingItemObjAndSorting()
