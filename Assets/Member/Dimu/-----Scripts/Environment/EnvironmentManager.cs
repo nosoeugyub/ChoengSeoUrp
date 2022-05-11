@@ -172,14 +172,21 @@ public class EnvironmentManager : MonoBehaviour
         DayMat.SetColor("_EquatorColor", _lerpEquatorColor);
         DayMat.SetColor("_GroundColor", _lerpEquatorGroundColor);
 
-
+        if (d1.intensity < 0.13f)
+        {
+            FireFlyEffect.SetActive(true);
+        }
+        else
+        {
+            FireFlyEffect.SetActive(false);
+        }
 
         //랜더
         RenderSettings.ambientIntensity = lighingIntensityMultipler.Evaluate(time);
         RenderSettings.reflectionIntensity = refloectionsIntensityMultipler.Evaluate(time);
         //이까지
 
-
+       
 
 
         //RenderSettings.fogColor = fogColor;
