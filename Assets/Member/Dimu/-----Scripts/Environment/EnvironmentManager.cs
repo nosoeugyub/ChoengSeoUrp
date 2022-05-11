@@ -1,5 +1,4 @@
 ﻿using DG.Tweening;
-using DM.Building;
 using NSY.Iven;
 using NSY.Manager;
 using System.Collections;
@@ -54,13 +53,13 @@ public class EnvironmentManager : MonoBehaviour
     [SerializeField] Color _groundColor;
     [SerializeField] Color _cloudColor;
 
-    
+
     [SerializeField] float goodIntensity_d1;
     [SerializeField] float badIntensity_d1;
-    
+
     [SerializeField] float goodIntensity_d2;
     [SerializeField] float badIntensity_d2;
-    
+
     [SerializeField] float goodIntensity_d3;
     [SerializeField] float badIntensity_d3;
 
@@ -69,8 +68,8 @@ public class EnvironmentManager : MonoBehaviour
     Vector3 lookForward;
 
     Coroutine nowCor;
-  
- 
+
+
 
 
 
@@ -87,6 +86,7 @@ public class EnvironmentManager : MonoBehaviour
     [SerializeField] Light d1;
     [SerializeField] Light d2;
     [SerializeField] Light d3;
+    [SerializeField] Light d4;
     public Gradient sunColor;
     public AnimationCurve sunintensity;
     public Material DayMat;
@@ -101,7 +101,7 @@ public class EnvironmentManager : MonoBehaviour
 
 
     [Header("밤")]
-   
+
     public Material NightMat;
     public float Waittime = 0.5f;
     [SerializeField] Color _NightSkyColor;
@@ -146,7 +146,7 @@ public class EnvironmentManager : MonoBehaviour
         {
             timeRate *= -1;
         }
-      
+
         if (time <= 0.02f)
         {
             timeRate *= -1;
@@ -154,16 +154,20 @@ public class EnvironmentManager : MonoBehaviour
 
         }
         //세기
-        d1.intensity = sunintensity.Evaluate(time);
-        d2.intensity = sunintensity.Evaluate(time);
-        d3.intensity = sunintensity.Evaluate(time);
+        d1.transform.rotation = Quaternion.Euler(d1.transform.eulerAngles.x, maincamera.transform.eulerAngles.y, d1.transform.eulerAngles.z);
+        d2.transform.rotation = Quaternion.Euler(d2.transform.eulerAngles.x, maincamera.transform.eulerAngles.y + 180, d2.transform.eulerAngles.z);
+
+        d1.intensity = sunintensity.Evaluate(time) * 0.4f + 0.1f;
+        d2.intensity = sunintensity.Evaluate(time) * 0.4f + 0.1f;
+        d3.intensity = sunintensity.Evaluate(time) * 0.51f + 0.1f;
+        d4.intensity = sunintensity.Evaluate(time) * 0.5f + 0.1f;
 
         //해의 색
         d1.color = sunColor.Evaluate(time);
         d2.color = sunColor.Evaluate(time);
         d3.color = sunColor.Evaluate(time);
 
-      
+
 
         _lerpSkyColor = Color.Lerp(_DaySkyColor, _NightSkyColor, time);
         _lerpEquatorColor = Color.Lerp(_DayEquatorColor, _NightEquatorColor, time);
@@ -186,14 +190,14 @@ public class EnvironmentManager : MonoBehaviour
         RenderSettings.reflectionIntensity = refloectionsIntensityMultipler.Evaluate(time);
         //이까지
 
-       
+
 
 
         //RenderSettings.fogColor = fogColor;
         if (Input.GetKeyDown(KeyCode.P))
         {
             //a.isHaveRecipeItem = true;
-            Cleanliness +=3;
+            Cleanliness += 3;
             //days++;
             //print(days);
 
@@ -204,23 +208,23 @@ public class EnvironmentManager : MonoBehaviour
             Cleanliness = _cleanliness;
         //Cleanliness +=Time.deltaTime*20;
 
-    
 
 
 
 
 
-        
+
+
         _fogColor = ((goodFogColor - badFogColor) / 100 * Cleanliness) + badFogColor;
         RenderSettings.fogColor = _fogColor;
 
         RenderSettings.fogStartDistance = ((goodFogStartDis - badFogStartDis) / 100 * Cleanliness) + badFogStartDis;
         RenderSettings.fogEndDistance = ((goodFogEndDis - badFogEndDis) / 100 * Cleanliness) + badFogEndDis;
 
-       
-    
 
-        
+
+
+
     }
 
 
