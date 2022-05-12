@@ -53,6 +53,7 @@ namespace NSY.Cam
 
             RaycastHit hit;
             int layerMask = ((1 << LayerMask.NameToLayer("CameraEvent"))); //| (1 << LayerMask.NameToLayer(" ")));
+            layerMask = ~layerMask;
             if (Physics.Raycast(transform.position, Direction, out hit, Distance, layerMask))
 
             {
