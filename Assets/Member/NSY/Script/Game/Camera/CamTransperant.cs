@@ -51,8 +51,8 @@ namespace NSY.Cam
 
             RaycastHit hit;
             int layerMask = ((1 << LayerMask.NameToLayer("CameraEvent"))); //| (1 << LayerMask.NameToLayer("GUN")));  // Everything에서 Player,GUN 레이어만 제외하고 충돌 체크함
-            layerMask = ~layerMask;
-            if (Physics.Raycast(transform.position, Direction, out hit, layerMask))
+         //   layerMask = ~layerMask;
+            if (Physics.Raycast(transform.position, Direction, out hit))
 
             {
                 // 플레이어가 레이에 맞으면 (가려지는 오브젝트가 없으면)
