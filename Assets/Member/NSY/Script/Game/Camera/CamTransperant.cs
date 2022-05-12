@@ -18,9 +18,8 @@ namespace NSY.Cam
         public List<GameObject> transparentObjs = new List<GameObject>();
 
         public void Awake()
-        { 
-           // defaultShader = Shader.Find("Universal Render Pipeline/Unlit");
-           // targetShader = Material.Find("Transperants");
+        {
+           // targetShader = Shader.Find("Legacy Shaders/Transparent/Diffuse");
         }
 
 
@@ -28,13 +27,12 @@ namespace NSY.Cam
         {
             for (int i = 0; i < transparentObjs.Count; i++)
             {
-                defaultShader = transparentObjs[i].GetComponentInChildren<Renderer>().material ;
+                transparentObjs[i].GetComponentInChildren<Renderer>().material = defaultShader;
                 Material Mat = transparentObjs[i].GetComponentInChildren<Renderer>().material;
 
                 Color matColor = Mat.color;
                 matColor.a = 1f;
                 Mat.color = matColor;
-                
             }
 
             transparentObjs.Clear();
@@ -52,9 +50,9 @@ namespace NSY.Cam
             Vector3 Direction = (Character.transform.position - transform.position).normalized;
 
             RaycastHit hit;
-            int layerMask = ((1 << LayerMask.NameToLayer("CameraEvent"))); //| (1 << LayerMask.NameToLayer(" ")));
+            int layerMask = ((1 << LayerMask.NameToLayer("CameraEvent"))); //| (1 << LayerMask.NameToLayer("GUN")));  // Everything에서 Player,GUN 레이어만 제외하고 충돌 체크함
             layerMask = ~layerMask;
-            if (Physics.Raycast(transform.position, Direction, out hit, Distance, layerMask))
+            if (Physics.Raycast(transform.position, Direction, out hit, layerMask))
 
             {
                 // 플레이어가 레이에 맞으면 (가려지는 오브젝트가 없으면)
@@ -63,7 +61,6 @@ namespace NSY.Cam
                     // 시야를 가린 오브젝트가 존재하고 있다면 되돌리기 
                     if (transparentObjs.Count != 0)
                     {
-                       
                         StartCoroutine(returnObjs());
                     }
 
@@ -79,7 +76,6 @@ namespace NSY.Cam
                 if (ObstacleRenderer.material.shader == targetShader) return;
 
 
-
                 if (ObstacleRenderer != null)
 
                 {
@@ -90,7 +86,6 @@ namespace NSY.Cam
                     Color matColor = Mat.color;
                     matColor.a = 0.3f;
                     Mat.color = matColor;
-                  
                 }
 
             }
