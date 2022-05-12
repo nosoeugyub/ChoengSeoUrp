@@ -62,6 +62,7 @@ namespace NSY.Cam
                     // 시야를 가린 오브젝트가 존재하고 있다면 되돌리기 
                     if (transparentObjs.Count != 0)
                     {
+                       
                         StartCoroutine(returnObjs());
                     }
 
@@ -75,6 +76,7 @@ namespace NSY.Cam
 
                 // 이미 반투명 상태라면 리턴
                 if (ObstacleRenderer.material.shader == targetShader) return;
+
 
 
                 if (ObstacleRenderer != null)
