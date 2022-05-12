@@ -124,10 +124,10 @@ namespace DM.Building
         void HouseBuildAreaCal()
         {
             //원래 위치 + 건축영역가로 반 길이 - 스케일 길이 
-            MaxX = /*ObjOriginPos.x + */ parentBuildArea.areaWidthsize / 2 - (quad.transform.localScale.x * transform.localScale.x) / 2;
-            MinX = ObjOriginPos.x - parentBuildArea.areaWidthsize / 2 + (quad.transform.localScale.x * transform.localScale.x) / 2;
-            MaxY = ObjOriginPos.y + parentBuildArea.areaHeightsize / 2 - quad.transform.localScale.y * transform.localScale.y / 2;
-            MinY = ObjOriginPos.y - parentBuildArea.areaHeightsize / 2 + quad.transform.localScale.y * transform.localScale.y / 2;
+            MaxX = /*ObjOriginPos.x + */ parentBuildArea.AreaWidthsize / 2 - (quad.transform.localScale.x * transform.localScale.x) / 2;
+            MinX = ObjOriginPos.x - parentBuildArea.AreaWidthsize / 2 + (quad.transform.localScale.x * transform.localScale.x) / 2;
+            MaxY = ObjOriginPos.y + parentBuildArea.AreaHeightsize / 2 - quad.transform.localScale.y * transform.localScale.y / 2;
+            MinY = ObjOriginPos.y - parentBuildArea.AreaHeightsize / 2 + quad.transform.localScale.y * transform.localScale.y / 2;
         }
         /// 
         /// </summary>
@@ -137,13 +137,13 @@ namespace DM.Building
             parentBuildArea.CancleUI(false);
             SuperManager.Instance.inventoryManager.AddItem(item);
             parentBuildArea.RemoveBuildItemToList(gameObject);
+
             Destroy(gameObject);
         }
         public void SetParentBuildArea(BuildingBlock pb)
         {
-            //Debug.Log("SetParent");
             parentBuildArea = pb;
-            parentBuildArea.curInteractObj = this;
+            parentBuildArea.SetCurInteractObj(this);
             ObjOriginPos = gameObject.transform.position;
         }
         public void SetBuildItemScale(Vector3 scalenum)
@@ -173,10 +173,10 @@ namespace DM.Building
             if (breakCount == 0)
             {
                 Debug.Log("파괴");
-                if (item.InItemType == InItemType.BuildWall)
-                    parentBuildArea.hasWall = false;
-                else if (item.InItemType == InItemType.BuildSign)
-                    parentBuildArea.hasSign = false;
+                //if (item.InItemType == InItemType.BuildWall)
+                //    parentBuildArea.hasWall = false;
+                //else if (item.InItemType == InItemType.BuildSign)
+                //    parentBuildArea.hasSign = false;
                 //파괴 임시 처리
                 DropItems();
                 parentBuildArea.RemoveBuildItemToList(gameObject);

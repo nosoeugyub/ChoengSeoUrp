@@ -26,7 +26,7 @@ namespace DM.Building
         {
             // if (buildOffUi.onClick == null)
             buildOffUi.onClick.RemoveAllListeners();
-                buildOffUi.onClick.AddListener(() => buildmodeOff());
+            buildOffUi.onClick.AddListener(() => buildmodeOff());
         }
 
         public void AddBuilding(BuildingBlock buildingBlock)
@@ -76,27 +76,27 @@ namespace DM.Building
                 button.gameObject.SetActive(isOn);
             }
         }
-        public void ResetButtonEvents()
+        public void ResetButtonEvents(Button button)
         {
-            foreach (var button in buildingButtons)
-            {
-                button.gameObject.SetActive(false);
-                button.onClick.RemoveAllListeners();
-            }
+            button.gameObject.SetActive(false);
+            button.onClick.RemoveAllListeners();
+            DebugText.Instance.SetText(string.Format("RemoveAllListeners"));
         }
-        public void SetBuildButtonEvents(Action buildmodeOn, Action demomodeOn)
+        public void SetBuildButtonEvents(Action buildmodeOn, Action demomodeOn, GameObject interactUI)
         {
             buildingButtons[0].onClick.AddListener(() =>
             {
                 buildmodeOn();
                 PlayerOnOff(false);
-                ResetButtonEvents();
+                interactUI.SetActive(false);
+                ResetButtonEvents(buildingButtons[0]);
             });
             buildingButtons[1].onClick.AddListener(() =>
             {
                 demomodeOn();
                 PlayerOnOff(false);
-                ResetButtonEvents();
+                interactUI.SetActive(false);
+                ResetButtonEvents(buildingButtons[1]);
             });
         }
         public void PlayerOnOff(bool isOn)

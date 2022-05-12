@@ -81,17 +81,17 @@ namespace NSY.Iven
             {
                 if (itemSlot.item == null) continue;
 
-                if (!buildingBlock.hasWall)// 벽이 없다면 벽만 설치 가능하도록
-                {
-                    if (itemSlot.item.InItemType == InItemType.BuildWall)//벽이면
-                    {
-                        itemSlot.Interactble(true);
-                    }
-                    else
-                    {
-                        itemSlot.Interactble(false);
-                    }
-                }
+                //if (!buildingBlock.hasWall)// 벽이 없다면 벽만 설치 가능하도록
+                //{
+                //    if (itemSlot.item.InItemType == InItemType.BuildWall)//벽이면
+                //    {
+                //        itemSlot.Interactble(true);
+                //    }
+                //    else
+                //    {
+                //        itemSlot.Interactble(false);
+                //    }
+                //}
                 //else if (!buildingBlock.hasSign)
                 //{
                 //    if (itemSlot.item.OutItemType == OutItemType.BuildSign)//벽이면
@@ -164,10 +164,10 @@ namespace NSY.Iven
             {
                 if (ItemSlots[i].CanAddStack(item))
                 {
-
                     ItemSlots[i].item = item;
                     ItemSlots[i].Amount++;
                     ItemSlots[i].item.GetCountItems++;
+                    if(OnAddItemEvent !=null)
                     OnAddItemEvent();
 
                     SuperManager.Instance.unlockmanager.GetInterectItemUnLocking();// 해금
@@ -182,9 +182,9 @@ namespace NSY.Iven
                     ItemSlots[i].item = item;
                     ItemSlots[i].Amount++;
                     ItemSlots[i].item.GetCountItems++;
+                    if(OnAddItemEvent !=null)
                     OnAddItemEvent();
                     SuperManager.Instance.unlockmanager.GetInterectItemUnLocking();
-
                     PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.GetItem, PlayerData.ItemData, ((int)ItemBehaviorEnum.length));
                     return true;
                 }

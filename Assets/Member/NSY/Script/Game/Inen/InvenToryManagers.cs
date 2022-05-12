@@ -125,7 +125,7 @@ namespace NSY.Iven
 
         private void rudtn(Item item)// 장착아이템을 장비칸으로
         {
-        
+
             equipPanel.RemoveResultItem(item);
         }
 
@@ -139,10 +139,22 @@ namespace NSY.Iven
             else
             {
                 Debug.Log("BuildingLeftClick");
-                //if (obj.item.OutItemType == OutItemType.BuildingItemObj_Mini)
+                BuildingHandyObjSpawn HandySpawnObj = FindObjectOfType<BuildingHandyObjSpawn>();
+                switch (obj.item.InItemType)
                 {
-
+                    case InItemType.BuildingItemObj_Essential:
+                        HandySpawnObj.HandySpawnBuildItem(obj.item);
+                        Debug.Log("SpawnEssentialItem");
+                        break;
+                    case InItemType.BuildingItemObj_Additional:
+                        HandySpawnObj.HandySpawnBuildItem(obj.item);
+                        Debug.Log("SpawnAdditionalItem");
+                        break;
                 }
+                ////if (obj.item.OutItemType == OutItemType.BuildingItemObj_Mini)
+                //{
+
+                //}
             }
         }
 
@@ -161,7 +173,7 @@ namespace NSY.Iven
 
             if (itemslot.item.OutItemType == OutItemType.Tool)
             {
-               
+
                 Unequip(itemslot.item);
 
             }
@@ -186,7 +198,7 @@ namespace NSY.Iven
 
             Equip(itemslot.item); //장비칸장착
 
-            
+
         }
 
         private void BeginDrag(BaseItemSlot itemslot)
@@ -273,7 +285,7 @@ namespace NSY.Iven
             {
                 playerinterract.SetHandItem(item);
                 Debug.Log("윌스미스마렵네");
-         
+
             }
 
         }
@@ -282,14 +294,14 @@ namespace NSY.Iven
         public void Unequip(Item item)//
         {
 
-                if (equipPanel.AddItem(item))
-                {
+            if (equipPanel.AddItem(item))
+            {
                 if (iventorynsy.RemoveItem(item))
                 {
                     Debug.Log("씨발아 왜안되는데 ");
                 }
-                
-                }
+
+            }
 
         }
 

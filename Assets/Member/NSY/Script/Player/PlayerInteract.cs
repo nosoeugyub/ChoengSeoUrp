@@ -2,14 +2,15 @@
 using DM.NPC;
 using System.Collections.Generic;
 using TMPro;
-using TT.BuildSystem;
 using UnityEngine;
 
 namespace NSY.Player
 {
     public class PlayerInteract : MonoBehaviour
     {
-        [SerializeField] List<IInteractble> interacts = new List<IInteractble>();//상호작용 범위 내 있는 IInteractable오브젝트 리스트
+        [SerializeField] List<IInteractable> interacts = new List<IInteractable>();//상호작용 범위 내 있는 IInteractable오브젝트 리스트
+        IInteractable closestObj;//가장 가까운 친구
+
 
         public GameObject interactUI;//띄울 UI
         //public Text interactUiText;//띄울 UI
@@ -24,15 +25,17 @@ namespace NSY.Player
         [SerializeField] Item[] testToolItems;
 
         [SerializeField] MainNpc followNpc;
+        [SerializeField] Camera uiCamera;
 
         RaycastHit hit;
         Ray ray;
-        IInteractble nowInteractable;
+        IInteractable nowInteractable;
         bool canInteract = false;
         int layerMask;   // Player 레이어만 충돌 체크함
 
+        public RectTransform targetRectTr;
         public bool isAnimating = false;
-
+        private Vector2 screenPoint;
         private void Awake()
         {
             layerMask = 1 << LayerMask.NameToLayer("Interactable");
@@ -71,7 +74,7 @@ namespace NSY.Player
             isAnimating = isTrue;
         }
 
-        private void InvokeInteract(IInteractble interactable)
+        private void InvokeInteract(IInteractable interactable)
         {
             //PlayerEat playerInteract = interactable.ReturnTF().GetComponent<PlayerEat>();
             //if (playerInteract != null)
@@ -145,18 +148,18 @@ namespace NSY.Player
                         else
                         {
                             print(buildAreaObject.name);
-                            buildAreaObject.OnBuildMode();
+                            buildAreaObject.OnBuildMode(interactUI);
                         }
                         return;
                     }
-                    IBuildable buildMat = interactable.ReturnTF().GetComponent<IBuildable>();
-                    //IBuildable buildable = interactable.ReturnTF().GetComponent<IBuildable>();
-                    if (buildMat != null)
-                    {
-                        SetIsAnimation(false);
-                        buildMat.Demolish();
-                        return;
-                    }
+                    //IBuildable buildMat = interactable.ReturnTF().GetComponent<IBuildable>();
+                    ////IBuildable buildable = interactable.ReturnTF().GetComponent<IBuildable>();
+                    //if (buildMat != null)
+                    //{
+                    //    SetIsAnimation(false);
+                    //    buildMat.Demolish();
+                    //    return;
+                    //}
                     break;
             }
             SetIsAnimation(false);
@@ -175,18 +178,26 @@ namespace NSY.Player
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue, 0.3f);
 
-            if (Physics.Raycast(ray, out hit, 10000, layerMask))
+            if (Physics.Raycast(ray, out hit, 10000, layerMask) && !BuildingBlock.isBuildMode)
             {
                 //print(hit.collider.name);
-                nowInteractable = hit.collider.GetComponent<IInteractble>();
+                nowInteractable = hit.collider.GetComponent<IInteractable>();
                 if (nowInteractable != null && IsInteracted(nowInteractable))// 클릭한 옵젝이 닿은 옵젝 리스트에 있다면 통과
                 {
                     interactUI.SetActive(true);
-                    //Debug.Log("interactUI.SetActive(true)");
 
                     interactUiText2.text = nowInteractable.CanInteract();
                     Vector3 uiPos = new Vector3(nowInteractable.ReturnTF().position.x, nowInteractable.ReturnTF().position.y + 2, nowInteractable.ReturnTF().position.z);
-                    interactUI.transform.position = Camera.main.WorldToScreenPoint(uiPos);
+                    interactUI.transform.position = uiCamera.WorldToScreenPoint(uiPos);
+
+                    var position = uiCamera.WorldToScreenPoint(uiPos);
+                    position.z = (interactUI.transform.position - uiCamera.transform.position).magnitude;
+                    //interactUI.transform.position = Camera.main.ScreenToWorldPoint(position);
+
+                    RectTransformUtility.ScreenPointToLocalPointInRectangle(targetRectTr, Input.mousePosition, uiCamera, out screenPoint);
+                    interactUI.GetComponent<RectTransform>().localPosition = screenPoint;
+
+                    //interactUI.transform.position = RectTransformUtility.WorldToScreenPoint(Camera.main, interactUI.transform.position);
                 }
                 else
                 {
@@ -199,10 +210,6 @@ namespace NSY.Player
                     //}
                 }
             }
-            else
-            {
-                interactUI.SetActive(false);
-            }
 
 
 
@@ -210,7 +217,7 @@ namespace NSY.Player
             {
                 if (Physics.Raycast(ray, out hit, 10000, layerMask))
                 {
-                    nowInteractable = hit.collider.GetComponent<IInteractble>();
+                    nowInteractable = hit.collider.GetComponent<IInteractable>();
                     if (nowInteractable != null && IsInteracted(nowInteractable))
                     {
                         Debug.Log("상호작용한 물체: " + hit.collider.name);
@@ -225,7 +232,7 @@ namespace NSY.Player
             return isAnimating;
         }
 
-        public bool IsInteracted(IInteractble it)
+        public bool IsInteracted(IInteractable it)
         {
             return interacts.Contains(it);
         }
@@ -260,7 +267,7 @@ namespace NSY.Player
         {
             ReliableOnTriggerExit.NotifyTriggerEnter(other, gameObject, OnTriggerExit);
 
-            IInteractble interactable = other.GetComponent<IInteractble>();
+            IInteractable interactable = other.GetComponent<IInteractable>();
             if (interactable != null)
             {
                 //canInteract = true;
@@ -271,7 +278,7 @@ namespace NSY.Player
         {
             ReliableOnTriggerExit.NotifyTriggerExit(other, gameObject);
 
-            IInteractble interactable = other.GetComponent<IInteractble>();
+            IInteractable interactable = other.GetComponent<IInteractable>();
             if (interactable != null)
             {
                 interacts.Remove(interactable);
@@ -280,40 +287,40 @@ namespace NSY.Player
 
 
         }
+
+        ////가장 가까운 오브젝트 검출
+        //public void LightClosestObj()
+        //{
+        //    if (interacts.Count == 0)
+        //    {
+        //        interactUI.SetActive(false);
+        //        return;
+        //    }
+        //    interactUI.SetActive(true);
+
+        //    DistChect();
+        //    closestObj.CanInteract();
+
+        //    Vector3 uiPos = new Vector3(closestObj.ReturnTF().position.x, closestObj.ReturnTF().position.y + 4, closestObj.ReturnTF().position.z);
+        //    interactUI.transform.position = Camera.main.WorldToScreenPoint(uiPos);
+        //}
+        ////거리 계산
+        //public void DistChect()
+        //{
+        //    float shortestDist = 1000000;
+
+        //    foreach (var item in interacts)
+        //    {
+        //        float dist = Vector3.Distance(transform.position, item.ReturnTF().position);
+        //        if (dist < shortestDist)
+        //        {
+        //            shortestDist = dist;
+        //            closestObj = item;
+        //        }
+        //    }
+        //}
     }
 
 }
 
 //[SerializeField] Dictionary<IInteractable, T> interactss= new Dictionary<IInteractable>();//상호작용 범위 내 있는 IInteractable오브젝트 리스트
-//IInteractable closestObj;//가장 가까운 친구
-////가장 가까운 오브젝트 검출
-//public void LightClosestObj()
-//{
-//    if (interacts.Count == 0)
-//    {
-//        collisionUI.SetActive(false);
-//        return;
-//    }
-//    collisionUI.SetActive(true);
-
-//    DistChect();
-//    closestObj.CanInteract();
-
-//    Vector3 uiPos = new Vector3(closestObj.ReturnTF().position.x, closestObj.ReturnTF().position.y + 4, closestObj.ReturnTF().position.z);
-//    collisionUI.transform.position = Camera.main.WorldToScreenPoint(uiPos);
-//}
-////거리 계산
-//public void DistChect()
-//{
-//    float shortestDist = 1000000;
-
-//    foreach (var item in interacts)
-//    {
-//        float dist = Vector3.Distance(transform.position, item.ReturnTF().position);
-//        if (dist < shortestDist)
-//        {
-//            shortestDist = dist;
-//            closestObj = item;
-//        }
-//    }
-//}

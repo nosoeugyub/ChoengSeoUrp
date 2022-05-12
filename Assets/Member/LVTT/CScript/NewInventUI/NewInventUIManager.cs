@@ -1,10 +1,8 @@
 ﻿using DG.Tweening;
 using NSY.Iven;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using NSY.Manager;
 public class NewInventUIManager : MonoBehaviour
 {
     [Header("오픈될 오브젝트")] [SerializeField] RectTransform BG, invenBtn;
@@ -22,6 +20,7 @@ public class NewInventUIManager : MonoBehaviour
     [SerializeField] Scrollbar scrollbar;
 
     public int nowActiveTabIdx;
+    bool isCreateMode = false;
 
     [Header("열고 닫고 체인지")]
     public bool isOpen;
@@ -47,11 +46,7 @@ public class NewInventUIManager : MonoBehaviour
         //조건 검사 as
 
         UnLockManager.Unlockmanager.GetItemUnlocks += InterectingItem;
-        UnLockManager.Unlockmanager.GetCreateUnlocks += CreateingItem;
-        UnLockManager.Unlockmanager.GetUnlockUnlocks += UnlockingItem;
     }
-
-    
 
     private void OnDisable()
     {
@@ -63,94 +58,8 @@ public class NewInventUIManager : MonoBehaviour
             }
         }
         UnLockManager.Unlockmanager.GetItemUnlocks -= InterectingItem;
-        UnLockManager.Unlockmanager.GetCreateUnlocks -= CreateingItem;
-        UnLockManager.Unlockmanager.GetUnlockUnlocks -= UnlockingItem;
 
     }
-
-    private void UnlockingItem() //레시피 해금 여부
-    {
-        for (int i = 0; i < iven.ItemSlots.Count; i++)
-        {
-            for (int r = 0; r < TabUI.Length; r++) //4 
-            {
-                for (int j = 1; j < TabUI[r].transform.childCount; j++)
-                {
-                    CraftList tempCL = TabUI[r].transform.GetChild(j).GetComponent<CraftList>();
-                    for (int k = 0; k < tempCL.Craftslot.Count; k++)
-                    {
-                        if (tempCL.Craftslot[k].RecipeItem != null)
-                        {
-                            for (int n = 0; n < tempCL.Craftslot[k].RecipeItem.UnlockItem.Length; n++) // 이벤토리 슬롯과 탭창의 아이템의 해금재료아이템을 검사
-                            {
-                                if (iven.ItemSlots[i].item != null)
-                                {
-                                    Debug.Log("뒤질래");
-                                    if (iven.ItemSlots[i].item.ItemName == tempCL.Craftslot[k].RecipeItem.UnlockItem[n].item.ItemName && //슬롯과 해료 이름이같으면
-                                       iven.ItemSlots[i].item.GetCountItems == tempCL.Craftslot[k].RecipeItem.UnlockItem[n].count &&    // 갯수도 같으면
-                                        tempCL.Craftslot[k].RecipeItem.UnlockItem[n].NeedCraftSlot.isHaveRecipeItem == true )     //추가 슬롯도필요하면                                                                                            // 다른 염료도 같으면
-                                    {
-
-                                        if (tempCL.Craftslot[k].isHaveRecipeItem == false )
-                                        {
-                                            tempCL.Craftslot[k].isHaveRecipeItem = true;
-                                        }
-                                        else
-                                        {
-                                            Debug.Log("왜안댕");
-                                            return;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    private void CreateingItem()  //아이템 n개 제작 시 해금
-    {
-        for (int i = 0; i < iven.ItemSlots.Count; i++)
-        {
-            for (int r = 0; r < TabUI.Length; r++) //4 
-            {
-                for (int j = 1; j < TabUI[r].transform.childCount; j++)
-                {
-                    CraftList tempCL = TabUI[r].transform.GetChild(j).GetComponent<CraftList>();
-                    for (int k = 0; k < tempCL.Craftslot.Count; k++)
-                    {
-                        if (tempCL.Craftslot[k].RecipeItem != null)
-                        {
-                            for (int n = 0; n < tempCL.Craftslot[k].RecipeItem.UnlockItem.Length; n++) // 이벤토리 슬롯과 탭창의 아이템의 해금재료아이템을 검사
-                            {
-                                if (iven.ItemSlots[i].item != null)
-                                {
-                                    Debug.Log("뒤질래");
-                                    if (iven.ItemSlots[i].item.ItemName == tempCL.Craftslot[k].RecipeItem.UnlockItem[n].item.ItemName && //슬롯과 해료 이름이같으면
-                                       iven.ItemSlots[i].item.GetCountItems == tempCL.Craftslot[k].RecipeItem.UnlockItem[n].count) // 갯수도 같으면
-                                    {
-                                      
-                                        if (tempCL.Craftslot[k].isHaveRecipeItem == false)
-                                        {
-                                            tempCL.Craftslot[k].isHaveRecipeItem = true;
-                                        }
-                                        else
-                                        {
-                                            Debug.Log("왜안댕");
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-    }
-
-
     void InterectingItem()//아이템 n개 획득 시 해금  검사
     {
         for (int i = 0; i < iven.ItemSlots.Count; i++)
@@ -169,15 +78,11 @@ public class NewInventUIManager : MonoBehaviour
                                 if (iven.ItemSlots[i].item != null)
                                 {
                                     if (iven.ItemSlots[i].item.ItemName == tempCL.Craftslot[k].RecipeItem.UnlockItem[n].item.ItemName && //슬롯과 해료 이름이같으면
-                                       iven.ItemSlots[i].item.GetCountItems == tempCL.Craftslot[k].RecipeItem.UnlockItem[n].count) // 갯수도 같으면
+                                       iven.ItemSlots[i].item.GetCountItems >= tempCL.Craftslot[k].RecipeItem.UnlockItem[n].count) // 갯수도 같으면
                                     {
                                         if (tempCL.Craftslot[k].isHaveRecipeItem == false)
                                         {
                                             tempCL.Craftslot[k].isHaveRecipeItem = true;
-                                        }
-                                        else
-                                        {
-                                            Debug.Log("");
                                         }
                                     }
                                 }
@@ -233,11 +138,20 @@ public class NewInventUIManager : MonoBehaviour
         scrollbar.size = 0;
 
     }
+    public void CreateMode()
+    {
+        isCreateMode = !isCreateMode;
+        DebugText.Instance.SetText(string.Format("Creative 모드 {0}입니다.", isCreateMode.ToString()));
+    }
     public void BtnSolution()
     {
+        if (isCreateMode == true)
+        {
+            iven.AddItem(nowSelectItem.RecipeItem);
+            return;
+        }
         List<List<ItemSlot>> itemSlots = CanCraftItem();
-        if (itemSlots == null) return;
-        if (itemSlots[0].Count == 0) return;
+        if (itemSlots == null || itemSlots[0].Count == 0) return;
 
         for (int i = 0; i < CraftWindows.Length; i++)
         {
@@ -278,10 +192,7 @@ public class NewInventUIManager : MonoBehaviour
 
             minSlot.Amount -= ra;
         }
-        
         iven.AddItem(nowSelectItem.RecipeItem);
-        SuperManager.Instance.unlockmanager.GetCreateItemUnLocking();
-
     }
 
     private List<List<ItemSlot>> CanCraftItem()

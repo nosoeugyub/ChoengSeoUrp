@@ -62,12 +62,12 @@ namespace DM.Dialog
             times += Time.deltaTime;
             if (times > 3) { EventManager.EventAction -= EventManager.EventActions[1]; }
         }
-        public void FirstShowDialog(MainNpc npc, Item handitem, bool isFollowPlayer, int isLike) //첫 상호작용 시 호출. 어떤 대화를 호출할지 결정
+        public bool FirstShowDialog(MainNpc npc, Item handitem, bool isFollowPlayer, int isLike) //첫 상호작용 시 호출. 어떤 대화를 호출할지 결정
         {
             if (isTalking)
             {
                 Debug.Log("대화중입니다.");
-                return;
+                return false;
             }
 
             isTalking = true;
@@ -78,6 +78,7 @@ namespace DM.Dialog
             PlayerData.AddValue((int)npc.GetCharacterType(), (int)NpcBehaviorEnum.Interact, PlayerData.npcData, (int)NpcBehaviorEnum.length);
 
             StartShowDialog(handitem, isFollowPlayer, isLike); //파트너와 진행해야 하는 순서의 대화를 진행
+            return true;
         }
 
         public void StartShowDialog(Item handitem, bool isFollowPlayer, int isLike)
