@@ -10,68 +10,59 @@ namespace DM.Building
 {
     public class BuildingBlock : MonoBehaviour, IInteractable
     {
-        [SerializeField] int buildingId;
-        [SerializeField] BuildMode CurBuildMode;
-        [SerializeField] MainNpc livingCharacter;
+        [SerializeField] private int buildingId;
+        [SerializeField] private BuildMode CurBuildMode;
+        [SerializeField] private MainNpc livingCharacter;
 
-        [SerializeField] Transform HouseBuild;
-        [SerializeField] List<GameObject> BuildItemList;
+        [SerializeField] private Transform HouseBuild;
+        [SerializeField] private List<GameObject> BuildItemList;
 
-        [SerializeField] public BuildState buildState;
+        [SerializeField] BuildState buildState;
 
-        [Tooltip("이 오브젝트를 채집할 수 있는 도구 타입")]
+        [SerializeField] private float areaWidthsize;
+        [SerializeField] private float areaHeightsize;
+
         [SerializeField] InItemType toolType;
+
         private bool buildButtonFuncAdded;
-        public bool hasWall = false;
-        public bool hasDoor = false;
-        public bool hasSign = false;
 
-        //static
-        public static bool isBuildMode = false;
-        public static bool isBuildDemolishMode = false;
-        public static BuildingBlock nowBuildingBlock;
-        //static public Action UpdateBuildingInfos;//임시선언
+        private CameraManager CamManager;
+        private BuildingManager buildManager;
 
-        CameraManager CamManager;
-        BuildingManager buildManager;
-
-        public float areaWidthsize;
-        public float areaHeightsize;
-
-        //BuildItemObj
-        [HideInInspector]
-        public BuildingItemObj curInteractObj;
+        private BuildingItemObj curInteractObj;
         private float BuildItemScaleVar = 0.01f;
         private float BuildItemRotationVar = 1;
-
         private float BuildItemGap = 0.0001f;
-
 
         RaycastHit hit;
         Ray ray;
         int layerMask;   // Player 레이어만 충돌 체크함
 
-        public int BuildingID
-        {
-            get
-            {
-                return buildingId;
-            }
-            set
-            {
-                buildingId = value;
-            }
-        }
+        public static bool isBuildMode { get; set; } = false;
+        public static bool isBuildDemolishMode { get; set; } = false;
+        public static BuildingBlock nowBuildingBlock { get; set; } = null;
 
-        ////////////////////////////////////////////////////////
+        public float AreaWidthsize { get { return areaWidthsize; } set { areaWidthsize = value; } }
+        public float AreaHeightsize { get { return areaHeightsize; } set { areaHeightsize = value; } }
+        public int BuildingID { get { return buildingId; } set { buildingId = value; } }
+
+        private void Awake()
+        {
+            CamManager = FindObjectOfType<CameraManager>();
+            buildManager = FindObjectOfType<BuildingManager>();
+        }
         void Start()
         {
             layerMask = 1 << LayerMask.NameToLayer("Interactable");
             buildButtonFuncAdded = false;
-            CamManager = FindObjectOfType<CameraManager>();
-            buildManager = FindObjectOfType<BuildingManager>();
             buildManager.SetbuildOffButtonEvents(BuildModeOff);
         }
+
+        public void SetCurInteractObj(BuildingItemObj buildingItemObj)
+        {
+            curInteractObj = buildingItemObj;
+        }
+
         public MainNpc GetLivingChar()
         {
             return livingCharacter;
@@ -166,7 +157,7 @@ namespace DM.Building
             curInteractObj.ItemisSet = true;
             curInteractObj.IsFirstDrop = false;
             CancleUI(false);
-            curInteractObj.PutDownBuildingItemObj(areaWidthsize, areaHeightsize);
+            curInteractObj.PutDownBuildingItemObj(AreaWidthsize, AreaHeightsize);
         }
 
         public List<BuildingItemObj> GetBuildItemList()
@@ -303,7 +294,6 @@ namespace DM.Building
             isBuildDemolishMode = false;
             //SuperManager.Instance.inventoryManager.CheckCanBuildItem(null);
         }
-
         public void CancleUI(bool on)
         {
             buildManager.CancleUIState(on);
@@ -373,89 +363,47 @@ namespace DM.Building
         {
             Vector3 spawnPos = HouseBuild.transform.position;
 
-            //if (BuildItemList.Count == 0)
-            //{
-            //    if (spawnObj.InItemType == InItemType.BuildWall)
-            //        hasWall = true;
-            //}
-            //else if (spawnObj.InItemType == InItemType.BuildWall)
-            //{
-            //    float bigZinWalls = 999999;
-            //    foreach (GameObject item in BuildItemList)
-            //    {
-            //        if (item.GetComponent<BuildingItemObj>().GetInItemType() == InItemType.BuildWall)
-            //        {
-            //            if (bigZinWalls > item.transform.position.z)
-            //            {
-            //                bigZinWalls = item.transform.position.z;
-            //            }
-
-            //            item.transform.position
-            //             = new Vector3(item.transform.position.x, item.transform.position.y, item.transform.position.z + BuildItemGap / 2);
-            //        }
-            //        if (item.GetComponent<BuildingItemObj>().GetInItemType() == InItemType.BuildNormal)
-            //        {
-            //            item.transform.position
-            //             = new Vector3(item.transform.position.x, item.transform.position.y, item.transform.position.z - BuildItemGap / 2);
-            //        }
-            //    }
-            //    spawnPos.z = bigZinWalls - BuildItemGap / 2;// when the building is facing South
-            //    hasWall = true;
-            //    SuperManager.Instance.inventoryManager.CheckCanBuildItem(nowBuildingBlock);
-            //}
-            //else
-            //{
-            //if (spawnObj.InItemType == InItemType.BuildWall) hasDoor = true;
-
+            //기존에 설치되어있던 건축자재 뒤로 이동
             foreach (GameObject item in BuildItemList)
             {
                 item.transform.position += item.transform.forward * BuildItemGap / 2;
                 print(item.transform.position.z);
-                //item.transform.position
-                //      = new Vector3(item.transform.position.x, item.transform.position.y, item.transform.position.z + BuildItemGap / 2);
             }
-            spawnPos += HouseBuild.forward * -(BuildItemGap / 2 * BuildItemList.Count);// when the building is facing South
-            //}
-            CancleUI(true);
-            spawnPos.y = HouseBuild.transform.position.y + areaHeightsize / 2;
+
+            //새로 설치할 건축자재 앞으로 이동 및 y 세팅
+            spawnPos += HouseBuild.forward * -(BuildItemGap / 2 * BuildItemList.Count);
+            spawnPos.y = HouseBuild.transform.position.y + AreaHeightsize / 2;
+
             GameObject newPrefab = Instantiate(spawnObj.ItemPrefab, spawnPos, Quaternion.identity, HouseBuild.transform);
             newPrefab.transform.localRotation = Quaternion.Euler(0, 0, 0);
             newPrefab.GetComponent<BuildingItemObj>().SetParentBuildArea(nowBuildingBlock);
             newPrefab.name = spawnObj.name;
+
             AddBuildItemToList(newPrefab);
             FindObjectOfType<EnvironmentManager>().ChangeCleanliness(newPrefab.GetComponent<BuildingItemObj>().GetItem().CleanAmount + 1);
+            CancleUI(true);
         }
 
-        void BuildingItemObjAndSorting()
+        void BuildingItemObjAndSorting()//n개 
         {
             int frontCount = 0;
             foreach (GameObject item in BuildItemList)
             {
-                //if (curInteractObj.GetInItemType() == InItemType.BuildWall)//현재오브젝트가 벽일때
-                //{
-                //    if (item.GetComponent<BuildingItemObj>().GetInItemType() != InItemType.BuildWall) continue;//선택한게 벽이 아니라면
-                //}
-                //else if (curInteractObj.GetInItemType() == InItemType.BuildNormal)//현재오브젝트가 벽 아닐때
-                //{
-                //    if (item.GetComponent<BuildingItemObj>().GetInItemType() != InItemType.BuildNormal) continue;//선택한게 일반이 아니라면
-                //}
-
                 float bigZinWalls = curInteractObj.transform.localPosition.z;//클릭한 오브젝트의 z값
-
-                //print(bigZinWalls +" / "+ item.transform.localPosition.z);
 
                 if (bigZinWalls <= item.transform.localPosition.z) continue;//선택한게 다른 옵젝보다 더 가깝다면 검사 패스 z가 크면 멀음
 
                 item.transform.position += item.transform.forward * BuildItemGap;
 
-                //item.transform.position = new Vector3(item.transform.position.x, item.transform.position.y, Mathf.Round((item.transform.position.z + BuildItemGap) *10000)*0.0001f);
                 frontCount++;
                 print(frontCount);
             }
-
             curInteractObj.transform.position += curInteractObj.transform.forward * -(BuildItemGap * frontCount);
-            //curInteractObj.transform.position =
-            //new Vector3(curInteractObj.transform.position.x, curInteractObj.transform.position.y, curInteractObj.transform.position.z - (BuildItemGap * frontCount));
+        }
+
+        void DeleteBuildingItemObjSorting(BuildingItemObj buildingItemObj) //있는 아이템을 소팅함.
+        {
+            
         }
         /// </summary>
 

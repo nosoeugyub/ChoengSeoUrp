@@ -20,7 +20,6 @@ namespace NSY.Player
         public void UpdateEat()
         {
             pc.playerVital.Tired += eatItem.EatAmount;
-            print(pc.playerVital.Tired);
             eatItem = null;
         }
         public void Update()
