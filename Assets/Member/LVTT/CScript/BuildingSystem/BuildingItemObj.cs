@@ -137,6 +137,7 @@ namespace DM.Building
             parentBuildArea.CancleUI(false);
             SuperManager.Instance.inventoryManager.AddItem(item);
             parentBuildArea.RemoveBuildItemToList(gameObject);
+            parentBuildArea.DeleteBuildingItemObjSorting(gameObject);
 
             Destroy(gameObject);
         }
@@ -180,6 +181,7 @@ namespace DM.Building
                 //파괴 임시 처리
                 DropItems();
                 parentBuildArea.RemoveBuildItemToList(gameObject);
+                parentBuildArea.DeleteBuildingItemObjSorting(gameObject);
                 FindObjectOfType<EnvironmentManager>().ChangeCleanliness(-GetItem().CleanAmount);
                 Destroy(gameObject);
             }

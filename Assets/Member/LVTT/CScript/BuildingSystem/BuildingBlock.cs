@@ -32,7 +32,7 @@ namespace DM.Building
         private BuildingItemObj curInteractObj;
         private float BuildItemScaleVar = 0.01f;
         private float BuildItemRotationVar = 1;
-        private float BuildItemGap = 0.0001f;
+        private float BuildItemGap = 2f;
 
         RaycastHit hit;
         Ray ray;
@@ -398,12 +398,27 @@ namespace DM.Building
                 frontCount++;
                 print(frontCount);
             }
-            curInteractObj.transform.position += curInteractObj.transform.forward * -(BuildItemGap * frontCount);
+            curInteractObj.transform.position -= curInteractObj.transform.forward * (BuildItemGap * frontCount);
         }
 
-        void DeleteBuildingItemObjSorting(BuildingItemObj buildingItemObj) //있는 아이템을 소팅함.
+        public void DeleteBuildingItemObjSorting(GameObject deleteObj) //있는 아이템을 소팅함.
         {
-            
+            foreach (GameObject item in BuildItemList)
+            {
+                float bigZinWalls = deleteObj.transform.localPosition.z;//삭제할 오브젝트의 z값
+
+                if (bigZinWalls <= item.transform.localPosition.z)//삭제할애가 더 가깝다면
+                {
+                    item.transform.position -= item.transform.forward * BuildItemGap / 2; //반값전진
+                }
+                else
+                {
+                    item.transform.position -= item.transform.forward * BuildItemGap / 2; //반값전진
+                    item.transform.position += item.transform.forward * BuildItemGap; //가까운것들 정값후진
+                }
+
+            }
+
         }
         /// </summary>
 
