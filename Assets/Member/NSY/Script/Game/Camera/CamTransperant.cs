@@ -54,6 +54,7 @@ namespace NSY.Cam
             if (Physics.Raycast(transform.position, Direction, out hit, Distance , layerMask))
 
             {
+                Debug.Log(hit.collider.name);
                 // 플레이어가 레이에 맞으면 (가려지는 오브젝트가 없으면)
                 if (hit.transform.gameObject.CompareTag("Player"))
                 {
