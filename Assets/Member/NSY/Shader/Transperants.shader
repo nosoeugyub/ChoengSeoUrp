@@ -2,65 +2,94 @@
 
 // Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 Shader "Unlit/Transperants"
 {
-    Properties
-    {
-        _MainTex("Base (RGB)", 2D) = "white" {}
-        _Color("Color (RGBA)", Color) = (1, 1, 1, 1) // add _Color property
+    Properties{
+
+  _TintColor("Test Color", color) = (1, 1, 1, 0.4)
+  _Intensity("Range Sample", Range(0, 1)) = 1
+  _MainTex("Main Texture", 2D) = "white" {}
+
+  _Alpha("AlphaCut", Range(0,1)) = 0.3
+
     }
 
-        SubShader
-        {
-            Tags {"Queue" = "Transparent" "IgnoreProjector" = "True" "RenderType" = "Transparent"}
-            ZWrite Off
-            Blend SrcAlpha OneMinusSrcAlpha
-            Cull front
-            LOD 100
+ SubShader
+  {
+  Tags
+  {
+  "RenderPipeline" = "UniversalPipeline"
+         "RenderType" = "Transparent"
+         "Queue" = "Transparent"
+      }
+      Pass
+      {
+          Cull off
+          Blend SrcAlpha OneMinusSrcAlpha
 
-            Pass
+       Name "Universal Forward"
+          Tags {"LightMode" = "UniversalForward"}
+
+      HLSLPROGRAM
+          #pragma prefer_hlslcc gles
+          #pragma exclude_renderers d3d11_9x
+
+          #pragma vertex vert
+          #pragma fragment frag
+
+
+
+
+
+      #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+
+  half4 _TintColor;
+  float _Intensity;
+  float _Alpha;
+
+  float4 _MainTex_ST;
+  Texture2D _MainTex;
+  SamplerState sampler_MainTex;
+
+          struct VertexInput
             {
-                CGPROGRAM
+              float4 vertex : POSITION;
+              float2 uv       : TEXCOORD0;
+            };
 
-                #pragma vertex vert alpha
-                #pragma fragment frag alpha
+          struct VertexOutput
+            {
+                     float4 vertex  	: SV_POSITION;
+                     float2 uv      	: TEXCOORD0;
+        };
 
-                #include "UnityCG.cginc"
+      VertexOutput vert(VertexInput v)
+            {
+          VertexOutput o;
 
-                struct appdata_t
-                {
-                    float4 vertex   : POSITION;
-                    float2 texcoord : TEXCOORD0;
-                };
+          o.vertex = TransformObjectToHClip(v.vertex.xyz);
+          o.uv = v.uv.xy * _MainTex_ST.xy + _MainTex_ST.zw;
 
-                struct v2f
-                {
-                    float4 vertex  : SV_POSITION;
-                    half2 texcoord : TEXCOORD0;
-                };
-
-                sampler2D _MainTex;
-                float4 _MainTex_ST;
-                float4 _Color;
-
-                v2f vert(appdata_t v)
-                {
-                    v2f o;
-
-                    o.vertex = UnityObjectToClipPos(v.vertex);
-                    v.texcoord.x = 1 - v.texcoord.x;
-                    o.texcoord = TRANSFORM_TEX(v.texcoord, _MainTex);
-
-                    return o;
-                }
-
-                fixed4 frag(v2f i) : SV_Target
-                {
-                    fixed4 col = tex2D(_MainTex, i.texcoord) * _Color; // multiply by _Color
-                    return col;
-                }
-
-                ENDCG
+          return o;
             }
-        }
+
+          half4 frag(VertexOutput i) : SV_Target
+          {
+                float4 color = _MainTex.Sample(sampler_MainTex, i.uv);
+                color.rgb *= _TintColor * _Intensity;
+                color.a = color.a * _Alpha;
+                return color;
+
+          }
+            ENDHLSL
+       }
+  }
 }
+
+
