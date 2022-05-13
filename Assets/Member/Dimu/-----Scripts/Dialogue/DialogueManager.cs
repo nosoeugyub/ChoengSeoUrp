@@ -36,7 +36,7 @@ namespace DM.Dialog
 
         GameObject nowOnFab;
         QuestData canClearqd;
-        MainNpc nowNpc;
+        HouseNpc nowNpc;
         bool isTalking = false;
         float times = 0;
 
@@ -50,9 +50,9 @@ namespace DM.Dialog
         {
             EventManager.EventActions[1] = Test;
 
-            FirstShowDialog(npcTalkBubbleTfs[(int)Character.CheongSeo].parent.GetComponent<MainNpc>(), null, false, -1);
+            FirstShowDialog(npcTalkBubbleTfs[(int)Character.CheongSeo].parent.GetComponent<HouseNpc>(), null, false, -1);
         }
-        public MainNpc GetNowNpc()
+        public HouseNpc GetNowNpc()
         {
             return nowNpc;
         }
@@ -62,7 +62,7 @@ namespace DM.Dialog
             times += Time.deltaTime;
             if (times > 3) { EventManager.EventAction -= EventManager.EventActions[1]; }
         }
-        public bool FirstShowDialog(MainNpc npc, Item handitem, bool isFollowPlayer, int isLike) //첫 상호작용 시 호출. 어떤 대화를 호출할지 결정
+        public bool FirstShowDialog(HouseNpc npc, Item handitem, bool isFollowPlayer, int isLike) //첫 상호작용 시 호출. 어떤 대화를 호출할지 결정
         {
             if (isTalking)
             {

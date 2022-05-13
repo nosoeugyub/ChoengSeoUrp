@@ -24,7 +24,7 @@ namespace NSY.Player
 
         [SerializeField] Item[] testToolItems;
 
-        [SerializeField] MainNpc followNpc;
+        [SerializeField] HouseNpc followNpc;
         [SerializeField] Camera uiCamera;
 
         RaycastHit hit;
@@ -64,7 +64,7 @@ namespace NSY.Player
             InteractWithObjects();
         }
 
-        public void SetNpc(MainNpc npc)
+        public void SetNpc(HouseNpc npc)
         {
             followNpc = npc;
         }

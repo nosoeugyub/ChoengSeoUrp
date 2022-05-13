@@ -12,7 +12,7 @@ namespace DM.Building
     {
         [SerializeField] private int buildingId;
         [SerializeField] private BuildMode CurBuildMode;
-        [SerializeField] private MainNpc livingCharacter;
+        [SerializeField] private HouseNpc livingCharacter;
 
         [SerializeField] private Transform HouseBuild;
         [SerializeField] private List<GameObject> BuildItemList;
@@ -42,6 +42,8 @@ namespace DM.Building
         public static bool isBuildDemolishMode { get; set; } = false;
         public static BuildingBlock nowBuildingBlock { get; set; } = null;
 
+        public Vector3 HouseOwnerLocation { get; set; }
+        public Vector3 FriendLocation { get; set; }
         public float AreaWidthsize { get { return areaWidthsize; } set { areaWidthsize = value; } }
         public float AreaHeightsize { get { return areaHeightsize; } set { areaHeightsize = value; } }
         public int BuildingID { get { return buildingId; } set { buildingId = value; } }
@@ -63,11 +65,11 @@ namespace DM.Building
             curInteractObj = buildingItemObj;
         }
 
-        public MainNpc GetLivingChar()
+        public HouseNpc GetLivingChar()
         {
             return livingCharacter;
         }
-        public void SetLivingChar(MainNpc mainNpc)
+        public void SetLivingChar(HouseNpc mainNpc)
         {
             livingCharacter = mainNpc;
         }

@@ -9,32 +9,27 @@ public enum BuildingLike { Like, Unlike_Shape, Unlike_Count, Unlike_Empty, Cant,
 
 namespace DM.NPC
 {
-    public class MainNpc : NPC, ITalkable
+    public class HouseNpc : NPC, ITalkable
     {
-        //[SerializeField] PreferItem[] preferBuildItemObjList;
-        [SerializeField] BuildingBlock myHouse;
-        public Condition[] wantToBuildCondition;
-        BuildingManager buildingManager;
-        DialogueManager dialogueManager;
-        EnvironmentManager environmentManager;
-        public PlayerInteract player;
-        [SerializeField] float speed;
-        [SerializeField] bool isFollowPlayer;
-        BuildingLike like = BuildingLike.None;
+        [SerializeField] private BuildingBlock myHouse;
+        [SerializeField] private Condition[] wantToBuildCondition;
+        [SerializeField] private PlayerInteract player;
+        [SerializeField] private float speed;
+        [SerializeField] private bool isFollowPlayer;
+        private DialogueManager dialogueManager;
+        private BuildingLike like = BuildingLike.None;
+
+        public BuildingBlock MyHouse { get; set; }
+
         private void Awake()
         {
-            environmentManager = FindObjectOfType<EnvironmentManager>();
-            buildingManager = FindObjectOfType<BuildingManager>();
             dialogueManager = FindObjectOfType<DialogueManager>();
             player = FindObjectOfType<PlayerInteract>();
         }
         private void Start()
         {
             EventManager.EventActions[2] += MoveToMyHome;
-            EventManager.EventActions[3] += MoveToHisHome;
             EventManager.EventActions[4] += OnFollowPlayer;
-
-            //BuildingBlock.UpdateBuildingInfos += FindLikeHouse;
         }
         private void Update()
         {
@@ -96,7 +91,6 @@ namespace DM.NPC
             {
                 myHouse = block;
                 myHouse.SetLivingChar(this);
-                environmentManager.PortToHouse();
                 print("Find My House");
                 MoveToMyHome();
             }
@@ -264,7 +258,6 @@ namespace DM.NPC
         }
         public bool SettingBuildingTalk()
         {
-            print("SettingBuildingTalk");
             if (!PlayDialog(null)) return false;
             if (isFollowPlayer)
             {
@@ -275,7 +268,6 @@ namespace DM.NPC
         }
         public void Talk(Item handitem)
         {
-            print("Talk");
             if (isFollowPlayer)
             {
                 player.SetNpc(null);
@@ -296,33 +288,13 @@ namespace DM.NPC
         {
             if (myHouse)
             {
-                Vector3 vec = new Vector3(myHouse.transform.position.x - 5, transform.transform.position.y, myHouse.transform.position.z + myHouse.transform.forward.z * -7);
-                //vec = new Vector3(myHouse.transform.position.x, myHouse.transform.position.y, myHouse.transform.position.z);// myHouse.transform.forward * -7;//집 앞
+                Vector3 vec = myHouse.HouseOwnerLocation;
                 MoveTo(vec);
             }
             EventManager.EventAction -= EventManager.EventActions[2];
         }
-        //텔포기능 추가
-        public void MoveToHisHome()
-        {
-            if (GetCharacterType() != Character.Walrus) return;
-            BuildingBlock buildingBlock = buildingManager.GetNPCsHouse((int)Character.Ejang);
-            Vector3 vec = new Vector3(buildingBlock.transform.position.x, buildingBlock.transform.position.y, buildingBlock.transform.position.z);
-            vec += buildingBlock.transform.forward * -9;//집 앞
-            MoveTo(vec);
-            EventManager.EventAction -= EventManager.EventActions[3];
-        }
-
         public void EndInteract()
         {
         }
     }
-    [System.Serializable]
-    public class PreferItem
-    {
-        public Item item;
-        public float likeable;
-    }
-
-
 }
