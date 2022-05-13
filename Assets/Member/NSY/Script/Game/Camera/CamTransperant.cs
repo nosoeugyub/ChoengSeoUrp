@@ -11,23 +11,19 @@ namespace NSY.Cam
         public GameObject Character;
 
         public Material defaultShader;
-        public Material targetShader;
+        public Shader targetShader;
 
 
         // 가리는 오브젝트 리스트
         public List<GameObject> transparentObjs = new List<GameObject>();
 
-        public void Awake()
-        {
-           // targetShader = Shader.Find("Legacy Shaders/Transparent/Diffuse");
-        }
-
-
         IEnumerator returnObjs()
         {
+            Debug.Log("들어가냐");
             for (int i = 0; i < transparentObjs.Count; i++)
             {
-                transparentObjs[i].GetComponentInChildren<Renderer>().material = defaultShader;
+              //  ObstacleRenderer =// defaultShader;
+                 transparentObjs[i].GetComponentInChildren<Renderer>().material = defaultShader;
                 Material Mat = transparentObjs[i].GetComponentInChildren<Renderer>().material;
 
                 Color matColor = Mat.color;
@@ -51,8 +47,8 @@ namespace NSY.Cam
 
             RaycastHit hit;
             int layerMask = ((1 << LayerMask.NameToLayer("CameraEvent"))); //| (1 << LayerMask.NameToLayer("GUN")));  // Everything에서 Player,GUN 레이어만 제외하고 충돌 체크함
-         //   layerMask = ~layerMask;
-            if (Physics.Raycast(transform.position, Direction, out hit))
+            layerMask = ~layerMask;
+            if (Physics.Raycast(transform.position, Direction, out hit , Distance,  layerMask))
 
             {
                 // 플레이어가 레이에 맞으면 (가려지는 오브젝트가 없으면)
@@ -61,6 +57,7 @@ namespace NSY.Cam
                     // 시야를 가린 오브젝트가 존재하고 있다면 되돌리기 
                     if (transparentObjs.Count != 0)
                     {
+                        Debug.Log("들어가냐");
                         StartCoroutine(returnObjs());
                     }
 
@@ -73,18 +70,19 @@ namespace NSY.Cam
 
 
                 // 이미 반투명 상태라면 리턴
-                if (ObstacleRenderer.material.shader == targetShader) return;
-
+                if (ObstacleRenderer.material.shader == targetShader)
+                {
+                    return;
+                }
 
                 if (ObstacleRenderer != null)
-
                 {
-                    ObstacleRenderer.material = targetShader;
+                        ObstacleRenderer.material.shader = targetShader;
                     transparentObjs.Add(hit.transform.gameObject);
                     Material Mat = ObstacleRenderer.material;
 
                     Color matColor = Mat.color;
-                    matColor.a = 0.3f;
+                    matColor.a = 0.4f;
                     Mat.color = matColor;
                 }
 
