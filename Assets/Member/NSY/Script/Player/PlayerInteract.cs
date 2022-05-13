@@ -8,8 +8,8 @@ namespace NSY.Player
 {
     public class PlayerInteract : MonoBehaviour
     {
-        [SerializeField] List<IInteractable> interacts = new List<IInteractable>();//상호작용 범위 내 있는 IInteractable오브젝트 리스트
-        IInteractable closestObj;//가장 가까운 친구
+        [SerializeField] List<Interactable> interacts = new List<Interactable>();//상호작용 범위 내 있는 IInteractable오브젝트 리스트
+        //IInteractable closestObj;//가장 가까운 친구
 
         CursorManager cursorManager;
 
@@ -30,7 +30,7 @@ namespace NSY.Player
 
         RaycastHit hit;
         Ray ray;
-        IInteractable nowInteractable;
+        Interactable nowInteractable;
         bool canInteract = false;
         int layerMask;   // Player 레이어만 충돌 체크함
 
@@ -61,8 +61,6 @@ namespace NSY.Player
             //    return;
             //}
 
-
-
             InteractWithObjects();
         }
 
@@ -76,7 +74,7 @@ namespace NSY.Player
             isAnimating = isTrue;
         }
 
-        private void InvokeInteract(IInteractable interactable)
+        private void InvokeInteract(Interactable interactable)
         {
             //PlayerEat playerInteract = interactable.ReturnTF().GetComponent<PlayerEat>();
             //if (playerInteract != null)
@@ -86,32 +84,32 @@ namespace NSY.Player
             //    return;
             //}
 
-            ICollectable collectable = interactable.ReturnTF().GetComponent<ICollectable>();
-            if (collectable != null)
+            CollectObject collectObj = interactable.transform.GetComponent<CollectObject>();
+            if (collectObj != null)
             {
-                collectable.Collect(playerAnimator.animator);
+                collectObj.Collect(playerAnimator.animator);
                 SetIsAnimation(true);
                 return;
             }
-            ITalkable talkable = interactable.ReturnTF().GetComponent<ITalkable>();
+            NPC talkable = interactable.transform.GetComponent<NPC>();
             if (talkable != null)
             {
                 talkable.Talk(handItem);
                 return;
             }
-            IEventable eventable = interactable.ReturnTF().GetComponent<IEventable>();
-            if (eventable != null)
-            {
-                eventable.EtcEvent(handItem);
-                return;
-            }
+            //IEventable eventable = interactable.transform.GetComponent<IEventable>();
+            //if (eventable != null)
+            //{
+            //    eventable.EtcEvent(handItem);
+            //    return;
+            //}
 
             if (!handItem) return;
 
             switch (handItem.OutItemType)
             {
                 case OutItemType.Tool://손에 도구를 들고 있으면
-                    ISpeechBubbleCollectable bubbleCollectable = interactable.ReturnTF().GetComponent<ISpeechBubbleCollectable>();
+                    MagnifyObject bubbleCollectable = interactable.transform.GetComponent<MagnifyObject>();
                     if (bubbleCollectable != null)
                     {
                         if (!bubbleCollectable.CheckBubble(handItem, playerAnimator.animator))
@@ -124,7 +122,7 @@ namespace NSY.Player
                             return;
                         }
                     }
-                    IMineable mineable = interactable.ReturnTF().GetComponent<IMineable>();
+                    MineObject mineable = interactable.transform.GetComponent<MineObject>();
                     if (mineable != null)
                     {
                         if (!mineable.Mine(handItem, playerAnimator.animator))
@@ -137,7 +135,7 @@ namespace NSY.Player
                             return;
                         }
                     }
-                    BuildingBlock buildAreaObject = interactable.ReturnTF().GetComponent<BuildingBlock>();
+                    BuildingBlock buildAreaObject = interactable.transform.GetComponent<BuildingBlock>();
                     //IBuildable buildable = interactable.ReturnTF().GetComponent<IBuildable>();
                     if (buildAreaObject != null)
                     {
@@ -167,7 +165,7 @@ namespace NSY.Player
             SetIsAnimation(false);
 
 
-            ItemObject itemObject = interactable.ReturnTF().GetComponent<ItemObject>();
+            ItemObject itemObject = interactable.transform.GetComponent<ItemObject>();
             if (itemObject != null)
             {
                 itemObject.Interact();
@@ -183,14 +181,14 @@ namespace NSY.Player
             if (Physics.Raycast(ray, out hit, 10000, layerMask) && !BuildingBlock.isBuildMode)
             {
                 //print(hit.collider.name);
-                nowInteractable = hit.collider.GetComponent<IInteractable>();
+                nowInteractable = hit.collider.GetComponent<Interactable>();
                 if (nowInteractable != null && IsInteracted(nowInteractable))// 클릭한 옵젝이 닿은 옵젝 리스트에 있다면 통과
                 {
                     //interactUI.SetActive(true);
 
                     StartCoroutine( cursorManager.SetCursor(nowInteractable.CanInteract()));
                     //interactUiText2.text = nowInteractable.CanInteract();
-                    Vector3 uiPos = new Vector3(nowInteractable.ReturnTF().position.x, nowInteractable.ReturnTF().position.y + 2, nowInteractable.ReturnTF().position.z);
+                    Vector3 uiPos = new Vector3(nowInteractable.transform.position.x, nowInteractable.transform.position.y + 2, nowInteractable.transform.position.z);
                     //interactUI.transform.position = uiCamera.WorldToScreenPoint(uiPos);
 
                     //var position = uiCamera.WorldToScreenPoint(uiPos);
@@ -221,7 +219,7 @@ namespace NSY.Player
             {
                 if (Physics.Raycast(ray, out hit, 10000, layerMask))
                 {
-                    nowInteractable = hit.collider.GetComponent<IInteractable>();
+                    nowInteractable = hit.collider.GetComponent<Interactable>();
                     if (nowInteractable != null && IsInteracted(nowInteractable))
                     {
                         Debug.Log("상호작용한 물체: " + hit.collider.name);
@@ -236,7 +234,7 @@ namespace NSY.Player
             return isAnimating;
         }
 
-        public bool IsInteracted(IInteractable it)
+        public bool IsInteracted(Interactable it)
         {
             return interacts.Contains(it);
         }
@@ -271,7 +269,7 @@ namespace NSY.Player
         {
             ReliableOnTriggerExit.NotifyTriggerEnter(other, gameObject, OnTriggerExit);
 
-            IInteractable interactable = other.GetComponent<IInteractable>();
+            Interactable interactable = other.GetComponent<Interactable>();
             if (interactable != null)
             {
                 //canInteract = true;
@@ -282,11 +280,11 @@ namespace NSY.Player
         {
             ReliableOnTriggerExit.NotifyTriggerExit(other, gameObject);
 
-            IInteractable interactable = other.GetComponent<IInteractable>();
+            Interactable interactable = other.GetComponent<Interactable>();
             if (interactable != null)
             {
                 interacts.Remove(interactable);
-                interactable.EndInteract();
+                //interactable.EndInteract();
             }
 
 

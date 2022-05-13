@@ -2,7 +2,7 @@
 using NSY.Manager;
 using UnityEngine;
 
-public class CollectObject : ItemObject, ICollectable
+public class CollectObject : ItemObject
 {
     public int amount = 1;
     public float powerInit = 0.3f;
@@ -10,7 +10,7 @@ public class CollectObject : ItemObject, ICollectable
     public bool canMove;
     [SerializeField] string soundName = "item_pick";
     BoxCollider box;
-    public int CanInteract()
+    public override int CanInteract()
     {
         return (int)CursorType.Pickup;
     }
@@ -69,10 +69,6 @@ public class CollectObject : ItemObject, ICollectable
             //print("ground");
             canMove = false;
         }
-    }
-
-    public void EndInteract()
-    {
     }
     void OnDisable()
     {

@@ -1,7 +1,7 @@
 ﻿using NSY.Iven;
 using UnityEngine;
 
-public class ItemObject : MonoBehaviour//, IInteractable
+public class ItemObject : Interactable//, IInteractable
 {
     [SerializeField] protected Item item;
     protected InventoryNSY inventoryNSY;
@@ -39,14 +39,15 @@ public class ItemObject : MonoBehaviour//, IInteractable
     {
         return item.InItemType;
     }
-    public string CanInteract()
-    {
-        return "상호작용하기";
-    }
     public void Interact()
     {
         //상호작용 인덱스 체크
         //print(string.Format("AddData : {0}", item.ItemName));
         PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.InteractItem, PlayerData.ItemData, (int)ItemBehaviorEnum.length);
+    }
+
+    public override int CanInteract()
+    {
+        throw new System.NotImplementedException();
     }
 }

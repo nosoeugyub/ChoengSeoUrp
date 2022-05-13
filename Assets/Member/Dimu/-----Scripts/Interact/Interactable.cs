@@ -9,43 +9,40 @@ public interface IInteractable
     Transform ReturnTF(); //거리 계산을 위한 Transform
 }
 
-public abstract class Interactable: MonoBehaviour
+public abstract class Interactable : MonoBehaviour
 {
     public abstract int CanInteract();
 }
-
-
-public interface ITalkable : IInteractable
-{
-    void Talk(Item handitem);
-}
-public interface IMineable :IInteractable
-{
-    bool Mine(Item handitem, Animator animator);
-}
-public interface IDropable : IInteractable
-{
-    void DropItems();
-}
-public interface IEatable : IInteractable
-{
-    void Eat();
-}
-public interface ICollectable : IInteractable
-{
-    void Collect(Animator animator);
-}
-public interface IEventable : IInteractable
-{
-    void EtcEvent(Item handItem);
-}
-public interface IBuildable : IInteractable
-{
-    void Demolish();
-}
-public interface ISpeechBubbleCollectable : IInteractable
-{
-    void InstantiateBubble();
-    bool CheckBubble(Item handitem, Animator animator);
-}
-
+//public interface ITalkable : IInteractable
+//{
+//    void Talk(Item handitem);
+//}
+//public interface IMineable :IInteractable
+//{
+//    bool Mine(Item handitem, Animator animator);
+//}
+//public interface ICollectable : IInteractable
+//{
+//    void Collect(Animator animator);
+//}
+//public interface IBuildable : IInteractable
+//{
+//    void Demolish();
+//}
+//public interface ISpeechBubbleCollectable : IInteractable
+//{
+//    void InstantiateBubble();
+//    bool CheckBubble(Item handitem, Animator animator);
+//}
+//public interface IEatable : IInteractable
+//{
+//    void Eat();
+//}
+//public interface IEventable : IInteractable
+//{
+//    void EtcEvent(Item handItem);
+//}
+//public interface IDropable : IInteractable
+//{
+//    void DropItems();
+//}

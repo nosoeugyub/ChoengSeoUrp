@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 public enum MineState { Normal, Trunk, Gone, }
-public class MineObject : ItemObject, IMineable, IDropable
+public class MineObject : ItemObject
 {
     public bool haveTruckState;
     int nowChopCount;
@@ -85,7 +85,7 @@ public class MineObject : ItemObject, IMineable, IDropable
 
         }
     }
-    public new int CanInteract()
+    public override int CanInteract()
     {
         //if (handitem.InItemType != toolType)
         //    return (int)CursorType.X;
@@ -175,10 +175,6 @@ public class MineObject : ItemObject, IMineable, IDropable
                 instantiateItem = ObjectPooler.SpawnFromPool(item.itemObjs[i].itemObj.name, gameObject.transform.position + randVec);
             }
         }
-    }
-
-    public void EndInteract()
-    {
     }
 }
 [System.Serializable]

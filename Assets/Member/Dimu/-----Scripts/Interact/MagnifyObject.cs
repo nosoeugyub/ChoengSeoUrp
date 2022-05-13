@@ -1,16 +1,15 @@
 ﻿using UnityEngine;
 
-public class MagnifyObject : ItemObject, ISpeechBubbleCollectable
+public class MagnifyObject : ItemObject
 {
     [SerializeField] GameObject glassSpeechBubble;
 
     private void Awake()
     {
-        base.Awake();
         glassSpeechBubble = Instantiate(Resources.Load("Object/glassSpeechBubble") as GameObject, this.transform);
         glassSpeechBubble.SetActive(false);
     }
-    public int CanInteract()
+    public override int CanInteract()
     {
         return (int)CursorType.Mag;
     }
@@ -35,9 +34,5 @@ public class MagnifyObject : ItemObject, ISpeechBubbleCollectable
         ObjectManager.CheckBubble();
         //확률로 레시피 획득 구문
         return true;
-    }
-
-    public void EndInteract()
-    {
     }
 }

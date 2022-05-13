@@ -4,7 +4,7 @@ using UnityEngine;
 namespace DM.Building
 {
 
-    public class BuildingItemObj : ItemObject, IBuildable, IDropable
+    public class BuildingItemObj : ItemObject//, IDropable
     {
         [SerializeField] BuildObjAttribute attributes;
 
@@ -160,7 +160,7 @@ namespace DM.Building
             transform.Rotate(new Vector3(0, 0, scalenum));
             print(transform.rotation);
         }
-        public int CanInteract()
+        public override int CanInteract()
         {
             return (int)CursorType.Build;
         }
@@ -256,13 +256,6 @@ namespace DM.Building
                 attributes.buildSize = BuildSize.Normal;
             else
                 attributes.buildSize = BuildSize.Big;
-
-            //print(attributes.buildSize.ToString());
-
-        }
-
-        public void EndInteract()
-        {
         }
     }
 

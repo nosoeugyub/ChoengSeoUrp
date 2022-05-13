@@ -9,7 +9,7 @@ public enum BuildingLike { Like, Unlike_Shape, Unlike_Count, Unlike_Empty, Cant,
 
 namespace DM.NPC
 {
-    public class HouseNpc : NPC, ITalkable
+    public class HouseNpc : NPC
     {
         [SerializeField] private BuildingBlock myHouse;
         [SerializeField] private Condition[] wantToBuildCondition;
