@@ -33,8 +33,9 @@ public class MineObject : ItemObject
         yield return new WaitForSeconds(respawnTime);
         ChangeMineState(MineState.Normal);
     }
-    protected virtual void ChangeMineState(MineState state)
+    protected void ChangeMineState(MineState state)
     {
+        mineState = state;
         if (state == MineState.Normal)
         {
             boxcol.GetComponent<BoxCollider>().enabled = true;
@@ -53,7 +54,7 @@ public class MineObject : ItemObject
     {
         return (int)CursorType.PickAxe;
     }
-    public virtual bool Mine(Item _handitem, Animator playerAnimator)
+    public bool Mine(Item _handitem, Animator playerAnimator)
     {
         handitem = _handitem;
         if (_handitem.InItemType != toolType)
@@ -73,7 +74,7 @@ public class MineObject : ItemObject
         return true;
     }
 
-    public virtual void SetAnimationEventMethod(Animator playerAnimator)
+    public void SetAnimationEventMethod(Animator playerAnimator)
     {
         playerAnimator.GetComponent<PlayerAnimator>().Mine = UpdateMineState;
     }

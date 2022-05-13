@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class TreeObject : MineObject
 {
-
     [SerializeField] Material downMat;
     [SerializeField] GameObject upObj;
-
-
     [SerializeField] Tree sadtree;
+    Tree origintree;
+
     public void SetDownMat(Material material)
     {
         downMat = material;
@@ -29,8 +28,11 @@ public class TreeObject : MineObject
         yield return new WaitForSeconds(0.1f);
         quad.transform.SetParent(animator.transform);
     }
-    protected override void ChangeMineState(MineState state)
+    protected new void ChangeMineState(MineState state)
     {
+        mineState = state;
+        Debug.Log("Tree ChangeMineState");
+
         if (state == MineState.Normal) //처음으로 초기화
         {
             animator.SetBool("IsFalling", false);
@@ -57,6 +59,7 @@ public class TreeObject : MineObject
     }
     public override void UpdateMineState()
     {
+        Debug.Log("Tree UpdateMineState");
         SuperManager.Instance.soundManager.PlaySFX(handitem.UsingToolSoundName);
         if (++nowChopCount >= item.ChopCount)
         {
@@ -76,4 +79,24 @@ public class TreeObject : MineObject
             animator.SetTrigger("Shaking");
         }
     }
+
+    public void ChangeTreeData(int treetype)
+    {
+        if(treetype == (int)TreeType.Original)
+        {
+            origintree.TreeMat = quad.material;
+            origintree.TreeUpMat = upObj.GetComponent<Renderer>().material;
+            origintree.TreeDownMat = downMat;
+
+            nowMat = sadtree.TreeMat;
+            upObj.GetComponent<Renderer>().material = sadtree.TreeUpMat;
+            downMat = sadtree.TreeDownMat;
+
+            if(mineState == MineState.Trunk)
+            {
+                quad.material = downMat;
+            }
+        }
+    }
 }
+enum TreeType { Original, Sad, Length}
