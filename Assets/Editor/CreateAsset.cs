@@ -131,7 +131,7 @@ public class CreateAsset : MonoBehaviour
             variantRootChild.GetComponent<MeshRenderer>().material = material;
             variantRootChild2.GetComponent<MeshRenderer>().material = material2;//string.Format("{0}.mat", upMatname));
 
-            variantRoot.GetComponent<MineObject>().SetDownMat(material3);
+            variantRoot.GetComponent<TreeObject>().SetDownMat(material3);
             variantRoot.GetComponent<BoxCollider>().size = new Vector3(texture.width * 0.01f, texture.height * 0.01f, 1);
             variantRootChild.localScale = new Vector3(texture.width * 0.01f, texture.height * 0.01f, 1);
             variantRootChild2.localScale = new Vector3(texture.width * 0.01f, texture.height * 0.01f, 1);

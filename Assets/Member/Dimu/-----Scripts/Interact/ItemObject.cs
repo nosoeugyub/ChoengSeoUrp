@@ -48,6 +48,6 @@ public class ItemObject : Interactable//, IInteractable
 
     public override int CanInteract()
     {
-        throw new System.NotImplementedException();
+        return (int)CursorType.Normal;
     }
 }

@@ -52,7 +52,6 @@ namespace NSY.Player
                 else
                 {
                     Tired -= 0.2f;
-            print(Tired);
                     healthcurrentTime = 0;
                 }
             }

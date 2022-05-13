@@ -4,100 +4,56 @@ using UnityEngine;
 public enum MineState { Normal, Trunk, Gone, }
 public class MineObject : ItemObject
 {
-    public bool haveTruckState;
-    int nowChopCount;
-    int truckChopCount;
-    [SerializeField] float respawnTime = 20;
-    //[SerializeField] float time = 0;
-    MineState mineState = MineState.Normal;//0 성장완료 1미완료
-    [SerializeField] Material nowMat;
+    protected int nowChopCount;
+    [SerializeField] protected float respawnTime = 20;
+    protected MineState mineState = MineState.Normal;//0 성장완료 1미완료
+    [SerializeField] protected Material nowMat;
 
     [Tooltip("이 오브젝트를 채집할 수 있는 도구 타입")]
-    [SerializeField] InItemType toolType;
+    [SerializeField] protected InItemType toolType;
 
-    [Header("If haveTruckState True, Set Plz")]
-
-    [SerializeField] Material downMat;
-    [SerializeField] GameObject upObj;
-
-    [SerializeField] Animator animator;
-
-    [SerializeField] BoxCollider boxcol;
-
-    Item handitem;
+    [SerializeField] protected Animator animator;
+    [SerializeField] protected BoxCollider boxcol;
+    protected Item handitem;
     private new void Awake()
     {
         base.Awake();
     }
-    public void SetDownMat(Material material)
-    {
-        downMat = material;
-    }
-    private void OnEnable()
+
+    protected void OnEnable()
     {
         nowChopCount = 0;
         nowMat = quad.material;
         animator = quad.transform.parent.GetComponent<Animator>();//transform.Find("Quad").
         boxcol = GetComponent<BoxCollider>();
-
     }
 
     IEnumerator Respawn()
     {
         yield return new WaitForSeconds(respawnTime);
         ChangeMineState(MineState.Normal);
-        if (!haveTruckState) yield break;
-        yield return new WaitForSeconds(0.1f);
-        quad.transform.SetParent(animator.transform);
     }
-    private void ChangeMineState(MineState state)
+    protected virtual void ChangeMineState(MineState state)
     {
         if (state == MineState.Normal)
         {
-            //Debug.Log("초기화");
-            if (haveTruckState)
-            {
-                animator.SetBool("IsFalling", false);
-                animator.SetTrigger("Finish");
-                upObj.SetActive(false);
-                nowChopCount = 0;
-            }
-            boxcol.enabled = true;
-            //time = 0;
+            boxcol.GetComponent<BoxCollider>().enabled = true;
             quad.material = nowMat;
             quad.material.color = new Color(1, 1, 1, 1);
-
-        }
-        else if (state == MineState.Trunk)
-        {
-            boxcol.enabled = false;
-            quad.material = downMat;
-            quad.transform.SetParent(transform);
-            upObj.SetActive(true);
-            nowChopCount = 0;
-            //quad.material.color = new Color(1,1,1,0);
-            animator.SetBool("IsFalling", true);
         }
         else
         {
+
+            boxcol = GetComponent<BoxCollider>();
             boxcol.enabled = false;
             animator.SetBool("IsFalling", true);
-
         }
     }
     public override int CanInteract()
     {
-        //if (handitem.InItemType != toolType)
-        //    return (int)CursorType.X;
-        //else if(handitem.InItemType == InItemType.Pickaxe)
-        //    return (int)CursorType.PickAxe;
-        //else if(handitem.InItemType == InItemType.Axe)
-            return (int)CursorType.Axe;
-        //else
-        //    return (int)CursorType.Normal;
-
+        return (int)CursorType.PickAxe;
     }
-    public bool Mine(Item _handitem, Animator playerAnimator)
+    public virtual bool Mine(Item _handitem, Animator playerAnimator)
     {
         handitem = _handitem;
         if (_handitem.InItemType != toolType)
@@ -105,7 +61,6 @@ public class MineObject : ItemObject
             print("다른 도구로 시도해주세요.");
             return false;
         }
-        //print(nowChopCount);
         Interact();
 
         animator.SetBool("IsFalling", false);
@@ -114,12 +69,16 @@ public class MineObject : ItemObject
             playerAnimator.SetBool("isMining", true);
         else if (_handitem.InItemType == InItemType.Axe)
             playerAnimator.SetBool("isAxing", true);
-
-        playerAnimator.GetComponent<PlayerAnimator>().Mine = UpdateMineState;
+        SetAnimationEventMethod(playerAnimator);
         return true;
     }
 
-    private void UpdateMineState()
+    public virtual void SetAnimationEventMethod(Animator playerAnimator)
+    {
+        playerAnimator.GetComponent<PlayerAnimator>().Mine = UpdateMineState;
+    }
+
+    public virtual void UpdateMineState()
     {
         SuperManager.Instance.soundManager.PlaySFX(handitem.UsingToolSoundName);
         if (++nowChopCount >= item.ChopCount)
@@ -129,15 +88,8 @@ public class MineObject : ItemObject
             PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.MineItem, PlayerData.ItemData, ((int)ItemBehaviorEnum.length));
             FindObjectOfType<EnvironmentManager>().ChangeCleanliness(item.CleanAmount);
 
-            if (!haveTruckState || mineState == MineState.Trunk)
-            {
-                ChangeMineState(MineState.Gone);
-            }
-            else if (mineState == MineState.Normal)
-            {
-                ChangeMineState(MineState.Trunk);
-                StartCoroutine(Respawn());
-            }
+            ChangeMineState(MineState.Gone);
+            //StartCoroutine(Respawn());
         }
         else
         {

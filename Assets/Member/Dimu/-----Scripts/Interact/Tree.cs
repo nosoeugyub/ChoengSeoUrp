@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Tree", menuName = "Tree")]
-public class Tree : ScriptableObject
+public class Tree : Item
 {
     [SerializeField] Material treeMat;
     [SerializeField] Material treeUpMat;
