@@ -76,14 +76,6 @@ namespace NSY.Player
 
         private void InvokeInteract(Interactable interactable)
         {
-            //PlayerEat playerInteract = interactable.ReturnTF().GetComponent<PlayerEat>();
-            //if (playerInteract != null)
-            //{
-            //    //playerInteract.Eat(playerAnimator.animator);
-            //    //isAnimating = true;
-            //    return;
-            //}
-
             CollectObject collectObj = interactable.transform.GetComponent<CollectObject>();
             if (collectObj != null)
             {
@@ -201,18 +193,8 @@ namespace NSY.Player
                     //interactUI.transform.position = RectTransformUtility.WorldToScreenPoint(Camera.main, interactUI.transform.position);
                 }
                 else
-                {
-                    //interactUI.SetActive(false);
                     StartCoroutine(cursorManager.SetCursor((int)CursorType.Normal));
-
-                    //분리 필요
-                    //foreach (var button in buildingButtons)
-                    //{
-                    //    button.gameObject.SetActive(false);
-                    //}
-                }
             }
-
 
 
             if (Input.GetMouseButtonDown(0))

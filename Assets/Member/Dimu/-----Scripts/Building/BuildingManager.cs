@@ -89,11 +89,13 @@ namespace DM.Building
                 buildmodeOn();
                 PlayerOnOff(false);
                 ResetButtonEvents(buildingButtons[0]);
+                ResetButtonEvents(buildingButtons[1]);
             });
             buildingButtons[1].onClick.AddListener(() =>
             {
                 demomodeOn();
                 PlayerOnOff(false);
+                ResetButtonEvents(buildingButtons[0]);
                 ResetButtonEvents(buildingButtons[1]);
             });
         }

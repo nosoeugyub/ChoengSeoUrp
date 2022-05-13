@@ -8,7 +8,7 @@ public enum BuildMode { None, BuildHouseMode, DemolishMode }
 
 namespace DM.Building
 {
-    public class BuildingBlock : MonoBehaviour, IInteractable
+    public class BuildingBlock : Interactable
     {
         [SerializeField] private int buildingId;
         [SerializeField] private BuildMode CurBuildMode;
@@ -432,7 +432,7 @@ namespace DM.Building
         {
             PlayerData.AddValue(buildingId, (int)BuildingBehaviorEnum.Interact, PlayerData.BuildBuildingData, (int)BuildingBehaviorEnum.length);
         }
-        public int CanInteract()
+        public override int CanInteract()
         {
             return (int)CursorType.Build;
         }

@@ -52,7 +52,7 @@ public class CollectObject : ItemObject
         Item itemCopy = item.GetCopy();
         if (inventoryNSY.AddItem(itemCopy))
         {
-            SuperManager.Instance.soundManager.PlaySFX("item_pick");
+            SuperManager.Instance.soundManager.PlaySFX(soundName);
             amount--;
         }
         else
