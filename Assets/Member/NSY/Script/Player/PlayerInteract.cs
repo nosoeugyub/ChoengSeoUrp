@@ -11,8 +11,9 @@ namespace NSY.Player
         [SerializeField] List<IInteractable> interacts = new List<IInteractable>();//상호작용 범위 내 있는 IInteractable오브젝트 리스트
         IInteractable closestObj;//가장 가까운 친구
 
+        CursorManager cursorManager;
 
-        public GameObject interactUI;//띄울 UI
+        //public GameObject interactUI;//띄울 UI
         //public Text interactUiText;//띄울 UI
         public TextMeshProUGUI interactUiText2;
 
@@ -40,6 +41,7 @@ namespace NSY.Player
         {
             layerMask = 1 << LayerMask.NameToLayer("Interactable");
             //마우스 상호작용 오브젝트는 Interactable 이라는 레이어를 가지고 있어야 합니다.
+            cursorManager = FindObjectOfType<CursorManager>();
         }
         private void Update()
         {
@@ -148,7 +150,7 @@ namespace NSY.Player
                         else
                         {
                             print(buildAreaObject.name);
-                            buildAreaObject.OnBuildMode(interactUI);
+                            buildAreaObject.OnBuildMode();
                         }
                         return;
                     }
@@ -184,24 +186,26 @@ namespace NSY.Player
                 nowInteractable = hit.collider.GetComponent<IInteractable>();
                 if (nowInteractable != null && IsInteracted(nowInteractable))// 클릭한 옵젝이 닿은 옵젝 리스트에 있다면 통과
                 {
-                    interactUI.SetActive(true);
+                    //interactUI.SetActive(true);
 
-                    interactUiText2.text = nowInteractable.CanInteract();
+                    StartCoroutine( cursorManager.SetCursor(nowInteractable.CanInteract()));
+                    //interactUiText2.text = nowInteractable.CanInteract();
                     Vector3 uiPos = new Vector3(nowInteractable.ReturnTF().position.x, nowInteractable.ReturnTF().position.y + 2, nowInteractable.ReturnTF().position.z);
-                    interactUI.transform.position = uiCamera.WorldToScreenPoint(uiPos);
+                    //interactUI.transform.position = uiCamera.WorldToScreenPoint(uiPos);
 
-                    var position = uiCamera.WorldToScreenPoint(uiPos);
-                    position.z = (interactUI.transform.position - uiCamera.transform.position).magnitude;
+                    //var position = uiCamera.WorldToScreenPoint(uiPos);
+                    //position.z = (interactUI.transform.position - uiCamera.transform.position).magnitude;
                     //interactUI.transform.position = Camera.main.ScreenToWorldPoint(position);
 
-                    RectTransformUtility.ScreenPointToLocalPointInRectangle(targetRectTr, Input.mousePosition, uiCamera, out screenPoint);
-                    interactUI.GetComponent<RectTransform>().localPosition = screenPoint;
+                    //RectTransformUtility.ScreenPointToLocalPointInRectangle(targetRectTr, Input.mousePosition, uiCamera, out screenPoint);
+                    //interactUI.GetComponent<RectTransform>().localPosition = screenPoint;
 
                     //interactUI.transform.position = RectTransformUtility.WorldToScreenPoint(Camera.main, interactUI.transform.position);
                 }
                 else
                 {
-                    interactUI.SetActive(false);
+                    //interactUI.SetActive(false);
+                    StartCoroutine(cursorManager.SetCursor((int)CursorType.Normal));
 
                     //분리 필요
                     //foreach (var button in buildingButtons)

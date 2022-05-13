@@ -12,9 +12,9 @@ public class TrashCan : ItemObject, IEventable
     {
         popupmanager = GameObject.Find("PopUpUi Contain");
     }
-    public new string CanInteract()
+    public new int CanInteract()
     {
-        return "쓰레기통 인벤열기";
+        return (int)CursorType.Normal;
     }
     public void EtcEvent(Item _handItem) //상호작용 시 실행
     {

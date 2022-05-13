@@ -10,9 +10,9 @@ public class CollectObject : ItemObject, ICollectable
     public bool canMove;
     [SerializeField] string soundName = "item_pick";
     BoxCollider box;
-    public string CanInteract()
+    public int CanInteract()
     {
-        return "줍기";
+        return (int)CursorType.Pickup;
     }
     private void OnEnable()
     {

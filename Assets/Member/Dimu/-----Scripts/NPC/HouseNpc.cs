@@ -19,7 +19,7 @@ namespace DM.NPC
         private DialogueManager dialogueManager;
         private BuildingLike like = BuildingLike.None;
 
-        public BuildingBlock MyHouse { get; set; }
+        public BuildingBlock MyHouse { get { return myHouse; } set { myHouse = value; } }
 
         private void Awake()
         {
@@ -248,9 +248,9 @@ namespace DM.NPC
             return BuildingLike.Like;
         }
 
-        public string CanInteract()
+        public int CanInteract()
         {
-            return "말걸기";
+            return (int)CursorType.Talk;
         }
         public Transform ReturnTF()
         {
@@ -288,7 +288,7 @@ namespace DM.NPC
         {
             if (myHouse)
             {
-                Vector3 vec = myHouse.HouseOwnerLocation;
+                Vector3 vec = myHouse.HouseOwnerTransform.position;
                 MoveTo(vec);
             }
             EventManager.EventAction -= EventManager.EventActions[2];

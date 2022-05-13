@@ -242,6 +242,24 @@ public class CreateAsset : MonoBehaviour
             //material.SetTexture("_MainTex", texture);
         }
     }
+
+    [MenuItem("Assets/CreateAssets_BuildObj_ScriptableObj")]
+    static void CreateAssets_TreeMats()
+    {
+        Object[] _textures = Selection.GetFiltered(typeof(Texture2D), SelectionMode.DeepAssets);
+        Tree so;
+        foreach (Texture2D texture in _textures)
+        {
+            string path = AssetDatabase.GetAssetPath(texture);
+            string filename = path.Substring(0, path.Length - 7);
+
+            so = ScriptableObject.CreateInstance<Tree>();
+            Sprite tests = AssetDatabase.LoadAssetAtPath(string.Format(path), typeof(Sprite)) as Sprite;
+            //so.TreeMat = tests;
+
+            AssetDatabase.CreateAsset(so, string.Format("{0}.asset", filename));
+        }
+    }
     //[MenuItem("Assets/FixAssets_BuildObj_ScriptableObj")]
     //static void FixAssets_BuildObj_ScriptableObj()
     //{

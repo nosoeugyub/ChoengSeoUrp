@@ -160,9 +160,9 @@ namespace DM.Building
             transform.Rotate(new Vector3(0, 0, scalenum));
             print(transform.rotation);
         }
-        public string CanInteract()
+        public int CanInteract()
         {
-            return "BuildItemObj";
+            return (int)CursorType.Build;
         }
         public void Demolish()
         {

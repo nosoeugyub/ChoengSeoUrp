@@ -58,7 +58,7 @@ public class NPCManager : MonoBehaviour
     //////////////event Methods
     public void MoveToBearsHouse()
     {
-        MoveToNPCSomewhere(2, npcTfs[1].Npctf.MyHouse.FriendLocation);
+        MoveToNPCSomewhere(2, npcTfs[1].Npctf.MyHouse.FriendTransform.position);
         EventManager.EventAction -= EventManager.EventActions[3];
     }
 }

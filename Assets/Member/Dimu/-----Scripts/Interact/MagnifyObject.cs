@@ -10,9 +10,9 @@ public class MagnifyObject : ItemObject, ISpeechBubbleCollectable
         glassSpeechBubble = Instantiate(Resources.Load("Object/glassSpeechBubble") as GameObject, this.transform);
         glassSpeechBubble.SetActive(false);
     }
-    public string CanInteract()
+    public int CanInteract()
     {
-        return "캐기";
+        return (int)CursorType.Mag;
     }
     public void InstantiateBubble()
     {

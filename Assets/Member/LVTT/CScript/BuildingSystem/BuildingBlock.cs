@@ -24,6 +24,9 @@ namespace DM.Building
 
         [SerializeField] InItemType toolType;
 
+        [SerializeField] Transform houseOwnerTransform;
+        [SerializeField] Transform friendTransform;
+
         private bool buildButtonFuncAdded;
 
         private CameraManager CamManager;
@@ -42,8 +45,8 @@ namespace DM.Building
         public static bool isBuildDemolishMode { get; set; } = false;
         public static BuildingBlock nowBuildingBlock { get; set; } = null;
 
-        public Vector3 HouseOwnerLocation { get; set; }
-        public Vector3 FriendLocation { get; set; }
+        public Transform HouseOwnerTransform { get { return houseOwnerTransform; } set { houseOwnerTransform = value; } }
+        public Transform FriendTransform { get { return friendTransform; } set { friendTransform = value; } }
         public float AreaWidthsize { get { return areaWidthsize; } set { areaWidthsize = value; } }
         public float AreaHeightsize { get { return areaHeightsize; } set { areaHeightsize = value; } }
         public int BuildingID { get { return buildingId; } set { buildingId = value; } }
@@ -194,7 +197,7 @@ namespace DM.Building
             }
         }
 
-        public void OnBuildMode(GameObject interactUI)
+        public void OnBuildMode()
         {
 
             buildManager.BuildingInteractButtonOnOff(true);
@@ -206,7 +209,7 @@ namespace DM.Building
             if (!this.buildButtonFuncAdded)
             {
 
-                buildManager.SetBuildButtonEvents(BuildModeOn, BuildDemolishModeOn, interactUI);
+                buildManager.SetBuildButtonEvents(BuildModeOn, BuildDemolishModeOn);
 
                 this.buildButtonFuncAdded = true;
             }
@@ -429,9 +432,9 @@ namespace DM.Building
         {
             PlayerData.AddValue(buildingId, (int)BuildingBehaviorEnum.Interact, PlayerData.BuildBuildingData, (int)BuildingBehaviorEnum.length);
         }
-        public string CanInteract()
+        public int CanInteract()
         {
-            return "건물 상호작용";
+            return (int)CursorType.Build;
         }
 
         public Transform ReturnTF()

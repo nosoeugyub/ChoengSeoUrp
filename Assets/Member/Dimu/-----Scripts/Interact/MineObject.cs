@@ -85,9 +85,17 @@ public class MineObject : ItemObject, IMineable, IDropable
 
         }
     }
-    public new string CanInteract()
+    public new int CanInteract()
     {
-        return "캐기";
+        //if (handitem.InItemType != toolType)
+        //    return (int)CursorType.X;
+        //else if(handitem.InItemType == InItemType.Pickaxe)
+        //    return (int)CursorType.PickAxe;
+        //else if(handitem.InItemType == InItemType.Axe)
+            return (int)CursorType.Axe;
+        //else
+        //    return (int)CursorType.Normal;
+
     }
     public bool Mine(Item _handitem, Animator playerAnimator)
     {
