@@ -6,6 +6,7 @@ using DM.Inven;
 using DM.Building;
 using DM.Dialog;
 using NSY.Iven;
+using TT.Sound;
 
 namespace NSY.Manager
 { /// <summary>
@@ -24,7 +25,8 @@ namespace NSY.Manager
         public DialogueManager dialogueManager;
         public SpawnManager spawnmanager;
         public InventoryNSY inventoryManager;
-
+        public SoundManager soundManager;
+        public UnLockManager unlockmanager;
 
         public static SuperManager Instance
         {

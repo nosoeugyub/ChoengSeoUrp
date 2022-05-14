@@ -1,18 +1,17 @@
 ﻿using UnityEngine;
 
-public class MagnifyObject : ItemObject, ISpeechBubbleCollectable
+public class MagnifyObject : ItemObject
 {
     [SerializeField] GameObject glassSpeechBubble;
 
     private void Awake()
     {
-        base.Awake();
         glassSpeechBubble = Instantiate(Resources.Load("Object/glassSpeechBubble") as GameObject, this.transform);
         glassSpeechBubble.SetActive(false);
     }
-    public string CanInteract()
+    public override int CanInteract()
     {
-        return "캐기";
+        return (int)CursorType.Mag;
     }
     public void InstantiateBubble()
     {

@@ -12,18 +12,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cc61efa26a84a64ea78939328250dd4, type: 3}
   m_Name: wall_brick_square_2
   m_EditorClassIdentifier: 
-  outItemType: 7
-  inItemType: 0
-  itemName: 
+  outItemType: 0
+  inItemType: 70003
+  itemName: wall_brick_square_2
   itemDescription: 
-  itemSprite: {fileID: 21300000, guid: 2f9eade6ffd529240aae1c94f5616130, type: 3}
-  itemMaterial: {fileID: 2100000, guid: c8ad373003f8c9043ac38fb9af335daf, type: 2}
-  cleanAmount: 0
+  itemSprite: {fileID: 21300000, guid: 94ae23c6c4b61254bafb3e977debdf07, type: 3}
+  itemMaterial: {fileID: 2100000, guid: 422012d4844c09f4dbf5978314177fe5, type: 2}
+  cleanAmount: 0.7
+  eatAmount: 0
   chopCount: 0
   dropItems: []
   durability: 0
-  itemPrefab: {fileID: 872522878345368272, guid: ca03931c9910beb4b90c8b4dcd99c5b6,
+  itemPrefab: {fileID: 2117286388629599647, guid: 3113c3dd92e2d74409055ab1a943d6ae,
     type: 3}
+  usingToolSoundName: 
+  _ItemNubering: 0
+  GetCountitems: 0
   MaximumStacks: 5
-  recipe: []
-  RecipeCode: 0
+  recipe:
+  - item: {fileID: 11400000, guid: 23e39a38484ef76448489f2869fe41f2, type: 2}
+    count: 1
+  - item: {fileID: 11400000, guid: 0fd973446ae977042aed9658bea02137, type: 2}
+    count: 1
+  - item: {fileID: 0}
+    count: 0
+  UnlockItem: []

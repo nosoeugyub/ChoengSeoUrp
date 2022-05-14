@@ -15,10 +15,14 @@ namespace NSY.Iven
         public Color emptyColor;
         private bool isInRange;
 
-        
+        private void Awake()
+        {
+            item.GetCountItems = 0;
+        }
 
         public void OnValidate()
         {
+         
             if (inventory == null)
             {
                 inventory = FindObjectOfType<InventoryNSY>();
@@ -36,16 +40,18 @@ namespace NSY.Iven
 
         public void Update()
         {
+            isInRange = true;
             if (isInRange && Input.GetKeyDown(KeyCode.E))
             {
                 Item itemCopy = item.GetCopy();
-
-                if (inventory.AddItem(itemCopy))
+                
+                if (inventory.AddItem(item.GetCopy()))
                 {
-                    amount--;
-                    if (amount ==0)
+
+                    itemCopy.GetCountItems++;
+                    if (itemCopy.CleanAmount == 0)
                     {
-                        spriteRenderer.color = emptyColor;
+                        //spriteRenderer.color = emptyColor;
                     }
                 }
                 else

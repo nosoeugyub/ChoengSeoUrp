@@ -1,54 +1,102 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using DM.Inven;
+
+
 
 namespace NSY.Iven
 {
 	public class CraftWindow : MonoBehaviour
 	{
-		[Header("References")]
-		[SerializeField] CraftManager recipeUIPrefab;
-		[SerializeField] RectTransform recipeUIParent;
-		[SerializeField] List<CraftManager> craftingRecipeUIs;
+        public Sprite reimage;
+        public Text RecipeCurrentAmount;
+        public Text RecipeHaverAmount;
 
-		[Header("Public Variables")]
-		public ItemContainer ItemContainer;
-		public List<CraftingRecipe> CraftingRecipes;
+        private void OnValidate()
+        {
+            Item = _item;
+            RecipeAmount = _RecipeAmount;
+            HaveAmount = _haveAmount;
+        }
 
-		
-		private void OnValidate()
-		{
-			//Init();
-		}
 
-		private void Start()
-		{
-		//	Init();
+        public Item _item;
+		public Item Item
+        {
+            get
+            {
+                return _item;
+            }
+            set
+            {
+                _item = value;
+             
+                if (_item == null)
+                {
+                    reimage = null;
+                }
+               
+            }
+        }
 
-		}
+      
+        public int _RecipeAmount;
+        public int RecipeAmount
+        {
+            get
+            {
+                return _RecipeAmount;
+            }
+            set
+            {
+                _RecipeAmount = value;
+                SetRecipeCurrentAmountText(_RecipeAmount.ToString());
+                if (_RecipeAmount == 0)
+                {
+                    SetRecipeCurrentAmountText(" ");
+                }
+            }
+        }
+       // [SerializeField]
+        public int _haveAmount;
+        public int HaveAmount
+        {
+            get
+            {
+                return _haveAmount;
+            }
+            set
+            {
+                _haveAmount = value;
+                SetRecipeHaverAmountText(_haveAmount.ToString());
+                if (_haveAmount <= 0)
+                {
+                    _haveAmount = 0;
+                   
+                }
+                if (_haveAmount == 0  && Item != null )
+                {
+                    SetRecipeHaverAmountText(" ");
+                }
+            }
+        }
+      
+        public void MiuseBtn()
+        {
+            _haveAmount -= 1;
+        }
 
-		private void Init()
-		{
-		//	recipeUIParent.GetComponentsInChildren<CraftManager>(includeInactive: true, result: craftingRecipeUIs);
-			UpdateCraftingRecipes();
-		}
-
-		public void UpdateCraftingRecipes()
-		{
-			for (int i = 0; i < CraftingRecipes.Count; i++)
-			{
-				
-
-				craftingRecipeUIs[i].itemContainer = ItemContainer;
-				//craftingRecipeUIs[i].CraftingRecipe = CraftingRecipes[i];
-			}
-
-			for (int i = CraftingRecipes.Count; i < craftingRecipeUIs.Count; i++)
-			{
-				//craftingRecipeUIs[i].CraftingRecipe = null;
-			}
-		}
-	}
+        public void SetRecipeHaverAmountText(string str)
+        {
+            RecipeHaverAmount.text = str;
+        }
+        public void SetRecipeCurrentAmountText(string str)
+        {
+            RecipeCurrentAmount.text = str;
+        }
+    }
 
 }
 

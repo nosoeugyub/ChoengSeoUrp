@@ -1,15 +1,15 @@
 ﻿using NSY.Manager;
 using UnityEngine;
 
-namespace TT.BuildSystem
+namespace DM.Building
 {
 
-    public class BuildingItemObj : ItemObject, IBuildable, IDropable
+    public class BuildingItemObj : ItemObject//, IDropable
     {
         [SerializeField] BuildObjAttribute attributes;
 
         [Tooltip("이 오브젝트를 채집할 수 있는 도구 타입")]
-        [SerializeField] InItemType toolType;
+        public InItemType toolType;
 
         [SerializeField] float MaxScale = 1.5f;
         [SerializeField] float MinScale = 0.3f;
@@ -17,6 +17,8 @@ namespace TT.BuildSystem
 
         [SerializeField] private bool itemisSet;
         [SerializeField] private bool isFirstDrop;
+
+        [SerializeField] private ParticleSystem particle;
 
         float MaxX;
         float MinX;
@@ -65,9 +67,9 @@ namespace TT.BuildSystem
             {
                 ItemMove();
             }
-            if(IsFirstDrop)
+            if (IsFirstDrop)
             {
-                print("isFirstDrop");
+               // print("isFirstDrop");
 
                 if (Input.GetMouseButtonDown(1))
                 {
@@ -78,39 +80,71 @@ namespace TT.BuildSystem
         /// <summary>
         /////////////////////////Update
         private void ItemMove()
-        {
-            var movePos = Input.mousePosition;
-            movePos.z = Camera.main.WorldToScreenPoint(transform.position).z;
-            movePos = Camera.main.ScreenToWorldPoint(movePos);
-            HouseBuildAreaCal();
-            if (movePos.x >= MaxX) movePos.x = MaxX;
-            if (movePos.x <= MinX) movePos.x = MinX;
-            if (movePos.y >= MaxY) movePos.y = MaxY;
-            if (movePos.y <= MinY) movePos.y = MinY;
+        { //onBuildItem interact during BuildMode
+            if (BuildingBlock.isBuildMode)
+            {
+                var movePos = Input.mousePosition;
+                movePos.z = parentBuildArea.DistanceToNowBuildItem(Camera.main.transform.position);
+                //            print(movePos.z);
+                movePos = Camera.main.ScreenToWorldPoint(movePos);
 
-            transform.position = movePos;
+                HouseBuildAreaCal();
+
+                if (movePos.y >= MaxY) movePos.y = MaxY;
+                if (movePos.y <= MinY) movePos.y = MinY;
+
+                if (parentBuildArea.DistanceToNowBuildItem(movePos) > MaxX)
+                {
+                    //print(" 여어 멈추라고");
+                    movePos.x = transform.position.x;
+                    movePos.z = transform.position.z;
+                }
+
+
+                //if (movePos.x >= MaxX) movePos.x = MaxX;
+                //if (movePos.x <= MinX) movePos.x = MinX;
+
+
+                //print(parentBuildArea.DistanceFromHouseBuildTo(movePos));
+                transform.position = movePos;
+            }
+
+            //onBuildItem interact when not in BuildMode
+            else
+            {
+                BuildingHandyObjSpawn SpawnHandyObjParent = FindObjectOfType<BuildingHandyObjSpawn>();
+                SpawnHandyObjParent.curInteractHandyObj.gameObject.GetComponent<Billboard>().enabled = true;
+                var movePos = Input.mousePosition;
+                movePos.z = SpawnHandyObjParent.DistanceFromCharacterTo(Camera.main.transform.position);
+                movePos = Camera.main.ScreenToWorldPoint(movePos);
+                transform.position = movePos;
+            }
+
         }
         void HouseBuildAreaCal()
         {
-            MaxX = ObjOriginPos.x + parentBuildArea.areaWidthsize / 2 - (quad.transform.localScale.x * transform.localScale.x) / 2;
-            MinX = ObjOriginPos.x - parentBuildArea.areaWidthsize / 2 + (quad.transform.localScale.x * transform.localScale.x) / 2;
-            MaxY = ObjOriginPos.y + parentBuildArea.areaHeightsize / 2 - quad.transform.localScale.y * transform.localScale.y / 2;
-            MinY = ObjOriginPos.y - parentBuildArea.areaHeightsize / 2 + quad.transform.localScale.y * transform.localScale.y / 2;
+            //원래 위치 + 건축영역가로 반 길이 - 스케일 길이 
+            MaxX = /*ObjOriginPos.x + */ parentBuildArea.AreaWidthsize / 2 - (quad.transform.localScale.x * transform.localScale.x) / 2;
+            MinX = ObjOriginPos.x - parentBuildArea.AreaWidthsize / 2 + (quad.transform.localScale.x * transform.localScale.x) / 2;
+            MaxY = ObjOriginPos.y + parentBuildArea.AreaHeightsize / 2 - quad.transform.localScale.y * transform.localScale.y / 2;
+            MinY = ObjOriginPos.y - parentBuildArea.AreaHeightsize / 2 + quad.transform.localScale.y * transform.localScale.y / 2;
         }
         /// 
         /// </summary>
+        /// 
         public void BackToInventory()
         {
             parentBuildArea.CancleUI(false);
             SuperManager.Instance.inventoryManager.AddItem(item);
             parentBuildArea.RemoveBuildItemToList(gameObject);
+            parentBuildArea.DeleteBuildingItemObjSorting(gameObject);
+
             Destroy(gameObject);
         }
         public void SetParentBuildArea(BuildingBlock pb)
         {
-            //Debug.Log("SetParent");
             parentBuildArea = pb;
-            parentBuildArea.curInteractObj = this;
+            parentBuildArea.SetCurInteractObj(this);
             ObjOriginPos = gameObject.transform.position;
         }
         public void SetBuildItemScale(Vector3 scalenum)
@@ -121,41 +155,65 @@ namespace TT.BuildSystem
             if (scalenum.y <= MinScale) scalenum.y = MinScale;
             transform.localScale = scalenum;
         }
-
-        public string CanInteract()
+        public void SetBuildItemRotation(float scalenum)
         {
-            return "BuildItemObj";
+            transform.Rotate(new Vector3(0, 0, scalenum));
+            print(transform.rotation);
+        }
+        public override int CanInteract()
+        {
+            return (int)CursorType.Build;
         }
         public void Demolish()
         {
             breakCount--;
             Debug.Log("뚜가" + breakCount);
             //이펙트 등
+            particle.Play();
+
             if (breakCount == 0)
             {
                 Debug.Log("파괴");
-                if (item.OutItemType == OutItemType.BuildWall)
-                    parentBuildArea.hasWall = false;
-                else if (item.OutItemType == OutItemType.BuildSign)
-                    parentBuildArea.hasSign = false;
+                //if (item.InItemType == InItemType.BuildWall)
+                //    parentBuildArea.hasWall = false;
+                //else if (item.InItemType == InItemType.BuildSign)
+                //    parentBuildArea.hasSign = false;
                 //파괴 임시 처리
                 DropItems();
                 parentBuildArea.RemoveBuildItemToList(gameObject);
+                parentBuildArea.DeleteBuildingItemObjSorting(gameObject);
+                FindObjectOfType<EnvironmentManager>().ChangeCleanliness(-GetItem().CleanAmount);
                 Destroy(gameObject);
             }
         }
         public void DropItems()
         {
             GameObject instantiateItem;
+
+
             foreach (DropItem item in item.DropItems)
             {
-                //print("spawn" + 2);
-                for (int i = 0; i < item.count; ++i)
+                float randnum = Random.Range(0, 100);//50( 10 30 60)
+                float sumtemp = 0;
+
+                if (item.percent >= randnum)
+                    continue;
+
+                randnum = Random.Range(0, 100);
+
+                int i = 0;
+                for (i = 0; i < item.itemObjs.Length; i++)
                 {
-                    instantiateItem = Instantiate(item.itemObj) as GameObject;
+                    sumtemp += item.itemObjs[i].percent;
+                    if (sumtemp >= randnum)
+                        break;
+                }
+                //i = 결정된 오브젝트
+
+                for (int j = 0; j < item.itemObjs[i].count; ++j)
+                {
                     Vector3 randVec = new Vector3(Random.Range(-1.5f, 1.5f), 0, Random.Range(-1.5f, 1.5f));
-                    instantiateItem.transform.position = gameObject.transform.position + randVec;
-                    //print("spawn" + instantiateItem.name);
+                    instantiateItem = ObjectPooler.SpawnFromPool(item.itemObjs[i].itemObj.name, gameObject.transform.position + randVec);
                 }
             }
         }
@@ -184,8 +242,8 @@ namespace TT.BuildSystem
             else
                 attributes.buildVPos = BuildVPos.Top;
 
-            print(attributes.buildHPos.ToString());
-            print(attributes.buildVPos.ToString());
+            //print(attributes.buildHPos.ToString());
+            //print(attributes.buildVPos.ToString());
 
             //크기 저장
             float scaleRange = MaxScale - MinScale; // 1.5 0.3     1.2
@@ -198,9 +256,6 @@ namespace TT.BuildSystem
                 attributes.buildSize = BuildSize.Normal;
             else
                 attributes.buildSize = BuildSize.Big;
-
-            print(attributes.buildSize.ToString());
-
         }
     }
 

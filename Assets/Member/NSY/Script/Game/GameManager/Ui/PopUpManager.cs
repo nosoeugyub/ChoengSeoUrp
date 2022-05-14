@@ -5,6 +5,7 @@ using UnityEngine;
 using TT.MapTravel;
 using Game.Cam;
 using TT.BuildSystem;
+using DM.Building;
 
 public class PopUpManager : MonoBehaviour
 {

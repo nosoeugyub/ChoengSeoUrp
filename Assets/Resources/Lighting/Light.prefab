@@ -60,7 +60,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7852749227005530390}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 170, y: 0, z: 0}
 --- !u!108 &7852749225287480106
 Light:
@@ -587,7 +587,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7852749227005530390}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 75, y: 25, z: 0}
 --- !u!108 &7852749226125243734
 Light:
@@ -1113,6 +1113,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7c87be04fee6674ab4942ca4762d482, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cleanLevels: 0a00000015000000210000002e0000003c0000004b000000
+  npcTfs: []
+  PortPos: {fileID: 0}
+  portInformUI: {fileID: 0}
+  nowNpcStandAtPort:
+    npctf: {fileID: 0}
+  canChange: 0
   _cleanliness: 0
   cleanGageImage: {fileID: 0}
   skyBox: {fileID: 2100000, guid: 7ed016baed72b4f499bdd4869dc12469, type: 2}
@@ -1135,16 +1142,81 @@ MonoBehaviour:
   _equatorColor: {r: 0.27058825, g: 0.27058825, b: 0.3019608, a: 0}
   _groundColor: {r: 0.6784314, g: 0.7294118, b: 0.7921569, a: 0}
   _cloudColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  d1: {fileID: 7852749225950809842}
   goodIntensity_d1: 0.7
   badIntensity_d1: 0.3
-  d2: {fileID: 7852749226125243734}
   goodIntensity_d2: 1
   badIntensity_d2: 0.4
-  d3: {fileID: 7852749225287480106}
   goodIntensity_d3: 0.7
   badIntensity_d3: 0.3
   volume: {fileID: 0}
+  maincamera: {fileID: 0}
+  time: 0
+  fullDayLength: 0
+  startTime: 0.35
+  d1: {fileID: 7852749225950809842}
+  d2: {fileID: 7852749226125243734}
+  d3: {fileID: 7852749225287480106}
+  sunColor:
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  sunintensity:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  DayMat: {fileID: 0}
+  _DaySkyColor: {r: 0, g: 0, b: 0, a: 0}
+  _DayEquatorColor: {r: 0, g: 0, b: 0, a: 0}
+  _DayEquatorGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  _lerpSkyColor: {r: 0, g: 0, b: 0, a: 0}
+  _lerpEquatorColor: {r: 0, g: 0, b: 0, a: 0}
+  _lerpEquatorGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  NightMat: {fileID: 0}
+  Waittime: 0.5
+  _NightSkyColor: {r: 0, g: 0, b: 0, a: 0}
+  _NightEquatorColor: {r: 0, g: 0, b: 0, a: 0}
+  _NightEquatorGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  lighingIntensityMultipler:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  refloectionsIntensityMultipler:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  FireFlyEffect: {fileID: 0}
+  a: {fileID: 0}
 --- !u!1 &7852749226897154182
 GameObject:
   m_ObjectHideFlags: 0
@@ -1210,8 +1282,8 @@ Transform:
   - {fileID: 7852749226611147415}
   - {fileID: 7852749225886402438}
   - {fileID: 7852749225950809843}
-  - {fileID: 7852749226125243735}
   - {fileID: 7852749225287480107}
+  - {fileID: 7852749226125243735}
   m_Father: {fileID: 7852749226887743060}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

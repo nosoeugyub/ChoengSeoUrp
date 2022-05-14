@@ -1,41 +1,49 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace NSY.Player
 {
     public class PlayerVital : MonoBehaviour
     {
-      public  int MaxVital = 100;
-      public  int CurVital;
+        public int MaxVital = 100;
+        public int CurVital;
+        public float tired;
 
+        public float Tired
+        {
+            get
+            {
+                return tired;
+            }
+            set
+            {
+                tired = value;
+                tiredUi.SetTiredUI(Tired, MaxVital);
+            }
+        }
         [SerializeField]
         PlayerController playerController;
 
         [Header("건강")]
-        public Image PlayerHealth_image;
-        public int Health { get; set; }
+        //public int Health { get; set; }
+        [SerializeField] TiredUI tiredUi;
         public int MaxHealth;
         public int healthDislatetime = 200;
         private int healthcurrentTime;
 
         private void Start()
         {
-            PlayerHealth_image.fillAmount = Health;
-            Health = 50;
+            Tired = 80;
         }
 
         private void Update()
         {
             StartCoroutine(disVital());
-            GaugeUpdate();
         }
 
         IEnumerator disVital()
         {
-
-            if (Health > 0)
+            if (Tired > 0)
             {
                 if (healthcurrentTime <= healthDislatetime)
                 {
@@ -43,21 +51,16 @@ namespace NSY.Player
                 }
                 else
                 {
-                    Health--;
+                    Tired -= 0.2f;
                     healthcurrentTime = 0;
                 }
             }
-
+            else
+                FindObjectOfType<SceneChangeManager>().LoadSceneString("EndScene");
 
             yield return null;
-
-
-
         }
-        void GaugeUpdate()
-        {
-            PlayerHealth_image.fillAmount = (float)Health / MaxHealth;
-        }
+
 
     }
 
