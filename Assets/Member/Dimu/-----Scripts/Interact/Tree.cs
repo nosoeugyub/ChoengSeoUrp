@@ -9,8 +9,8 @@ public class Tree : Item
     [SerializeField] Material treeUpMat;
     [SerializeField] Material treeDownMat;
 
-    public Material TreeMat { get; set; }
-    public Material TreeUpMat { get; set; }
-    public Material TreeDownMat { get; set; }
+    public Material TreeMat { get { return treeMat; } set { treeMat = value; } }
+    public Material TreeUpMat { get { return treeUpMat; } set { treeUpMat = value; } }
+    public Material TreeDownMat { get { return treeDownMat; } set { treeDownMat = value; } }
 
 }

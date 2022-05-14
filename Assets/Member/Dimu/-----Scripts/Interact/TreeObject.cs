@@ -8,7 +8,25 @@ public class TreeObject : MineObject
     [SerializeField] GameObject upObj;
     [SerializeField] Tree sadtree;
     Tree origintree;
+    [SerializeField] TreeType nowTreeType = TreeType.Sad;
 
+    EnvironmentManager environmentManager;
+
+    static int allSadTreeCount = 0;
+    static int nowSadTreeCount = 0;
+    private new void Awake()
+    {
+        base.Awake();
+        environmentManager = FindObjectOfType<EnvironmentManager>();
+        origintree = new Tree();
+    }
+    private void Start()
+    {
+        ++allSadTreeCount;
+        nowSadTreeCount = allSadTreeCount;
+        ChangeTreeData(TreeType.Sad);
+        quad.material = nowMat;
+    }
     public void SetDownMat(Material material)
     {
         downMat = material;
@@ -37,9 +55,15 @@ public class TreeObject : MineObject
         {
             animator.SetBool("IsFalling", false);
             animator.SetTrigger("Finish");
+
+            //확률계산
+            CalculateUpgradePercent();
+
             upObj.SetActive(false);
             boxcol.enabled = true;
+
             quad.material = nowMat;
+
             nowChopCount = 0;
         }
         else if (state == MineState.Trunk) //무너질 때로 초기화
@@ -49,6 +73,7 @@ public class TreeObject : MineObject
             boxcol.enabled = false;
             quad.material = downMat;
             nowChopCount = 0;
+
             quad.transform.SetParent(transform);
         }
         else
@@ -79,11 +104,11 @@ public class TreeObject : MineObject
             animator.SetTrigger("Shaking");
         }
     }
-
-    public void ChangeTreeData(int treetype)
+    public void ChangeTreeData(TreeType treetype)
     {
-        if(treetype == (int)TreeType.Original)
+        if (treetype == TreeType.Sad)
         {
+            //기존 거 저장
             origintree.TreeMat = quad.material;
             origintree.TreeUpMat = upObj.GetComponent<Renderer>().material;
             origintree.TreeDownMat = downMat;
@@ -91,12 +116,30 @@ public class TreeObject : MineObject
             nowMat = sadtree.TreeMat;
             upObj.GetComponent<Renderer>().material = sadtree.TreeUpMat;
             downMat = sadtree.TreeDownMat;
+        }
+        else
+        {
+            nowMat = origintree.TreeMat;
+            upObj.GetComponent<Renderer>().material = origintree.TreeUpMat;
+            downMat = origintree.TreeDownMat;
+        }
+    }
+    public void CalculateUpgradePercent()
+    {
+        if (nowTreeType == TreeType.Sad)
+        {
+            int randnum = Random.Range(0, 100);
 
-            if(mineState == MineState.Trunk)
+            float treepercent =(1.0f - (float)nowSadTreeCount / allSadTreeCount)* 100f;
+            float percent = environmentManager.Cleanliness - treepercent + treepercent / 5;
+            print(treepercent + "  " +  percent +  "  " +  randnum);
+            if (randnum < percent)
             {
-                quad.material = downMat;
+                nowTreeType = TreeType.Original;
+                ChangeTreeData(nowTreeType);
+                nowSadTreeCount--;
             }
         }
     }
 }
-enum TreeType { Original, Sad, Length}
+public enum TreeType { Original, Sad, Length }

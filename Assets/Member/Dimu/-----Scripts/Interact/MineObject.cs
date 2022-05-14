@@ -54,7 +54,7 @@ public class MineObject : ItemObject
     {
         return (int)CursorType.PickAxe;
     }
-    public bool Mine(Item _handitem, Animator playerAnimator)
+    public virtual bool Mine(Item _handitem, Animator playerAnimator)
     {
         handitem = _handitem;
         if (_handitem.InItemType != toolType)

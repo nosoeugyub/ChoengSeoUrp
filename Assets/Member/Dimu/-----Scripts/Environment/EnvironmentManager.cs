@@ -7,7 +7,7 @@ using UnityEngine.UI;
 [ExecuteInEditMode]
 public class EnvironmentManager : MonoBehaviour
 {
-    float cleanliness; //0~100
+    [SerializeField] float cleanliness; //0~100
 
     [SerializeField] List<int> cleanLevels;
     int cleanLevel;
@@ -85,8 +85,11 @@ public class EnvironmentManager : MonoBehaviour
         {
             cleanliness = value;
 
-            if (cleanLevels[cleanLevel] <= cleanliness)
-                ComeToPort();
+            if (cleanLevel < cleanLevels.Count)
+            {
+                if (cleanLevels[cleanLevel] <= cleanliness)
+                    ComeToPort();
+            }
 
             cleanGageImage.fillAmount = cleanliness / 100;
         }
@@ -171,11 +174,8 @@ public class EnvironmentManager : MonoBehaviour
 
     private void ComeToPort()
     {
-        if (cleanLevels[cleanLevel] <= Cleanliness)
-        {
-            npcManager.ComeToPort();
-            AddCleanLevel();
-        }
+        npcManager.ComeToPort();
+        AddCleanLevel();
     }
 
     public void AddCleanLevel()
@@ -192,7 +192,6 @@ public class EnvironmentManager : MonoBehaviour
     public void ChangeCleanliness(float cleanAmount)
     {
         Cleanliness += cleanAmount;
-        print(Cleanliness);
     }
 }
 

@@ -87,6 +87,31 @@ public class CreateAsset : MonoBehaviour
             material.SetTexture("_MainTex", texture);
         }
     }
+    [MenuItem("Assets/CreateAssets_Mine")]
+    static void CreateAssets_Mine()
+    {
+        Object[] _textures = Selection.GetFiltered(typeof(Texture2D), SelectionMode.DeepAssets);
+        Material material;// = new Material(Resources.Load<Material>("BaseMat"));
+        foreach (Texture2D texture in _textures)
+        {
+            string path = AssetDatabase.GetAssetPath(texture);
+            string filename = path.Substring(0, path.Length - 7);
+
+            var modelRootGO = Resources.Load<GameObject>("MineBase");
+            var instanceRoot = PrefabUtility.InstantiatePrefab(modelRootGO);
+            GameObject variantRoot = PrefabUtility.SaveAsPrefabAsset((GameObject)instanceRoot, string.Format("{0}.prefab", filename));
+            Transform variantRootChild = variantRoot.transform.Find("GameObject/Quad");
+
+            material = AssetDatabase.LoadAssetAtPath<Material>(string.Format("{0}.mat", filename));
+
+            variantRootChild.GetComponent<MeshRenderer>().material = material;
+            variantRoot.GetComponent<BoxCollider>().center = new Vector3(0, texture.height * 0.01f / 2 + 0.001f, 0);
+            variantRoot.GetComponent<BoxCollider>().size = new Vector3(texture.width * 0.01f, texture.height * 0.01f, 1);
+
+            variantRootChild.position = new Vector3(variantRoot.transform.position.x, texture.height * 0.01f / 2 + 0.001f, variantRoot.transform.position.z);
+            variantRootChild.localScale = new Vector3(texture.width * 0.01f, texture.height * 0.01f, 1);
+        }
+    }
     [MenuItem("Assets/CreateAssets_Tree")]
     static void CreateAssets_Tree()
     {
@@ -100,7 +125,6 @@ public class CreateAsset : MonoBehaviour
 
         foreach (Texture2D texture in _textures)
         {
-            //count++;
             string path = AssetDatabase.GetAssetPath(texture);
             string filename = path.Substring(0, path.Length - 7);//falltree_L_1 @ _v0.png 7자
             string upMatname = path.Substring(0, path.Length - 8) + "up_" + filename.Substring(filename.Length - 1, 1);
@@ -119,7 +143,7 @@ public class CreateAsset : MonoBehaviour
             material2 = AssetDatabase.LoadAssetAtPath<Material>(string.Format("{0}.mat", upMatname));//new Material(Resources.Load<Material>("MapObject/OutLine/Fall/tree/falltree_L_up_0"));//new Material(Resources.Load<Material>("MapObject/OutLine/Fall/tree/falltree_L_up_0"));
             material3 = AssetDatabase.LoadAssetAtPath<Material>(string.Format("{0}.mat", downMatname));//new Material(Resources.Load<Material>("MapObject/OutLine/Fall/tree/falltree_L_up_0"));//new Material(Resources.Load<Material>("MapObject/OutLine/Fall/tree/falltree_L_up_0"));
 
-            var modelRootGO = Resources.Load<GameObject>("TreeTest");//(GameObject)AssetDatabase.LoadMainAssetAtPath("Assets/Resources/ItemBase.prefab");
+            var modelRootGO = Resources.Load<GameObject>("TreeBase");//(GameObject)AssetDatabase.LoadMainAssetAtPath("Assets/Resources/ItemBase.prefab");
             var instanceRoot = PrefabUtility.InstantiatePrefab(modelRootGO);
             GameObject variantRoot = PrefabUtility.SaveAsPrefabAsset((GameObject)instanceRoot, string.Format("{0}.prefab", filename));
             Transform variantRootChild = variantRoot.transform.Find("GameObject/Quad");
@@ -132,6 +156,7 @@ public class CreateAsset : MonoBehaviour
             variantRootChild2.GetComponent<MeshRenderer>().material = material2;//string.Format("{0}.mat", upMatname));
 
             variantRoot.GetComponent<TreeObject>().SetDownMat(material3);
+            variantRoot.GetComponent<BoxCollider>().center = new Vector3(0, texture.height * 0.01f / 2 + 0.001f, 0);
             variantRoot.GetComponent<BoxCollider>().size = new Vector3(texture.width * 0.01f, texture.height * 0.01f, 1);
             variantRootChild.localScale = new Vector3(texture.width * 0.01f, texture.height * 0.01f, 1);
             variantRootChild2.localScale = new Vector3(texture.width * 0.01f, texture.height * 0.01f, 1);

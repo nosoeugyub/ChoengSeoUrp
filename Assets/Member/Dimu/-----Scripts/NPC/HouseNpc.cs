@@ -248,7 +248,7 @@ namespace DM.NPC
             return BuildingLike.Like;
         }
 
-        public int CanInteract()
+        public override int CanInteract()
         {
             return (int)CursorType.Talk;
         }
