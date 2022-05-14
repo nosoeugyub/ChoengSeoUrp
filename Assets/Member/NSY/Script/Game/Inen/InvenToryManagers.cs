@@ -1,8 +1,12 @@
-﻿using DG.Tweening;
-using DM.Building;
-using NSY.Player;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DM.Inven;
+using NSY.Player;
+using System;
+using TT.BuildSystem;
+using DM.Building;
 
 namespace NSY.Iven
 {
@@ -12,29 +16,27 @@ namespace NSY.Iven
         public int Vital = 100;
 
         [SerializeField] ItemTooltip itemTooltip;
-        //    [SerializeField] BtnIven btniven;
+       // [SerializeField] BtnIven btniven;
         [SerializeField] InventoryNSY iventorynsy;
         [SerializeField] EquipPanel equipPanel;
-        // [SerializeField] CraftManager craftPanel;
+    //    [SerializeField] CraftManager craftPanel;
         [SerializeField] Image draggableitem;
         [SerializeField] DropItemArea Dropitemarea;
         [SerializeField] QuestionDialog questionDialog;
-        [SerializeField] PlayerEat PlayerEat;
-        [SerializeField] PlayerInteract playerinterract;
-        //조합 필요한 컴포넌트들
+      //  조합 필요한 컴포넌트들
         CraftSlot craftslot;
-
-        //레시피
-        [Header("레시피 레퍼런스")]
-        private CraftingRecipe carftingRecipe;
-        //  [SerializeField] CraftSlot[] CraftSlot;
-
+     
+      //레시피
+      [Header("레시피 레퍼런스")]
+    //    private CraftingRecipe carftingRecipe;
+      // [SerializeField] CraftSlot[] CraftSlot;
+       
 
         //조합
-        //  [SerializeField] CraftManager Craftmanager;
-        //   [SerializeField] GameObject Craftmgr;
-        //    public int Craftindex = 0;
-        //   public bool isAdd = true;
+     //   [SerializeField] CraftManager Craftmanager;
+     //   [SerializeField] GameObject Craftmgr;
+        public int Craftindex = 0;
+      public bool isAdd = true;
         private BaseItemSlot dragitemSlot;
         public ReSultSlot resultslot;
 
@@ -45,18 +47,14 @@ namespace NSY.Iven
 
         //Ui Rect
         public RectTransform BaseCharcterPanel;
-        public RectTransform button_UpDown;
-        public bool isUp;
-        public bool isDown;
+      public  bool isUp ;
+      public  bool isDown ;
         //버리기
         public Text ScriptTxt;
         int discount = 1;
         private void Awake()
         {
-            ScriptTxt.text = "1";
-            //조합
-
-
+           ScriptTxt.text = "1";
 
             //툴립
             iventorynsy.OnPointerEnterEvent += ShowToolTip;
@@ -71,25 +69,25 @@ namespace NSY.Iven
             iventorynsy.OnDubleClickEvent += OnDoubleClickEvent;
             iventorynsy.OnLeftClickEvent += BuildingLeftClick;
             iventorynsy.OnRightClickEvent += InventoryRightClick;
-            // iventorynsy.OnLeftClickEvent += InventoryLeftClick;
+           // iventorynsy.OnLeftClickEvent += InventoryLeftClick;
             equipPanel.OnRightClickEvent += EquipmentPanelRightClick;
-            //  craftPanel.OnLeftClickEvent += CraftPanelLeftClick;
+         //   craftPanel.OnLeftClickEvent += CraftPanelLeftClick;
             //드래그 시작
             iventorynsy.OnBeginDragEvent += BeginDrag;
             equipPanel.OnBeginDragEvent += BeginDrag;
-            //   craftPanel.OnBeginDragEvent += BeginDrag;
+          //  craftPanel.OnBeginDragEvent += BeginDrag;
             //드래그 끝
             iventorynsy.OnEndDragEvent += EndDrag;
             equipPanel.OnEndDragEvent += EndDrag;
-            //   craftPanel.OnEndDragEvent += EndDrag;
+         //   craftPanel.OnEndDragEvent += EndDrag;
             //드래그
             iventorynsy.OnDragEvent += Drag;
             equipPanel.OnDragEvent += Drag;
-            //    craftPanel.OnDragEvent += Drag;
+         //   craftPanel.OnDragEvent += Drag;
             //드롭
             iventorynsy.OnDropEvent += Drop;
             equipPanel.OnDropEvent += Drop;
-            //     craftPanel.OnDropEvent += Drop;
+         //   craftPanel.OnDropEvent += Drop;
             Dropitemarea.OnDropEvent += DropItemOutsideUI;
 
 
@@ -109,24 +107,25 @@ namespace NSY.Iven
             if (itemSlot.item != null)
             {
                 itemTooltip.ShowItemTooltip(itemSlot.item);
-                itemTooltip.tooltipTransform.position = new Vector3(itemSlot.transform.position.x + 60, itemSlot.transform.position.y + 30, itemSlot.transform.position.z);
+                itemTooltip.tooltipTransform.position = new Vector3(itemSlot.transform.position.x +60, itemSlot.transform.position.y + 30, itemSlot.transform.position.z);
             }
         }
 
-        private void ResultClick(BaseItemSlot obj)//결과창에서 장착칸으로
+        private void ResultClick(BaseItemSlot obj)
         {
-
-            if (obj.item.OutItemType == OutItemType.Tool)
+            if (obj.item is EquippableItem)
             {
-                rudtn(obj.item);
+                rudtn((EquippableItem)obj.item);
 
             }
         }
 
-        private void rudtn(Item item)// 장착아이템을 장비칸으로
+        private void rudtn(EquippableItem item)
         {
-
-            equipPanel.RemoveResultItem(item);
+            Debug.Log("되냐");
+          
+           
+                equipPanel.RemoveResultItem(item);
         }
 
         private void BuildingLeftClick(BaseItemSlot obj)
@@ -136,48 +135,52 @@ namespace NSY.Iven
                 BuildingBlock.nowBuildingBlock.BtnSpawnHouseBuildItem(obj.item);
                 obj.Amount--;
             }
-            else
-            {
-                Debug.Log("BuildingLeftClick");
-                BuildingHandyObjSpawn HandySpawnObj = FindObjectOfType<BuildingHandyObjSpawn>();
-                switch (obj.item.InItemType)
-                {
-                    case InItemType.BuildingItemObj_Essential:
-                        HandySpawnObj.HandySpawnBuildItem(obj.item);
-                        Debug.Log("SpawnEssentialItem");
-                        break;
-                    case InItemType.BuildingItemObj_Additional:
-                        HandySpawnObj.HandySpawnBuildItem(obj.item);
-                        Debug.Log("SpawnAdditionalItem");
-                        break;
-                }
-                ////if (obj.item.OutItemType == OutItemType.BuildingItemObj_Mini)
-                //{
-
-                //}
-            }
         }
 
         //더블클릭
         public void OnDoubleClickEvent(BaseItemSlot itemslot)
         {
             Debug.Log("더블클릭따땅");
-            if (itemslot.item.OutItemType == OutItemType.Food)
-                PlayerEat.Eat(itemslot.item);
         }
 
 
 
+        //조합창 중지
+        Item currntitem;
+        public void CloseCraftPanel()
+        {
+          
+       //     Craftmanager.RestSlot();
+        }
+
+
+        //우편 버튼 눌렀을때.
+        private void ClickPostButton(PostSlot postslot)
+        {
+           Debug.Log("버튼클릭함");
+        }
+
         private void InventoryRightClick(BaseItemSlot itemslot)
         {
-
-            if (itemslot.item.OutItemType == OutItemType.Tool)
+          
+            if (itemslot.item is Item )
             {
-
-                Unequip(itemslot.item);
-
+              //  if (craftPanel.DonthaveCraft())
+            //    {
+               //     craftPanel.CraftAddItem(itemslot.item.GetCopy());
+              //     itemslot.Amount--;
+              //      UpdateRecipe();
+             //   }
+                   
+                   
             }
-            else if (itemslot.item is UseableItem)
+
+            if (itemslot.item is EquippableItem )
+            {
+                Equip((EquippableItem)itemslot.item);
+             
+            }
+            else if (itemslot.item is UseableItem )
             {
                 UseableItem usableitem = (UseableItem)itemslot.item;
                 usableitem.Use(this);
@@ -191,16 +194,44 @@ namespace NSY.Iven
 
 
         }
-
-        //장비슬롯에서 눌렀을때
-        private void EquipmentPanelRightClick(BaseItemSlot itemslot)
+       
+      
+        private void CraftPanelLeftClick(BaseItemSlot itemslot)
         {
+            if (itemslot.item is Item)
+            {
+                iventorynsy.AddItem(itemslot.item.GetCopy());
+                itemslot.Amount--;
+                UpdateRecipe();
+               
 
-            Equip(itemslot.item); //장비칸장착
+            }
+            
+        }
+        void UpdateRecipe()
+        {//탐색
+            Item Recipe;
+
+        //   Recipe = craftPanel.SetCraftingRecipe();
+            
 
 
         }
 
+      
+
+
+
+        private void EquipmentPanelRightClick(BaseItemSlot itemslot)
+        {
+           
+            if (itemslot.item is EquippableItem )
+            {
+                  Unequip((EquippableItem)itemslot.item);
+               
+            }
+        }
+        
         private void BeginDrag(BaseItemSlot itemslot)
         {
             if (itemslot.item != null)
@@ -214,21 +245,25 @@ namespace NSY.Iven
         }
         private void Drag(BaseItemSlot itemslot)
         {
-
-            draggableitem.transform.position = Input.mousePosition;
-
+          
+                draggableitem.transform.position = Input.mousePosition;
+           
 
         }
         private void EndDrag(BaseItemSlot itemslot)
         {
-
+          
             dragitemSlot = null;
             draggableitem.gameObject.SetActive(false);
-            ;
+        ;
         }
-
+       
         private void Drop(BaseItemSlot dropitemslot)
         {
+
+           
+
+
             if (dragitemSlot == null) return;
 
             if (dropitemslot.CanAddStack(dragitemSlot.item))
@@ -239,6 +274,10 @@ namespace NSY.Iven
             {
                 Swapitems(dropitemslot);
             }
+
+          
+
+
         }
         //버리기
         private void DropItemOutsideUI()
@@ -248,7 +287,7 @@ namespace NSY.Iven
             {
                 return;
             }
-
+           
             BaseItemSlot baseitemslot = dragitemSlot;
             questionDialog.Show();
             questionDialog.OnYesEvent += () => DestroyItem(baseitemslot);
@@ -272,40 +311,49 @@ namespace NSY.Iven
             {
                 baseitemslot.item = null;
             }
-            //  
+          //  
         }
 
+       
 
-
-
-        //장비창에서 장착창으로
-        public void Equip(Item item)
+        
+        //아이템 장착 해제
+        public void Equip(EquippableItem item)
         {
+           
+            if (iventorynsy.RemoveItem(item))
+            {
+                EquippableItem previousitem;
+                if (equipPanel.AddItem(item, out previousitem))
+                { 
+                    if (previousitem != null)
+                    {
+                        iventorynsy.AddItem(previousitem);
+                        //equipPanel.AddItem(item, out previousitem);
+                    }
+                   
+                    
+                }
+              
+                else
+                {
+                    iventorynsy.AddItem(item);
+                }
+            }
+        }
+        public void Unequip(EquippableItem item)//장착
+        {
+            
             if (equipPanel.AddResultItem(item))
             {
-                playerinterract.SetHandItem(item);
-                Debug.Log("윌스미스마렵네");
-
+                Debug.Log("후..");
+             //   equipPanel.changeItem(item);
             }
-
+            
+            
         }
-
-        //인벤창에서 장착창으로
-        public void Unequip(Item item)//
-        {
-
-            if (equipPanel.AddItem(item))
-            {
-                if (iventorynsy.RemoveItem(item))
-                {
-                    Debug.Log("씨발아 왜안되는데 ");
-                }
-
-            }
-
-        }
-
-
+ 
+        
 
 
 
@@ -323,7 +371,7 @@ namespace NSY.Iven
             EquippableItem dragItem = dragitemSlot.item as EquippableItem;
             EquippableItem dropitem = dropitemslot.item as EquippableItem;
 
-
+           
 
             Item draggedItem = dragitemSlot.item;
             int draggedItemAmount = dragitemSlot.Amount;
@@ -370,8 +418,8 @@ namespace NSY.Iven
 
             itemContainer.OnRightClickEvent += TransferToInventory;
 
-            //   itemContainer.OnPointerEnterEvent += ShowTooltip;
-            //   itemContainer.OnPointerExitEvent += HideTooltip;
+         //   itemContainer.OnPointerEnterEvent += ShowTooltip;
+         //   itemContainer.OnPointerExitEvent += HideTooltip;
             itemContainer.OnBeginDragEvent += BeginDrag;
             itemContainer.OnEndDragEvent += EndDrag;
             itemContainer.OnDragEvent += Drag;
@@ -387,16 +435,29 @@ namespace NSY.Iven
 
             itemContainer.OnRightClickEvent -= TransferToInventory;
 
-            //    itemContainer.OnPointerEnterEvent -= ShowTooltip;
-            //    itemContainer.OnPointerExitEvent -= HideTooltip;
+        //    itemContainer.OnPointerEnterEvent -= ShowTooltip;
+        //    itemContainer.OnPointerExitEvent -= HideTooltip;
             itemContainer.OnBeginDragEvent -= BeginDrag;
             itemContainer.OnEndDragEvent -= EndDrag;
             itemContainer.OnDragEvent -= Drag;
             itemContainer.OnDropEvent -= Drop;
         }
 
+
+
+      
+        public void  ClickPostSlotUi()
+        {
+          
+            Debug.Log("버튼누름");
+           
+
+        }
+
         public void Open_CloseBtn()
         {
+         
+          
             if (isUp == true)
             {
                 Up();
@@ -408,22 +469,19 @@ namespace NSY.Iven
         }
         private void Up()
         {
-            BaseCharcterPanel.DOLocalMoveY(0, 1).SetEase(Ease.OutQuart);
-            button_UpDown.DOBlendableLocalRotateBy(new Vector3(0, 0, 180), 1, RotateMode.Fast).SetEase(Ease.OutQuart);
-            //BaseCharcterPanel.anchoredPosition = new Vector3(0, 0, 0);
+          
+            BaseCharcterPanel.anchoredPosition = new Vector3(0, 0, 0);
             isUp = false;
             isDown = true;
         }
         void Down()
         {
-            BaseCharcterPanel.DOLocalMoveY(-160, 1).SetEase(Ease.OutQuart);
-            button_UpDown.DOBlendableLocalRotateBy(new Vector3(0, 0, 180), 1, RotateMode.Fast).SetEase(Ease.OutQuart);
-
-            //BaseCharcterPanel.anchoredPosition = new Vector3(0, -170, 0);
+           
+            BaseCharcterPanel.anchoredPosition = new Vector3(0, -240, 0);
             isUp = true;
             isDown = false;
         }
-
+      
     }
 
 }

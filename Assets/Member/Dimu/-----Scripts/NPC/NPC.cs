@@ -2,23 +2,14 @@
 
 namespace DM.NPC
 {
-    public class NPC : Interactable
+    public class NPC : MonoBehaviour
     {
         [SerializeField]
         Character characterType;
 
-        public override int CanInteract()
-        {
-            throw new System.NotImplementedException();
-        }
-
         public Character GetCharacterType()
         {
             return characterType;
-        }
-        public void Talk(Item hitem)
-        {
-
         }
     }
 }

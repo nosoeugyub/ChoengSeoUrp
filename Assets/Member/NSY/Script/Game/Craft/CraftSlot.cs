@@ -4,111 +4,55 @@ using UnityEngine;
 using DM.Inven;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using System;
-
 
 namespace NSY.Iven
 {
-    public class CraftSlot : MonoBehaviour , IPointerDownHandler
+    public class CraftSlot : ItemSlot
     {
-        [Header("재료 갯수")]
+      
+        Item Recipe;
+        Image ResultSprite;
+
+       public int index;
        
 
-        [Header("현재 흭득한 갯수")]
-        public Text[] ReCipeamountText;
-        
+        public InItemType itemtype;
 
-        [Header("결과 이미지")]
-        public Image ResultSlotListImage;
-        public Image ResultSlotImage;
-
-        [Header("재료 이미지")]
-        public Image[] RecipeSlot;
-       
-        [Header("결과 이름")]
-        public Text RecipeName;
-
-        [Header("결과 설명")]
-        public Text RecipeExplain;
-
-        public Text reamountText;
-        public Text HaveAmount;
-
-
-        public event Action<CraftSlot> OnLeftClickEventss;
-         [SerializeField]
-        private Item _recipeItem;
-
-        //지금 갖고있는아이템
-        public Item RecipeItem
+        protected override void OnValidate()
         {
-            get
-            {
-                return _recipeItem;
-            }
-            set
-            {
-                _recipeItem = value;
-              
-                ResultSlotListImage.sprite = _recipeItem.ItemSprite;
-            }
-        }
-
-        [SerializeField]
-        private bool _isHaverecipeItem;
-        public bool isHaveRecipeItem
-        {
-            get
-            {
-                return _isHaverecipeItem;
-            }
-            set
-            {
-                _isHaverecipeItem = value;
-                if (_isHaverecipeItem == false)
-                {
-                    ResultSlotListImage.color = new Color(0.5f, 0.5f, 0.5f);
-                }
-                else
-                {
-                    ResultSlotListImage.color = new Color(1f, 1f, 1f);
-                }
-            }
-        }
-
-
-
-
-
-
-        private void OnValidate()
-        {
-            RecipeItem = _recipeItem;
-            isHaveRecipeItem = _isHaverecipeItem;
-        }
-
-
-        void Update()
-        {
-
-        }
-       
-
-        public void OnPointerDown(PointerEventData eventData)
-        {
-            if (isHaveRecipeItem == true)
-            {
-                if (eventData != null && eventData.button == PointerEventData.InputButton.Left)
-                {
-                    if (OnLeftClickEventss != null)
-                    {
-
-                        OnLeftClickEventss(this);
-                    }
-                }
-            }
+            base.OnValidate();
+            ResultSprite = gameObject.GetComponent<Image>();
+            gameObject.name = itemtype.ToString() + " Slot";
            
         }
+        public override bool CanReceiveItem(Item item)
+        {
+            if (item == null)
+            {
+                return true;
+            }
+            Item craftitem = item ;
+            return craftitem != null && craftitem.InItemType == itemtype;
+        }
+
+
+       public void UpdateResult(Item MadeRecipe)
+        {
+            Recipe = MadeRecipe;
+
+            if (Recipe = null)
+            {
+                ResultSprite.enabled = false;
+
+            }
+            else if(Recipe != null)
+            {
+                ResultSprite.enabled = true ;
+               
+            }
+        
+        }
+
     }
 
 }

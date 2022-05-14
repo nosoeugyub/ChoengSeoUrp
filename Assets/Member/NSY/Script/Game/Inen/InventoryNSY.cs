@@ -25,10 +25,10 @@ namespace NSY.Iven
                 itemsParent.GetComponentsInChildren(includeInactive: true, result: ItemSlots);
             }
 
-            //if (!Application.isPlaying)
-            //{
-            //    SetStartingTiems();
-            //}
+            if (!Application.isPlaying)
+            {
+                SetStartingTiems();
+            }
             
         }
         protected override void Awake()
@@ -43,10 +43,7 @@ namespace NSY.Iven
             Clear();
             foreach (Item item in startingitems)
             {
-                if (item)
-                {
-                    AddItem(item.GetCopy());
-                }
+                AddItem(item.GetCopy());
             }
 
 

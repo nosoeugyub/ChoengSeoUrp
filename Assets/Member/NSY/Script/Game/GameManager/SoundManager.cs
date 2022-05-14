@@ -13,7 +13,7 @@ namespace NSY.Manager
     }
 
 
-    public class SoundManager2 : MonoBehaviour
+    public class SoundManager : MonoBehaviour
     {
 
         public AudioSource[] audioSourceEffect;

@@ -285,8 +285,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3095994203314263235}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: -0}
-  m_LocalScale: {x: 3, y: 4, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3.74, y: 4.59, z: 1}
   m_Children: []
   m_Father: {fileID: 4734001089623499147}
   m_RootOrder: 5
@@ -317,7 +317,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8eef3e996b96f4a49b1e0bfbb0b66c88, type: 2}
+  - {fileID: 2100000, guid: 7f5728acb8fd2774cb97a97dd7ea151b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -397,7 +397,6 @@ GameObject:
   - component: {fileID: 4734001088782708370}
   - component: {fileID: 4734001088782708371}
   - component: {fileID: 4734001088782708380}
-  - component: {fileID: 263427202257335206}
   m_Layer: 0
   m_Name: Capsule Collider
   m_TagString: Untagged
@@ -429,8 +428,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 2
-  m_Height: 10
+  m_Radius: 1
+  m_Height: 4
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &4734001088782708371
@@ -461,34 +460,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07037f9f195549a42b38fc04275c62d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buildingButtons:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   interactUI: {fileID: 0}
   interactUiText2: {fileID: 0}
   handItem: {fileID: 11400000, guid: 7d25015775a3aa94baa1d23bf1551308, type: 2}
-  handItemObj: {fileID: 7828844462006603665}
+  handItemObj: {fileID: 0}
   playerAnimator: {fileID: 5397978829035566975}
-  testToolItems:
-  - {fileID: 11400000, guid: 7d25015775a3aa94baa1d23bf1551308, type: 2}
-  - {fileID: 11400000, guid: 1987327ab12fd7c4398ea2b1e830775f, type: 2}
-  - {fileID: 11400000, guid: 60eb3782c63a7e24caca544c13e03e89, type: 2}
-  - {fileID: 11400000, guid: da29745b67c9a3f46a6769b4e31d6852, type: 2}
-  followNpc: {fileID: 0}
+  testToolItems: []
   isAnimating: 0
---- !u!114 &263427202257335206
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4734001088782708369}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4b4bb0fcc6f87f4498a953801a3c8a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pc: {fileID: 0}
-  pi: {fileID: 0}
-  pa: {fileID: 0}
-  eatItem: {fileID: 0}
 --- !u!1 &4734001089623499144
 GameObject:
   m_ObjectHideFlags: 0
@@ -568,6 +550,7 @@ MonoBehaviour:
   maincamera: {fileID: 0}
   PlayerSpeed: 10
   SpritePlayerAnim: {fileID: 911088236287530421}
+  Tired: 0
 --- !u!114 &5777408093625932307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -611,11 +594,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterType: 0
+  preferBuildItemObjList: []
   myHouse: {fileID: 0}
-  wantToBuildCondition: []
-  player: {fileID: 0}
-  speed: 0
-  isFollowPlayer: 0
 --- !u!1 &4734001089988310966
 GameObject:
   m_ObjectHideFlags: 0
@@ -754,7 +734,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3837717017563872329}
   m_Layer: 0
-  m_Name: "DIalogPos_\uCCAD\uC11C"
+  m_Name: DIalogPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

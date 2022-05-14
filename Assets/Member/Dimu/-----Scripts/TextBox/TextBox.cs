@@ -20,13 +20,6 @@ public class TextBox : MonoBehaviour
         textboxFabNextButton = transform.Find("Button").GetComponent<Button>();
         rect = GetComponent<RectTransform>();
     }
-    private void OnEnable()
-    {
-        textboxFabImg.gameObject.SetActive(true);
-        textboxFabText.gameObject.SetActive(true);
-        textboxFabNextButton.gameObject.SetActive(true);
-        boomParticle.SetActive(false);
-    }
     public Button GetNextButton => textboxFabNextButton;
     public void SetTextbox(string sentence, Transform tf, TextboxType textboxType)
     {
@@ -50,19 +43,13 @@ public class TextBox : MonoBehaviour
         GameObject newNote = Instantiate(note, transform.parent.parent.parent.parent);
         newNote.transform.position = new Vector3(transform.position.x - Random.Range(0.5f, -0.5f), transform.position.y, transform.position.z - Random.Range(0.5f, -0.5f));//아이템오브젝트 부모로 설정해야함
     }
-    void DeactiveDelay() => gameObject.SetActive(false);
 
     public void Destroy()
     {
-        DeactiveDelay();
+        Destroy(this.gameObject);
     }
 
     public void Init()
     {
-    }
-    void OnDisable()
-    {
-        ObjectPooler.ReturnToPool(gameObject);  // 한 객체에 한번만
-        CancelInvoke();    // Monobehaviour에 Invoke가 있다면
     }
 }

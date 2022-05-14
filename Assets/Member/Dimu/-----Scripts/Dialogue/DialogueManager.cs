@@ -4,7 +4,7 @@ using NSY.Manager;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening;
+
 public enum Character
 { CheongSeo, Ejang, Walrus, Hen, Bee, Rabbit, Deer, Milkcow, Sheep, Length }
 //청서 곰 닭 바코 벌 토끼 사슴 젖소 양
@@ -18,7 +18,7 @@ namespace DM.Dialog
         int dialogLength;
         int nowSentenceIdx;
         public Transform partnerTf;
-        public Transform[] npcTalkBubbleTfs;
+        public Transform[] npcTfs;
 
         [Header("UI")]
         //public GameObject dialogUI;//대화창 조상
@@ -36,23 +36,25 @@ namespace DM.Dialog
 
         GameObject nowOnFab;
         QuestData canClearqd;
-        HouseNpc nowNpc;
+        MainNpc nowNpc;
         bool isTalking = false;
         float times = 0;
 
         QuestManager questManager;
+        BuildingManager buildingManager;
 
         private void Awake()
         {
             questManager = SuperManager.Instance.questmanager;
+            buildingManager = FindObjectOfType<BuildingManager>();
         }
         void Start()
         {
             EventManager.EventActions[1] = Test;
 
-            FirstShowDialog(npcTalkBubbleTfs[(int)Character.CheongSeo].parent.GetComponent<HouseNpc>(), null, false, -1);
+            FirstShowDialog(npcTfs[(int)Character.CheongSeo].parent.GetComponent<MainNpc>(), null, false, -1);
         }
-        public HouseNpc GetNowNpc()
+        public MainNpc GetNowNpc()
         {
             return nowNpc;
         }
@@ -62,12 +64,12 @@ namespace DM.Dialog
             times += Time.deltaTime;
             if (times > 3) { EventManager.EventAction -= EventManager.EventActions[1]; }
         }
-        public bool FirstShowDialog(HouseNpc npc, Item handitem, bool isFollowPlayer, int isLike) //첫 상호작용 시 호출. 어떤 대화를 호출할지 결정
+        public void FirstShowDialog(MainNpc npc, Item handitem, bool isFollowPlayer, int isLike) //첫 상호작용 시 호출. 어떤 대화를 호출할지 결정
         {
             if (isTalking)
             {
                 Debug.Log("대화중입니다.");
-                return false;
+                return;
             }
 
             isTalking = true;
@@ -78,7 +80,6 @@ namespace DM.Dialog
             PlayerData.AddValue((int)npc.GetCharacterType(), (int)NpcBehaviorEnum.Interact, PlayerData.npcData, (int)NpcBehaviorEnum.length);
 
             StartShowDialog(handitem, isFollowPlayer, isLike); //파트너와 진행해야 하는 순서의 대화를 진행
-            return true;
         }
 
         public void StartShowDialog(Item handitem, bool isFollowPlayer, int isLike)
@@ -100,7 +101,7 @@ namespace DM.Dialog
                 nowDialogData = buildDialogLists[(int)nowNpc.GetCharacterType()].dialogList[isLike];
                 ss = nowDialogData.acceptSentenceInfo;
                 dialogLength = nowDialogData.acceptSentenceInfo.Length;
-                sentenceState = -1;
+                sentenceState = -1;//클리어
             }
             else
             {
@@ -206,14 +207,12 @@ namespace DM.Dialog
         {
             if (dialogData.haveToHaveAndLikeHouse)//입주 필수 인가?
             {
-                if (!nowNpc.IsHaveHouse()) return false;//그렇다면 이 npc는 집을 갖고 있는가?
-                //if (buildingManager.GetNPCsHouse(dialogData.subjectCharacterID) == null) return false;//그렇다면 이 npc는 집을 갖고 있는가?
-                if (nowNpc.CanGetMyHouse()!=BuildingLike.Like) return false;//그렇다면 집에 입주 가능 조건 충족했는가?
+                if (buildingManager.GetNPCsHouse(dialogData.subjectCharacterID) == null) return false;//그렇다면 이 npc는 집을 갖고 있는가?
+                if (nowNpc.GetMyHouseScore() <= 50) return false;//그렇다면 집의 점수가 50점 초과인가?
             }
             if (dialogData.dontHaveToHaveAndLikeHouse)//미입주 필수 인가?
             {
-                if (nowNpc.IsHaveHouse()) return false;// 집이 있으면 false
-                //if (buildingManager.GetNPCsHouse(dialogData.subjectCharacterID) != null) return false;// 집이 없는가 ?
+                if (buildingManager.GetNPCsHouse(dialogData.subjectCharacterID) != null) return false;// 집이 없는가 ?
             }
 
 
@@ -256,6 +255,13 @@ namespace DM.Dialog
         public void UpdateDialog(Sentence[] sentences, int sentenceState)
         {
             UpdateDialogText(sentences, sentenceState);
+            //if (dialogLength == nowSentenceIdx)
+            //  LastDialog(sentenceState);
+
+            //if (dialogLength == nowSentenceIdx)
+            //{
+            //    LastDialog(sentenceState);
+            //}
         }
 
         private void UpdateDialogText(Sentence[] sentences, int sentenceState)
@@ -267,13 +273,11 @@ namespace DM.Dialog
             {
                 nowOnFab.GetComponent<TextBox>().DestroyTextBox();
             }
-            nowOnFab = ObjectPooler.SpawnFromPool("TextBox", gameObject.transform.position);
-            nowOnFab.transform.SetParent(npcTalkBubbleTfs[sentences[nowSentenceIdx].characterId]);
-            nowOnFab.GetComponent<TextBox>().SetTextbox(sentences[nowSentenceIdx].sentence, npcTalkBubbleTfs[sentences[nowSentenceIdx].characterId], sentences[nowSentenceIdx].textboxType);
 
-            //nowOnFab = Instantiate(textboxFab, npcTalkBubbleTfs[sentences[nowSentenceIdx].characterId]);
+            nowOnFab = Instantiate(textboxFab, npcTfs[sentences[nowSentenceIdx].characterId]);
             nextButton = nowOnFab.GetComponent<TextBox>().GetNextButton;
 
+            nowOnFab.GetComponent<TextBox>().SetTextbox(sentences[nowSentenceIdx].sentence, npcTfs[sentences[nowSentenceIdx].characterId], sentences[nowSentenceIdx].textboxType);
             nameText.text = questDialogLists[sentences[nowSentenceIdx++].characterId].charName;
 
 
@@ -283,7 +287,6 @@ namespace DM.Dialog
             }
             else
             {
-                nextButton.onClick.RemoveAllListeners();
                 nextButton.onClick.AddListener(() =>
                 {
                     UpdateDialog(sentences, sentenceState);
@@ -291,7 +294,7 @@ namespace DM.Dialog
                 });
             }
             // DOTween.
-            //nameText.DOText(sentences[nowSentenceIdx].sentence,1);
+            //textboxFabText.DOText(sentences[nowSentenceIdx].sentence,1);
             //dialogText.text = sentences[nowSentenceIdx].sentence;
         }
 

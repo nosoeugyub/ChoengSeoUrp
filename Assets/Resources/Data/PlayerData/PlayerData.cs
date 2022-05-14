@@ -70,15 +70,13 @@ public class Behavior
 }
 public enum OutItemType
 {
-    Talk, Tool, Mineral, Food, Collect, BuildingItemObj, BuildingItemObj_Mini,
-     Etc,
+    Talk, Tool, Mineral, Food, Collect,
+    BuildWall, BuildSign, BuildNormal, Etc,
 }
 public enum InItemType
 {
     //1차 재료
     None = 0, Twigs, Cutgrass, Rocks, Petal, leaf, Mud, Trash,
-    //1차 염료
-    Red = 9900, Orange, Yellow, Green, Mint, Blue, Pupple, White, Black,
     //1차 식량
     Seed = 10000, Apple,
     //2차재료
@@ -97,9 +95,8 @@ public enum InItemType
     //돋보기 아이템
     MagnifyObject = 70000,
     //1차 건축자재
-    BuildWall, BuildSign, BuildNormal,
+    
     //간이 건축물
-    BuildingItemObj_Essential, BuildingItemObj_Additional,
 }
 //public static Dictionary<int, BuildingBehavior> BuildBuildingData = new Dictionary<int, BuildingBehavior>();//
 //public static Dictionary<int, ItemBehavior> ItemData = new Dictionary<int, ItemBehavior>();

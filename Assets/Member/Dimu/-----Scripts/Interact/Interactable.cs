@@ -1,48 +1,44 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public interface IInteractable
+public interface IInteractble
 {
     //void Interact(); //상호작용 조작 시 호출될 메서드
-    int CanInteract(); //상호작용 가능할 때 호출될 메서드
-    void EndInteract();//상호작용 끝날 때 호출될 메서드. 삭제할까 생각중
+    string CanInteract(); //상호작용 가능할 때 호출될 메서드
+    //void EndInteract();//상호작용 끝날 때 호출될 메서드. 삭제할까 생각중
     Transform ReturnTF(); //거리 계산을 위한 Transform
 }
-
-public abstract class Interactable : MonoBehaviour
+public interface ITalkable : IInteractble
 {
-    public abstract int CanInteract();
+    void Talk(Item handitem);
 }
-//public interface ITalkable : IInteractable
-//{
-//    void Talk(Item handitem);
-//}
-//public interface IMineable :IInteractable
-//{
-//    bool Mine(Item handitem, Animator animator);
-//}
-//public interface ICollectable : IInteractable
-//{
-//    void Collect(Animator animator);
-//}
-//public interface IBuildable : IInteractable
-//{
-//    void Demolish();
-//}
-//public interface ISpeechBubbleCollectable : IInteractable
-//{
-//    void InstantiateBubble();
-//    bool CheckBubble(Item handitem, Animator animator);
-//}
-//public interface IEatable : IInteractable
-//{
-//    void Eat();
-//}
-//public interface IEventable : IInteractable
-//{
-//    void EtcEvent(Item handItem);
-//}
-//public interface IDropable : IInteractable
-//{
-//    void DropItems();
-//}
+public interface IMineable :IInteractble
+{
+    bool Mine(Item handitem, Animator animator);
+}
+public interface IDropable : IInteractble
+{
+    void DropItems();
+}
+public interface IEatable : IInteractble
+{
+    void Eat();
+}
+public interface ICollectable : IInteractble
+{
+    void Collect();
+}
+public interface IEventable : IInteractble
+{
+    void EtcEvent(Item handItem);
+}
+public interface IBuildable : IInteractble
+{
+    void Demolish();
+}
+public interface ISpeechBubbleCollectable : IInteractble
+{
+    void InstantiateBubble();
+    bool CheckBubble(Item handitem, Animator animator);
+}
+
