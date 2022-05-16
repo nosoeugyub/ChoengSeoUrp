@@ -77,7 +77,7 @@ public enum TextboxType { Normal, Cloud, Sharp }
 [System.Serializable]
 public class Sentence
 {
-    public string sentence;
+    [TextArea] public string sentence;
     public int characterId;
     public int eventIdx;
     public TextboxType textboxType;
