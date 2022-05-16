@@ -16,7 +16,7 @@ Shader "Unlit/Transperants"
             LOD 100
 
             Cull Off
-            ZWrite Off
+            ZWrite On
             Blend SrcAlpha OneMinusSrcAlpha
 
             Pass {
