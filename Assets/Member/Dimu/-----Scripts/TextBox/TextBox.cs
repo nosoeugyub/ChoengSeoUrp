@@ -10,14 +10,16 @@ public class TextBox : MonoBehaviour
 
     RectTransform rect;
     Image textboxFabImg;
+    [SerializeField]
     TextMeshProUGUI textboxFabText;
+    [SerializeField]
     Button textboxFabNextButton;
 
     private void Awake()
     {
         textboxFabImg = transform.Find("Image").GetComponent<Image>();
-        textboxFabText = transform.Find("Text").GetComponent<TextMeshProUGUI>();
-        textboxFabNextButton = transform.Find("Button").GetComponent<Button>();
+      
+       
         rect = GetComponent<RectTransform>();
     }
     private void OnEnable()
