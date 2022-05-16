@@ -2,64 +2,66 @@
 
 // Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
-
 Shader "Unlit/Transperants"
 {
-    Properties{
-       _MainTex("Base (RGB) Trans (A)", 2D) = "white" {}
-    _TintColor("Test Color", color) = (1, 1, 1, 0.4)
-
+    Properties
+    {
+        _MainTex("Base (RGB)", 2D) = "white" {}
+        _Color("Color (RGBA)", Color) = (1, 1, 1, 1) // add _Color property
     }
 
-        SubShader{
+        SubShader
+        {
             Tags {"Queue" = "Transparent" "IgnoreProjector" = "True" "RenderType" = "Transparent"}
-            LOD 100
-
-            Cull Off
             ZWrite Off
             Blend SrcAlpha OneMinusSrcAlpha
+            Cull front
+            LOD 100
 
-            Pass {
+
+            Pass
+            {
                 CGPROGRAM
-                    #pragma vertex vert
-                    #pragma fragment frag
-                    #pragma multi_compile_fog
 
-                    #include "UnityCG.cginc"
+                #pragma vertex vert alpha
+                #pragma fragment frag alpha
 
-                    struct appdata_t {
-                        float4 vertex : POSITION;
-                        float2 texcoord : TEXCOORD0;
-                    };
+                #include "UnityCG.cginc"
 
-                    struct v2f {
-                        float4 vertex : SV_POSITION;
-                        half2 texcoord : TEXCOORD0;
-                        UNITY_FOG_COORDS(1)
-                    };
+                struct appdata_t
+                {
+                    float4 vertex   : POSITION;
+                    float2 texcoord : TEXCOORD0;
+                };
 
-                    sampler2D _MainTex;
-                    float4 _MainTex_ST;
-                    half4 _TintColor;
+                struct v2f
+                {
+                    float4 vertex  : SV_POSITION;
+                    half2 texcoord : TEXCOORD0;
+                };
 
-                    v2f vert(appdata_t v)
-                    {
-                        v2f o;
-                        o.vertex = UnityObjectToClipPos(v.vertex);
-                        o.texcoord = TRANSFORM_TEX(v.texcoord, _MainTex);
-                        UNITY_TRANSFER_FOG(o,o.vertex);
-                        return o;
-                    }
+                sampler2D _MainTex;
+                float4 _MainTex_ST;
+                float4 _Color;
 
-                    fixed4 frag(v2f i) : SV_Target
-                    {
-                        fixed4 col = tex2D(_MainTex, i.texcoord)* _TintColor;
-                        UNITY_APPLY_FOG(i.fogCoord, col);
-                        return col;
-                    }
+                v2f vert(appdata_t v)
+                {
+                    v2f o;
+
+                    o.vertex = UnityObjectToClipPos(v.vertex);
+                    v.texcoord.x = 1 - v.texcoord.x;
+                    o.texcoord = TRANSFORM_TEX(v.texcoord, _MainTex);
+
+                    return o;
+                }
+
+                fixed4 frag(v2f i) : SV_Target
+                {
+                    fixed4 col = tex2D(_MainTex, i.texcoord) * _Color; // multiply by _Color
+                    return col;
+                }
+
                 ENDCG
             }
-    }
+        }
 }
-
-
