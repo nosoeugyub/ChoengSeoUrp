@@ -61,7 +61,7 @@ namespace DM.Quest
         {
             public RewardType rewardType;
             public Item itemType;
-            public int requireCount;
+            public int getCount;
         }
 
         public void InitData() //퀘스트에 필요한 항목을 현재 플레이어 데이터 값으로 초기화

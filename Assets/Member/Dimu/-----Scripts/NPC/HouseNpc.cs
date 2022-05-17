@@ -266,7 +266,7 @@ namespace DM.NPC
             }
             return true;
         }
-        public void Talk(Item handitem)
+        public override void Talk(Item handitem)
         {
             if (isFollowPlayer)
             {

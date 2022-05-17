@@ -52,7 +52,7 @@ namespace DM.Quest
                     if (reward.rewardType == RewardType.Gold)
                     {
                         //재화 증가
-                        Debug.Log(string.Format("Clear, {0}G 획득", reward.requireCount));
+                        Debug.Log(string.Format("Clear, {0}G 획득", reward.getCount));
                     }
                     else if (reward.rewardType == RewardType.Item)
                     {
