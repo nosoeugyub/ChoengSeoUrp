@@ -15,19 +15,32 @@ public class TextBox : MonoBehaviour
     [SerializeField]
     Button textboxFabNextButton;
 
+    [SerializeField]
+    Image RecImg;
+
+    [SerializeField]
+    Vector3 BoomPosRec;
+   
+
     private void Awake()
     {
         textboxFabImg = transform.Find("Image").GetComponent<Image>();
-      
-       
-        rect = GetComponent<RectTransform>();
+
+        BoomPosRec = Vector3.zero;
+         rect = GetComponent<RectTransform>();
+        LayoutRebuilder.ForceRebuildLayoutImmediate(RecImg.rectTransform);
     }
     private void OnEnable()
     {
         textboxFabImg.gameObject.SetActive(true);
         textboxFabText.gameObject.SetActive(true);
         textboxFabNextButton.gameObject.SetActive(true);
+
+
+        
         boomParticle.SetActive(false);
+      
+
     }
     public Button GetNextButton => textboxFabNextButton;
     public void SetTextbox(string sentence, Transform tf, TextboxType textboxType)
@@ -35,6 +48,7 @@ public class TextBox : MonoBehaviour
         textboxFabText.text = sentence;
         rect.anchoredPosition3D = Vector3.zero;
         textboxFabImg.sprite = textboxFabImgs[(int)textboxType];
+        LayoutRebuilder.ForceRebuildLayoutImmediate(RecImg.rectTransform);
     }
     public void DestroyTextBox()
     {
@@ -42,9 +56,17 @@ public class TextBox : MonoBehaviour
             InstactiateNote();
         textboxFabImg.gameObject.SetActive(false);
         textboxFabText.gameObject.SetActive(false);
+
         textboxFabNextButton.gameObject.SetActive(false);
         Invoke("Destroy", 0.5f);
+
+        //  Rectoffset.
+
+        boomParticle.transform.localPosition = new Vector3(RecImg.GetComponent<RectTransform>().rect.width/ 2,
+                                                           RecImg.GetComponent<RectTransform>().rect.height / 2, 0);
         boomParticle.SetActive(true);
+        LayoutRebuilder.ForceRebuildLayoutImmediate(RecImg.rectTransform);
+
     }
 
     private void InstactiateNote()
