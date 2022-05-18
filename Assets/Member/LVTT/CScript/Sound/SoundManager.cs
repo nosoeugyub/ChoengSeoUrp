@@ -52,7 +52,7 @@ namespace TT.Sound
         }
         private void Start()
         {
-            PlayBGM("SummerLine");
+            //PlayBGM("SummerLine");
         }
         public void PlayBGM(string name)
         {
