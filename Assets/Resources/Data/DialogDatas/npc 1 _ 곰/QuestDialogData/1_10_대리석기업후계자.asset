@@ -41,23 +41,12 @@ MonoBehaviour:
     characterId: 1
     eventIdx: 0
     textboxType: 0
-  proceedingSentenceInfo:
-  - sentence: "\uD654\uBD84\uC744 \uADF8\uB140\uC5D0\uAC8C \uC804\uB2EC\uD574\uC8FC\uC138\uC694.\n\uBCF5\uC2AC\uBCF5\uC2AC\uD55C
-      \uB9E4\uB825\uC774 \uC788\uC5B4\uC694."
-    characterId: 0
-    eventIdx: 0
-    textboxType: 0
-  clearSentenceInfo:
-  - sentence: "\uC5B4\uBA38\uB098, \uADF8\uC774\uAC00 \uC800\uC5D0\uAC8C \uC120\uBB3C\uC744\uC694?\n\uBA87\uB144\uB9CC\uC778\uC9C0..."
-    characterId: 0
-    eventIdx: 0
-    textboxType: 0
+  proceedingSentenceInfo: []
+  clearSentenceInfo: []
   dialogTasks:
-    haveToClearQuest:
-    - questdata: {fileID: 11400000, guid: 50e607a1900ab5e40baf7cb2c63a4508, type: 2}
-      npcid: 1
-      questid: 3
-    haveToEndDialog: []
+    haveToClearQuest: []
+    haveToEndDialog:
+    - {fileID: 11400000, guid: 0def115be10fc8842a8c889e2a358e87, type: 2}
     DonthaveToClearQuest: []
     DonthaveToEndDialog:
     - {fileID: 11400000}
@@ -69,3 +58,4 @@ MonoBehaviour:
   isTalkingOver: 0
   haveToHaveAndLikeHouse: 1
   dontHaveToHaveAndLikeHouse: 0
+  haveToHaveNPCHouse: 

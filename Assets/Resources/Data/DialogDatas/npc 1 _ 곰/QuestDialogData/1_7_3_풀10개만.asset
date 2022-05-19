@@ -43,10 +43,13 @@ MonoBehaviour:
     textboxType: 0
   dialogTasks:
     haveToClearQuest: []
-    haveToEndDialog: []
-    DonthaveToClearQuest: []
-    DonthaveToEndDialog:
-    - {fileID: 11400000}
+    haveToEndDialog:
+    - {fileID: 11400000, guid: 0e97069b1b015334a9cb64c439142e44, type: 2}
+    DonthaveToClearQuest:
+    - questdata: {fileID: 11400000, guid: 50e607a1900ab5e40baf7cb2c63a4508, type: 2}
+      npcid: 0
+      questid: 0
+    DonthaveToEndDialog: []
     haveToDoingQuest: []
     buildBuildings: []
     itemIndexToHand: 0
@@ -55,3 +58,4 @@ MonoBehaviour:
   isTalkingOver: 0
   haveToHaveAndLikeHouse: 1
   dontHaveToHaveAndLikeHouse: 0
+  haveToHaveNPCHouse: 
