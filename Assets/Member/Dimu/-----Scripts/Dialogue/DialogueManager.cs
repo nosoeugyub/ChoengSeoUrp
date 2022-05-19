@@ -4,7 +4,6 @@ using NSY.Manager;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening;
 public enum Character
 { CheongSeo, Ejang, Walrus, Hen, Bee, Rabbit, Deer, Milkcow, Sheep, Length }
 //청서 곰 닭 바코 벌 토끼 사슴 젖소 양
@@ -41,10 +40,12 @@ namespace DM.Dialog
         float times = 0;
 
         QuestManager questManager;
+        NPCManager npcManager;
 
         private void Awake()
         {
             questManager = SuperManager.Instance.questmanager;
+            npcManager = FindObjectOfType<NPCManager>();
         }
         void Start()
         {
@@ -208,14 +209,23 @@ namespace DM.Dialog
             {
                 if (!nowNpc.IsHaveHouse()) return false;//그렇다면 이 npc는 집을 갖고 있는가?
                 //if (buildingManager.GetNPCsHouse(dialogData.subjectCharacterID) == null) return false;//그렇다면 이 npc는 집을 갖고 있는가?
-                if (nowNpc.CanGetMyHouse()!=BuildingLike.Like) return false;//그렇다면 집에 입주 가능 조건 충족했는가?
+                if (nowNpc.CanGetMyHouse() != BuildingLike.Like) return false;//그렇다면 집에 입주 가능 조건 충족했는가?
             }
             if (dialogData.dontHaveToHaveAndLikeHouse)//미입주 필수 인가?
             {
                 if (nowNpc.IsHaveHouse()) return false;// 집이 있으면 false
                 //if (buildingManager.GetNPCsHouse(dialogData.subjectCharacterID) != null) return false;// 집이 없는가 ?
             }
-
+            if (dialogData.haveToHaveNPCHouse.Length > 0)
+            {
+                for (int i = 0; i < dialogData.haveToHaveNPCHouse.Length; i++)
+                {
+                    if (!npcManager.HaveHouse(dialogData.haveToHaveNPCHouse[i]))
+                    {
+                        return false;
+                    }
+                }
+            }
 
 
             foreach (var item in dialogData.dialogTasks.haveToClearQuest)

@@ -61,6 +61,10 @@ public class NPCManager : MonoBehaviour
         MoveToNPCSomewhere(2, npcTfs[1].Npctf.MyHouse.FriendTransform.position);
         EventManager.EventAction -= EventManager.EventActions[3];
     }
+    public bool HaveHouse(int npcnum)
+    {
+        return npcTfs[npcnum].Npctf.IsHaveHouse();
+    }
 }
 [System.Serializable]
 public class NPCField
