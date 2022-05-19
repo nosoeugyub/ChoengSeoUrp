@@ -12,7 +12,45 @@ public interface IInteractable
 public abstract class Interactable : MonoBehaviour
 {
     public abstract int CanInteract();
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //public interface ITalkable : IInteractable
 //{
 //    void Talk(Item handitem);

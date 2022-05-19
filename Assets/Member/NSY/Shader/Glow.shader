@@ -5,13 +5,13 @@ Shader "Unlit/Glow"
     Properties{
        _MainTex("Texture", 2D) = "white" {}
        _Color("Color", Color) = (1,1,1,1)
-       _Glow("Intensity", Range(0, 3)) = 1
+       _Glow("Intensity", Range(0, 3)) = 1.5
     }
         SubShader{
             Tags { "Queue" = "Transparent" "IgnoreProjector" = "True" "RenderType" = "Transparent" }
             LOD 100
             Cull Off
-            ZWrite On
+            ZWrite off
             Blend SrcAlpha OneMinusSrcAlpha
 
             Pass {

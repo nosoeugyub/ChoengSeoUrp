@@ -37,6 +37,13 @@ namespace NSY.Player
         public RectTransform targetRectTr;
         public bool isAnimating = false;
         private Vector2 screenPoint;
+
+
+
+        [SerializeField] Shader GlowColor;
+
+
+
         private void Awake()
         {
             layerMask = 1 << LayerMask.NameToLayer("Interactable");
@@ -176,21 +183,15 @@ namespace NSY.Player
                 nowInteractable = hit.collider.GetComponent<Interactable>();
                 if (nowInteractable != null && IsInteracted(nowInteractable))// 클릭한 옵젝이 닿은 옵젝 리스트에 있다면 통과
                 {
-                    //interactUI.SetActive(true);
-
-                    StartCoroutine( cursorManager.SetCursor(nowInteractable.CanInteract()));
-                    //interactUiText2.text = nowInteractable.CanInteract();
+                    StartCoroutine(cursorManager.SetCursor(nowInteractable.CanInteract()));
                     Vector3 uiPos = new Vector3(nowInteractable.transform.position.x, nowInteractable.transform.position.y + 2, nowInteractable.transform.position.z);
-                    //interactUI.transform.position = uiCamera.WorldToScreenPoint(uiPos);
+                    //형광 셰이더로 변환....
+                    Debug.Log("형광으로!" + nowInteractable.gameObject.name);
 
-                    //var position = uiCamera.WorldToScreenPoint(uiPos);
-                    //position.z = (interactUI.transform.position - uiCamera.transform.position).magnitude;
-                    //interactUI.transform.position = Camera.main.ScreenToWorldPoint(position);
+                    nowInteractable.gameObject.GetComponentInChildren<MeshRenderer>().material.shader = GlowColor;
 
-                    //RectTransformUtility.ScreenPointToLocalPointInRectangle(targetRectTr, Input.mousePosition, uiCamera, out screenPoint);
-                    //interactUI.GetComponent<RectTransform>().localPosition = screenPoint;
 
-                    //interactUI.transform.position = RectTransformUtility.WorldToScreenPoint(Camera.main, interactUI.transform.position);
+
                 }
                 else
                     StartCoroutine(cursorManager.SetCursor((int)CursorType.Normal));
@@ -272,6 +273,28 @@ namespace NSY.Player
 
         }
 
+      
+
+
+
+        /*
+          //interactUI.SetActive(true);
+
+
+                    //interactUiText2.text = nowInteractable.CanInteract();
+
+                    //interactUI.transform.position = uiCamera.WorldToScreenPoint(uiPos);
+
+                    //var position = uiCamera.WorldToScreenPoint(uiPos);
+                    //position.z = (interactUI.transform.position - uiCamera.transform.position).magnitude;
+                    //interactUI.transform.position = Camera.main.ScreenToWorldPoint(position);
+
+                    //RectTransformUtility.ScreenPointToLocalPointInRectangle(targetRectTr, Input.mousePosition, uiCamera, out screenPoint);
+                    //interactUI.GetComponent<RectTransform>().localPosition = screenPoint;
+
+                    //interactUI.transform.position = RectTransformUtility.WorldToScreenPoint(Camera.main, interactUI.transform.position);
+
+        */
         ////가장 가까운 오브젝트 검출
         //public void LightClosestObj()
         //{
