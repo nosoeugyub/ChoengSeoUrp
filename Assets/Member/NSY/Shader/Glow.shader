@@ -1,17 +1,23 @@
 ﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
+// Upgrade NOTE: replaced 'PositionFog()' with transforming position into clip space.
+// Upgrade NOTE: replaced 'V2F_POS_FOG' with 'float4 pos : SV_POSITION'
+
+// Upgrade NOTE: replaced 'PositionFog()' with transforming position into clip space.
+// Upgrade NOTE: replaced 'V2F_POS_FOG' with 'float4 pos : SV_POSITION'
+
 Shader "Unlit/Glow"
 {
     Properties{
-       _MainTex("Texture", 2D) = "white" {}
-       _Color("Color", Color) = (1,1,1,1)
-       _Glow("Intensity", Range(0, 3)) = 1.5
+        _MainTex("Texture", 2D) = "white" {}
+        _Color("Color", Color) = (1,1,1,1)
+        _Glow("Intensity", Range(0, 3)) = 1.2
     }
         SubShader{
             Tags { "Queue" = "Transparent" "IgnoreProjector" = "True" "RenderType" = "Transparent" }
             LOD 100
             Cull Off
-            ZWrite off
+            ZWrite On
             Blend SrcAlpha OneMinusSrcAlpha
 
             Pass {
@@ -49,5 +55,5 @@ Shader "Unlit/Glow"
                     }
                 ENDCG
             }
-       }
+        }
 }
