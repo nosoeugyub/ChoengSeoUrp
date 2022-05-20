@@ -432,10 +432,6 @@ namespace DM.Building
         {
             PlayerData.AddValue(buildingId, (int)BuildingBehaviorEnum.Interact, PlayerData.BuildBuildingData, (int)BuildingBehaviorEnum.length);
         }
-        public override int CanInteract()
-        {
-            return (int)CursorType.Build;
-        }
 
         public Transform ReturnTF()
         {
@@ -455,6 +451,11 @@ namespace DM.Building
 
             return dist;
 
+        }
+        public override int CanInteract()
+        {
+            //EndInteract();
+            return (int)CursorType.Build;
         }
         public void EndInteract()
         {
