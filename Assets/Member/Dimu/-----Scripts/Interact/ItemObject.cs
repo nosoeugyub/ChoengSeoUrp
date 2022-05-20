@@ -5,7 +5,6 @@ public class ItemObject : Interactable//, IInteractable
 {
     [SerializeField] protected Item item;
     protected InventoryNSY inventoryNSY;
-    [SerializeField] protected MeshRenderer quad;
 
     public void Awake()
     {
@@ -20,6 +19,7 @@ public class ItemObject : Interactable//, IInteractable
     }
     private void OnEnable()
     {
+        base.OnEnable();
         if (item.ItemMaterial)
             quad.material = item.ItemMaterial;
     }

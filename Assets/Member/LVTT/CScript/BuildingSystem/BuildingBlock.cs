@@ -457,9 +457,10 @@ namespace DM.Building
             //EndInteract();
             return (int)CursorType.Build;
         }
-        public void EndInteract()
+        public void EndInteract_()
         {
-            buildManager.BuildingInteractButtonOnOff(false);
+            buildManager.BuildingInteractButtonOnOff(false); 
+            EndInteract();
         }
     }
 }

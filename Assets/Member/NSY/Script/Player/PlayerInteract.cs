@@ -153,7 +153,8 @@ namespace NSY.Player
         {
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue, 0.3f);
-
+            if(nowInteractable)
+            nowInteractable.EndInteract();
             if (Physics.Raycast(ray, out hit, 10000, layerMask) && !BuildingBlock.isBuildMode)
             {
                 //print(hit.collider.name);
@@ -243,8 +244,6 @@ namespace NSY.Player
                 interacts.Remove(interactable);
                 EndInteract(interactable);
             }
-
-
         }
 
         private void EndInteract(Interactable interactable)
@@ -253,7 +252,7 @@ namespace NSY.Player
             {
                 BuildingBlock buildAreaObject = interactable.transform.GetComponent<BuildingBlock>();
                 if (buildAreaObject)
-                    buildAreaObject.EndInteract();
+                    buildAreaObject.EndInteract_();
             }
         }
 

@@ -293,8 +293,5 @@ namespace DM.NPC
             }
             EventManager.EventAction -= EventManager.EventActions[2];
         }
-        public void EndInteract()
-        {
-        }
     }
 }

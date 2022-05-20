@@ -22,6 +22,7 @@ public class MineObject : ItemObject
 
     protected void OnEnable()
     {
+        base.OnEnable();
         nowChopCount = 0;
         nowMat = quad.material;
         animator = quad.transform.parent.GetComponent<Animator>();//transform.Find("Quad").
