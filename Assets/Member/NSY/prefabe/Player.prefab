@@ -400,7 +400,7 @@ GameObject:
   - component: {fileID: 263427202257335206}
   m_Layer: 0
   m_Name: Capsule Collider
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -430,7 +430,7 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 2
-  m_Height: 10
+  m_Height: 7.2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &4734001088782708371
@@ -475,6 +475,7 @@ MonoBehaviour:
   uiCamera: {fileID: 0}
   targetRectTr: {fileID: 0}
   isAnimating: 0
+  GlowColor: {fileID: 4800000, guid: 3877dc49cced25741b64f8e8a6ff429d, type: 3}
 --- !u!114 &263427202257335206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -487,9 +488,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4b4bb0fcc6f87f4498a953801a3c8a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pc: {fileID: 0}
-  pi: {fileID: 0}
-  pa: {fileID: 0}
+  pc: {fileID: 4397998359987372906}
+  pi: {fileID: 4734001088782708380}
+  pa: {fileID: 911088236287530421}
   eatItem: {fileID: 0}
 --- !u!1 &4734001089623499144
 GameObject:
@@ -505,6 +506,7 @@ GameObject:
   - component: {fileID: 5777408093625932307}
   - component: {fileID: 406097229730921028}
   - component: {fileID: 7826665347579581055}
+  - component: {fileID: 784880089}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -546,11 +548,11 @@ CharacterController:
   serializedVersion: 2
   m_Height: 3
   m_Radius: 0.75
-  m_SlopeLimit: 20
+  m_SlopeLimit: 0
   m_StepOffset: 0.5
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: -0.59, z: 0}
+  m_Center: {x: 0, y: -0.25, z: 0}
 --- !u!114 &4397998359987372906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -563,7 +565,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01446065fa522ab4baad4ea8bc1d30fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerVital: {fileID: 0}
+  playerVital: {fileID: 784880089}
   playerinput: {fileID: 406097229730921028}
   playermove: {fileID: 5777408093625932307}
   playerinteract: {fileID: 4734001088782708380}
@@ -618,6 +620,25 @@ MonoBehaviour:
   player: {fileID: 0}
   speed: 0
   isFollowPlayer: 0
+--- !u!114 &784880089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4734001089623499144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d82ac5f70e1db3647934cc2052c2bb16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxVital: 100
+  CurVital: 0
+  tired: 0
+  playerController: {fileID: 4397998359987372906}
+  tiredUi: {fileID: 0}
+  MaxHealth: 100
+  healthDislatetime: 200
 --- !u!1 &4734001089988310966
 GameObject:
   m_ObjectHideFlags: 0
