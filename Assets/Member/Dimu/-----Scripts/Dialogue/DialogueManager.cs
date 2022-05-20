@@ -36,7 +36,7 @@ namespace DM.Dialog
         GameObject nowOnFab;
         QuestData canClearqd;
         HouseNpc nowNpc;
-        bool isTalking = false;
+       [SerializeField] bool isTalking = false;
         float times = 0;
 
         QuestManager questManager;
@@ -207,9 +207,11 @@ namespace DM.Dialog
         {
             if (dialogData.haveToHaveAndLikeHouse)//입주 필수 인가?
             {
+
                 if (!nowNpc.IsHaveHouse()) return false;//그렇다면 이 npc는 집을 갖고 있는가?
                 //if (buildingManager.GetNPCsHouse(dialogData.subjectCharacterID) == null) return false;//그렇다면 이 npc는 집을 갖고 있는가?
                 if (nowNpc.CanGetMyHouse() != BuildingLike.Like) return false;//그렇다면 집에 입주 가능 조건 충족했는가?
+                print("입주 필수인 대화입니다.");
             }
             if (dialogData.dontHaveToHaveAndLikeHouse)//미입주 필수 인가?
             {
@@ -222,6 +224,7 @@ namespace DM.Dialog
                 {
                     if (!npcManager.HaveHouse(dialogData.haveToHaveNPCHouse[i]))
                     {
+                        print("필요 NPC가 집이 없습니다.");
                         return false;
                     }
                 }
@@ -230,16 +233,19 @@ namespace DM.Dialog
 
             foreach (var item in dialogData.dialogTasks.haveToClearQuest)
             {
+                //print("haveToClearQuest: " + item.questdata.questName);
                 if (!SuperManager.Instance.questmanager.IsQuestCleared(item.questdata))
                     return false;
             }
             foreach (var item in dialogData.dialogTasks.DonthaveToClearQuest)
             {
+                //print("DonthaveToClearQuest: " + item.questdata.questName);
                 if (SuperManager.Instance.questmanager.IsQuestCleared(item.questdata))
                     return false;
             }
             foreach (var item in dialogData.dialogTasks.haveToDoingQuest)
             {
+                //print("DonthaveToClearQuest: " + item.questdata.questName);
                 if (!SuperManager.Instance.questmanager.IsQuestAccepted(item.questdata))
                     return false;
             }
@@ -251,6 +257,7 @@ namespace DM.Dialog
             {
                 if (!item.isTalkingOver)
                 {
+                //print("haveToEndDialog: 끝난 대화가 아님 false " + item.name);
                     return false;
                 }
             }
@@ -258,9 +265,11 @@ namespace DM.Dialog
             {
                 if (item.isTalkingOver)
                 {
+                //print("haveToEndDialog: 끝난대화임 false " + item.name);
                     return false;
                 }
             }
+            print("통과");
             return true;
         }
         public void UpdateDialog(Sentence[] sentences, int sentenceState)

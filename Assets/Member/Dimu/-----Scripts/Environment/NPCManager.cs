@@ -19,9 +19,9 @@ public class NPCManager : MonoBehaviour
     {
         SuperManager.Instance.soundManager.PlaySFX("NPCShip");
 
-        int randnum = UnityEngine.Random.Range(0, npcTfs.Length);
+        int randnum = UnityEngine.Random.Range(3, npcTfs.Length);
         while (npcTfs[randnum].IsField == true)
-            randnum = UnityEngine.Random.Range(0, npcTfs.Length);
+            randnum = UnityEngine.Random.Range(3, npcTfs.Length);
 
         npcTfs[randnum].Npctf.gameObject.SetActive(true);
         MoveToNPCSomewhere(randnum, PortPos.position);
