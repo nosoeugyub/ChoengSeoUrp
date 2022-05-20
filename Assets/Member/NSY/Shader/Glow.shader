@@ -15,8 +15,6 @@ Shader "Unlit/Glow"
     }
         SubShader{
             Tags {  	 "RenderPipeline" = "UniversalPipeline" "RenderType" = "Transparent"  "Queue" = "Transparent"
-
-          
                 }
             LOD 100
             Cull Off
