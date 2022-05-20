@@ -332,7 +332,7 @@ namespace DM.Building
         public void SetBuildMode(BuildMode buildmode)
         {
             CurBuildMode = buildmode;
-            DebugText.Instance.SetText(string.Format("CurBuildMode: {0}", CurBuildMode.ToString()));
+            //DebugText.Instance.SetText(string.Format("CurBuildMode: {0}", CurBuildMode.ToString()));
         }
         void ScaleBuildItem()
         {
