@@ -11,7 +11,7 @@ Shader "Unlit/Glow"
     Properties{
         _MainTex("Texture", 2D) = "white" {}
         _Color("Color", Color) = (1,1,1,1)
-        _Glow("Intensity", Range(0, 3)) = 1
+        _Glow("Intensity", Range(0, 3)) = 1.2
     }
         SubShader{
             Tags { "Queue" = "Transparent" "IgnoreProjector" = "True" "RenderType" = "Transparent" }
