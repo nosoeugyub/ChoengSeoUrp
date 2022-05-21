@@ -64,8 +64,8 @@ namespace NSY.Manager
     }
 
 }
-public enum EventType
-{ Test, }
+//public enum EventType
+//{ Test, Layout }
 
 
 

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 public interface IInteractable
 {
@@ -11,9 +10,20 @@ public interface IInteractable
 
 public abstract class Interactable : MonoBehaviour
 {
+    [SerializeField]  Shader defaultshader;
+    [SerializeField] protected MeshRenderer quad;
+
+    protected void OnEnable()
+    {
+        if (quad)
+            defaultshader = quad.material.shader;
+    }
     public abstract int CanInteract();
-
-
+    public virtual void EndInteract()
+    {
+        if (quad)
+            quad.material.shader = defaultshader;
+    }
 }
 
 

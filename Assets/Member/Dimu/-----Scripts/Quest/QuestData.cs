@@ -132,10 +132,12 @@ namespace DM.Quest
                 foreach (QuestTask gotItem in tasks.gotItems)
                 {
                     //if (gotItem.finishData > PlayerData.gotItemData[gotItem.objType].amounts[0] - gotItem.initData)
-                    //if(gotItem .finishData > SuperManager.Instance.inventoryManager.ItemCount(gotItem.objType.ToString()))
-                    //{
-                    //    return false;
-                    //}
+                    {
+                        if (gotItem.finishData > SuperManager.Instance.inventoryManager.ItemCount(gotItem.objType.ToString()))
+                        {
+                            return false;
+                        }
+                    }
                 }
             }
             Debug.Log("해당 사항 없음");

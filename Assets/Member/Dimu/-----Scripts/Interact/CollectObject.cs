@@ -16,6 +16,7 @@ public class CollectObject : ItemObject
     }
     private void OnEnable()
     {
+        base.OnEnable();
         box = GetComponent<BoxCollider>();
         box.enabled = false;
         SuperManager.Instance.soundManager.PlaySFX("item_drop");

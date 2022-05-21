@@ -16,6 +16,7 @@ public class DialogData : ScriptableObject
     public bool isTalkingOver; //대화가 끝났는지
     public bool haveToHaveAndLikeHouse; //집을 가져야  하는지
     public bool dontHaveToHaveAndLikeHouse; //집을 가지지 말아야 하는지
+    public int[] haveToHaveNPCHouse; //집 있어야 하는 npc
 
     private void OnEnable()
     {

@@ -80,7 +80,7 @@ namespace DM.Building
         {
             button.gameObject.SetActive(false);
             button.onClick.RemoveAllListeners();
-            DebugText.Instance.SetText(string.Format("RemoveAllListeners"));
+            //DebugText.Instance.SetText(string.Format("RemoveAllListeners"));
         }
         public void SetBuildButtonEvents(Action buildmodeOn, Action demomodeOn)
         {

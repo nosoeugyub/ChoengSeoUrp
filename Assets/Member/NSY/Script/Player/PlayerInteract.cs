@@ -53,20 +53,6 @@ namespace NSY.Player
         private void Update()
         {
             TestInputs();
-            //foreach (var item in interacts)
-            //{
-            //    print(item.ReturnTF().name);
-            //}
-
-            //if (!canInteract || IsAnimating())
-            //{
-            //    foreach (var button in buildingButtons)
-            //    {
-            //        button.gameObject.SetActive(false);
-            //    }
-            //    interactUI.SetActive(false);
-            //    return;
-            //}
 
             InteractWithObjects();
         }
@@ -135,7 +121,6 @@ namespace NSY.Player
                         }
                     }
                     BuildingBlock buildAreaObject = interactable.transform.GetComponent<BuildingBlock>();
-                    //IBuildable buildable = interactable.ReturnTF().GetComponent<IBuildable>();
                     if (buildAreaObject != null)
                     {
                         SetIsAnimation(false);
@@ -151,14 +136,6 @@ namespace NSY.Player
                         }
                         return;
                     }
-                    //IBuildable buildMat = interactable.ReturnTF().GetComponent<IBuildable>();
-                    ////IBuildable buildable = interactable.ReturnTF().GetComponent<IBuildable>();
-                    //if (buildMat != null)
-                    //{
-                    //    SetIsAnimation(false);
-                    //    buildMat.Demolish();
-                    //    return;
-                    //}
                     break;
             }
             SetIsAnimation(false);
@@ -176,7 +153,8 @@ namespace NSY.Player
         {
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue, 0.3f);
-
+            if(nowInteractable)
+            nowInteractable.EndInteract();
             if (Physics.Raycast(ray, out hit, 10000, layerMask) && !BuildingBlock.isBuildMode)
             {
                 //print(hit.collider.name);
@@ -189,9 +167,6 @@ namespace NSY.Player
                     Debug.Log("형광으로!" + nowInteractable.gameObject.name);
 
                     nowInteractable.gameObject.GetComponentInChildren<MeshRenderer>().material.shader = GlowColor;
-
-
-
                 }
                 else
                     StartCoroutine(cursorManager.SetCursor((int)CursorType.Normal));
@@ -267,13 +242,21 @@ namespace NSY.Player
             if (interactable != null)
             {
                 interacts.Remove(interactable);
-                //interactable.EndInteract();
+                EndInteract(interactable);
             }
-
-
         }
 
-      
+        private void EndInteract(Interactable interactable)
+        {
+            if (interactable)
+            {
+                BuildingBlock buildAreaObject = interactable.transform.GetComponent<BuildingBlock>();
+                if (buildAreaObject)
+                    buildAreaObject.EndInteract_();
+            }
+        }
+
+
 
 
 
