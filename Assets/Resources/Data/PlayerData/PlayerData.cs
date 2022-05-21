@@ -99,7 +99,7 @@ public enum InItemType
     //1차 건축자재
     BuildWall, BuildSign, BuildNormal,RedRibbon, Plant, Redflower, GreenBalloon, BlackMirror, Giftbox,Button,
     //간이 건축물
-    BuildingItemObj_Essential, BuildingItemObj_Additional,
+    BuildingItemObj_Essential = 80000, BuildingItemObj_Additional,
 }
 //public static Dictionary<int, BuildingBehavior> BuildBuildingData = new Dictionary<int, BuildingBehavior>();//
 //public static Dictionary<int, ItemBehavior> ItemData = new Dictionary<int, ItemBehavior>();

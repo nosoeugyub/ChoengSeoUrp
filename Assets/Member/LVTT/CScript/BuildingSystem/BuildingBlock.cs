@@ -84,15 +84,15 @@ namespace DM.Building
         {
             if (CurBuildMode == BuildMode.BuildHouseMode)
             {
-                ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue, 0.3f);
-
                 if (Input.GetMouseButtonDown(0))
                 {
                     print("MouseDown");
                     if (curInteractObj == null) return;
 
-                    if (Physics.Raycast(ray, out hit, 10000, layerMask))
+                    ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue, 0.3f);
+
+                    if (Physics.Raycast(ray, out hit, 100, layerMask))
                     {
 
                         print(hit.collider.name);
@@ -140,12 +140,12 @@ namespace DM.Building
             }
             else if (CurBuildMode == BuildMode.DemolishMode)
             {
-                ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue, 0.3f);
-
                 if (Input.GetMouseButtonDown(0))
                 {
-                    if (Physics.Raycast(ray, out hit, 10000, layerMask))
+                    ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue, 0.3f);
+
+                    if (Physics.Raycast(ray, out hit, 100, layerMask))
                     {
                         if (hit.collider.GetComponent<BuildingItemObj>() == null) return;
                         curInteractObj = hit.collider.GetComponent<BuildingItemObj>();
@@ -459,7 +459,7 @@ namespace DM.Building
         }
         public void EndInteract_()
         {
-            buildManager.BuildingInteractButtonOnOff(false); 
+            buildManager.BuildingInteractButtonOnOff(false);
             EndInteract();
         }
     }

@@ -28,6 +28,11 @@ namespace DM.Building
         Vector3 ObjOriginPos;
 
         BuildingBlock parentBuildArea;
+        BuildingHandyObjSpawn SpawnHandyObjParent;
+
+        RaycastHit hit;
+        Ray ray;
+        int layerMask;
 
         public bool IsFirstDrop
         {
@@ -57,9 +62,15 @@ namespace DM.Building
         }
         private new void Awake()
         {
+            SpawnHandyObjParent = FindObjectOfType<BuildingHandyObjSpawn>();
+
             base.Awake();
             itemisSet = false;
             isFirstDrop = true;
+        }
+        private void Start()
+        {
+            layerMask = 1 << LayerMask.NameToLayer("Ground");
         }
         private void Update()
         {
@@ -69,7 +80,7 @@ namespace DM.Building
             }
             if (IsFirstDrop)
             {
-               // print("isFirstDrop");
+                // print("isFirstDrop");
 
                 if (Input.GetMouseButtonDown(1))
                 {
@@ -112,12 +123,15 @@ namespace DM.Building
             //onBuildItem interact when not in BuildMode
             else
             {
-                BuildingHandyObjSpawn SpawnHandyObjParent = FindObjectOfType<BuildingHandyObjSpawn>();
-                SpawnHandyObjParent.curInteractHandyObj.gameObject.GetComponent<Billboard>().enabled = true;
-                var movePos = Input.mousePosition;
-                movePos.z = SpawnHandyObjParent.DistanceFromCharacterTo(Camera.main.transform.position);
-                movePos = Camera.main.ScreenToWorldPoint(movePos);
-                transform.position = movePos;
+     
+
+
+
+                ////SpawnHandyObjParent.curInteractHandyObj.gameObject.GetComponent<Billboard>().enabled = true;
+                //var movePos = Input.mousePosition;
+                //movePos.z = SpawnHandyObjParent.DistanceFromCharacterTo(Camera.main.transform.position);
+                //movePos = Camera.main.ScreenToWorldPoint(movePos);
+                //transform.position = movePos;
             }
 
         }
