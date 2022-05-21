@@ -229,7 +229,8 @@ namespace NSY.Iven
             for (int i = 0; i < ItemSlots.Count; i++)
             {
                 Item item = ItemSlots[i].item;
-                if (item != null && item.ItemName == itemID)
+                //string itemtype = ((int)item.InItemType).ToString();
+                if (item != null && ((int)item.InItemType).ToString() == itemID)
                 {
                     number += ItemSlots[i].Amount;
                 }

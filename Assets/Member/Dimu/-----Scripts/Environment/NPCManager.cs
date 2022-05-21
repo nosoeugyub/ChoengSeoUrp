@@ -19,9 +19,9 @@ public class NPCManager : MonoBehaviour
     {
         SuperManager.Instance.soundManager.PlaySFX("NPCShip");
 
-        int randnum = UnityEngine.Random.Range(0, npcTfs.Length);
+        int randnum = UnityEngine.Random.Range(3, npcTfs.Length);
         while (npcTfs[randnum].IsField == true)
-            randnum = UnityEngine.Random.Range(0, npcTfs.Length);
+            randnum = UnityEngine.Random.Range(3, npcTfs.Length);
 
         npcTfs[randnum].Npctf.gameObject.SetActive(true);
         MoveToNPCSomewhere(randnum, PortPos.position);
@@ -60,6 +60,10 @@ public class NPCManager : MonoBehaviour
     {
         MoveToNPCSomewhere(2, npcTfs[1].Npctf.MyHouse.FriendTransform.position);
         EventManager.EventAction -= EventManager.EventActions[3];
+    }
+    public bool HaveHouse(int npcnum)
+    {
+        return npcTfs[npcnum].Npctf.IsHaveHouse();
     }
 }
 [System.Serializable]

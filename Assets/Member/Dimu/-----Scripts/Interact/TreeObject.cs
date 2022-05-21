@@ -112,13 +112,16 @@ public class TreeObject : MineObject
             origintree.TreeMat = quad.material;
             origintree.TreeUpMat = upObj.GetComponent<Renderer>().material;
             origintree.TreeDownMat = downMat;
+            origintree = (Tree)GetItem();
 
+            SetItem(sadtree);
             nowMat = sadtree.TreeMat;
             upObj.GetComponent<Renderer>().material = sadtree.TreeUpMat;
             downMat = sadtree.TreeDownMat;
         }
         else
         {
+            SetItem(origintree);
             nowMat = origintree.TreeMat;
             upObj.GetComponent<Renderer>().material = origintree.TreeUpMat;
             downMat = origintree.TreeDownMat;

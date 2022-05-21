@@ -116,10 +116,18 @@ public class Item : ScriptableObject
             inItemType = value;
         }
     }
+    public string ItemName
+    {
+        get
+        {
+            return itemName;
+        }
+        set
+        {
+            itemName = value;
+        }
+    }
 
- 
-
-    public string ItemName => itemName;
     public string ItemDescription => itemDescription;
     //public InItemType InItemType => inItemType;
     //public OutItemType OutItemType => outItemType;

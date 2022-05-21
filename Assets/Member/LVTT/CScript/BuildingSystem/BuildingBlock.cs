@@ -35,7 +35,7 @@ namespace DM.Building
         private BuildingItemObj curInteractObj;
         private float BuildItemScaleVar = 0.01f;
         private float BuildItemRotationVar = 1;
-        private float BuildItemGap = 2f;
+        private float BuildItemGap = 0.002f;
 
         RaycastHit hit;
         Ray ray;
@@ -84,15 +84,15 @@ namespace DM.Building
         {
             if (CurBuildMode == BuildMode.BuildHouseMode)
             {
-                ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue, 0.3f);
-
                 if (Input.GetMouseButtonDown(0))
                 {
                     print("MouseDown");
                     if (curInteractObj == null) return;
 
-                    if (Physics.Raycast(ray, out hit, 10000, layerMask))
+                    ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue, 0.3f);
+
+                    if (Physics.Raycast(ray, out hit, 100, layerMask))
                     {
 
                         print(hit.collider.name);
@@ -140,12 +140,12 @@ namespace DM.Building
             }
             else if (CurBuildMode == BuildMode.DemolishMode)
             {
-                ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue, 0.3f);
-
                 if (Input.GetMouseButtonDown(0))
                 {
-                    if (Physics.Raycast(ray, out hit, 10000, layerMask))
+                    ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue, 0.3f);
+
+                    if (Physics.Raycast(ray, out hit, 100, layerMask))
                     {
                         if (hit.collider.GetComponent<BuildingItemObj>() == null) return;
                         curInteractObj = hit.collider.GetComponent<BuildingItemObj>();
@@ -332,7 +332,7 @@ namespace DM.Building
         public void SetBuildMode(BuildMode buildmode)
         {
             CurBuildMode = buildmode;
-            DebugText.Instance.SetText(string.Format("CurBuildMode: {0}", CurBuildMode.ToString()));
+            //DebugText.Instance.SetText(string.Format("CurBuildMode: {0}", CurBuildMode.ToString()));
         }
         void ScaleBuildItem()
         {
@@ -432,10 +432,6 @@ namespace DM.Building
         {
             PlayerData.AddValue(buildingId, (int)BuildingBehaviorEnum.Interact, PlayerData.BuildBuildingData, (int)BuildingBehaviorEnum.length);
         }
-        public override int CanInteract()
-        {
-            return (int)CursorType.Build;
-        }
 
         public Transform ReturnTF()
         {
@@ -456,9 +452,15 @@ namespace DM.Building
             return dist;
 
         }
-        public void EndInteract()
+        public override int CanInteract()
+        {
+            //EndInteract();
+            return (int)CursorType.Build;
+        }
+        public void EndInteract_()
         {
             buildManager.BuildingInteractButtonOnOff(false);
+            EndInteract();
         }
     }
 }
