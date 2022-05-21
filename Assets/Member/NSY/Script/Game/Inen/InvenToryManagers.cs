@@ -163,7 +163,10 @@ namespace NSY.Iven
         {
             Debug.Log("더블클릭따땅");
             if (itemslot.item.OutItemType == OutItemType.Food)
+            {
                 PlayerEat.Eat(itemslot.item);
+                itemslot.Amount --;
+            }
         }
 
 
