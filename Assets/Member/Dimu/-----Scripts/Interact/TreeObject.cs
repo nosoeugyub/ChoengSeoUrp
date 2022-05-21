@@ -7,7 +7,7 @@ public class TreeObject : MineObject
     [SerializeField] Material downMat;
     [SerializeField] GameObject upObj;
     [SerializeField] Tree sadtree;
-    Tree origintree;
+    Item origintree;
     [SerializeField] TreeType nowTreeType = TreeType.Sad;
 
     EnvironmentManager environmentManager;
@@ -109,10 +109,10 @@ public class TreeObject : MineObject
         if (treetype == TreeType.Sad)
         {
             //기존 거 저장
-            origintree.TreeMat = quad.material;
-            origintree.TreeUpMat = upObj.GetComponent<Renderer>().material;
-            origintree.TreeDownMat = downMat;
-            origintree = (Tree)GetItem();
+            ((Tree)origintree).TreeMat = quad.material;
+            ((Tree)origintree).TreeUpMat = upObj.GetComponent<Renderer>().material;
+            ((Tree)origintree).TreeDownMat = downMat;
+            origintree = GetItem();
 
             SetItem(sadtree);
             nowMat = sadtree.TreeMat;
@@ -122,9 +122,9 @@ public class TreeObject : MineObject
         else
         {
             SetItem(origintree);
-            nowMat = origintree.TreeMat;
-            upObj.GetComponent<Renderer>().material = origintree.TreeUpMat;
-            downMat = origintree.TreeDownMat;
+            nowMat = ((Tree)origintree).TreeMat;
+            upObj.GetComponent<Renderer>().material = ((Tree)origintree).TreeUpMat;
+            downMat = ((Tree)origintree).TreeDownMat;
         }
     }
     public void CalculateUpgradePercent()
