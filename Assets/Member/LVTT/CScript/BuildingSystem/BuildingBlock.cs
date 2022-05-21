@@ -2,7 +2,7 @@
 using Game.Cam;
 using System.Collections.Generic;
 using UnityEngine;
-
+using NSY.Manager;
 public enum BuildState { None, NotFinish, Finish }
 public enum BuildMode { None, BuildHouseMode, DemolishMode }
 
@@ -241,8 +241,9 @@ namespace DM.Building
             isBuildMode = true;
 
             CamManager.ActiveSubCamera(1);
-
-            //SuperManager.Instance.inventoryManager.CheckCanBuildItem(nowBuildingBlock);
+           
+            //주석 부분
+            SuperManager.Instance.inventoryManager.CheckCanBuildItem(nowBuildingBlock);
             //Inventory UI On + Can't turn Off while in build mode + Press X button, Invoke BuildModeOff method
             //FindObjectOfType<PopUpManager>().OpenPopup(FindObjectOfType<PopUpManager>()._ivenPopup);
         }
@@ -297,7 +298,8 @@ namespace DM.Building
             buildManager.PlayerOnOff(true);
             isBuildMode = false;
             isBuildDemolishMode = false;
-            //SuperManager.Instance.inventoryManager.CheckCanBuildItem(null);
+            //주석 부분
+            SuperManager.Instance.inventoryManager.CheckCanBuildItem(null);
         }
         public void CancleUI(bool on)
         {

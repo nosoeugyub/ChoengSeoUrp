@@ -22,6 +22,8 @@ namespace NSY.Iven
         private Color dragColor = new Color(1, 1, 1, 0.2f);
 
 
+        public bool isCheckBulid;
+
 
         public override bool CanAddStack(Item item, int amount = 1)
         {
@@ -88,7 +90,15 @@ namespace NSY.Iven
             }
         }
 
-      
+         public void StopAcitveSlot()
+        {
+            Debug.Log("됨 ㅋ");
+            OnDrag(null);
+            OnBeginDrag(null);
+            OnEndDrag(null);
+            OnDrop(null);
+            OnPointerDown(null);
+        }
 
 
     }
