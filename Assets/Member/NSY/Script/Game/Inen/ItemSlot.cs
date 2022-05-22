@@ -90,7 +90,7 @@ namespace NSY.Iven
             }
         }
 
-         public void StopAcitveSlot()
+         public void StopActiveSlot()// 건축할때 다른 슬롯들은 상호작용 멈추는 코드
         {
             Debug.Log("됨 ㅋ");
             OnDrag(null);
@@ -98,6 +98,7 @@ namespace NSY.Iven
             OnEndDrag(null);
             OnDrop(null);
             OnPointerDown(null);
+           
         }
 
 

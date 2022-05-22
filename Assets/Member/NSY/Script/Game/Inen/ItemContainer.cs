@@ -101,13 +101,16 @@ namespace NSY.Iven
                 }
                 if (itemSlot.item.OutItemType != OutItemType.BuildingItemObj)// 건축 불가능한친구면
                 {
-                    Debug.Log("비활됐냐?");
-                    itemSlot.StopAcitveSlot();
+                    itemSlot.OnDrag(null);
+                    itemSlot.OnBeginDrag(null);
+                    itemSlot.OnEndDrag(null);
+                    itemSlot.OnDrop(null);
+                    itemSlot.OnPointerDown(null);
                 }
             
             }
         }
-    
+      
 
 
         public virtual bool AddItem(Item item)
