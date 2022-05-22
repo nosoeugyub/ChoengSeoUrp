@@ -11,6 +11,7 @@ namespace NSY.Iven
     public class ItemSlot : BaseItemSlot , IDragHandler, IBeginDragHandler , IEndDragHandler , IDropHandler
     {
         bool isDragging;
+     
       
         public event Action<BaseItemSlot> OnBeginDragEvent;
         public event Action<BaseItemSlot> OnEndDragEvent;
@@ -22,7 +23,7 @@ namespace NSY.Iven
         private Color dragColor = new Color(1, 1, 1, 0.2f);
 
 
-        public bool isCheckBulid;
+      
 
 
         public override bool CanAddStack(Item item, int amount = 1)
@@ -46,18 +47,26 @@ namespace NSY.Iven
         }
         public void OnDrag(PointerEventData eventData)
         {
-         
+            if (isCheckBulid == true)
+            {
+              return;
+            }
+
             if (OnDragEvent != null)
             {
-              
                 OnDragEvent(this);
             }
+          
         }
 
         public void OnBeginDrag(PointerEventData eventData)
         {
             isDragging = true;
-
+            if (isCheckBulid == true)
+            {
+                //  OnBeginDragEvent(null);
+                return;
+            }
             if (item != null)
             {
                 itemImage.color = dragColor;
@@ -66,11 +75,17 @@ namespace NSY.Iven
             {
                 OnBeginDragEvent(this);
             }
+         
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
             isDragging = false;
+            if (isCheckBulid == true)
+            {
+                //   OnEndDragEvent(null);
+                return;
+            }
             if (item != null)
             {
                 itemImage.color = normalColor;
@@ -79,27 +94,25 @@ namespace NSY.Iven
             {
                 OnEndDragEvent(this);
             }
+       
         }
 
         public void OnDrop(PointerEventData eventData)
         {
+            if (isCheckBulid == true)
+            {
+                //  OnDropEvent(null); ;
+                return;
+            }
 
             if (OnDropEvent != null)
             {
                 OnDropEvent(this);
             }
+      
         }
 
-         public void StopActiveSlot()// 건축할때 다른 슬롯들은 상호작용 멈추는 코드
-        {
-            Debug.Log("됨 ㅋ");
-            OnDrag(null);
-            OnBeginDrag(null);
-            OnEndDrag(null);
-            OnDrop(null);
-            OnPointerDown(null);
-           
-        }
+
 
 
     }

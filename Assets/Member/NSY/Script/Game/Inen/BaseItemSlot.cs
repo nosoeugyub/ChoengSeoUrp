@@ -30,6 +30,18 @@ namespace NSY.Iven
         public event Action<BaseItemSlot> OnDubleClickEvent;
         //  public event Action<BaseItemSlot> OnLeftClickEvent;
 
+
+        public bool isCheckBulid = false;
+
+
+
+
+
+
+
+        /// <summary>
+        /// 아이템
+        /// </summary>
         public Item _item;
         public Item item
         {
@@ -180,6 +192,10 @@ namespace NSY.Iven
 
         public void OnPointerDown(PointerEventData eventData)
         {
+            if (isCheckBulid == true)
+            {
+                return;
+            }
 
             if (eventData != null && eventData.button == PointerEventData.InputButton.Right)
             {
