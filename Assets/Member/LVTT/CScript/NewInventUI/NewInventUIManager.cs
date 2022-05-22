@@ -83,6 +83,8 @@ public class NewInventUIManager : MonoBehaviour
                                         if (tempCL.Craftslot[k].isHaveRecipeItem == false)
                                         {
                                             tempCL.Craftslot[k].isHaveRecipeItem = true;
+
+                                            Debug.Log("해방된 아이템은 이겁니다" + tempCL.Craftslot[k]);
                                         }
                                     }
                                 }
@@ -106,7 +108,7 @@ public class NewInventUIManager : MonoBehaviour
     }
     public void ShowRecipe(CraftSlot obj)
     {
-        print("OnLeftClickEventss");
+        
 
         nowSelectItem = obj;
         obj.ResultSlotImage.sprite = obj.RecipeItem.ItemSprite; //결과 이미지

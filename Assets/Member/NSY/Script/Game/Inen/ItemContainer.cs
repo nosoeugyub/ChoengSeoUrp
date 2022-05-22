@@ -104,10 +104,7 @@ namespace NSY.Iven
                 {
                     Debug.Log("씨발련아 뒤질레 비활해라");
                     itemSlot.isCheckBulid = true;
-                    itemSlot.OnDrag(null);
-                    itemSlot.OnBeginDrag(null);
-                    itemSlot.OnEndDrag(null);
-                    itemSlot.OnPointerDown(null);
+
                 }
             
             }
