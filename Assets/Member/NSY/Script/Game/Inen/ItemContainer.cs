@@ -80,9 +80,7 @@ namespace NSY.Iven
 
             foreach (ItemSlot itemSlot in ItemSlots)
             {
-                if (itemSlot.item.OutItemType == OutItemType.BuildingItemObj)// 건축가능한 친구
-                {
-                    itemSlot.isCheckBulid = false;
+           
                     if (itemSlot.item == null)
                     {
 
@@ -99,8 +97,14 @@ namespace NSY.Iven
                             itemSlot.Interactble(true);
                         }
                     }
+
+
+
+                if (itemSlot.item.OutItemType == OutItemType.BuildingItemObj && itemSlot.item != null)// 건축가능한 친구
+                {
+                    itemSlot.isCheckBulid = false;
                 }
-               else// if (itemSlot.item.OutItemType != OutItemType.BuildingItemObj)// 건축 불가능한친구면
+                else// 건축 불가능한친구면
                 {
                     Debug.Log("씨발련아 뒤질레 비활해라");
                     itemSlot.isCheckBulid = true;
