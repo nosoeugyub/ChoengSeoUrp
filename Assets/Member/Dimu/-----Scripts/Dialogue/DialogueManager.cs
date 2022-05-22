@@ -324,6 +324,7 @@ namespace DM.Dialog
                 Debug.Log("isTalking false");
                 nowOnFab.GetComponent<TextBox>().DestroyTextBox();
                 nowOnFab = null;
+
                 nowDialogData.isTalkingOver = true;
                 CloseDialog();
                 isTalking = false;
@@ -337,6 +338,14 @@ namespace DM.Dialog
                     {
                         case 0://수락 상태라면?
                             questManager.AcceptQuest(nowDialogData.questId, (int)nowNpc.GetCharacterType());
+                            if (nowDialogData.acceptQuestItems.Length > 0)
+                            {
+                                foreach (DialogData.QuestRewards item in nowDialogData.acceptQuestItems)//아이템추가해야함.
+                                {
+                                    SuperManager.Instance.inventoryManager.AddItem(item.itemType);
+                                    //개수만큼 더하게 해야함
+                                }
+                            }
                             break;
                         default:
                             break;

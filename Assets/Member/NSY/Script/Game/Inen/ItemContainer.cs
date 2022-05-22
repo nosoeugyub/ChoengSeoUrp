@@ -153,8 +153,8 @@ namespace NSY.Iven
             {
                 if (ItemSlots[i].item == item)
                 {
-                    ItemSlots[i].Amount--;
                     ItemSlots[i].item.GetCountItems--;
+                    ItemSlots[i].Amount--;
                     return true;
                 }
             }

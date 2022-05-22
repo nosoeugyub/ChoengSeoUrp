@@ -16,6 +16,7 @@ namespace DM.Quest
         public Task tasks;
         //public Requirements requirements;
         public Rewards[] rewards;
+        public Rewards[] returnRewards;
 
 
         [System.Serializable]
@@ -81,6 +82,15 @@ namespace DM.Quest
         }
         public bool CanClear()
         {
+            foreach (Rewards item in returnRewards)
+            {
+                if (item.getCount > SuperManager.Instance.inventoryManager.ItemCount(((int)(item.itemType.InItemType)).ToString()))
+                {
+                    return false;
+                }
+            }
+
+
             if (tasks.builds.Length > 0)
             {
                 foreach (QuestTask_Build building in tasks.builds)
