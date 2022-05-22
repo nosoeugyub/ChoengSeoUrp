@@ -151,15 +151,19 @@ namespace NSY.Player
 
         private void InteractWithObjects()
         {
-            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue, 0.3f);
-            if(nowInteractable)
-            nowInteractable.EndInteract();
-            if (Physics.Raycast(ray, out hit, 10000, layerMask) && !BuildingBlock.isBuildMode)
+            //ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Vector3 mousepos = Input.mousePosition;
+            mousepos.z = 20;
+            Vector3 nordir = (Camera.main.ScreenToWorldPoint(mousepos) - Camera.main.transform.position).normalized;
+            ray = new Ray(Camera.main.transform.position + nordir * 10, nordir);
+            Debug.DrawRay(ray.origin, ray.direction * 20, Color.blue, 0.3f);
+            if (nowInteractable)
+                nowInteractable.EndInteract();
+            if (Physics.Raycast(ray, out hit, 20, layerMask) && !BuildingBlock.isBuildMode)
             {
                 //print(hit.collider.name);
                 nowInteractable = hit.collider.GetComponent<Interactable>();
-                if (nowInteractable != null && IsInteracted(nowInteractable))// 클릭한 옵젝이 닿은 옵젝 리스트에 있다면 통과
+                if (nowInteractable != null && IsInteracted(nowInteractable))// 클릭한 옵젝이 닿은 옵젝 리스트에 있다면 통과ds
                 {
                     StartCoroutine(cursorManager.SetCursor(nowInteractable.CanInteract()));
                     Vector3 uiPos = new Vector3(nowInteractable.transform.position.x, nowInteractable.transform.position.y + 2, nowInteractable.transform.position.z);

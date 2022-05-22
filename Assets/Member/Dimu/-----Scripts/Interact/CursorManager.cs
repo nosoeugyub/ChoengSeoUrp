@@ -14,7 +14,7 @@ public class CursorManager : MonoBehaviour
     {
         yield return new WaitForEndOfFrame();
         hotSpot.x = cursorsprites[idx].width / 2;
-        hotSpot.y = cursorsprites[idx].height / 2;
-        Cursor.SetCursor(cursorsprites[idx], Vector2.zero, CursorMode.Auto);
+        hotSpot.y = 0;
+        Cursor.SetCursor(cursorsprites[idx], hotSpot, CursorMode.Auto);
     }
 }

@@ -33,7 +33,7 @@ namespace NSY.Player
 
         private void Start()
         {
-            Tired = 80;
+            Tired = 800;
         }
 
         private void Update()
