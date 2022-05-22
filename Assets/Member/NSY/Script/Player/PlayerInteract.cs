@@ -151,11 +151,10 @@ namespace NSY.Player
 
         private void InteractWithObjects()
         {
-            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            //ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Vector3 mousepos = Input.mousePosition;
             mousepos.z = 20;
             Vector3 nordir = (Camera.main.ScreenToWorldPoint(mousepos) - Camera.main.transform.position).normalized;
-            Debug.Log(Camera.main.ScreenToWorldPoint(mousepos) +" " + nordir);
             ray = new Ray(Camera.main.transform.position + nordir * 10, nordir);
             Debug.DrawRay(ray.origin, ray.direction * 20, Color.blue, 0.3f);
             if (nowInteractable)

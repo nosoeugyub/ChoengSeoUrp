@@ -84,7 +84,7 @@ namespace Game.Cam
 
         private void OnTriggerStay(Collider other)
         {
-            if (other.CompareTag("Player"))
+            if (other.CompareTag("Player") && other.GetComponent<CharacterController>())
             {
                 MainCam.SetActive(false);
             }
