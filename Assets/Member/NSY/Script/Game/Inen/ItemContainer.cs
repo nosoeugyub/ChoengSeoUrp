@@ -67,7 +67,7 @@ namespace NSY.Iven
 
         public virtual void CheckCanBuildItem(BuildingBlock buildingBlock)//당장 건축 가능한 자재인지 아닌지 판단.
         {
-            
+           
             if (!buildingBlock) //임시 처리 정확한 기획 없음
             {
                 foreach (ItemSlot itemSlot in ItemSlots)
@@ -80,8 +80,8 @@ namespace NSY.Iven
 
             foreach (ItemSlot itemSlot in ItemSlots)
             {
-           
-                    if (itemSlot.item == null)
+               
+                if (itemSlot.item == null)
                     {
 
                         continue;
@@ -106,7 +106,7 @@ namespace NSY.Iven
                 }
                 else// 건축 불가능한친구면
                 {
-                    Debug.Log("씨발련아 뒤질레 비활해라");
+                  
                     itemSlot.isCheckBulid = true;
 
                 }

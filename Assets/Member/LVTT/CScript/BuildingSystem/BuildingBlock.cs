@@ -3,6 +3,7 @@ using Game.Cam;
 using System.Collections.Generic;
 using UnityEngine;
 using NSY.Manager;
+using NSY.Iven;
 public enum BuildState { None, NotFinish, Finish }
 public enum BuildMode { None, BuildHouseMode, DemolishMode }
 
@@ -51,6 +52,9 @@ namespace DM.Building
         public float AreaHeightsize { get { return areaHeightsize; } set { areaHeightsize = value; } }
         public int BuildingID { get { return buildingId; } set { buildingId = value; } }
 
+
+        //
+        public InventoryNSY inventory;
         private void Awake()
         {
             CamManager = FindObjectOfType<CameraManager>();
@@ -269,6 +273,12 @@ namespace DM.Building
 
         public void BuildModeOff()
         {
+
+            foreach (ItemSlot itemSlot in inventory.ItemSlots)
+            {
+                itemSlot.isCheckBulid = false;
+            }
+
             if (!isBuildMode && !isBuildDemolishMode) return;
 
             CamManager.DeactiveSubCamera(1);
