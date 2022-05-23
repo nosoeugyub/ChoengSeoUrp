@@ -11,8 +11,6 @@ namespace DM.NPC
         {
             throw new System.NotImplementedException();
         }
-
-
         public Character GetCharacterType()
         {
             return characterType;
