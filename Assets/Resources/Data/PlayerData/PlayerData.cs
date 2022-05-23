@@ -76,7 +76,8 @@ public enum OutItemType
 public enum InItemType
 {
     //1차 재료
-    None = 0, Twigs, Cutgrass, Rocks, Petal, leaf, Mud, Trash, Grass, Marble, ChickHair, HenHair, Paper, Rubber,Egg,Milk,TreeWater,
+    None = 0, Twigs, Cutgrass, Rocks, Petal, leaf, Mud, Trash, Grass, Marble, ChickHair, HenHair, Paper, Rubber,Egg,Milk,Sap,Firefly,
+    Sheephair,moss,Iron,Gold,Silver,Sand, Glass, Woodp0, Woodp1,Woodp2, Log0, Log1,Log2,
     //1차 염료
     Red = 9900, Orange, Yellow, Green, Mint, Blue, Pupple, White, Black,
     //1차 식량
