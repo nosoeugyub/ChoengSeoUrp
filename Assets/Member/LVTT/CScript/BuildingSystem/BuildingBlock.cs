@@ -44,6 +44,7 @@ namespace DM.Building
         Ray ray;
         int layerMask;   // Player 레이어만 충돌 체크함
 
+        public SpecialHouse SpecialHouse { get { return specialHouse; } set { specialHouse = value; } }
         public static bool isBuildMode { get; set; } = false;
         public static bool isBuildDemolishMode { get; set; } = false;
         public static BuildingBlock nowBuildingBlock { get; set; } = null;
@@ -63,6 +64,7 @@ namespace DM.Building
             CamManager = FindObjectOfType<CameraManager>();
             buildManager = FindObjectOfType<BuildingManager>();
             specialHouse = GetComponent<SpecialHouse>();
+            
             inventory = FindObjectOfType<InventoryNSY>();
         }
         void Start()
@@ -163,7 +165,6 @@ namespace DM.Building
                     }
                 }
             }
-
         }
 
         private void SetBuildingItemObj()
@@ -176,7 +177,6 @@ namespace DM.Building
 
         public List<BuildingItemObj> GetBuildItemList()
         {
-
             List<BuildingItemObj> items = new List<BuildingItemObj>();
             if (isBuildMode || isBuildDemolishMode) return items;
 

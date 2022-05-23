@@ -5,7 +5,10 @@ public class SpecialHouse : MonoBehaviour
 {
     [SerializeField] HaveItem[] nessBuildItems;
     BuildingBlock buildingBlock;
-    [SerializeField] bool ison;
+    //[SerializeField] bool ison;
+    [SerializeField] SpecialBuildingType spetype;
+     public SpecialBuildingType Spetype { get; set; }
+     public bool Ison { get; set; }
     private void Awake()
     {
         buildingBlock = GetComponent<BuildingBlock>();
@@ -24,7 +27,7 @@ public class SpecialHouse : MonoBehaviour
             }
             if (count <= 1)
             {
-                ison = false;
+                Ison = false;
                 print("SPECIALBUILDING OFF");
             }
         }
@@ -40,14 +43,11 @@ public class SpecialHouse : MonoBehaviour
                 }
                 else
                 {
-                    print("isonfalse");
-                    ison = false;
+                    Ison = false;
                     return;
                 }
             }
-            ison = true;
-            print("SPECIALBUILDING ON");
-
+            Ison = true;
         }
     }
     [System.Serializable]
@@ -57,3 +57,4 @@ public class SpecialHouse : MonoBehaviour
         public bool isHave = false;
     }
 }
+public enum SpecialBuildingType { LightHouse, Length}
