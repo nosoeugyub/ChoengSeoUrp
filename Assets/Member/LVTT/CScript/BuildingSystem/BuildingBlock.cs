@@ -37,6 +37,8 @@ namespace DM.Building
         private float BuildItemRotationVar = 1;
         private float BuildItemGap = 0.002f;
 
+        SpecialHouse specialHouse;
+
         RaycastHit hit;
         Ray ray;
         int layerMask;   // Player 레이어만 충돌 체크함
@@ -55,6 +57,7 @@ namespace DM.Building
         {
             CamManager = FindObjectOfType<CameraManager>();
             buildManager = FindObjectOfType<BuildingManager>();
+            specialHouse = GetComponent<SpecialHouse>();
         }
         void Start()
         {
@@ -184,6 +187,8 @@ namespace DM.Building
         }
         public void RemoveBuildItemToList(GameObject Item)
         {
+            if (specialHouse)
+                specialHouse.CanExist(curInteractObj, false);
             BuildItemList.Remove(Item);
         }
         public void RemoveDemolishedBuildItem()
@@ -386,6 +391,8 @@ namespace DM.Building
             newPrefab.GetComponent<BuildingItemObj>().SetParentBuildArea(nowBuildingBlock);
             newPrefab.name = spawnObj.name;
 
+            if(specialHouse)
+            specialHouse.CanExist(curInteractObj, true);
             AddBuildItemToList(newPrefab);
             FindObjectOfType<EnvironmentManager>().ChangeCleanliness(newPrefab.GetComponent<BuildingItemObj>().GetItem().CleanAmount + 1);
             CancleUI(true);
