@@ -54,11 +54,13 @@ namespace DM.Building
 
 
         //
-        public InventoryNSY inventory;
+        private InventoryNSY inventory;
+
         private void Awake()
         {
             CamManager = FindObjectOfType<CameraManager>();
             buildManager = FindObjectOfType<BuildingManager>();
+            inventory = FindObjectOfType<InventoryNSY>();
         }
         void Start()
         {
