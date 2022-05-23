@@ -264,10 +264,12 @@ public class CreateAsset : MonoBehaviour
             variantRoot.GetComponent<BoxCollider>().center = new Vector3(0, 0, 0);
 
             so = AssetDatabase.LoadAssetAtPath(string.Format(string.Format("{0}.asset", path.Substring(0, path.Length - 7))), typeof(Item)) as Item;
-            so.OutItemType = OutItemType.Collect;
-            so.InItemType = InItemType.None;
-            so.ItemName = so.name;
-
+            if (so)
+            {
+                so.OutItemType = OutItemType.Collect;
+                so.InItemType = InItemType.None;
+                so.ItemName = so.name;
+            }
 
             variantRoot.GetComponent<CollectObject>().SetItem(so);
 
@@ -280,7 +282,47 @@ public class CreateAsset : MonoBehaviour
 
         }
     }
+    [MenuItem("Assets/CreateAssets_GroundCollect")]
+    static void CreateAssets_GroundCollect()
+    {
+        Object[] _textures = Selection.GetFiltered(typeof(Texture2D), SelectionMode.DeepAssets);
+        Material material;
+        Item so;
 
+        foreach (Texture2D texture in _textures)
+        {
+            string path = AssetDatabase.GetAssetPath(texture);
+
+            AssetDatabase.ImportAsset(path);
+
+            material = AssetDatabase.LoadAssetAtPath<Material>(string.Format("{0}.mat", path.Substring(0, path.Length - 7)));
+
+            var modelRootGO = Resources.Load<GameObject>("GroundCollectItemBase");
+            var instanceRoot = PrefabUtility.InstantiatePrefab(modelRootGO);
+
+            GameObject variantRoot = PrefabUtility.SaveAsPrefabAsset((GameObject)instanceRoot, string.Format("{0}.prefab", path.Substring(0, path.Length - 7)));
+            variantRoot.GetComponent<BoxCollider>().size = new Vector3(texture.width * 0.01f, texture.height * 0.01f, 1);
+            variantRoot.GetComponent<BoxCollider>().center = new Vector3(0, 0, 0);
+
+            so = AssetDatabase.LoadAssetAtPath(string.Format(string.Format("{0}.asset", path.Substring(0, path.Length - 7))), typeof(Item)) as Item;
+            if (so)
+            {
+                so.OutItemType = OutItemType.Collect;
+                so.InItemType = InItemType.None;
+                so.ItemName = so.name;
+            }
+
+            variantRoot.GetComponent<CollectObject>().SetItem(so);
+
+            Transform variantRootChild = variantRoot.transform.GetChild(0);
+            variantRootChild.GetComponent<MeshRenderer>().material = material;
+            variantRootChild.localScale = new Vector3(texture.width * 0.01f, texture.height * 0.01f, 1);
+
+            Debug.Log(AssetDatabase.GetAssetPath(material));
+            AssetDatabase.Refresh();
+
+        }
+    }
     [MenuItem("Assets/CreateAssets_BuildObj_ScriptableObj")]
     static void CreateAssets_BuildObj_ScriptableObj()
     {

@@ -42,9 +42,14 @@ namespace DM.Quest
         }
         public bool ClearQuest(int questId, int npcID) //퀘스트 클리어하기
         {
-            if (CanClear(questId, npcID))
+            if (CanClear(questId, npcID))//소모아이템이 존재한다면 추가
             {
                 QuestData nowQuestData = questLists[npcID].questList[questId];
+
+                foreach (QuestData.Rewards item in nowQuestData.returnRewards)
+                {
+                    SuperManager.Instance.inventoryManager.RemoveItem(item.itemType);//, reward.requireCount);
+                }
 
                 //reward
                 foreach (var reward in nowQuestData.rewards)

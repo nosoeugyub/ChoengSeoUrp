@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class CollectObject : ItemObject
 {
-    public int amount = 1;
-    public float powerInit = 0.3f;
-    public float power;
-    public bool canMove;
+    [SerializeField] bool isGround;
+    [SerializeField] int amount = 1;
+    [SerializeField] float powerInit = 0.3f;
+    [SerializeField] float power;
+    [SerializeField] bool canMove;
     [SerializeField] string soundName = "item_pick";
     BoxCollider box;
     public override int CanInteract()
@@ -18,12 +19,20 @@ public class CollectObject : ItemObject
     {
         base.OnEnable();
         box = GetComponent<BoxCollider>();
+        if(isGround)
+        {
+
+        }
+        else
+        {
         box.enabled = false;
-        SuperManager.Instance.soundManager.PlaySFX("item_drop");
+        Invoke("MoveTrue", 0.5f);
         canMove = true;
         amount = 0;
         power = powerInit;
-        Invoke("MoveTrue", 0.5f);
+        }
+        SuperManager.Instance.soundManager.PlaySFX("item_drop");
+
     }
     void DeactiveDelay() => gameObject.SetActive(false);
     public void MoveTrue()

@@ -98,7 +98,7 @@ namespace DM.Building
                     ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                     Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue, 0.3f);
 
-                    if (Physics.Raycast(ray, out hit, 100, layerMask))
+                    if (Physics.Raycast(ray, out hit, 100))
                     {
 
                         print(hit.collider.name);
@@ -151,7 +151,7 @@ namespace DM.Building
                     ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                     Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue, 0.3f);
 
-                    if (Physics.Raycast(ray, out hit, 100, layerMask))
+                    if (Physics.Raycast(ray, out hit, 100))
                     {
                         if (hit.collider.GetComponent<BuildingItemObj>() == null) return;
                         curInteractObj = hit.collider.GetComponent<BuildingItemObj>();
