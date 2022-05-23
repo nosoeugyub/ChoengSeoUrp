@@ -103,13 +103,17 @@ namespace NSY.Iven
                 itemTooltip.HideTooltip();
             }
         }
-
+        float ToolX, ToolY;
         private void ShowToolTip(BaseItemSlot itemSlot)
         {
             if (itemSlot.item != null)
             {
                 itemTooltip.ShowItemTooltip(itemSlot.item);
-                itemTooltip.tooltipTransform.position = new Vector3(itemSlot.transform.position.x + 60, itemSlot.transform.position.y + 30, itemSlot.transform.position.z);
+                Vector3 ToolVec =   itemTooltip.tooltipTransform.transform.position ;
+                ToolVec.x = itemSlot.GetComponent<Image>().rectTransform.position.x ;
+                ToolVec.y = itemSlot.GetComponent<Image>().rectTransform.position.y ;
+                ToolVec.z= itemSlot.GetComponent<Image>().rectTransform.position.z;
+                itemTooltip.tooltipTransform.transform.position = ToolVec;
             }
         }
 

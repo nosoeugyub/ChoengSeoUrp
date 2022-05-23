@@ -67,7 +67,7 @@ namespace NSY.Iven
 
         public virtual void CheckCanBuildItem(BuildingBlock buildingBlock)//당장 건축 가능한 자재인지 아닌지 판단.
         {
-            
+           
             if (!buildingBlock) //임시 처리 정확한 기획 없음
             {
                 foreach (ItemSlot itemSlot in ItemSlots)
@@ -80,10 +80,8 @@ namespace NSY.Iven
 
             foreach (ItemSlot itemSlot in ItemSlots)
             {
-                if (itemSlot.item.OutItemType == OutItemType.BuildingItemObj)// 건축가능한 친구
-                {
-                    itemSlot.isCheckBulid = false;
-                    if (itemSlot.item == null)
+               
+                if (itemSlot.item == null)
                     {
 
                         continue;
@@ -99,10 +97,16 @@ namespace NSY.Iven
                             itemSlot.Interactble(true);
                         }
                     }
-                }
-               else// if (itemSlot.item.OutItemType != OutItemType.BuildingItemObj)// 건축 불가능한친구면
+
+
+
+                if (itemSlot.item.OutItemType == OutItemType.BuildingItemObj && itemSlot.item != null)// 건축가능한 친구
                 {
-                    Debug.Log("씨발련아 뒤질레 비활해라");
+                    itemSlot.isCheckBulid = false;
+                }
+                else// 건축 불가능한친구면
+                {
+                  
                     itemSlot.isCheckBulid = true;
 
                 }
