@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cc61efa26a84a64ea78939328250dd4, type: 3}
   m_Name: structure_alphabet_gold_8
   m_EditorClassIdentifier: 
-  outItemType: 0
+  outItemType: 5
   inItemType: 70003
   itemName: structure_alphabet_gold_8
   itemDescription: 
@@ -30,10 +30,13 @@ MonoBehaviour:
   GetCountitems: 0
   MaximumStacks: 5
   recipe:
-  - item: {fileID: 11400000, guid: e20bd642e6e327840bc302aadeccd0b9, type: 2}
-    count: 2
+  - item: {fileID: 11400000, guid: 4c1409ce02ae5b148a35f50a58634acf, type: 2}
+    count: 1
   - item: {fileID: 0}
     count: 0
   - item: {fileID: 0}
     count: 0
-  UnlockItem: []
+  UnlockItem:
+  - item: {fileID: 11400000, guid: 1a766f77439d97e40b2b83c864b846ae, type: 2}
+    count: 5
+    NeedCraftSlot: {fileID: 0}

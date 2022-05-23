@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cc61efa26a84a64ea78939328250dd4, type: 3}
   m_Name: structure_bell_1
   m_EditorClassIdentifier: 
-  outItemType: 0
+  outItemType: 5
   inItemType: 70003
-  itemName: 
+  itemName: structure_bell_1
   itemDescription: 
   itemSprite: {fileID: 21300000, guid: 627241aee45a18049a5249e6ec4abc1f, type: 3}
   itemMaterial: {fileID: 2100000, guid: af777fd0995b4d64cac83105d010bb12, type: 2}
@@ -30,10 +30,16 @@ MonoBehaviour:
   GetCountitems: 0
   MaximumStacks: 5
   recipe:
-  - item: {fileID: 11400000, guid: e20bd642e6e327840bc302aadeccd0b9, type: 2}
+  - item: {fileID: 11400000, guid: 4c1409ce02ae5b148a35f50a58634acf, type: 2}
     count: 2
   - item: {fileID: 11400000, guid: 0ceddcd835564f14fab474afcf9eacd3, type: 2}
     count: 1
-  - item: {fileID: 0}
-    count: 0
-  UnlockItem: []
+  - item: {fileID: 11400000, guid: 12c2e28e24f0ff3439141051acc00a5f, type: 2}
+    count: 1
+  UnlockItem:
+  - item: {fileID: 11400000, guid: 4c1409ce02ae5b148a35f50a58634acf, type: 2}
+    count: 2
+    NeedCraftSlot: {fileID: 0}
+  - item: {fileID: 11400000, guid: 12c2e28e24f0ff3439141051acc00a5f, type: 2}
+    count: 2
+    NeedCraftSlot: {fileID: 0}

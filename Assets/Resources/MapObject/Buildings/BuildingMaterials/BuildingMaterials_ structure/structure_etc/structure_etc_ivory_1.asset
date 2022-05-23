@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cc61efa26a84a64ea78939328250dd4, type: 3}
   m_Name: structure_etc_ivory_1
   m_EditorClassIdentifier: 
-  outItemType: 0
+  outItemType: 5
   inItemType: 70003
   itemName: structure_etc_ivory_1
   itemDescription: 
@@ -30,10 +30,13 @@ MonoBehaviour:
   GetCountitems: 0
   MaximumStacks: 5
   recipe:
-  - item: {fileID: 0}
-    count: 0
-  - item: {fileID: 0}
-    count: 0
-  - item: {fileID: 0}
-    count: 0
-  UnlockItem: []
+  - item: {fileID: 11400000, guid: e52ded7097105ed43a918611b57752b2, type: 2}
+    count: 2
+  - item: {fileID: 11400000, guid: 17b67ad1631b1444ea311332b7f42bc4, type: 2}
+    count: 1
+  - item: {fileID: 11400000, guid: c7c1b8047ad122f4293817a17a7a7621, type: 2}
+    count: 1
+  UnlockItem:
+  - item: {fileID: 11400000, guid: e52ded7097105ed43a918611b57752b2, type: 2}
+    count: 1
+    NeedCraftSlot: {fileID: 0}
