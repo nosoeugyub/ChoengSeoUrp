@@ -73,7 +73,7 @@ namespace NSY.Iven
                 foreach (ItemSlot itemSlot in ItemSlots)
                 {
                     if (itemSlot.item == null) continue;
-                    itemSlot.Interactble(true);
+                    itemSlot.Interactble(true); //채원이 착한고 이쁜 빨갱이
                 }
                 return;
             }
@@ -83,6 +83,7 @@ namespace NSY.Iven
                
                 if (itemSlot.item == null)
                     {
+
 
                         continue;
                     }
@@ -103,11 +104,13 @@ namespace NSY.Iven
                 if (itemSlot.item.OutItemType == OutItemType.BuildingItemObj && itemSlot.item != null)// 건축가능한 친구
                 {
                     itemSlot.isCheckBulid = false;
+                    itemSlot.Interactble(true);
                 }
                 else// 건축 불가능한친구면
                 {
                   
                     itemSlot.isCheckBulid = true;
+                    itemSlot.Interactble(false);
 
                 }
             
@@ -130,12 +133,13 @@ namespace NSY.Iven
 
                     SuperManager.Instance.unlockmanager.GetInterectItemUnLocking();// 해금
                     PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.GetItem, PlayerData.ItemData, ((int)ItemBehaviorEnum.length));
+                   
                     return true;
                 }
             }
             for (int i = 0; i < ItemSlots.Count; i++)
             {
-                if (ItemSlots[i].item == null)
+                if (ItemSlots[i].item == null )
                 {
                     ItemSlots[i].item = item;
                     ItemSlots[i].Amount++;

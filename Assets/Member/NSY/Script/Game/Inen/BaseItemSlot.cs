@@ -22,7 +22,7 @@ namespace NSY.Iven
 
         private Color normalColor = Color.white;
         private Color disabledColor = new Color(1, 1, 1, 0);
-        private Color cantInteractColor = new Color(1, 0.3f, 0.3f, 0.5f);
+        private Color cantInteractColor = new Color(1, 0.3f, 0.3f, 0.5f); //채원이 빨갱이
         public event Action<BaseItemSlot> OnRightClickEvent;
         public event Action<BaseItemSlot> OnLeftClickEvent;
         public event Action<BaseItemSlot> OnPointerEnterEvent;
@@ -143,7 +143,7 @@ namespace NSY.Iven
                 OnPointerExit(null);
             }
         }
-        public void Interactble(bool canInteractable)
+        public void Interactble(bool canInteractable)// 채원이 빨갱잉
         {
 
             if (canInteractable)
