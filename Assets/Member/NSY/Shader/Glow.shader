@@ -20,12 +20,14 @@ Shader "Unlit/Glow"
             Cull Off
             ZWrite On
             Blend SrcAlpha OneMinusSrcAlpha
+           
 
             Pass 
             {
                 CGPROGRAM
                     #pragma vertex vert
                     #pragma fragment frag
+                 #include "AutoLight.cginc"
 
                     sampler2D _MainTex;
                     half4 _MainTex_ST;
@@ -50,6 +52,7 @@ Shader "Unlit/Glow"
                     }
 
                     fixed4 frag(v2f f) : SV_Target {
+                         float attenuation = LIGHT_ATTENUATION(i);
                         fixed4 col = tex2D(_MainTex, f.tex);
                         col *= _Color;
                         col *= _Glow;

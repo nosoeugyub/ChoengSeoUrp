@@ -8,7 +8,7 @@ namespace NSY.Iven
     public class EquipmentSlot : ItemSlot
     {
         public OutItemType equipmentType;
-        public Image GetImg;
+        [SerializeField] Image GetImg;
 
        
         private Image EqImg;
@@ -21,15 +21,23 @@ namespace NSY.Iven
             set
             {
                 EqImg = value;
-                EqImg.sprite = item.ItemSprite;
-                GetImg.sprite = EqImg.sprite;
+                if (item !=null)
+                {
+                    EqImg.sprite = item.ItemSprite;
+                    GetImg.sprite = EqImg.sprite;
+                }
+               
             }
         }
 
 
         protected override void OnValidate()//개체의 이름을 지정
         {
-        //    base.OnValidate();
+            //    base.OnValidate();
+            if (GetImg == null)
+            {
+                GetImg = GetComponent<Image>();
+            }
             gameObject.name = equipmentType.ToString() + " Slot";
             _EqImg = _EqImg;
         }
