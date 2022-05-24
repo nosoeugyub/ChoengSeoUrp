@@ -168,9 +168,12 @@ namespace NSY.Player
                     StartCoroutine(cursorManager.SetCursor(nowInteractable.CanInteract()));
                     Vector3 uiPos = new Vector3(nowInteractable.transform.position.x, nowInteractable.transform.position.y + 2, nowInteractable.transform.position.z);
                     //형광 셰이더로 변환....
-                    Debug.Log("형광으로!" + nowInteractable.gameObject.name);
-
-                    nowInteractable.gameObject.GetComponentInChildren<MeshRenderer>().material.shader = GlowColor;
+                  
+                    if(!nowInteractable.GetComponent<BuildingBlock>())
+                    {
+                        nowInteractable.gameObject.GetComponentInChildren<MeshRenderer>().material.shader = GlowColor;
+                    }
+                  
                 }
                 else
                     StartCoroutine(cursorManager.SetCursor((int)CursorType.Normal));
