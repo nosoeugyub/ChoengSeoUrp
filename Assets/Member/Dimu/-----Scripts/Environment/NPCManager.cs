@@ -8,12 +8,14 @@ public class NPCManager : MonoBehaviour
 {
     [SerializeField] NPCField[] npcTfs;
     [SerializeField] Transform PortPos;
+    [SerializeField] Transform WalPos;
     [SerializeField] Transform portInformUI;
     [SerializeField] NPCField nowNpcStandAtPort;
     Coroutine nowCor;
     private void Start()
     {
         EventManager.EventActions[3] += MoveToBearsHouse;
+        EventManager.EventActions[5] += MoveToWalPort;
     }
     public void ComeToPort()
     {
@@ -60,6 +62,11 @@ public class NPCManager : MonoBehaviour
     {
         MoveToNPCSomewhere(2, npcTfs[1].Npctf.MyHouse.FriendTransform.position);
         EventManager.EventAction -= EventManager.EventActions[3];
+    }
+    public void MoveToWalPort()
+    {
+        MoveToNPCSomewhere(2, WalPos.position);
+        EventManager.EventAction -= EventManager.EventActions[5];
     }
     public bool HaveHouse(int npcnum)
     {

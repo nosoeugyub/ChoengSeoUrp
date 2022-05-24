@@ -47,6 +47,7 @@ public class SpecialHouse : MonoBehaviour
                     return;
                 }
             }
+                print("SPECIALBUILDING ON");
             Ison = true;
         }
     }

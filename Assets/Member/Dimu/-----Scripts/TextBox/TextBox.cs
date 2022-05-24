@@ -52,7 +52,7 @@ public class TextBox : MonoBehaviour
     }
     public void DestroyTextBox()
     {
-        if (Random.Range(0, 100) < 50)
+        if (Random.Range(0, 100) < 5)
             InstactiateNote();
         textboxFabImg.gameObject.SetActive(false);
         textboxFabText.gameObject.SetActive(false);

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cc61efa26a84a64ea78939328250dd4, type: 3}
   m_Name: door_brick_1
   m_EditorClassIdentifier: 
-  outItemType: 0
+  outItemType: 5
   inItemType: 70003
   itemName: door_brick_1
   itemDescription: 
@@ -26,12 +26,17 @@ MonoBehaviour:
   itemPrefab: {fileID: 3309744508925850739, guid: d235ea0b736653d4d96a56d6468e886b,
     type: 3}
   usingToolSoundName: 
+  _ItemNubering: 0
   GetCountitems: 0
   MaximumStacks: 5
   recipe:
-  - item: {fileID: 11400000, guid: ef8aa99b0a2e2744688a08260021f5fc, type: 2}
-    count: 1
+  - item: {fileID: 11400000, guid: 785d7c880b9fc7744a2dd8d59d13d7c1, type: 2}
+    count: 3
   - item: {fileID: 11400000, guid: a766fd73fccbb0b40824dc5c1f5487d8, type: 2}
     count: 1
   - item: {fileID: 0}
     count: 0
+  UnlockItem:
+  - item: {fileID: 11400000, guid: 23e39a38484ef76448489f2869fe41f2, type: 2}
+    count: 1
+    NeedCraftSlot: {fileID: 0}

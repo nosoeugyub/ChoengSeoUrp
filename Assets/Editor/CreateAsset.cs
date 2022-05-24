@@ -282,6 +282,28 @@ public class CreateAsset : MonoBehaviour
 
         }
     }
+    [MenuItem("Assets/SetSOObj")]
+    static void SetSOObj()
+    {
+        Object[] _textures = Selection.GetFiltered(typeof(Texture2D), SelectionMode.DeepAssets);
+        Item so;
+
+        foreach (Texture2D texture in _textures)
+        {
+            string path = AssetDatabase.GetAssetPath(texture);
+
+            AssetDatabase.ImportAsset(path);
+
+            so = AssetDatabase.LoadAssetAtPath(string.Format(string.Format("{0}.asset", path.Substring(0, path.Length - 7))), typeof(Item)) as Item;
+            if (so)
+            {
+                //so.OutItemType = OutItemType.BuildingItemObj;
+                so.MaximumStacks = 30;
+                //so.InItemType = InItemType.None;
+                so.ItemName = so.name;
+            }
+        }
+    }
     [MenuItem("Assets/CreateAssets_GroundCollect")]
     static void CreateAssets_GroundCollect()
     {

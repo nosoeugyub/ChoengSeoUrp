@@ -41,9 +41,11 @@ namespace DM.NPC
             //현재 대화 상대와 같다면
             if (dialogueManager.GetNowNpc() == this)
             {
-                isFollowPlayer = true;
-                player.SetNpc(this);
-                EventManager.EventAction -= EventManager.EventActions[4];
+                if (player.SetNpc(this))
+                {
+                    isFollowPlayer = true;
+                }
+                    EventManager.EventAction -= EventManager.EventActions[4];
             }
         }
         public bool IsHaveHouse()
@@ -98,7 +100,7 @@ namespace DM.NPC
         public BuildingLike GetBuildingLikeable(BuildingBlock buildingBlock) //bool형
         {
             if (!buildingBlock) return BuildingLike.None;
-            if(buildingBlock.GetBuildItemList().Count==0) return BuildingLike.Unlike_Empty;
+            if (buildingBlock.GetBuildItemList().Count == 0) return BuildingLike.Unlike_Empty;
 
             List<BuildingItemObj> buildItemList = buildingBlock.GetBuildItemList();
 

@@ -57,9 +57,23 @@ namespace NSY.Player
             InteractWithObjects();
         }
 
-        public void SetNpc(HouseNpc npc)
+        public bool SetNpc(HouseNpc npc)
         {
-            followNpc = npc;
+            if (npc == null)
+            {
+                followNpc = npc;
+                return true;
+            }
+
+            if (followNpc == null)
+            {
+                followNpc = npc;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public void SetIsAnimation(bool isTrue)
