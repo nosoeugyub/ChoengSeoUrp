@@ -6,6 +6,7 @@ public class MagnifyObject : ItemObject
 
     private void Awake()
     {
+        base.Awake();
         glassSpeechBubble = Instantiate(Resources.Load("Object/glassSpeechBubble") as GameObject, this.transform);
         glassSpeechBubble.SetActive(false);
     }

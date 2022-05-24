@@ -151,7 +151,7 @@ public class Item : ScriptableObject
     {
         GetCountItems = 0;
         //MaximumStacks = 20;
-        itemName = itemPrefab.name;
+        //itemName = itemPrefab.name;
         //Debug.Log(itemName);
     }
     public virtual Item GetCopy()

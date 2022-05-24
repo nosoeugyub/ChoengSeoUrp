@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class TreeObject : MineObject
 {
-    [SerializeField] Material downMat;
+    [SerializeField] MaterialSet finMatSet;//원래애 머테리얼을 저장함.
+    [SerializeField] MaterialSet sadMatSet;//시든애 머테리얼을 저장함.
+    MaterialSet nowMatSet;//현재 적용중인 머테리얼
+    [SerializeField] MeshRenderer upMesh;
+    [SerializeField] MeshRenderer downMesh;
     [SerializeField] GameObject upObj;
-    [SerializeField] Tree sadtree;
+    [SerializeField] Item sadtree;
     Item origintree;
     [SerializeField] TreeType nowTreeType = TreeType.Sad;
 
@@ -18,22 +22,30 @@ public class TreeObject : MineObject
     {
         base.Awake();
         environmentManager = FindObjectOfType<EnvironmentManager>();
-        origintree = new Tree();
+        //upMesh = upObj.GetComponent<MeshRenderer>();
+        finMatSet.materials = new Material[3];
+
+        origintree = GetItem();
+
     }
     private void Start()
     {
         ++allSadTreeCount;
         nowSadTreeCount = allSadTreeCount;
         ChangeTreeData(TreeType.Sad);
-        quad.material = nowMat;
+        ChangeMineState(MineState.Normal);
+        //quad.material = nowMat;
     }
     public void SetDownMat(Material material)
     {
-        downMat = material;
+        finMatSet.materials[2] = material;
     }
     public new void OnEnable()
     {
         base.OnEnable();
+        finMatSet.materials[0] = nowMat;
+        finMatSet.materials[1] = upMesh.material;
+        finMatSet.materials[2] = downMesh.material;
     }
     public override int CanInteract()
     {
@@ -62,7 +74,8 @@ public class TreeObject : MineObject
             upObj.SetActive(false);
             boxcol.enabled = true;
 
-            quad.material = nowMat;
+            quad.material = nowMatSet.materials[0];
+            upMesh.material = nowMatSet.materials[1];
 
             nowChopCount = 0;
         }
@@ -71,7 +84,7 @@ public class TreeObject : MineObject
             animator.SetBool("IsFalling", true);
             upObj.SetActive(true);
             boxcol.enabled = false;
-            quad.material = downMat;
+            quad.material = nowMatSet.materials[2];
             nowChopCount = 0;
 
             quad.transform.SetParent(transform);
@@ -108,23 +121,13 @@ public class TreeObject : MineObject
     {
         if (treetype == TreeType.Sad)
         {
-            //기존 거 저장
-            ((Tree)origintree).TreeMat = quad.material;
-            ((Tree)origintree).TreeUpMat = upObj.GetComponent<Renderer>().material;
-            ((Tree)origintree).TreeDownMat = downMat;
-            origintree = GetItem();
-
+            nowMatSet = sadMatSet;
             SetItem(sadtree);
-            nowMat = sadtree.TreeMat;
-            upObj.GetComponent<Renderer>().material = sadtree.TreeUpMat;
-            downMat = sadtree.TreeDownMat;
         }
         else
         {
+            nowMatSet = finMatSet;
             SetItem(origintree);
-            nowMat = ((Tree)origintree).TreeMat;
-            upObj.GetComponent<Renderer>().material = ((Tree)origintree).TreeUpMat;
-            downMat = ((Tree)origintree).TreeDownMat;
         }
     }
     public void CalculateUpgradePercent()
@@ -146,3 +149,9 @@ public class TreeObject : MineObject
     }
 }
 public enum TreeType { Original, Sad, Length }
+
+[System.Serializable]
+public class MaterialSet
+{
+    public Material[] materials;
+}

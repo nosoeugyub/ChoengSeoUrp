@@ -9,33 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cc61efa26a84a64ea78939328250dd4, type: 3}
+  m_Script: {fileID: 11500000, guid: 6d69e3474396381479caa4a9202bf781, type: 3}
   m_Name: FallTree_OrangeRedYellow
   m_EditorClassIdentifier: 
   outItemType: 2
   inItemType: 50000
-  itemName: "\uB098\uBB34"
-  itemDescription: "\uD14C\uC2A4\uD2B8\uB098\uBB34"
+  itemName: SadTree_L_0
+  itemDescription: 
   itemSprite: {fileID: 0}
-  itemMaterial: {fileID: 2100000, guid: 20d512bb21c86d84cb4981bb0354a720, type: 2}
+  itemMaterial: {fileID: 0}
   cleanAmount: 0
   eatAmount: 0
   chopCount: 3
   dropItems:
-  - percent: 100
-    itemObjs:
-    - itemObj: {fileID: 8811231406822601565, guid: 10234634760b6cd4da2381d79dbfd62f,
-        type: 3}
-      percent: 33.33
-      count: 1
-    - itemObj: {fileID: 8923826871903050590, guid: 812c026c3ce95be429af865f1a17a52b,
-        type: 3}
-      percent: 33.33
-      count: 1
-    - itemObj: {fileID: 8394522536032744235, guid: 9d3a721a7f3e3e0488de0a93f7f58a45,
-        type: 3}
-      percent: 33.33
-      count: 1
   - percent: 100
     itemObjs:
     - itemObj: {fileID: 7272204889410860834, guid: 0e0ed48e5965f0a409e62dc6d0dc1b6e,
@@ -56,6 +42,20 @@ MonoBehaviour:
         type: 3}
       percent: 100
       count: 2
+  - percent: 51
+    itemObjs:
+    - itemObj: {fileID: 8811231406822601565, guid: 10234634760b6cd4da2381d79dbfd62f,
+        type: 3}
+      percent: 33.33
+      count: 1
+    - itemObj: {fileID: 8923826871903050590, guid: 812c026c3ce95be429af865f1a17a52b,
+        type: 3}
+      percent: 33.33
+      count: 1
+    - itemObj: {fileID: 8394522536032744235, guid: 9d3a721a7f3e3e0488de0a93f7f58a45,
+        type: 3}
+      percent: 33.33
+      count: 1
   durability: 0
   itemPrefab: {fileID: 0}
   usingToolSoundName: 
@@ -64,3 +64,6 @@ MonoBehaviour:
   MaximumStacks: 1
   recipe: []
   UnlockItem: []
+  treeMat: {fileID: 0}
+  treeUpMat: {fileID: 0}
+  treeDownMat: {fileID: 0}
