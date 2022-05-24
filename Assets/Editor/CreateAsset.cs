@@ -1,5 +1,4 @@
 ﻿using DM.Building;
-using TT.BuildSystem;
 using UnityEditor;
 using UnityEngine;
 
@@ -229,6 +228,7 @@ public class CreateAsset : MonoBehaviour
             so = AssetDatabase.LoadAssetAtPath(string.Format(string.Format("{0}.asset", path.Substring(0, path.Length - 7))), typeof(Item)) as Item;
             so.OutItemType = OutItemType.BuildingItemObj;
             so.ItemName = path.Substring(0, path.Length - 7);
+            so.MaximumStacks = 30;
             variantRoot.GetComponent<BuildingItemObj>().SetItem(so);
 
             Transform variantRootChild = variantRoot.transform.GetChild(0);
@@ -269,6 +269,7 @@ public class CreateAsset : MonoBehaviour
                 so.OutItemType = OutItemType.Collect;
                 so.InItemType = InItemType.None;
                 so.ItemName = so.name;
+                so.MaximumStacks = 30;
             }
 
             variantRoot.GetComponent<CollectObject>().SetItem(so);
@@ -302,6 +303,7 @@ public class CreateAsset : MonoBehaviour
                 //so.InItemType = InItemType.None;
                 so.ItemName = so.name;
             }
+            AssetDatabase.Refresh();
         }
     }
     [MenuItem("Assets/CreateAssets_GroundCollect")]
@@ -332,6 +334,7 @@ public class CreateAsset : MonoBehaviour
                 so.OutItemType = OutItemType.Collect;
                 so.InItemType = InItemType.None;
                 so.ItemName = so.name;
+                so.MaximumStacks = 30;
             }
 
             variantRoot.GetComponent<CollectObject>().SetItem(so);
@@ -358,10 +361,10 @@ public class CreateAsset : MonoBehaviour
 
             so = ScriptableObject.CreateInstance<Item>();
             Sprite tests = AssetDatabase.LoadAssetAtPath(string.Format(path), typeof(Sprite)) as Sprite;
-            so.ItemSprite =tests;
+            so.ItemSprite = tests;
 
             Material testm = AssetDatabase.LoadAssetAtPath(string.Format(string.Format("{0}.mat", path.Substring(0, path.Length - 7))), typeof(Material)) as Material;
-            so.ItemMaterial= testm;
+            so.ItemMaterial = testm;
 
             GameObject testg = AssetDatabase.LoadAssetAtPath(string.Format(string.Format("{0}.prefab", path.Substring(0, path.Length - 7))), typeof(GameObject)) as GameObject;
             so.ItemPrefab = testg;
@@ -372,6 +375,7 @@ public class CreateAsset : MonoBehaviour
 
             AssetDatabase.CreateAsset(so, string.Format("{0}.asset", filename));
             so.ItemName = so.name;
+            so.MaximumStacks = 30;
 
             AssetDatabase.Refresh();
             //material.SetTexture("_MainTex", texture);

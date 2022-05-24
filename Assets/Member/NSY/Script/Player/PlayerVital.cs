@@ -33,7 +33,7 @@ namespace NSY.Player
 
         private void Start()
         {
-            Tired = 800;
+            Tired = 80;
         }
 
         private void Update()
@@ -56,7 +56,7 @@ namespace NSY.Player
                 }
             }
             else
-                FindObjectOfType<SceneChangeManager>().LoadSceneString("EndScene");
+                FindObjectOfType<SceneChangeManager>().LoadSceneString("CreditDemo");
 
             yield return null;
         }

@@ -69,7 +69,7 @@ namespace DM.Building
         }
         void Start()
         {
-            layerMask = 1 << LayerMask.NameToLayer("Interactable");
+            layerMask = 1 << LayerMask.NameToLayer("Wall");
             buildButtonFuncAdded = false;
             buildManager.SetbuildOffButtonEvents(BuildModeOff);
         }
@@ -103,7 +103,7 @@ namespace DM.Building
                     ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                     Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue, 0.3f);
 
-                    if (Physics.Raycast(ray, out hit, 100))
+                    if (Physics.Raycast(ray, out hit, 100, layerMask))
                     {
 
                         print(hit.collider.name);
@@ -156,7 +156,7 @@ namespace DM.Building
                     ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                     Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue, 0.3f);
 
-                    if (Physics.Raycast(ray, out hit, 100))
+                    if (Physics.Raycast(ray, out hit, 100, layerMask))
                     {
                         if (hit.collider.GetComponent<BuildingItemObj>() == null) return;
                         curInteractObj = hit.collider.GetComponent<BuildingItemObj>();

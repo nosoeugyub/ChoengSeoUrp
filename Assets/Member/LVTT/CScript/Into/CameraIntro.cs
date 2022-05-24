@@ -64,7 +64,7 @@ namespace Game.Cam
         {
             
             Transform curRot = camera.transform; 
-            camera.transform.localRotation = Quaternion.Lerp(curRot.rotation,SecondRot.rotation,Time.deltaTime* 2.5f);
+            camera.transform.localRotation = Quaternion.Lerp(curRot.rotation,SecondRot.rotation,Time.deltaTime* 5.5f);
             if(curRot.rotation==SecondRot.rotation)
             {
                 isRotate = false;
@@ -76,7 +76,14 @@ namespace Game.Cam
         {
             ChangeCam();
             WhiteScreenAnim.SetTrigger("whitescreen");
-        }    
+            StartCoroutine(ChangeScene());
+
+        }   
+        IEnumerator ChangeScene()
+        {
+            yield return new WaitForSeconds(2.5f);
+            FindObjectOfType<SceneChangeManager>().LoadSceneString("MainScene");
+        }
         public void ChangeCam()
         {
             CamManager.DeactiveSubCamera(1);
@@ -86,11 +93,11 @@ namespace Game.Cam
         
         IEnumerator IntroRoutine()
         {
-            yield return new WaitForSeconds(0.7f);
+            yield return new WaitForSeconds(0.6f);
            
             CamManager.ActiveSubCamera(1);      
            
-            yield return new WaitForSeconds(1.8f);
+            yield return new WaitForSeconds(1.0f);
            
             State = Introstate.Second;
         }
