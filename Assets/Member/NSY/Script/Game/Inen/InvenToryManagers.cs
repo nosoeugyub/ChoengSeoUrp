@@ -67,12 +67,12 @@ namespace NSY.Iven
 
 
             //인벤토리 클레스 이벤트
-            equipPanel.OnRightClickEvents += ResultClick;
+            equipPanel.OnLeftClickEvents += ResultClick;
             iventorynsy.OnDubleClickEvent += OnDoubleClickEvent;
             iventorynsy.OnLeftClickEvent += BuildingLeftClick;
             iventorynsy.OnRightClickEvent += InventoryRightClick;
             // iventorynsy.OnLeftClickEvent += InventoryLeftClick;
-            equipPanel.OnRightClickEvent += EquipmentPanelRightClick;
+            equipPanel.OnLeftClickEvent += EquipmentPanelLeftClick;
             //  craftPanel.OnLeftClickEvent += CraftPanelLeftClick;
             //드래그 시작
             iventorynsy.OnBeginDragEvent += BeginDrag;
@@ -200,7 +200,7 @@ namespace NSY.Iven
         }
 
         //장비슬롯에서 눌렀을때
-        private void EquipmentPanelRightClick(BaseItemSlot itemslot)
+        private void EquipmentPanelLeftClick(BaseItemSlot itemslot)
         {
 
             Equip(itemslot.item); //장비칸장착
