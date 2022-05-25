@@ -122,10 +122,10 @@ public class EnvironmentManager : MonoBehaviour
         d1.transform.rotation = Quaternion.Euler(d1.transform.eulerAngles.x, maincamera.transform.eulerAngles.y, d1.transform.eulerAngles.z);
         d2.transform.rotation = Quaternion.Euler(d2.transform.eulerAngles.x, maincamera.transform.eulerAngles.y + 180, d2.transform.eulerAngles.z);
 
-        d1.intensity = sunintensity.Evaluate(time) * 0.4f + 0.1f;
-        d2.intensity = sunintensity.Evaluate(time) * 0.4f + 0.1f;
-        d3.intensity = sunintensity.Evaluate(time) * 0.51f + 0.1f;
-        d4.intensity = sunintensity.Evaluate(time) * 0.5f + 0.1f;
+        d1.intensity = sunintensity.Evaluate(time) * 0.6f + 0.2f;
+        d2.intensity = sunintensity.Evaluate(time) * 0.6f + 0.2f;
+        d3.intensity = sunintensity.Evaluate(time) * 0.81f + 0.2f;
+        d4.intensity = sunintensity.Evaluate(time) * 0.8f + 0.2f;
 
         //해의 색
         d1.color = sunColor.Evaluate(time);

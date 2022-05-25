@@ -406,7 +406,7 @@ namespace DM.Building
             if(specialHouse)
             specialHouse.CanExist(curInteractObj, true);
             AddBuildItemToList(newPrefab);
-            FindObjectOfType<EnvironmentManager>().ChangeCleanliness(newPrefab.GetComponent<BuildingItemObj>().GetItem().CleanAmount);
+            FindObjectOfType<EnvironmentManager>().ChangeCleanliness(newPrefab.GetComponent<BuildingItemObj>().GetItem().CleanAmount + 0.5f);
             CancleUI(true);
         }
 
