@@ -9,19 +9,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d69e3474396381479caa4a9202bf781, type: 3}
-  m_Name: SadTree_M_1
+  m_Script: {fileID: 11500000, guid: 3cc61efa26a84a64ea78939328250dd4, type: 3}
+  m_Name: SummerTree_GreenMintBlue
   m_EditorClassIdentifier: 
   outItemType: 2
-  inItemType: 0
-  itemName: SadTree_M_1
-  itemDescription: 
+  inItemType: 50000
+  itemName: "\uB098\uBB34"
+  itemDescription: "\uD14C\uC2A4\uD2B8\uB098\uBB34"
   itemSprite: {fileID: 0}
-  itemMaterial: {fileID: 0}
+  itemMaterial: {fileID: 2100000, guid: 20d512bb21c86d84cb4981bb0354a720, type: 2}
   cleanAmount: 0
   eatAmount: 0
   chopCount: 3
   dropItems:
+  - percent: 100
+    itemObjs:
+    - itemObj: {fileID: 7687154284120268029, guid: 420e17e779729874091f9d1b20365308,
+        type: 3}
+      percent: 50
+      count: 1
+    - itemObj: {fileID: 4416091383578873622, guid: feb2322dda6e1714582d29dff4586838,
+        type: 3}
+      percent: 50
+      count: 1
   - percent: 100
     itemObjs:
     - itemObj: {fileID: 7272204889410860834, guid: 0e0ed48e5965f0a409e62dc6d0dc1b6e,
@@ -41,21 +51,12 @@ MonoBehaviour:
     - itemObj: {fileID: 7875340127727919632, guid: 021c503a2d86b2c4999752343ea038d7,
         type: 3}
       percent: 100
-      count: 1
-  - percent: 51
-    itemObjs:
-    - itemObj: {fileID: 5681592757358732213, guid: feea6e77c39ffb840b277ce7f41184a3,
-        type: 3}
-      percent: 100
-      count: 1
+      count: 2
   durability: 0
   itemPrefab: {fileID: 0}
   usingToolSoundName: 
   _ItemNubering: 0
   GetCountitems: 0
-  MaximumStacks: 1
+  MaximumStacks: 30
   recipe: []
   UnlockItem: []
-  treeMat: {fileID: 2100000, guid: 646802bbeeb4bfb4e895fb0bc8eb5183, type: 2}
-  treeUpMat: {fileID: 2100000, guid: dc68035842201ab4da266171350079ec, type: 2}
-  treeDownMat: {fileID: 2100000, guid: ddc4c76ce16709c49924d42614a7f543, type: 2}

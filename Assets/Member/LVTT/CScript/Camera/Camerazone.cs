@@ -20,6 +20,7 @@ namespace Game.Cam
         //bool FixedZone;
         bool CanSwitchCam;
         CameraManager CamManager;
+        static GameObject nowCam;
         void Start()
         {
             CamManager = FindObjectOfType<CameraManager>();
@@ -69,6 +70,7 @@ namespace Game.Cam
 
                 MainCam.SetActive(false);
                 virtualCamera.SetActive(true);
+                nowCam = virtualCamera;
                 // switch (CamManager.LookIn)
                 //{
                 //    case true:

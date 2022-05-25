@@ -26,7 +26,9 @@ public class NPCManager : MonoBehaviour
             randnum = UnityEngine.Random.Range(3, npcTfs.Length);
 
         npcTfs[randnum].Npctf.gameObject.SetActive(true);
-        MoveToNPCSomewhere(randnum, PortPos.position * Random.Range(-2,2));
+
+        Vector3 randPos = new Vector3(PortPos.position.x + Random.Range(-1.5f, 1.5f), PortPos.position.y, PortPos.position.z + Random.Range(-1.5f, 1.5f));
+        MoveToNPCSomewhere(randnum, randPos);
 
         npcTfs[randnum].IsField = true;
         ComeToPortUIAction(true);
