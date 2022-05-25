@@ -63,13 +63,13 @@ namespace Game.Cam
         //}
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Player"))
+            if (other.CompareTag("Player") && other.GetComponent<CharacterController>())
             {
 
                 //CanSwitchCam = true;
 
-                MainCam.SetActive(false);
-                virtualCamera.SetActive(true);
+                //MainCam.SetActive(false);
+                //virtualCamera.SetActive(true);
                 nowCam = virtualCamera;
                 // switch (CamManager.LookIn)
                 //{
@@ -88,18 +88,18 @@ namespace Game.Cam
         {
             if (other.CompareTag("Player") && other.GetComponent<CharacterController>())
             {
-                MainCam.SetActive(false);
+                virtualCamera.SetActive(true);
             }
         }
         private void OnTriggerExit(Collider other)
         {
-            if (other.CompareTag("Player"))
+            if (other.CompareTag("Player") && other.GetComponent<CharacterController>())
             {
                 //CanSwitchCam = false;
                 //virtualCamera.enabled = false;
                 virtualCamera.SetActive(false);
                 //virtualCamera2.SetActive(false);
-                MainCam.SetActive(true);
+                //MainCam.SetActive(true);
                CamManager.LookIn = true;
             }
         }

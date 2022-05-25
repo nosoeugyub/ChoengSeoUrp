@@ -170,6 +170,7 @@ namespace NSY.Iven
             {
                 PlayerEat.Eat(itemslot.item);
                 itemslot.Amount --;
+                itemslot.item.GetCountItems --;
             }
         }
 
