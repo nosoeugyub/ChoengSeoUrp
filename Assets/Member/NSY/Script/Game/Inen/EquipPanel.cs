@@ -71,11 +71,11 @@ namespace NSY.Iven
            
             return false;
         }
-
+        int j = 0;
         //무기 장착
         public bool AddResultItem(Item item)//결과 장착
         {
-            Debug.Log("삐용쓰");
+          
             for (int i = 0; i < equipmentSlots.Length; i++)
             {
                
@@ -86,34 +86,28 @@ namespace NSY.Iven
                     ResultEquip.Amount = 1;
                     equipmentSlots[i].item = null;
                     equipmentSlots[i].Amount = 0;
+                    Debug.Log("바로들어갓");
                     return true;
                 }
-                if(ResultEquip.item != null && equipmentSlots[i].item == null)
+         
+            
+            }
+            for (int i = 0; i < equipmentSlots.Length; i++)
+            {
+                if (ResultEquip.item != null && equipmentSlots[i].item == item) //1번무기를 장착중일때
                 {
-                    Debug.Log("바꾸라");
-                    item = equipmentSlots[i].item; //슬롯에서 아이템으로 
                     equipmentSlots[i].item = ResultEquip.item;
                     ResultEquip.item = item;
-   
-                }
-                if (ResultEquip.item != null && equipmentSlots[i+1].item == null)
-                {
-                    Debug.Log("바꾸라2");
-                    item = equipmentSlots[i+1].item; //슬롯에서 아이템으로 
-                    equipmentSlots[i+1].item = ResultEquip.item;
-                    ResultEquip.item = item;
-
-                }
-                if (ResultEquip.item != null && equipmentSlots[i + 2].item == null)
-                {
-                    Debug.Log("바꾸라3");
-                    item = equipmentSlots[i+1].item; //슬롯에서 아이템으로 
-                    equipmentSlots[i+1].item = ResultEquip.item;
-                    ResultEquip.item = item;
+                    if (item.ItemName == equipmentSlots[i].item.ItemName)
+                    {
+                       
+                        Debug.Log("체인지혀");
+                        return true;
+                    }
+               
 
                 }
             }
-            
             return false;
         }
 

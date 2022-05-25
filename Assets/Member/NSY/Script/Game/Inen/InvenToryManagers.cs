@@ -142,7 +142,7 @@ namespace NSY.Iven
             }
             else
             {
-                Debug.Log("BuildingLeftClick");
+               
                 BuildingHandyObjSpawn HandySpawnObj = FindObjectOfType<BuildingHandyObjSpawn>();
                 switch (obj.item.InItemType)
                 {
@@ -291,7 +291,7 @@ namespace NSY.Iven
             if (equipPanel.AddResultItem(item))
             {
                 playerinterract.SetHandItem(item);
-                Debug.Log("윌스미스마렵네");
+               
 
             }
 
