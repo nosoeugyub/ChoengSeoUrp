@@ -31,7 +31,7 @@ public class DebugText : MonoBehaviour
     public void Awake()
     {
         spawnPos = transform.position;
-        print(spawnPos);
+        //print(spawnPos);
         inst = this;
     }
 

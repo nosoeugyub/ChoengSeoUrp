@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using NSY.Iven;
+using UnityEngine;
 
 namespace NSY.Player
 {
@@ -7,19 +8,21 @@ namespace NSY.Player
         [SerializeField] PlayerController pc;
         [SerializeField] PlayerInteract pi;
         [SerializeField] Animator pa;
-        [SerializeField] Item eatItem;
+        [SerializeField] BaseItemSlot eatItem;
 
-        public void Eat(Item _eatItem) //player Animator
+        public bool Eat(BaseItemSlot _eatItem) //player Animator
         {
             eatItem = _eatItem;
             pi.SetIsAnimation(true);
             pa.SetBool("isEating", true);
             pa.GetComponent<PlayerAnimator>().Eat = UpdateEat;
-
+            return true;
         }
         public void UpdateEat()
         {
-            pc.playerVital.Tired += eatItem.EatAmount;
+            pc.playerVital.Tired += eatItem.item.EatAmount;
+            eatItem.Amount--;
+            eatItem.item.GetCountItems--;
             eatItem = null;
         }
         public void Update()

@@ -61,7 +61,7 @@ public class TreeObject : MineObject
     protected new void ChangeMineState(MineState state)
     {
         mineState = state;
-        Debug.Log("Tree ChangeMineState");
+        //Debug.Log("Tree ChangeMineState");
 
         if (state == MineState.Normal) //처음으로 초기화
         {

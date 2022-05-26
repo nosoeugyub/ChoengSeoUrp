@@ -109,10 +109,10 @@ namespace NSY.Iven
             if (itemSlot.item != null)
             {
                 itemTooltip.ShowItemTooltip(itemSlot.item);
-                Vector3 ToolVec =   itemTooltip.tooltipTransform.transform.position ;
-                ToolVec.x = itemSlot.GetComponent<Image>().rectTransform.position.x ;
-                ToolVec.y = itemSlot.GetComponent<Image>().rectTransform.position.y ;
-                ToolVec.z= itemSlot.GetComponent<Image>().rectTransform.position.z;
+                Vector3 ToolVec = itemTooltip.tooltipTransform.transform.position;
+                ToolVec.x = itemSlot.GetComponent<Image>().rectTransform.position.x;
+                ToolVec.y = itemSlot.GetComponent<Image>().rectTransform.position.y;
+                ToolVec.z = itemSlot.GetComponent<Image>().rectTransform.position.z;
                 itemTooltip.tooltipTransform.transform.position = ToolVec;
             }
         }
@@ -142,7 +142,7 @@ namespace NSY.Iven
             }
             else
             {
-               
+
                 BuildingHandyObjSpawn HandySpawnObj = FindObjectOfType<BuildingHandyObjSpawn>();
                 switch (obj.item.InItemType)
                 {
@@ -165,12 +165,9 @@ namespace NSY.Iven
         //더블클릭
         public void OnDoubleClickEvent(BaseItemSlot itemslot)
         {
-            Debug.Log("더블클릭따땅");
             if (itemslot.item.OutItemType == OutItemType.Food)
             {
-                PlayerEat.Eat(itemslot.item);
-                itemslot.Amount --;
-                itemslot.item.GetCountItems --;
+                PlayerEat.Eat(itemslot);
             }
         }
 
@@ -292,7 +289,7 @@ namespace NSY.Iven
             if (equipPanel.AddResultItem(item))
             {
                 playerinterract.SetHandItem(item);
-               
+
 
             }
 

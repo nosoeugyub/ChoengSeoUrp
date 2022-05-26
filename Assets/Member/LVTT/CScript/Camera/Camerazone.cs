@@ -86,10 +86,23 @@ namespace Game.Cam
 
         private void OnTriggerStay(Collider other)
         {
+            // 채원아.. CompareTag보다는 Layer 비교연산이 더 빠르단다..
+            // GetCompont를 Stay에 호출하면 어떡하니..
+
+            /*
             if (other.CompareTag("Player") && other.GetComponent<CharacterController>())
             {
                 virtualCamera.SetActive(true);
             }
+            */
+
+            // 차라리 이렇게 쓰렴..... 안느리단다..
+            if (other.CompareTag("Player") && other.GetComponent<CharacterController>())
+            {
+                if(other.GetComponent<CharacterController>())
+                virtualCamera.SetActive(true);
+            }
+
         }
         private void OnTriggerExit(Collider other)
         {
