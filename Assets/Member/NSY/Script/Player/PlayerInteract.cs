@@ -52,8 +52,6 @@ namespace NSY.Player
         }
         private void Update()
         {
-            TestInputs();
-
             InteractWithObjects();
         }
 
@@ -146,7 +144,7 @@ namespace NSY.Player
                         else
                         {
                             print(buildAreaObject.name);
-                            buildAreaObject.OnBuildMode();
+                            buildAreaObject.OnBuildMode(handItem);
                         }
                         return;
                     }
@@ -223,25 +221,6 @@ namespace NSY.Player
             handItem = item;
             handItemObj.sprite = handItem.ItemSprite;
             //애니메이션 변경
-        }
-        private void TestInputs()
-        {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                SetHandItem(testToolItems[0]);
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                SetHandItem(testToolItems[1]);
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                SetHandItem(testToolItems[2]);
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha4))
-            {
-                SetHandItem(testToolItems[3]);
-            }
         }
 
         public void OnTriggerEnter(Collider other)

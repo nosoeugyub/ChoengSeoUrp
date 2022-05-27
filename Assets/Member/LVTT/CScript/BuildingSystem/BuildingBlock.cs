@@ -142,16 +142,7 @@ namespace DM.Building
 
                     }
                 }
-
-                if (curInteractObj && !curInteractObj.ItemisSet)
-                {
-                    ScaleBuildItem();
-                    RotateBuildItem();
-                }
-            }
-            else if (CurBuildMode == BuildMode.DemolishMode)
-            {
-                if (Input.GetMouseButtonDown(0))
+                if(Input.GetMouseButtonDown(1))
                 {
                     ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                     Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue, 0.3f);
@@ -164,7 +155,20 @@ namespace DM.Building
                         curInteractObj.Demolish();
                     }
                 }
+
+                if (curInteractObj && !curInteractObj.ItemisSet)
+                {
+                    ScaleBuildItem();
+                    RotateBuildItem();
+                }
             }
+            //else if (CurBuildMode == BuildMode.DemolishMode)
+            //{
+            //    if (Input.GetMouseButtonDown(0))
+            //    {
+
+            //    }
+            //}
         }
 
         private void SetBuildingItemObj()
@@ -208,8 +212,9 @@ namespace DM.Building
             }
         }
 
-        public void OnBuildMode()
+        public void OnBuildMode(Item handitem)
         {
+            if (handitem.InItemType != InItemType.Hammer) return;
 
             buildManager.BuildingInteractButtonOnOff(true);
 
