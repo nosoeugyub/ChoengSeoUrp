@@ -155,6 +155,7 @@ public class NewInventUIManager : MonoBehaviour
             iven.AddItem(nowSelectItem.RecipeItem);
             return;
         }
+
         List<List<ItemSlot>> itemSlots = CanCraftItem();
         if (itemSlots == null || itemSlots[0].Count == 0) return;
 
@@ -162,7 +163,7 @@ public class NewInventUIManager : MonoBehaviour
         {
             if (itemSlots[i].Count == 0) continue;
 
-            //슬롯 중 숫자가 제일 작은 슬롯 구해옴
+            //슬롯 중 숫자가 제일 작은 슬롯 구해올 변수
             int ra = CraftWindows[i].RecipeAmount;
 
             ItemSlot minSlot = itemSlots[i][itemSlots[i].Count - 1];
@@ -210,12 +211,12 @@ public class NewInventUIManager : MonoBehaviour
             itemSlots.Add(itemSlot1);
             if (itemwid.Item == null) continue;// 아이템이 널이면 다음 슬롯 검사로.
 
-            for (int i = 0; i < iven.ItemSlots.Count; i++)
+            for (int i = 0; i < iven.ItemSlots.Count; i++)//전체 인벤 돌기
             {
                 //특정 템 있는 슬롯 얻어옴
                 if (itemwid.Item == iven.ItemSlots[i].item) // 필요 재료와 아이템 타입이 같다.
                 {
-                    if (itemwid.RecipeAmount > iven.ItemSlots[i].item.GetCountItems) return null; //개수가 모자라면 리턴시킴.
+                    if (itemwid.RecipeAmount > iven.ItemSlots[i].item.GetCountItems) return null; //필요 개수가 모자라면 널 리턴시킴.
                     itemSlots[itemSlots.Count - 1].Add(iven.ItemSlots[i]);
                     //break;//개수 충족했다면 일단 다음.
                 }

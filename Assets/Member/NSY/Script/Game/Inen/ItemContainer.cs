@@ -1,8 +1,8 @@
 ﻿using DM.Building;
+using NSY.Manager;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using NSY.Manager;
 namespace NSY.Iven
 {
     public abstract class ItemContainer : MonoBehaviour, IItemContainer
@@ -67,7 +67,7 @@ namespace NSY.Iven
 
         public virtual void CheckCanBuildItem(BuildingBlock buildingBlock)//당장 건축 가능한 자재인지 아닌지 판단.
         {
-           
+
             if (!buildingBlock) //임시 처리 정확한 기획 없음
             {
                 foreach (ItemSlot itemSlot in ItemSlots)
@@ -80,24 +80,24 @@ namespace NSY.Iven
 
             foreach (ItemSlot itemSlot in ItemSlots)
             {
-               
+
                 if (itemSlot.item == null)
+                {
+
+
+                    continue;
+                }
+                else
+                {
+                    if (itemSlot.item.InItemType == InItemType.BuildSign || itemSlot.item.InItemType != InItemType.BuildWall && itemSlot.item.InItemType != InItemType.BuildNormal)//벽이면
                     {
-
-
-                        continue;
+                        itemSlot.Interactble(false);
                     }
                     else
                     {
-                        if (itemSlot.item.InItemType == InItemType.BuildSign || itemSlot.item.InItemType != InItemType.BuildWall && itemSlot.item.InItemType != InItemType.BuildNormal)//벽이면
-                        {
-                            itemSlot.Interactble(false);
-                        }
-                        else
-                        {
-                            itemSlot.Interactble(true);
-                        }
+                        itemSlot.Interactble(true);
                     }
+                }
 
 
 
@@ -108,16 +108,14 @@ namespace NSY.Iven
                 }
                 else// 건축 불가능한친구면
                 {
-                  
+
                     itemSlot.isCheckBulid = true;
                     itemSlot.Interactble(false);
 
                 }
-            
+
             }
         }
-      
-
 
         public virtual bool AddItem(Item item)
         {
@@ -128,30 +126,109 @@ namespace NSY.Iven
                     ItemSlots[i].item = item;
                     ItemSlots[i].Amount++;
                     ItemSlots[i].item.GetCountItems++;
-                    if(OnAddItemEvent !=null)
-                    OnAddItemEvent();
+                    if (OnAddItemEvent != null)
+                        OnAddItemEvent();
 
                     SuperManager.Instance.unlockmanager.GetInterectItemUnLocking();// 해금
                     PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.GetItem, PlayerData.ItemData, ((int)ItemBehaviorEnum.length));
-                   
+
                     return true;
                 }
             }
             for (int i = 0; i < ItemSlots.Count; i++)
             {
-                if (ItemSlots[i].item == null )
+                if (ItemSlots[i].item == null)
                 {
                     ItemSlots[i].item = item;
                     ItemSlots[i].Amount++;
                     ItemSlots[i].item.GetCountItems++;
-                    if(OnAddItemEvent !=null)
-                    OnAddItemEvent();
+                    if (OnAddItemEvent != null)
+                        OnAddItemEvent();
+
                     SuperManager.Instance.unlockmanager.GetInterectItemUnLocking();
                     PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.GetItem, PlayerData.ItemData, ((int)ItemBehaviorEnum.length));
+
                     return true;
                 }
             }
             return false;
+        }
+
+        public bool AddItem(Item item, int removeCount)
+        {
+            for (int i = 0; i < ItemSlots.Count; i++)
+            {
+                if (ItemSlots[i].CanAddStack(item, removeCount))
+                {
+                    ItemSlots[i].item = item;
+                    ItemSlots[i].Amount++;
+                    ItemSlots[i].item.GetCountItems++;
+                    if (OnAddItemEvent != null)
+                        OnAddItemEvent();
+
+                    SuperManager.Instance.unlockmanager.GetInterectItemUnLocking();// 해금
+                    PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.GetItem, PlayerData.ItemData, ((int)ItemBehaviorEnum.length));
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public virtual bool RemoveItem(Item item, int removeCount)
+        {
+            if (item.GetCountItems < removeCount) return false; //삭제할 개수보다 보유 개수가 작으면 실패
+
+            List<ItemSlot> itemSlots = GetItemSlotList(item);
+
+            int ra = removeCount;
+
+            ItemSlot minSlot;// = itemSlots[itemSlots.Count - 1];
+
+            do
+            {
+                //print(itemSlots[i].Count - 1);
+                minSlot = itemSlots[itemSlots.Count - 1];
+
+                foreach (var itemslot in itemSlots) //최소 슬롯 찾음
+                {
+                    if (itemslot.Amount < minSlot.Amount)
+                    {
+                        minSlot = itemslot;
+                    }
+                }
+
+                if (minSlot.Amount < ra) //전체 6  민 칸 1개, 필요 2개일 경우 
+                {
+                    minSlot.item.GetCountItems -= minSlot.Amount;//6- 1
+                    ra -= minSlot.Amount; //2 -= 1
+                    minSlot.Amount = 0;
+                    itemSlots.Remove(minSlot);
+                }
+                else
+                    break;
+            }
+            while (ra > 0);// 그런데도
+
+            minSlot.item.GetCountItems -= ra;
+            minSlot.Amount -= ra;
+
+            return true;
+        }
+
+        private List<ItemSlot> GetItemSlotList(Item item)
+        {
+            List<ItemSlot> itemSlot = new List<ItemSlot>();
+
+            for (int i = 0; i < ItemSlots.Count; i++)//전체 인벤 돌기
+            {
+                if (item == ItemSlots[i].item) // 삭제할 재료와 인벤슬롯의 아이템 타입이 같다.
+                {
+                    itemSlot.Add(ItemSlots[i]);//해당 슬롯 리스트 추가
+                }
+            }
+            return itemSlot;
         }
 
         //
@@ -212,6 +289,7 @@ namespace NSY.Iven
                 ItemSlots[i].Amount = 0;
             }
         }
+
     }
 }
 

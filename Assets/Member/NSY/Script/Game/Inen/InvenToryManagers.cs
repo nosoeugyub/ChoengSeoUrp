@@ -142,7 +142,6 @@ namespace NSY.Iven
             }
             else
             {
-
                 BuildingHandyObjSpawn HandySpawnObj = FindObjectOfType<BuildingHandyObjSpawn>();
                 switch (obj.item.InItemType)
                 {
@@ -170,17 +169,11 @@ namespace NSY.Iven
                 PlayerEat.Eat(itemslot);
             }
         }
-
-
-
         private void InventoryRightClick(BaseItemSlot itemslot)
         {
-
             if (itemslot.item.OutItemType == OutItemType.Tool)
             {
-
                 Unequip(itemslot.item);
-
             }
             else if (itemslot.item is UseableItem)
             {
@@ -193,17 +186,12 @@ namespace NSY.Iven
                     usableitem.Destroy();
                 }
             }
-
-
         }
 
         //장비슬롯에서 눌렀을때
         private void EquipmentPanelLeftClick(BaseItemSlot itemslot)
         {
-
             Equip(itemslot.item); //장비칸장착
-
-
         }
 
         private void BeginDrag(BaseItemSlot itemslot)
@@ -219,17 +207,13 @@ namespace NSY.Iven
         }
         private void Drag(BaseItemSlot itemslot)
         {
-
             draggableitem.transform.position = Input.mousePosition;
-
-
         }
         private void EndDrag(BaseItemSlot itemslot)
         {
 
             dragitemSlot = null;
             draggableitem.gameObject.SetActive(false);
-            ;
         }
 
         private void Drop(BaseItemSlot dropitemslot)
