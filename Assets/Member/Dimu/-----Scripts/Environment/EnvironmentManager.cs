@@ -1,8 +1,6 @@
-﻿using NSY.Iven;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 [ExecuteInEditMode]
 public class EnvironmentManager : MonoBehaviour
@@ -16,7 +14,7 @@ public class EnvironmentManager : MonoBehaviour
     [SerializeField] bool canChange;
     [Range(0, 100)]
     [SerializeField] float _cleanliness; //0~100
-    [SerializeField] Image cleanGageImage;
+
     [SerializeField] Material skyBox;
 
     [SerializeField] Color goodFogColor;//183 239 248
@@ -73,8 +71,8 @@ public class EnvironmentManager : MonoBehaviour
     //반딧불이
     [SerializeField] GameObject FireFlyEffect;
 
-    [SerializeField] CraftSlot a;
-
+    //[SerializeField] CraftSlot a;
+    [SerializeField] HappyUI happyUI;
     public float Cleanliness
     {
         get
@@ -84,16 +82,20 @@ public class EnvironmentManager : MonoBehaviour
         set
         {
             cleanliness = value;
+            if (cleanliness > 100)
+                cleanliness = 100;
 
             if (cleanLevel < cleanLevels.Count)
             {
                 if (cleanLevels[cleanLevel] <= cleanliness)
                     ComeToPort();
             }
-
-            cleanGageImage.fillAmount = cleanliness / 100;
+            happyUI.HappyUISetting(cleanliness);
         }
     }
+
+
+
     private void Awake()
     {
         npcManager = FindObjectOfType<NPCManager>();
