@@ -1,5 +1,4 @@
 ﻿using DM.Building;
-using TT.BuildSystem;
 using UnityEditor;
 using UnityEngine;
 
@@ -229,6 +228,7 @@ public class CreateAsset : MonoBehaviour
             so = AssetDatabase.LoadAssetAtPath(string.Format(string.Format("{0}.asset", path.Substring(0, path.Length - 7))), typeof(Item)) as Item;
             so.OutItemType = OutItemType.BuildingItemObj;
             so.ItemName = path.Substring(0, path.Length - 7);
+            so.MaximumStacks = 30;
             variantRoot.GetComponent<BuildingItemObj>().SetItem(so);
 
             Transform variantRootChild = variantRoot.transform.GetChild(0);
@@ -269,6 +269,7 @@ public class CreateAsset : MonoBehaviour
                 so.OutItemType = OutItemType.Collect;
                 so.InItemType = InItemType.None;
                 so.ItemName = so.name;
+                so.MaximumStacks = 30;
             }
 
             variantRoot.GetComponent<CollectObject>().SetItem(so);
@@ -280,6 +281,29 @@ public class CreateAsset : MonoBehaviour
             Debug.Log(AssetDatabase.GetAssetPath(material));
             AssetDatabase.Refresh();
 
+        }
+    }
+    [MenuItem("Assets/SetSOObj")]
+    static void SetSOObj()
+    {
+        Object[] _textures = Selection.GetFiltered(typeof(Texture2D), SelectionMode.DeepAssets);
+        Item so;
+
+        foreach (Texture2D texture in _textures)
+        {
+            string path = AssetDatabase.GetAssetPath(texture);
+
+            AssetDatabase.ImportAsset(path);
+
+            so = AssetDatabase.LoadAssetAtPath(string.Format(string.Format("{0}.asset", path.Substring(0, path.Length - 7))), typeof(Item)) as Item;
+            if (so)
+            {
+                //so.OutItemType = OutItemType.BuildingItemObj;
+                so.MaximumStacks = 30;
+                //so.InItemType = InItemType.None;
+                so.ItemName = so.name;
+            }
+            AssetDatabase.Refresh();
         }
     }
     [MenuItem("Assets/CreateAssets_GroundCollect")]
@@ -302,7 +326,7 @@ public class CreateAsset : MonoBehaviour
 
             GameObject variantRoot = PrefabUtility.SaveAsPrefabAsset((GameObject)instanceRoot, string.Format("{0}.prefab", path.Substring(0, path.Length - 7)));
             variantRoot.GetComponent<BoxCollider>().size = new Vector3(texture.width * 0.01f, texture.height * 0.01f, 1);
-            variantRoot.GetComponent<BoxCollider>().center = new Vector3(0, 0, 0);
+            variantRoot.GetComponent<BoxCollider>().center = new Vector3(0, texture.height * 0.01f / 2 + 0.001f, 0);
 
             so = AssetDatabase.LoadAssetAtPath(string.Format(string.Format("{0}.asset", path.Substring(0, path.Length - 7))), typeof(Item)) as Item;
             if (so)
@@ -310,12 +334,16 @@ public class CreateAsset : MonoBehaviour
                 so.OutItemType = OutItemType.Collect;
                 so.InItemType = InItemType.None;
                 so.ItemName = so.name;
+                so.MaximumStacks = 30;
             }
 
             variantRoot.GetComponent<CollectObject>().SetItem(so);
 
             Transform variantRootChild = variantRoot.transform.GetChild(0);
             variantRootChild.GetComponent<MeshRenderer>().material = material;
+            variantRootChild.localScale = new Vector3(texture.width * 0.01f, texture.height * 0.01f, 1);
+
+            variantRootChild.position = new Vector3(variantRoot.transform.position.x, texture.height * 0.01f / 2 + 0.001f, variantRoot.transform.position.z);
             variantRootChild.localScale = new Vector3(texture.width * 0.01f, texture.height * 0.01f, 1);
 
             Debug.Log(AssetDatabase.GetAssetPath(material));
@@ -336,10 +364,10 @@ public class CreateAsset : MonoBehaviour
 
             so = ScriptableObject.CreateInstance<Item>();
             Sprite tests = AssetDatabase.LoadAssetAtPath(string.Format(path), typeof(Sprite)) as Sprite;
-            so.ItemSprite =tests;
+            so.ItemSprite = tests;
 
             Material testm = AssetDatabase.LoadAssetAtPath(string.Format(string.Format("{0}.mat", path.Substring(0, path.Length - 7))), typeof(Material)) as Material;
-            so.ItemMaterial= testm;
+            so.ItemMaterial = testm;
 
             GameObject testg = AssetDatabase.LoadAssetAtPath(string.Format(string.Format("{0}.prefab", path.Substring(0, path.Length - 7))), typeof(GameObject)) as GameObject;
             so.ItemPrefab = testg;
@@ -350,6 +378,7 @@ public class CreateAsset : MonoBehaviour
 
             AssetDatabase.CreateAsset(so, string.Format("{0}.asset", filename));
             so.ItemName = so.name;
+            so.MaximumStacks = 30;
 
             AssetDatabase.Refresh();
             //material.SetTexture("_MainTex", texture);

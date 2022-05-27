@@ -48,7 +48,7 @@ namespace DM.Quest
 
                 foreach (QuestData.Rewards item in nowQuestData.returnRewards)
                 {
-                    SuperManager.Instance.inventoryManager.RemoveItem(item.itemType);//, reward.requireCount);
+                    SuperManager.Instance.inventoryManager.RemoveItem(item.itemType, item.getCount);//, reward.requireCount);
                 }
 
                 //reward
@@ -67,7 +67,7 @@ namespace DM.Quest
                     }
                     else if (reward.rewardType == RewardType.Event)
                     {
-                        //이벤트 할당
+                        EventManager.EventAction += EventManager.EventActions[reward.getCount];
                     }
                 }
                 clearQuestLists.Add(nowQuestData);

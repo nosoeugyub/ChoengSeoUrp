@@ -20,6 +20,7 @@ namespace Game.Cam
         //bool FixedZone;
         bool CanSwitchCam;
         CameraManager CamManager;
+        static GameObject nowCam;
         void Start()
         {
             CamManager = FindObjectOfType<CameraManager>();
@@ -62,13 +63,14 @@ namespace Game.Cam
         //}
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Player"))
+            if (other.CompareTag("Player") && other.GetComponent<CharacterController>())
             {
 
                 //CanSwitchCam = true;
 
-                MainCam.SetActive(false);
-                virtualCamera.SetActive(true);
+                //MainCam.SetActive(false);
+                //virtualCamera.SetActive(true);
+                nowCam = virtualCamera;
                 // switch (CamManager.LookIn)
                 //{
                 //    case true:
@@ -84,20 +86,33 @@ namespace Game.Cam
 
         private void OnTriggerStay(Collider other)
         {
+            // 채원아.. CompareTag보다는 Layer 비교연산이 더 빠르단다..
+            // GetCompont를 Stay에 호출하면 어떡하니..
+
+            /*
             if (other.CompareTag("Player") && other.GetComponent<CharacterController>())
             {
-                MainCam.SetActive(false);
+                virtualCamera.SetActive(true);
             }
+            */
+
+            // 차라리 이렇게 쓰렴..... 안느리단다..
+            if (other.CompareTag("Player") && other.GetComponent<CharacterController>())
+            {
+                if(other.GetComponent<CharacterController>())
+                virtualCamera.SetActive(true);
+            }
+
         }
         private void OnTriggerExit(Collider other)
         {
-            if (other.CompareTag("Player"))
+            if (other.CompareTag("Player") && other.GetComponent<CharacterController>())
             {
                 //CanSwitchCam = false;
                 //virtualCamera.enabled = false;
                 virtualCamera.SetActive(false);
                 //virtualCamera2.SetActive(false);
-                MainCam.SetActive(true);
+                //MainCam.SetActive(true);
                CamManager.LookIn = true;
             }
         }

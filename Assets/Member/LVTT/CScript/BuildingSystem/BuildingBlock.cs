@@ -38,10 +38,13 @@ namespace DM.Building
         private float BuildItemRotationVar = 1;
         private float BuildItemGap = 0.002f;
 
+        SpecialHouse specialHouse;
+
         RaycastHit hit;
         Ray ray;
         int layerMask;   // Player 레이어만 충돌 체크함
 
+        public SpecialHouse SpecialHouse { get { return specialHouse; } set { specialHouse = value; } }
         public static bool isBuildMode { get; set; } = false;
         public static bool isBuildDemolishMode { get; set; } = false;
         public static BuildingBlock nowBuildingBlock { get; set; } = null;
@@ -60,11 +63,13 @@ namespace DM.Building
         {
             CamManager = FindObjectOfType<CameraManager>();
             buildManager = FindObjectOfType<BuildingManager>();
+            specialHouse = GetComponent<SpecialHouse>();
+            
             inventory = FindObjectOfType<InventoryNSY>();
         }
         void Start()
         {
-            layerMask = 1 << LayerMask.NameToLayer("Interactable");
+            layerMask = 1 << LayerMask.NameToLayer("Wall");
             buildButtonFuncAdded = false;
             buildManager.SetbuildOffButtonEvents(BuildModeOff);
         }
@@ -98,7 +103,7 @@ namespace DM.Building
                     ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                     Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue, 0.3f);
 
-                    if (Physics.Raycast(ray, out hit, 100))
+                    if (Physics.Raycast(ray, out hit, 100, layerMask))
                     {
 
                         print(hit.collider.name);
@@ -137,21 +142,12 @@ namespace DM.Building
 
                     }
                 }
-
-                if (curInteractObj && !curInteractObj.ItemisSet)
-                {
-                    ScaleBuildItem();
-                    RotateBuildItem();
-                }
-            }
-            else if (CurBuildMode == BuildMode.DemolishMode)
-            {
-                if (Input.GetMouseButtonDown(0))
+                if(Input.GetMouseButtonDown(1))
                 {
                     ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                     Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue, 0.3f);
 
-                    if (Physics.Raycast(ray, out hit, 100))
+                    if (Physics.Raycast(ray, out hit, 100, layerMask))
                     {
                         if (hit.collider.GetComponent<BuildingItemObj>() == null) return;
                         curInteractObj = hit.collider.GetComponent<BuildingItemObj>();
@@ -159,8 +155,20 @@ namespace DM.Building
                         curInteractObj.Demolish();
                     }
                 }
-            }
 
+                if (curInteractObj && !curInteractObj.ItemisSet)
+                {
+                    ScaleBuildItem();
+                    RotateBuildItem();
+                }
+            }
+            //else if (CurBuildMode == BuildMode.DemolishMode)
+            //{
+            //    if (Input.GetMouseButtonDown(0))
+            //    {
+
+            //    }
+            //}
         }
 
         private void SetBuildingItemObj()
@@ -173,7 +181,6 @@ namespace DM.Building
 
         public List<BuildingItemObj> GetBuildItemList()
         {
-
             List<BuildingItemObj> items = new List<BuildingItemObj>();
             if (isBuildMode || isBuildDemolishMode) return items;
 
@@ -190,6 +197,8 @@ namespace DM.Building
         }
         public void RemoveBuildItemToList(GameObject Item)
         {
+            if (specialHouse)
+                specialHouse.CanExist(curInteractObj, false);
             BuildItemList.Remove(Item);
         }
         public void RemoveDemolishedBuildItem()
@@ -203,8 +212,9 @@ namespace DM.Building
             }
         }
 
-        public void OnBuildMode()
+        public void OnBuildMode(Item handitem)
         {
+            if (handitem.InItemType != InItemType.Hammer) return;
 
             buildManager.BuildingInteractButtonOnOff(true);
 
@@ -398,8 +408,10 @@ namespace DM.Building
             newPrefab.GetComponent<BuildingItemObj>().SetParentBuildArea(nowBuildingBlock);
             newPrefab.name = spawnObj.name;
 
+            if(specialHouse)
+            specialHouse.CanExist(curInteractObj, true);
             AddBuildItemToList(newPrefab);
-            FindObjectOfType<EnvironmentManager>().ChangeCleanliness(newPrefab.GetComponent<BuildingItemObj>().GetItem().CleanAmount + 1);
+            FindObjectOfType<EnvironmentManager>().ChangeCleanliness(newPrefab.GetComponent<BuildingItemObj>().GetItem().CleanAmount + 0.5f);
             CancleUI(true);
         }
 

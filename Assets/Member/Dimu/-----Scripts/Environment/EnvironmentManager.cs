@@ -1,8 +1,6 @@
-﻿using NSY.Iven;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 [ExecuteInEditMode]
 public class EnvironmentManager : MonoBehaviour
@@ -16,7 +14,7 @@ public class EnvironmentManager : MonoBehaviour
     [SerializeField] bool canChange;
     [Range(0, 100)]
     [SerializeField] float _cleanliness; //0~100
-    [SerializeField] Image cleanGageImage;
+
     [SerializeField] Material skyBox;
 
     [SerializeField] Color goodFogColor;//183 239 248
@@ -73,8 +71,8 @@ public class EnvironmentManager : MonoBehaviour
     //반딧불이
     [SerializeField] GameObject FireFlyEffect;
 
-    [SerializeField] CraftSlot a;
-
+    //[SerializeField] CraftSlot a;
+    [SerializeField] HappyUI happyUI;
     public float Cleanliness
     {
         get
@@ -84,16 +82,20 @@ public class EnvironmentManager : MonoBehaviour
         set
         {
             cleanliness = value;
+            if (cleanliness > 100)
+                cleanliness = 100;
 
             if (cleanLevel < cleanLevels.Count)
             {
                 if (cleanLevels[cleanLevel] <= cleanliness)
                     ComeToPort();
             }
-
-            cleanGageImage.fillAmount = cleanliness / 100;
+            happyUI.HappyUISetting(cleanliness);
         }
     }
+
+
+
     private void Awake()
     {
         npcManager = FindObjectOfType<NPCManager>();
@@ -122,10 +124,10 @@ public class EnvironmentManager : MonoBehaviour
         d1.transform.rotation = Quaternion.Euler(d1.transform.eulerAngles.x, maincamera.transform.eulerAngles.y, d1.transform.eulerAngles.z);
         d2.transform.rotation = Quaternion.Euler(d2.transform.eulerAngles.x, maincamera.transform.eulerAngles.y + 180, d2.transform.eulerAngles.z);
 
-        d1.intensity = sunintensity.Evaluate(time) * 0.4f + 0.1f;
-        d2.intensity = sunintensity.Evaluate(time) * 0.4f + 0.1f;
-        d3.intensity = sunintensity.Evaluate(time) * 0.51f + 0.1f;
-        d4.intensity = sunintensity.Evaluate(time) * 0.5f + 0.1f;
+        d1.intensity = sunintensity.Evaluate(time) * 0.6f + 0.2f;
+        d2.intensity = sunintensity.Evaluate(time) * 0.6f + 0.2f;
+        d3.intensity = sunintensity.Evaluate(time) * 0.81f + 0.2f;
+        d4.intensity = sunintensity.Evaluate(time) * 0.8f + 0.2f;
 
         //해의 색
         d1.color = sunColor.Evaluate(time);

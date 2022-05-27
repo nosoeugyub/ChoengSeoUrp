@@ -30,8 +30,8 @@ public class CollectObject : ItemObject
         canMove = true;
         amount = 0;
         power = powerInit;
-        }
         SuperManager.Instance.soundManager.PlaySFX("item_drop");
+        }
 
     }
     void DeactiveDelay() => gameObject.SetActive(false);

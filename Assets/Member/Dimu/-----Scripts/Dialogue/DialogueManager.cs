@@ -223,7 +223,7 @@ namespace DM.Dialog
                 {
                     if (!npcManager.HaveHouse(dialogData.haveToHaveNPCHouse[i]))
                     {
-                        print("필요 NPC가 집이 없습니다.");
+                        //print("필요 NPC가 집이 없습니다.");
                         return false;
                     }
                 }

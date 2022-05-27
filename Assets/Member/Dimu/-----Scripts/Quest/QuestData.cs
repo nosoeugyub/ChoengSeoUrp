@@ -44,6 +44,7 @@ namespace DM.Quest
             //public int npcType; //특정 NPC의 집
             public Condition buildCondition; //특정 NPC의 집
             public BuildingBehaviorEnum behaviorType;//
+            public SpecialBuildingType sbtype;//
         }
         public class QuestInfo
         {
@@ -72,6 +73,9 @@ namespace DM.Quest
             {
                 //PlayerData.AddDictionary(building.objType, PlayerData.BuildBuildingData, (int)BuildingBehaviorEnum.length);
                 //building.initData = PlayerData.BuildBuildingData[building.objType].amounts[building.behaviorType];
+
+
+
             }
 
             foreach (QuestTask item in tasks.items)
@@ -96,6 +100,20 @@ namespace DM.Quest
                 foreach (QuestTask_Build building in tasks.builds)
                 {
                     //building.buildCondition
+
+                    foreach (var item in SuperManager.Instance.buildingManager.buildings)
+                    {
+                        if (!item.SpecialHouse) continue;
+
+                        if (item.SpecialHouse.Spetype == building.sbtype)
+                        {
+                            if (item.SpecialHouse.Ison == true)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
                 }
             }
             if (tasks.items.Length > 0)

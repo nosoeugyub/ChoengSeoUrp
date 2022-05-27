@@ -26,7 +26,7 @@ namespace NSY.Manager
         //public static event EndTreeTutor UnFristTreeCollder;
         //==
 
-        public static Action[] EventActions = new Action[5];
+        public static Action[] EventActions = new Action[10];
         public static Action EventAction;
         //EventAction 는 항상 실행중.
         //이벤트 바로 넣기 >> EventActions[0] = ~~~;

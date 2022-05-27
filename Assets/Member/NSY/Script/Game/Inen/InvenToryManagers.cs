@@ -67,12 +67,12 @@ namespace NSY.Iven
 
 
             //인벤토리 클레스 이벤트
-            equipPanel.OnRightClickEvents += ResultClick;
+            equipPanel.OnLeftClickEvents += ResultClick;
             iventorynsy.OnDubleClickEvent += OnDoubleClickEvent;
             iventorynsy.OnLeftClickEvent += BuildingLeftClick;
             iventorynsy.OnRightClickEvent += InventoryRightClick;
             // iventorynsy.OnLeftClickEvent += InventoryLeftClick;
-            equipPanel.OnRightClickEvent += EquipmentPanelRightClick;
+            equipPanel.OnLeftClickEvent += EquipmentPanelLeftClick;
             //  craftPanel.OnLeftClickEvent += CraftPanelLeftClick;
             //드래그 시작
             iventorynsy.OnBeginDragEvent += BeginDrag;
@@ -109,10 +109,10 @@ namespace NSY.Iven
             if (itemSlot.item != null)
             {
                 itemTooltip.ShowItemTooltip(itemSlot.item);
-                Vector3 ToolVec =   itemTooltip.tooltipTransform.transform.position ;
-                ToolVec.x = itemSlot.GetComponent<Image>().rectTransform.position.x ;
-                ToolVec.y = itemSlot.GetComponent<Image>().rectTransform.position.y ;
-                ToolVec.z= itemSlot.GetComponent<Image>().rectTransform.position.z;
+                Vector3 ToolVec = itemTooltip.tooltipTransform.transform.position;
+                ToolVec.x = itemSlot.GetComponent<Image>().rectTransform.position.x;
+                ToolVec.y = itemSlot.GetComponent<Image>().rectTransform.position.y;
+                ToolVec.z = itemSlot.GetComponent<Image>().rectTransform.position.z;
                 itemTooltip.tooltipTransform.transform.position = ToolVec;
             }
         }
@@ -142,7 +142,6 @@ namespace NSY.Iven
             }
             else
             {
-               
                 BuildingHandyObjSpawn HandySpawnObj = FindObjectOfType<BuildingHandyObjSpawn>();
                 switch (obj.item.InItemType)
                 {
@@ -165,24 +164,16 @@ namespace NSY.Iven
         //더블클릭
         public void OnDoubleClickEvent(BaseItemSlot itemslot)
         {
-            Debug.Log("더블클릭따땅");
             if (itemslot.item.OutItemType == OutItemType.Food)
             {
-                PlayerEat.Eat(itemslot.item);
-                itemslot.Amount --;
+                PlayerEat.Eat(itemslot);
             }
         }
-
-
-
         private void InventoryRightClick(BaseItemSlot itemslot)
         {
-
             if (itemslot.item.OutItemType == OutItemType.Tool)
             {
-
                 Unequip(itemslot.item);
-
             }
             else if (itemslot.item is UseableItem)
             {
@@ -195,17 +186,12 @@ namespace NSY.Iven
                     usableitem.Destroy();
                 }
             }
-
-
         }
 
         //장비슬롯에서 눌렀을때
-        private void EquipmentPanelRightClick(BaseItemSlot itemslot)
+        private void EquipmentPanelLeftClick(BaseItemSlot itemslot)
         {
-
             Equip(itemslot.item); //장비칸장착
-
-
         }
 
         private void BeginDrag(BaseItemSlot itemslot)
@@ -221,17 +207,13 @@ namespace NSY.Iven
         }
         private void Drag(BaseItemSlot itemslot)
         {
-
             draggableitem.transform.position = Input.mousePosition;
-
-
         }
         private void EndDrag(BaseItemSlot itemslot)
         {
 
             dragitemSlot = null;
             draggableitem.gameObject.SetActive(false);
-            ;
         }
 
         private void Drop(BaseItemSlot dropitemslot)
@@ -250,16 +232,17 @@ namespace NSY.Iven
         //버리기
         private void DropItemOutsideUI()
         {
-            discount = 0;
             if (dragitemSlot == null)
             {
                 return;
             }
+            discount = 1;
+            ScriptTxt.text = discount.ToString();
 
             BaseItemSlot baseitemslot = dragitemSlot;
-            questionDialog.Show();
-            questionDialog.OnYesEvent += () => DestroyItem(baseitemslot);
-
+            //questionDialog.Show();
+            //questionDialog.OnYesEvent += () => DestroyItem(baseitemslot);
+            DestroyItem(baseitemslot);
 
         }
         public void PlusBtn()
@@ -274,6 +257,7 @@ namespace NSY.Iven
         }
         private void DestroyItem(BaseItemSlot baseitemslot)//버릴떄 쓰는 로직
         {
+            baseitemslot.item.GetCountItems -= discount;
             baseitemslot.Amount -= discount;
             if (baseitemslot.Amount <= 0)
             {
@@ -291,7 +275,7 @@ namespace NSY.Iven
             if (equipPanel.AddResultItem(item))
             {
                 playerinterract.SetHandItem(item);
-               
+
 
             }
 

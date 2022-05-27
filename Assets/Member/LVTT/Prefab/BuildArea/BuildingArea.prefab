@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 541952936611033171}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.14, y: 0, z: -3.49}
+  m_LocalPosition: {x: -10, y: 0, z: -4.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4123280055350815964}
@@ -437,8 +437,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 20, y: 12, z: 2}
-  m_Center: {x: 0, y: 6, z: -1}
+  m_Size: {x: 20, y: 12, z: 1}
+  m_Center: {x: 0, y: 6, z: -1.2}
 --- !u!114 &4123280055350815965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -451,6 +451,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83250eade0b79f5429b6c83f68c1f5f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultshader: {fileID: 0}
+  quad: {fileID: 0}
   buildingId: 0
   CurBuildMode: 0
   livingCharacter: {fileID: 0}
@@ -639,7 +641,7 @@ MeshCollider:
   m_GameObject: {fileID: 4123280055967156640}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
@@ -796,7 +798,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5035700525535553099}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -16.19, y: 0, z: -4.17}
+  m_LocalPosition: {x: -13, y: 0, z: -4.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4123280055350815964}
@@ -963,6 +965,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8387030273146135035, guid: f9b0d3e40b30e4e498b148ead52544bc,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9b0d3e40b30e4e498b148ead52544bc, type: 3}
 --- !u!4 &7377421063724409395 stripped
@@ -982,6 +989,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: pile_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5776676840567992691, guid: 68e9981f23e2c0b42b99646f39157fda,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6316974475518856229, guid: 68e9981f23e2c0b42b99646f39157fda,
         type: 3}
@@ -1058,6 +1070,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: pile_1
       objectReference: {fileID: 0}
+    - target: {fileID: 5805994490463704966, guid: fb5d18858e927364586f0808831e8de3,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6274516011973864144, guid: fb5d18858e927364586f0808831e8de3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1128,6 +1145,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4123280055350815964}
     m_Modifications:
+    - target: {fileID: 4296928406631811274, guid: a0b89d4fb6af8d84db9e29e9b18fde81,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4332823160468944284, guid: a0b89d4fb6af8d84db9e29e9b18fde81,
         type: 3}
       propertyPath: m_LocalPosition.x

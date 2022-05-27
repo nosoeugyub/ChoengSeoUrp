@@ -125,8 +125,8 @@ public class MineObject : ItemObject
 
             for (int j = 0; j < item.itemObjs[i].count; ++j)
             {
-                Vector3 randVec = new Vector3(Random.Range(-1.5f, 1.5f), 0, Random.Range(-1.5f, 1.5f));
-                instantiateItem = ObjectPooler.SpawnFromPool(item.itemObjs[i].itemObj.name, gameObject.transform.position + randVec);
+                Vector3 randVec = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f));
+                instantiateItem = ObjectPooler.SpawnFromPool(item.itemObjs[i].itemObj.name, gameObject.transform.position + randVec - gameObject.transform.forward);
             }
         }
     }

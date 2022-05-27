@@ -15,8 +15,8 @@ namespace NSY.Iven
 
         public event Action<BaseItemSlot> OnPointerEnterEvent;
         public event Action<BaseItemSlot> OnPointerExitEvent;
-        public event Action<BaseItemSlot> OnRightClickEvent;
-        public event Action<BaseItemSlot> OnRightClickEvents;
+        public event Action<BaseItemSlot> OnLeftClickEvent;
+        public event Action<BaseItemSlot> OnLeftClickEvents;
         public event Action<BaseItemSlot> OnBeginDragEvent;
         public event Action<BaseItemSlot> OnEndDragEvent;
         public event Action<BaseItemSlot> OnDragEvent;
@@ -29,14 +29,14 @@ namespace NSY.Iven
             {
                 equipmentSlots[i].OnPointerEnterEvent +=  OnPointerEnterEvent;
                 equipmentSlots[i].OnPointerExitEvent +=  OnPointerExitEvent;
-                equipmentSlots[i].OnRightClickEvent +=  OnRightClickEvent;
+                equipmentSlots[i].OnLeftClickEvent += OnLeftClickEvent;
                 equipmentSlots[i].OnBeginDragEvent +=   OnBeginDragEvent;
                 equipmentSlots[i].OnEndDragEvent += OnEndDragEvent;
                 equipmentSlots[i].OnDragEvent +=  OnDragEvent;
                 equipmentSlots[i].OnDropEvent +=  OnDropEvent;
               
             }
-            ResultEquip.OnRightClickEvent += OnRightClickEvents;
+            ResultEquip.OnLeftClickEvent += OnLeftClickEvents;
         }
 
 
@@ -86,7 +86,7 @@ namespace NSY.Iven
                     ResultEquip.Amount = 1;
                     equipmentSlots[i].item = null;
                     equipmentSlots[i].Amount = 0;
-                    Debug.Log("바로들어갓");
+                    //Debug.Log("바로들어갓");
                     return true;
                 }
          
@@ -98,10 +98,10 @@ namespace NSY.Iven
                 {
                     equipmentSlots[i].item = ResultEquip.item;
                     ResultEquip.item = item;
-                    if (item.ItemName == equipmentSlots[i].item.ItemName)
+                    // if (item.ItemName == equipmentSlots[i].item.ItemName)
                     {
                        
-                        Debug.Log("체인지혀");
+                        //Debug.Log("체인지혀");
                         return true;
                     }
                
