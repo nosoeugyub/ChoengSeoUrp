@@ -248,16 +248,17 @@ namespace NSY.Iven
         //버리기
         private void DropItemOutsideUI()
         {
-            discount = 0;
             if (dragitemSlot == null)
             {
                 return;
             }
+            discount = 1;
+            ScriptTxt.text = discount.ToString();
 
             BaseItemSlot baseitemslot = dragitemSlot;
-            questionDialog.Show();
-            questionDialog.OnYesEvent += () => DestroyItem(baseitemslot);
-
+            //questionDialog.Show();
+            //questionDialog.OnYesEvent += () => DestroyItem(baseitemslot);
+            DestroyItem(baseitemslot);
 
         }
         public void PlusBtn()
@@ -272,6 +273,7 @@ namespace NSY.Iven
         }
         private void DestroyItem(BaseItemSlot baseitemslot)//버릴떄 쓰는 로직
         {
+            baseitemslot.item.GetCountItems -= discount;
             baseitemslot.Amount -= discount;
             if (baseitemslot.Amount <= 0)
             {
