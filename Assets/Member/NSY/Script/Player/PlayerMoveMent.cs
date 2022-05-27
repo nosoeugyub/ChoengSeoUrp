@@ -40,7 +40,7 @@ namespace NSY.Player
             //////End of "Zess's code"//////
         }
 
-        public void Update()
+        public void FixedUpdate()
         {
             if (!CamManager.IsZoom && !playerController.playerinteract.IsAnimating())
             {
