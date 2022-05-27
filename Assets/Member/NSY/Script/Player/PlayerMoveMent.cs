@@ -58,7 +58,7 @@ namespace NSY.Player
 
         protected void Move()
         {
-            Vector2 MoveDelta = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+            Vector2 MoveDelta = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
             isMove = MoveDelta.magnitude != 0; // 0이면 이동입력이 없는것 
             playerController.SpritePlayerAnim.SetBool("isWalk", isMove);
 
