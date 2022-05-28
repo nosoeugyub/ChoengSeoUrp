@@ -112,25 +112,11 @@ namespace NSY.Player
         }
         public void MoveTowardsTarget(Vector3 target)
         {
-
-            //Physics.IgnoreLayerCollision(0, 12, false);
-
             Vector3 offset = target - transform.position;
             Vector3 top = Vector3.up;
-            playerController.characterCtrl.Move(top*4);// * Time.deltaTime);
-            playerController.characterCtrl.Move(offset);// * Time.deltaTime);
-            playerController.characterCtrl.Move(-top * 3);// * Time.deltaTime);
-
-            // StartCoroutine(enumerator());
-        }
-        IEnumerator enumerator()
-        {
-            while (playerController.characterCtrl.velocity.magnitude > 0.01f)
-            {
-            }
-            print(playerController.characterCtrl.velocity.magnitude);
-            Physics.IgnoreLayerCollision(0, 12, true);
-            yield break;
+            playerController.characterCtrl.Move(top*4);
+            playerController.characterCtrl.Move(offset);
+            playerController.characterCtrl.Move(-top * 3);
         }
     }
 }
