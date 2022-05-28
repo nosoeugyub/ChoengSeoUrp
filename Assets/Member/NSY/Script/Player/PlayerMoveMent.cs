@@ -1,5 +1,6 @@
 ﻿using Game.Cam;
 using NSY.Manager;
+using System.Collections;
 using TT.MapTravel;
 using UnityEngine;
 namespace NSY.Player
@@ -30,7 +31,7 @@ namespace NSY.Player
 
 
         //////End of "Zess's code"//////
-        private void Start()
+        private void Awake()
         {
             //////Zess's code//////
             MapTravel = FindObjectOfType<MapTravel>();
@@ -83,6 +84,7 @@ namespace NSY.Player
                 playerController.characterCtrl.Move(idleMove);
 
             transform.forward = lookForward;
+
         }
 
         public void idle()
@@ -108,9 +110,30 @@ namespace NSY.Player
                 meshrender.localEulerAngles = new Vector3(0, 180, 0);
             }
         }
+        public void MoveTowardsTarget(Vector3 target)
+        {
+
+            //Physics.IgnoreLayerCollision(0, 12, false);
+
+            Vector3 offset = target - transform.position;
+            Vector3 top = Vector3.up;
+            playerController.characterCtrl.Move(top*4);// * Time.deltaTime);
+            playerController.characterCtrl.Move(offset);// * Time.deltaTime);
+            playerController.characterCtrl.Move(-top * 3);// * Time.deltaTime);
+
+            // StartCoroutine(enumerator());
+        }
+        IEnumerator enumerator()
+        {
+            while (playerController.characterCtrl.velocity.magnitude > 0.01f)
+            {
+            }
+            print(playerController.characterCtrl.velocity.magnitude);
+            Physics.IgnoreLayerCollision(0, 12, true);
+            yield break;
+        }
     }
 }
-
 
 ////////Zess's code//////
 //void CharacterTravel()

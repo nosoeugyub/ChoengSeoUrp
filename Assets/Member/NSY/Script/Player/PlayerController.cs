@@ -42,7 +42,7 @@ namespace NSY.Player
 
        
         // Start is called before the first frame update
-        void Start()
+        void Awake()
         {
             characterCtrl = GetComponent<CharacterController>();
             //anim = GetComponent<Animator>();
