@@ -18,6 +18,8 @@ public class DialogData : ScriptableObject
     public bool dontHaveToHaveAndLikeHouse; //집을 가지지 말아야 하는지
     public int[] haveToHaveNPCHouse; //집 있어야 하는 npc
     public QuestRewards[] acceptQuestItems;//대화 종료 시 획득하는 아이템
+    public float needHappyAmount; //필요 행복도
+
 
     [System.Serializable]
     public class QuestRewards

@@ -22,6 +22,7 @@ namespace DM.Dialog
         [Header("UI")]
         //public GameObject dialogUI;//대화창 조상
         public Button nextButton; //다음 버튼 >> 별로다
+        public Button speedNextButton; //다음 버튼 >> 별로다
         public Text dialogText;
         public Text nameText;
 
@@ -52,6 +53,13 @@ namespace DM.Dialog
             EventManager.EventActions[1] = Test;
 
             FirstShowDialog(npcTalkBubbleTfs[(int)Character.CheongSeo].parent.GetComponent<HouseNpc>(), null, false, -1);
+        }
+        private void Update()
+        {
+            if(Input.GetKeyDown(KeyCode.Space))
+            {
+
+            }
         }
         public HouseNpc GetNowNpc()
         {
@@ -307,6 +315,13 @@ namespace DM.Dialog
                     UpdateDialog(sentences, sentenceState);
                     //nowOnFab.GetComponent<TextBox>().DestroyTextBox();
                 });
+
+                speedNextButton.onClick.RemoveAllListeners();
+                speedNextButton.onClick.AddListener(() =>
+                {
+                    UpdateDialog(sentences, sentenceState);
+                    //nowOnFab.GetComponent<TextBox>().DestroyTextBox();
+                });
             }
             // DOTween.
             //nameText.DOText(sentences[nowSentenceIdx].sentence,1);
@@ -317,42 +332,52 @@ namespace DM.Dialog
         private void LastDialog(int sentenceState)
         {
             nextButton.onClick.RemoveAllListeners();
+            speedNextButton.onClick.RemoveAllListeners();
             print("Remove_Last");
 
             nextButton.onClick.AddListener(() =>
             {
-                Debug.Log("isTalking false");
-                nowOnFab.GetComponent<TextBox>().DestroyTextBox();
-                nowOnFab = null;
-
-                nowDialogData.isTalkingOver = true;
-                CloseDialog();
-                isTalking = false;
-
-                //만약 대화데이터에 퀘스트가 있다면
-                if (nowDialogData.questId > -1)
-                {
-                    //완료 상태 아니라면 강제수락
-                    print(sentenceState);
-                    switch (sentenceState)
-                    {
-                        case 0://수락 상태라면?
-                            questManager.AcceptQuest(nowDialogData.questId, (int)nowNpc.GetCharacterType());
-                            if (nowDialogData.acceptQuestItems.Length > 0)
-                            {
-                                foreach (DialogData.QuestRewards item in nowDialogData.acceptQuestItems)//아이템추가해야함.
-                                {
-                                    SuperManager.Instance.inventoryManager.AddItem(item.itemType);
-                                    //개수만큼 더하게 해야함
-                                }
-                            }
-                            break;
-                        default:
-                            break;
-                    }
-                }
+                LastDialogNextEvent(sentenceState);
+            });
+            speedNextButton.onClick.AddListener(() =>
+            {
+                LastDialogNextEvent(sentenceState);
             });
             //수락 시 이벤트가 있다면 진행
+        }
+
+        private void LastDialogNextEvent(int sentenceState)
+        {
+            Debug.Log("isTalking false");
+            nowOnFab.GetComponent<TextBox>().DestroyTextBox();
+            nowOnFab = null;
+
+            nowDialogData.isTalkingOver = true;
+            CloseDialog();
+            isTalking = false;
+
+            //만약 대화데이터에 퀘스트가 있다면
+            if (nowDialogData.questId > -1)
+            {
+                //완료 상태 아니라면 강제수락
+                print(sentenceState);
+                switch (sentenceState)
+                {
+                    case 0://수락 상태라면?
+                        questManager.AcceptQuest(nowDialogData.questId, (int)nowNpc.GetCharacterType());
+                        if (nowDialogData.acceptQuestItems.Length > 0)
+                        {
+                            foreach (DialogData.QuestRewards item in nowDialogData.acceptQuestItems)//아이템추가해야함.
+                            {
+                                SuperManager.Instance.inventoryManager.AddItem(item.itemType);
+                                //개수만큼 더하게 해야함
+                            }
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
 
         private void CloseDialog()

@@ -31,7 +31,7 @@ namespace DM.NPC
             EventManager.EventActions[2] += MoveToMyHome;
             EventManager.EventActions[4] += OnFollowPlayer;
         }
-        private void Update()
+        private void FixedUpdate()
         {
             if (isFollowPlayer)
                 FollowPlayer();

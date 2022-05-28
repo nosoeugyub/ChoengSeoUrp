@@ -78,7 +78,7 @@ public class NPCManager : MonoBehaviour
 [System.Serializable]
 public class NPCField
 {
-    private bool isField;
+    [SerializeField] private bool isField;
     [SerializeField] private HouseNpc npc;
     public bool IsField { get { return isField; } set { isField = value; } }
     public HouseNpc Npctf { get { return npc; } set { npc = value; } }
