@@ -1,16 +1,12 @@
 ﻿using DG.Tweening;
 using DM.NPC;
 using NSY.Manager;
-using NSY.Player;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class NPCManager : MonoBehaviour
 {
     [SerializeField] NPCField[] npcTfs;
-    [SerializeField] Transform[] teleportPos;
-    [SerializeField] Button[] teleportPosButtons;
     [SerializeField] Transform PortPos;
     [SerializeField] Transform WalPos;
     [SerializeField] Transform portInformUI;
@@ -20,14 +16,6 @@ public class NPCManager : MonoBehaviour
     {
         EventManager.EventActions[3] += MoveToBearsHouse;
         EventManager.EventActions[5] += MoveToWalPort;
-
-        //npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().CharacterMove(teleportPos[0].position);
-
-        teleportPosButtons[0].onClick.AddListener(() => npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(teleportPos[0].position));
-        teleportPosButtons[1].onClick.AddListener(() => npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(teleportPos[1].position));
-        teleportPosButtons[2].onClick.AddListener(() => npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(teleportPos[2].position));
-        teleportPosButtons[3].onClick.AddListener(() => npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(teleportPos[3].position));
-        teleportPosButtons[4].onClick.AddListener(() => npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(teleportPos[4].position));
     }
     public void ComeToPort()
     {
@@ -69,8 +57,8 @@ public class NPCManager : MonoBehaviour
     public void MoveToNPCSomewhere(int npcIdx, Vector3 location)
     {
         npcTfs[npcIdx].Npctf.gameObject.transform.position = location;
-        print(npcTfs[npcIdx].Npctf.gameObject.transform.position);
     }
+
     //////////////event Methods
     public void MoveToBearsHouse()
     {
