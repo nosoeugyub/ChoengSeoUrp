@@ -8,8 +8,7 @@ namespace NSY.Iven
 {
     public class InvenToryManagers : MonoBehaviour
     {
-        //케릭터 속성
-        public int Vital = 100;
+        
 
         [SerializeField] ItemTooltip itemTooltip;
         //    [SerializeField] BtnIven btniven;
@@ -110,8 +109,8 @@ namespace NSY.Iven
             {
                 itemTooltip.ShowItemTooltip(itemSlot.item);
                 Vector3 ToolVec = itemTooltip.tooltipTransform.transform.position;
-                ToolVec.x = itemSlot.GetComponent<Image>().rectTransform.position.x;
-                ToolVec.y = itemSlot.GetComponent<Image>().rectTransform.position.y;
+                ToolVec.x = itemSlot.GetComponent<Image>().rectTransform.position.x +0.7f;
+                ToolVec.y = itemSlot.GetComponent<Image>().rectTransform.position.y + 0.3f;
                 ToolVec.z = itemSlot.GetComponent<Image>().rectTransform.position.z;
                 itemTooltip.tooltipTransform.transform.position = ToolVec;
             }

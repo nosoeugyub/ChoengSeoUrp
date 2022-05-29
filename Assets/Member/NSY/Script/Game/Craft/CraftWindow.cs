@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DM.Inven;
-
-
+using System;
+using UnityEngine.EventSystems;
 
 namespace NSY.Iven
 {
-	public class CraftWindow : MonoBehaviour
-	{
+	public class CraftWindow : MonoBehaviour , IPointerEnterHandler , IPointerExitHandler 
+    {
+        //툴팁 이벤트
+        public ItemTooltip TapToolTip;
+       
+
         public Sprite reimage;
         public Text RecipeCurrentAmount;
         public Text RecipeHaverAmount;
@@ -95,6 +99,24 @@ namespace NSY.Iven
         public void SetRecipeCurrentAmountText(string str)
         {
             RecipeCurrentAmount.text = str;
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            Debug.Log("씨빨련아");
+            TapToolTip.ShowItemTooltip(Item);
+           
+                Vector3 ToolVec = TapToolTip.tooltipTransform.transform.position;
+                ToolVec.x = GetComponent<Image>().rectTransform.position.x +0.7f;
+                ToolVec.y = GetComponent<Image>().rectTransform.position.y + 0.3f;
+                ToolVec.z = GetComponent<Image>().rectTransform.position.z;
+            TapToolTip.tooltipTransform.transform.position = ToolVec;
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            TapToolTip.HideTooltip();
+
         }
     }
 

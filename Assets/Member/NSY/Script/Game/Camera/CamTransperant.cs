@@ -8,6 +8,8 @@ namespace NSY.Cam
     {
         Renderer ObstacleRenderer;
 
+        public LayerMask layerMask;
+
         public GameObject Character;
 
         public Shader defaultShader;
@@ -49,12 +51,22 @@ namespace NSY.Cam
             Vector3 Direction = (Character.transform.position - transform.position).normalized;
 
             RaycastHit hit;
-            int layerMask = (1 << LayerMask.NameToLayer("CameraEvent"));  // Everything에서 Player 레이어만 제외하고 충돌 체크함
-            layerMask = ~layerMask;
-            if (Physics.Raycast(transform.position, Direction, out hit, Distance , layerMask))
 
+            //   int layerMask = (1 << LayerMask.NameToLayer("CameraEvent")) + (1 << LayerMask.NameToLayer("Wall"));
+            // int layerMask = (1 << LayerMask.NameToLayer("CameraEvent")) | (1 << LayerMask.NameToLayer("Wall")); // Everything에서 Player 레이어만 제외하고 충돌 체크함
+            //layerMask = ~layerMask;
+
+            Debug.DrawRay(transform.position, Direction * Distance, Color.green, 0.1f);
+
+            if (Physics.Raycast(transform.position, Direction, out hit, Distance , layerMask.value))
             {
-                //Debug.Log(hit.collider.name);
+
+                if (hit.transform.gameObject.CompareTag("BuildingArea"))
+                {
+                    return;
+                }
+
+               // Debug.DrawRay(transform.position, (hit.point - transform.position).normalized * Vector3.Distance(hit.point, transform.position), Color.red, 0.1f);
                 // 플레이어가 레이에 맞으면 (가려지는 오브젝트가 없으면)
                 if (hit.transform.gameObject.CompareTag("Player"))
                 {
