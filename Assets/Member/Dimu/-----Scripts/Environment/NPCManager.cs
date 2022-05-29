@@ -28,7 +28,18 @@ public class NPCManager : MonoBehaviour
         teleportPosButtons[2].onClick.AddListener(() => npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(teleportPos[2].position));
         teleportPosButtons[3].onClick.AddListener(() => npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(teleportPos[3].position));
         teleportPosButtons[4].onClick.AddListener(() => npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(teleportPos[4].position));
+
+        for (int i = 0; i < teleportPosButtons.Length; ++i)
+        {
+            ButtonInteractable(i, false);
+        }
     }
+
+    public void ButtonInteractable(int i, bool interactable)
+    {
+        teleportPosButtons[i].interactable = interactable;
+    }
+
     public void ComeToPort()
     {
         SuperManager.Instance.soundManager.PlaySFX("NPCShip");
