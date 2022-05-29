@@ -14,7 +14,16 @@ public class NPCManager : MonoBehaviour
     [SerializeField] Transform PortPos;
     [SerializeField] Transform WalPos;
     [SerializeField] Transform portInformUI;
+
+    [SerializeField] Transform teleUI;
+    [SerializeField] Transform teleFailUI;
+    [SerializeField] Button teleUIYesButton;
+
     [SerializeField] NPCField nowNpcStandAtPort;
+
+    [SerializeField] Item removeitem;
+    [SerializeField] int removeCount;
+
     Coroutine nowCor;
     private void Start()
     {
@@ -23,11 +32,11 @@ public class NPCManager : MonoBehaviour
 
         //npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().CharacterMove(teleportPos[0].position);
 
-        teleportPosButtons[0].onClick.AddListener(() => npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(teleportPos[0].position));
-        teleportPosButtons[1].onClick.AddListener(() => npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(teleportPos[1].position));
-        teleportPosButtons[2].onClick.AddListener(() => npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(teleportPos[2].position));
-        teleportPosButtons[3].onClick.AddListener(() => npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(teleportPos[3].position));
-        teleportPosButtons[4].onClick.AddListener(() => npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(teleportPos[4].position));
+        //teleportPosButtons[0].onClick.AddListener(() => npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(teleportPos[0].position));
+        //teleportPosButtons[1].onClick.AddListener(() => npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(teleportPos[1].position));
+        //teleportPosButtons[2].onClick.AddListener(() => npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(teleportPos[2].position));
+        //teleportPosButtons[3].onClick.AddListener(() => npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(teleportPos[3].position));
+        //teleportPosButtons[4].onClick.AddListener(() => npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(teleportPos[4].position));
 
         for (int i = 0; i < teleportPosButtons.Length; ++i)
         {
@@ -39,7 +48,17 @@ public class NPCManager : MonoBehaviour
     {
         teleportPosButtons[i].interactable = interactable;
     }
-
+    public void OpenTeleportUI(int i)
+    {
+        teleUI.gameObject.SetActive(true);
+        teleUIYesButton.onClick.AddListener(() =>
+        {
+            if (SuperManager.Instance.inventoryManager.RemoveItem(removeitem, removeCount))
+                npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(teleportPos[i].position);
+            else
+                teleFailUI.gameObject.SetActive(true);
+        });
+    }
     public void ComeToPort()
     {
         SuperManager.Instance.soundManager.PlaySFX("NPCShip");

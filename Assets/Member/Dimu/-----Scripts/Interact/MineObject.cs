@@ -39,13 +39,17 @@ public class MineObject : ItemObject
         mineState = state;
         if (state == MineState.Normal)
         {
+            animator.SetBool("IsFalling", false);
+            animator.SetTrigger("Finish");
+
             boxcol.GetComponent<BoxCollider>().enabled = true;
-            quad.material = nowMat;
-            quad.material.color = new Color(1, 1, 1, 1);
+            //quad.material = nowMat;
+            //quad.material.color = new Color(1, 1, 1, 1);
+
+            nowChopCount = 0;
         }
         else
         {
-
             boxcol = GetComponent<BoxCollider>();
             boxcol.enabled = false;
             animator.SetBool("IsFalling", true);
@@ -91,7 +95,7 @@ public class MineObject : ItemObject
             FindObjectOfType<EnvironmentManager>().ChangeCleanliness(item.CleanAmount);
 
             ChangeMineState(MineState.Gone);
-            //StartCoroutine(Respawn());
+            StartCoroutine(Respawn());
         }
         else
         {
