@@ -5,6 +5,7 @@ public enum MineState { Normal, Trunk, Gone, }
 public class MineObject : ItemObject
 {
     protected int nowChopCount;
+    [SerializeField] protected bool cantRespown;
     [SerializeField] protected float respawnTime = 20;
     protected MineState mineState = MineState.Normal;//0 성장완료 1미완료
     [SerializeField] protected Material nowMat;
@@ -95,6 +96,7 @@ public class MineObject : ItemObject
             FindObjectOfType<EnvironmentManager>().ChangeCleanliness(item.CleanAmount);
 
             ChangeMineState(MineState.Gone);
+            if(!cantRespown)
             StartCoroutine(Respawn());
         }
         else

@@ -109,7 +109,8 @@ public class TreeObject : MineObject
             if (mineState == MineState.Normal)
             {
                 ChangeMineState(MineState.Trunk);
-                StartCoroutine(Respawn());
+                if (!cantRespown)
+                    StartCoroutine(Respawn());
             }
         }
         else
@@ -136,9 +137,9 @@ public class TreeObject : MineObject
         {
             int randnum = Random.Range(0, 100);
 
-            float treepercent =(1.0f - (float)nowSadTreeCount / allSadTreeCount)* 100f;
+            float treepercent = (1.0f - (float)nowSadTreeCount / allSadTreeCount) * 100f;
             float percent = environmentManager.Cleanliness - treepercent + treepercent / 5;
-            print(treepercent + "  " +  percent +  "  " +  randnum);
+            print(treepercent + "  " + percent + "  " + randnum);
             if (randnum < percent)
             {
                 nowTreeType = TreeType.Original;
