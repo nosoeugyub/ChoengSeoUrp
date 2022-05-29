@@ -107,8 +107,8 @@ namespace NSY.Iven
             TapToolTip.ShowItemTooltip(Item);
            
                 Vector3 ToolVec = TapToolTip.tooltipTransform.transform.position;
-                ToolVec.x = GetComponent<Image>().rectTransform.position.x;
-                ToolVec.y = GetComponent<Image>().rectTransform.position.y;
+                ToolVec.x = GetComponent<Image>().rectTransform.position.x +0.7f;
+                ToolVec.y = GetComponent<Image>().rectTransform.position.y + 0.3f;
                 ToolVec.z = GetComponent<Image>().rectTransform.position.z;
             TapToolTip.tooltipTransform.transform.position = ToolVec;
         }
