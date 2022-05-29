@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-public enum AreaType { Fallter, WinRing, Sprimmer, Sumall, Port, Q_1}
+﻿using UnityEngine;
+public enum AreaType { Sprimmer, Sumall, Fallter, WinRing, Port, Q_1 }
 public class AreaInteract : MonoBehaviour
 {
     [SerializeField] AreaType areaType;
@@ -12,10 +10,10 @@ public class AreaInteract : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
             PlayerData.AddValue((int)areaType, (int)LocationBehaviorEnum.Interact, PlayerData.locationData, (int)LocationBehaviorEnum.length);
-            npcManager.ButtonInteractable((int)areaType,true);
+            npcManager.ButtonInteractable((int)areaType, true);
             Debug.Log(areaType.ToString());
         }
     }

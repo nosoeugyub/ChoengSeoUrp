@@ -114,9 +114,9 @@ namespace NSY.Player
         {
             Vector3 offset = target - transform.position;
             Vector3 top = Vector3.up;
-            playerController.characterCtrl.Move(top*4);
+            playerController.characterCtrl.Move(top*8);
             playerController.characterCtrl.Move(offset);
-            playerController.characterCtrl.Move(-top * 3);
+            playerController.characterCtrl.Move(-top * 6);
         }
     }
 }
