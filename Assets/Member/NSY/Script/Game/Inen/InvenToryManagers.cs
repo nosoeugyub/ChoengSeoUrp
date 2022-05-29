@@ -67,7 +67,7 @@ namespace NSY.Iven
 
 
             //인벤토리 클레스 이벤트
-            equipPanel.OnLeftClickEvents += ResultClick;
+         
             iventorynsy.OnDubleClickEvent += OnDoubleClickEvent;
             iventorynsy.OnLeftClickEvent += BuildingLeftClick;
             iventorynsy.OnRightClickEvent += InventoryRightClick;
@@ -117,21 +117,13 @@ namespace NSY.Iven
             }
         }
 
-        private void ResultClick(BaseItemSlot obj)//결과창에서 장착칸으로
-        {
+  
 
-            if (obj.item.OutItemType == OutItemType.Tool)
-            {
-                rudtn(obj.item);
+    //    private void rudtn(Item item)// 장착아이템을 장비칸으로
+      //  {
 
-            }
-        }
-
-        private void rudtn(Item item)// 장착아이템을 장비칸으로
-        {
-
-            equipPanel.RemoveResultItem(item);
-        }
+        //    equipPanel.RemoveResultItem(item);
+        //}
 
         private void BuildingLeftClick(BaseItemSlot obj)
         {
