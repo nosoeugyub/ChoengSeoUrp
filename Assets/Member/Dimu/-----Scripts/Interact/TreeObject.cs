@@ -138,7 +138,7 @@ public class TreeObject : MineObject
             int randnum = Random.Range(0, 100);
 
             float treepercent = (1.0f - (float)nowSadTreeCount / allSadTreeCount) * 100f;
-            float percent = environmentManager.Cleanliness - treepercent + treepercent / 5;
+            float percent = environmentManager.Cleanliness - treepercent + treepercent / 2 + ((100 - environmentManager.Cleanliness) / 4);
             print(treepercent + "  " + percent + "  " + randnum);
             if (randnum < percent)
             {
