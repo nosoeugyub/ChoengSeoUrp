@@ -2918,6 +2918,14 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 912780205, guid: 9afa54840553ae648bf11384edf5553d, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 912780205, guid: 9afa54840553ae648bf11384edf5553d, type: 3}
+      propertyPath: m_Text
+      value: 123123123
+      objectReference: {fileID: 0}
     - target: {fileID: 973944378, guid: 9afa54840553ae648bf11384edf5553d, type: 3}
       propertyPath: m_AnchorMin.y
       value: 0
@@ -3013,10 +3021,42 @@ PrefabInstance:
     - target: {fileID: 1341885209, guid: 9afa54840553ae648bf11384edf5553d, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1512329320, guid: 9afa54840553ae648bf11384edf5553d, type: 3}
+      propertyPath: UiTaptooltipTransform
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1853501990, guid: 9afa54840553ae648bf11384edf5553d, type: 3}
       propertyPath: m_RaycastTarget
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1982227243, guid: 9afa54840553ae648bf11384edf5553d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -16.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1982227245, guid: 9afa54840553ae648bf11384edf5553d, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1982227245, guid: 9afa54840553ae648bf11384edf5553d, type: 3}
+      propertyPath: m_Text
+      value: 123123123
+      objectReference: {fileID: 0}
+    - target: {fileID: 1982227245, guid: 9afa54840553ae648bf11384edf5553d, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1982227245, guid: 9afa54840553ae648bf11384edf5553d, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1982227245, guid: 9afa54840553ae648bf11384edf5553d, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1982227245, guid: 9afa54840553ae648bf11384edf5553d, type: 3}
+      propertyPath: m_FontData.m_BestFit
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 267418557016089085, guid: 9afa54840553ae648bf11384edf5553d,
         type: 3}
@@ -36114,6 +36154,21 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 1818921169336874303, guid: 2d4e9ab6618aa0040bf38d635eaa3b1c,
+        type: 3}
+      propertyPath: TapToolTip
+      value: 
+      objectReference: {fileID: 1255319213}
+    - target: {fileID: 1818921169541820996, guid: 2d4e9ab6618aa0040bf38d635eaa3b1c,
+        type: 3}
+      propertyPath: TapToolTip
+      value: 
+      objectReference: {fileID: 1255319213}
+    - target: {fileID: 1818921170221543187, guid: 2d4e9ab6618aa0040bf38d635eaa3b1c,
+        type: 3}
+      propertyPath: TapToolTip
+      value: 
+      objectReference: {fileID: 1255319213}
     - target: {fileID: 1819790508783455932, guid: 2d4e9ab6618aa0040bf38d635eaa3b1c,
         type: 3}
       propertyPath: m_Layer
@@ -36417,7 +36472,7 @@ PrefabInstance:
     - target: {fileID: 1834768808605999317, guid: 2d4e9ab6618aa0040bf38d635eaa3b1c,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 221.99994
+      value: 222
       objectReference: {fileID: 0}
     - target: {fileID: 1834768808605999317, guid: 2d4e9ab6618aa0040bf38d635eaa3b1c,
         type: 3}
@@ -61115,6 +61170,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1936175742}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1255319213 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1512329320, guid: 9afa54840553ae648bf11384edf5553d,
+    type: 3}
+  m_PrefabInstance: {fileID: 98794666}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c4ef175c7eeaeb4898cc2c424121a6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1257464047
 GameObject:
   m_ObjectHideFlags: 0

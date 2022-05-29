@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using NSY.Iven;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,10 +11,8 @@ public class NewInventUIManager : MonoBehaviour
     [SerializeField] ScrollRect TopRect;
 
 
-    //[SerializeField] CraftList[] Craftlists;
+   
     [SerializeField] CraftWindow[] CraftWindows;
-    //[SerializeField] CraftList Craftlist1;
-    //[SerializeField] CraftList Craftlist2;
     [SerializeField] InventoryNSY iven;
     [SerializeField] CraftSlot nowSelectItem;
 
@@ -26,9 +25,13 @@ public class NewInventUIManager : MonoBehaviour
     public bool isOpen;
     public bool isChange;
     public int TabuiNumber;
+
     // Start is called before the first frame update
     void Awake()
     {
+       
+       
+
         for (int i = 0; i < TabUI.Length; i++)
         {
             for (int j = 1; j < TabUI[i].transform.childCount; j++)
@@ -38,6 +41,16 @@ public class NewInventUIManager : MonoBehaviour
         }
 
         iven.OnAddItemEvent += ShowRecipe;
+    }
+
+    private void OnPointerExitEvent(BaseItemSlot obj)
+    {
+        Debug.Log("김띠용띠용 띠용쓰");
+    }
+
+    private void OnPointerEnterEvent(BaseItemSlot obj)
+    {
+        Debug.Log("김띠용띠용 띠용쓰");
     }
 
     private void Start()

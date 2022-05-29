@@ -15,7 +15,7 @@ namespace NSY.Iven
         public int somAmount;
         public virtual void Use(InvenToryManagers inventoryMgr)
         {
-            inventoryMgr.Vital += somAmount;
+         //  inventoryMgr.Vital += somAmount;
 
 
         }

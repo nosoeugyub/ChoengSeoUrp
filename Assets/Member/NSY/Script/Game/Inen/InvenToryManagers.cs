@@ -8,8 +8,7 @@ namespace NSY.Iven
 {
     public class InvenToryManagers : MonoBehaviour
     {
-        //케릭터 속성
-        public int Vital = 100;
+        
 
         [SerializeField] ItemTooltip itemTooltip;
         //    [SerializeField] BtnIven btniven;
