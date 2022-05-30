@@ -7,6 +7,8 @@ using UnityEngine.Rendering;
 
 public class Screenshot : MonoBehaviour
 {
+
+    public Camera camera;//ui카메라가찍히기 전에 게임 카메라에 있는 랜더텍스쳐를 활용해 ui제외한 부분들을 스크린샷처럼 찍음 
     public int Width; //가로
     public int Hight; //세로
    
@@ -30,16 +32,9 @@ public class Screenshot : MonoBehaviour
 
 
 
-    private void OnEnable()
-    {
-        RenderPipelineManager.endCameraRendering += RenderPipelineManager_EndCameraRendering;
-    }
-    private void OnDisable()
-    {
-        RenderPipelineManager.endCameraRendering -= RenderPipelineManager_EndCameraRendering;
-    }
 
-    private void RenderPipelineManager_EndCameraRendering(ScriptableRenderContext arg1, Camera arg2)
+
+    private void OnPostRender()
     {
         if (_WillFakeScreenShot)
         {
@@ -48,35 +43,29 @@ public class Screenshot : MonoBehaviour
                 Debug.Log("폴더없으니 만들겠음 ㅋ");
                 Directory.CreateDirectory(FolderPath);
             }
+
             _WillFakeScreenShot = false;
             Width = Screen.width;
             Hight = Screen.height;
+            RenderTexture RenderTexture = new RenderTexture(Width, Hight ,24);
+            camera.targetTexture = RenderTexture;
             Texture2D screenshotTexture = new Texture2D(Width, Hight, TextureFormat.RGB24, false); // 화면 크기의 텍스쳐를 생성
             Rect rect = new Rect(0, 0, Width, Hight); //캡쳐 영역을지정
+            camera.Render();RenderTexture.active = RenderTexture;
+
+
             screenshotTexture.ReadPixels(rect, 0, 0); //텍스쳐 픽셀에 저장
-         screenshotTexture.Apply();
-         //pc 저장
+           screenshotTexture.Apply();
+          //pc 저장
          byte[] byteArray = screenshotTexture.EncodeToPNG(); // 이미지 저장
          System.IO.File.WriteAllBytes(TotalPath, screenshotTexture.EncodeToPNG());
 
             Destroy(screenshotTexture);
-        
+            camera.targetTexture = null;
         }
-        RefreshAndroidGallery(TotalPath);
+           
     }
   
-    private void RefreshAndroidGallery(string imageFilePath)
-    {
-#if !UNITY_EDITOR
-        AndroidJavaClass classPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-        AndroidJavaObject objActivity = classPlayer.GetStatic<AndroidJavaObject>("currentActivity");
-        AndroidJavaClass classUri = new AndroidJavaClass("android.net.Uri");
-        AndroidJavaObject objIntent = new AndroidJavaObject("android.content.Intent", new object[2]
-        { "android.intent.action.MEDIA_SCANNER_SCAN_FILE", classUri.CallStatic<AndroidJavaObject>("parse", "file://" + imageFilePath) });
-        objActivity.Call("sendBroadcast", objIntent);
-#endif
-    }
-
 
 
 
@@ -86,6 +75,7 @@ public class Screenshot : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Y))
         {
             _WillFakeScreenShot = true;
+            OnPostRender();
             Debug.Log("김취!~");
         }
         else
