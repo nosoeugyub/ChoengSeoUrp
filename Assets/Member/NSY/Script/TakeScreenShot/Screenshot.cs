@@ -8,7 +8,7 @@ using UnityEngine.Rendering;
 public class Screenshot : MonoBehaviour
 {
 
-    public Camera camera;
+    public Camera camera;//ui카메라가찍히기 전에 게임 카메라에 있는 랜더텍스쳐를 활용해 ui제외한 부분들을 스크린샷처럼 찍음 
     public int Width; //가로
     public int Hight; //세로
    
@@ -61,7 +61,7 @@ public class Screenshot : MonoBehaviour
          System.IO.File.WriteAllBytes(TotalPath, screenshotTexture.EncodeToPNG());
 
             Destroy(screenshotTexture);
-        
+            camera.targetTexture = null;
         }
            
     }
