@@ -6,7 +6,7 @@ public class MineObject : ItemObject
 {
     protected int nowChopCount;
     [SerializeField] protected bool cantRespown;
-    [SerializeField] protected float respawnTime = 20;
+    [SerializeField] protected float respawnTime = 60;
     protected MineState mineState = MineState.Normal;//0 성장완료 1미완료
     [SerializeField] protected Material nowMat;
 
@@ -32,7 +32,7 @@ public class MineObject : ItemObject
 
     IEnumerator Respawn()
     {
-        yield return new WaitForSeconds(respawnTime);
+        yield return new WaitForSeconds(respawnTime + Random.Range(0, 50));
         ChangeMineState(MineState.Normal);
     }
     protected void ChangeMineState(MineState state)

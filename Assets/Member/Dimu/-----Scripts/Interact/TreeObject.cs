@@ -53,7 +53,7 @@ public class TreeObject : MineObject
     }
     IEnumerator Respawn()
     {
-        yield return new WaitForSeconds(respawnTime);
+        yield return new WaitForSeconds(respawnTime + Random.Range(0,50));
         ChangeMineState(MineState.Normal);
         yield return new WaitForSeconds(0.1f);
         quad.transform.SetParent(animator.transform);
