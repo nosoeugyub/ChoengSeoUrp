@@ -12,7 +12,7 @@ namespace DM.Quest
         public string questName;
         [TextArea]
         public string description;
-        public Sprite[] TaskImg;
+        //public Sprite[] TaskImg;
         public Task tasks;
         //public Requirements requirements;
         public Rewards[] rewards;

@@ -103,7 +103,6 @@ namespace NSY.Iven
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            Debug.Log("씨빨련아");
             TapToolTip.ShowItemTooltip(Item);
            
                 Vector3 ToolVec = TapToolTip.tooltipTransform.transform.position;

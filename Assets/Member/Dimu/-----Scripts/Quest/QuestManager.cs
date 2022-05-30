@@ -14,7 +14,7 @@ namespace DM.Quest
         public QuestData testSoData;
         public QuestList[] questLists;
         public List<QuestData> clearQuestLists;
-
+        public Sprite[] TaskImg;
         //[SerializeField] InventoryNSY inventoryNSY;
 
         private void Awake()
@@ -34,7 +34,7 @@ namespace DM.Quest
 
             nowQuestData.npcID = npcID;
             GameObject qui = Instantiate(questInfoUI, questInfoMom) as GameObject;
-            //UpdateQuestInfoUI(qui, nowQuestData);
+            UpdateQuestInfoUI(qui, nowQuestData);
 
             nowQuestData.InitData();
             acceptQuests.Add(nowQuestData, qui);
@@ -85,10 +85,10 @@ namespace DM.Quest
                 = string.Format("{0}", questData.questName);
             qui.transform.Find("DescriptionText").GetComponent<Text>().text
                 = string.Format(questData.description);
-            qui.transform.Find("ProgressText").GetComponent<Text>().text
-                = string.Format(questData.description);
-            //qui.transform.Find("BuildingImg").GetComponent<Image>().sprite
-            //    = questData.TaskImg[0];
+            //qui.transform.Find("ProgressText").GetComponent<Text>().text
+            //    = string.Format(questData.description);
+            qui.transform.Find("BuildingImg").GetComponent<Image>().sprite
+                = TaskImg[questData.interactNpcID];
         }
 
         public bool CanClear(int questId, int npcID)//퀘스트 클리어 가능한지?
