@@ -30,7 +30,7 @@ namespace NSY.Iven
         {
             return base.CanAddStack(item, amount) && Amount + amount <= item.MaximumStacks; 
         }
-
+     
 
         public override bool CanReceiveItem(Item item)
         {

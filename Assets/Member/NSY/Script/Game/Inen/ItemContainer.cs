@@ -64,6 +64,19 @@ namespace NSY.Iven
             }
             return freeSpaces >= amount;
         }
+        public virtual bool CanAddItems(Item item, int amount )
+        {
+            int freeSpaces = 0;
+
+            foreach (ItemSlot itemSlot in ItemSlots)
+            {
+                if (itemSlot.item == null || itemSlot.item.ItemName == item.ItemName)
+                {
+                    freeSpaces += item.MaximumStacks - itemSlot.Amount;
+                }
+            }
+            return freeSpaces >= amount;
+        }
 
         public virtual void CheckCanBuildItem(BuildingBlock buildingBlock)//당장 건축 가능한 자재인지 아닌지 판단.
         {
@@ -153,24 +166,59 @@ namespace NSY.Iven
             }
             return false;
         }
+        int resultadd;
 
-        public bool AddItem(Item item, int removeCount)
+        public bool AddItem(Item item, int AddCount)//많은 갯수를 먹을때 
         {
             for (int i = 0; i < ItemSlots.Count; i++)
             {
-                if (ItemSlots[i].CanAddStack(item, removeCount))
+                if (ItemSlots[i].item.MaximumStacks < ItemSlots[i].Amount + AddCount)
                 {
-                    ItemSlots[i].item = item;
-                    ItemSlots[i].Amount++;
-                    ItemSlots[i].item.GetCountItems++;
-                    if (OnAddItemEvent != null)
-                        OnAddItemEvent();
+                    ItemSlots[i].Amount = ItemSlots[i].item.MaximumStacks;
+                    AddCount = (ItemSlots[i].Amount + AddCount) - ItemSlots[i].item.MaximumStacks;
+                    Debug.Log(AddCount);
+                }
+                if (ItemSlots[i].CanAddStack(item))// 최대 
+                 {
+                    for (resultadd = 0; resultadd < AddCount; resultadd++)
+                    {
+                        ItemSlots[i].item = item;
+                        ItemSlots[i].Amount++;
+                        ItemSlots[i].item.GetCountItems++;
+                        if (OnAddItemEvent != null)
+                            OnAddItemEvent();
 
-                    SuperManager.Instance.unlockmanager.GetInterectItemUnLocking();// 해금
-                    PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.GetItem, PlayerData.ItemData, ((int)ItemBehaviorEnum.length));
+                        SuperManager.Instance.unlockmanager.GetInterectItemUnLocking();// 해금
+                        PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.GetItem, PlayerData.ItemData, ((int)ItemBehaviorEnum.length));
+                        
+                    }
+                  
+                    return true;
+                 }
+               
 
+            }
+            for (int i = 0; i < ItemSlots.Count; i++)
+            {
+
+                if (ItemSlots[i].item == null)
+                {
+                    for (resultadd = 0; resultadd < AddCount; resultadd++)
+                    {
+                        ItemSlots[i].item = item;
+                        ItemSlots[i].Amount++;
+                        ItemSlots[i].item.GetCountItems++;
+                        if (OnAddItemEvent != null)
+                            OnAddItemEvent();
+
+                        SuperManager.Instance.unlockmanager.GetInterectItemUnLocking();
+                        PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.GetItem, PlayerData.ItemData, ((int)ItemBehaviorEnum.length));
+
+
+                    }
                     return true;
                 }
+
             }
 
             return false;

@@ -162,6 +162,7 @@ namespace NSY.Iven
         {
             return item != null && item.ItemName == Item.ItemName;
         }
+     
         //갯수채우기 함수
 
         public virtual bool CanReceiveItem(Item item)
