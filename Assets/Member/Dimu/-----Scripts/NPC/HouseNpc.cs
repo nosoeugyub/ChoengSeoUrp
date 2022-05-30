@@ -14,6 +14,8 @@ namespace DM.NPC
         [SerializeField] private BuildingBlock myHouse;
         [SerializeField] private Condition[] wantToBuildCondition;
         [SerializeField] private PlayerInteract player;
+        [SerializeField] private Transform questMark;
+        [SerializeField] private Vector3 questMarkScale;
         [SerializeField] private float speed;
         [SerializeField] private bool isFollowPlayer;
         private DialogueManager dialogueManager;
@@ -23,6 +25,7 @@ namespace DM.NPC
 
         private void Awake()
         {
+            questMarkScale = questMark.localScale;
             dialogueManager = FindObjectOfType<DialogueManager>();
             player = FindObjectOfType<PlayerInteract>();
         }
@@ -35,6 +38,14 @@ namespace DM.NPC
         {
             if (isFollowPlayer)
                 FollowPlayer();
+            float dist = Vector3.Distance(player.transform.position, questMark.position) * 0.03f;
+            if(dist < 0.5f)
+                dist = 0.5f;
+            questMark.localScale = questMarkScale * dist; 
+        }
+        public void SetQuestMark(bool ison)
+        {
+            questMark.gameObject.SetActive(ison);
         }
         public void OnFollowPlayer()
         {

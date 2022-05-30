@@ -37,7 +37,7 @@ namespace DM.Dialog
         GameObject nowOnFab;
         QuestData canClearqd;
         HouseNpc nowNpc;
-       [SerializeField] bool isTalking = false;
+        [SerializeField] bool isTalking = false;
         float times = 0;
 
         QuestManager questManager;
@@ -56,7 +56,7 @@ namespace DM.Dialog
         }
         private void Update()
         {
-            if(Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
 
             }
@@ -118,7 +118,7 @@ namespace DM.Dialog
                 //List<QuestData> isAcceptedQuests = questManager.GetIsAcceptedQuestList(nowPartner);//진행중인 퀘스트
                 //List<QuestData> canAcceptQuests = questManager.GetCanAcceptQuestList(nowPartner);//수락가능 퀘스트
                 List<QuestData> isAcceptedQuests = questManager.GetIsAcceptedQuestList((int)nowNpc.GetCharacterType());//진행중인 대화 
-                List<DialogData> canStartDialogs = GetCanAcceptDialogList((int)nowNpc.GetCharacterType(), true);//시작가능 대화
+                List<DialogData> canStartDialogs = GetCanAcceptDialogList((int)nowNpc.GetCharacterType(), true, false);//시작가능 대화
 
                 //완료자가 nowPartner(현재 대화 상대)인 퀘스트 받아옴. 제공자는 같을 수도,  다를 수 있음.
                 if (canClearqd != null && questManager.ClearQuest(canClearqd.questID, canClearqd.npcID))//있거나 클리어할 수 있다면
@@ -149,7 +149,7 @@ namespace DM.Dialog
                 }
                 else //아무것도 없다면?
                 {
-                    canStartDialogs = GetCanAcceptDialogList((int)nowNpc.GetCharacterType(), false);
+                    canStartDialogs = GetCanAcceptDialogList((int)nowNpc.GetCharacterType(), false, false);
                     if (canStartDialogs.Count <= 0)
                     {
                         Debug.LogError("StartShowDialog :: nothing else");
@@ -185,16 +185,26 @@ namespace DM.Dialog
             print("FindDialogIndex return -1");
             return -1;
         }
-        private List<DialogData> GetCanAcceptDialogList(int npcID, bool isQuestList)
+        private List<DialogData> GetCanAcceptDialogList(int npcID, bool isQuestList, bool isQuestmarkCheck)
         {
             List<DialogData> canAcceptDialogs = new List<DialogData>();
             if (isQuestList)
             {
                 foreach (var dialogData in questDialogLists[npcID].dialogList)//퀘스트 가진 리스트 중에서 검사
                 {
-                    if (CanStartTalk(dialogData))
+                    if (isQuestmarkCheck)
                     {
-                        canAcceptDialogs.Add(dialogData);
+                        if (CanStartTalk(dialogData, npcManager.NpcTfs[npcID].Npctf))
+                        {
+                            canAcceptDialogs.Add(dialogData);
+                        }
+                    }
+                    else
+                    {
+                        if (CanStartTalk(dialogData, nowNpc))
+                        {
+                            canAcceptDialogs.Add(dialogData);
+                        }
                     }
                 }
             }
@@ -202,7 +212,7 @@ namespace DM.Dialog
             {
                 foreach (var dialogData in dailydialogLists[npcID].dialogList)//일반대화 리스트 중에서 검사
                 {
-                    if (CanStartTalk(dialogData))
+                    if (CanStartTalk(dialogData, nowNpc))
                     {
                         canAcceptDialogs.Add(dialogData);
                     }
@@ -211,18 +221,18 @@ namespace DM.Dialog
 
             return canAcceptDialogs;
         }
-        public bool CanStartTalk(DialogData dialogData)
+        public bool CanStartTalk(DialogData dialogData, HouseNpc npc)
         {
             if (dialogData.haveToHaveAndLikeHouse)//입주 필수 인가?
             {
-                if (!nowNpc.IsHaveHouse()) return false;//그렇다면 이 npc는 집을 갖고 있는가?
+                if (!npc.IsHaveHouse()) return false;//그렇다면 이 npc는 집을 갖고 있는가?
                 //if (buildingManager.GetNPCsHouse(dialogData.subjectCharacterID) == null) return false;//그렇다면 이 npc는 집을 갖고 있는가?
                 //if (nowNpc.CanGetMyHouse() != BuildingLike.Like) return false;//그렇다면 집에 입주 가능 조건 충족했는가?
                 //print("입주 필수인 대화입니다.");
             }
             if (dialogData.dontHaveToHaveAndLikeHouse)//미입주 필수 인가?
             {
-                if (nowNpc.IsHaveHouse()) return false;// 집이 있으면 false
+                if (npc.IsHaveHouse()) return false;// 집이 있으면 false
                 //if (buildingManager.GetNPCsHouse(dialogData.subjectCharacterID) != null) return false;// 집이 없는가 ?
             }
             if (dialogData.haveToHaveNPCHouse.Length > 0)
@@ -264,7 +274,7 @@ namespace DM.Dialog
             {
                 if (!item.isTalkingOver)
                 {
-                //print("haveToEndDialog: 끝난 대화가 아님 false " + item.name);
+                    //print("haveToEndDialog: 끝난 대화가 아님 false " + item.name);
                     return false;
                 }
             }
@@ -272,11 +282,11 @@ namespace DM.Dialog
             {
                 if (item.isTalkingOver)
                 {
-                //print("haveToEndDialog: 끝난대화임 false " + item.name);
+                    //print("haveToEndDialog: 끝난대화임 false " + item.name);
                     return false;
                 }
             }
-            print("통과");
+            //print("통과");
             return true;
         }
         public void UpdateDialog(Sentence[] sentences, int sentenceState)
@@ -378,8 +388,38 @@ namespace DM.Dialog
                         break;
                 }
             }
-        }
 
+            UpdateNpcsQuestMark();
+        }
+        public void UpdateNpcsQuestMark()
+        {
+            for (int i = 1; i < npcManager.NpcTfs.Length; i++)
+            {
+                QuestData qd = questManager.ReturnCanClearQuestRequireNpc(i);
+                List<QuestData> isAcceptedQuests = questManager.GetIsAcceptedQuestList(i);//진행중인 대화 
+                List<DialogData> canStartDialogs = GetCanAcceptDialogList(i, true, true);//시작가능 대화
+
+                if (qd != null || isAcceptedQuests.Count > 0 || canStartDialogs.Count > 0)
+                {
+                    npcManager.NpcTfs[i].Npctf.SetQuestMark(true);
+
+                    if(isAcceptedQuests.Count>0)
+                    {
+                        Debug.Log(string.Format("{0} {1}", npcManager.NpcTfs[i].Npctf.name, isAcceptedQuests[0]));
+
+                    }
+                    if(canStartDialogs.Count>0)
+                    {
+                        Debug.Log(string.Format("{0} {1}", npcManager.NpcTfs[i].Npctf.name, canStartDialogs[0]));
+                    }
+                }
+                else
+                {
+                    npcManager.NpcTfs[i].Npctf.SetQuestMark(false);
+
+                }
+            }
+        }
         private void CloseDialog()
         {
             // dialogUI.SetActive(false);

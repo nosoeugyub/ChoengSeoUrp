@@ -97,7 +97,7 @@ namespace DM.Building
             {
                 if (Input.GetMouseButtonDown(0))
                 {
-                    print("MouseDown");
+                    //print("MouseDown");
                     if (curInteractObj == null) return;
 
                     ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -106,39 +106,39 @@ namespace DM.Building
                     if (Physics.Raycast(ray, out hit, 100, layerMask))
                     {
 
-                        print(hit.collider.name);
+                        //print(hit.collider.name);
 
                         if (hit.collider.GetComponent<BuildingItemObj>() == null) //자재가 아닌걸 클릭 시
                         {
                             if (!curInteractObj.ItemisSet && !curInteractObj.IsFirstDrop)
                             {
-                                print("ItemisSet = true 1 ");
+                                //print("ItemisSet = true 1 ");
                                 SetBuildingItemObj();
                             }
                             else //처음 생성 시
                             {
-                                print("ItemisSet = false 1");
+                                //print("ItemisSet = false 1");
                             }
                         }
                         else
                         {
                             if (curInteractObj.ItemisSet) //자재 클릭 + 세팅된 자재일 때
                             {
-                                print("ItemisSet = false 2");
+                                //print("ItemisSet = false 2");
                                 curInteractObj = hit.collider.GetComponent<BuildingItemObj>();
                                 curInteractObj.ItemisSet = false;
                                 BuildingItemObjAndSorting();
                             }
                             else //자재 클릭 + 무빙중일 때
                             {
-                                print("ItemisSet = true 2 ");
+                                //print("ItemisSet = true 2 ");
                                 SetBuildingItemObj();
                             }
                         }
                     }
                     else
                     {
-                        print("ItemisSet = true 3 ");
+                        //print("ItemisSet = true 3 ");
 
                     }
                 }

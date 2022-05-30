@@ -25,6 +25,12 @@ public class NPCManager : MonoBehaviour
     [SerializeField] int removeCount;
 
     Coroutine nowCor;
+
+    public NPCField[] NpcTfs
+    {
+        get { return npcTfs; }
+    }
+
     private void Start()
     {
         EventManager.EventActions[3] += MoveToBearsHouse;

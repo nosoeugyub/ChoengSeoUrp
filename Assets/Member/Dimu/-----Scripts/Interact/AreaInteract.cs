@@ -14,7 +14,7 @@ public class AreaInteract : MonoBehaviour
         {
             PlayerData.AddValue((int)areaType, (int)LocationBehaviorEnum.Interact, PlayerData.locationData, (int)LocationBehaviorEnum.length);
             npcManager.ButtonInteractable((int)areaType, true);
-            Debug.Log(areaType.ToString());
+            //Debug.Log(areaType.ToString());
         }
     }
 

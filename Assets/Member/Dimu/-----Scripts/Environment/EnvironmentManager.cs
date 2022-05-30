@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using DM.Dialog;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -31,6 +32,7 @@ public class EnvironmentManager : MonoBehaviour
     [SerializeField] Camera maincamera;
 
     NPCManager npcManager;
+    DialogueManager dManager;
 
 
     //NSY의 추가 코드
@@ -99,6 +101,7 @@ public class EnvironmentManager : MonoBehaviour
     private void Awake()
     {
         npcManager = FindObjectOfType<NPCManager>();
+        dManager = FindObjectOfType<DialogueManager>();
     }
     private void Start()
     {
@@ -177,6 +180,7 @@ public class EnvironmentManager : MonoBehaviour
     private void ComeToPort()
     {
         npcManager.ComeToPort();
+        dManager.UpdateNpcsQuestMark();
         AddCleanLevel();
     }
 

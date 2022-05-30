@@ -35,7 +35,7 @@ namespace DM.Building
             {
                 buildingBlock.BuildingID = buildings.Count;
                 buildings.Add(buildingBlock);
-                Debug.Log(buildingBlock.BuildingID);
+                //Debug.Log(buildingBlock.BuildingID);
             }
         }
         public int GetId(BuildingBlock buildingBlock)
