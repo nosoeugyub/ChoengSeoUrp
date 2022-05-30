@@ -64,7 +64,7 @@ namespace NSY.Iven
             }
             return freeSpaces >= amount;
         }
-        public virtual bool CanAddItems(Item item, int amount )
+        public virtual bool CanAddItems(Item item, int amount)
         {
             int freeSpaces = 0;
 
@@ -172,14 +172,8 @@ namespace NSY.Iven
         {
             for (int i = 0; i < ItemSlots.Count; i++)
             {
-                if (ItemSlots[i].item.MaximumStacks < ItemSlots[i].Amount + AddCount)
+                if (ItemSlots[i].CanAddStack(item, AddCount))// 최대 
                 {
-                    ItemSlots[i].Amount = ItemSlots[i].item.MaximumStacks;
-                    AddCount = (ItemSlots[i].Amount + AddCount) - ItemSlots[i].item.MaximumStacks;
-                    Debug.Log(AddCount);
-                }
-                if (ItemSlots[i].CanAddStack(item))// 최대 
-                 {
                     for (resultadd = 0; resultadd < AddCount; resultadd++)
                     {
                         ItemSlots[i].item = item;
@@ -190,13 +184,16 @@ namespace NSY.Iven
 
                         SuperManager.Instance.unlockmanager.GetInterectItemUnLocking();// 해금
                         PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.GetItem, PlayerData.ItemData, ((int)ItemBehaviorEnum.length));
-                        
                     }
-                  
                     return true;
-                 }
-               
-
+                }
+                else if (ItemSlots[i].item && ItemSlots[i].item.name == item.name)
+                {
+                    int sub = ItemSlots[i].Amount + AddCount - ItemSlots[i].item.MaximumStacks;
+                    ItemSlots[i].Amount = ItemSlots[i].item.MaximumStacks;
+                    AddCount = sub;
+                    Debug.Log(AddCount);
+                }
             }
             for (int i = 0; i < ItemSlots.Count; i++)
             {
