@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class URL : MonoBehaviour
 {
-    public void SIAme()
-    {
-        Application.OpenURL("http://Faceboook.com/");
-    }
+  
 
    public void Facebook()
     {

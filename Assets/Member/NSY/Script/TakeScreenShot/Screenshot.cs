@@ -48,7 +48,7 @@ public class Screenshot : MonoBehaviour
             Width = Screen.width;
             Hight = Screen.height;
             RenderTexture RenderTexture = new RenderTexture(Width, Hight ,24);
-            camera.targetTexture = RenderTexture;
+            camera.targetTexture =  RenderTexture;
             Texture2D screenshotTexture = new Texture2D(Width, Hight, TextureFormat.RGB24, false); // 화면 크기의 텍스쳐를 생성
             Rect rect = new Rect(0, 0, Width, Hight); //캡쳐 영역을지정
             camera.Render();RenderTexture.active = RenderTexture;

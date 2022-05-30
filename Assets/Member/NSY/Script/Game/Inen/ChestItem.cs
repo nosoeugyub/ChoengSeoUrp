@@ -45,9 +45,9 @@ namespace NSY.Iven
             {
                 Item itemCopy = item.GetCopy();
                 
-                if (inventory.AddItem(item.GetCopy()))
+                if (inventory.AddItem(item.GetCopy(), 8))
                 {
-
+                    Debug.Log("갯씨바럼ㅇ렼ㅌ아아");
                     itemCopy.GetCountItems++;
                     if (itemCopy.CleanAmount == 0)
                     {
