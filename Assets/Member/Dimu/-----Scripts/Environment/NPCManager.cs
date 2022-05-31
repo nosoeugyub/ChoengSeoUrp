@@ -91,14 +91,14 @@ public class NPCManager : MonoBehaviour
     {
         if (isOn)
         {
-            portInformUI.DOLocalMoveY(500, 1).SetEase(Ease.OutQuart);
+            portInformUI.DOLocalMoveY(490, 1).SetEase(Ease.OutQuart);
             if (nowCor != null)
                 StopCoroutine(nowCor);
             nowCor = StartCoroutine(ComeToPortCor());
         }
         else
         {
-            portInformUI.DOLocalMoveY(550, 1).SetEase(Ease.OutQuart);
+            portInformUI.DOLocalMoveY(600, 1).SetEase(Ease.OutQuart);
         }
     }
 
