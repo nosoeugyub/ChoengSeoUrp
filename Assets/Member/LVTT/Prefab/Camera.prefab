@@ -806,28 +806,8 @@ MonoBehaviour:
   LookIn: 0
   IsZoom: 0
   MainCamera: {fileID: 5589402194847045389}
-  SideCamera:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 5589402196132334590}
-  - {fileID: 5589402194301862436}
-  - {fileID: 0}
-  - {fileID: 5589402196169524754}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  CornerCamera:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  SideCamera: []
+  CornerCamera: []
   virtualCamera:
   - {fileID: 5589402195125831015}
   - {fileID: 6866960870124245401}
@@ -1025,6 +1005,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b595a7a53b0444343809a8cb630c752e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 2871
   Character: {fileID: 0}
   defaultShader: {fileID: -6465566751694194690, guid: 6d00078c37506cd4b9c038d684b987d6,
     type: 3}
@@ -1037,13 +1020,18 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5589402194441285439}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d18b1f0b4ec22584ab99894433c56f49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camera: {fileID: 5589402194441285436}
   Width: 0
   Hight: 0
+  folderName: ScreenShot
+  fileName: MyScreenShot
+  extName: png
+  _WillFakeScreenShot: 0
 --- !u!1 &5589402194623762539
 GameObject:
   m_ObjectHideFlags: 0
@@ -1210,7 +1198,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5589402194847045385
 Transform:
   m_ObjectHideFlags: 0
@@ -2164,7 +2152,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 1.5962145, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
