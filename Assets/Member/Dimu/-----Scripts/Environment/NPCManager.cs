@@ -61,15 +61,15 @@ public class NPCManager : MonoBehaviour
     }
     public void OpenTeleportUI(int i)
     {
-        //teleUI.gameObject.SetActive(true);
-        //teleUIYesButton.onClick.RemoveAllListeners();
-        //teleUIYesButton.onClick.AddListener(() =>
-        //{
+        teleUI.gameObject.SetActive(true);
+        teleUIYesButton.onClick.RemoveAllListeners();
+        teleUIYesButton.onClick.AddListener(() =>
+        {
             //if (SuperManager.Instance.inventoryManager.RemoveItem(removeitem, removeCount))
                 npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(teleportPos[i].position);
             //else
                 //teleFailUI.gameObject.SetActive(true);
-        //});
+        });
     }
     public void ComeToPort()
     {
