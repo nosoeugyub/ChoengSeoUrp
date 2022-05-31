@@ -393,10 +393,9 @@ GameObject:
   - component: {fileID: 4123280055350815964}
   - component: {fileID: 4123280055350815966}
   - component: {fileID: 4123280055350815965}
-  - component: {fileID: 636429364}
   m_Layer: 9
   m_Name: BuildingArea
-  m_TagString: BuildingArea
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -438,7 +437,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 10, y: 12, z: 1}
+  m_Size: {x: 20, y: 12, z: 1}
   m_Center: {x: 0, y: 6, z: -1.2}
 --- !u!114 &4123280055350815965
 MonoBehaviour:
@@ -460,31 +459,11 @@ MonoBehaviour:
   HouseBuild: {fileID: 4123280055626430901}
   BuildItemList: []
   buildState: 0
-  areaWidthsize: 10
+  areaWidthsize: 20
   areaHeightsize: 12
   toolType: 0
   houseOwnerTransform: {fileID: 8243889578910933617}
   friendTransform: {fileID: 7799207880830488519}
---- !u!114 &636429364
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4123280055350815963}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1da8599408c2dd41b95f55312331b94, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nessBuildItems:
-  - nessBuildItem: {fileID: 11400000, guid: 96d7db460decc344d8bc0253e4de2661, type: 2}
-    isHave: 0
-  - nessBuildItem: {fileID: 11400000, guid: ac257b61dc248fc479fcc25fea515fdb, type: 2}
-    isHave: 0
-  - nessBuildItem: {fileID: 11400000, guid: 7229a892b0fbddf458c7b670bc99d092, type: 2}
-    isHave: 0
-  spetype: 0
 --- !u!1 &4123280055626430900
 GameObject:
   m_ObjectHideFlags: 0
@@ -601,7 +580,7 @@ Transform:
   m_GameObject: {fileID: 4123280055967156640}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 6, z: 0.5}
-  m_LocalScale: {x: 10, y: 12, z: 1}
+  m_LocalScale: {x: 20, y: 12, z: 1}
   m_Children: []
   m_Father: {fileID: 4123280055350815964}
   m_RootOrder: 3
@@ -853,7 +832,7 @@ Transform:
   m_GameObject: {fileID: 5187823569524285712}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0.01, z: 0.5}
-  m_LocalScale: {x: 10, y: 3.9735599, z: 1}
+  m_LocalScale: {x: 20, y: 3.9735599, z: 1}
   m_Children: []
   m_Father: {fileID: 4123280055350815964}
   m_RootOrder: 4
@@ -934,7 +913,7 @@ PrefabInstance:
     - target: {fileID: 8350854254920441005, guid: f9b0d3e40b30e4e498b148ead52544bc,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8350854254920441005, guid: f9b0d3e40b30e4e498b148ead52544bc,
         type: 3}
@@ -1019,7 +998,7 @@ PrefabInstance:
     - target: {fileID: 6316974475518856229, guid: 68e9981f23e2c0b42b99646f39157fda,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6316974475518856229, guid: 68e9981f23e2c0b42b99646f39157fda,
         type: 3}
@@ -1099,7 +1078,7 @@ PrefabInstance:
     - target: {fileID: 6274516011973864144, guid: fb5d18858e927364586f0808831e8de3,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 6274516011973864144, guid: fb5d18858e927364586f0808831e8de3,
         type: 3}
@@ -1174,7 +1153,7 @@ PrefabInstance:
     - target: {fileID: 4332823160468944284, guid: a0b89d4fb6af8d84db9e29e9b18fde81,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 4332823160468944284, guid: a0b89d4fb6af8d84db9e29e9b18fde81,
         type: 3}

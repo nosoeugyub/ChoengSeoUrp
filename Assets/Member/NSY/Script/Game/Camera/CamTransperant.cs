@@ -66,7 +66,7 @@ namespace NSY.Cam
                     return;
                 }
 
-                Debug.DrawRay(transform.position, (hit.point - transform.position).normalized * Vector3.Distance(hit.point, transform.position), Color.red, 0.1f);
+               // Debug.DrawRay(transform.position, (hit.point - transform.position).normalized * Vector3.Distance(hit.point, transform.position), Color.red, 0.1f);
                 // 플레이어가 레이에 맞으면 (가려지는 오브젝트가 없으면)
                 if (hit.transform.gameObject.CompareTag("Player"))
                 {
