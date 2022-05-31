@@ -100,6 +100,12 @@ namespace NSY.Player
             //    eventable.EtcEvent(handItem);
             //    return;
             //}
+            TeleportObject eventable = interactable.transform.GetComponent<TeleportObject>();
+            if (eventable != null)
+            {
+                eventable.Teleport();
+                return;
+            }
 
             if (!handItem) return;
 

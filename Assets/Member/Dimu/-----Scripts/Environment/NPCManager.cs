@@ -16,6 +16,7 @@ public class NPCManager : MonoBehaviour
     [SerializeField] Transform portInformUI;
 
     [SerializeField] Transform teleUI;
+    [SerializeField] Transform telePickUI;
     [SerializeField] Transform teleFailUI;
     [SerializeField] Button teleUIYesButton;
 
@@ -54,18 +55,21 @@ public class NPCManager : MonoBehaviour
     {
         teleportPosButtons[i].interactable = interactable;
     }
+    public void OpentelePickUI()
+    {
+        telePickUI.gameObject.SetActive(true);
+    }
     public void OpenTeleportUI(int i)
     {
-        teleUI.gameObject.SetActive(true);
-        teleUIYesButton.onClick.RemoveAllListeners();
-        teleUIYesButton.onClick.AddListener(() =>
-        {
-            DebugText.Instance.SetText("버튼을 눌럿 답니다");
-            if (SuperManager.Instance.inventoryManager.RemoveItem(removeitem, removeCount))
+        //teleUI.gameObject.SetActive(true);
+        //teleUIYesButton.onClick.RemoveAllListeners();
+        //teleUIYesButton.onClick.AddListener(() =>
+        //{
+            //if (SuperManager.Instance.inventoryManager.RemoveItem(removeitem, removeCount))
                 npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(teleportPos[i].position);
-            else
-                teleFailUI.gameObject.SetActive(true);
-        });
+            //else
+                //teleFailUI.gameObject.SetActive(true);
+        //});
     }
     public void ComeToPort()
     {
