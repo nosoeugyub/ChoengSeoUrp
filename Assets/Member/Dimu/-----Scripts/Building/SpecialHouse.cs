@@ -7,17 +7,17 @@ public class SpecialHouse : MonoBehaviour
     BuildingBlock buildingBlock;
     //[SerializeField] bool ison;
     [SerializeField] SpecialBuildingType spetype;
-     public SpecialBuildingType Spetype { get; set; }
-     public bool Ison { get; set; }
+    public SpecialBuildingType Spetype { get; set; }
+    public bool Ison { get; set; }
     private void Awake()
     {
         buildingBlock = GetComponent<BuildingBlock>();
     }
     public void CanExist(BuildingItemObj buildingItemObj, bool isAdd)
     {
+        int count = 0;
         if (!isAdd)
         {
-            int count = 0;
             foreach (BuildingItemObj item in buildingBlock.GetBuildItemList())
             {
                 if (item.GetItem() == buildingItemObj.GetItem())
@@ -27,6 +27,14 @@ public class SpecialHouse : MonoBehaviour
             }
             if (count <= 1)
             {
+                foreach (HaveItem item in nessBuildItems)
+                {
+                    if (item.nessBuildItem == buildingItemObj.GetItem())//없는애랑 새로들어온애랑 같다면
+                    {
+                        item.isHave = false;
+                    }
+
+                }
                 Ison = false;
                 print("SPECIALBUILDING OFF");
             }
@@ -37,18 +45,23 @@ public class SpecialHouse : MonoBehaviour
             foreach (HaveItem item in nessBuildItems)
             {
                 if (item.isHave == true) continue; //이미 갖구있는애면
+
                 if (item.nessBuildItem == buildingItemObj.GetItem())//없는애랑 새로들어온애랑 같다면
                 {
                     item.isHave = true;
                 }
                 else
                 {
-                    Ison = false;
-                    return;
+                    item.isHave = false;
+                    count++;
+                    continue;
                 }
             }
+            if (count == 0)
+            {
                 print("SPECIALBUILDING ON");
-            Ison = true;
+                Ison = true;
+            }
         }
     }
     [System.Serializable]
@@ -58,4 +71,4 @@ public class SpecialHouse : MonoBehaviour
         public bool isHave = false;
     }
 }
-public enum SpecialBuildingType { LightHouse, Length}
+public enum SpecialBuildingType { LightHouse, Length }
