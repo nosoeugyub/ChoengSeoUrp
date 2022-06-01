@@ -89,7 +89,6 @@ public class MineObject : ItemObject
         SuperManager.Instance.soundManager.PlaySFX(item.UsingToolSoundName);
         if (++nowChopCount >= item.ChopCount)
         {
-            NSY.Player.PlayerInput.OnPressFDown = null;
             DropItems();
             PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.MineItem, PlayerData.ItemData, ((int)ItemBehaviorEnum.length));
             FindObjectOfType<EnvironmentManager>().ChangeCleanliness(item.CleanAmount);

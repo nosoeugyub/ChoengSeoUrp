@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8243889578910933617}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: HouseOwnerLocation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 4123280054350793678}
   - component: {fileID: 4123280054350793677}
   - component: {fileID: 4123280054350793676}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,7 +134,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4123280054433368081}
   - component: {fileID: 4123280054433368082}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BoundFront
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -271,7 +271,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4123280054577332983}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: GuideObj
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -304,7 +304,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4123280054628325711}
   - component: {fileID: 4123280054630016688}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BoundBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -348,7 +348,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4123280055118334128}
   - component: {fileID: 4123280055118334129}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BoundLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -393,7 +393,7 @@ GameObject:
   - component: {fileID: 4123280055350815964}
   - component: {fileID: 4123280055350815966}
   - component: {fileID: 4123280055350815965}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: BuildingArea
   m_TagString: BuildingArea
   m_Icon: {fileID: 0}
@@ -434,11 +434,11 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4123280055350815963}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 20, y: 12, z: 1}
-  m_Center: {x: 0, y: 6, z: -1.2}
+  m_Size: {x: 20, y: 12, z: 2}
+  m_Center: {x: 0, y: 6, z: -0.66}
 --- !u!114 &4123280055350815965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -474,7 +474,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4123280055626430901}
   - component: {fileID: 3536207802484503900}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HouseBuild
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -518,7 +518,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4123280055655279821}
   - component: {fileID: 4123280055655279822}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BoundRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -564,7 +564,7 @@ GameObject:
   - component: {fileID: 4123280055967156644}
   - component: {fileID: 4123280055967156643}
   - component: {fileID: 4123280055967156642}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HouseBuildArea-Blue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -655,7 +655,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4123280056203766432}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -692,7 +692,7 @@ GameObject:
   - component: {fileID: 4123280056344860221}
   - component: {fileID: 4123280056344860220}
   - component: {fileID: 4123280056344860219}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: GardenBuildArea-Blue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -783,7 +783,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7799207880830488519}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: FriendLocation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -816,7 +816,7 @@ GameObject:
   - component: {fileID: 7675743796202846321}
   - component: {fileID: 1707969620643665598}
   - component: {fileID: 6530125337307530999}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HouseBuildArea-Blue (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -910,6 +910,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: pile_3
       objectReference: {fileID: 0}
+    - target: {fileID: 442868448699089243, guid: f9b0d3e40b30e4e498b148ead52544bc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5231669315082340929, guid: f9b0d3e40b30e4e498b148ead52544bc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8350854254920441005, guid: f9b0d3e40b30e4e498b148ead52544bc,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -990,6 +1000,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: pile_2
       objectReference: {fileID: 0}
+    - target: {fileID: 2480135272527122899, guid: 68e9981f23e2c0b42b99646f39157fda,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 5776676840567992691, guid: 68e9981f23e2c0b42b99646f39157fda,
         type: 3}
       propertyPath: m_Enabled
@@ -1050,6 +1065,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7842113733489728201, guid: 68e9981f23e2c0b42b99646f39157fda,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 68e9981f23e2c0b42b99646f39157fda, type: 3}
 --- !u!4 &8834895632938847464 stripped
@@ -1069,6 +1089,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: pile_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2509309986930456358, guid: fb5d18858e927364586f0808831e8de3,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5805994490463704966, guid: fb5d18858e927364586f0808831e8de3,
         type: 3}
@@ -1130,6 +1155,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7812937369600867388, guid: fb5d18858e927364586f0808831e8de3,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb5d18858e927364586f0808831e8de3, type: 3}
 --- !u!4 &4597207913139594452 stripped
@@ -1145,6 +1175,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4123280055350815964}
     m_Modifications:
+    - target: {fileID: 531400018931409776, guid: a0b89d4fb6af8d84db9e29e9b18fde81,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4296928406631811274, guid: a0b89d4fb6af8d84db9e29e9b18fde81,
         type: 3}
       propertyPath: m_Enabled
@@ -1209,6 +1244,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: pile_0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5323277331873245290, guid: a0b89d4fb6af8d84db9e29e9b18fde81,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a0b89d4fb6af8d84db9e29e9b18fde81, type: 3}

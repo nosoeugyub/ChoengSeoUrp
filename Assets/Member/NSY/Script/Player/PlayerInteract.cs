@@ -51,6 +51,10 @@ namespace NSY.Player
             //마우스 상호작용 오브젝트는 Interactable 이라는 레이어를 가지고 있어야 합니다.
             cursorManager = FindObjectOfType<CursorManager>();
         }
+        private void Start()
+        {
+            PlayerInput.OnPressFDown = InvokeInteractClosestObj;
+        }
         private void Update()
         {
             InteractWithObjects();
@@ -83,6 +87,7 @@ namespace NSY.Player
 
         private void InvokeInteract(Interactable interactable)
         {
+            if (!interactable) return;
             CollectObject collectObj = interactable.transform.GetComponent<CollectObject>();
             if (collectObj != null)
             {
@@ -205,18 +210,20 @@ namespace NSY.Player
         public void LightClosestObj()
         {
             if (closestObj)
-                closestObj.EndInteract();
-            if (interacts.Count <= 1)
             {
-                return;
+                closestObj.EndInteract();
+                closestObj = null;
             }
+
+            if (interacts.Count <= 1) return;
+
             DistChect();
+
             if (closestObj)
             {
                 closestObj.CanInteract();
-                PlayerInput.OnPressFDown = InvokeInteractClosestObj;
+                ChangeLightShader(closestObj);
             }
-            ChangeLightShader(closestObj);
         }
         public void InvokeInteractClosestObj()
         {
@@ -226,8 +233,6 @@ namespace NSY.Player
         public void DistChect()
         {
             float shortestDist = 1000000;
-
-
 
             foreach (var item in interacts)
             {

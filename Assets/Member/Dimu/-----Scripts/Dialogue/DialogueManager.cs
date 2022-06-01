@@ -403,7 +403,7 @@ namespace DM.Dialog
                         break;
                 }
             }
-
+            testdelegate = null;
             UpdateNpcsQuestMark();
         }
         public void UpdateNpcsQuestMark()
@@ -420,12 +420,12 @@ namespace DM.Dialog
 
                     if (isAcceptedQuests.Count > 0)
                     {
-                        Debug.Log(string.Format("{0} {1}", npcManager.NpcTfs[i].Npctf.name, isAcceptedQuests[0]));
+                        //Debug.Log(string.Format("{0} {1}", npcManager.NpcTfs[i].Npctf.name, isAcceptedQuests[0]));
 
                     }
                     if (canStartDialogs.Count > 0)
                     {
-                        Debug.Log(string.Format("{0} {1}", npcManager.NpcTfs[i].Npctf.name, canStartDialogs[0]));
+                        //Debug.Log(string.Format("{0} {1}", npcManager.NpcTfs[i].Npctf.name, canStartDialogs[0]));
                     }
                 }
                 else
