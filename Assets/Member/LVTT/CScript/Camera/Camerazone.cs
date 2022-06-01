@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Cinemachine;
-using UnityEngine;
+﻿using UnityEngine;
 
 
 namespace Game.Cam
@@ -39,8 +36,8 @@ namespace Game.Cam
             //    }
             //}
 
-            
-            
+
+
 
         }
 
@@ -97,10 +94,10 @@ namespace Game.Cam
             */
 
             // 차라리 이렇게 쓰렴..... 안느리단다..
-            if (other.CompareTag("Player") && other.GetComponent<CharacterController>())
+            if (other.CompareTag("Player"))
             {
-                if(other.GetComponent<CharacterController>())
-                virtualCamera.SetActive(true);
+                if (other.GetComponent<CharacterController>())
+                    virtualCamera.SetActive(true);
             }
 
         }
@@ -113,7 +110,7 @@ namespace Game.Cam
                 virtualCamera.SetActive(false);
                 //virtualCamera2.SetActive(false);
                 //MainCam.SetActive(true);
-               CamManager.LookIn = true;
+                CamManager.LookIn = true;
             }
         }
 

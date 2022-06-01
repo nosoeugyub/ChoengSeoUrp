@@ -265,7 +265,7 @@ namespace NSY.Iven
         {
             if (equipPanel.AddResultItem(item))
             {
-                playerinterract.SetHandItem(item);
+                //playerinterract.SetHandItem(item);
 
 
             }

@@ -17,7 +17,7 @@ namespace NSY.Player
         //public Text interactUiText;//띄울 UI
         public TextMeshProUGUI interactUiText2;
 
-        [SerializeField] Item handItem;
+        //[SerializeField] Item handItem;
 
         [SerializeField] SpriteRenderer handItemObj;
 
@@ -33,6 +33,7 @@ namespace NSY.Player
         Interactable nowInteractable;
         bool canInteract = false;
         int layerMask;   // Player 레이어만 충돌 체크함
+        [SerializeField] LayerMask layerMask2;   // Player 레이어만 충돌 체크함
 
         public RectTransform targetRectTr;
         public bool isAnimating = false;
@@ -91,7 +92,7 @@ namespace NSY.Player
             NPC talkable = interactable.transform.GetComponent<NPC>();
             if (talkable != null)
             {
-                talkable.Talk(handItem);
+                talkable.Talk();
                 return;
             }
             //IEventable eventable = interactable.transform.GetComponent<IEventable>();
@@ -100,64 +101,57 @@ namespace NSY.Player
             //    eventable.EtcEvent(handItem);
             //    return;
             //}
-            TeleportObject eventable = interactable.transform.GetComponent<TeleportObject>();
-            if (eventable != null)
+            TeleportObject teleportable = interactable.transform.GetComponent<TeleportObject>();
+            if (teleportable != null)
             {
-                eventable.Teleport();
+                teleportable.Teleport();
                 return;
             }
 
-            if (!handItem) return;
-
-            switch (handItem.OutItemType)
+            MagnifyObject bubbleCollectable = interactable.transform.GetComponent<MagnifyObject>();
+            if (bubbleCollectable != null)
             {
-                case OutItemType.Tool://손에 도구를 들고 있으면
-                    MagnifyObject bubbleCollectable = interactable.transform.GetComponent<MagnifyObject>();
-                    if (bubbleCollectable != null)
-                    {
-                        if (!bubbleCollectable.CheckBubble(handItem, playerAnimator.animator))
-                        {
-                            SetIsAnimation(false);
-                        }
-                        else
-                        {
-                            SetIsAnimation(true);
-                            return;
-                        }
-                    }
-                    MineObject mineable = interactable.transform.GetComponent<MineObject>();
-                    if (mineable != null)
-                    {
-                        if (!mineable.Mine(handItem, playerAnimator.animator))
-                        {
-                            SetIsAnimation(false);
-                        }
-                        else
-                        {
-                            SetIsAnimation(true);
-                            return;
-                        }
-                    }
-                    BuildingBlock buildAreaObject = interactable.transform.GetComponent<BuildingBlock>();
-                    if (buildAreaObject != null)
-                    {
-                        SetIsAnimation(false);
-
-                        if (followNpc)
-                        {
-                            followNpc.FindLikeHouse(buildAreaObject);
-                        }
-                        else
-                        {
-                            print(buildAreaObject.name);
-                            buildAreaObject.OnBuildMode(handItem);
-                        }
-                        return;
-                    }
-                    break;
+                if (!bubbleCollectable.CheckBubble(playerAnimator.animator))
+                {
+                    SetIsAnimation(false);
+                }
+                else
+                {
+                    SetIsAnimation(true);
+                    return;
+                }
             }
-            SetIsAnimation(false);
+            MineObject mineable = interactable.transform.GetComponent<MineObject>();
+            if (mineable != null)
+            {
+                if (!mineable.Mine(playerAnimator.animator))
+                {
+                    SetIsAnimation(false);
+                }
+                else
+                {
+                    SetIsAnimation(true);
+                    return;
+                }
+            }
+            BuildingBlock buildAreaObject = interactable.transform.GetComponent<BuildingBlock>();
+            if (buildAreaObject != null)
+            {
+                SetIsAnimation(false);
 
+                if (followNpc)
+                {
+                    followNpc.FindLikeHouse(buildAreaObject);
+                }
+                else
+                {
+                    print(buildAreaObject.name);
+                    buildAreaObject.OnBuildMode();
+                }
+                return;
+            }
+
+            SetIsAnimation(false);
 
             ItemObject itemObject = interactable.transform.GetComponent<ItemObject>();
             if (itemObject != null)
@@ -177,21 +171,21 @@ namespace NSY.Player
             Debug.DrawRay(ray.origin, ray.direction * 20, Color.blue, 0.3f);
             if (nowInteractable)
                 nowInteractable.EndInteract();
-            if (Physics.Raycast(ray, out hit, 20, layerMask) && !BuildingBlock.isBuildMode)
+            if (Physics.Raycast(ray, out hit, 20, layerMask2.value) && !BuildingBlock.isBuildMode)
             {
-                //print(hit.collider.name);
+                print(hit.collider.name);
                 nowInteractable = hit.collider.GetComponent<Interactable>();
                 if (nowInteractable != null && IsInteracted(nowInteractable))// 클릭한 옵젝이 닿은 옵젝 리스트에 있다면 통과ds
                 {
                     StartCoroutine(cursorManager.SetCursor(nowInteractable.CanInteract()));
                     Vector3 uiPos = new Vector3(nowInteractable.transform.position.x, nowInteractable.transform.position.y + 2, nowInteractable.transform.position.z);
                     //형광 셰이더로 변환....
-                  
-                    if(!nowInteractable.GetComponent<BuildingBlock>())
+
+                    if (!nowInteractable.GetComponent<BuildingBlock>())
                     {
                         nowInteractable.gameObject.GetComponentInChildren<MeshRenderer>().material.shader = GlowColor;
                     }
-                  
+
                 }
                 else
                     StartCoroutine(cursorManager.SetCursor((int)CursorType.Normal));
@@ -200,7 +194,7 @@ namespace NSY.Player
 
             if (Input.GetMouseButtonDown(0))
             {
-                if (Physics.Raycast(ray, out hit, 10000, layerMask))
+                if (Physics.Raycast(ray, out hit, 10000, layerMask2.value))
                 {
                     nowInteractable = hit.collider.GetComponent<Interactable>();
                     if (nowInteractable != null && IsInteracted(nowInteractable))
@@ -222,12 +216,12 @@ namespace NSY.Player
             return interacts.Contains(it);
         }
 
-        public void SetHandItem(Item item)
-        {
-            handItem = item;
-            handItemObj.sprite = handItem.ItemSprite;
-            //애니메이션 변경
-        }
+        //public void SetHandItem(Item item)
+        //{
+        //    handItem = item;
+        //    handItemObj.sprite = handItem.ItemSprite;
+        //    //애니메이션 변경
+        //}
 
         public void OnTriggerEnter(Collider other)
         {

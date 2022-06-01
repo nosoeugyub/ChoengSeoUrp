@@ -18,13 +18,13 @@ public class MagnifyObject : ItemObject
     {
         glassSpeechBubble.SetActive(true);
     }
-    public bool CheckBubble(Item handitem, Animator animator)
+    public bool CheckBubble(Animator animator)
     {
-        if (handitem.InItemType != InItemType.MagnifyingGlass)
-        {
-            print("다른 도구로 시도해주세요.");
-            return false;
-        }
+        //if (handitem.InItemType != InItemType.MagnifyingGlass)
+        //{
+        //    print("다른 도구로 시도해주세요.");
+        //    return false;
+        //}
         if (!glassSpeechBubble.activeSelf)
         {
             print("돋보기가 활성화되지 않았습니다.");

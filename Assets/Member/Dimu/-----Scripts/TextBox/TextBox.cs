@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,14 +20,14 @@ public class TextBox : MonoBehaviour
     Image RecImg;
 
     [SerializeField]
-    Vector3 BoomPosRec;
-   
+    Vector2 rectpos;
+
+   // [SerializeField]
+    BoxCollider boxCollider;
 
     private void Awake()
     {
         textboxFabImg = transform.Find("Image").GetComponent<Image>();
-
-        BoomPosRec = Vector3.zero;
          rect = GetComponent<RectTransform>();
         LayoutRebuilder.ForceRebuildLayoutImmediate(RecImg.rectTransform);
     }
@@ -49,6 +50,15 @@ public class TextBox : MonoBehaviour
         rect.anchoredPosition3D = Vector3.zero;
         textboxFabImg.sprite = textboxFabImgs[(int)textboxType];
         LayoutRebuilder.ForceRebuildLayoutImmediate(RecImg.rectTransform);
+        //StartCoroutine(PosChange());
+    }
+    IEnumerator PosChange()
+    {
+        yield return new WaitForSeconds(0.01f);
+        rectpos.x = textboxFabImg.rectTransform.rect.width;
+        rectpos.y = textboxFabImg.rectTransform.rect.height;
+        boxCollider.size = rectpos;
+        boxCollider.center = rectpos / 2;
     }
     public void DestroyTextBox()
     {
@@ -64,6 +74,7 @@ public class TextBox : MonoBehaviour
 
         boomParticle.transform.localPosition = new Vector3(RecImg.GetComponent<RectTransform>().rect.width/ 2,
                                                            RecImg.GetComponent<RectTransform>().rect.height / 2, 0);
+
         boomParticle.SetActive(true);
         LayoutRebuilder.ForceRebuildLayoutImmediate(RecImg.rectTransform);
 

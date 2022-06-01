@@ -21,10 +21,13 @@ namespace DM.Dialog
 
         [Header("UI")]
         //public GameObject dialogUI;//대화창 조상
-        public Button nextButton; //다음 버튼 >> 별로다
-        public Button speedNextButton; //다음 버튼 >> 별로다
+        //public Button nextButton; //다음 버튼 >> 별로다
+        //public Button speedNextButton; //다음 버튼 >> 별로다
         public Text dialogText;
         public Text nameText;
+
+        public delegate void VoidEvent();
+        VoidEvent testdelegate;
 
         [Header("DialogInfos")]
         public List<DialogList> questDialogLists; //퀘스트 있는 대화
@@ -52,13 +55,13 @@ namespace DM.Dialog
         {
             EventManager.EventActions[1] = Test;
 
-            FirstShowDialog(npcTalkBubbleTfs[(int)Character.CheongSeo].parent.GetComponent<HouseNpc>(), null, false, -1);
+            FirstShowDialog(npcTalkBubbleTfs[(int)Character.CheongSeo].parent.GetComponent<HouseNpc>(), false, -1);
         }
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-
+                testdelegate();
             }
         }
         public HouseNpc GetNowNpc()
@@ -71,7 +74,7 @@ namespace DM.Dialog
             times += Time.deltaTime;
             if (times > 3) { EventManager.EventAction -= EventManager.EventActions[1]; }
         }
-        public bool FirstShowDialog(HouseNpc npc, Item handitem, bool isFollowPlayer, int isLike) //첫 상호작용 시 호출. 어떤 대화를 호출할지 결정
+        public bool FirstShowDialog(HouseNpc npc,  bool isFollowPlayer, int isLike) //첫 상호작용 시 호출. 어떤 대화를 호출할지 결정
         {
             if (isTalking)
             {
@@ -86,11 +89,11 @@ namespace DM.Dialog
 
             PlayerData.AddValue((int)npc.GetCharacterType(), (int)NpcBehaviorEnum.Interact, PlayerData.npcData, (int)NpcBehaviorEnum.length);
 
-            StartShowDialog(handitem, isFollowPlayer, isLike); //파트너와 진행해야 하는 순서의 대화를 진행
+            StartShowDialog(isFollowPlayer, isLike); //파트너와 진행해야 하는 순서의 대화를 진행
             return true;
         }
 
-        public void StartShowDialog(Item handitem, bool isFollowPlayer, int isLike)
+        public void StartShowDialog(bool isFollowPlayer, int isLike)
         {
             Sentence[] ss = null;//대화뭉치를 담을 변수
             int sentenceState = -1;//대화뭉치 타입(수락0, 진행중1, 완료2)
@@ -308,7 +311,7 @@ namespace DM.Dialog
             nowOnFab.GetComponent<TextBox>().SetTextbox(sentences[nowSentenceIdx].sentence, npcTalkBubbleTfs[sentences[nowSentenceIdx].characterId], sentences[nowSentenceIdx].textboxType);
 
             //nowOnFab = Instantiate(textboxFab, npcTalkBubbleTfs[sentences[nowSentenceIdx].characterId]);
-            nextButton = nowOnFab.GetComponent<TextBox>().GetNextButton;
+            //nextButton = nowOnFab.GetComponent<TextBox>().GetNextButton;
 
             nameText.text = questDialogLists[sentences[nowSentenceIdx++].characterId].charName;
 
@@ -319,17 +322,17 @@ namespace DM.Dialog
             }
             else
             {
-                nextButton.onClick.RemoveAllListeners();
-                nextButton.onClick.AddListener(() =>
-                {
-                    UpdateDialog(sentences, sentenceState);
-                    //nowOnFab.GetComponent<TextBox>().DestroyTextBox();
-                });
+                //nextButton.onClick.RemoveAllListeners();
+                //nextButton.onClick.AddListener(() =>
+                //{
+                //    UpdateDialog(sentences, sentenceState);
+                //    //nowOnFab.GetComponent<TextBox>().DestroyTextBox();
+                //});
 
-                speedNextButton.onClick.RemoveAllListeners();
-                speedNextButton.onClick.AddListener(() =>
+                testdelegate = (() =>
                 {
                     UpdateDialog(sentences, sentenceState);
+                    Debug.Log("testdelegete");
                     //nowOnFab.GetComponent<TextBox>().DestroyTextBox();
                 });
             }
@@ -341,17 +344,23 @@ namespace DM.Dialog
         //마지막 대사일 때 작동
         private void LastDialog(int sentenceState)
         {
-            nextButton.onClick.RemoveAllListeners();
-            speedNextButton.onClick.RemoveAllListeners();
-            print("Remove_Last");
+            //nextButton.onClick.RemoveAllListeners();
+            //speedNextButton.onClick.RemoveAllListeners();
+            //print("Remove_Last");
 
-            nextButton.onClick.AddListener(() =>
+            //nextButton.onClick.AddListener(() =>
+            //{
+            //    LastDialogNextEvent(sentenceState);
+            //});
+            //speedNextButton.onClick.AddListener(() =>
+            //{
+            //    LastDialogNextEvent(sentenceState);
+            //});
+            testdelegate = (() =>
             {
                 LastDialogNextEvent(sentenceState);
-            });
-            speedNextButton.onClick.AddListener(() =>
-            {
-                LastDialogNextEvent(sentenceState);
+                Debug.Log("Remove_Last");
+                //nowOnFab.GetComponent<TextBox>().DestroyTextBox();
             });
             //수락 시 이벤트가 있다면 진행
         }

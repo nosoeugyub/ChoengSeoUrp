@@ -15,7 +15,7 @@ namespace DM.NPC
         {
             return characterType;
         }
-        public virtual void Talk(Item hitem)
+        public virtual void Talk()
         {
 
         }

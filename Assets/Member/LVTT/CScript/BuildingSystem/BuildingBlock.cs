@@ -212,9 +212,9 @@ namespace DM.Building
             }
         }
 
-        public void OnBuildMode(Item handitem)
+        public void OnBuildMode()
         {
-            if (handitem.InItemType != InItemType.Hammer) return;
+            //if (handitem.InItemType != InItemType.Hammer) return;
 
             buildManager.BuildingInteractButtonOnOff(true);
 

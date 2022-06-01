@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine;
 public enum MineState { Normal, Trunk, Gone, }
+public enum MineType { Tree, Stone,}
 public class MineObject : ItemObject
 {
     protected int nowChopCount;
@@ -15,7 +16,6 @@ public class MineObject : ItemObject
 
     [SerializeField] protected Animator animator;
     [SerializeField] protected BoxCollider boxcol;
-    protected Item handitem;
     private new void Awake()
     {
         base.Awake();
@@ -60,21 +60,21 @@ public class MineObject : ItemObject
     {
         return (int)CursorType.PickAxe;
     }
-    public virtual bool Mine(Item _handitem, Animator playerAnimator)
+    public virtual bool Mine(Animator playerAnimator)
     {
-        handitem = _handitem;
-        if (_handitem.InItemType != toolType)
-        {
-            print("다른 도구로 시도해주세요.");
-            return false;
-        }
+        //handitem = _handitem;
+        //if (_handitem.InItemType != toolType)
+        //{
+        //    print("다른 도구로 시도해주세요.");
+        //    return false;
+        //}
         Interact();
 
         animator.SetBool("IsFalling", false);
 
-        if (_handitem.InItemType == InItemType.Pickaxe)
+        if (GetItem().InItemType == InItemType.Stone)
             playerAnimator.SetBool("isMining", true);
-        else if (_handitem.InItemType == InItemType.Axe)
+        else if (GetItem().InItemType == InItemType.tree)
             playerAnimator.SetBool("isAxing", true);
         SetAnimationEventMethod(playerAnimator);
         return true;
@@ -87,7 +87,7 @@ public class MineObject : ItemObject
 
     public virtual void UpdateMineState()
     {
-        SuperManager.Instance.soundManager.PlaySFX(handitem.UsingToolSoundName);
+        SuperManager.Instance.soundManager.PlaySFX(item.UsingToolSoundName);
         if (++nowChopCount >= item.ChopCount)
         {
             NSY.Player.PlayerInput.OnPressFDown = null;

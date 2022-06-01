@@ -98,7 +98,7 @@ public class TreeObject : MineObject
     public override void UpdateMineState()
     {
         Debug.Log("Tree UpdateMineState");
-        SuperManager.Instance.soundManager.PlaySFX(handitem.UsingToolSoundName);
+        SuperManager.Instance.soundManager.PlaySFX(item.UsingToolSoundName);
         if (++nowChopCount >= item.ChopCount)
         {
             NSY.Player.PlayerInput.OnPressFDown = null;

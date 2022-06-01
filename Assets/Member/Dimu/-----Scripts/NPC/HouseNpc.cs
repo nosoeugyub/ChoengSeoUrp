@@ -271,7 +271,7 @@ namespace DM.NPC
         }
         public bool SettingBuildingTalk()
         {
-            if (!PlayDialog(null)) return false;
+            if (!PlayDialog()) return false;
             if (isFollowPlayer)
             {
                 player.SetNpc(null);
@@ -279,7 +279,7 @@ namespace DM.NPC
             }
             return true;
         }
-        public override void Talk(Item handitem)
+        public override void Talk()
         {
             if (isFollowPlayer)
             {
@@ -287,11 +287,11 @@ namespace DM.NPC
                 //isFollowPlayer = false;
             }
             else
-                PlayDialog(handitem);
+                PlayDialog();
         }
-        public bool PlayDialog(Item handitem)
+        public bool PlayDialog()
         {
-            return SuperManager.Instance.dialogueManager.FirstShowDialog(this, handitem, isFollowPlayer, (int)like);
+            return SuperManager.Instance.dialogueManager.FirstShowDialog(this, isFollowPlayer, (int)like);
         }
         public void MoveTo(Vector3 pos)
         {
