@@ -8,18 +8,22 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: TEST 2
-  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 6d00078c37506cd4b9c038d684b987d6,
+    type: 3}
   m_ShaderKeywords: _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A _SPECULARHIGHLIGHTS_OFF
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
-  stringTagMap:
-    RenderType: Opaque
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Maintexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 2800000, guid: 6934eae47d19ecc4bb545d442145484d, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -48,11 +52,31 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _ToonShade:
+        m_Texture: {fileID: 8900000, guid: b995d4bd9d11078d11005b9844295342, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
+    - Vector1_14D63945: 0.5
+    - Vector1_1D72CB8B: 1
+    - Vector1_1FB108EC: 1
+    - Vector1_25277890: 0
+    - Vector1_36B343B4: 0.5
+    - Vector1_4BE427E3: 0.1
+    - Vector1_723E9DA6: 0.5
+    - Vector1_768F9A92: 0
+    - Vector1_862ED1EF: 0
+    - Vector1_8A8E7952: 0
+    - Vector1_BFB5F24C: 1
+    - Vector1_D9BA9BE2: 0
+    - Vector1_F53C9199: 0
+    - Vector1_F75EA2B8: 0
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
     - _Cull: 2
+    - _CurrCol: 0
+    - _CurrRow: 0
     - _Cutoff: 0.5
     - _DstBlend: 0
     - _EnvironmentReflections: 1
@@ -71,9 +95,11 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
+    - Vector2_AF8C33AB: {r: 1, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 0.9607843, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Grid: {r: 1, g: 1, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
 --- !u!114 &2625211632703872478
 MonoBehaviour:
