@@ -46,6 +46,7 @@ namespace DM.Dialog
         QuestManager questManager;
         NPCManager npcManager;
 
+        public bool IsTalking { get { return isTalking; } }
         private void Awake()
         {
             questManager = SuperManager.Instance.questmanager;
@@ -404,6 +405,7 @@ namespace DM.Dialog
                 }
             }
             testdelegate = null;
+            nowNpc = null;
             UpdateNpcsQuestMark();
         }
         public void UpdateNpcsQuestMark()

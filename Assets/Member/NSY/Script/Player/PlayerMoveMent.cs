@@ -1,6 +1,6 @@
-﻿using Game.Cam;
+﻿using DM.Dialog;
+using Game.Cam;
 using NSY.Manager;
-using System.Collections;
 using TT.MapTravel;
 using UnityEngine;
 namespace NSY.Player
@@ -28,6 +28,7 @@ namespace NSY.Player
         public bool Maptravel;
         MapTravel MapTravel;
         CameraManager CamManager;
+        DialogueManager dialogManager;
 
 
         //////End of "Zess's code"//////
@@ -36,6 +37,7 @@ namespace NSY.Player
             //////Zess's code//////
             MapTravel = FindObjectOfType<MapTravel>();
             CamManager = FindObjectOfType<CameraManager>();
+            dialogManager = FindObjectOfType<DialogueManager>();
             Maptravel = false;
             curAreaNum = 1;
             //////End of "Zess's code"//////
@@ -45,8 +47,13 @@ namespace NSY.Player
         {
             if (!CamManager.IsZoom && !playerController.playerinteract.IsAnimating())
             {
-                Move();
-                Flip();
+                if (dialogManager.IsTalking && Vector3.Distance(dialogManager.GetNowNpc().transform.position, transform.position) > 10)
+                { }
+                else
+                {
+                    Move();
+                    Flip();
+                }
             }
             idle();
             //////Zess's code//////
@@ -114,7 +121,7 @@ namespace NSY.Player
         {
             Vector3 offset = target - transform.position;
             Vector3 top = Vector3.up;
-            playerController.characterCtrl.Move(top*8);
+            playerController.characterCtrl.Move(top * 8);
             playerController.characterCtrl.Move(offset);
             playerController.characterCtrl.Move(-top * 6);
         }
