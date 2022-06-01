@@ -9,7 +9,9 @@ public class DialogData : ScriptableObject
     public Sentence[] proceedingSentenceInfo;//진행중 문장뭉치
     public Sentence[] clearSentenceInfo;//완료 문장뭉치
 
+    [Space]
     public DialogTask dialogTasks;
+    [Space]
 
     public int questId; //문장이 끝나면 주어질 퀘스트
     public int subjectCharacterID; //대화 주체(상대)
@@ -24,6 +26,7 @@ public class DialogData : ScriptableObject
     [System.Serializable]
     public class QuestRewards
     {
+        public RewardType rewardType;
         public Item itemType;
         public int getCount;
     }
@@ -105,16 +108,14 @@ public class DialogTask
     public DialogData[] haveToEndDialog;
     public QuestIndexSet[] DonthaveToClearQuest; //클리어 하지 말아야 하는 퀘스트
     public DialogData[] DonthaveToEndDialog;
+    [Space]
     public QuestIndexSet[] haveToDoingQuest; //진행중이어야 하는 퀘스트
     public BuildBuilding[] buildBuildings;
-    public int itemIndexToHand;//손에 들고 있어야 하는 아이템 인덱스
 }
 [System.Serializable]
 public class QuestIndexSet
 {
     public QuestData questdata;
-    public int npcid;
-    public int questid;
 }
 [System.Serializable]
 public class BuildBuilding

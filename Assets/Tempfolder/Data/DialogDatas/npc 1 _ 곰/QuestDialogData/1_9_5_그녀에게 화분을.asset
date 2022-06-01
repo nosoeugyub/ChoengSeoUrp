@@ -13,10 +13,13 @@ MonoBehaviour:
   m_Name: "1_9_5_\uADF8\uB140\uC5D0\uAC8C \uD654\uBD84\uC744"
   m_EditorClassIdentifier: 
   acceptSentenceInfo:
-  - sentence: "\uC800\uB294 \uC544\uB0B4\uC640 \uCC9C\uB144\uAC00\uC57D\uC744 \uB9FA\uC5C8\uAC70\uB4E0\uC694.\n\uADF8\uB140\uB97C
-      \uC704\uD574 \uD654\uBD84\uC744 \uC120\uBB3C\uD558\uACE0 \uC2F6\uC740\uB370,\n\uD654\uBD84
-      \uD558\uB098 \uC81C\uC791\uD574\uC11C \uC804\uB2EC\uD574\uC8FC\uC2E4 \uC218
-      \uC788\uC744\uAE4C\uC694?"
+  - sentence: "\uC800\uB294 \uC544\uB0B4\uC640 \uCC9C\uB144\uAC00\uC57D\uC744 \uB9FA\uC5C8\uAC70\uB4E0\uC694."
+    characterId: 1
+    eventIdx: 0
+    textboxType: 0
+  - sentence: "\uADF8\uB140\uB97C \uC704\uD574 \uD654\uBD84\uC744 \uC120\uBB3C\uD558\uACE0
+      \uC2F6\uC740\uB370,\n\uD654\uBD84 \uD558\uB098 \uC81C\uC791\uD574\uC11C \uC804\uB2EC\uD574\uC8FC\uC2E4
+      \uC218 \uC788\uC744\uAE4C\uC694?"
     characterId: 1
     eventIdx: 0
     textboxType: 0
@@ -44,17 +47,12 @@ MonoBehaviour:
   dialogTasks:
     haveToClearQuest:
     - questdata: {fileID: 11400000, guid: 4aa667d06f5dcdf4798d7f4f019a1102, type: 2}
-      npcid: 0
-      questid: 0
     haveToEndDialog: []
     DonthaveToClearQuest:
     - questdata: {fileID: 11400000, guid: 24f5138648c27ce4794e6b6456c501e2, type: 2}
-      npcid: 0
-      questid: 0
     DonthaveToEndDialog: []
     haveToDoingQuest: []
     buildBuildings: []
-    itemIndexToHand: 0
   questId: 5
   subjectCharacterID: 1
   isTalkingOver: 0

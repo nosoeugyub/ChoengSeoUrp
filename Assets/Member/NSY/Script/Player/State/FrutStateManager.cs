@@ -37,7 +37,7 @@ public class FrutStateManager : ItemObject//, IInteractable
 
     public void CanInteract(GameObject player)
     {
-        PlayerInput.OnPressFDown = Interact;
+        //PlayerInput.OnPressFDown = Interact;
     }
     public Transform ReturnTF()
     {

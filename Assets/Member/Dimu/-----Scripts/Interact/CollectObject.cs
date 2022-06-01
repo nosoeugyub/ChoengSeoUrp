@@ -1,5 +1,6 @@
 ﻿using NSY.Iven;
 using NSY.Manager;
+using NSY.Player;
 using UnityEngine;
 
 public class CollectObject : ItemObject

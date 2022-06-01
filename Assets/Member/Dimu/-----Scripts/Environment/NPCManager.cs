@@ -34,8 +34,8 @@ public class NPCManager : MonoBehaviour
 
     private void Start()
     {
-        EventManager.EventActions[3] += MoveToBearsHouse;
-        EventManager.EventActions[5] += MoveToWalPort;
+        EventManager.EventActions[(int)EventEnum.MoveToBearsHouse] += MoveToBearsHouse;
+        EventManager.EventActions[(int)EventEnum.MoveToWalPort] += MoveToWalPort;
 
         //npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().CharacterMove(teleportPos[0].position);
 
@@ -66,9 +66,9 @@ public class NPCManager : MonoBehaviour
         teleUIYesButton.onClick.AddListener(() =>
         {
             //if (SuperManager.Instance.inventoryManager.RemoveItem(removeitem, removeCount))
-                npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(teleportPos[i].position);
+            npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(teleportPos[i].position);
             //else
-                //teleFailUI.gameObject.SetActive(true);
+            //teleFailUI.gameObject.SetActive(true);
         });
     }
     public void ComeToPort()

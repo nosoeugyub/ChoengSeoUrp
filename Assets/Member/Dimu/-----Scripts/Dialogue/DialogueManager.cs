@@ -53,8 +53,7 @@ namespace DM.Dialog
         }
         void Start()
         {
-            EventManager.EventActions[1] = Test;
-
+            EventManager.EventActions[((int)EventEnum.Test)] = Test;
             FirstShowDialog(npcTalkBubbleTfs[(int)Character.CheongSeo].parent.GetComponent<HouseNpc>(), false, -1);
         }
         private void Update()
@@ -74,7 +73,7 @@ namespace DM.Dialog
             times += Time.deltaTime;
             if (times > 3) { EventManager.EventAction -= EventManager.EventActions[1]; }
         }
-        public bool FirstShowDialog(HouseNpc npc,  bool isFollowPlayer, int isLike) //첫 상호작용 시 호출. 어떤 대화를 호출할지 결정
+        public bool FirstShowDialog(HouseNpc npc, bool isFollowPlayer, int isLike) //첫 상호작용 시 호출. 어떤 대화를 호출할지 결정
         {
             if (isTalking)
             {
@@ -388,7 +387,14 @@ namespace DM.Dialog
                         {
                             foreach (DialogData.QuestRewards item in nowDialogData.acceptQuestItems)//아이템추가해야함.
                             {
-                                SuperManager.Instance.inventoryManager.AddItem(item.itemType);
+                                if (item.rewardType == RewardType.Item)
+                                {
+                                    SuperManager.Instance.inventoryManager.AddItem(item.itemType, item.getCount);
+                                }
+                                else if (item.rewardType == RewardType.Event)
+                                {
+                                    EventManager.EventAction += EventManager.EventActions[item.getCount];
+                                }
                                 //개수만큼 더하게 해야함
                             }
                         }
@@ -412,12 +418,12 @@ namespace DM.Dialog
                 {
                     npcManager.NpcTfs[i].Npctf.SetQuestMark(true);
 
-                    if(isAcceptedQuests.Count>0)
+                    if (isAcceptedQuests.Count > 0)
                     {
                         Debug.Log(string.Format("{0} {1}", npcManager.NpcTfs[i].Npctf.name, isAcceptedQuests[0]));
 
                     }
-                    if(canStartDialogs.Count>0)
+                    if (canStartDialogs.Count > 0)
                     {
                         Debug.Log(string.Format("{0} {1}", npcManager.NpcTfs[i].Npctf.name, canStartDialogs[0]));
                     }

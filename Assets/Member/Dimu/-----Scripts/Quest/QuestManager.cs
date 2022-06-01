@@ -54,12 +54,7 @@ namespace DM.Quest
                 //reward
                 foreach (var reward in nowQuestData.rewards)
                 {
-                    if (reward.rewardType == RewardType.Gold)
-                    {
-                        //재화 증가
-                        Debug.Log(string.Format("Clear, {0}G 획득", reward.getCount));
-                    }
-                    else if (reward.rewardType == RewardType.Item)
+                    if (reward.rewardType == RewardType.Item)
                     {
                         //아이템 추가
                         print(reward.itemType.ItemName);
@@ -162,4 +157,4 @@ namespace DM.Quest
     }
 }
 public enum RewardType
-{ Gold, Item, Event, }
+{ Item, Event, }

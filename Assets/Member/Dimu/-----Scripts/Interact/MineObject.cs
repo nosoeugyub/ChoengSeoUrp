@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 public enum MineState { Normal, Trunk, Gone, }
-public enum MineType { Tree, Stone,}
+public enum MineType { Tree, Stone, }
 public class MineObject : ItemObject
 {
     protected int nowChopCount;
@@ -71,11 +71,10 @@ public class MineObject : ItemObject
         Interact();
 
         animator.SetBool("IsFalling", false);
-
-        if (GetItem().InItemType == InItemType.Stone)
-            playerAnimator.SetBool("isMining", true);
-        else if (GetItem().InItemType == InItemType.tree)
+        if (GetItem().InItemType == InItemType.tree)
             playerAnimator.SetBool("isAxing", true);
+        else
+            playerAnimator.SetBool("isMining", true);
         SetAnimationEventMethod(playerAnimator);
         return true;
     }
@@ -96,8 +95,8 @@ public class MineObject : ItemObject
             FindObjectOfType<EnvironmentManager>().ChangeCleanliness(item.CleanAmount);
 
             ChangeMineState(MineState.Gone);
-            if(!cantRespown)
-            StartCoroutine(Respawn());
+            if (!cantRespown)
+                StartCoroutine(Respawn());
         }
         else
         {

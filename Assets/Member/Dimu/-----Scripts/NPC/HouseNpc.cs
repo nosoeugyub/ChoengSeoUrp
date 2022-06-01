@@ -31,8 +31,8 @@ namespace DM.NPC
         }
         private void Start()
         {
-            EventManager.EventActions[2] += MoveToMyHome;
-            EventManager.EventActions[4] += OnFollowPlayer;
+            EventManager.EventActions[((int)EventEnum.MoveToMyHome)] += MoveToMyHome;
+            EventManager.EventActions[(int)EventEnum.OnFollowPlayer] += OnFollowPlayer;
         }
         private void FixedUpdate()
         {

@@ -41,13 +41,12 @@ namespace NSY.Iven
         public void Update()
         {
             isInRange = true;
-            if (isInRange && Input.GetKeyDown(KeyCode.E))
+            if (isInRange && Input.GetKeyDown(KeyCode.N))
             {
                 Item itemCopy = item.GetCopy();
                 
                 if (inventory.AddItem(item.GetCopy(), 8))
                 {
-                    Debug.Log("갯씨바럼ㅇ렼ㅌ아아");
                     itemCopy.GetCountItems++;
                     if (itemCopy.CleanAmount == 0)
                     {

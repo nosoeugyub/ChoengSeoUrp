@@ -1,7 +1,15 @@
 ﻿using System;
 using UnityEngine;
 
-
+public enum EventEnum
+{   
+    Test = 1,
+    MoveToMyHome,
+    MoveToBearsHouse,
+    OnFollowPlayer,
+    MoveToWalPort,
+    OpenRoad1,
+}
 namespace NSY.Manager
 {
 
@@ -10,6 +18,8 @@ namespace NSY.Manager
         //싱글턴
         private EventManager() { }
         private static EventManager _instace = null;
+
+        public GameObject[] cols;
 
         ////이벤트 델리게이트, 표지판 튜토리얼
         //public delegate void StartSignPost();
@@ -22,9 +32,10 @@ namespace NSY.Manager
         //public delegate void StartTreeTutor();
         //public static event StartTreeTutor FristTreeCollder;
 
-        //public delegate void EndTreeTutor();
-        //public static event EndTreeTutor UnFristTreeCollder;
-        //==
+        //public delegate void OpenRoad();
+        //public static event OpenRoad OpenRoadPort;
+        //public static event OpenRoad OpenRoadFall;
+        
 
         public static Action[] EventActions = new Action[10];
         public static Action EventAction;
@@ -55,17 +66,27 @@ namespace NSY.Manager
                 _instace = value;
             }
         }
+
+        private void Start()
+        {
+            EventActions[((int)EventEnum.OpenRoad1)] = OpenPortCol;
+
+        }
         private void Update()
         {
             if (EventAction == null) return;
             EventAction(); //이벤트 실행
         }
 
+        public void OpenPortCol()
+        {
+            for (int i = 0; i < cols.Length; i++)
+            {
+                cols[i].SetActive(false);
+            }
+        }
     }
-
 }
-//public enum EventType
-//{ Test, Layout }
 
 
 

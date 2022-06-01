@@ -9,7 +9,7 @@ namespace NSY.Player
     public class PlayerInteract : MonoBehaviour
     {
         [SerializeField] List<Interactable> interacts = new List<Interactable>();//상호작용 범위 내 있는 IInteractable오브젝트 리스트
-        //IInteractable closestObj;//가장 가까운 친구
+        Interactable closestObj;//가장 가까운 친구
 
         CursorManager cursorManager;
 
@@ -54,6 +54,7 @@ namespace NSY.Player
         private void Update()
         {
             InteractWithObjects();
+            LightClosestObj();
         }
 
         public bool SetNpc(HouseNpc npc)
@@ -163,7 +164,6 @@ namespace NSY.Player
 
         private void InteractWithObjects()
         {
-            //ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Vector3 mousepos = Input.mousePosition;
             mousepos.z = 20;
             Vector3 nordir = (Camera.main.ScreenToWorldPoint(mousepos) - Camera.main.transform.position).normalized;
@@ -178,13 +178,9 @@ namespace NSY.Player
                 if (nowInteractable != null && IsInteracted(nowInteractable))// 클릭한 옵젝이 닿은 옵젝 리스트에 있다면 통과ds
                 {
                     StartCoroutine(cursorManager.SetCursor(nowInteractable.CanInteract()));
-                    Vector3 uiPos = new Vector3(nowInteractable.transform.position.x, nowInteractable.transform.position.y + 2, nowInteractable.transform.position.z);
+                    //Vector3 uiPos = new Vector3(nowInteractable.transform.position.x, nowInteractable.transform.position.y + 2, nowInteractable.transform.position.z);
                     //형광 셰이더로 변환....
-
-                    if (!nowInteractable.GetComponent<BuildingBlock>())
-                    {
-                        nowInteractable.gameObject.GetComponentInChildren<MeshRenderer>().material.shader = GlowColor;
-                    }
+                    ChangeLightShader(nowInteractable);
 
                 }
                 else
@@ -205,6 +201,52 @@ namespace NSY.Player
                 }
             }
         }
+        ////가장 가까운 오브젝트 검출
+        public void LightClosestObj()
+        {
+            if (closestObj)
+                closestObj.EndInteract();
+            if (interacts.Count <= 1)
+            {
+                return;
+            }
+            DistChect();
+            if (closestObj)
+            {
+                closestObj.CanInteract();
+                PlayerInput.OnPressFDown = InvokeInteractClosestObj;
+            }
+            ChangeLightShader(closestObj);
+        }
+        public void InvokeInteractClosestObj()
+        {
+            InvokeInteract(closestObj);
+        }
+        //거리 계산
+        public void DistChect()
+        {
+            float shortestDist = 1000000;
+
+
+
+            foreach (var item in interacts)
+            {
+                if (item.gameObject.layer != 9) continue;
+                float dist = Vector3.Distance(transform.position, item.transform.position);
+                if (dist < shortestDist)
+                {
+                    shortestDist = dist;
+                    closestObj = item;
+                }
+            }
+        }
+        private void ChangeLightShader(Interactable interactableobj)
+        {
+            if (!interactableobj.GetComponent<BuildingBlock>())
+            {
+                interactableobj.gameObject.GetComponentInChildren<MeshRenderer>().material.shader = GlowColor;
+            }
+        }
 
         public bool IsAnimating()
         {
@@ -215,13 +257,6 @@ namespace NSY.Player
         {
             return interacts.Contains(it);
         }
-
-        //public void SetHandItem(Item item)
-        //{
-        //    handItem = item;
-        //    handItemObj.sprite = handItem.ItemSprite;
-        //    //애니메이션 변경
-        //}
 
         public void OnTriggerEnter(Collider other)
         {
@@ -255,11 +290,6 @@ namespace NSY.Player
                     buildAreaObject.EndInteract_();
             }
         }
-
-
-
-
-
         /*
           //interactUI.SetActive(true);
 
@@ -278,37 +308,7 @@ namespace NSY.Player
                     //interactUI.transform.position = RectTransformUtility.WorldToScreenPoint(Camera.main, interactUI.transform.position);
 
         */
-        ////가장 가까운 오브젝트 검출
-        //public void LightClosestObj()
-        //{
-        //    if (interacts.Count == 0)
-        //    {
-        //        interactUI.SetActive(false);
-        //        return;
-        //    }
-        //    interactUI.SetActive(true);
 
-        //    DistChect();
-        //    closestObj.CanInteract();
-
-        //    Vector3 uiPos = new Vector3(closestObj.ReturnTF().position.x, closestObj.ReturnTF().position.y + 4, closestObj.ReturnTF().position.z);
-        //    interactUI.transform.position = Camera.main.WorldToScreenPoint(uiPos);
-        //}
-        ////거리 계산
-        //public void DistChect()
-        //{
-        //    float shortestDist = 1000000;
-
-        //    foreach (var item in interacts)
-        //    {
-        //        float dist = Vector3.Distance(transform.position, item.ReturnTF().position);
-        //        if (dist < shortestDist)
-        //        {
-        //            shortestDist = dist;
-        //            closestObj = item;
-        //        }
-        //    }
-        //}
     }
 
 }
