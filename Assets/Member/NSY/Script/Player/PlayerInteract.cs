@@ -13,7 +13,7 @@ namespace NSY.Player
 
         CursorManager cursorManager;
 
-        //public GameObject interactUI;//띄울 UI
+        public GameObject interactUI;//띄울 UI
         //public Text interactUiText;//띄울 UI
         public TextMeshProUGUI interactUiText2;
 
@@ -60,7 +60,6 @@ namespace NSY.Player
             InteractWithObjects();
             LightClosestObj();
         }
-
         public bool SetNpc(HouseNpc npc)
         {
             if (npc == null)
@@ -213,6 +212,7 @@ namespace NSY.Player
             {
                 closestObj.EndInteract();
                 closestObj = null;
+                interactUI.SetActive(false);
             }
 
             if (interacts.Count <= 1) return;
@@ -222,6 +222,14 @@ namespace NSY.Player
             if (closestObj)
             {
                 closestObj.CanInteract();
+                interactUI.SetActive(true);
+                Vector3 vector3 = Camera.main.WorldToScreenPoint(closestObj.transform.position);
+
+                RectTransformUtility.ScreenPointToLocalPointInRectangle(targetRectTr, vector3, uiCamera, out screenPoint);
+                interactUI.GetComponent<RectTransform>().localPosition = screenPoint;
+
+                //interactUI.transform.position = RectTransformUtility.WorldToScreenPoint(Camera.main, interactUI.transform.position);
+
                 ChangeLightShader(closestObj);
             }
         }
