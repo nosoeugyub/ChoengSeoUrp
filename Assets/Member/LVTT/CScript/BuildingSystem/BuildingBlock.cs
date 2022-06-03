@@ -130,8 +130,8 @@ namespace DM.Building
                             }
                             if (curInteractObj.ItemisSet) //자재 클릭 + 세팅된 자재일 때
                             {
-                                Debug.Log("쒸ㅃ쒸ㅃ쒸ㅃ 전인석 쓉새기야");
-                                invenmanager.CheckBuliditem = hit.collider.GetComponent<BuildingItemObj>().item;// 쉬바들어가라 좋은말할때
+                             
+                                invenmanager.CheckBuliditem = hit.collider.GetComponent<BuildingItemObj>().item;//  건축 슬롯말고 건축존에서 다시 클릭할때
                                 foreach (ItemSlot itemslot in inventory.ItemSlots)
                                 {
                                     if (itemslot.item == null)
@@ -141,7 +141,11 @@ namespace DM.Building
                                     if (itemslot.item.OutItemType == OutItemType.BuildingItemObj && itemslot.item.ItemName != hit.collider.GetComponent<BuildingItemObj>().item.ItemName)
                                     {
                                         itemslot.Interactble(false);
-                                       
+                                        itemslot.OnDrag(null);
+                                        itemslot.OnBeginDrag(null);
+                                        itemslot.OnEndDrag(null);
+                                        itemslot.OnDrop(null);
+
                                     }
                                 }
                                 SetCurInteractObj(hit.collider.GetComponent<BuildingItemObj>());
