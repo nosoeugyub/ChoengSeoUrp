@@ -8,13 +8,13 @@ namespace NSY.Iven
 {
     public class InvenToryManagers : MonoBehaviour
     {
-        
+
 
         [SerializeField] ItemTooltip itemTooltip;
-        //    [SerializeField] BtnIven btniven;
+
         [SerializeField] InventoryNSY iventorynsy;
         [SerializeField] EquipPanel equipPanel;
-        // [SerializeField] CraftManager craftPanel;
+
         [SerializeField] Image draggableitem;
         [SerializeField] DropItemArea Dropitemarea;
         [SerializeField] QuestionDialog questionDialog;
@@ -26,14 +26,10 @@ namespace NSY.Iven
         //레시피
         [Header("레시피 레퍼런스")]
         private CraftingRecipe carftingRecipe;
-        //  [SerializeField] CraftSlot[] CraftSlot;
 
 
         //조합
-        //  [SerializeField] CraftManager Craftmanager;
-        //   [SerializeField] GameObject Craftmgr;
-        //    public int Craftindex = 0;
-        //   public bool isAdd = true;
+
         private BaseItemSlot dragitemSlot;
         public ReSultSlot resultslot;
 
@@ -50,6 +46,11 @@ namespace NSY.Iven
         //버리기
         public Text ScriptTxt;
         int discount = 1;
+
+        //빌딩쓰
+        bool isBuildingHands = false;
+        public Item CheckBuliditem;
+
         private void Awake()
         {
             ScriptTxt.text = "1";
@@ -66,7 +67,7 @@ namespace NSY.Iven
 
 
             //인벤토리 클레스 이벤트
-         
+
             iventorynsy.OnDubleClickEvent += OnDoubleClickEvent;
             iventorynsy.OnLeftClickEvent += BuildingLeftClick;
             iventorynsy.OnRightClickEvent += InventoryRightClick;
@@ -102,34 +103,55 @@ namespace NSY.Iven
                 itemTooltip.HideTooltip();
             }
         }
-        float ToolX, ToolY;
+
         private void ShowToolTip(BaseItemSlot itemSlot)
         {
             if (itemSlot.item != null)
             {
                 itemTooltip.ShowItemTooltip(itemSlot.item);
                 Vector3 ToolVec = itemTooltip.tooltipTransform.transform.position;
-                ToolVec.x = itemSlot.GetComponent<Image>().rectTransform.position.x +0.7f;
+                ToolVec.x = itemSlot.GetComponent<Image>().rectTransform.position.x + 0.7f;
                 ToolVec.y = itemSlot.GetComponent<Image>().rectTransform.position.y + 0.3f;
                 ToolVec.z = itemSlot.GetComponent<Image>().rectTransform.position.z;
                 itemTooltip.tooltipTransform.transform.position = ToolVec;
             }
         }
 
-  
 
-    //    private void rudtn(Item item)// 장착아이템을 장비칸으로
-      //  {
 
-        //    equipPanel.RemoveResultItem(item);
-        //}
 
+        public bool isRed = false;
         private void BuildingLeftClick(BaseItemSlot obj)
         {
+
+
+            if (CheckBuliditem != null)
+            {
+                return;
+            }
+
             if (BuildingBlock.isBuildMode)
             {
+                CheckBuliditem = obj.item;
                 BuildingBlock.nowBuildingBlock.BtnSpawnHouseBuildItem(obj.item);
-                obj.Amount--;
+
+                foreach (ItemSlot itemslots in iventorynsy.ItemSlots) //인벤 빌딩슬롯 정검 
+                {
+
+                    //  if (itemslots.item == null) continue;
+                    if (itemslots.item.OutItemType == OutItemType.BuildingItemObj || CheckBuliditem.ItemName != itemslots.item.ItemName)
+                    {
+                        itemslots.Interactble(false);
+
+                    }
+                    if (itemslots.item == CheckBuliditem)
+                    {
+                        obj.Amount--;
+                    }
+                }
+                //  obj.Amount--;
+
+
             }
             else
             {
@@ -138,19 +160,17 @@ namespace NSY.Iven
                 {
                     case InItemType.BuildingItemObj_Essential:
                         HandySpawnObj.HandySpawnBuildItem(obj.item);
-                        Debug.Log("SpawnEssentialItem");
+
                         break;
                     case InItemType.BuildingItemObj_Additional:
                         HandySpawnObj.HandySpawnBuildItem(obj.item);
-                        Debug.Log("SpawnAdditionalItem");
+
                         break;
                 }
-                ////if (obj.item.OutItemType == OutItemType.BuildingItemObj_Mini)
-                //{
-
-                //}
             }
+
         }
+
 
         //더블클릭
         public void OnDoubleClickEvent(BaseItemSlot itemslot)
@@ -265,7 +285,6 @@ namespace NSY.Iven
         {
             if (equipPanel.AddResultItem(item))
             {
-                //playerinterract.SetHandItem(item);
 
 
             }
@@ -280,7 +299,7 @@ namespace NSY.Iven
             {
                 if (iventorynsy.RemoveItem(item))
                 {
-                    Debug.Log("씨발아 왜안되는데 ");
+
                 }
 
             }

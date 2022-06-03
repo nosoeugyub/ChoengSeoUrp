@@ -24,12 +24,6 @@ namespace NSY.Iven
             {
                 itemsParent.GetComponentsInChildren(includeInactive: true, result: ItemSlots);
             }
-
-            //if (!Application.isPlaying)
-            //{
-            //    SetStartingTiems();
-            //}
-            
         }
         protected override void Awake()
         {

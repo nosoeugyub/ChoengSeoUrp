@@ -90,14 +90,10 @@ namespace NSY.Iven
                 }
                 return;
             }
-
             foreach (ItemSlot itemSlot in ItemSlots)
             {
-
                 if (itemSlot.item == null)
                 {
-
-
                     continue;
                 }
                 else
@@ -111,8 +107,6 @@ namespace NSY.Iven
                         itemSlot.Interactble(true);
                     }
                 }
-
-
 
                 if (itemSlot.item.OutItemType == OutItemType.BuildingItemObj && itemSlot.item != null)// 건축가능한 친구
                 {
@@ -128,6 +122,21 @@ namespace NSY.Iven
                 }
 
             }
+        }
+
+        public void BulidRed() // 건축자재 빨갱이 
+        {
+            foreach (ItemSlot itemSlot in ItemSlots)
+            {
+                if (itemSlot.item == null) continue;
+                if (itemSlot.item.OutItemType == OutItemType.BuildingItemObj)
+                {
+                    Debug.Log("씨발련아");
+                    itemSlot.Interactble(true);
+                }
+              
+            }
+            return;
         }
 
         public virtual bool AddItem(Item item)

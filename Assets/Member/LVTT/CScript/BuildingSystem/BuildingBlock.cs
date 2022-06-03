@@ -32,11 +32,13 @@ namespace DM.Building
 
         private CameraManager CamManager;
         private BuildingManager buildManager;
+        private InvenToryManagers invenmanager;
 
-        private BuildingItemObj curInteractObj;
+        public BuildingItemObj curInteractObj;
         private float BuildItemScaleVar = 0.01f;
         private float BuildItemRotationVar = 1;
         private float BuildItemGap = 0.002f;
+        
 
         SpecialHouse specialHouse;
 
@@ -64,7 +66,7 @@ namespace DM.Building
             CamManager = FindObjectOfType<CameraManager>();
             buildManager = FindObjectOfType<BuildingManager>();
             specialHouse = GetComponent<SpecialHouse>();
-
+            invenmanager = FindObjectOfType<InvenToryManagers>();
             inventory = FindObjectOfType<InventoryNSY>();
         }
         void Start()
@@ -97,7 +99,6 @@ namespace DM.Building
             {
                 if (Input.GetMouseButtonDown(0))
                 {
-                    //print("MouseDown");
                     if (curInteractObj == null) return;
 
                     ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -105,9 +106,6 @@ namespace DM.Building
 
                     if (Physics.Raycast(ray, out hit, 100, layerMask))
                     {
-
-                        //print(hit.collider.name);
-
                         if (hit.collider.GetComponent<BuildingItemObj>() == null) //자재가 아닌걸 클릭 시
                         {
                             if (!curInteractObj.ItemisSet && !curInteractObj.IsFirstDrop)
@@ -115,35 +113,38 @@ namespace DM.Building
                                 print("ItemisSet = true 1 ");
                                 SetBuildingItemObj();
                             }
-                            else //처음 생성 시
-                            {
-                                //print("ItemisSet = false 1");
-                            }
                         }
                         else
                         {
+                            invenmanager.CheckBuliditem = null; //설치하면 다른거 할수있음 ㅋ
+                            foreach (ItemSlot itemslot in inventory.ItemSlots) //건축슬롯 원상복구
+                            {
+                                if (itemslot.item == null)
+                                {
+                                    continue;
+                                }
+                                if (itemslot.item.OutItemType == OutItemType.BuildingItemObj)// 건축슬롯들을dnsjtkdqhrrngo
+                                {
+                                    itemslot.Interactble(true);
+                                }
+                            }
                             if (curInteractObj.ItemisSet) //자재 클릭 + 세팅된 자재일 때
                             {
-                                //print("ItemisSet = false 2");
                                 SetCurInteractObj(hit.collider.GetComponent<BuildingItemObj>());
                                 curInteractObj.ItemisSet = false;
                                 BuildingItemObjAndSorting();
                             }
                             else //자재 클릭 + 무빙중일 때
                             {
-                                //print("ItemisSet = true 2 ");
                                 SetBuildingItemObj();
                             }
                         }
                     }
-                    else
-                    {
-                        //print("ItemisSet = true 3 ");
-
-                    }
+                
                 }
                 if (Input.GetMouseButtonDown(1))
                 {
+                   
                     ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                     Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue, 0.3f);
 
@@ -153,6 +154,7 @@ namespace DM.Building
 
                         SetCurInteractObj(hit.collider.GetComponent<BuildingItemObj>());
                         curInteractObj.Demolish();
+                       
                     }
                 }
 
@@ -162,16 +164,10 @@ namespace DM.Building
                     RotateBuildItem();
                 }
             }
-            //else if (CurBuildMode == BuildMode.DemolishMode)
-            //{
-            //    if (Input.GetMouseButtonDown(0))
-            //    {
-
-            //    }
-            //}
+     
         }
 
-        private void SetBuildingItemObj()
+        private void SetBuildingItemObj()//설치중이냐?
         {
             curInteractObj.ItemisSet = true;
             curInteractObj.IsFirstDrop = false;
@@ -352,7 +348,7 @@ namespace DM.Building
             //}
             else return false;
         }
-
+         
         public void SetBuildMode(BuildMode buildmode)
         {
             CurBuildMode = buildmode;
