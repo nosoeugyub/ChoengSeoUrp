@@ -116,7 +116,7 @@ namespace DM.Building
                         }
                         else
                         {
-                            invenmanager.CheckBuliditem = null; //설치하면 다른거 할수있음 ㅋ
+                            invenmanager.CheckBuliditem = null; //설치하면 다른거 할수없음 ㅋ
                             foreach (ItemSlot itemslot in inventory.ItemSlots) //건축슬롯 원상복구
                             {
                                 if (itemslot.item == null)
@@ -130,21 +130,34 @@ namespace DM.Building
                             }
                             if (curInteractObj.ItemisSet) //자재 클릭 + 세팅된 자재일 때
                             {
+                                Debug.Log("쒸ㅃ쒸ㅃ쒸ㅃ 전인석 쓉새기야");
+                                invenmanager.CheckBuliditem = hit.collider.GetComponent<BuildingItemObj>().item;// 쉬바들어가라 좋은말할때
+                                foreach (ItemSlot itemslot in inventory.ItemSlots)
+                                {
+                                    if (itemslot.item == null)
+                                    {
+                                        continue;
+                                    }
+                                    if (itemslot.item.OutItemType == OutItemType.BuildingItemObj && itemslot.item.ItemName != hit.collider.GetComponent<BuildingItemObj>().item.ItemName)
+                                    {
+                                        itemslot.Interactble(false);
+                                       
+                                    }
+                                }
                                 SetCurInteractObj(hit.collider.GetComponent<BuildingItemObj>());
                                 curInteractObj.ItemisSet = false;
                                 BuildingItemObjAndSorting();
                             }
                             else //자재 클릭 + 무빙중일 때
                             {
+                            
                                 SetBuildingItemObj();
                             }
                         }
                     }
-                
                 }
                 if (Input.GetMouseButtonDown(1))
                 {
-                   
                     ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                     Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue, 0.3f);
 

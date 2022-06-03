@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ItemObject : Interactable//, IInteractable
 {
-    [SerializeField] protected Item item;
+    public Item item;
     protected InventoryNSY inventoryNSY;
 
     public void Awake()

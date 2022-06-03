@@ -130,7 +130,7 @@ namespace NSY.Iven
                 return;
             }
 
-            if (BuildingBlock.isBuildMode)
+            if (BuildingBlock.isBuildMode && CheckBuliditem == null)
             {
                 CheckBuliditem = obj.item;
                 BuildingBlock.nowBuildingBlock.BtnSpawnHouseBuildItem(obj.item);
