@@ -1,6 +1,8 @@
 ﻿using DM.NPC;
 using DM.Quest;
 using NSY.Manager;
+using NSY.Player;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,8 +28,9 @@ namespace DM.Dialog
         public Text dialogText;
         public Text nameText;
 
-        public delegate void VoidEvent();
-        VoidEvent testdelegate;
+        //public delegate void InputEvent();
+        PlayerInput.InputEvent testdelegate;
+        PlayerInput.InputEvent savedelegate;
 
         [Header("DialogInfos")]
         public List<DialogList> questDialogLists; //퀘스트 있는 대화
@@ -55,14 +58,22 @@ namespace DM.Dialog
         void Start()
         {
             EventManager.EventActions[((int)EventEnum.Test)] = Test;
+            StartCoroutine(firstDialog());
+        }
+        IEnumerator firstDialog()
+        {
+            yield return new WaitForSeconds(0.1f);
+            savedelegate = PlayerInput.OnPressFDown;
+
             FirstShowDialog(npcTalkBubbleTfs[(int)Character.CheongSeo].parent.GetComponent<HouseNpc>(), false, -1);
+
         }
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                testdelegate();
-            }
+            //if (Input.GetKeyDown(KeyCode.F)&& isTalking)
+            //{
+            //    testdelegate();
+            //}
         }
         public HouseNpc GetNowNpc()
         {
@@ -81,7 +92,6 @@ namespace DM.Dialog
                 Debug.Log("대화중입니다.");
                 return false;
             }
-
             isTalking = true;
             nowNpc = npc;
             partnerTf = npc.transform;
@@ -97,13 +107,6 @@ namespace DM.Dialog
         {
             Sentence[] ss = null;//대화뭉치를 담을 변수
             int sentenceState = -1;//대화뭉치 타입(수락0, 진행중1, 완료2)
-
-            //현재 진행중인 퀘스트에서 자신과 상호작용 하는 내용의 퀘스트가 있는지?
-            //있다면 해당 퀘스트의 CanClear 검사
-            //클리어할 수 있다면 해당 퀘스트 클리어 처리 후 완료 대사를 ss에 넣는다.
-            //dialogUI.SetActive(true);
-            //Vector3 uiPos = new Vector3(partnerTf.position.x, partnerTf.position.y + 6, partnerTf.position.z);
-            //dialogUI.transform.position = Camera.main.WorldToScreenPoint(uiPos);
 
             if (isFollowPlayer)
             {
@@ -167,11 +170,10 @@ namespace DM.Dialog
                     dialogLength = nowDialogData.acceptSentenceInfo.Length;
                 }
             }
-            //nextButton.onClick.RemoveAllListeners();
-            //nextButton.onClick.AddListener(() =>
-            //{
-            //    UpdateDialog(ss, sentenceState);
-            //});
+
+ 
+
+
             UpdateDialog(ss, sentenceState);
         }
         public int FindDialogIndex(QuestData questData)
@@ -316,7 +318,7 @@ namespace DM.Dialog
             nameText.text = questDialogLists[sentences[nowSentenceIdx++].characterId].charName;
 
 
-            if (dialogLength == nowSentenceIdx)
+            if (dialogLength <= nowSentenceIdx)
             {
                 LastDialog(sentenceState);
             }
@@ -328,13 +330,13 @@ namespace DM.Dialog
                 //    UpdateDialog(sentences, sentenceState);
                 //    //nowOnFab.GetComponent<TextBox>().DestroyTextBox();
                 //});
-
                 testdelegate = (() =>
                 {
                     UpdateDialog(sentences, sentenceState);
                     Debug.Log("testdelegete");
                     //nowOnFab.GetComponent<TextBox>().DestroyTextBox();
                 });
+                PlayerInput.OnPressFDown = testdelegate;
             }
             // DOTween.
             //nameText.DOText(sentences[nowSentenceIdx].sentence,1);
@@ -362,6 +364,7 @@ namespace DM.Dialog
                 Debug.Log("Remove_Last");
                 //nowOnFab.GetComponent<TextBox>().DestroyTextBox();
             });
+            PlayerInput.OnPressFDown = testdelegate;
             //수락 시 이벤트가 있다면 진행
         }
 
@@ -370,6 +373,7 @@ namespace DM.Dialog
             Debug.Log("isTalking false");
             nowOnFab.GetComponent<TextBox>().DestroyTextBox();
             nowOnFab = null;
+            testdelegate = null;
 
             nowDialogData.isTalkingOver = true;
             CloseDialog();
@@ -404,7 +408,8 @@ namespace DM.Dialog
                         break;
                 }
             }
-            testdelegate = null;
+            
+            PlayerInput.OnPressFDown = savedelegate;
             nowNpc = null;
             UpdateNpcsQuestMark();
         }
