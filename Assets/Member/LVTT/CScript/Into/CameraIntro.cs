@@ -64,7 +64,7 @@ namespace Game.Cam
         {
             
             Transform curRot = camera.transform; 
-            camera.transform.localRotation = Quaternion.Lerp(curRot.rotation,SecondRot.rotation,Time.deltaTime* 5.5f);
+            camera.transform.localRotation = Quaternion.Lerp(curRot.rotation,SecondRot.rotation,Time.deltaTime* 3f);
             if(curRot.rotation==SecondRot.rotation)
             {
                 isRotate = false;
@@ -93,11 +93,11 @@ namespace Game.Cam
         
         IEnumerator IntroRoutine()
         {
-            yield return new WaitForSeconds(0.6f);
+            yield return new WaitForSeconds(0.3f);
            
             CamManager.ActiveSubCamera(1);      
            
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(2.0f);
            
             State = Introstate.Second;
         }
