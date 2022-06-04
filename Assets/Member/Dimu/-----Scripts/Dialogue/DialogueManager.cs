@@ -121,8 +121,6 @@ namespace DM.Dialog
             {
                 canClearqd = questManager.ReturnCanClearQuestRequireNpc((int)nowNpc.GetCharacterType());
 
-                //List<QuestData> isAcceptedQuests = questManager.GetIsAcceptedQuestList(nowPartner);//진행중인 퀘스트
-                //List<QuestData> canAcceptQuests = questManager.GetCanAcceptQuestList(nowPartner);//수락가능 퀘스트
                 List<QuestData> isAcceptedQuests = questManager.GetIsAcceptedQuestList((int)nowNpc.GetCharacterType());//진행중인 대화 
                 List<DialogData> canStartDialogs = GetCanAcceptDialogList((int)nowNpc.GetCharacterType(), true, false);//시작가능 대화
 
@@ -163,17 +161,12 @@ namespace DM.Dialog
                         isTalking = false;
                         return;
                     }
-
                     nowDialogData = canStartDialogs[0];
 
                     ss = nowDialogData.acceptSentenceInfo;
                     dialogLength = nowDialogData.acceptSentenceInfo.Length;
                 }
             }
-
- 
-
-
             UpdateDialog(ss, sentenceState);
         }
         public int FindDialogIndex(QuestData questData)
@@ -291,7 +284,6 @@ namespace DM.Dialog
                     return false;
                 }
             }
-            //print("통과");
             return true;
         }
         public void UpdateDialog(Sentence[] sentences, int sentenceState)
@@ -308,12 +300,12 @@ namespace DM.Dialog
             {
                 nowOnFab.GetComponent<TextBox>().DestroyTextBox();
             }
-            nowOnFab = ObjectPooler.SpawnFromPool("TextBox", gameObject.transform.position);
-            nowOnFab.transform.SetParent(npcTalkBubbleTfs[sentences[nowSentenceIdx].characterId]);
-            nowOnFab.GetComponent<TextBox>().SetTextbox(sentences[nowSentenceIdx].sentence, npcTalkBubbleTfs[sentences[nowSentenceIdx].characterId], sentences[nowSentenceIdx].textboxType);
 
-            //nowOnFab = Instantiate(textboxFab, npcTalkBubbleTfs[sentences[nowSentenceIdx].characterId]);
-            //nextButton = nowOnFab.GetComponent<TextBox>().GetNextButton;
+            Sentence nowSentences = sentences[nowSentenceIdx];
+
+            nowOnFab = ObjectPooler.SpawnFromPool("TextBox", npcTalkBubbleTfs[nowSentences.characterId].transform.position);
+            //nowOnFab.transform.SetParent(npcTalkBubbleTfs[nowSentences.characterId]);
+            nowOnFab.GetComponent<TextBox>().SetTextbox(nowSentences.sentence, npcTalkBubbleTfs[nowSentences.characterId], nowSentences.textboxType);
 
             nameText.text = questDialogLists[sentences[nowSentenceIdx++].characterId].charName;
 
@@ -324,48 +316,24 @@ namespace DM.Dialog
             }
             else
             {
-                //nextButton.onClick.RemoveAllListeners();
-                //nextButton.onClick.AddListener(() =>
-                //{
-                //    UpdateDialog(sentences, sentenceState);
-                //    //nowOnFab.GetComponent<TextBox>().DestroyTextBox();
-                //});
                 testdelegate = (() =>
                 {
                     UpdateDialog(sentences, sentenceState);
                     Debug.Log("testdelegete");
-                    //nowOnFab.GetComponent<TextBox>().DestroyTextBox();
                 });
                 PlayerInput.OnPressFDown = testdelegate;
             }
-            // DOTween.
-            //nameText.DOText(sentences[nowSentenceIdx].sentence,1);
-            //dialogText.text = sentences[nowSentenceIdx].sentence;
         }
 
         //마지막 대사일 때 작동
         private void LastDialog(int sentenceState)
         {
-            //nextButton.onClick.RemoveAllListeners();
-            //speedNextButton.onClick.RemoveAllListeners();
-            //print("Remove_Last");
-
-            //nextButton.onClick.AddListener(() =>
-            //{
-            //    LastDialogNextEvent(sentenceState);
-            //});
-            //speedNextButton.onClick.AddListener(() =>
-            //{
-            //    LastDialogNextEvent(sentenceState);
-            //});
             testdelegate = (() =>
             {
                 LastDialogNextEvent(sentenceState);
                 Debug.Log("Remove_Last");
-                //nowOnFab.GetComponent<TextBox>().DestroyTextBox();
             });
             PlayerInput.OnPressFDown = testdelegate;
-            //수락 시 이벤트가 있다면 진행
         }
 
         private void LastDialogNextEvent(int sentenceState)
@@ -454,8 +422,6 @@ namespace DM.Dialog
 
             return false;
         }
-
-
 
         #region Data
         //public bool LoadDialogData(int charId, int diaIdx, bool isQuestDialog)//string eventname)
