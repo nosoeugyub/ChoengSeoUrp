@@ -86,7 +86,7 @@ namespace NSY.Iven
                 foreach (ItemSlot itemSlot in ItemSlots)
                 {
                     if (itemSlot.item == null) continue;
-                    itemSlot.Interactble(true); //채원이 착한고 이쁜 빨갱이
+                    itemSlot.Interactble(true); //채원이는 착한 이쁜 빨갱이
                 }
                 return;
             }
