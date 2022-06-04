@@ -267,8 +267,8 @@ public class NewInventUIManager : MonoBehaviour
     {
         if (isOpen == false)
         {
-            BG.DOLocalMoveX(743, 1).SetEase(Ease.OutQuart);
-            invenBtn.DOLocalMoveX(458 + 25, 1).SetEase(Ease.OutQuart);
+            BG.DOLocalMoveX(815, 1).SetEase(Ease.OutQuart);
+            invenBtn.DOLocalMoveX(603 + 25, 1).SetEase(Ease.OutQuart);//630 815 1 85
             isOpen = true;
         }
     }
@@ -285,9 +285,8 @@ public class NewInventUIManager : MonoBehaviour
     }
     public void close()
     {
-        BG.DOLocalMoveX(1182, 1).SetEase(Ease.OutQuart);
-        invenBtn.DOLocalMoveX(922, 1).SetEase(Ease.OutQuart);
+        BG.DOLocalMoveX(1107, 1).SetEase(Ease.OutQuart);
+        invenBtn.DOLocalMoveX(920, 1).SetEase(Ease.OutQuart); //187
         isOpen = false;
     }
-
 }
