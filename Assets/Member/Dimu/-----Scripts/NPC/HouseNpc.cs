@@ -38,7 +38,7 @@ namespace DM.NPC
         {
             if (isFollowPlayer)
                 FollowPlayer();
-            float dist = Vector3.Distance(player.transform.position, questMark.position) * 0.03f;
+            float dist = Vector3.Distance(player.transform.position, questMark.position) * 0.02f;
             if(dist < 0.5f)
                 dist = 0.5f;
             questMark.localScale = questMarkScale * dist; 
