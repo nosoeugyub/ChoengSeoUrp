@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using DM.Building;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -78,6 +79,11 @@ public class TextBox : MonoBehaviour
         worldToScreenPoint = Camera.main.WorldToScreenPoint(bubblePos.position);
         RectTransformUtility.ScreenPointToLocalPointInRectangle(baseCanvas, worldToScreenPoint, UiCam, out screenPoint);
         transform.GetComponent<RectTransform>().localPosition = screenPoint;
+
+        if(BuildingBlock.isBuildMode)
+            RecImg.gameObject.SetActive(false);
+        else
+            RecImg.gameObject.SetActive(true);
 
     }
     IEnumerator PosChange()

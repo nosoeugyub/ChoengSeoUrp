@@ -11,6 +11,7 @@ public class CutSceneImage
 
 public enum CutType
 {
+    None,
     BearChick,
     WatchDearAndSheepExercising,
     BearRibbonToHen,
@@ -19,7 +20,6 @@ public enum CutType
     ButtingCowToBear,
     BearAndWalrus,
     FakeLuxuryToCow,
-    None,
 }
 
 public class CutScene : MonoBehaviour
@@ -34,6 +34,7 @@ public class CutScene : MonoBehaviour
 
     public void PrintImage(int index)//Calling this will also unlock the Image in the Library
     {
+        index--;
         if (Image[index] != null && !Image[index].isOpen)
         {
             Image[index].isOpen = true;
