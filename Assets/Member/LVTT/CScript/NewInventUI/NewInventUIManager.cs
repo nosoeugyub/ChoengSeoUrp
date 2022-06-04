@@ -80,9 +80,9 @@ public class NewInventUIManager : MonoBehaviour
         {
             for (int r = 0; r < TabUI.Length; r++) //4 
             {
-                for (int j = 1; j < TabUI[r].transform.childCount; j++)
+                //for (int j = 1; j < TabUI[r].transform.childCount; j++)
                 {
-                    CraftList tempCL = TabUI[r].transform.GetChild(j).GetComponent<CraftList>();
+                    CraftList tempCL = TabUI[r].transform.GetChild(1).GetComponent<CraftList>();
                     for (int k = 0; k < tempCL.Craftslot.Count; k++)
                     {
                         if (tempCL.Craftslot[k].RecipeItem != null)
