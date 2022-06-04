@@ -48,16 +48,13 @@ public class TextBox : MonoBehaviour
         textboxFabImg.gameObject.SetActive(true);
         textboxFabText.gameObject.SetActive(true);
         textboxFabNextButton.gameObject.SetActive(true);
-
-
-
         boomParticle.SetActive(false);
-
 
     }
     public Button GetNextButton => textboxFabNextButton;
     public void SetTextbox(string sentence, Transform tf, TextboxType textboxType)//말풍선 생산
     {
+        BuildingBlock.SetTextBox(this);
         transform.SetParent(baseCanvas);
         transform.localScale = Vector3.one;
         transform.localRotation = Quaternion.identity;
@@ -79,12 +76,6 @@ public class TextBox : MonoBehaviour
         worldToScreenPoint = Camera.main.WorldToScreenPoint(bubblePos.position);
         RectTransformUtility.ScreenPointToLocalPointInRectangle(baseCanvas, worldToScreenPoint, UiCam, out screenPoint);
         transform.GetComponent<RectTransform>().localPosition = screenPoint;
-
-        if(BuildingBlock.isBuildMode)
-            RecImg.gameObject.SetActive(false);
-        else
-            RecImg.gameObject.SetActive(true);
-
     }
     IEnumerator PosChange()
     {
@@ -96,10 +87,11 @@ public class TextBox : MonoBehaviour
     }
     public void DestroyTextBox()
     {
-        if (Random.Range(0, 100) < 5)
+        if (Random.Range(0, 100) < 1)
             InstactiateNote();
         textboxFabImg.gameObject.SetActive(false);
         textboxFabText.gameObject.SetActive(false);
+        BuildingBlock.SetTextBox(null);
 
         textboxFabNextButton.gameObject.SetActive(false);
         Invoke("Destroy", 0.5f);

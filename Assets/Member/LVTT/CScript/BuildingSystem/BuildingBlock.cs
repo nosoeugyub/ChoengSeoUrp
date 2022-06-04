@@ -41,6 +41,7 @@ namespace DM.Building
         
 
         SpecialHouse specialHouse;
+        static TextBox textBox;
 
         RaycastHit hit;
         Ray ray;
@@ -225,10 +226,6 @@ namespace DM.Building
 
         public void OnBuildMode()
         {
-            //if (handitem.InItemType != InItemType.Hammer) return;
-
-            //buildManager.BuildingInteractButtonOnOff(true);
-
             nowBuildingBlock = this;
             Interact();
 
@@ -250,9 +247,14 @@ namespace DM.Building
                 button.onClick.RemoveAllListeners();
             }
         }
-
+        public static void SetTextBox(TextBox textBox_)
+        {
+            textBox = textBox_;
+        }
         public void BuildModeOn()
         {
+            if(textBox)
+            textBox.gameObject.SetActive(false);
             buildButtonFuncAdded = false;
             TutoUI(true);
             buildManager.PlayerOnOff(false);
@@ -308,6 +310,8 @@ namespace DM.Building
             CamManager.DeactiveSubCamera(2);
             CamManager.DeactiveSubCamera(3);
             TutoUI(false);
+            if(textBox)
+            textBox.gameObject.SetActive(true);
 
             nowBuildingBlock.GetComponent<BoxCollider>().enabled = true;
 
