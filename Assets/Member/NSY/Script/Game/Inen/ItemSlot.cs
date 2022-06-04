@@ -22,7 +22,7 @@ namespace NSY.Iven
       //  private Color disabledColor = new Color(1, 1, 1, 0);
         private Color dragColor = new Color(1, 1, 1, 0.2f);
 
-
+      public bool isRedbulid = false;
       
 
 
@@ -47,24 +47,21 @@ namespace NSY.Iven
         }
         public void OnDrag(PointerEventData eventData)
         {
-            if (isCheckBulid == true)
+            if (isCheckBulid == true || isRedbulid == true)
             {
-              return;
+               return;
             }
-
             if (OnDragEvent != null)
             {
                 OnDragEvent(this);
             }
-          
         }
 
         public void OnBeginDrag(PointerEventData eventData)
         {
             isDragging = true;
-            if (isCheckBulid == true)
+            if (isCheckBulid == true || isRedbulid==true)
             {
-                //  OnBeginDragEvent(null);
                 return;
             }
             if (item != null)
@@ -81,9 +78,10 @@ namespace NSY.Iven
         public void OnEndDrag(PointerEventData eventData)
         {
             isDragging = false;
-            if (isCheckBulid == true)
+           
+            if (isCheckBulid == true || isRedbulid == true)
             {
-                //   OnEndDragEvent(null);
+               
                 return;
             }
             if (item != null)
@@ -99,7 +97,7 @@ namespace NSY.Iven
 
         public void OnDrop(PointerEventData eventData)
         {
-            if (isCheckBulid == true)
+            if (isCheckBulid == true || isRedbulid == true)
             {
                 //  OnDropEvent(null); ;
                 return;

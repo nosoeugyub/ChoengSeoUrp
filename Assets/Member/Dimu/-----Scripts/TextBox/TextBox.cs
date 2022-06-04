@@ -24,12 +24,17 @@ public class TextBox : MonoBehaviour
 
    // [SerializeField]
     BoxCollider boxCollider;
-
+    //랜더모드 카메라 생성
+    Canvas UiCamCanvas;
+     Camera UiCam;
     private void Awake()
     {
         textboxFabImg = transform.Find("Image").GetComponent<Image>();
          rect = GetComponent<RectTransform>();
         LayoutRebuilder.ForceRebuildLayoutImmediate(RecImg.rectTransform);
+        UiCamCanvas = this.gameObject.GetComponent<Canvas>();
+        UiCam = GameObject.Find("UICamera").GetComponent<Camera>();
+
     }
     private void OnEnable()
     {
@@ -44,13 +49,15 @@ public class TextBox : MonoBehaviour
 
     }
     public Button GetNextButton => textboxFabNextButton;
-    public void SetTextbox(string sentence, Transform tf, TextboxType textboxType)
+    public void SetTextbox(string sentence, Transform tf, TextboxType textboxType)//말풍선 생산
     {
         textboxFabText.text = sentence;
         rect.anchoredPosition3D = Vector3.zero;
         textboxFabImg.sprite = textboxFabImgs[(int)textboxType];
         LayoutRebuilder.ForceRebuildLayoutImmediate(RecImg.rectTransform);
         //StartCoroutine(PosChange());
+        UiCamCanvas.renderMode = RenderMode.ScreenSpaceCamera;
+        UiCamCanvas.worldCamera = UiCam;
     }
     IEnumerator PosChange()
     {

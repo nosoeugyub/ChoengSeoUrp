@@ -109,7 +109,7 @@ namespace NSY.Iven
                         amountText.text = _amount.ToString();
                     }
                 }
-
+     
 
             }
         }
@@ -143,6 +143,7 @@ namespace NSY.Iven
                 OnPointerExit(null);
             }
         }
+      
         public void Interactble(bool canInteractable)// 채원이 빨갱잉
         {
 
