@@ -126,12 +126,13 @@ namespace DM.Building
                                 if (itemslot.item.OutItemType == OutItemType.BuildingItemObj)// 건축슬롯들을dnsjtkdqhrrngo
                                 {
                                     itemslot.Interactble(true);
+                                    itemslot.isRedbulid = false;
                                 }
                             }
                             if (curInteractObj.ItemisSet) //자재 클릭 + 세팅된 자재일 때
                             {
-                                Debug.Log("쒸ㅃ쒸ㅃ쒸ㅃ 전인석 쓉새기야");
-                                invenmanager.CheckBuliditem = hit.collider.GetComponent<BuildingItemObj>().item;// 쉬바들어가라 좋은말할때
+                             
+                                invenmanager.CheckBuliditem = hit.collider.GetComponent<BuildingItemObj>().item;//  건축 슬롯말고 건축존에서 다시 클릭할때
                                 foreach (ItemSlot itemslot in inventory.ItemSlots)
                                 {
                                     if (itemslot.item == null)
@@ -142,6 +143,7 @@ namespace DM.Building
                                     {
                                         itemslot.Interactble(false);
                                        
+
                                     }
                                 }
                                 SetCurInteractObj(hit.collider.GetComponent<BuildingItemObj>());
