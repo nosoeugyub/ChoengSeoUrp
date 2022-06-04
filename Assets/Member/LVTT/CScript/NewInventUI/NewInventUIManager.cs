@@ -34,9 +34,10 @@ public class NewInventUIManager : MonoBehaviour
 
         for (int i = 0; i < TabUI.Length; i++)
         {
-            for (int j = 1; j < TabUI[i].transform.childCount; j++)
+            //for (int j = 1; j < TabUI[i].transform.childCount; j++)
             {
-                TabUI[i].transform.GetChild(j).GetComponent<CraftList>().OnLeftClickEventss += ShowRecipe;
+                Transform tabuichild = TabUI[i].transform.GetChild(1);
+                tabuichild.GetComponent<CraftList>().OnLeftClickEventss += ShowRecipe;
             }
         }
 
