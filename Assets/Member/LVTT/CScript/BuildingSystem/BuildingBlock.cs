@@ -126,6 +126,7 @@ namespace DM.Building
                                 if (itemslot.item.OutItemType == OutItemType.BuildingItemObj)// 건축슬롯들을dnsjtkdqhrrngo
                                 {
                                     itemslot.Interactble(true);
+                                    itemslot.isRedbulid = false;
                                 }
                             }
                             if (curInteractObj.ItemisSet) //자재 클릭 + 세팅된 자재일 때
@@ -141,10 +142,7 @@ namespace DM.Building
                                     if (itemslot.item.OutItemType == OutItemType.BuildingItemObj && itemslot.item.ItemName != hit.collider.GetComponent<BuildingItemObj>().item.ItemName)
                                     {
                                         itemslot.Interactble(false);
-                                        itemslot.OnDrag(null);
-                                        itemslot.OnBeginDrag(null);
-                                        itemslot.OnEndDrag(null);
-                                        itemslot.OnDrop(null);
+                                       
 
                                     }
                                 }
