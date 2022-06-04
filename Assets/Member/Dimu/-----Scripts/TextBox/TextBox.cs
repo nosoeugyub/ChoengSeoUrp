@@ -25,10 +25,10 @@ public class TextBox : MonoBehaviour
     // [SerializeField]
     BoxCollider boxCollider;
     //랜더모드 카메라 생성
-    Canvas UiCamCanvas;
+    //Canvas UiCamCanvas;
     Camera UiCam;
 
-    private RectTransform baseCanvas;
+    [SerializeField] private RectTransform baseCanvas;
     private Vector2 screenPoint;
     private Vector2 worldToScreenPoint;
     Transform bubblePos;
@@ -37,9 +37,9 @@ public class TextBox : MonoBehaviour
         textboxFabImg = transform.Find("Image").GetComponent<Image>();
         rect = GetComponent<RectTransform>();
         LayoutRebuilder.ForceRebuildLayoutImmediate(RecImg.rectTransform);
-        UiCamCanvas = this.gameObject.GetComponent<Canvas>();
         UiCam = GameObject.Find("UICamera").GetComponent<Camera>();
-        baseCanvas = GameObject.Find("Canvas").GetComponent<RectTransform>();
+        //UiCamCanvas = this.gameObject.GetComponent<Canvas>();
+        baseCanvas = GameObject.Find("GameCanvas").GetComponent<RectTransform>();
 
     }
     private void OnEnable()

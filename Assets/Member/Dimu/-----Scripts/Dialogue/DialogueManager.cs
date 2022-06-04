@@ -48,12 +48,14 @@ namespace DM.Dialog
 
         QuestManager questManager;
         NPCManager npcManager;
+        CutScene cutSceneManager;
 
         public bool IsTalking { get { return isTalking; } }
         private void Awake()
         {
             questManager = SuperManager.Instance.questmanager;
             npcManager = FindObjectOfType<NPCManager>();
+            cutSceneManager = FindObjectOfType<CutScene>();
         }
         void Start()
         {
@@ -376,7 +378,13 @@ namespace DM.Dialog
                         break;
                 }
             }
-            
+
+            if (nowDialogData.cuttype != CutType.None)
+            {
+                cutSceneManager.PrintImage((int)nowDialogData.cuttype);
+            }
+
+
             PlayerInput.OnPressFDown = savedelegate;
             nowNpc = null;
             UpdateNpcsQuestMark();

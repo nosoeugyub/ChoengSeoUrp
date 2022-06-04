@@ -21,7 +21,7 @@ public class DialogData : ScriptableObject
     public int[] haveToHaveNPCHouse; //집 있어야 하는 npc
     public QuestRewards[] acceptQuestItems;//대화 종료 시 획득하는 아이템
     public float needHappyAmount; //필요 행복도
-
+    public CutType cuttype;
 
     [System.Serializable]
     public class QuestRewards
