@@ -17,7 +17,7 @@ MonoBehaviour:
   characterType: 8
   myHouse: {fileID: 0}
   wantToBuildCondition:
-  - buildItemKind: 0000000001000000020000000300000005000000
+  - buildItemKind: 
     buildVPos: 
     buildHPos: 
     buildSize: 
@@ -28,8 +28,24 @@ MonoBehaviour:
     buildPerfactCount: 0
     likeable: 0
   player: {fileID: 0}
-  speed: 1
+  questMark: {fileID: 3477878983180069780}
+  questMarkScale: {x: 0, y: 0, z: 0}
+  speed: 2
   isFollowPlayer: 0
+--- !u!136 &1326752849
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5025258004261780296}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 1.3
+  m_Height: 4
+  m_Direction: 1
+  m_Center: {x: 0, y: 2, z: 0}
 --- !u!1 &6280491766186964670
 GameObject:
   m_ObjectHideFlags: 0
@@ -87,20 +103,30 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: 1.885
       objectReference: {fileID: 0}
+    - target: {fileID: 2527683101836964441, guid: 1ff8cb4505dce054082ec4fdaae2665f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2527683101836964441, guid: 1ff8cb4505dce054082ec4fdaae2665f,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2635912312698621711, guid: 1ff8cb4505dce054082ec4fdaae2665f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 127.19882
+      value: -239.85999
       objectReference: {fileID: 0}
     - target: {fileID: 2635912312698621711, guid: 1ff8cb4505dce054082ec4fdaae2665f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.46
+      value: 10000
       objectReference: {fileID: 0}
     - target: {fileID: 2635912312698621711, guid: 1ff8cb4505dce054082ec4fdaae2665f,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 61.36191
+      value: 75.56999
       objectReference: {fileID: 0}
     - target: {fileID: 2635912312698621711, guid: 1ff8cb4505dce054082ec4fdaae2665f,
         type: 3}
@@ -194,6 +220,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: QuestMark
       objectReference: {fileID: 0}
+    - target: {fileID: 53352208969234442, guid: 464e783b142b9e945beae9e99c4f3842,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6395161391044616933, guid: 464e783b142b9e945beae9e99c4f3842,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -202,7 +233,7 @@ PrefabInstance:
     - target: {fileID: 6395161391044616933, guid: 464e783b142b9e945beae9e99c4f3842,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6395161391044616933, guid: 464e783b142b9e945beae9e99c4f3842,
         type: 3}
@@ -251,3 +282,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 464e783b142b9e945beae9e99c4f3842, type: 3}
+--- !u!4 &3477878983180069780 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6395161391044616933, guid: 464e783b142b9e945beae9e99c4f3842,
+    type: 3}
+  m_PrefabInstance: {fileID: 7531080588271241585}
+  m_PrefabAsset: {fileID: 0}

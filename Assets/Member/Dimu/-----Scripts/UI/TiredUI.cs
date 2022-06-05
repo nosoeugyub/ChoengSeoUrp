@@ -7,6 +7,7 @@ public class TiredUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] Image PlayerHealth_image;
     [SerializeField] Image PlayerHealth_icon;
+    [SerializeField] Image PlayerHealth_danger;
     [SerializeField] TextMeshProUGUI PlayerHealth_textParent;
     [SerializeField] TextMeshProUGUI PlayerHealth_textText;
     [SerializeField] Sprite[] playerHealth_sprites;
@@ -33,10 +34,19 @@ public class TiredUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     void SpriteUpdate()
     {
         if (PlayerHealth_image.fillAmount > 0.7f)
+        {
+            PlayerHealth_danger.color = Color.clear;
             PlayerHealth_icon.sprite = playerHealth_sprites[0];
+        }
         else if (PlayerHealth_image.fillAmount > 0.3f)
+        {
+            PlayerHealth_danger.color = Color.clear;
             PlayerHealth_icon.sprite = playerHealth_sprites[1];
+        }
         else
+        {
             PlayerHealth_icon.sprite = playerHealth_sprites[2];
+            PlayerHealth_danger.color = Color.white;
+        }
     }
 }
