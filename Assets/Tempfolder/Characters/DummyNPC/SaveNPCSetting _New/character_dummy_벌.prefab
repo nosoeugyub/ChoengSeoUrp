@@ -1,5 +1,51 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &902165885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 229570832180603225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f771d70b6b47d1d4a96de6e59845f85d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultshader: {fileID: 0}
+  quad: {fileID: 5325569323366865790}
+  characterType: 4
+  myHouse: {fileID: 0}
+  wantToBuildCondition:
+  - buildItemKind: 
+    buildVPos: 
+    buildHPos: 
+    buildSize: 
+    buildColor: 
+    buildThema: 
+    buildShape: 
+    buildCount: 3
+    buildPerfactCount: 0
+    likeable: 10
+  player: {fileID: 0}
+  questMark: {fileID: 6242338444203467944}
+  questMarkScale: {x: 0, y: 0, z: 0}
+  speed: 2
+  isFollowPlayer: 0
+--- !u!136 &2014018022
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 229570832180603225}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 1
+  m_Height: 3
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!1 &3653896765242217862
 GameObject:
   m_ObjectHideFlags: 0
@@ -30,36 +76,6 @@ Transform:
   m_Father: {fileID: 8570009544330966191}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &902165885
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 229570832180603225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f771d70b6b47d1d4a96de6e59845f85d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultshader: {fileID: 0}
-  quad: {fileID: 5325569323366865790}
-  characterType: 4
-  myHouse: {fileID: 0}
-  wantToBuildCondition:
-  - buildItemKind: 05000000
-    buildVPos: 
-    buildHPos: 
-    buildSize: 
-    buildColor: 
-    buildThema: 
-    buildShape: 
-    buildCount: 3
-    buildPerfactCount: 0
-    likeable: 10
-  player: {fileID: 0}
-  speed: 2
-  isFollowPlayer: 0
 --- !u!1001 &1036127922794186317
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -72,6 +88,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: QuestMark
       objectReference: {fileID: 0}
+    - target: {fileID: 53352208969234442, guid: 464e783b142b9e945beae9e99c4f3842,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6395161391044616933, guid: 464e783b142b9e945beae9e99c4f3842,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -80,7 +101,7 @@ PrefabInstance:
     - target: {fileID: 6395161391044616933, guid: 464e783b142b9e945beae9e99c4f3842,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6395161391044616933, guid: 464e783b142b9e945beae9e99c4f3842,
         type: 3}
@@ -129,6 +150,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 464e783b142b9e945beae9e99c4f3842, type: 3}
+--- !u!4 &6242338444203467944 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6395161391044616933, guid: 464e783b142b9e945beae9e99c4f3842,
+    type: 3}
+  m_PrefabInstance: {fileID: 1036127922794186317}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5943183665532451744
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -156,20 +183,30 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: 1.24
       objectReference: {fileID: 0}
+    - target: {fileID: 2527683101836964441, guid: 1ff8cb4505dce054082ec4fdaae2665f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2527683101836964441, guid: 1ff8cb4505dce054082ec4fdaae2665f,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2635912312698621711, guid: 1ff8cb4505dce054082ec4fdaae2665f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -144.79
+      value: -74.22
       objectReference: {fileID: 0}
     - target: {fileID: 2635912312698621711, guid: 1ff8cb4505dce054082ec4fdaae2665f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 17.139
+      value: 15.91
       objectReference: {fileID: 0}
     - target: {fileID: 2635912312698621711, guid: 1ff8cb4505dce054082ec4fdaae2665f,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 69.79
+      value: 371.09
       objectReference: {fileID: 0}
     - target: {fileID: 2635912312698621711, guid: 1ff8cb4505dce054082ec4fdaae2665f,
         type: 3}
