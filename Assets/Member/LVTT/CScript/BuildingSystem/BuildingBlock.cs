@@ -127,17 +127,7 @@ namespace DM.Building
                                 if (curInteractObj.ItemisSet) //자재 클릭 + 세팅된 자재일 때  세팅 >> 논세팅
                                 {
                                     invenmanager.CheckBuliditem = hit.collider.GetComponent<BuildingItemObj>().item;//  건축 슬롯말고 건축존에서 다시 클릭할때
-                                    foreach (ItemSlot itemslot in inventory.ItemSlots)
-                                    {
-                                        if (itemslot.item == null)
-                                        {
-                                            continue;
-                                        }
-                                        if (itemslot.item.OutItemType == OutItemType.BuildingItemObj && itemslot.item.ItemName != hit.collider.GetComponent<BuildingItemObj>().item.ItemName)
-                                        {
-                                            itemslot.Interactble(false);
-                                        }
-                                    }
+                                    InvenItemCantBuild();
                                     SetCurInteractObj(hit.collider.GetComponent<BuildingItemObj>());
                                     curInteractObj.ItemisSet = false;
                                     BuildingItemObjAndSorting();
@@ -145,12 +135,15 @@ namespace DM.Building
                                 else //자재 클릭 + 무빙중일 때
                                 {
                                     SetBuildingItemObj();
-                                    curInteractObj.ItemisSet = false;
                                 }
                             }
                             else
                             {
+                                invenmanager.CheckBuliditem = hit.collider.GetComponent<BuildingItemObj>().item;//  건축 슬롯말고 건축존에서 다시 클릭할때
+                                InvenItemCantBuild();
                                 SetCurInteractObj(hit.collider.GetComponent<BuildingItemObj>());
+                                curInteractObj.ItemisSet = false;
+                                BuildingItemObjAndSorting();
                             }
                         }
                     }
@@ -179,7 +172,22 @@ namespace DM.Building
 
         }
 
-        private void InvenSlotResetCanBuildMode()
+        public void InvenItemCantBuild()
+        {
+            foreach (ItemSlot itemslot in inventory.ItemSlots)
+            {
+                if (itemslot.item == null)
+                {
+                    continue;
+                }
+                if (itemslot.item.OutItemType == OutItemType.BuildingItemObj && itemslot.item.ItemName != hit.collider.GetComponent<BuildingItemObj>().item.ItemName)
+                {
+                    itemslot.Interactble(false);
+                }
+            }
+        }
+
+        public void InvenSlotResetCanBuildMode()
         {
             invenmanager.CheckBuliditem = null; //설치하면 다른거 할수없음
             foreach (ItemSlot itemslot in inventory.ItemSlots) //건축슬롯 원상복구
