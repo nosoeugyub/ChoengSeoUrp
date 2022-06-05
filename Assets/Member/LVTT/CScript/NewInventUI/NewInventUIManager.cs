@@ -29,6 +29,9 @@ public class NewInventUIManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+       
+       
+
         for (int i = 0; i < TabUI.Length; i++)
         {
             //for (int j = 1; j < TabUI[i].transform.childCount; j++)
@@ -122,6 +125,8 @@ public class NewInventUIManager : MonoBehaviour
     }
     public void ShowRecipe(CraftSlot obj)
     {
+        
+
         nowSelectItem = obj;
         obj.ResultSlotImage.sprite = obj.RecipeItem.ItemSprite; //결과 이미지
         obj.RecipeName.text = obj.RecipeItem.ItemName;

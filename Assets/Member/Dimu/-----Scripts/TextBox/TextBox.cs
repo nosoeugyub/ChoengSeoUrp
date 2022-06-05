@@ -1,5 +1,4 @@
-﻿using DM.Building;
-using System.Collections;
+﻿using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,24 +22,18 @@ public class TextBox : MonoBehaviour
     [SerializeField]
     Vector2 rectpos;
 
-    // [SerializeField]
+   // [SerializeField]
     BoxCollider boxCollider;
     //랜더모드 카메라 생성
-    //Canvas UiCamCanvas;
-    Camera UiCam;
-
-    [SerializeField] private RectTransform baseCanvas;
-    private Vector2 screenPoint;
-    private Vector2 worldToScreenPoint;
-    Transform bubblePos;
+    Canvas UiCamCanvas;
+     Camera UiCam;
     private void Awake()
     {
         textboxFabImg = transform.Find("Image").GetComponent<Image>();
-        rect = GetComponent<RectTransform>();
+         rect = GetComponent<RectTransform>();
         LayoutRebuilder.ForceRebuildLayoutImmediate(RecImg.rectTransform);
+        UiCamCanvas = this.gameObject.GetComponent<Canvas>();
         UiCam = GameObject.Find("UICamera").GetComponent<Camera>();
-        //UiCamCanvas = this.gameObject.GetComponent<Canvas>();
-        baseCanvas = GameObject.Find("GameCanvas").GetComponent<RectTransform>();
 
     }
     private void OnEnable()
@@ -48,34 +41,23 @@ public class TextBox : MonoBehaviour
         textboxFabImg.gameObject.SetActive(true);
         textboxFabText.gameObject.SetActive(true);
         textboxFabNextButton.gameObject.SetActive(true);
+
+
+        
         boomParticle.SetActive(false);
+      
 
     }
     public Button GetNextButton => textboxFabNextButton;
     public void SetTextbox(string sentence, Transform tf, TextboxType textboxType)//말풍선 생산
     {
-        BuildingBlock.SetTextBox(this);
-        transform.SetParent(baseCanvas);
-        transform.localScale = Vector3.one;
-        transform.localRotation = Quaternion.identity;
-        bubblePos = tf;
         textboxFabText.text = sentence;
         rect.anchoredPosition3D = Vector3.zero;
         textboxFabImg.sprite = textboxFabImgs[(int)textboxType];
         LayoutRebuilder.ForceRebuildLayoutImmediate(RecImg.rectTransform);
         //StartCoroutine(PosChange());
-        //UiCamCanvas.renderMode = RenderMode.ScreenSpaceCamera;
-        //UiCamCanvas.worldCamera = UiCam;
-
-        worldToScreenPoint = Camera.main.WorldToScreenPoint(bubblePos.position);
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(baseCanvas, worldToScreenPoint, UiCam, out screenPoint);
-        transform.GetComponent<RectTransform>().localPosition = screenPoint;
-    }
-    public void FixedUpdate()
-    {
-        worldToScreenPoint = Camera.main.WorldToScreenPoint(bubblePos.position);
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(baseCanvas, worldToScreenPoint, UiCam, out screenPoint);
-        transform.GetComponent<RectTransform>().localPosition = screenPoint;
+        UiCamCanvas.renderMode = RenderMode.ScreenSpaceCamera;
+        UiCamCanvas.worldCamera = UiCam;
     }
     IEnumerator PosChange()
     {
@@ -87,18 +69,17 @@ public class TextBox : MonoBehaviour
     }
     public void DestroyTextBox()
     {
-        if (Random.Range(0, 100) < 1)
+        if (Random.Range(0, 100) < 5)
             InstactiateNote();
         textboxFabImg.gameObject.SetActive(false);
         textboxFabText.gameObject.SetActive(false);
-        BuildingBlock.SetTextBox(null);
 
         textboxFabNextButton.gameObject.SetActive(false);
         Invoke("Destroy", 0.5f);
 
         //  Rectoffset.
 
-        boomParticle.transform.localPosition = new Vector3(RecImg.GetComponent<RectTransform>().rect.width / 2,
+        boomParticle.transform.localPosition = new Vector3(RecImg.GetComponent<RectTransform>().rect.width/ 2,
                                                            RecImg.GetComponent<RectTransform>().rect.height / 2, 0);
 
         boomParticle.SetActive(true);

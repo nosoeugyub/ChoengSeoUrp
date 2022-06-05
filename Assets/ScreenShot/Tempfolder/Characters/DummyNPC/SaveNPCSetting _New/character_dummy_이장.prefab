@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &8987877325106567232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7887945832878286234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f771d70b6b47d1d4a96de6e59845f85d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultshader: {fileID: 0}
+  quad: {fileID: 2859852355223820221}
+  characterType: 1
+  myHouse: {fileID: 0}
+  wantToBuildCondition:
+  - buildItemKind: 0000000001000000020000000300000005000000
+    buildVPos: 
+    buildHPos: 
+    buildSize: 
+    buildColor: 
+    buildThema: 
+    buildShape: 000000000100000002000000e9030000d2070000ba0b0000bb0b0000bc0b0000bd0b0000c30b0000a20f0000ac0f0000b00f0000
+    buildCount: 3
+    buildPerfactCount: 0
+    likeable: 0
+  player: {fileID: 0}
+  speed: 4
+  isFollowPlayer: 0
 --- !u!1 &6691879781194415105
 GameObject:
   m_ObjectHideFlags: 0
@@ -30,38 +60,6 @@ Transform:
   m_Father: {fileID: 1780839142005684332}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8987877325106567232
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7887945832878286234}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f771d70b6b47d1d4a96de6e59845f85d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultshader: {fileID: 0}
-  quad: {fileID: 2859852355223820221}
-  characterType: 1
-  myHouse: {fileID: 0}
-  wantToBuildCondition:
-  - buildItemKind: 
-    buildVPos: 
-    buildHPos: 
-    buildSize: 
-    buildColor: 
-    buildThema: 
-    buildShape: 000000000100000002000000e9030000d2070000ba0b0000bb0b0000bc0b0000bd0b0000c30b0000a20f0000ac0f0000b00f0000
-    buildCount: 3
-    buildPerfactCount: 0
-    likeable: 0
-  player: {fileID: 0}
-  questMark: {fileID: 1911581570840994234}
-  questMarkScale: {x: 0, y: 0, z: 0}
-  speed: 2
-  isFollowPlayer: 0
 --- !u!1001 &4333144039653570403
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -253,9 +251,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 464e783b142b9e945beae9e99c4f3842, type: 3}
---- !u!4 &1911581570840994234 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6395161391044616933, guid: 464e783b142b9e945beae9e99c4f3842,
-    type: 3}
-  m_PrefabInstance: {fileID: 4775891661134283615}
-  m_PrefabAsset: {fileID: 0}
