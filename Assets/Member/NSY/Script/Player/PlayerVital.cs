@@ -19,6 +19,7 @@ namespace NSY.Player
             {
                 tired = value;
                 tiredUi.SetTiredUI(Tired, MaxVital);
+                //DebugText.Instance.SetText(tired.ToString());
             }
         }
         [SerializeField]
