@@ -9,7 +9,8 @@ using UnityEngine.UI;
 public enum Character
 { CheongSeo, Ejang, Walrus, Hen, Bee, Rabbit, Deer, Milkcow, Sheep, Length }
 //청서 곰 닭 바코 벌 토끼 사슴 젖소 양
-
+public enum LanguegeType
+{ Korean, English, Vietnamese, }
 namespace DM.Dialog
 {
 
@@ -32,7 +33,11 @@ namespace DM.Dialog
         PlayerInput.InputEvent testdelegate;
         PlayerInput.InputEvent savedelegate;
 
-        [Header("DialogInfos")]
+        public List<DialogList> activeQuestDialogLists; //퀘스트 있는 대화
+        public List<DialogList> activeDailydialogLists; //퀘스트 없는 대화
+        public List<DialogList> activeBuildDialogLists; //건축 피드백 대화
+
+        [Header("DialogInfos_kor")]
         public List<DialogList> questDialogLists; //퀘스트 있는 대화
         public List<DialogList> dailydialogLists; //퀘스트 없는 대화
         public List<DialogList> buildDialogLists; //건축 피드백 대화
@@ -80,12 +85,28 @@ namespace DM.Dialog
             FirstShowDialog(npcTalkBubbleTfs[(int)Character.CheongSeo].parent.GetComponent<HouseNpc>(), false, -1);
 
         }
-        private void Update()
+        public void SetDialogSet(LanguegeType languegeType)
         {
-            //if (Input.GetKeyDown(KeyCode.F)&& isTalking)
-            //{
-            //    testdelegate();
-            //}
+            switch (languegeType)
+            {
+                case LanguegeType.Korean:
+                    activeQuestDialogLists = questDialogLists;
+                    activeDailydialogLists = dailydialogLists;
+                    activeBuildDialogLists = buildDialogLists;
+                    break;
+                case LanguegeType.English:
+                    activeQuestDialogLists = questDialogLists_eng;
+                    activeDailydialogLists = dailydialogLists_eng;
+                    activeBuildDialogLists = buildDialogLists_eng;
+                    break;
+                case LanguegeType.Vietnamese:
+                    activeQuestDialogLists = questDialogLists_viet;
+                    activeDailydialogLists = dailydialogLists_viet;
+                    activeBuildDialogLists = buildDialogLists_viet;
+                    break;
+                default:
+                    break;
+            }
         }
         public HouseNpc GetNowNpc()
         {
