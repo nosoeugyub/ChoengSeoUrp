@@ -33,7 +33,8 @@ namespace DM.Building
         RaycastHit hit;
         Ray ray;
         int layerMask;
-
+        
+        public BuildingBlock ParentBuildArea { get { return parentBuildArea; } }
         public bool IsFirstDrop
         {
             get

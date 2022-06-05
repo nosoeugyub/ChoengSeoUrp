@@ -79,6 +79,7 @@ namespace DM.Building
 
         public void SetCurInteractObj(BuildingItemObj buildingItemObj)
         {
+            //if(curInteractObj.ParentBuildArea == this)
             curInteractObj = buildingItemObj;
         }
 
@@ -315,10 +316,10 @@ namespace DM.Building
 
             nowBuildingBlock.GetComponent<BoxCollider>().enabled = true;
 
-            if (curInteractObj)
+            if (nowBuildingBlock.curInteractObj)
             {
-                curInteractObj.ItemisSet = true;
-                curInteractObj.IsFirstDrop = false;
+                nowBuildingBlock.curInteractObj.ItemisSet = true;
+                nowBuildingBlock.curInteractObj.IsFirstDrop = false;
             }
             CancleUI(false);
             nowBuildingBlock.SetBuildMode(BuildMode.None);
