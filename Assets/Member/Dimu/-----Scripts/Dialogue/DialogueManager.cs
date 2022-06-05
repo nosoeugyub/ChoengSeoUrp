@@ -9,7 +9,8 @@ using UnityEngine.UI;
 public enum Character
 { CheongSeo, Ejang, Walrus, Hen, Bee, Rabbit, Deer, Milkcow, Sheep, Length }
 //청서 곰 닭 바코 벌 토끼 사슴 젖소 양
-
+public enum LanguegeType
+{ Korean, English, Vietnamese, }
 namespace DM.Dialog
 {
 
@@ -32,10 +33,24 @@ namespace DM.Dialog
         PlayerInput.InputEvent testdelegate;
         PlayerInput.InputEvent savedelegate;
 
-        [Header("DialogInfos")]
+        public List<DialogList> activeQuestDialogLists; //퀘스트 있는 대화
+        public List<DialogList> activeDailydialogLists; //퀘스트 없는 대화
+        public List<DialogList> activeBuildDialogLists; //건축 피드백 대화
+
+        [Header("DialogInfos_kor")]
         public List<DialogList> questDialogLists; //퀘스트 있는 대화
         public List<DialogList> dailydialogLists; //퀘스트 없는 대화
         public List<DialogList> buildDialogLists; //건축 피드백 대화
+
+        [Header("DialogInfos_eng")]
+        public List<DialogList> questDialogLists_eng; //퀘스트 있는 대화
+        public List<DialogList> dailydialogLists_eng; //퀘스트 없는 대화
+        public List<DialogList> buildDialogLists_eng; //건축 피드백 대화
+
+        [Header("DialogInfos_viet")]
+        public List<DialogList> questDialogLists_viet; //퀘스트 있는 대화
+        public List<DialogList> dailydialogLists_viet; //퀘스트 없는 대화
+        public List<DialogList> buildDialogLists_viet; //건축 피드백 대화
 
         [Header("InstanciatePrefab")]
         public GameObject textboxFab;//대화창 프리펩 //쪽지로 변하는것임!!
@@ -48,12 +63,14 @@ namespace DM.Dialog
 
         QuestManager questManager;
         NPCManager npcManager;
+        CutScene cutSceneManager;
 
         public bool IsTalking { get { return isTalking; } }
         private void Awake()
         {
             questManager = SuperManager.Instance.questmanager;
             npcManager = FindObjectOfType<NPCManager>();
+            cutSceneManager = FindObjectOfType<CutScene>();
         }
         void Start()
         {
@@ -68,12 +85,28 @@ namespace DM.Dialog
             FirstShowDialog(npcTalkBubbleTfs[(int)Character.CheongSeo].parent.GetComponent<HouseNpc>(), false, -1);
 
         }
-        private void Update()
+        public void SetDialogSet(LanguegeType languegeType)
         {
-            //if (Input.GetKeyDown(KeyCode.F)&& isTalking)
-            //{
-            //    testdelegate();
-            //}
+            switch (languegeType)
+            {
+                case LanguegeType.Korean:
+                    activeQuestDialogLists = questDialogLists;
+                    activeDailydialogLists = dailydialogLists;
+                    activeBuildDialogLists = buildDialogLists;
+                    break;
+                case LanguegeType.English:
+                    activeQuestDialogLists = questDialogLists_eng;
+                    activeDailydialogLists = dailydialogLists_eng;
+                    activeBuildDialogLists = buildDialogLists_eng;
+                    break;
+                case LanguegeType.Vietnamese:
+                    activeQuestDialogLists = questDialogLists_viet;
+                    activeDailydialogLists = dailydialogLists_viet;
+                    activeBuildDialogLists = buildDialogLists_viet;
+                    break;
+                default:
+                    break;
+            }
         }
         public HouseNpc GetNowNpc()
         {
@@ -121,8 +154,6 @@ namespace DM.Dialog
             {
                 canClearqd = questManager.ReturnCanClearQuestRequireNpc((int)nowNpc.GetCharacterType());
 
-                //List<QuestData> isAcceptedQuests = questManager.GetIsAcceptedQuestList(nowPartner);//진행중인 퀘스트
-                //List<QuestData> canAcceptQuests = questManager.GetCanAcceptQuestList(nowPartner);//수락가능 퀘스트
                 List<QuestData> isAcceptedQuests = questManager.GetIsAcceptedQuestList((int)nowNpc.GetCharacterType());//진행중인 대화 
                 List<DialogData> canStartDialogs = GetCanAcceptDialogList((int)nowNpc.GetCharacterType(), true, false);//시작가능 대화
 
@@ -163,17 +194,12 @@ namespace DM.Dialog
                         isTalking = false;
                         return;
                     }
-
                     nowDialogData = canStartDialogs[0];
 
                     ss = nowDialogData.acceptSentenceInfo;
                     dialogLength = nowDialogData.acceptSentenceInfo.Length;
                 }
             }
-
- 
-
-
             UpdateDialog(ss, sentenceState);
         }
         public int FindDialogIndex(QuestData questData)
@@ -291,7 +317,6 @@ namespace DM.Dialog
                     return false;
                 }
             }
-            //print("통과");
             return true;
         }
         public void UpdateDialog(Sentence[] sentences, int sentenceState)
@@ -308,12 +333,12 @@ namespace DM.Dialog
             {
                 nowOnFab.GetComponent<TextBox>().DestroyTextBox();
             }
-            nowOnFab = ObjectPooler.SpawnFromPool("TextBox", gameObject.transform.position);
-            nowOnFab.transform.SetParent(npcTalkBubbleTfs[sentences[nowSentenceIdx].characterId]);
-            nowOnFab.GetComponent<TextBox>().SetTextbox(sentences[nowSentenceIdx].sentence, npcTalkBubbleTfs[sentences[nowSentenceIdx].characterId], sentences[nowSentenceIdx].textboxType);
 
-            //nowOnFab = Instantiate(textboxFab, npcTalkBubbleTfs[sentences[nowSentenceIdx].characterId]);
-            //nextButton = nowOnFab.GetComponent<TextBox>().GetNextButton;
+            Sentence nowSentences = sentences[nowSentenceIdx];
+
+            nowOnFab = ObjectPooler.SpawnFromPool("TextBox", npcTalkBubbleTfs[nowSentences.characterId].transform.position);
+            //nowOnFab.transform.SetParent(npcTalkBubbleTfs[nowSentences.characterId]);
+            nowOnFab.GetComponent<TextBox>().SetTextbox(nowSentences.sentence, npcTalkBubbleTfs[nowSentences.characterId], nowSentences.textboxType);
 
             nameText.text = questDialogLists[sentences[nowSentenceIdx++].characterId].charName;
 
@@ -324,48 +349,24 @@ namespace DM.Dialog
             }
             else
             {
-                //nextButton.onClick.RemoveAllListeners();
-                //nextButton.onClick.AddListener(() =>
-                //{
-                //    UpdateDialog(sentences, sentenceState);
-                //    //nowOnFab.GetComponent<TextBox>().DestroyTextBox();
-                //});
                 testdelegate = (() =>
                 {
                     UpdateDialog(sentences, sentenceState);
                     Debug.Log("testdelegete");
-                    //nowOnFab.GetComponent<TextBox>().DestroyTextBox();
                 });
                 PlayerInput.OnPressFDown = testdelegate;
             }
-            // DOTween.
-            //nameText.DOText(sentences[nowSentenceIdx].sentence,1);
-            //dialogText.text = sentences[nowSentenceIdx].sentence;
         }
 
         //마지막 대사일 때 작동
         private void LastDialog(int sentenceState)
         {
-            //nextButton.onClick.RemoveAllListeners();
-            //speedNextButton.onClick.RemoveAllListeners();
-            //print("Remove_Last");
-
-            //nextButton.onClick.AddListener(() =>
-            //{
-            //    LastDialogNextEvent(sentenceState);
-            //});
-            //speedNextButton.onClick.AddListener(() =>
-            //{
-            //    LastDialogNextEvent(sentenceState);
-            //});
             testdelegate = (() =>
             {
                 LastDialogNextEvent(sentenceState);
                 Debug.Log("Remove_Last");
-                //nowOnFab.GetComponent<TextBox>().DestroyTextBox();
             });
             PlayerInput.OnPressFDown = testdelegate;
-            //수락 시 이벤트가 있다면 진행
         }
 
         private void LastDialogNextEvent(int sentenceState)
@@ -408,7 +409,13 @@ namespace DM.Dialog
                         break;
                 }
             }
-            
+
+            if (nowDialogData.cuttype != CutType.None)
+            {
+                cutSceneManager.PrintImage((int)nowDialogData.cuttype);
+            }
+
+
             PlayerInput.OnPressFDown = savedelegate;
             nowNpc = null;
             UpdateNpcsQuestMark();
@@ -454,8 +461,6 @@ namespace DM.Dialog
 
             return false;
         }
-
-
 
         #region Data
         //public bool LoadDialogData(int charId, int diaIdx, bool isQuestDialog)//string eventname)
