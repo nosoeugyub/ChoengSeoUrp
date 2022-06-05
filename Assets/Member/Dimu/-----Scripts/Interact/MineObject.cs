@@ -54,6 +54,7 @@ public class MineObject : ItemObject
             boxcol = GetComponent<BoxCollider>();
             boxcol.enabled = false;
             animator.SetBool("IsFalling", true);
+            print(animator.transform.parent.name);
         }
     }
     public override int CanInteract()

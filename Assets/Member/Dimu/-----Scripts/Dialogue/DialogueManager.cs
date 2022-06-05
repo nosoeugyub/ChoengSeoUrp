@@ -83,7 +83,6 @@ namespace DM.Dialog
             savedelegate = PlayerInput.OnPressFDown;
 
             FirstShowDialog(npcTalkBubbleTfs[(int)Character.CheongSeo].parent.GetComponent<HouseNpc>(), false, -1);
-
         }
         public void SetDialogSet(LanguegeType languegeType)
         {
