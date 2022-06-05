@@ -37,6 +37,16 @@ namespace DM.Dialog
         public List<DialogList> dailydialogLists; //퀘스트 없는 대화
         public List<DialogList> buildDialogLists; //건축 피드백 대화
 
+        [Header("DialogInfos_eng")]
+        public List<DialogList> questDialogLists_eng; //퀘스트 있는 대화
+        public List<DialogList> dailydialogLists_eng; //퀘스트 없는 대화
+        public List<DialogList> buildDialogLists_eng; //건축 피드백 대화
+
+        [Header("DialogInfos_viet")]
+        public List<DialogList> questDialogLists_viet; //퀘스트 있는 대화
+        public List<DialogList> dailydialogLists_viet; //퀘스트 없는 대화
+        public List<DialogList> buildDialogLists_viet; //건축 피드백 대화
+
         [Header("InstanciatePrefab")]
         public GameObject textboxFab;//대화창 프리펩 //쪽지로 변하는것임!!
 
