@@ -39,9 +39,9 @@ namespace DM.NPC
             if (isFollowPlayer)
                 FollowPlayer();
             float dist = Vector3.Distance(player.transform.position, questMark.position) * 0.02f;
-            if(dist < 0.5f)
+            if (dist < 0.5f)
                 dist = 0.5f;
-            questMark.localScale = questMarkScale * dist; 
+            questMark.localScale = questMarkScale * dist;
         }
         public void SetQuestMark(bool ison)
         {
@@ -56,7 +56,7 @@ namespace DM.NPC
                 {
                     isFollowPlayer = true;
                 }
-                    EventManager.EventAction -= EventManager.EventActions[4];
+                EventManager.EventAction -= EventManager.EventActions[4];
             }
         }
         public bool IsHaveHouse()
@@ -117,15 +117,19 @@ namespace DM.NPC
 
             int[] ints = new int[wantToBuildCondition.Length];
 
+            int failBuildItemCount = 0;
+
             foreach (BuildingItemObj buildItem in buildItemList)//건축자재 하나씩
             {
                 int count = 0;
                 for (int i = 0; i < wantToBuildCondition.Length; i++)
                 {
-                    bool canContinue = false;
+                    bool canContinue = true;
+                    ints[i]++;
 
-                    foreach (var preferkind in wantToBuildCondition[i].buildItemKind)
+                    foreach (var preferkind in wantToBuildCondition[i].buildItemKind)//설정한 종류들 중 하나 체크
                     {
+                        canContinue = false;
                         //희망 조건에 있는 종류와 설치된 자재와 같은지
                         if (preferkind == buildItem.GetAttribute().buildItemKind)
                         {
@@ -135,7 +139,13 @@ namespace DM.NPC
                         }
                         count++;
                     }
-                    if (wantToBuildCondition[i].buildItemKind.Length != 0 && count == wantToBuildCondition[i].buildItemKind.Length) return BuildingLike.Unlike_Shape;
+                    //설정된게 있는데 하나도 해당되는게 없으면...
+                    if (wantToBuildCondition[i].buildItemKind.Length != 0 && count == wantToBuildCondition[i].buildItemKind.Length)
+                    {
+                        ++failBuildItemCount; //틀린 자재 개수 증가.
+
+                        //return BuildingLike.Unlike_Shape;
+                    }
 
                     if (!canContinue) break;
 
@@ -151,7 +161,9 @@ namespace DM.NPC
                         }
                         count++;
                     }
-                    if (wantToBuildCondition[i].buildHPos.Length != 0 && count == wantToBuildCondition[i].buildHPos.Length) return BuildingLike.Unlike_Shape;
+                    if (wantToBuildCondition[i].buildHPos.Length != 0 && count == wantToBuildCondition[i].buildHPos.Length)
+                        ++failBuildItemCount;
+                    //return BuildingLike.Unlike_Shape;
 
                     if (!canContinue) break;
 
@@ -167,7 +179,9 @@ namespace DM.NPC
                         }
                         count++;
                     }
-                    if (wantToBuildCondition[i].buildVPos.Length != 0 && count == wantToBuildCondition[i].buildVPos.Length) return BuildingLike.Unlike_Shape;
+                    if (wantToBuildCondition[i].buildVPos.Length != 0 && count == wantToBuildCondition[i].buildVPos.Length)
+                        ++failBuildItemCount;
+                    //return BuildingLike.Unlike_Shape;
 
                     if (!canContinue) break;
 
@@ -183,7 +197,9 @@ namespace DM.NPC
                         }
                         count++;
                     }
-                    if (wantToBuildCondition[i].buildSize.Length != 0 && count == wantToBuildCondition[i].buildSize.Length) return BuildingLike.Unlike_Shape;
+                    if (wantToBuildCondition[i].buildSize.Length != 0 && count == wantToBuildCondition[i].buildSize.Length)
+                        ++failBuildItemCount;
+                    //return BuildingLike.Unlike_Shape;
 
                     if (!canContinue) break;
 
@@ -199,7 +215,9 @@ namespace DM.NPC
                         }
                         count++;
                     }
-                    if (wantToBuildCondition[i].buildColor.Length != 0 && count == wantToBuildCondition[i].buildColor.Length) return BuildingLike.Unlike_Shape;
+                    if (wantToBuildCondition[i].buildColor.Length != 0 && count == wantToBuildCondition[i].buildColor.Length)
+                        ++failBuildItemCount;
+                    //return BuildingLike.Unlike_Shape;
 
                     if (!canContinue) break;
 
@@ -215,7 +233,9 @@ namespace DM.NPC
                         }
                         count++;
                     }
-                    if (wantToBuildCondition[i].buildShape.Length != 0 && count == wantToBuildCondition[i].buildShape.Length) return BuildingLike.Unlike_Shape;
+                    if (wantToBuildCondition[i].buildShape.Length != 0 && count == wantToBuildCondition[i].buildShape.Length)
+                        ++failBuildItemCount;
+                    //return BuildingLike.Unlike_Shape;
 
                     if (!canContinue) break;
 
@@ -235,11 +255,13 @@ namespace DM.NPC
                         if (canContinue) break;
                         count++;
                     }
-                    if (wantToBuildCondition[i].buildThema.Length != 0 && count == wantToBuildCondition[i].buildThema.Length) return BuildingLike.Unlike_Shape;
+                    if (wantToBuildCondition[i].buildThema.Length != 0 && count == wantToBuildCondition[i].buildThema.Length)
+                        ++failBuildItemCount;
+                    //return BuildingLike.Unlike_Shape;
 
                     if (!canContinue) break;
 
-                    ints[i]++;
+                    
                 }
             }
 
@@ -258,7 +280,13 @@ namespace DM.NPC
                     return BuildingLike.Unlike_Count; // false
                 }
             }
-            return BuildingLike.Like;
+
+            print(failBuildItemCount);
+            int halfbuildcount = buildItemList.Count / 2;
+            if (halfbuildcount >= failBuildItemCount)
+                return BuildingLike.Like;
+            else
+                return BuildingLike.Unlike_Shape;
         }
 
         public override int CanInteract()
