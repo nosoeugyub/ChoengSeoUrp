@@ -10,4 +10,9 @@ public class SceneChangeManager : MonoBehaviour
         SceneManager.LoadScene(scenename);
         
     }
+
+    public void slbal(int scenenuber)
+    {
+        SceneManager.LoadScene(scenenuber);
+    }
 }
