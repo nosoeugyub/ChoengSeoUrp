@@ -2,13 +2,14 @@
 using UnityEngine;
 
 public enum EventEnum
-{   
+{
     Test = 1,
     MoveToMyHome,
     MoveToBearsHouse,
     OnFollowPlayer,
     MoveToWalPort,
     OpenRoad1,
+    OpenRoad2,
 }
 namespace NSY.Manager
 {
@@ -35,7 +36,7 @@ namespace NSY.Manager
         //public delegate void OpenRoad();
         //public static event OpenRoad OpenRoadPort;
         //public static event OpenRoad OpenRoadFall;
-        
+
 
         public static Action[] EventActions = new Action[10];
         public static Action<CutType> testevent;
@@ -70,7 +71,8 @@ namespace NSY.Manager
 
         private void Start()
         {
-            EventActions[((int)EventEnum.OpenRoad1)] = OpenPortCol;
+            EventActions[((int)EventEnum.OpenRoad1)] = OpenPortCol1;
+            EventActions[((int)EventEnum.OpenRoad2)] = OpenPortCol2;
 
         }
         private void Update()
@@ -79,12 +81,13 @@ namespace NSY.Manager
             EventAction(); //이벤트 실행
         }
 
-        public void OpenPortCol()
+        public void OpenPortCol1()
         {
-            for (int i = 0; i < cols.Length; i++)
-            {
-                cols[i].SetActive(false);
-            }
+            cols[0].SetActive(false);
+        }
+        public void OpenPortCol2()
+        {
+            cols[1].SetActive(false);
         }
     }
 }

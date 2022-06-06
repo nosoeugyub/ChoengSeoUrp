@@ -311,8 +311,8 @@ namespace DM.NPC
         {
             if (isFollowPlayer)
             {
-                //player.SetNpc(null);
-                //isFollowPlayer = false;
+                player.SetNpc(null);
+                isFollowPlayer = false;
             }
             else
                 PlayDialog();

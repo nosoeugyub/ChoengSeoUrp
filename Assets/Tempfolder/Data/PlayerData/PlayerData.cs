@@ -83,7 +83,7 @@ public enum InItemType
     //1차 식량
     Seed = 10000, Apple,Applejuice,
     //2차재료
-    Woodplank = 20000, Cutstone, String, torch, Ironplate,SilverPlate,GoldPlate,
+    Woodplank = 20000, Cutstone, String, torch, Ironplate,SilverPlate,GoldPlate,bulbs,
     //2차 식량
 
     //3차재료

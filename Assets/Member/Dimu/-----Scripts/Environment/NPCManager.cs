@@ -47,7 +47,7 @@ public class NPCManager : MonoBehaviour
 
         for (int i = 0; i < teleportPosButtons.Length; ++i)
         {
-            ButtonInteractable(i, false);
+           // ButtonInteractable(i, false);
         }
     }
 
