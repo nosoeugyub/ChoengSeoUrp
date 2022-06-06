@@ -44,6 +44,7 @@ public class ItemObject : Interactable//, IInteractable
         //상호작용 인덱스 체크
         //print(string.Format("AddData : {0}", item.ItemName));
         PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.InteractItem, PlayerData.ItemData, (int)ItemBehaviorEnum.length);
+        PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.alreadyitem, PlayerData.ItemData, (int)ItemBehaviorEnum.length);
     }
 
     public override int CanInteract()

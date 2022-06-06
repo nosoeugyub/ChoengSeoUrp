@@ -71,8 +71,10 @@ public class NPCManager : MonoBehaviour
             //teleFailUI.gameObject.SetActive(true);
         });
     }
-    public void ComeToPort()
+    public bool ComeToPort()
     {
+        if (!npcTfs[2].IsField) return false;
+
         SuperManager.Instance.soundManager.PlaySFX("NPCShip");
 
         int randnum = UnityEngine.Random.Range(3, npcTfs.Length);
@@ -86,6 +88,8 @@ public class NPCManager : MonoBehaviour
 
         npcTfs[randnum].IsField = true;
         ComeToPortUIAction(true);
+
+        return true;
     }
     private void ComeToPortUIAction(bool isOn)
     {
@@ -122,6 +126,7 @@ public class NPCManager : MonoBehaviour
     public void MoveToWalPort()
     {
         MoveToNPCSomewhere(2, WalPos.position);
+        npcTfs[2].IsField = true;
         EventManager.EventAction -= EventManager.EventActions[5];
     }
     public bool HaveHouse(int npcnum)
