@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public enum Character
 { CheongSeo, Ejang, Walrus, Hen, Bee, Rabbit, Deer, Milkcow, Sheep, Length }
 //청서 곰 닭 바코 벌 토끼 사슴 젖소 양
-public enum LanguegeType
+public enum LanguageType
 { Korean, English, Vietnamese, }
 namespace DM.Dialog
 {
@@ -64,6 +64,7 @@ namespace DM.Dialog
         QuestManager questManager;
         NPCManager npcManager;
         CutScene cutSceneManager;
+        [SerializeField] LanguageType nowLanguageType;
 
         public bool IsTalking { get { return isTalking; } }
         private void Awake()
@@ -75,6 +76,7 @@ namespace DM.Dialog
         void Start()
         {
             EventManager.EventActions[((int)EventEnum.Test)] = Test;
+            SetDialogSet(nowLanguageType);
             StartCoroutine(firstDialog());
         }
         IEnumerator firstDialog()
@@ -84,21 +86,21 @@ namespace DM.Dialog
 
             FirstShowDialog(npcTalkBubbleTfs[(int)Character.CheongSeo].parent.GetComponent<HouseNpc>(), false, -1);
         }
-        public void SetDialogSet(LanguegeType languegeType)
+        public void SetDialogSet(LanguageType languageType)
         {
-            switch (languegeType)
+            switch (languageType)
             {
-                case LanguegeType.Korean:
+                case LanguageType.Korean:
                     activeQuestDialogLists = questDialogLists;
                     activeDailydialogLists = dailydialogLists;
                     activeBuildDialogLists = buildDialogLists;
                     break;
-                case LanguegeType.English:
+                case LanguageType.English:
                     activeQuestDialogLists = questDialogLists_eng;
                     activeDailydialogLists = dailydialogLists_eng;
                     activeBuildDialogLists = buildDialogLists_eng;
                     break;
-                case LanguegeType.Vietnamese:
+                case LanguageType.Vietnamese:
                     activeQuestDialogLists = questDialogLists_viet;
                     activeDailydialogLists = dailydialogLists_viet;
                     activeBuildDialogLists = buildDialogLists_viet;
@@ -144,7 +146,7 @@ namespace DM.Dialog
             {
                 if (isLike == (int)BuildingLike.None) return;
 
-                nowDialogData = buildDialogLists[(int)nowNpc.GetCharacterType()].dialogList[isLike];
+                nowDialogData = activeBuildDialogLists[(int)nowNpc.GetCharacterType()].dialogList[isLike];
                 ss = nowDialogData.acceptSentenceInfo;
                 dialogLength = nowDialogData.acceptSentenceInfo.Length;
                 sentenceState = -1;
@@ -159,7 +161,7 @@ namespace DM.Dialog
                 //완료자가 nowPartner(현재 대화 상대)인 퀘스트 받아옴. 제공자는 같을 수도,  다를 수 있음.
                 if (canClearqd != null && questManager.ClearQuest(canClearqd.questID, canClearqd.npcID))//있거나 클리어할 수 있다면
                 {
-                    nowDialogData = questDialogLists[canClearqd.npcID].dialogList[FindDialogIndex(canClearqd)];
+                    nowDialogData = activeQuestDialogLists[canClearqd.npcID].dialogList[FindDialogIndex(canClearqd)];
 
                     ss = nowDialogData.clearSentenceInfo;
                     dialogLength = nowDialogData.clearSentenceInfo.Length;
@@ -168,7 +170,7 @@ namespace DM.Dialog
 
                 else if (isAcceptedQuests.Count > 0) // 진행중인 대화가 있다면?
                 {
-                    nowDialogData = questDialogLists[(int)nowNpc.GetCharacterType()].dialogList[FindDialogIndex(isAcceptedQuests[0])];
+                    nowDialogData = activeQuestDialogLists[(int)nowNpc.GetCharacterType()].dialogList[FindDialogIndex(isAcceptedQuests[0])];
 
                     ss = nowDialogData.proceedingSentenceInfo;
                     dialogLength = nowDialogData.proceedingSentenceInfo.Length;
@@ -203,10 +205,10 @@ namespace DM.Dialog
         }
         public int FindDialogIndex(QuestData questData)
         {
-            for (int i = 0; i < questDialogLists[questData.npcID].dialogList.Length; ++i)
+            for (int i = 0; i < activeQuestDialogLists[questData.npcID].dialogList.Length; ++i)
             {
 
-                if (questDialogLists[questData.npcID].dialogList[i].questId == questData.questID)
+                if (activeQuestDialogLists[questData.npcID].dialogList[i].questId == questData.questID)
                 {
 
                     return i;
@@ -220,7 +222,7 @@ namespace DM.Dialog
             List<DialogData> canAcceptDialogs = new List<DialogData>();
             if (isQuestList)
             {
-                foreach (var dialogData in questDialogLists[npcID].dialogList)//퀘스트 가진 리스트 중에서 검사
+                foreach (var dialogData in activeQuestDialogLists[npcID].dialogList)//퀘스트 가진 리스트 중에서 검사
                 {
                     if (isQuestmarkCheck)
                     {
@@ -240,7 +242,7 @@ namespace DM.Dialog
             }
             else
             {
-                foreach (var dialogData in dailydialogLists[npcID].dialogList)//일반대화 리스트 중에서 검사
+                foreach (var dialogData in activeDailydialogLists[npcID].dialogList)//일반대화 리스트 중에서 검사
                 {
                     if (CanStartTalk(dialogData, nowNpc))
                     {
@@ -339,7 +341,7 @@ namespace DM.Dialog
             //nowOnFab.transform.SetParent(npcTalkBubbleTfs[nowSentences.characterId]);
             nowOnFab.GetComponent<TextBox>().SetTextbox(nowSentences.sentence, npcTalkBubbleTfs[nowSentences.characterId], nowSentences.textboxType);
 
-            nameText.text = questDialogLists[sentences[nowSentenceIdx++].characterId].charName;
+            nameText.text = activeQuestDialogLists[sentences[nowSentenceIdx++].characterId].charName;
 
 
             if (dialogLength <= nowSentenceIdx)
@@ -455,8 +457,8 @@ namespace DM.Dialog
 
         public bool IsQuestCleared(int questId, int npcID)//클리어한 대화인지?
         {
-            if (questDialogLists[npcID].dialogList[questId].isTalkingOver) return true;
-            if (dailydialogLists[npcID].dialogList[questId].isTalkingOver) return true;
+            if (activeQuestDialogLists[npcID].dialogList[questId].isTalkingOver) return true;
+            if (activeDailydialogLists[npcID].dialogList[questId].isTalkingOver) return true;
 
             return false;
         }
