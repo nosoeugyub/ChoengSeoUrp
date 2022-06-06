@@ -5,7 +5,8 @@ using Cinemachine;
 
 namespace Game.Cam
 
-{ public class CameraManager : MonoBehaviour
+{
+    public class CameraManager : MonoBehaviour
     {
         //[Header("MainCameraList")]
         //[SerializeField]
@@ -23,14 +24,16 @@ namespace Game.Cam
         [Header("SubCameraList")]
         [SerializeField]
         private GameObject[] virtualCamera = null;
-    
+
         bool IsMoveRight;
+        bool isTitleOn;
         //[SerializeField]
         //private CinemachineVirtualCamera [] virtualCamera = null;
 
         void Start()
         {
             LookIn = true;
+            isTitleOn = false;
             DeactiveAllSideCam();
             DeactiveAllCornerCam();
             DeaactiveAllSubCam();
@@ -42,7 +45,7 @@ namespace Game.Cam
         }
 
 
-    
+
 
         public void ChangeCamRotToArea(MapArea Area)
         {
@@ -77,10 +80,10 @@ namespace Game.Cam
                         }
                     case MapArea.West:
                         {
-                            
+
                             CornerCamControl3.SetCamRot(CornerCamControl3.YRotMoveLeft);
                             CornerCamControl4.SetCamRot(CornerCamControl4.YRotMoveRight);
-                           // Debug.Log("ChangeCamToWestArea");
+                            // Debug.Log("ChangeCamToWestArea");
 
 
                             break;
@@ -89,10 +92,10 @@ namespace Game.Cam
 
             }
 
-               
 
-            
-               
+
+
+
         }
         //void ChangeCornerCamRot()
         //{
@@ -115,7 +118,7 @@ namespace Game.Cam
         void MoveDirectionCheck()
         {
             float XMovevalue = Input.GetAxisRaw("Horizontal");
-            if(XMovevalue>0)
+            if (XMovevalue > 0)
             {
                 IsMoveRight = true;
             }
@@ -140,10 +143,10 @@ namespace Game.Cam
 
         void DeactiveAllSideCam()
         {
-            for(int i=0;i<SideCamera.Length;i++)
+            for (int i = 0; i < SideCamera.Length; i++)
             {
                 SideCamera[i].SetActive(false);
-            }     
+            }
         }
 
         void DeactiveAllCornerCam()
@@ -154,10 +157,11 @@ namespace Game.Cam
             }
         }
 
-        void DeaactiveAllSubCam() {
+        void DeaactiveAllSubCam()
+        {
             for (int i = 0; i < virtualCamera.Length; i++)
             {
-             virtualCamera[i].SetActive(false);
+                virtualCamera[i].SetActive(false);
             }
         }
 
@@ -183,7 +187,7 @@ namespace Game.Cam
         {
             CinemachineVirtualCamera virtualCam = virtualCamera[camNum].GetComponent<CinemachineVirtualCamera>();
             virtualCam.LookAt = newTarget;
-          
+
         }
         public IEnumerator AutoFocusObjectLocation(Transform focusObject, float stayTime, int camNum)
         {
@@ -199,7 +203,6 @@ namespace Game.Cam
             IsZoom = false;
         }
 
-        
+
     }
 }
-
