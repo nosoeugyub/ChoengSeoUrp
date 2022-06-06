@@ -9,11 +9,11 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Sky 01
   m_Shader: {fileID: 4800000, guid: 6fc9318f5193c094c98c0d450cd61e3b, type: 3}
-  m_ShaderKeywords: _BUILTINFOG_ON _CLOUDS_ON _ENABLECLOUDSROTATION_ON _ENABLEPATTERN_ON
-    _ENABLESKYPATTERNOVERLAY_ON _ENABLESTARSSUNMASK_ON _ENABLESTARSTWINKLING_ON _ENABLESTARS_ON
-    _ENABLESUNMASK_ON _ENABLESUNMOONMASK_ON _ENABLESUNMOON_ON _ENABLESUN_ON _ENABLETWINKLING_ON
-    _PATTERNOVERLAY_ON _STARS_ON _SUNORMOON_ON _USECUBEMAP_ON _USEENVIRONMENTGRADIENT_ON
-    _USESKYPATTERNOVERLAY_ON _USETEXTURE_ON
+  m_ShaderKeywords: _BUILTINFOG_ON _CLOUDS_ON _ENABLECLOUDSROTATION_ON _ENABLECLOUDS_ON
+    _ENABLEPATTERN_ON _ENABLESKYPATTERNOVERLAY_ON _ENABLESTARSSUNMASK_ON _ENABLESTARSTWINKLING_ON
+    _ENABLESTARS_ON _ENABLESUNMASK_ON _ENABLESUNMOONMASK_ON _ENABLESUNMOON_ON _ENABLESUN_ON
+    _ENABLETWINKLING_ON _PATTERNOVERLAY_ON _STARS_ON _SUNORMOON_ON _USECUBEMAP_ON
+    _USEENVIRONMENTGRADIENT_ON _USESKYPATTERNOVERLAY_ON _USETEXTURE_ON
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -197,7 +197,7 @@ Material:
     - _DstBlend: 0
     - _Enable1Twinkling: 0
     - _EnableBuiltinFog: 0
-    - _EnableClouds: 0
+    - _EnableClouds: 1
     - _EnableCloudsRotation: 1
     - _EnableDirectionLight: 0
     - _EnableFogMessage: 0
@@ -304,7 +304,7 @@ Material:
     - _CloudLightColor: {r: 0.5620674, g: 0.6149295, b: 0.6764706, a: 1}
     - _CloudShadowColor: {r: 0.03952206, g: 0.12203295, b: 0.31617644, a: 1}
     - _CloudsLightColor: {r: 1, g: 1, b: 1, a: 1}
-    - _CloudsShadowColor: {r: 1, g: 1, b: 1, a: 1}
+    - _CloudsShadowColor: {r: 0, g: 0, b: 0, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Color0: {r: 0, g: 0.5054344, b: 1, a: 0}
     - _Color1: {r: 1, g: 1, b: 1, a: 0}

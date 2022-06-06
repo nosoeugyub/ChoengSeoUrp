@@ -358,11 +358,7 @@ public class IntroManager : MonoBehaviour
                     case TouchPad.PageEnum.Right:
 
                         //OpenMiddle();
-                        if (introCam.State == Introstate.First)
-                        {
-
-                        }
-                            if (introCam.State == Introstate.Second)
+                        if (introCam.State == Introstate.Second)
                         {
                             TurnToPage(17);
                             introCam.OnSecondstate();

@@ -25,14 +25,12 @@ namespace Game.Cam
         private GameObject[] virtualCamera = null;
     
         bool IsMoveRight;
-        bool isTitleOn;
         //[SerializeField]
         //private CinemachineVirtualCamera [] virtualCamera = null;
 
         void Start()
         {
             LookIn = true;
-            isTitleOn = false;
             DeactiveAllSideCam();
             DeactiveAllCornerCam();
             DeaactiveAllSubCam();
