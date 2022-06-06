@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -45379,13 +45379,73 @@ PrefabInstance:
       value: 2871
       objectReference: {fileID: 0}
     - target: {fileID: 1263176054, guid: d706d87b09a875740ac9fdf06ea2cca7, type: 3}
+      propertyPath: PageMat.Array.size
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 1263176054, guid: d706d87b09a875740ac9fdf06ea2cca7, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1263176054, guid: d706d87b09a875740ac9fdf06ea2cca7, type: 3}
       propertyPath: camera
       value: 
       objectReference: {fileID: 5589402195269076939}
+    - target: {fileID: 1263176054, guid: d706d87b09a875740ac9fdf06ea2cca7, type: 3}
+      propertyPath: PageMat.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 944a0ae8f4171754c9a118926bafe474, type: 2}
+    - target: {fileID: 1263176054, guid: d706d87b09a875740ac9fdf06ea2cca7, type: 3}
+      propertyPath: PageMat.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 51fcc6abe14d9014c894dc449c95374b, type: 2}
+    - target: {fileID: 1263176054, guid: d706d87b09a875740ac9fdf06ea2cca7, type: 3}
+      propertyPath: PageMat.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 35b787a66611e4d4f9b356b74827ba65, type: 2}
+    - target: {fileID: 1263176054, guid: d706d87b09a875740ac9fdf06ea2cca7, type: 3}
+      propertyPath: PageMat.Array.data[3]
+      value: 
+      objectReference: {fileID: 2100000, guid: f27d551e65fd5c943b89b7c7e9aae422, type: 2}
+    - target: {fileID: 1263176054, guid: d706d87b09a875740ac9fdf06ea2cca7, type: 3}
+      propertyPath: PageMat.Array.data[4]
+      value: 
+      objectReference: {fileID: 2100000, guid: ddbeed07a5ddcf44c9e3ff93ecd27c4f, type: 2}
+    - target: {fileID: 1263176054, guid: d706d87b09a875740ac9fdf06ea2cca7, type: 3}
+      propertyPath: PageMat.Array.data[5]
+      value: 
+      objectReference: {fileID: 2100000, guid: a37d74677174f364585720ec8e696117, type: 2}
+    - target: {fileID: 1263176054, guid: d706d87b09a875740ac9fdf06ea2cca7, type: 3}
+      propertyPath: PageMat.Array.data[6]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7ddc9e5d9c4e3974db754020ab2939dd, type: 2}
+    - target: {fileID: 1263176054, guid: d706d87b09a875740ac9fdf06ea2cca7, type: 3}
+      propertyPath: PageMat.Array.data[7]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8723636459c9a3a4e8006c83f91b5e31, type: 2}
+    - target: {fileID: 1263176054, guid: d706d87b09a875740ac9fdf06ea2cca7, type: 3}
+      propertyPath: PageMat.Array.data[8]
+      value: 
+      objectReference: {fileID: 2100000, guid: 32eb7011670193e4c9ddb5a48a5b4579, type: 2}
+    - target: {fileID: 1263176054, guid: d706d87b09a875740ac9fdf06ea2cca7, type: 3}
+      propertyPath: PageMat.Array.data[9]
+      value: 
+      objectReference: {fileID: 2100000, guid: df26ab86d8a30bd4db480fad7f3c7f11, type: 2}
+    - target: {fileID: 1263176054, guid: d706d87b09a875740ac9fdf06ea2cca7, type: 3}
+      propertyPath: PageMat.Array.data[10]
+      value: 
+      objectReference: {fileID: 2100000, guid: ee27a16fd7d69bc4287e79fd545a373f, type: 2}
+    - target: {fileID: 1263176054, guid: d706d87b09a875740ac9fdf06ea2cca7, type: 3}
+      propertyPath: PageMat.Array.data[11]
+      value: 
+      objectReference: {fileID: 2100000, guid: d720dadefcd53544292572caadb76339, type: 2}
+    - target: {fileID: 1263176054, guid: d706d87b09a875740ac9fdf06ea2cca7, type: 3}
+      propertyPath: PageMat.Array.data[12]
+      value: 
+      objectReference: {fileID: 2100000, guid: 72cc49af8fec56a4ab15435335fc6799, type: 2}
+    - target: {fileID: 1263176054, guid: d706d87b09a875740ac9fdf06ea2cca7, type: 3}
+      propertyPath: PageMat.Array.data[13]
+      value: 
+      objectReference: {fileID: 2100000, guid: 00f61e3c36803c345bc2dc53d24aed14, type: 2}
     - target: {fileID: 1302497577, guid: d706d87b09a875740ac9fdf06ea2cca7, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -51788,12 +51848,12 @@ MonoBehaviour:
   horizonColor: {r: 0.58018863, g: 0.9627194, b: 1, a: 1}
   horizonDistance: 20
   shoreFade: 1
-  shoreColor: {r: 0, g: 0.094317354, b: 0.02885683, a: 0}
+  shoreColor: {r: 0, g: 0.09431695, b: 0.02885683, a: 0}
   shoreStrength: 0
   shoreBlend: 1
   shoreDepth: 0.74
-  waveColor: {r: 0, g: 0.3135784, b: 0.017320469, a: 0}
-  underwaterColor: {r: 0.2034449, g: 0.309301, b: 0.517647, a: 0}
+  waveColor: {r: 0, g: 0.313578, b: 0.017320469, a: 0}
+  underwaterColor: {r: 0.20344451, g: 0.30930057, b: 0.517647, a: 0}
   underwaterColorStrength: 0
   underwaterRefractionStrength: 0.099
   surfaceFoamTexture: {fileID: 2800000, guid: ab507ff7ff37d954da98b07bf0bb152e, type: 3}

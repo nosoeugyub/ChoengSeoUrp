@@ -27,27 +27,43 @@ public class Screenshot : MonoBehaviour
         }
     }
 
+   
+   
+
     [SerializeField]
-    private Texture2D texture;
-    public Texture2D Texutre
+    private Texture2D texture1;
+    public Texture2D Texutre1
     {
         get
         {
-            return texture;
+            return texture1;
         }
         set
         {
-            texture = value;
-            if (texture ==null)
+            texture1 = value;
+            if (texture1 ==null)
             {
                 return;
             }
         }
     }
 
-    private void OnValidate()
+    [SerializeField]
+    private Texture2D texture2;
+    public Texture2D Texutre2
     {
-        
+        get
+        {
+            return texture2;
+        }
+        set
+        {
+            texture2 = value;
+            if (texture2 == null)
+            {
+                return;
+            }
+        }
     }
 
 
@@ -69,42 +85,72 @@ public class Screenshot : MonoBehaviour
             _WillFakeScreenShot = false;
             Width = Screen.width;
             Hight = Screen.height;
+
             RenderTexture RenderTexture = new RenderTexture(Width, Hight, 24);
+           
             camera.targetTexture = RenderTexture;
 
-            Texture2D screenshotTexture = new Texture2D(Width, Hight, TextureFormat.RGB24, false); // 화면 크기의 텍스쳐를 생성
-            Texutre = screenshotTexture;
-         
-            Rect rect = new Rect(0, 0, Width, Hight); //캡쳐 영역을지정
+            Texture2D screenshotTexture1 = new Texture2D(Width, Hight, TextureFormat.RGB24, false); //처음 끝 화면 크기의 텍스쳐를 생성
+            Texture2D screenshotTexture2 = new Texture2D(Width, Hight, TextureFormat.RGB24, false); //중앙부터 끝 화면 크기의 텍스쳐를 생성
+
+            Texutre1 = screenshotTexture1;//처음부터끝
+            Texutre2 = screenshotTexture2; //중앙부터끝
+
+            Texutre1.wrapMode = TextureWrapMode.Clamp;//노노해
+            Texutre2.wrapMode = TextureWrapMode.Clamp; //반복 노노해
+          
+            Rect halfrect1 = new Rect(0, 0, Width/2 , Hight); //처음부터 반영역
+            Rect halfrect2 = new Rect(Width/2, 0, Width/2, Hight);//캡쳐영역을 중간부터 끝
+           
             camera.Render(); 
             RenderTexture.active = RenderTexture;
+
+            screenshotTexture1.ReadPixels(halfrect2, 0, 0); //텍스쳐 픽셀에 저장
+            screenshotTexture2.ReadPixels(halfrect1, 0, 0);
+           
            
 
-            screenshotTexture.ReadPixels(rect, 0, 0); //텍스쳐 픽셀에 저장
 
-            screenshotTexture.Apply();
-            
+            screenshotTexture1.Apply();
+            screenshotTexture2.Apply();
             //pc 저장
-            byte[] byteArray = screenshotTexture.EncodeToPNG(); // 이미지 저장
-            System.IO.File.WriteAllBytes(TotalPath, screenshotTexture.EncodeToPNG());
+            byte[] byteArray = screenshotTexture1.EncodeToPNG(); // 이미지 저장
+            byte[] byteArray2 = screenshotTexture2.EncodeToPNG(); // 이미지 저장
+
+            System.IO.File.WriteAllBytes(TotalPath, screenshotTexture1.EncodeToPNG());
+            System.IO.File.WriteAllBytes(TotalPath, screenshotTexture2.EncodeToPNG());
             for (int i = 0; i < PageMat.Count; i++)
             {
                 if (PageMat[i].GetTexture("_MainTex") == null)
                 {
-                    PageMat[i].SetTexture("_MainTex", Texutre);
+                    PageMat[i].SetTexture("_MainTex", Texutre2);
+                    PageMat[i+1].SetTexture("_MainTex", Texutre1);
                     camera.targetTexture = null;
                     return;
+                }
+                else
+                {
+                    continue;
                 }
             }
 
              
-            //  Destroy(screenshotTexture);
+           
 
         }
 
     }
 
-
+    Texture2D Resize(Texture2D texture2D, int targetX, int targetY)//리사이즈
+    {
+        RenderTexture rt = new RenderTexture(targetX, targetY, 24);
+        RenderTexture.active = rt;
+        Graphics.Blit(texture2D, rt);
+        Texture2D result = new Texture2D(targetX, targetY);
+        result.ReadPixels(new Rect(0, 0, targetX, targetY), 0, 0);
+        result.Apply();
+        return result;
+    }
 
 
     // Update is called once per frame
@@ -130,50 +176,6 @@ public class Screenshot : MonoBehaviour
       
     }
     //메쉬를 잘라보실?
-    #region
-    Mesh CreateQuad(Vector3 normal, Vector3 right, Vector2 size, Vector2 uvFrom, Vector2 uvTo, Vector3 positionOffset, Color color)
-    {
-        Vector3 up = -Vector3.Cross(normal, right);
-        right = right * size.x * 0.5f;
-        up = up * size.y * 0.5f;
-
-        Vector3[] vertices = new Vector3[4];
-        vertices[0] = -right - up + positionOffset;
-        vertices[1] = right - up + positionOffset;
-        vertices[2] = right + up + positionOffset;
-        vertices[3] = -right + up + positionOffset;
-
-        int[] triangles = new int[6];
-        triangles[0] = 0;
-        triangles[1] = 3;
-        triangles[2] = 1;
-        triangles[3] = 1;
-        triangles[4] = 3;
-        triangles[5] = 2;
-
-        Vector2[] uvs = new Vector2[4];
-        uvs[0] = uvFrom;
-        uvs[1] = new Vector2(uvTo.x, uvFrom.y);
-        uvs[2] = uvTo;
-        uvs[3] = new Vector2(uvFrom.x, uvTo.y);
-
-        Color[] colors = new Color[4];
-        for (int i = 0; i < 4; ++i)
-        {
-            colors[i] = color;
-        }
-
-        Mesh mesh = new Mesh();
-        mesh.vertices = vertices;
-        mesh.triangles = triangles;
-        mesh.uv = uvs;
-        mesh.colors = colors;
-
-        mesh.RecalculateBounds();
-        mesh.RecalculateNormals();
-
-        return mesh;
-    }
-
-    #endregion
+    
+   
 }
