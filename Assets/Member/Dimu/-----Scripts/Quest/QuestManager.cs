@@ -12,10 +12,14 @@ namespace DM.Quest
         public Transform questInfoMom;
         public GameObject questInfoUI;
         public QuestData testSoData;
+        public QuestList[] nowQuestLists;
         public QuestList[] questLists;
+        public QuestList[] questLists_eng;
+        public QuestList[] questLists_viet;
         public List<QuestData> clearQuestLists;
         public Sprite[] TaskImg;
         //[SerializeField] InventoryNSY inventoryNSY;
+        [SerializeField] LanguageType nowLanguageType;
 
         private void Awake()
         {
@@ -24,8 +28,27 @@ namespace DM.Quest
             clearQuestLists = new List<QuestData>();
         }
 
-        public void Start() { print(""); }//start update 등의 구문이 없다면 에디터에서 public QuestManager questmanager; 같은 구문에 넣을 수 없다.
-
+        public void Start()
+        {
+            SetQuestSet(nowLanguageType);
+        }//start update 등의 구문이 없다면 에디터에서 public QuestManager questmanager; 같은 구문에 넣을 수 없다.
+        public void SetQuestSet(LanguageType languageType)
+        {
+            switch (languageType)
+            {
+                case LanguageType.Korean:
+                    nowQuestLists = questLists;
+                    break;
+                case LanguageType.English:
+                    nowQuestLists = questLists_eng;
+                    break;
+                case LanguageType.Vietnamese:
+                    nowQuestLists = questLists_viet;
+                    break;
+                default:
+                    break;
+            }
+        }
         public void AcceptQuest(int questId, int npcID)//퀘스트 수락하기
         {
             QuestData nowQuestData = questLists[npcID].questList[questId];
