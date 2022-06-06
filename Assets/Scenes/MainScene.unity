@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -7460,7 +7460,7 @@ RectTransform:
   - {fileID: 574126388}
   - {fileID: 2007067694}
   m_Father: {fileID: 1620158966}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -25068,27 +25068,37 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
         type: 3}
-      propertyPath: questDialogLists.Array.data[1].dialogList.Array.size
-      value: 17
+      propertyPath: questDialogLists_eng.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
         type: 3}
-      propertyPath: questDialogLists.Array.data[3].dialogList.Array.size
-      value: 10
+      propertyPath: questDialogLists_eng.Array.data[0].dialogList.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
         type: 3}
-      propertyPath: questDialogLists.Array.data[7].dialogList.Array.size
-      value: 9
+      propertyPath: dailydialogLists_eng.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
         type: 3}
-      propertyPath: questDialogLists.Array.data[2].dialogList.Array.size
-      value: 9
+      propertyPath: dailydialogLists_eng.Array.data[0].dialogList.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
         type: 3}
-      propertyPath: dailydialogLists.Array.data[1].dialogList.Array.size
+      propertyPath: dailydialogLists_viet.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
+        type: 3}
+      propertyPath: dailydialogLists_viet.Array.data[0].dialogList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
+        type: 3}
+      propertyPath: questDialogLists_viet.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
@@ -25169,177 +25179,9 @@ PrefabInstance:
         type: 2}
     - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
         type: 3}
-      propertyPath: questDialogLists.Array.data[1].dialogList.Array.data[14]
-      value: 
-      objectReference: {fileID: 11400000, guid: e5adb9731ead6be4e8253f82441577c2,
-        type: 2}
-    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
-        type: 3}
-      propertyPath: questDialogLists.Array.data[1].dialogList.Array.data[15]
-      value: 
-      objectReference: {fileID: 11400000, guid: a262ed7ca0d3f1e4a8e4289c6289819d,
-        type: 2}
-    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
-        type: 3}
-      propertyPath: questDialogLists.Array.data[3].dialogList.Array.data[9]
-      value: 
-      objectReference: {fileID: 11400000, guid: 583c31e0c5b71f34d91be7ca90d4d331,
-        type: 2}
-    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
-        type: 3}
-      propertyPath: questDialogLists.Array.data[3].dialogList.Array.data[8]
-      value: 
-      objectReference: {fileID: 11400000, guid: d90e18d089a56634f819f16568d23036,
-        type: 2}
-    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
-        type: 3}
-      propertyPath: questDialogLists.Array.data[7].dialogList.Array.data[7]
-      value: 
-      objectReference: {fileID: 11400000, guid: 1376b3566f4612443b574d6134312415,
-        type: 2}
-    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
-        type: 3}
-      propertyPath: questDialogLists.Array.data[7].dialogList.Array.data[8]
-      value: 
-      objectReference: {fileID: 11400000, guid: 98cfe2a8fd7b37b4ca51173257b4e651,
-        type: 2}
-    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
-        type: 3}
-      propertyPath: questDialogLists.Array.data[1].dialogList.Array.data[7]
-      value: 
-      objectReference: {fileID: 11400000, guid: c1e6d82ffc1c88e45a88bac2f7501136,
-        type: 2}
-    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
-        type: 3}
-      propertyPath: questDialogLists.Array.data[1].dialogList.Array.data[8]
-      value: 
-      objectReference: {fileID: 11400000, guid: 9f288e640fd627341a0d4731227738a8,
-        type: 2}
-    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
-        type: 3}
-      propertyPath: questDialogLists.Array.data[1].dialogList.Array.data[9]
-      value: 
-      objectReference: {fileID: 11400000, guid: 0def115be10fc8842a8c889e2a358e87,
-        type: 2}
-    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
-        type: 3}
-      propertyPath: questDialogLists.Array.data[1].dialogList.Array.data[10]
-      value: 
-      objectReference: {fileID: 11400000, guid: 96612d76a8f52c846900403c6b854183,
-        type: 2}
-    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
-        type: 3}
-      propertyPath: questDialogLists.Array.data[1].dialogList.Array.data[11]
-      value: 
-      objectReference: {fileID: 11400000, guid: fa081ca7dbe01aa468b84d2817adc12b,
-        type: 2}
-    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
-        type: 3}
-      propertyPath: questDialogLists.Array.data[1].dialogList.Array.data[12]
-      value: 
-      objectReference: {fileID: 11400000, guid: b89720a089732b047a5ae9072de8784c,
-        type: 2}
-    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
-        type: 3}
-      propertyPath: questDialogLists.Array.data[1].dialogList.Array.data[13]
-      value: 
-      objectReference: {fileID: 11400000, guid: 1d8e7e228337d1046957fe1ca0369e55,
-        type: 2}
-    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
-        type: 3}
-      propertyPath: questDialogLists.Array.data[1].dialogList.Array.data[16]
-      value: 
-      objectReference: {fileID: 11400000, guid: 641111db03a5286489d3c8ad2868101d,
-        type: 2}
-    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
-        type: 3}
-      propertyPath: questDialogLists.Array.data[1].dialogList.Array.data[1]
-      value: 
-      objectReference: {fileID: 11400000, guid: 97d2aed933d19f54188742d857bdffc7,
-        type: 2}
-    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
-        type: 3}
-      propertyPath: questDialogLists.Array.data[1].dialogList.Array.data[2]
-      value: 
-      objectReference: {fileID: 11400000, guid: b54e4941fcae4b242b66a944a80b9800,
-        type: 2}
-    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
-        type: 3}
-      propertyPath: questDialogLists.Array.data[1].dialogList.Array.data[3]
-      value: 
-      objectReference: {fileID: 11400000, guid: 652215ec90a55434e9fa795818ba1917,
-        type: 2}
-    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
-        type: 3}
-      propertyPath: questDialogLists.Array.data[1].dialogList.Array.data[4]
-      value: 
-      objectReference: {fileID: 11400000, guid: 5e8dfd701594a094f8fc92339ada8f82,
-        type: 2}
-    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
-        type: 3}
-      propertyPath: questDialogLists.Array.data[1].dialogList.Array.data[5]
-      value: 
-      objectReference: {fileID: 11400000, guid: 0e97069b1b015334a9cb64c439142e44,
-        type: 2}
-    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
-        type: 3}
-      propertyPath: questDialogLists.Array.data[1].dialogList.Array.data[6]
-      value: 
-      objectReference: {fileID: 11400000, guid: 17bc24ca81dbfe047963cb1207d95817,
-        type: 2}
-    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
-        type: 3}
       propertyPath: questDialogLists.Array.data[1].dialogList.Array.data[17]
       value: 
       objectReference: {fileID: 11400000, guid: 641111db03a5286489d3c8ad2868101d,
-        type: 2}
-    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
-        type: 3}
-      propertyPath: questDialogLists.Array.data[1].dialogList.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: 7cd95470a1955c54ba289a690ff90bf9,
-        type: 2}
-    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
-        type: 3}
-      propertyPath: questDialogLists.Array.data[2].dialogList.Array.data[1]
-      value: 
-      objectReference: {fileID: 11400000, guid: 6f6e9770b94f32a45b74cd7693f6be3e,
-        type: 2}
-    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
-        type: 3}
-      propertyPath: questDialogLists.Array.data[2].dialogList.Array.data[2]
-      value: 
-      objectReference: {fileID: 11400000, guid: e848a88cbf8bb6e44b5b212c9b51549e,
-        type: 2}
-    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
-        type: 3}
-      propertyPath: questDialogLists.Array.data[2].dialogList.Array.data[3]
-      value: 
-      objectReference: {fileID: 11400000, guid: 01f09e1537c1eb14f861033733e61eb4,
-        type: 2}
-    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
-        type: 3}
-      propertyPath: questDialogLists.Array.data[2].dialogList.Array.data[4]
-      value: 
-      objectReference: {fileID: 11400000, guid: 6fd7acbeaa7f15449b2a811c070633aa,
-        type: 2}
-    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
-        type: 3}
-      propertyPath: questDialogLists.Array.data[2].dialogList.Array.data[5]
-      value: 
-      objectReference: {fileID: 11400000, guid: b996988cb2681b44093d35fc64bdd6e9,
-        type: 2}
-    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
-        type: 3}
-      propertyPath: questDialogLists.Array.data[2].dialogList.Array.data[6]
-      value: 
-      objectReference: {fileID: 11400000, guid: d52612c567494d34e8ff4f14e13db245,
-        type: 2}
-    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
-        type: 3}
-      propertyPath: questDialogLists.Array.data[2].dialogList.Array.data[7]
-      value: 
-      objectReference: {fileID: 11400000, guid: c746bdc48f9618845a327d6885d601ad,
         type: 2}
     - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
         type: 3}
@@ -25348,21 +25190,46 @@ PrefabInstance:
       objectReference: {fileID: 191213392}
     - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
         type: 3}
-      propertyPath: dailydialogLists.Array.data[0].dialogList.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: 34652c5d20f384b4f95696d8e2efcd0d,
-        type: 2}
-    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
-        type: 3}
       propertyPath: uiCamera
       value: 
       objectReference: {fileID: 256469766}
     - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
         type: 3}
-      propertyPath: textboxFab
-      value: 
-      objectReference: {fileID: 529243422837345177, guid: 1ecaa0d6260efa2438cb41e6d406972e,
+      propertyPath: nowLanguageType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
         type: 3}
+      propertyPath: questDialogLists_eng.Array.data[0].charName
+      value: CheongSeo
+      objectReference: {fileID: 0}
+    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
+        type: 3}
+      propertyPath: dailydialogLists_eng.Array.data[0].charName
+      value: Cheongseo
+      objectReference: {fileID: 0}
+    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
+        type: 3}
+      propertyPath: dailydialogLists_eng.Array.data[0].dialogList.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: e19f2cf28a408e648a643f71b408975e,
+        type: 2}
+    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
+        type: 3}
+      propertyPath: dailydialogLists_viet.Array.data[0].charName
+      value: "s\xF3c"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
+        type: 3}
+      propertyPath: dailydialogLists_viet.Array.data[0].dialogList.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: a0def24b767829f4aae614a825261982,
+        type: 2}
+    - target: {fileID: 3150749997692315837, guid: efcb8539c03eecb4696aa5df5c1685eb,
+        type: 3}
+      propertyPath: questDialogLists_viet.Array.data[0].charName
+      value: "s\xF3c"
+      objectReference: {fileID: 0}
     - target: {fileID: 3578624606642225627, guid: efcb8539c03eecb4696aa5df5c1685eb,
         type: 3}
       propertyPath: m_Layer
@@ -25496,7 +25363,7 @@ PrefabInstance:
     - target: {fileID: 8250598392454428751, guid: efcb8539c03eecb4696aa5df5c1685eb,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8250598392454428751, guid: efcb8539c03eecb4696aa5df5c1685eb,
         type: 3}
@@ -45822,6 +45689,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2180480416977546633, guid: 05f774a23446850449458835ba4cd194,
         type: 3}
+      propertyPath: questLists_viet.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2180480416977546633, guid: 05f774a23446850449458835ba4cd194,
+        type: 3}
+      propertyPath: questLists_eng.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2180480416977546633, guid: 05f774a23446850449458835ba4cd194,
+        type: 3}
       propertyPath: questLists.Array.data[3].questList.Array.data[2]
       value: 
       objectReference: {fileID: 11400000, guid: f1e0ca1d4911b014890109a75b007210,
@@ -45934,6 +45811,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 5e3b456aff1c18341a34456c2572304b,
         type: 2}
+    - target: {fileID: 2180480416977546633, guid: 05f774a23446850449458835ba4cd194,
+        type: 3}
+      propertyPath: questLists.Array.data[0].questList.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2180480416977546633, guid: 05f774a23446850449458835ba4cd194,
+        type: 3}
+      propertyPath: nowLanguageType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2648439749709951643, guid: 05f774a23446850449458835ba4cd194,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -57083,12 +56970,12 @@ MonoBehaviour:
   horizonColor: {r: 0.58018863, g: 0.9627194, b: 1, a: 1}
   horizonDistance: 20
   shoreFade: 1
-  shoreColor: {r: 0, g: 0.09430335, b: 0.02885683, a: 0}
+  shoreColor: {r: 0, g: 0.09430245, b: 0.02885683, a: 0}
   shoreStrength: 0
   shoreBlend: 1
   shoreDepth: 0.74
-  waveColor: {r: 0, g: 0.313564, b: 0.017320469, a: 0}
-  underwaterColor: {r: 0.20343125, g: 0.3092866, b: 0.517647, a: 0}
+  waveColor: {r: 0, g: 0.3135631, b: 0.017320469, a: 0}
+  underwaterColor: {r: 0.20343038, g: 0.30928567, b: 0.517647, a: 0}
   underwaterColorStrength: 0
   underwaterRefractionStrength: 0.099
   surfaceFoamTexture: {fileID: 2800000, guid: ab507ff7ff37d954da98b07bf0bb152e, type: 3}
@@ -58907,8 +58794,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 187529475}
-  - {fileID: 185482741}
   - {fileID: 881417759}
+  - {fileID: 185482741}
   - {fileID: 1314346473}
   - {fileID: 1149521552}
   - {fileID: 1084954153}

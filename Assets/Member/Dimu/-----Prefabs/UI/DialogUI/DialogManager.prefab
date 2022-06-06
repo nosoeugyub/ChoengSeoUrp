@@ -417,9 +417,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  nextButton: {fileID: 0}
   dialogText: {fileID: 67602702263487560}
   nameText: {fileID: 6684166840314429757}
+  activeQuestDialogLists: []
+  activeDailydialogLists: []
+  activeBuildDialogLists: []
   questDialogLists:
   - charName: Cheongseo
     dialogList: []
@@ -432,6 +434,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 5e8dfd701594a094f8fc92339ada8f82, type: 2}
     - {fileID: 11400000, guid: 0e97069b1b015334a9cb64c439142e44, type: 2}
     - {fileID: 11400000, guid: 17bc24ca81dbfe047963cb1207d95817, type: 2}
+    - {fileID: 11400000, guid: c1e6d82ffc1c88e45a88bac2f7501136, type: 2}
     - {fileID: 11400000, guid: 9f288e640fd627341a0d4731227738a8, type: 2}
     - {fileID: 11400000, guid: 0def115be10fc8842a8c889e2a358e87, type: 2}
     - {fileID: 11400000, guid: 96612d76a8f52c846900403c6b854183, type: 2}
@@ -439,11 +442,13 @@ MonoBehaviour:
     - {fileID: 11400000, guid: b89720a089732b047a5ae9072de8784c, type: 2}
     - {fileID: 11400000, guid: 1d8e7e228337d1046957fe1ca0369e55, type: 2}
     - {fileID: 11400000, guid: e5adb9731ead6be4e8253f82441577c2, type: 2}
+    - {fileID: 11400000, guid: a262ed7ca0d3f1e4a8e4289c6289819d, type: 2}
+    - {fileID: 11400000, guid: 641111db03a5286489d3c8ad2868101d, type: 2}
   - charName: "\uC120\uC7A5"
     dialogList:
     - {fileID: 11400000, guid: 3a609abc9abaefb46afddebd0e052037, type: 2}
-    - {fileID: 11400000, guid: e848a88cbf8bb6e44b5b212c9b51549e, type: 2}
     - {fileID: 11400000, guid: 6f6e9770b94f32a45b74cd7693f6be3e, type: 2}
+    - {fileID: 11400000, guid: e848a88cbf8bb6e44b5b212c9b51549e, type: 2}
     - {fileID: 11400000, guid: 01f09e1537c1eb14f861033733e61eb4, type: 2}
     - {fileID: 11400000, guid: 6fd7acbeaa7f15449b2a811c070633aa, type: 2}
     - {fileID: 11400000, guid: b996988cb2681b44093d35fc64bdd6e9, type: 2}
@@ -460,6 +465,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 92ad21fe8f7a9e340b1ab79b6c892eca, type: 2}
     - {fileID: 11400000, guid: f1999c99c867cba469b6ae9f10d3ad0f, type: 2}
     - {fileID: 11400000, guid: 3da6f774da5ca134ead0424240d0ba3c, type: 2}
+    - {fileID: 11400000, guid: d90e18d089a56634f819f16568d23036, type: 2}
     - {fileID: 11400000, guid: 583c31e0c5b71f34d91be7ca90d4d331, type: 2}
   - charName: "\uBC8C"
     dialogList:
@@ -524,6 +530,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 1b8feeaf494f42344a72596fe9828fe9, type: 2}
     - {fileID: 11400000, guid: 9907646f5efb0f747a15e4069ef4081f, type: 2}
     - {fileID: 11400000, guid: 453b1962b0356a048b4a60083f6c8967, type: 2}
+    - {fileID: 11400000, guid: 1376b3566f4612443b574d6134312415, type: 2}
     - {fileID: 11400000, guid: 98cfe2a8fd7b37b4ca51173257b4e651, type: 2}
   - charName: "\uC591"
     dialogList:
@@ -549,7 +556,6 @@ MonoBehaviour:
   - charName: bear
     dialogList:
     - {fileID: 11400000, guid: ef994cd02375ca04e8bb60d579f31764, type: 2}
-    - {fileID: 11400000, guid: 1e28594522cdf6e49810756cb5883b07, type: 2}
   - charName: "\uC120\uC7A5"
     dialogList: []
   - charName: "\uB2ED"
@@ -623,8 +629,16 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 31c6e6e68877c8e4b889efd673f7cf96, type: 2}
     - {fileID: 11400000, guid: d646d799b98b02a4c831d3dbff4c0fc2, type: 2}
     - {fileID: 11400000, guid: 2218f0e309386b64198cc71fd6b7a840, type: 2}
-  textboxFab: {fileID: 4929008982926311981, guid: 7d03c0730cf963848a3e2e4bc2dd24bb,
+  questDialogLists_eng: []
+  dailydialogLists_eng: []
+  buildDialogLists_eng: []
+  questDialogLists_viet: []
+  dailydialogLists_viet: []
+  buildDialogLists_viet: []
+  textboxFab: {fileID: 529243422837345177, guid: 1ecaa0d6260efa2438cb41e6d406972e,
     type: 3}
+  isTalking: 0
+  nowLanguageType: 0
 --- !u!1 &5508273956434393930
 GameObject:
   m_ObjectHideFlags: 0
