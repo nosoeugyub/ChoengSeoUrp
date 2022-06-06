@@ -127,6 +127,7 @@ namespace NSY.Iven
 
             if (CheckBuliditem != null)
             {
+                DebugText.Instance.SetText("널이 아닙니다 - 인벤");
                 return;
             }
 

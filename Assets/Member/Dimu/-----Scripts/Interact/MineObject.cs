@@ -35,6 +35,11 @@ public class MineObject : ItemObject
         yield return new WaitForSeconds(respawnTime + Random.Range(0, 50));
         ChangeMineState(MineState.Normal);
     }
+    IEnumerator Destroy()
+    {
+        yield return new WaitForSeconds(1);
+        Destroy(this.gameObject);
+    }
     protected void ChangeMineState(MineState state)
     {
         mineState = state;
@@ -97,6 +102,10 @@ public class MineObject : ItemObject
             ChangeMineState(MineState.Gone);
             if (!cantRespown)
                 StartCoroutine(Respawn());
+            else
+            {
+                StartCoroutine(Destroy());
+            }
         }
         else
         {
