@@ -180,9 +180,11 @@ public class EnvironmentManager : MonoBehaviour
 
     private void ComeToPort()
     {
-        npcManager.ComeToPort();
-        dManager.UpdateNpcsQuestMark();
-        AddCleanLevel();
+        if(npcManager.ComeToPort())
+        {
+            dManager.UpdateNpcsQuestMark();
+            AddCleanLevel();
+        }
     }
 
     public void AddCleanLevel()

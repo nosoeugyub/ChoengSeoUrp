@@ -177,7 +177,7 @@ namespace DM.Building
 
         public void InvenItemCantBuild()
         {
-            DebugText.Instance.SetText("널이 아닙니다");
+            //DebugText.Instance.SetText("널이 아닙니다");
 
             foreach (ItemSlot itemslot in inventory.ItemSlots)
             {
@@ -195,7 +195,7 @@ namespace DM.Building
         public void InvenSlotResetCanBuildMode()
         {
             invenmanager.CheckBuliditem = null; //설치하면 다른거 할수없음
-            DebugText.Instance.SetText("널입니다");
+            //DebugText.Instance.SetText("널입니다");
 
 
             foreach (ItemSlot itemslot in inventory.ItemSlots) //건축슬롯 원상복구

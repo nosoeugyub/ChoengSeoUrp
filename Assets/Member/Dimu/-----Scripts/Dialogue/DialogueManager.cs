@@ -339,7 +339,7 @@ namespace DM.Dialog
 
             nowOnFab = ObjectPooler.SpawnFromPool("TextBox", npcTalkBubbleTfs[nowSentences.characterId].transform.position);
             //nowOnFab.transform.SetParent(npcTalkBubbleTfs[nowSentences.characterId]);
-            nowOnFab.GetComponent<TextBox>().SetTextbox(nowSentences.sentence, npcTalkBubbleTfs[nowSentences.characterId], nowSentences.textboxType);
+            nowOnFab.GetComponent<TextBox>().SetTextbox(nowSentences.sentence, npcTalkBubbleTfs[nowSentences.characterId], nowSentences.textboxType,nowSentences.isLeft);
 
             nameText.text = activeQuestDialogLists[sentences[nowSentenceIdx++].characterId].charName;
 
