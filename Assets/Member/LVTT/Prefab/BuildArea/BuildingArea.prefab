@@ -30,6 +30,36 @@ Transform:
   m_Father: {fileID: 4123280055350815964}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3848557435124485583
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8145650585716596250}
+  m_Layer: 10
+  m_Name: CameraPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8145650585716596250
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3848557435124485583}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 6.33, z: -12.55}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4123280055350815964}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4123280054350793674
 GameObject:
   m_ObjectHideFlags: 0
@@ -423,6 +453,7 @@ Transform:
   - {fileID: 4123280054577332983}
   - {fileID: 8243889578910933617}
   - {fileID: 7799207880830488519}
+  - {fileID: 8145650585716596250}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -464,6 +495,7 @@ MonoBehaviour:
   toolType: 0
   houseOwnerTransform: {fileID: 8243889578910933617}
   friendTransform: {fileID: 7799207880830488519}
+  curInteractObj: {fileID: 0}
 --- !u!1 &4123280055626430900
 GameObject:
   m_ObjectHideFlags: 0

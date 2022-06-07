@@ -8,7 +8,8 @@ public class TextBox : MonoBehaviour
 {
     [SerializeField] GameObject note;
     [SerializeField] GameObject boomParticle;
-    [SerializeField] Sprite[] textboxFabImgs;
+    [SerializeField] Sprite[] textboxFabImgs_Right;
+    [SerializeField] Sprite[] textboxFabImgs_Left;
 
     RectTransform rect;
     Image textboxFabImg;
@@ -32,7 +33,8 @@ public class TextBox : MonoBehaviour
     [SerializeField] private RectTransform baseCanvas;
     private Vector2 screenPoint;
     private Vector2 worldToScreenPoint;
-    Transform bubblePos;
+    Transform bubbleTf;
+    Vector3  bubbleposition;
     private void Awake()
     {
         textboxFabImg = transform.Find("Image").GetComponent<Image>();
@@ -52,28 +54,39 @@ public class TextBox : MonoBehaviour
 
     }
     public Button GetNextButton => textboxFabNextButton;
-    public void SetTextbox(string sentence, Transform tf, TextboxType textboxType)//말풍선 생산
+    public void SetTextbox(string sentence, Transform tf, TextboxType textboxType, bool isLeft)//말풍선 생산
     {
         BuildingBlock.SetTextBox(this);
         transform.SetParent(baseCanvas);
         transform.localScale = Vector3.one;
         transform.localRotation = Quaternion.identity;
-        bubblePos = tf;
+        bubbleTf = tf;
         textboxFabText.text = sentence;
         rect.anchoredPosition3D = Vector3.zero;
-        textboxFabImg.sprite = textboxFabImgs[(int)textboxType];
         LayoutRebuilder.ForceRebuildLayoutImmediate(RecImg.rectTransform);
         //StartCoroutine(PosChange());
         //UiCamCanvas.renderMode = RenderMode.ScreenSpaceCamera;
         //UiCamCanvas.worldCamera = UiCam;
-
-        worldToScreenPoint = Camera.main.WorldToScreenPoint(bubblePos.position);
+        if (!isLeft)
+        {
+            bubbleposition = bubbleTf.position;
+            textboxFabImg.GetComponent<RectTransform>().pivot = new Vector2(0, 0);
+        textboxFabImg.sprite = textboxFabImgs_Right[(int)textboxType];
+        }
+        else
+        {
+            bubbleposition = bubbleTf.position;
+            bubbleposition.x = -bubbleTf.position.x;
+            textboxFabImg.GetComponent<RectTransform>().pivot = new Vector2(1, 0);
+        textboxFabImg.sprite = textboxFabImgs_Left[(int)textboxType];
+        }
+        worldToScreenPoint = Camera.main.WorldToScreenPoint(bubbleposition);
         RectTransformUtility.ScreenPointToLocalPointInRectangle(baseCanvas, worldToScreenPoint, UiCam, out screenPoint);
         transform.GetComponent<RectTransform>().localPosition = screenPoint;
     }
     public void FixedUpdate()
     {
-        worldToScreenPoint = Camera.main.WorldToScreenPoint(bubblePos.position);
+        worldToScreenPoint = Camera.main.WorldToScreenPoint(bubbleTf.position);
         RectTransformUtility.ScreenPointToLocalPointInRectangle(baseCanvas, worldToScreenPoint, UiCam, out screenPoint);
         transform.GetComponent<RectTransform>().localPosition = screenPoint;
     }

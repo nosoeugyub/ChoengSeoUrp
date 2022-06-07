@@ -96,6 +96,7 @@ public class Sentence
     public int characterId;
     public int eventIdx;
     public TextboxType textboxType;
+    public bool isLeft;
 
     public Sentence(string sentence_, int characterId_)
     { sentence = sentence_; characterId = characterId_; }
