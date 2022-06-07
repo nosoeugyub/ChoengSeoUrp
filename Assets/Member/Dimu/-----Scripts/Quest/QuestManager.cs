@@ -12,10 +12,14 @@ namespace DM.Quest
         public Transform questInfoMom;
         public GameObject questInfoUI;
         public QuestData testSoData;
+        public QuestList[] nowQuestLists;
         public QuestList[] questLists;
+        public QuestList[] questLists_eng;
+        public QuestList[] questLists_viet;
         public List<QuestData> clearQuestLists;
         public Sprite[] TaskImg;
         //[SerializeField] InventoryNSY inventoryNSY;
+        [SerializeField] LanguageType nowLanguageType;
 
         private void Awake()
         {
@@ -24,11 +28,30 @@ namespace DM.Quest
             clearQuestLists = new List<QuestData>();
         }
 
-        public void Start() { print(""); }//start update 등의 구문이 없다면 에디터에서 public QuestManager questmanager; 같은 구문에 넣을 수 없다.
-
+        public void Start()
+        {
+            SetQuestSet(nowLanguageType);
+        }//start update 등의 구문이 없다면 에디터에서 public QuestManager questmanager; 같은 구문에 넣을 수 없다.
+        public void SetQuestSet(LanguageType languageType)
+        {
+            switch (languageType)
+            {
+                case LanguageType.Korean:
+                    nowQuestLists = questLists;
+                    break;
+                case LanguageType.English:
+                    nowQuestLists = questLists_eng;
+                    break;
+                case LanguageType.Vietnamese:
+                    nowQuestLists = questLists_viet;
+                    break;
+                default:
+                    break;
+            }
+        }
         public void AcceptQuest(int questId, int npcID)//퀘스트 수락하기
         {
-            QuestData nowQuestData = questLists[npcID].questList[questId];
+            QuestData nowQuestData = nowQuestLists[npcID].questList[questId];
             //nowQuestData.CanAccept();
             if (acceptQuests.ContainsKey(nowQuestData)) return;
 
@@ -44,7 +67,7 @@ namespace DM.Quest
         {
             if (CanClear(questId, npcID))//소모아이템이 존재한다면 추가
             {
-                QuestData nowQuestData = questLists[npcID].questList[questId];
+                QuestData nowQuestData = nowQuestLists[npcID].questList[questId];
 
                 foreach (QuestData.Rewards item in nowQuestData.returnRewards)
                 {
@@ -88,7 +111,7 @@ namespace DM.Quest
 
         public bool CanClear(int questId, int npcID)//퀘스트 클리어 가능한지?
         {
-            return questLists[npcID].questList[questId].CanClear();
+            return nowQuestLists[npcID].questList[questId].CanClear();
         }
         public bool IsQuestAccepted(QuestData questData)//특정 퀘스트 진행중인지?
         {
@@ -124,11 +147,11 @@ namespace DM.Quest
         {
             List<QuestData> canAcceptQuests = new List<QuestData>();
 
-            for (int i = 0; i < questLists[npcID].questList.Length; i++)
+            for (int i = 0; i < nowQuestLists[npcID].questList.Length; i++)
             {
-                if (IsQuestAccepted(questLists[npcID].questList[i]))
+                if (IsQuestAccepted(nowQuestLists[npcID].questList[i]))
                 {
-                    canAcceptQuests.Add(questLists[npcID].questList[i]);
+                    canAcceptQuests.Add(nowQuestLists[npcID].questList[i]);
                 }
             }
 
