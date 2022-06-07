@@ -9,6 +9,7 @@
     /// </summary>
     public class PageView : MonoBehaviour
     {
+
         /// <summary>
         /// The camera to render the texture
         /// </summary>
@@ -21,6 +22,38 @@
         public LayerMask raycastLayerMask;
         public float maxRayCastDistance = 1000f;
 
+        [Header("NPC")]
+        [SerializeField]
+        private List<Material> PageNpcMat;
+        public List<Material> _PageNpcMat
+        {
+            get
+            {
+                return PageNpcMat;
+            }
+            set
+            {
+                PageNpcMat = value;
+            }
+        }
+
+
+
+
+        [SerializeField]
+        private int NPCindex;
+        public int _NPCindex
+        {
+            get 
+            {
+                return NPCindex;
+            }
+            set
+            {
+                NPCindex = value;
+            }
+        }
+        
         void Awake()
         {
             // cache the page camera

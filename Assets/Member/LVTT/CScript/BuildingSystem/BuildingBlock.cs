@@ -15,6 +15,7 @@ namespace DM.Building
         [SerializeField] private BuildMode CurBuildMode;
         [SerializeField] private HouseNpc livingCharacter;
 
+
         [SerializeField] private Transform HouseBuild;
         [SerializeField] private List<GameObject> BuildItemList;
 
@@ -47,6 +48,8 @@ namespace DM.Building
         Ray ray;
         int layerMask;   // Player 레이어만 충돌 체크함
 
+
+        public HouseNpc _livingCharacter { get { return livingCharacter; }  set { livingCharacter = value; } }
         public SpecialHouse SpecialHouse { get { return specialHouse; } set { specialHouse = value; } }
         public static bool isBuildMode { get; set; } = false;
         public static bool isBuildDemolishMode { get; set; } = false;

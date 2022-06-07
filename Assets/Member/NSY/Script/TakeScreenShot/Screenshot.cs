@@ -3,9 +3,15 @@ using System.IO;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using NSY.Manager;
+using DM.Building;
+using echo17.EndlessBook.Demo02;
+using System.Linq;
+
 public class Screenshot : MonoBehaviour
 {
-
+    public List<PageView> PageViows; //엘범 페이지
+   
     public Camera camera;//ui카메라가찍히기 전에 게임 카메라에 있는 랜더텍스쳐를 활용해 ui제외한 부분들을 스크린샷처럼 찍음 
     public int Width; //가로
     public int Hight; //세로
@@ -17,7 +23,7 @@ public class Screenshot : MonoBehaviour
     public bool _WillFakeScreenShot;
 
     //저장될 경로 변수
-    public List<Material> PageMat = new List<Material>();
+  
 
     private string RootPath
     {
@@ -119,38 +125,31 @@ public class Screenshot : MonoBehaviour
 
             System.IO.File.WriteAllBytes(TotalPath, screenshotTexture1.EncodeToPNG());
             System.IO.File.WriteAllBytes(TotalPath, screenshotTexture2.EncodeToPNG());
-            for (int i = 0; i < PageMat.Count; i++)
+    
+
+            //SAVE
+            for (int i = 0; i < SuperManager.Instance.buildingManager.buildings.Count; i++)// 빌딩건축 캐릭터 이름
             {
-                if (PageMat[i].GetTexture("_MainTex") == null)
+                for (int j = 0; j < PageViows.Count; j++) //페이지 등록 
                 {
-                    PageMat[i].SetTexture("_MainTex", Texutre2);
-                    PageMat[i+1].SetTexture("_MainTex", Texutre1);
-                    camera.targetTexture = null;
-                    return;
-                }
-                else
-                {
-                    continue;
+                    if (SuperManager.Instance.buildingManager.buildings[i]._livingCharacter == null )
+                    {
+                        continue;
+                    }
+
+
+                    if (SuperManager.Instance.buildingManager.buildings[i]._livingCharacter != null)//빌딩즈의 캐릭터와 페이지의 캐릭터가같다면
+                    {
+                        PageViows[j]._PageNpcMat[i].SetTexture("_MainTex", Texutre2); //사진넣어라 
+                        PageViows[j]._PageNpcMat[i+1].SetTexture("_MainTex", Texutre1);
+                        return;
+                    }
                 }
             }
-
-             
-           
-
         }
-
     }
 
-    Texture2D Resize(Texture2D texture2D, int targetX, int targetY)//리사이즈
-    {
-        RenderTexture rt = new RenderTexture(targetX, targetY, 24);
-        RenderTexture.active = rt;
-        Graphics.Blit(texture2D, rt);
-        Texture2D result = new Texture2D(targetX, targetY);
-        result.ReadPixels(new Rect(0, 0, targetX, targetY), 0, 0);
-        result.Apply();
-        return result;
-    }
+
 
 
     // Update is called once per frame
