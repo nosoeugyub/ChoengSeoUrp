@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -35971,7 +35971,7 @@ PrefabInstance:
     - target: {fileID: 1834768809830252397, guid: 2d4e9ab6618aa0040bf38d635eaa3b1c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -15.699188
+      value: -15.700341
       objectReference: {fileID: 0}
     - target: {fileID: 1863054444660916319, guid: 2d4e9ab6618aa0040bf38d635eaa3b1c,
         type: 3}
@@ -50430,6 +50430,10 @@ PrefabInstance:
       value: 2871
       objectReference: {fileID: 0}
     - target: {fileID: 1263176054, guid: d706d87b09a875740ac9fdf06ea2cca7, type: 3}
+      propertyPath: PageMat.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1263176054, guid: d706d87b09a875740ac9fdf06ea2cca7, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
@@ -50437,6 +50441,14 @@ PrefabInstance:
       propertyPath: camera
       value: 
       objectReference: {fileID: 5589402195269076939}
+    - target: {fileID: 1263176054, guid: d706d87b09a875740ac9fdf06ea2cca7, type: 3}
+      propertyPath: PageMat.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 944a0ae8f4171754c9a118926bafe474, type: 2}
+    - target: {fileID: 1263176054, guid: d706d87b09a875740ac9fdf06ea2cca7, type: 3}
+      propertyPath: PageMat.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 51fcc6abe14d9014c894dc449c95374b, type: 2}
     - target: {fileID: 1302497577, guid: d706d87b09a875740ac9fdf06ea2cca7, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -57083,12 +57095,12 @@ MonoBehaviour:
   horizonColor: {r: 0.58018863, g: 0.9627194, b: 1, a: 1}
   horizonDistance: 20
   shoreFade: 1
-  shoreColor: {r: 0, g: 0.09430335, b: 0.02885683, a: 0}
+  shoreColor: {r: 0, g: 0.09431463, b: 0.02885683, a: 0}
   shoreStrength: 0
   shoreBlend: 1
   shoreDepth: 0.74
-  waveColor: {r: 0, g: 0.313564, b: 0.017320469, a: 0}
-  underwaterColor: {r: 0.20343125, g: 0.3092866, b: 0.517647, a: 0}
+  waveColor: {r: 0, g: 0.31357563, b: 0.017320469, a: 0}
+  underwaterColor: {r: 0.20344225, g: 0.3092982, b: 0.517647, a: 0}
   underwaterColorStrength: 0
   underwaterRefractionStrength: 0.099
   surfaceFoamTexture: {fileID: 2800000, guid: ab507ff7ff37d954da98b07bf0bb152e, type: 3}

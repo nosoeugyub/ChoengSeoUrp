@@ -11,7 +11,12 @@ using System.Linq;
 public class Screenshot : MonoBehaviour
 {
     public List<PageView> PageViows; //엘범 페이지
-   
+
+    [Header("머테리얼")]
+    [SerializeField]
+    private List<Material> PageMat;
+
+
     public Camera camera;//ui카메라가찍히기 전에 게임 카메라에 있는 랜더텍스쳐를 활용해 ui제외한 부분들을 스크린샷처럼 찍음 
     public int Width; //가로
     public int Hight; //세로
@@ -123,29 +128,39 @@ public class Screenshot : MonoBehaviour
             byte[] byteArray = screenshotTexture1.EncodeToPNG(); // 이미지 저장
             byte[] byteArray2 = screenshotTexture2.EncodeToPNG(); // 이미지 저장
 
-            System.IO.File.WriteAllBytes(TotalPath, screenshotTexture1.EncodeToPNG());
-            System.IO.File.WriteAllBytes(TotalPath, screenshotTexture2.EncodeToPNG());
-    
-
-            //SAVE
-            for (int i = 0; i < SuperManager.Instance.buildingManager.buildings.Count; i++)// 빌딩건축 캐릭터 이름
+            for (int i = 0; i < SuperManager.Instance.buildingManager.buildings.Count; i++)
             {
-                for (int j = 0; j < PageViows.Count; j++) //페이지 등록 
+                Debug.Log(SuperManager.Instance.buildingManager.buildings[i]._livingCharacter);
+                if (PageMat[i].GetTexture("_MainTex") == null)
                 {
-                    if (SuperManager.Instance.buildingManager.buildings[i]._livingCharacter == null )
+                    if (SuperManager.Instance.buildingManager.buildings[i]._livingCharacter != null)
                     {
-                        continue;
-                    }
-
-
-                    if (SuperManager.Instance.buildingManager.buildings[i]._livingCharacter != null)//빌딩즈의 캐릭터와 페이지의 캐릭터가같다면
-                    {
-                        PageViows[j]._PageNpcMat[i].SetTexture("_MainTex", Texutre2); //사진넣어라 
-                        PageViows[j]._PageNpcMat[i+1].SetTexture("_MainTex", Texutre1);
+                        Debug.Log("김태리 김채원 닮음");
+                        PageMat[i].SetTexture("_MainTex", Texutre2);
+                        PageMat[i + 1].SetTexture("_MainTex", Texutre1);
+                        camera.targetTexture = null;
+                        Destroy(RenderTexture);
                         return;
                     }
+                    else
+                    {
+                        Debug.Log("개씨발");
+
+                        camera.targetTexture = null;
+                        Destroy(RenderTexture);
+                        continue;
+                    }
                 }
+                else
+                    continue;
+               
+               
             }
+
+              System.IO.File.WriteAllBytes(TotalPath, screenshotTexture1.EncodeToPNG());
+            System.IO.File.WriteAllBytes(TotalPath, screenshotTexture2.EncodeToPNG());
+            camera.targetTexture = null;
+            Destroy(RenderTexture);
         }
     }
 
