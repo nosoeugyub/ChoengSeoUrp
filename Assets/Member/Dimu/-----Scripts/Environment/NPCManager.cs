@@ -55,9 +55,9 @@ public class NPCManager : MonoBehaviour
     {
         teleportPosButtons[i].interactable = interactable;
     }
-    public void OpentelePickUI()
+    public void OnOfftelePickUI(bool isOn)
     {
-        telePickUI.gameObject.SetActive(true);
+        telePickUI.gameObject.SetActive(isOn);
     }
     public void OpenTeleportUI(int i)
     {
