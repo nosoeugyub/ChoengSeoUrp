@@ -37,7 +37,7 @@ namespace DM.Building
         public BuildingItemObj curInteractObj;
         private float BuildItemScaleVar = 0.01f;
         private float BuildItemRotationVar = 1;
-        private float BuildItemGap = 0.002f;
+        private float BuildItemGap = 2f;
 
 
         SpecialHouse specialHouse;
@@ -130,7 +130,7 @@ namespace DM.Building
                                     InvenItemCantBuild();
                                     SetCurInteractObj(hit.collider.GetComponent<BuildingItemObj>());
                                     curInteractObj.ItemisSet = false;
-                                    BuildingItemObjAndSorting();
+                                    //BuildingItemObjAndSorting();
                                 }
                                 else //자재 클릭 + 무빙중일 때
                                 {
@@ -143,7 +143,7 @@ namespace DM.Building
                                 InvenItemCantBuild();
                                 SetCurInteractObj(hit.collider.GetComponent<BuildingItemObj>());
                                 curInteractObj.ItemisSet = false;
-                                BuildingItemObjAndSorting();
+                               // BuildingItemObjAndSorting();
                             }
                         }
                     }
@@ -167,6 +167,7 @@ namespace DM.Building
                 {
                     ScaleBuildItem();
                     RotateBuildItem();
+                    FrontBackMoveBuildItem();
                 }
             }
 
@@ -434,6 +435,17 @@ namespace DM.Building
                 curInteractObj.SetBuildItemRotation(-BuildItemRotationVar);
             }
         }
+        void FrontBackMoveBuildItem()
+        {
+            if (Input.GetKey(buildManager.frontKey))
+            {
+                SwitchBuildingItemObjZPos(true);
+            }
+            else if (Input.GetKey(buildManager.BackKey))
+            {
+                SwitchBuildingItemObjZPos(false);
+            }
+        }
         /// <summary>
         /// //////////BuildObj Sorting
         public void BtnSpawnHouseBuildItem(Item spawnObj)
@@ -499,6 +511,73 @@ namespace DM.Building
             }
 
         }
+        public void SwitchBuildingItemObjZPos(bool isUp)
+        {
+            GameObject nearObj = null;
+            float curObjZ = curInteractObj.transform.localPosition.z;//선택한 오브젝트의 z값
+            float bujildItemZ = 10000;
+            //float minDIst = 10000;
+            if (isUp)
+            {
+                foreach (GameObject item in BuildItemList)
+                {
+                    bujildItemZ = item.transform.localPosition.z;
+                    if (!nearObj)
+                    {
+                        if (curObjZ > bujildItemZ)
+                        {
+                            nearObj = item;
+                        }
+                    }
+                    else
+                    {
+                        if (curObjZ > bujildItemZ && nearObj.transform.localPosition.z < bujildItemZ)//해당 자재가 나보다 더 가깝고, 현재 가까운 오브젝트보다 
+                        {
+                            nearObj = item;
+                        }
+                    }
+                }
+                if (nearObj)
+                {
+                print("Up Near Obj is " + nearObj.name);
+                    nearObj.transform.position += nearObj.transform.forward * BuildItemGap; //가장 가까운 자재후진
+                    curInteractObj.transform.position -= curInteractObj.transform.forward * BuildItemGap; //선택중인 자재 전진
+                }
+                else
+                    print("NO NEAROBJ");
+
+            }
+            else
+            {
+                foreach (GameObject item in BuildItemList)
+                {
+                    bujildItemZ = item.transform.localPosition.z;
+                    if (!nearObj)
+                    {
+                        if (curObjZ < bujildItemZ)
+                        {
+                            nearObj = item;
+                        }
+                    }
+                    else
+                    {
+                        if (curObjZ < bujildItemZ && nearObj.transform.localPosition.z > bujildItemZ)//해당 자재가 나보다 더 가깝고, 현재 가까운 오브젝트보다 
+                        {
+                            nearObj = item;
+                        }
+                    }
+                }
+                if (nearObj)
+                {
+                print("Down Near Obj is " + nearObj.name);
+                    nearObj.transform.position -= nearObj.transform.forward * BuildItemGap; //가장 가까운 자재전진
+                    curInteractObj.transform.position += curInteractObj.transform.forward * BuildItemGap; //선택중인 자재 후진
+                }
+                else
+                    print("NO NEAROBJ");
+
+            }
+        }
         /// </summary>
 
         ////////////////////////////////////////////////////////
@@ -522,6 +601,17 @@ namespace DM.Building
             float dist = Vector3.Distance(moveposY, VecY);
             float disc = ((BuildItemList.Count - 1f) / 2f) * BuildItemGap;
             dist -= disc;
+
+            return dist;
+
+        }
+        public float DistanceToNowBuildItemToNewSort(Vector3 movePos)
+        {
+            Vector3 VecY = new Vector3(HouseBuild.transform.position.x, 0, HouseBuild.transform.position.z);
+            Vector3 moveposY = new Vector3(movePos.x, 0, movePos.z);
+            float dist = Vector3.Distance(moveposY, VecY);
+            //float disc = ((BuildItemList.Count - 1f) / 2f) * BuildItemGap;
+            //dist -= disc;
 
             return dist;
 

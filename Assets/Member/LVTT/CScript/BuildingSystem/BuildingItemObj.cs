@@ -98,8 +98,8 @@ namespace DM.Building
             if (BuildingBlock.isBuildMode)
             {
                 var movePos = Input.mousePosition;
-                movePos.z = parentBuildArea.DistanceToNowBuildItem(Camera.main.transform.position);
-                //            print(movePos.z);
+                movePos.z = parentBuildArea.DistanceToNowBuildItemToNewSort(Camera.main.transform.position);
+                            print(movePos.z);
                 movePos = Camera.main.ScreenToWorldPoint(movePos);
 
                 HouseBuildAreaCal();
@@ -107,7 +107,7 @@ namespace DM.Building
                 if (movePos.y >= MaxY) movePos.y = MaxY;
                 if (movePos.y <= MinY) movePos.y = MinY;
 
-                if (parentBuildArea.DistanceToNowBuildItem(movePos) > MaxX)
+                if (parentBuildArea.DistanceToNowBuildItemToNewSort(movePos) > MaxX)
                 {
                     //print(" 여어 멈추라고");
                     movePos.x = transform.position.x;

@@ -13,6 +13,8 @@ namespace DM.Building
         public KeyCode scaleDownKey = KeyCode.S;
         public KeyCode rotateLeftKey = KeyCode.A;
         public KeyCode rotateRightKey = KeyCode.D;
+        public KeyCode frontKey = KeyCode.E;
+        public KeyCode BackKey = KeyCode.Q;
 
         [SerializeField] Button[] buildingButtons;
         [SerializeField] Button buildOffUi;
