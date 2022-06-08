@@ -232,6 +232,7 @@ namespace DM.Building
                 {
                     Vector3 randVec = new Vector3(Random.Range(-1.5f, 1.5f), 0, Random.Range(-1.5f, 1.5f));
                     instantiateItem = ObjectPooler.SpawnFromPool(item.itemObjs[i].itemObj.name, gameObject.transform.position + randVec);
+                    instantiateItem.GetComponent<CollectObject>().PlaySound();
                 }
             }
         }
