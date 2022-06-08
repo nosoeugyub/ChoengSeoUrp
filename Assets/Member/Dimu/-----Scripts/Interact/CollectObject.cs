@@ -1,6 +1,5 @@
 ﻿using NSY.Iven;
 using NSY.Manager;
-using NSY.Player;
 using UnityEngine;
 
 public class CollectObject : ItemObject
@@ -20,26 +19,30 @@ public class CollectObject : ItemObject
     {
         base.OnEnable();
         box = GetComponent<BoxCollider>();
-        if(isGround)
+        if (isGround)
         {
 
         }
         else
         {
-        box.enabled = false;
-        Invoke("MoveTrue", 0.5f);
-        canMove = true;
-        amount = 0;
-        power = powerInit;
-        SuperManager.Instance.soundManager.PlaySFX("item_drop");
+            box.enabled = false;
+            Invoke("MoveTrue", 0.5f);
+            canMove = true;
+            amount = 0;
+            power = powerInit;
+            
         }
-
     }
+
+    public void PlaySound()
+    {
+        SuperManager.Instance.soundManager.PlaySFX("item_drop");
+    }
+
     void DeactiveDelay() => gameObject.SetActive(false);
     public void MoveTrue()
     {
         box.enabled = true;
-
     }
     private void Update()
     {
