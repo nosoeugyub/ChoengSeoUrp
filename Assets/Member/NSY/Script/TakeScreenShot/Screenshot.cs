@@ -165,6 +165,8 @@ public class Screenshot : MonoBehaviour
                 {
                     EveryPageMat[i].SetTexture("_MainTex", Texutre2);
                     EveryPageMat[i+1].SetTexture("_MainTex", Texutre1);
+                    camera.targetTexture = null;
+                    Destroy(RenderTexture);
                     return;
                 }
             }
