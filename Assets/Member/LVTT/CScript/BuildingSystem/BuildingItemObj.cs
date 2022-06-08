@@ -200,7 +200,6 @@ namespace DM.Building
                 DropItems();
                 parentBuildArea.RemoveBuildItemToList(gameObject);
                 parentBuildArea.DeleteBuildingItemObjSorting(gameObject);
-                FindObjectOfType<EnvironmentManager>().ChangeCleanliness(-GetItem().CleanAmount);
                 Destroy(gameObject);
             }
         }

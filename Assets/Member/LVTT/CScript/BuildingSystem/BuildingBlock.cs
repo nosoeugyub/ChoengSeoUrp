@@ -239,6 +239,8 @@ namespace DM.Building
         {
             if (specialHouse)
                 specialHouse.CanExist(curInteractObj, false);
+
+            FindObjectOfType<EnvironmentManager>().ChangeCleanliness(-(Item.GetComponent<BuildingItemObj>().GetItem().CleanAmount + 1));
             BuildItemList.Remove(Item);
             invenmanager.CheckBuliditem = null; //설치하면 다른거 할수없음
         }
@@ -248,7 +250,9 @@ namespace DM.Building
             {
                 if (Item == null)
                 {
+                    FindObjectOfType<EnvironmentManager>().ChangeCleanliness(-(Item.GetComponent<BuildingItemObj>().GetItem().CleanAmount + 1));
                     this.BuildItemList.Remove(Item);
+
                 }
             }
         }

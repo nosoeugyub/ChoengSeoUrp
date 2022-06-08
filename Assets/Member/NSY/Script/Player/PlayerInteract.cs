@@ -109,7 +109,7 @@ namespace NSY.Player
             TeleportObject teleportable = interactable.transform.GetComponent<TeleportObject>();
             if (teleportable != null)
             {
-                teleportable.Teleport();
+                teleportable.Teleport(this.transform);
                 return;
             }
 
