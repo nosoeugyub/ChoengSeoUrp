@@ -36,6 +36,8 @@ public class NPCManager : MonoBehaviour
     {
         EventManager.EventActions[(int)EventEnum.MoveToBearsHouse] += MoveToBearsHouse;
         EventManager.EventActions[(int)EventEnum.MoveToWalPort] += MoveToWalPort;
+        EventManager.EventActions[(int)EventEnum.GotoBearsWithSheep] += MoveToBearsHouseWithSheep;
+        EventManager.EventActions[(int)EventEnum.GotoBackWithSheep] += MoveToBackSheep;
 
         //npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().CharacterMove(teleportPos[0].position);
 
@@ -47,10 +49,25 @@ public class NPCManager : MonoBehaviour
 
         for (int i = 0; i < teleportPosButtons.Length; ++i)
         {
-           // ButtonInteractable(i, false);
+            ButtonInteractable(i, false);
         }
     }
 
+    private void MoveToBearsHouseWithSheep()
+    {
+        MoveToNPCSomewhere(8, npcTfs[1].Npctf.MyHouse.FriendTransform.position);
+        Vector3 randPos = new Vector3(Random.Range(-1.5f, 1.5f), 0, Random.Range(-1.5f, 1.5f));
+
+        npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(npcTfs[1].Npctf.MyHouse.FriendTransform.position + randPos);
+        EventManager.EventAction -= EventManager.EventActions[(int)EventEnum.GotoBearsWithSheep];
+    }
+    private void MoveToBackSheep()
+    {
+        MoveToNPCSomewhere(8, npcTfs[8].Npctf.MyHouse.HouseOwnerTransform.position);
+        npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(npcTfs[8].Npctf.MyHouse.FriendTransform.position);
+        EventManager.EventAction -= EventManager.EventActions[(int)EventEnum.GotoBackWithSheep];
+
+    }
     public void ButtonInteractable(int i, bool interactable)
     {
         teleportPosButtons[i].interactable = interactable;

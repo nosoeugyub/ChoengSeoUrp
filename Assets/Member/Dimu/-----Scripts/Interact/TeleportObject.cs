@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class TeleportObject : Interactable
+public class TeleportObject : AreaInteract
 {
-    [SerializeField] AreaType areaType;
     bool isUIOn = false;
+    bool isOpen = false;
     Transform playerObj = null;
-   [SerializeField] int distfromplayer = 5;
+    [SerializeField] int distfromplayer = 5;
+    [SerializeField] ParticleSystem openParticle;
     public override int CanInteract()
     {
         return (int)CursorType.Mag;
@@ -18,7 +19,7 @@ public class TeleportObject : Interactable
         {
             playerObj = transform;
             isUIOn = true;
-            FindObjectOfType<NPCManager>().OnOfftelePickUI(isUIOn);
+            npcManager.OnOfftelePickUI(isUIOn);
             StartCoroutine(TeleportUIOffCheck());
         }
     }
@@ -29,10 +30,28 @@ public class TeleportObject : Interactable
             if (Vector3.Distance(playerObj.position, transform.position) > distfromplayer)
             {
                 isUIOn = false;
-                FindObjectOfType<NPCManager>().OnOfftelePickUI(isUIOn);
+                npcManager.OnOfftelePickUI(isUIOn);
             }
             yield return null;
         }
         yield return null;
+    }
+    public void ParticleOn()
+    {
+        openParticle.Play();
+    }
+    public override void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            PlayerData.AddValue((int)areaType, (int)LocationBehaviorEnum.Interact, PlayerData.locationData, (int)LocationBehaviorEnum.length);
+            if (!isOpen)
+            {
+                ParticleOn();
+                isOpen = true;
+                npcManager.ButtonInteractable((int)areaType, isOpen);
+            }
+            //Debug.Log(areaType.ToString());
+        }
     }
 }
