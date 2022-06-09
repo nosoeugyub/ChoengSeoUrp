@@ -7,8 +7,10 @@ public class DebugText : MonoBehaviour
 {
     static DebugText inst;
     public float space;
+    public float keepExistTime;
     public GameObject initFab;
-    public Vector3 spawnPos;
+    public Vector3 spawnOriginPos;
+    Vector3 spawnPos;
     List<GameObject> textlist= new List<GameObject>();
     public static DebugText Instance
     {
@@ -37,7 +39,7 @@ public class DebugText : MonoBehaviour
 
     public void SetText(string str)
     {
-        spawnPos = transform.position;
+        spawnPos = transform.position + spawnOriginPos;
         spawnPos.y += space* textlist.Count;
         //print(spawnPos);
         GameObject fab = Instantiate(initFab, spawnPos, Quaternion.identity, transform);
@@ -47,7 +49,7 @@ public class DebugText : MonoBehaviour
     }
     IEnumerator enumerator(GameObject go)
     {
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(keepExistTime);
         spawnPos.y -= space;
         textlist.Remove(go);
         Destroy(go);
