@@ -33,7 +33,9 @@ namespace DM.Building
         RaycastHit hit;
         Ray ray;
         int layerMask;
-        
+        [SerializeField] int myOrder;
+        public int MyOrder { get { return myOrder; } set { myOrder = value; } }
+
         public BuildingBlock ParentBuildArea { get { return parentBuildArea; } }
         public bool IsFirstDrop
         {
@@ -79,7 +81,7 @@ namespace DM.Building
         {
             if (!itemisSet)
             {
-                //ItemMove();
+                ItemMove();
             }
             if (IsFirstDrop)
             {
@@ -107,7 +109,7 @@ namespace DM.Building
                 if (movePos.y >= MaxY) movePos.y = MaxY;
                 if (movePos.y <= MinY) movePos.y = MinY;
 
-                if (parentBuildArea.DistanceToNowBuildItemToNewSort(movePos) > MaxX)
+                if (parentBuildArea.DistanceToNowBuildItem(movePos) > MaxX)
                 {
                     //print(" 여어 멈추라고");
                     movePos.x = transform.position.x;

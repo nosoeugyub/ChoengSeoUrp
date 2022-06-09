@@ -467,9 +467,9 @@ namespace DM.Building
             newPrefab.transform.localRotation = Quaternion.Euler(0, 0, 0);
             newPrefab.GetComponent<BuildingItemObj>().SetParentBuildArea(nowBuildingBlock);
             newPrefab.name = spawnObj.name;
-
             if (specialHouse)
                 specialHouse.CanExist(curInteractObj, true);
+            curInteractObj.MyOrder = BuildItemList.Count;
             AddBuildItemToList(newPrefab);
             FindObjectOfType<EnvironmentManager>().ChangeCleanliness(newPrefab.GetComponent<BuildingItemObj>().GetItem().CleanAmount + 1);
             CancleUI(true);
@@ -498,7 +498,7 @@ namespace DM.Building
             {
                 float bigZinWalls = deleteObj.transform.localPosition.z;//삭제할 오브젝트의 z값
 
-                if (bigZinWalls <= item.transform.localPosition.z)//삭제할애가 더 가깝다면
+                if (bigZinWalls <= item.transform.localPosition.z)//삭제할애가 더 앞이면
                 {
                     item.transform.position -= item.transform.forward * BuildItemGap / 2; //반값전진
                 }
@@ -506,6 +506,7 @@ namespace DM.Building
                 {
                     item.transform.position -= item.transform.forward * BuildItemGap / 2; //반값전진
                     item.transform.position += item.transform.forward * BuildItemGap; //가까운것들 정값후진
+                    item.GetComponent<BuildingItemObj>().MyOrder--;
                 }
 
             }
@@ -541,7 +542,9 @@ namespace DM.Building
                 {
                 print("Up Near Obj is " + nearObj.name);
                     nearObj.transform.position += nearObj.transform.forward * BuildItemGap; //가장 가까운 자재후진
+                    nearObj.GetComponent<BuildingItemObj>().MyOrder--;
                     curInteractObj.transform.position -= curInteractObj.transform.forward * BuildItemGap; //선택중인 자재 전진
+                    curInteractObj.MyOrder++;
                 }
                 else
                     print("NO NEAROBJ");
@@ -571,7 +574,9 @@ namespace DM.Building
                 {
                 print("Down Near Obj is " + nearObj.name);
                     nearObj.transform.position -= nearObj.transform.forward * BuildItemGap; //가장 가까운 자재전진
+                    nearObj.GetComponent<BuildingItemObj>().MyOrder++;
                     curInteractObj.transform.position += curInteractObj.transform.forward * BuildItemGap; //선택중인 자재 후진
+                    curInteractObj.MyOrder--;
                 }
                 else
                     print("NO NEAROBJ");
@@ -607,14 +612,15 @@ namespace DM.Building
         }
         public float DistanceToNowBuildItemToNewSort(Vector3 movePos)
         {
-            Vector3 houseBuildPosXZ = new Vector3(HouseBuild.transform.position.x, 0, HouseBuild.transform.position.z);
-            Vector3 moveposY = new Vector3(movePos.x, 0, movePos.z); // 카메라위치
-            float dist = Vector3.Distance(moveposY, houseBuildPosXZ);
-            //float disc = ((BuildItemList.Count - 1f) / 2f) * BuildItemGap;
-            //dist -= disc;
+            Vector3 VecY = new Vector3(HouseBuild.transform.position.x, 0, HouseBuild.transform.position.z);
+            Vector3 moveposY = new Vector3(movePos.x, 0, movePos.z);
+            float dist = Vector3.Distance(moveposY, VecY);
+            float disc = ((BuildItemList.Count - 1f) / 2f) * BuildItemGap;
+            float closeDist = dist - disc;
+            //gap* count -1 - order(2)
+            float dis2c = ((BuildItemList.Count - 1)- curInteractObj.MyOrder) * BuildItemGap + closeDist;
 
-            return dist;
-
+            return dis2c;
         }
         public override int CanInteract()
         {
