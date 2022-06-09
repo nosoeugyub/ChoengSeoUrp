@@ -42,7 +42,7 @@ public class TextBox : MonoBehaviour
         LayoutRebuilder.ForceRebuildLayoutImmediate(RecImg.rectTransform);
         UiCam = GameObject.Find("UICamera").GetComponent<Camera>();
         //UiCamCanvas = this.gameObject.GetComponent<Canvas>();
-        baseCanvas = GameObject.Find("GameCanvas").GetComponent<RectTransform>();
+        baseCanvas = GameObject.Find("DialogBubbleCanvas").GetComponent<RectTransform>();
 
     }
     private void OnEnable()
@@ -100,8 +100,8 @@ public class TextBox : MonoBehaviour
     }
     public void DestroyTextBox()
     {
-        if (Random.Range(0, 100) < 1)
-            InstactiateNote();
+        //if (Random.Range(0, 100) < 1)
+        //    InstactiateNote();
         textboxFabImg.gameObject.SetActive(false);
         textboxFabText.gameObject.SetActive(false);
         BuildingBlock.SetTextBox(null);
@@ -121,8 +121,8 @@ public class TextBox : MonoBehaviour
 
     private void InstactiateNote()
     {
-        GameObject newNote = Instantiate(note, transform.parent.parent.parent.parent);
-        newNote.transform.position = new Vector3(transform.position.x - Random.Range(0.5f, -0.5f), transform.position.y, transform.position.z - Random.Range(0.5f, -0.5f));//아이템오브젝트 부모로 설정해야함
+        //GameObject newNote = Instantiate(note, transform.parent.parent.parent.parent);
+        //newNote.transform.position = new Vector3(transform.position.x - Random.Range(0.5f, -0.5f), transform.position.y, transform.position.z - Random.Range(0.5f, -0.5f));//아이템오브젝트 부모로 설정해야함
     }
     void DeactiveDelay() => gameObject.SetActive(false);
 

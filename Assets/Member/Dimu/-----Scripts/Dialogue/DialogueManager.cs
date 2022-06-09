@@ -66,9 +66,32 @@ namespace DM.Dialog
         CutScene cutSceneManager;
         [SerializeField] LanguageType nowLanguageType;
 
-        public bool IsTalking { get { return isTalking; } }
+        [Header("AlphaCanvases")]
+        [SerializeField] CanvasGroup[] alphaCanvases;
+
+        Coroutine[] nowCor;
+
+
+        public bool IsTalking
+        {
+            get { return isTalking; }
+            set
+            {
+                isTalking = value;
+                if(!isTalking)
+                {
+                    for(int i = 0;i< alphaCanvases.Length; ++i)
+                    {
+                        if (nowCor[i] != null)
+                            StopCoroutine(nowCor[i]);
+                        nowCor[i] = StartCoroutine(CanvasAlphaUp(alphaCanvases[i], true,3));
+                    }
+                }
+            }
+        }
         private void Awake()
         {
+            nowCor = new Coroutine[alphaCanvases.Length];
             questManager = SuperManager.Instance.questmanager;
             npcManager = FindObjectOfType<NPCManager>();
             cutSceneManager = FindObjectOfType<CutScene>();
@@ -79,13 +102,33 @@ namespace DM.Dialog
             SetDialogSet(nowLanguageType);
             StartCoroutine(firstDialog());
         }
+        IEnumerator CanvasAlphaUp(CanvasGroup canvasGroup, bool isUp, float speed)
+        {
+            if (isUp)
+            {
+                while (canvasGroup.alpha < 1)
+                {
+                    canvasGroup.alpha += Time.deltaTime * speed;
+                    yield return null;
+                }
+            }
+            else
+            {
+                while (canvasGroup.alpha > 0)
+                {
+                    canvasGroup.alpha -= Time.deltaTime;
+                    yield return null;
+                }
+            }
+        }
         IEnumerator firstDialog()
         {
             yield return new WaitForSeconds(0.1f);
             savedelegate = PlayerInput.OnPressFDown;
 
-            FirstShowDialog(npcTalkBubbleTfs[(int)Character.CheongSeo].parent.GetComponent<HouseNpc>(), false, -1);
+            FirstShowDialog(npcManager.NpcTfs[0].Npctf, false, -1);
         }
+
         public void SetDialogSet(LanguageType languageType)
         {
             switch (languageType)
@@ -123,12 +166,12 @@ namespace DM.Dialog
         {
             if (isTalking)
             {
-                Debug.Log("대화중입니다.");
+                DebugText.Instance.SetText(string.Format("{0}님과 대화중입니다!", nowNpc.name));
                 return false;
             }
-            isTalking = true;
+            IsTalking = true;
             nowNpc = npc;
-            partnerTf = npc.transform;
+            partnerTf = npc.transform; //이 변수 삭제하고 npcmanager 쓰자
             nowSentenceIdx = 0;
 
             PlayerData.AddValue((int)npc.GetCharacterType(), (int)NpcBehaviorEnum.Interact, PlayerData.npcData, (int)NpcBehaviorEnum.length);
@@ -190,9 +233,9 @@ namespace DM.Dialog
                     canStartDialogs = GetCanAcceptDialogList((int)nowNpc.GetCharacterType(), false, false);
                     if (canStartDialogs.Count <= 0)
                     {
-                        Debug.LogError("StartShowDialog :: nothing else");
-                        //dialogUI.SetActive(false);
-                        isTalking = false;
+                        DebugText.Instance.SetText(string.Format("진행할 대화가 없습니다."));
+
+                        IsTalking = false;
                         return;
                     }
                     nowDialogData = canStartDialogs[0];
@@ -201,6 +244,21 @@ namespace DM.Dialog
                     dialogLength = nowDialogData.acceptSentenceInfo.Length;
                 }
             }
+            ////청설모 위치 이동
+            //if (partnerTf != npcManager.NpcTfs[0].Npctf.transform)
+            //{
+            //    npcManager.NpcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(partnerTf.position + (-partnerTf.right * 4), true);
+            //            DebugText.Instance.SetText(string.Format("{0}님 옆으로 이동!",nowNpc.GetCharacterType().ToString()));
+            //}
+            //존나 구림
+
+            for (int i = 0; i < alphaCanvases.Length; ++i)
+            {
+                if (nowCor[i] != null)
+                    StopCoroutine(nowCor[i]);
+                nowCor[i] = StartCoroutine(CanvasAlphaUp(alphaCanvases[i], false,3));
+            }
+
             UpdateDialog(ss, sentenceState);
         }
         public int FindDialogIndex(QuestData questData)
@@ -339,7 +397,7 @@ namespace DM.Dialog
 
             nowOnFab = ObjectPooler.SpawnFromPool("TextBox", npcTalkBubbleTfs[nowSentences.characterId].transform.position);
             //nowOnFab.transform.SetParent(npcTalkBubbleTfs[nowSentences.characterId]);
-            nowOnFab.GetComponent<TextBox>().SetTextbox(nowSentences.sentence, npcTalkBubbleTfs[nowSentences.characterId], nowSentences.textboxType,nowSentences.isLeft);
+            nowOnFab.GetComponent<TextBox>().SetTextbox(nowSentences.sentence, npcTalkBubbleTfs[nowSentences.characterId], nowSentences.textboxType, nowSentences.isLeft);
 
             nameText.text = activeQuestDialogLists[sentences[nowSentenceIdx++].characterId].charName;
 
@@ -377,10 +435,9 @@ namespace DM.Dialog
             nowOnFab = null;
             testdelegate = null;
 
-            nowDialogData.isTalkingOver = true;
-            CloseDialog();
-            isTalking = false;
+            IsTalking = false;
 
+            nowDialogData.isTalkingOver = true;
             //만약 대화데이터에 퀘스트가 있다면
             if (nowDialogData.questId > -1)
             {
@@ -421,6 +478,17 @@ namespace DM.Dialog
             nowNpc = null;
             UpdateNpcsQuestMark();
         }
+        public void CancleDIalog()
+        {
+            nowOnFab.GetComponent<TextBox>().DestroyTextBox();
+            nowOnFab = null;
+            testdelegate = null;
+            IsTalking = false;
+
+            PlayerInput.OnPressFDown = savedelegate;
+            nowNpc = null;
+            UpdateNpcsQuestMark();
+        }
         public void UpdateNpcsQuestMark()
         {
             for (int i = 1; i < npcManager.NpcTfs.Length; i++)
@@ -449,10 +517,6 @@ namespace DM.Dialog
 
                 }
             }
-        }
-        private void CloseDialog()
-        {
-            // dialogUI.SetActive(false);
         }
 
         public bool IsQuestCleared(int questId, int npcID)//클리어한 대화인지?

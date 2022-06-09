@@ -293,10 +293,6 @@ namespace DM.NPC
         {
             return (int)CursorType.Talk;
         }
-        public Transform ReturnTF()
-        {
-            return transform;
-        }
         public bool SettingBuildingTalk()
         {
             if (!PlayDialog()) return false;

@@ -147,7 +147,6 @@ public class TreeObject : MineObject
     private void CalculateSolution_Direct()
     {
         float treepercent = GoodTreePercentage();
-        print(string.Format("TreePercent: {0} Clean: {1}", treepercent, environmentManager.Cleanliness));
         if (treepercent < environmentManager.Cleanliness + 40)
         {
             ChangeTreeType(TreeType.Original);
@@ -176,7 +175,7 @@ public class TreeObject : MineObject
 
         float treepercent = GoodTreePercentage();
         float percent = environmentManager.Cleanliness - treepercent + treepercent / 2 + ((100 - environmentManager.Cleanliness) / 4);
-        print(string.Format("TreePercent: {0} Clean: {1}", treepercent, environmentManager.Cleanliness));
+        //print(string.Format("TreePercent: {0} Clean: {1}", treepercent, environmentManager.Cleanliness));
 
         if (randnum < percent)
         {
@@ -187,7 +186,7 @@ public class TreeObject : MineObject
 
     private static float GoodTreePercentage()
     {
-        print(string.Format("nowSadTreeCount: {0} allSadTreeCount: {1}", nowSadTreeCount, allSadTreeCount));
+        //print(string.Format("nowSadTreeCount: {0} allSadTreeCount: {1}", nowSadTreeCount, allSadTreeCount));
         return (1.0f - (float)nowSadTreeCount / allSadTreeCount) * 100f;
     }
 }
