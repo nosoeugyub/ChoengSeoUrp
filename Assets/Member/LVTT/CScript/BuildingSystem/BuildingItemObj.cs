@@ -79,7 +79,7 @@ namespace DM.Building
         {
             if (!itemisSet)
             {
-                ItemMove();
+                //ItemMove();
             }
             if (IsFirstDrop)
             {

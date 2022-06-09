@@ -437,11 +437,11 @@ namespace DM.Building
         }
         void FrontBackMoveBuildItem()
         {
-            if (Input.GetKey(buildManager.frontKey))
+            if (Input.GetKeyDown(buildManager.frontKey))
             {
                 SwitchBuildingItemObjZPos(true);
             }
-            else if (Input.GetKey(buildManager.BackKey))
+            else if (Input.GetKeyDown(buildManager.BackKey))
             {
                 SwitchBuildingItemObjZPos(false);
             }
@@ -607,9 +607,9 @@ namespace DM.Building
         }
         public float DistanceToNowBuildItemToNewSort(Vector3 movePos)
         {
-            Vector3 VecY = new Vector3(HouseBuild.transform.position.x, 0, HouseBuild.transform.position.z);
-            Vector3 moveposY = new Vector3(movePos.x, 0, movePos.z);
-            float dist = Vector3.Distance(moveposY, VecY);
+            Vector3 houseBuildPosXZ = new Vector3(HouseBuild.transform.position.x, 0, HouseBuild.transform.position.z);
+            Vector3 moveposY = new Vector3(movePos.x, 0, movePos.z); // 카메라위치
+            float dist = Vector3.Distance(moveposY, houseBuildPosXZ);
             //float disc = ((BuildItemList.Count - 1f) / 2f) * BuildItemGap;
             //dist -= disc;
 
