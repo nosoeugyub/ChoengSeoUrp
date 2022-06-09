@@ -1,20 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using NSY.Manager;
-using DM.Building;
-using echo17.EndlessBook.Demo02;
-using System.Linq;
 
 public class Screenshot : MonoBehaviour
 {
-    public List<PageView> PageViows; //엘범 페이지
+   
 
-    [Header("모두의 엘범")]
+
+
+
+    [Header("모두의 페이지")]
     [SerializeField]
-    private List<Material> EveryPageMat;
+    private List<Material> EveryMat;
 
     [Header("1페이지 머테리얼")]
     [SerializeField]
@@ -24,7 +22,7 @@ public class Screenshot : MonoBehaviour
     [SerializeField]
     private List<Material> PageMat2;
 
-     [Header("3페이지 머테리얼")]
+    [Header("3페이지 머테리얼")]
     [SerializeField]
     private List<Material> PageMat3;
 
@@ -44,7 +42,7 @@ public class Screenshot : MonoBehaviour
     [SerializeField]
     private List<Material> PageMat7;
 
-    public Camera camera;//ui카메라가찍히기 전에 게임 카메라에 있는 랜더텍스쳐를 활용해 ui제외한 부분들을 스크린샷처럼 찍음 
+    public Camera SceenShotCam;//ui카메라가찍히기 전에 게임 카메라에 있는 랜더텍스쳐를 활용해 ui제외한 부분들을 스크린샷처럼 찍음 
     public int Width; //가로
     public int Hight; //세로
 
@@ -55,7 +53,7 @@ public class Screenshot : MonoBehaviour
     public bool _WillFakeScreenShot;
 
     //저장될 경로 변수
-  
+
 
     private string RootPath
     {
@@ -76,7 +74,7 @@ public class Screenshot : MonoBehaviour
         set
         {
             texture1 = value;
-            if (texture1 ==null)
+            if (texture1 == null)
             {
                 return;
             }
@@ -101,6 +99,23 @@ public class Screenshot : MonoBehaviour
         }
     }
 
+    public int Page;
+    [SerializeField]
+    private Transform CamPos;
+    public Transform _CamPos
+    {
+        get
+        {
+            return CamPos;
+        }
+        set
+        {
+            CamPos = value;
+        }
+    }
+
+
+
 
     private string FolderPath => $"{RootPath}/{folderName}";
     private string TotalPath => $"{FolderPath}/{fileName}_{DateTime.Now.ToString("MMdd_HHmmss")}.{extName}";
@@ -117,13 +132,17 @@ public class Screenshot : MonoBehaviour
                 Directory.CreateDirectory(FolderPath);
             }
 
+
             _WillFakeScreenShot = false;
+
+
             Width = Screen.width;
             Hight = Screen.height;
 
             RenderTexture RenderTexture = new RenderTexture(Width, Hight, 24);
-           
-            camera.targetTexture = RenderTexture;
+
+
+            SceenShotCam.targetTexture = RenderTexture;
 
             Texture2D screenshotTexture1 = new Texture2D(Width, Hight, TextureFormat.RGB24, false); //처음 끝 화면 크기의 텍스쳐를 생성
             Texture2D screenshotTexture2 = new Texture2D(Width, Hight, TextureFormat.RGB24, false); //중앙부터 끝 화면 크기의 텍스쳐를 생성
@@ -133,17 +152,17 @@ public class Screenshot : MonoBehaviour
 
             Texutre1.wrapMode = TextureWrapMode.Clamp;//노노해
             Texutre2.wrapMode = TextureWrapMode.Clamp; //반복 노노해
-          
-            Rect halfrect1 = new Rect(0, 0, Width/2 , Hight); //처음부터 반영역
-            Rect halfrect2 = new Rect(Width/2, 0, Width/2, Hight);//캡쳐영역을 중간부터 끝
-           
-            camera.Render(); 
+
+            Rect halfrect1 = new Rect(0, 0, Width / 2, Hight); //처음부터 반영역
+            Rect halfrect2 = new Rect(Width / 2, 0, Width / 2, Hight);//캡쳐영역을 중간부터 끝
+
+            SceenShotCam.Render();
             RenderTexture.active = RenderTexture;
 
             screenshotTexture1.ReadPixels(halfrect2, 0, 0); //텍스쳐 픽셀에 저장
             screenshotTexture2.ReadPixels(halfrect1, 0, 0);
-           
-           
+
+
 
 
             screenshotTexture1.Apply();
@@ -152,22 +171,20 @@ public class Screenshot : MonoBehaviour
             byte[] byteArray = screenshotTexture1.EncodeToPNG(); // 이미지 저장
             byte[] byteArray2 = screenshotTexture2.EncodeToPNG(); // 이미지 저장
 
-            //Ver 2  . 무지성 저장
+            //Ver 2  . 무지성 저장 카메라 영역에대한
             #region
-            for (int i = 0; i < EveryPageMat.Count; i++)
+            for (int i = 0; i < EveryMat.Count; i++)
             {
-                if (EveryPageMat[i].GetTexture("_MainTex") != null)
+                if (EveryMat[i].GetTexture("_MainTex") != null)
                 {
-                    Debug.Log("테리우스 김채원 닮음");
                     continue;
                 }
-                if (EveryPageMat[i].GetTexture("_MainTex") == null)
+                if (EveryMat[i].GetTexture("_MainTex") == null)
                 {
-                    EveryPageMat[i].SetTexture("_MainTex", Texutre2);
-                    EveryPageMat[i+1].SetTexture("_MainTex", Texutre1);
-                    camera.targetTexture = null;
-                    Destroy(RenderTexture);
-                    return;
+                    EveryMat[i].SetTexture("_MainTex", Texutre2);
+                    EveryMat[i + 1].SetTexture("_MainTex", Texutre1);
+                    SceenShotCam.targetTexture = null;
+
                 }
             }
 
@@ -204,8 +221,8 @@ public class Screenshot : MonoBehaviour
 
             System.IO.File.WriteAllBytes(TotalPath, screenshotTexture1.EncodeToPNG());
             System.IO.File.WriteAllBytes(TotalPath, screenshotTexture2.EncodeToPNG());
-            camera.targetTexture = null;
-            Destroy(RenderTexture);
+            SceenShotCam.targetTexture = null;
+
         }
     }
 
@@ -222,19 +239,17 @@ public class Screenshot : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Y))
         {
-            _WillFakeScreenShot = true;
-            OnPostRender();
-            Debug.Log("김취!~");
-        }
-        else
-        {
+            if (_WillFakeScreenShot == false)
+            {
+                _WillFakeScreenShot = true;
+            }
+                SceenShotCam.enabled = true;
+                OnPostRender();
+                Debug.Log("김취!~");
+            
             _WillFakeScreenShot = false;
         }
-
-
-      
+         
+        
     }
-    //메쉬를 잘라보실?
-    
-   
 }

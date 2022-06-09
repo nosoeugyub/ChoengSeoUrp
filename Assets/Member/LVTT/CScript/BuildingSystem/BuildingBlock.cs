@@ -14,7 +14,7 @@ namespace DM.Building
         [SerializeField] private int buildingId;
         [SerializeField] private BuildMode CurBuildMode;
         [SerializeField] private HouseNpc livingCharacter;
-
+        
 
         [SerializeField] private Transform HouseBuild;
         [SerializeField] private List<GameObject> BuildItemList;
@@ -40,6 +40,8 @@ namespace DM.Building
         private float BuildItemRotationVar = 1;
         private float BuildItemGap = 0.002f;
 
+        //늙고 병든 노성엽이 추가한 카메라 포지션
+        public Transform CameraPos;
 
         SpecialHouse specialHouse;
         static TextBox textBox;

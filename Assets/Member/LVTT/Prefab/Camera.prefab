@@ -264,6 +264,36 @@ MonoBehaviour:
   m_MaximumFOV: 60
   m_MinimumOrthoSize: 1
   m_MaximumOrthoSize: 5000
+--- !u!1 &1766065263465404516
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1972770393522914342}
+  m_Layer: 0
+  m_Name: SceenShotCams
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1972770393522914342
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1766065263465404516}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -107.630806, y: 26.636543, z: 242.17525}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5589402194332409674}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2318893276682827552
 GameObject:
   m_ObjectHideFlags: 0
@@ -682,6 +712,7 @@ Transform:
   - {fileID: 5589402194441285433}
   - {fileID: 5589402196209967304}
   - {fileID: 6866960869391748580}
+  - {fileID: 1972770393522914342}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -743,7 +774,6 @@ GameObject:
   - component: {fileID: 5589402194441285437}
   - component: {fileID: 21825722}
   - component: {fileID: 21825723}
-  - component: {fileID: 1263176054}
   m_Layer: 0
   m_Name: Controller Camera
   m_TagString: MainCamera
@@ -927,25 +957,6 @@ MonoBehaviour:
     type: 3}
   targetShader: {fileID: 4800000, guid: d85af6fca73eeb34ea7064957c0aade9, type: 3}
   transparentObjs: []
---- !u!114 &1263176054
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5589402194441285439}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d18b1f0b4ec22584ab99894433c56f49, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  camera: {fileID: 0}
-  Width: 0
-  Hight: 0
-  folderName: ScreenShot
-  fileName: MyScreenShot
-  extName: png
-  _WillFakeScreenShot: 0
 --- !u!1 &5589402194623762539
 GameObject:
   m_ObjectHideFlags: 0
@@ -1157,7 +1168,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.5867507, y: 1}
+    m_SensorSize: {x: 1.7777778, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -2066,7 +2077,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.5867507, y: 1}
+    m_SensorSize: {x: 1.7777778, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -2429,12 +2440,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f0535bf18370e54688161d0100973e8, type: 3}
---- !u!4 &6866960869391748580 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1359474837762494939, guid: 5f0535bf18370e54688161d0100973e8,
-    type: 3}
-  m_PrefabInstance: {fileID: 5589402194860317759}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6866960870124245401 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1359474839830875558, guid: 5f0535bf18370e54688161d0100973e8,
@@ -2450,6 +2455,12 @@ GameObject:
 --- !u!1 &6866960870026936313 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1359474839794377670, guid: 5f0535bf18370e54688161d0100973e8,
+    type: 3}
+  m_PrefabInstance: {fileID: 5589402194860317759}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6866960869391748580 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1359474837762494939, guid: 5f0535bf18370e54688161d0100973e8,
     type: 3}
   m_PrefabInstance: {fileID: 5589402194860317759}
   m_PrefabAsset: {fileID: 0}
@@ -2522,15 +2533,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: adbb8300b3d788140af22f3c68751562, type: 3}
---- !u!4 &1592919028 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8279567383297975094, guid: adbb8300b3d788140af22f3c68751562,
-    type: 3}
-  m_PrefabInstance: {fileID: 8279567384676720834}
-  m_PrefabAsset: {fileID: 0}
 --- !u!20 &1592919025 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 8279567383297975091, guid: adbb8300b3d788140af22f3c68751562,
+    type: 3}
+  m_PrefabInstance: {fileID: 8279567384676720834}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1592919028 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8279567383297975094, guid: adbb8300b3d788140af22f3c68751562,
     type: 3}
   m_PrefabInstance: {fileID: 8279567384676720834}
   m_PrefabAsset: {fileID: 0}
