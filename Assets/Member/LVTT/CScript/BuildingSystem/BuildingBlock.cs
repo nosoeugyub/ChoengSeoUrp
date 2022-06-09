@@ -630,7 +630,7 @@ namespace DM.Building
         public void EndInteract_()
         {
             buildManager.BuildingInteractButtonOnOff(false);
-            EndInteract();
+            //EndInteract();
         }
     }
 }
