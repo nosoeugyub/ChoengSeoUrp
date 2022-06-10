@@ -466,7 +466,7 @@ public class Screenshot : MonoBehaviour
             FindObjectOfType<SceneChangeManager>().slbal(2);
         }
         if (Input.GetKeyDown(KeyCode.Y))
-        {
+        {//이안에거 갖다붙이면 됩니다.
 
             if (_WillFakeScreenShot == false)
             {
@@ -476,7 +476,7 @@ public class Screenshot : MonoBehaviour
             SceenShotCam.enabled = true;
 
             OnPostRender();
-            Debug.Log("김취!~");
+         
 
             _WillFakeScreenShot = false;
             SceenShotCam.enabled = false;
