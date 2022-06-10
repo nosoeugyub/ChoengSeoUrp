@@ -157,6 +157,11 @@ namespace DM.Quest
 
             return canAcceptQuests;
         }
+
+        public Dictionary<QuestData, GameObject> GetAcceptQuests()
+        {
+            return acceptQuests;
+        }
         //public List<QuestData> GetCanAcceptQuestList(int npcID)
         //{
         //    List<QuestData> canAcceptQuests = new List<QuestData>();

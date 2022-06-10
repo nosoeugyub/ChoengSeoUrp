@@ -33,7 +33,9 @@ namespace DM.Building
         RaycastHit hit;
         Ray ray;
         int layerMask;
-        
+        [SerializeField] int myOrder;
+        public int MyOrder { get { return myOrder; } set { myOrder = value; } }
+
         public BuildingBlock ParentBuildArea { get { return parentBuildArea; } }
         public bool IsFirstDrop
         {
@@ -98,8 +100,8 @@ namespace DM.Building
             if (BuildingBlock.isBuildMode)
             {
                 var movePos = Input.mousePosition;
-                movePos.z = parentBuildArea.DistanceToNowBuildItem(Camera.main.transform.position);
-                //            print(movePos.z);
+                movePos.z = parentBuildArea.DistanceToNowBuildItemToNewSort(Camera.main.transform.position);
+                            print(movePos.z);
                 movePos = Camera.main.ScreenToWorldPoint(movePos);
 
                 HouseBuildAreaCal();
@@ -200,7 +202,6 @@ namespace DM.Building
                 DropItems();
                 parentBuildArea.RemoveBuildItemToList(gameObject);
                 parentBuildArea.DeleteBuildingItemObjSorting(gameObject);
-                FindObjectOfType<EnvironmentManager>().ChangeCleanliness(-GetItem().CleanAmount);
                 Destroy(gameObject);
             }
         }

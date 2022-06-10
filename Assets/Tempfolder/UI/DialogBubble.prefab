@@ -54,15 +54,16 @@ MonoBehaviour:
   note: {fileID: 4394122734157252989, guid: 7a038d2a19b266f41bfb5abfb04c4c02, type: 3}
   boomParticle: {fileID: 1173287555813503859}
   textboxFabImgs_Right:
-  - {fileID: 21300000, guid: c4655450ec952df46b60c61a2d392469, type: 3}
-  - {fileID: 21300000, guid: 53cef028f93bad545bec499d8ca94f0d, type: 3}
+  - {fileID: 3416360125426561935, guid: c6f2d46641b52a44bb1e9b798bc97358, type: 3}
+  - {fileID: -4483416686213995076, guid: c6f2d46641b52a44bb1e9b798bc97358, type: 3}
   textboxFabImgs_Left:
-  - {fileID: 21300000, guid: ebe54365a0a729e43ba8104d211abdf6, type: 3}
-  - {fileID: 21300000, guid: 53cef028f93bad545bec499d8ca94f0d, type: 3}
+  - {fileID: -8744038823698427281, guid: d235e1c512ac7bc4080e3a0733654a74, type: 3}
+  - {fileID: 5948157994919876409, guid: d235e1c512ac7bc4080e3a0733654a74, type: 3}
   textboxFabText: {fileID: 2102195160991083839}
   textboxFabNextButton: {fileID: 826302408594792016}
   RecImg: {fileID: 2102195160789682908}
   rectpos: {x: 0, y: 0}
+  rectX: 0
   baseCanvas: {fileID: 0}
 --- !u!1 &680734761708110890
 GameObject:
@@ -221,7 +222,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -80.994995, y: 0}
+  m_AnchoredPosition: {x: 65, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &2102195160789682909
@@ -251,7 +252,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c4655450ec952df46b60c61a2d392469, type: 3}
+  m_Sprite: {fileID: -4483416686213995076, guid: c6f2d46641b52a44bb1e9b798bc97358,
+    type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -260,7 +262,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 3.6
+  m_PixelsPerUnitMultiplier: 3.5
 --- !u!114 &8894329556779756824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -274,10 +276,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 40
-    m_Right: 40
+    m_Left: 50
+    m_Right: 50
     m_Top: 35
-    m_Bottom: 40
+    m_Bottom: 50
   m_ChildAlignment: 4
   m_Spacing: 0
   m_ChildForceExpandWidth: 0
@@ -379,7 +381,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 40, y: 0}
+  m_AnchoredPosition: {x: 50, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &2102195160991083836

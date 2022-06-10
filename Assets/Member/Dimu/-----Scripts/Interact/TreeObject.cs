@@ -12,7 +12,7 @@ public class TreeObject : MineObject
     [SerializeField] GameObject upObj;
     [SerializeField] Item sadtree;
     Item origintree;
-    [SerializeField] TreeType nowTreeType = TreeType.Sad;
+    [SerializeField] TreeType nowTreeType;
 
     EnvironmentManager environmentManager;
 
@@ -32,9 +32,14 @@ public class TreeObject : MineObject
     {
         ++allSadTreeCount;
         nowSadTreeCount = allSadTreeCount;
-        ChangeTreeData(TreeType.Sad);
-        ChangeMineState(MineState.Normal);
+        StartCoroutine(SpawnTreesAfterCounting());
         //quad.material = nowMat;
+    }
+    IEnumerator SpawnTreesAfterCounting()
+    {
+        yield return new WaitForEndOfFrame();
+        ChangeTreeType(TreeType.Sad);
+        ChangeMineState(MineState.Normal);
     }
     public void SetDownMat(Material material)
     {
@@ -53,7 +58,7 @@ public class TreeObject : MineObject
     }
     IEnumerator Respawn()
     {
-        yield return new WaitForSeconds(respawnTime + Random.Range(0,50));
+        yield return new WaitForSeconds(respawnTime + Random.Range(0, 50));
         ChangeMineState(MineState.Normal);
         yield return new WaitForSeconds(0.1f);
         quad.transform.SetParent(animator.transform);
@@ -134,18 +139,55 @@ public class TreeObject : MineObject
     {
         if (nowTreeType == TreeType.Sad)
         {
-            int randnum = Random.Range(0, 100);
+            CalculateSolution_Direct();
+            //CalculateSolution_RandomNum();
+        }
+    }
 
-            float treepercent = (1.0f - (float)nowSadTreeCount / allSadTreeCount) * 100f;
-            float percent = environmentManager.Cleanliness - treepercent + treepercent / 2 + ((100 - environmentManager.Cleanliness) / 4);
-           // print(treepercent + "  " + percent + "  " + randnum);
-            if (randnum < percent)
+    private void CalculateSolution_Direct()
+    {
+        float treepercent = GoodTreePercentage();
+        if (treepercent < environmentManager.Cleanliness + 40)
+        {
+            ChangeTreeType(TreeType.Original);
+            nowSadTreeCount--;
+        }
+        else
+        {
+            int randnum = Random.Range(0,7);
+            if(randnum<1)
             {
-                nowTreeType = TreeType.Original;
-                ChangeTreeData(nowTreeType);
+                ChangeTreeType(TreeType.Original);
                 nowSadTreeCount--;
             }
         }
+    }
+
+    private void ChangeTreeType(TreeType treeType)
+    {
+        nowTreeType = treeType;
+        ChangeTreeData(nowTreeType);
+    }
+
+    private void CalculateSolution_RandomNum()
+    {
+        int randnum = Random.Range(0, 100);
+
+        float treepercent = GoodTreePercentage();
+        float percent = environmentManager.Cleanliness - treepercent + treepercent / 2 + ((100 - environmentManager.Cleanliness) / 4);
+        //print(string.Format("TreePercent: {0} Clean: {1}", treepercent, environmentManager.Cleanliness));
+
+        if (randnum < percent)
+        {
+            ChangeTreeType(TreeType.Original);
+            nowSadTreeCount--;
+        }
+    }
+
+    private static float GoodTreePercentage()
+    {
+        //print(string.Format("nowSadTreeCount: {0} allSadTreeCount: {1}", nowSadTreeCount, allSadTreeCount));
+        return (1.0f - (float)nowSadTreeCount / allSadTreeCount) * 100f;
     }
 }
 public enum TreeType { Original, Sad, Length }

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using NSY.Manager;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerData", menuName = "PlayerData/new PlayerData", order = 0)]
@@ -16,6 +18,35 @@ public class PlayerData : ScriptableObject
     {
         AddDictionary(dataid, pairs, listCount);
         pairs[dataid].amounts[behav]++;
+        SuperManager.Instance.dialogueManager.UpdateNpcsQuestMark();
+    }
+    private static void Fail()
+    {
+        foreach (var accectQuest in SuperManager.Instance.questmanager.GetAcceptQuests())
+        {
+            foreach (var item in accectQuest.Key.tasks.builds)
+            {
+            }
+            foreach (var item in accectQuest.Key.tasks.gotItems)
+            {
+
+            }
+            foreach (var item in accectQuest.Key.tasks.items)
+            {
+
+            }
+            foreach (var item in accectQuest.Key.tasks.locations)
+            {
+
+            }
+            foreach (var item in accectQuest.Key.tasks.npcs)
+            {
+
+            }
+            //.
+            //.
+            //.
+        }
     }
 
     public static void AddDictionary(int dataid, Dictionary<int, Behavior> pairs, int listCount)

@@ -38,7 +38,7 @@ namespace DM.Building
         public BuildingItemObj curInteractObj;
         private float BuildItemScaleVar = 0.01f;
         private float BuildItemRotationVar = 1;
-        private float BuildItemGap = 0.002f;
+        private float BuildItemGap = 2f;
 
         //늙고 병든 노성엽이 추가한 카메라 포지션
         public Transform CameraPos;
@@ -135,7 +135,7 @@ namespace DM.Building
                                     InvenItemCantBuild();
                                     SetCurInteractObj(hit.collider.GetComponent<BuildingItemObj>());
                                     curInteractObj.ItemisSet = false;
-                                    BuildingItemObjAndSorting();
+                                    //BuildingItemObjAndSorting();
                                 }
                                 else //자재 클릭 + 무빙중일 때
                                 {
@@ -148,7 +148,7 @@ namespace DM.Building
                                 InvenItemCantBuild();
                                 SetCurInteractObj(hit.collider.GetComponent<BuildingItemObj>());
                                 curInteractObj.ItemisSet = false;
-                                BuildingItemObjAndSorting();
+                               // BuildingItemObjAndSorting();
                             }
                         }
                     }
@@ -172,6 +172,7 @@ namespace DM.Building
                 {
                     ScaleBuildItem();
                     RotateBuildItem();
+                    FrontBackMoveBuildItem();
                 }
             }
 
@@ -244,6 +245,8 @@ namespace DM.Building
         {
             if (specialHouse)
                 specialHouse.CanExist(curInteractObj, false);
+
+            FindObjectOfType<EnvironmentManager>().ChangeCleanliness(-(Item.GetComponent<BuildingItemObj>().GetItem().CleanAmount + 1));
             BuildItemList.Remove(Item);
             invenmanager.CheckBuliditem = null; //설치하면 다른거 할수없음
         }
@@ -253,7 +256,9 @@ namespace DM.Building
             {
                 if (Item == null)
                 {
+                    FindObjectOfType<EnvironmentManager>().ChangeCleanliness(-(Item.GetComponent<BuildingItemObj>().GetItem().CleanAmount + 1));
                     this.BuildItemList.Remove(Item);
+
                 }
             }
         }
@@ -435,6 +440,17 @@ namespace DM.Building
                 curInteractObj.SetBuildItemRotation(-BuildItemRotationVar);
             }
         }
+        void FrontBackMoveBuildItem()
+        {
+            if (Input.GetKeyDown(buildManager.frontKey))
+            {
+                SwitchBuildingItemObjZPos(true);
+            }
+            else if (Input.GetKeyDown(buildManager.BackKey))
+            {
+                SwitchBuildingItemObjZPos(false);
+            }
+        }
         /// <summary>
         /// //////////BuildObj Sorting
         public void BtnSpawnHouseBuildItem(Item spawnObj)
@@ -456,9 +472,9 @@ namespace DM.Building
             newPrefab.transform.localRotation = Quaternion.Euler(0, 0, 0);
             newPrefab.GetComponent<BuildingItemObj>().SetParentBuildArea(nowBuildingBlock);
             newPrefab.name = spawnObj.name;
-
             if (specialHouse)
                 specialHouse.CanExist(curInteractObj, true);
+            curInteractObj.MyOrder = BuildItemList.Count;
             AddBuildItemToList(newPrefab);
             FindObjectOfType<EnvironmentManager>().ChangeCleanliness(newPrefab.GetComponent<BuildingItemObj>().GetItem().CleanAmount + 1);
             CancleUI(true);
@@ -487,7 +503,7 @@ namespace DM.Building
             {
                 float bigZinWalls = deleteObj.transform.localPosition.z;//삭제할 오브젝트의 z값
 
-                if (bigZinWalls <= item.transform.localPosition.z)//삭제할애가 더 가깝다면
+                if (bigZinWalls <= item.transform.localPosition.z)//삭제할애가 더 앞이면
                 {
                     item.transform.position -= item.transform.forward * BuildItemGap / 2; //반값전진
                 }
@@ -495,10 +511,82 @@ namespace DM.Building
                 {
                     item.transform.position -= item.transform.forward * BuildItemGap / 2; //반값전진
                     item.transform.position += item.transform.forward * BuildItemGap; //가까운것들 정값후진
+                    item.GetComponent<BuildingItemObj>().MyOrder--;
                 }
 
             }
 
+        }
+        public void SwitchBuildingItemObjZPos(bool isUp)
+        {
+            GameObject nearObj = null;
+            float curObjZ = curInteractObj.transform.localPosition.z;//선택한 오브젝트의 z값
+            float bujildItemZ = 10000;
+            //float minDIst = 10000;
+            if (isUp)
+            {
+                foreach (GameObject item in BuildItemList)
+                {
+                    bujildItemZ = item.transform.localPosition.z;
+                    if (!nearObj)
+                    {
+                        if (curObjZ > bujildItemZ)
+                        {
+                            nearObj = item;
+                        }
+                    }
+                    else
+                    {
+                        if (curObjZ > bujildItemZ && nearObj.transform.localPosition.z < bujildItemZ)//해당 자재가 나보다 더 가깝고, 현재 가까운 오브젝트보다 
+                        {
+                            nearObj = item;
+                        }
+                    }
+                }
+                if (nearObj)
+                {
+                print("Up Near Obj is " + nearObj.name);
+                    nearObj.transform.position += nearObj.transform.forward * BuildItemGap; //가장 가까운 자재후진
+                    nearObj.GetComponent<BuildingItemObj>().MyOrder--;
+                    curInteractObj.transform.position -= curInteractObj.transform.forward * BuildItemGap; //선택중인 자재 전진
+                    curInteractObj.MyOrder++;
+                }
+                else
+                    print("NO NEAROBJ");
+
+            }
+            else
+            {
+                foreach (GameObject item in BuildItemList)
+                {
+                    bujildItemZ = item.transform.localPosition.z;
+                    if (!nearObj)
+                    {
+                        if (curObjZ < bujildItemZ)
+                        {
+                            nearObj = item;
+                        }
+                    }
+                    else
+                    {
+                        if (curObjZ < bujildItemZ && nearObj.transform.localPosition.z > bujildItemZ)//해당 자재가 나보다 더 가깝고, 현재 가까운 오브젝트보다 
+                        {
+                            nearObj = item;
+                        }
+                    }
+                }
+                if (nearObj)
+                {
+                print("Down Near Obj is " + nearObj.name);
+                    nearObj.transform.position -= nearObj.transform.forward * BuildItemGap; //가장 가까운 자재전진
+                    nearObj.GetComponent<BuildingItemObj>().MyOrder++;
+                    curInteractObj.transform.position += curInteractObj.transform.forward * BuildItemGap; //선택중인 자재 후진
+                    curInteractObj.MyOrder--;
+                }
+                else
+                    print("NO NEAROBJ");
+
+            }
         }
         /// </summary>
 
@@ -527,6 +615,18 @@ namespace DM.Building
             return dist;
 
         }
+        public float DistanceToNowBuildItemToNewSort(Vector3 movePos)
+        {
+            Vector3 VecY = new Vector3(HouseBuild.transform.position.x, 0, HouseBuild.transform.position.z);
+            Vector3 moveposY = new Vector3(movePos.x, 0, movePos.z);
+            float dist = Vector3.Distance(moveposY, VecY);
+            float disc = ((BuildItemList.Count - 1f) / 2f) * BuildItemGap;
+            float closeDist = dist - disc;
+            //gap* count -1 - order(2)
+            float dis2c = ((BuildItemList.Count - 1)- curInteractObj.MyOrder) * BuildItemGap + closeDist;
+
+            return dis2c;
+        }
         public override int CanInteract()
         {
             //EndInteract();
@@ -535,7 +635,7 @@ namespace DM.Building
         public void EndInteract_()
         {
             buildManager.BuildingInteractButtonOnOff(false);
-            EndInteract();
+            //EndInteract();
         }
     }
 }

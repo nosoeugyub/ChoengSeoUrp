@@ -31,9 +31,11 @@ namespace NSY.Iven
             {
                 spriteRenderer = GetComponentInChildren<SpriteRenderer>();
             }
-            spriteRenderer.sprite = item.ItemSprite;
-            spriteRenderer.enabled = false;
-
+            else
+            {
+                spriteRenderer.sprite = item.ItemSprite;
+                spriteRenderer.enabled = false;
+            }
 
 
         }
