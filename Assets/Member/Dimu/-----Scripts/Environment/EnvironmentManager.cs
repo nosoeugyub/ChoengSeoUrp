@@ -75,6 +75,8 @@ public class EnvironmentManager : MonoBehaviour
 
     //[SerializeField] CraftSlot a;
     [SerializeField] HappyUI happyUI;
+
+    [SerializeField] GameObject endingButton;
     public float Cleanliness
     {
         get
@@ -85,13 +87,17 @@ public class EnvironmentManager : MonoBehaviour
         {
             cleanliness = value;
             if (cleanliness > 100)
+            {
                 cleanliness = 100;
+                endingButton.SetActive(true);
+            }
 
             if (cleanLevel < cleanLevels.Count)
             {
                 if (cleanLevels[cleanLevel] <= cleanliness)
                     ComeToPort();
             }
+            
             happyUI.HappyUISetting(cleanliness);
         }
     }
