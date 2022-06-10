@@ -74,7 +74,7 @@ public class CreateAsset : MonoBehaviour
         foreach (Texture2D texture in _textures)
         {
             string path = AssetDatabase.GetAssetPath(texture);
-            string filename = path.Substring(0, path.Length - 7);
+            string filename = path.Substring(0, path.Length - 4);
 
             TextureImporter textureImporter = AssetImporter.GetAtPath(path) as TextureImporter;
             textureImporter.textureType = TextureImporterType.Sprite;
