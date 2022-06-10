@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class Screenshot : MonoBehaviour
 {
-   
+    [Header("플래쉬 애니")]
+    private Animator FleshAnim;
 
 
 
@@ -52,8 +53,11 @@ public class Screenshot : MonoBehaviour
 
     public bool _WillFakeScreenShot;
 
-    //저장될 경로 변수
 
+    private void Awake()
+    {
+      //  FleshAnim.GetComponent<Animator>();
+    }
 
     private string RootPath
     {
@@ -98,8 +102,21 @@ public class Screenshot : MonoBehaviour
             }
         }
     }
+    [SerializeField]
+    private int Page;
+    public int _Page
+    {
+        get
+        {
+            return Page;
+        }
+        set
+        {
+            Page = value;
+        }
+    }
 
-    public int Page;
+
     [SerializeField]
     private Transform CamPos;
     public Transform _CamPos
@@ -139,8 +156,10 @@ public class Screenshot : MonoBehaviour
             Width = Screen.width;
             Hight = Screen.height;
 
-            RenderTexture RenderTexture = new RenderTexture(Width, Hight, 24);
+            SceenShotCam.transform.position = _CamPos.transform.position;
 
+            RenderTexture RenderTexture = new RenderTexture(Width, Hight, 24);
+            
 
             SceenShotCam.targetTexture = RenderTexture;
 
@@ -173,21 +192,48 @@ public class Screenshot : MonoBehaviour
 
             //Ver 2  . 무지성 저장 카메라 영역에대한
             #region
-            for (int i = 0; i < EveryMat.Count; i++)
+            if (Page == 1 &&
+                 EveryMat[0].GetTexture("_MainTex") == null)
             {
-                if (EveryMat[i].GetTexture("_MainTex") != null)
-                {
-                    continue;
-                }
-                if (EveryMat[i].GetTexture("_MainTex") == null)
-                {
-                    EveryMat[i].SetTexture("_MainTex", Texutre2);
-                    EveryMat[i + 1].SetTexture("_MainTex", Texutre1);
-                    SceenShotCam.targetTexture = null;
-
-                }
+                EveryMat[0].SetTexture("_MainTex", Texutre2);
+                EveryMat[1].SetTexture("_MainTex", Texutre1);
             }
-
+            if (Page == 2 &&
+               EveryMat[2].GetTexture("_MainTex") == null)
+            {
+                EveryMat[2].SetTexture("_MainTex", Texutre2);
+                EveryMat[3].SetTexture("_MainTex", Texutre1);
+            }
+            if (Page == 3 &&
+               EveryMat[4].GetTexture("_MainTex") == null)
+            {
+                EveryMat[4].SetTexture("_MainTex", Texutre2);
+                EveryMat[5].SetTexture("_MainTex", Texutre1);
+            }
+            if (Page == 4 &&
+               EveryMat[6].GetTexture("_MainTex") == null)
+            {
+                EveryMat[6].SetTexture("_MainTex", Texutre2);
+                EveryMat[7].SetTexture("_MainTex", Texutre1);
+            }
+            if (Page == 5 &&
+               EveryMat[8].GetTexture("_MainTex") == null)
+            {
+                EveryMat[8].SetTexture("_MainTex", Texutre2);
+                EveryMat[9].SetTexture("_MainTex", Texutre1);
+            }
+            if (Page == 6 &&
+               EveryMat[10].GetTexture("_MainTex") == null)
+            {
+                EveryMat[10].SetTexture("_MainTex", Texutre2);
+                EveryMat[11].SetTexture("_MainTex", Texutre1);
+            }
+            if (Page == 7 &&
+               EveryMat[12].GetTexture("_MainTex") == null)
+            {
+                EveryMat[12].SetTexture("_MainTex", Texutre2);
+                EveryMat[13].SetTexture("_MainTex", Texutre1);
+            }
             #endregion
             //Ver 1 . NPC만                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     c                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
             #region
@@ -239,11 +285,13 @@ public class Screenshot : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Y))
         {
+          
             if (_WillFakeScreenShot == false)
             {
                 _WillFakeScreenShot = true;
             }
                 SceenShotCam.enabled = true;
+         //   FleshAnim.Play("Crossfade_wait");
                 OnPostRender();
                 Debug.Log("김취!~");
             
@@ -252,4 +300,7 @@ public class Screenshot : MonoBehaviour
          
         
     }
+
+
+ 
 }
