@@ -1,6 +1,7 @@
 ﻿using DM.Building;
 using NSY.Manager;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 namespace NSY.Iven
@@ -131,7 +132,6 @@ namespace NSY.Iven
                 if (itemSlot.item == null) continue;
                 if (itemSlot.item.OutItemType == OutItemType.BuildingItemObj)
                 {
-                    Debug.Log("씨발련아");
                     itemSlot.Interactble(true);
                 }
               
@@ -139,6 +139,11 @@ namespace NSY.Iven
             return;
         }
 
+        IEnumerator DelayUpdateAddValue(Item item)
+        {
+            yield return new WaitForEndOfFrame();
+            PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.GetItem, PlayerData.ItemData, ((int)ItemBehaviorEnum.length));
+        }
         public virtual bool AddItem(Item item)
         {
             for (int i = 0; i < ItemSlots.Count; i++)
@@ -152,8 +157,7 @@ namespace NSY.Iven
                         OnAddItemEvent();
 
                     SuperManager.Instance.unlockmanager.GetInterectItemUnLocking();// 해금
-                    PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.GetItem, PlayerData.ItemData, ((int)ItemBehaviorEnum.length));
-
+                    StartCoroutine(DelayUpdateAddValue(item));
                     return true;
                 }
             }
@@ -168,7 +172,7 @@ namespace NSY.Iven
                         OnAddItemEvent();
 
                     SuperManager.Instance.unlockmanager.GetInterectItemUnLocking();
-                    PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.GetItem, PlayerData.ItemData, ((int)ItemBehaviorEnum.length));
+                    StartCoroutine(DelayUpdateAddValue(item));
 
                     return true;
                 }
@@ -192,7 +196,7 @@ namespace NSY.Iven
                             OnAddItemEvent();
 
                         SuperManager.Instance.unlockmanager.GetInterectItemUnLocking();// 해금
-                        PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.GetItem, PlayerData.ItemData, ((int)ItemBehaviorEnum.length));
+                        StartCoroutine(DelayUpdateAddValue(item));
                     }
                     return true;
                 }
@@ -218,8 +222,7 @@ namespace NSY.Iven
                             OnAddItemEvent();
 
                         SuperManager.Instance.unlockmanager.GetInterectItemUnLocking();
-                        PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.GetItem, PlayerData.ItemData, ((int)ItemBehaviorEnum.length));
-
+                        StartCoroutine(DelayUpdateAddValue(item));
 
                     }
                     return true;

@@ -48,7 +48,11 @@ namespace NSY.Player
             if (!CamManager.IsZoom && !playerController.playerinteract.IsAnimating())
             {
                 if (dialogManager.IsTalking && Vector3.Distance(dialogManager.GetNowNpc().transform.position, transform.position) > 10)
-                { }
+                {
+                    //대화 중인 상대와 거리가 멀어져 대화가 취소되었습니다.
+                    dialogManager.CancleDIalog();
+                    DebugText.Instance.SetText(string.Format("대화 중인 상대와 거리가 멀어져 대화가 취소되었습니다."));
+                }
                 else
                 {
                     Move();
@@ -108,15 +112,26 @@ namespace NSY.Player
             float FlipMove = Input.GetAxisRaw("Horizontal");
             bool facingRight = true;
             facingRight = !facingRight;
+            FlipMoveing(FlipMove);
+        }
+
+        private void FlipMoveing(float FlipMove)
+        {
             if (FlipMove > 0)
             {
-                meshrender.localEulerAngles = new Vector3(0, 0, 0);
+                ChangeYAngles(0);
             }
             else if (FlipMove < 0)
             {
-                meshrender.localEulerAngles = new Vector3(0, 180, 0);
+                ChangeYAngles(180);
             }
         }
+
+        private void ChangeYAngles(float yAngle)
+        {
+            meshrender.localEulerAngles = new Vector3(0, yAngle, 0);
+        }
+
         public void MoveTowardsTarget(Vector3 target)
         {
             Vector3 offset = target - transform.position;
@@ -124,6 +139,26 @@ namespace NSY.Player
             playerController.characterCtrl.Move(top * 15);
             playerController.characterCtrl.Move(offset);
             playerController.characterCtrl.Move(-top * 14);
+
+
+        }
+        public void MoveTowardsTarget(Vector3 target, bool isRight)
+        {
+            Vector3 offset = target - transform.position;
+            Vector3 top = Vector3.up;
+            playerController.characterCtrl.Move(top * 15);
+            playerController.characterCtrl.Move(offset);
+            playerController.characterCtrl.Move(-top * 14);
+
+            if(isRight)
+            {
+                ChangeYAngles(0);
+            }
+            else
+            {
+                ChangeYAngles(180);
+
+            }
         }
     }
 }

@@ -10,10 +10,13 @@ public enum EventEnum
     MoveToWalPort,
     OpenRoad1,
     OpenRoad2,
+    OnChick,
+    GotoBearsWithSheep,
+    GotoBackWithSheep,
 }
 namespace NSY.Manager
 {
-
+    //ㅈㅅ합니다 개같은 코드
     public class EventManager : MonoBehaviour
     {
         //싱글턴
@@ -21,6 +24,7 @@ namespace NSY.Manager
         private static EventManager _instace = null;
 
         public GameObject[] cols;
+        public GameObject chick;
 
         ////이벤트 델리게이트, 표지판 튜토리얼
         //public delegate void StartSignPost();
@@ -38,7 +42,7 @@ namespace NSY.Manager
         //public static event OpenRoad OpenRoadFall;
 
 
-        public static Action[] EventActions = new Action[10];
+        public static Action[] EventActions = new Action[15];
         public static Action<CutType> testevent;
         public static Action EventAction;
         //EventAction 는 항상 실행중.
@@ -73,6 +77,7 @@ namespace NSY.Manager
         {
             EventActions[((int)EventEnum.OpenRoad1)] = OpenPortCol1;
             EventActions[((int)EventEnum.OpenRoad2)] = OpenPortCol2;
+            EventActions[((int)EventEnum.OnChick)] = OnEnableChick;
 
         }
         private void Update()
@@ -88,6 +93,10 @@ namespace NSY.Manager
         public void OpenPortCol2()
         {
             cols[1].SetActive(false);
+        }
+        public void OnEnableChick()
+        {
+            chick.SetActive(true);
         }
     }
 }

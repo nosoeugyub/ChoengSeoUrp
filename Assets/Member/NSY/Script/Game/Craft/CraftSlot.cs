@@ -38,7 +38,8 @@ namespace NSY.Iven
         public event Action<CraftSlot> OnLeftClickEventss;
          [SerializeField]
         private Item _recipeItem;
-
+        [SerializeField]
+        private Image childImgObject;
         //지금 갖고있는아이템
         public Item RecipeItem
         {
@@ -49,8 +50,13 @@ namespace NSY.Iven
             set
             {
                 _recipeItem = value;
-              
-                ResultSlotListImage.sprite = _recipeItem.ItemSprite;
+
+                if (childImgObject)
+                {
+                    childImgObject.sprite = _recipeItem.ItemSprite;
+                    childImgObject.SetNativeSize();
+                    childImgObject.rectTransform.localScale = Vector3.one * 0.1f;
+                }
             }
         }
 

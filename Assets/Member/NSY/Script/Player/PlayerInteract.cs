@@ -109,7 +109,7 @@ namespace NSY.Player
             TeleportObject teleportable = interactable.transform.GetComponent<TeleportObject>();
             if (teleportable != null)
             {
-                teleportable.Teleport();
+                teleportable.Teleport(this.transform);
                 return;
             }
 
@@ -184,7 +184,7 @@ namespace NSY.Player
                     StartCoroutine(cursorManager.SetCursor(nowInteractable.CanInteract()));
                     //Vector3 uiPos = new Vector3(nowInteractable.transform.position.x, nowInteractable.transform.position.y + 2, nowInteractable.transform.position.z);
                     //형광 셰이더로 변환....
-                    ChangeLightShader(nowInteractable);
+                    //ChangeLightShader(nowInteractable);
 
                 }
                 else
@@ -230,7 +230,7 @@ namespace NSY.Player
 
                 //interactUI.transform.position = RectTransformUtility.WorldToScreenPoint(Camera.main, interactUI.transform.position);
 
-                ChangeLightShader(closestObj);
+                //ChangeLightShader(closestObj);
             }
         }
         public void InvokeInteractClosestObj()

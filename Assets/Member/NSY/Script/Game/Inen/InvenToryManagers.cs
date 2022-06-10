@@ -13,7 +13,7 @@ namespace NSY.Iven
         [SerializeField] ItemTooltip itemTooltip;
 
         [SerializeField] InventoryNSY iventorynsy;
-        [SerializeField] EquipPanel equipPanel;
+        //[SerializeField] EquipPanel equipPanel;
 
         [SerializeField] Image draggableitem;
         [SerializeField] DropItemArea Dropitemarea;
@@ -60,10 +60,10 @@ namespace NSY.Iven
 
             //툴립
             iventorynsy.OnPointerEnterEvent += ShowToolTip;
-            equipPanel.OnPointerEnterEvent += ShowToolTip;
+            //equipPanel.OnPointerEnterEvent += ShowToolTip;
             //
             iventorynsy.OnPointerExitEvent += HideTootip;
-            equipPanel.OnPointerExitEvent += HideTootip;
+            //equipPanel.OnPointerExitEvent += HideTootip;
 
 
             //인벤토리 클레스 이벤트
@@ -72,23 +72,23 @@ namespace NSY.Iven
             iventorynsy.OnLeftClickEvent += BuildingLeftClick;
             iventorynsy.OnRightClickEvent += InventoryRightClick;
             // iventorynsy.OnLeftClickEvent += InventoryLeftClick;
-            equipPanel.OnLeftClickEvent += EquipmentPanelLeftClick;
+            //equipPanel.OnLeftClickEvent += EquipmentPanelLeftClick;
             //  craftPanel.OnLeftClickEvent += CraftPanelLeftClick;
             //드래그 시작
             iventorynsy.OnBeginDragEvent += BeginDrag;
-            equipPanel.OnBeginDragEvent += BeginDrag;
+            //equipPanel.OnBeginDragEvent += BeginDrag;
             //   craftPanel.OnBeginDragEvent += BeginDrag;
             //드래그 끝
             iventorynsy.OnEndDragEvent += EndDrag;
-            equipPanel.OnEndDragEvent += EndDrag;
+            //equipPanel.OnEndDragEvent += EndDrag;
             //   craftPanel.OnEndDragEvent += EndDrag;
             //드래그
             iventorynsy.OnDragEvent += Drag;
-            equipPanel.OnDragEvent += Drag;
+            //equipPanel.OnDragEvent += Drag;
             //    craftPanel.OnDragEvent += Drag;
             //드롭
             iventorynsy.OnDropEvent += Drop;
-            equipPanel.OnDropEvent += Drop;
+            //equipPanel.OnDropEvent += Drop;
             //     craftPanel.OnDropEvent += Drop;
             Dropitemarea.OnDropEvent += DropItemOutsideUI;
 
@@ -284,7 +284,7 @@ namespace NSY.Iven
         //장비창에서 장착창으로
         public void Equip(Item item)
         {
-            if (equipPanel.AddResultItem(item))
+           // if (equipPanel.AddResultItem(item))
             {
 
 
@@ -296,7 +296,7 @@ namespace NSY.Iven
         public void Unequip(Item item)//
         {
 
-            if (equipPanel.AddItem(item))
+            //if (equipPanel.AddItem(item))
             {
                 if (iventorynsy.RemoveItem(item))
                 {
