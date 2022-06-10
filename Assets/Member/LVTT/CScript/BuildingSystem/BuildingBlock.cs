@@ -287,6 +287,7 @@ namespace DM.Building
         }
         public void BuildModeOn()
         {
+            if (SuperManager.Instance.dialogueManager.IsTalking) return;
             if (textBox)
                 textBox.gameObject.SetActive(false);
             buildButtonFuncAdded = false;

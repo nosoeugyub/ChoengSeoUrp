@@ -68,6 +68,7 @@ namespace DM.Dialog
 
         [Header("AlphaCanvases")]
         [SerializeField] CanvasGroup[] alphaCanvases;
+        [SerializeField] Image raycastBlockImg;
 
         Coroutine[] nowCor;
 
@@ -111,9 +112,11 @@ namespace DM.Dialog
                     canvasGroup.alpha += Time.deltaTime * speed;
                     yield return null;
                 }
+                raycastBlockImg.raycastTarget = false;
             }
             else
             {
+                raycastBlockImg.raycastTarget = true;
                 while (canvasGroup.alpha > 0)
                 {
                     canvasGroup.alpha -= Time.deltaTime;
