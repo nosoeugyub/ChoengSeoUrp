@@ -24,6 +24,9 @@ public class TextBox : MonoBehaviour
     [SerializeField]
     Vector2 rectpos;
 
+    [SerializeField]
+    float rectX;
+
     // [SerializeField]
     BoxCollider boxCollider;
     //랜더모드 카메라 생성
@@ -43,7 +46,7 @@ public class TextBox : MonoBehaviour
         UiCam = GameObject.Find("UICamera").GetComponent<Camera>();
         //UiCamCanvas = this.gameObject.GetComponent<Canvas>();
         baseCanvas = GameObject.Find("DialogBubbleCanvas").GetComponent<RectTransform>();
-
+        rectX = textboxFabImg.rectTransform.localPosition.x;
     }
     private void OnEnable()
     {
@@ -70,13 +73,17 @@ public class TextBox : MonoBehaviour
         if (!isLeft)
         {
             bubbleposition = bubbleTf.position;
+            Vector3 rectPos = new Vector3(rectX, textboxFabImg.rectTransform.localPosition.y, textboxFabImg.rectTransform.localPosition.z);
+            textboxFabImg.rectTransform.localPosition = rectPos;
             textboxFabImg.GetComponent<RectTransform>().pivot = new Vector2(0, 0);
         textboxFabImg.sprite = textboxFabImgs_Right[(int)textboxType];
         }
         else
         {
             bubbleposition = bubbleTf.position;
-            bubbleposition.x = -bubbleTf.position.x;
+            //bubbleposition.x = -bubbleTf.position.x;
+            Vector3 rectPos = new Vector3(-rectX, textboxFabImg.rectTransform.localPosition.y, textboxFabImg.rectTransform.localPosition.z);
+            textboxFabImg.rectTransform.localPosition = rectPos;
             textboxFabImg.GetComponent<RectTransform>().pivot = new Vector2(1, 0);
         textboxFabImg.sprite = textboxFabImgs_Left[(int)textboxType];
         }
