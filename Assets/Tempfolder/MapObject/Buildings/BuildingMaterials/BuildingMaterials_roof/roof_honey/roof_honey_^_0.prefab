@@ -1,5 +1,44 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!65 &8374746484251068180
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2374761550577080630}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 8.37, y: 0.9, z: 1}
+  m_Center: {x: 0, y: 0.18, z: 0}
+--- !u!65 &4183007353266297987
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2374761550577080630}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5.89, y: 0.9, z: 1}
+  m_Center: {x: -0.13, y: 1.09, z: 0}
+--- !u!65 &4711640940321679029
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2374761550577080630}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.88, y: 0.9, z: 1}
+  m_Center: {x: 0, y: 1.99, z: 0}
 --- !u!1001 &525016694427502622
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -106,7 +145,12 @@ PrefabInstance:
     - target: {fileID: 6195888706810147208, guid: df0276b2a9b7c2e4cb7877d0805b1158,
         type: 3}
       propertyPath: m_Size.y
-      value: 4.99
+      value: 2.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6195888706810147208, guid: df0276b2a9b7c2e4cb7877d0805b1158,
+        type: 3}
+      propertyPath: m_Center.y
+      value: -1.37
       objectReference: {fileID: 0}
     - target: {fileID: 7888690863200723727, guid: df0276b2a9b7c2e4cb7877d0805b1158,
         type: 3}
@@ -115,3 +159,9 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: a81b2da93d1a231438b58d95689c126a, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df0276b2a9b7c2e4cb7877d0805b1158, type: 3}
+--- !u!1 &2374761550577080630 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2863694435897004328, guid: df0276b2a9b7c2e4cb7877d0805b1158,
+    type: 3}
+  m_PrefabInstance: {fileID: 525016694427502622}
+  m_PrefabAsset: {fileID: 0}
