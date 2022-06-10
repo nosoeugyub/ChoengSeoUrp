@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum BuildingLike { Like, Unlike_Shape, Unlike_Count, Unlike_Empty, Cant, None, }
+public enum DialogMarkType { CanStart, CanClear, None, }
 
 namespace DM.NPC
 {
@@ -14,20 +15,23 @@ namespace DM.NPC
         [SerializeField] private BuildingBlock myHouse;
         [SerializeField] private Condition[] wantToBuildCondition;
         [SerializeField] private PlayerInteract player;
-        [SerializeField] private Transform questMark;
-        [SerializeField] private Vector3 questMarkScale;
+        [SerializeField] private Transform[] dialogMarks;
+        [SerializeField] private DialogMarkType nowDialogMarkType = DialogMarkType.None;
+        [SerializeField] private Vector3 dialogMarkScale;
         [SerializeField] private float speed;
         [SerializeField] private bool isFollowPlayer;
         private DialogueManager dialogueManager;
         private BuildingLike like = BuildingLike.None;
+        float dist;
 
         public BuildingBlock MyHouse { get { return myHouse; } set { myHouse = value; } }
 
         private void Awake()
         {
-            questMarkScale = questMark.localScale;
             dialogueManager = FindObjectOfType<DialogueManager>();
             player = FindObjectOfType<PlayerInteract>();
+            if(dialogMarks.Length>0)
+            dialogMarkScale = dialogMarks[0].localScale;
         }
         private void Start()
         {
@@ -38,14 +42,23 @@ namespace DM.NPC
         {
             if (isFollowPlayer)
                 FollowPlayer();
-            float dist = Vector3.Distance(player.transform.position, questMark.position) * 0.02f;
-            if (dist < 0.5f)
-                dist = 0.5f;
-            questMark.localScale = questMarkScale * dist;
+            if (nowDialogMarkType != DialogMarkType.None)
+            {
+                dist = Vector3.Distance(player.transform.position, dialogMarks[(int)nowDialogMarkType].position) * 0.02f;
+                if (dist < 0.5f)
+                    dist = 0.5f;
+                dialogMarks[(int)nowDialogMarkType].localScale = dialogMarkScale * dist;
+            }
         }
-        public void SetQuestMark(bool ison)
+        public void SetQuestMark(DialogMarkType dialogMarkType, bool ison)
         {
-            questMark.gameObject.SetActive(ison);
+            if (nowDialogMarkType != DialogMarkType.None)
+                dialogMarks[(int)nowDialogMarkType].gameObject.SetActive(!ison);
+
+            nowDialogMarkType = dialogMarkType;
+
+            if (dialogMarkType != DialogMarkType.None)
+                dialogMarks[(int)nowDialogMarkType].gameObject.SetActive(ison);
         }
         public void OnFollowPlayer()
         {
@@ -261,7 +274,7 @@ namespace DM.NPC
 
                     if (!canContinue) break;
 
-                    
+
                 }
             }
 
