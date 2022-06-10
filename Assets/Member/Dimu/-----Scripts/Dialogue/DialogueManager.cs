@@ -171,6 +171,7 @@ namespace DM.Dialog
             }
             IsTalking = true;
             nowNpc = npc;
+            npcManager.NowInteractNPCIndex = (int)nowNpc.GetCharacterType();
             partnerTf = npc.transform; //이 변수 삭제하고 npcmanager 쓰자
             nowSentenceIdx = 0;
 
@@ -503,15 +504,15 @@ namespace DM.Dialog
 
                 if (qd != null)
                 {
-                    npcManager.NpcTfs[i].Npctf.SetQuestMark(DialogMarkType.CanClear, true);
+                    npcManager.NpcTfs[i].Npctf.SetQuestMark(DialogMarkType.CanClear);//, true);
                 }
                 else if (canStartDialogs.Count > 0)
                 {
-                    npcManager.NpcTfs[i].Npctf.SetQuestMark(DialogMarkType.CanStart, true);
+                    npcManager.NpcTfs[i].Npctf.SetQuestMark(DialogMarkType.CanStart);//, true);
                 }
                 else
                 {
-                    npcManager.NpcTfs[i].Npctf.SetQuestMark(DialogMarkType.None, false);
+                    npcManager.NpcTfs[i].Npctf.SetQuestMark(DialogMarkType.None);//, false);
                 }
 
                 //if (qd != null || isAcceptedQuests.Count > 0 || canStartDialogs.Count > 0)

@@ -2,6 +2,7 @@
 using DM.Dialog;
 using NSY.Manager;
 using NSY.Player;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,17 +25,20 @@ namespace DM.NPC
         private BuildingLike like = BuildingLike.None;
         float dist;
 
+        public Action GoHomeEvent;
+
         public BuildingBlock MyHouse { get { return myHouse; } set { myHouse = value; } }
 
         private void Awake()
         {
             dialogueManager = FindObjectOfType<DialogueManager>();
             player = FindObjectOfType<PlayerInteract>();
-            if(dialogMarks.Length>0)
-            dialogMarkScale = dialogMarks[0].localScale;
+            if (dialogMarks.Length > 0)
+                dialogMarkScale = dialogMarks[0].localScale;
         }
         private void Start()
         {
+            GoHomeEvent += MoveToMyHome;
             EventManager.EventActions[((int)EventEnum.MoveToMyHome)] += MoveToMyHome;
             EventManager.EventActions[(int)EventEnum.OnFollowPlayer] += OnFollowPlayer;
         }
@@ -50,15 +54,24 @@ namespace DM.NPC
                 dialogMarks[(int)nowDialogMarkType].localScale = dialogMarkScale * dist;
             }
         }
-        public void SetQuestMark(DialogMarkType dialogMarkType, bool ison)
+        public void SetQuestMark(DialogMarkType dialogMarkType)//, bool ison)
         {
+            if (dialogMarkType == nowDialogMarkType) return;
+
             if (nowDialogMarkType != DialogMarkType.None)
-                dialogMarks[(int)nowDialogMarkType].gameObject.SetActive(!ison);
+            {
+                dialogMarks[(int)nowDialogMarkType].gameObject.SetActive(false);
+                print(this.name + nowDialogMarkType.ToString());
+            }
 
             nowDialogMarkType = dialogMarkType;
 
             if (dialogMarkType != DialogMarkType.None)
-                dialogMarks[(int)nowDialogMarkType].gameObject.SetActive(ison);
+            {
+                dialogMarks[(int)nowDialogMarkType].gameObject.SetActive(true);
+                print(this.name + nowDialogMarkType.ToString());
+
+            }
         }
         public void OnFollowPlayer()
         {
@@ -118,7 +131,7 @@ namespace DM.NPC
                 myHouse = block;
                 myHouse.SetLivingChar(this);
                 print("Find My House");
-                MoveToMyHome();
+                GoHomeEvent();
             }
         }
         public BuildingLike GetBuildingLikeable(BuildingBlock buildingBlock) //bool형
