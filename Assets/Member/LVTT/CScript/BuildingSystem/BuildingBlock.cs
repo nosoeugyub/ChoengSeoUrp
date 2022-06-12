@@ -37,7 +37,7 @@ namespace DM.Building
         public BuildingItemObj curInteractObj;
         private float BuildItemScaleVar = 0.01f;
         private float BuildItemRotationVar = 1;
-        private float BuildItemGap = 2f;
+        private float BuildItemGap = 0.002f;
 
 
         SpecialHouse specialHouse;
