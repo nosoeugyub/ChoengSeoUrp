@@ -254,7 +254,7 @@ namespace NSY.Iven
         //버리기
         private void DropItemOutsideUI()
         {
-            Debug.Log("씨발련아 ㅣㅈ나ㅉ");
+          
             if (dragitemSlot == null)
             {
                 return;
