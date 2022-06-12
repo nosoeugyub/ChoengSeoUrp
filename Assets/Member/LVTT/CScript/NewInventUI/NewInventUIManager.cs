@@ -180,12 +180,12 @@ public class NewInventUIManager : MonoBehaviour
     public void BtnSolution()
     {
 
-        //if (iven.Fulled() && !HasItemSlot())
-        //{
-        //    Debug.Log("시발이제 못넣어!");
-        //    StartCoroutine(StartPopup()); //가득찼을때 팝업 
-        //    return;
-        //}
+        if (iven.Fulled() && !HasItemSlot())
+        {
+            Debug.Log("시발이제 못넣어! 새로운걸 못넣어용");
+            StartCoroutine(StartPopup()); //가득찼을때 팝업 
+            return;
+        }
         List<List<ItemSlot>> itemSlots = CanCraftItem();
         if (itemSlots == null || itemSlots[0].Count == 0) return;
 
