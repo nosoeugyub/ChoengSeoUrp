@@ -355,7 +355,7 @@ namespace NSY.Iven
         {
             for (int i = 0; i < ItemSlots.Count; i++)
             {
-                if (ItemSlots[i].item != null)
+                if (ItemSlots[i].item == null)
                 {
                     return false;
                 }
