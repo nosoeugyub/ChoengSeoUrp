@@ -6,8 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class NewInventUIManager : MonoBehaviour
 {
-    [Header("경고 팝업")]
-    public GameObject NoCraftPopUp;
+  
 
     [Header("오픈될 오브젝트")] [SerializeField] RectTransform BG, invenBtn;
     [SerializeField] GameObject[] TabUI;
@@ -34,7 +33,6 @@ public class NewInventUIManager : MonoBehaviour
     {
         for (int i = 0; i < TabUI.Length; i++)
         {
-            //for (int j = 1; j < TabUI[i].transform.childCount; j++)
             {
                 Transform tabuichild = TabUI[i].transform.GetChild(1);
                 tabuichild.GetComponent<CraftList>().OnLeftClickEventss += ShowRecipe;
@@ -153,7 +151,7 @@ public class NewInventUIManager : MonoBehaviour
     public void FixedUpdate()  //현재 갯수
     {
         scrollbar.size = 0;
-
+        
     }
     public void CreateMode()
     {
@@ -162,7 +160,6 @@ public class NewInventUIManager : MonoBehaviour
     }
     public void BtnSolution()
     {
-     
         if (isCreateMode == true)
         {
             iven.AddItem(nowSelectItem.RecipeItem);

@@ -8,8 +8,38 @@ namespace NSY.Iven
 {
     public class InvenToryManagers : MonoBehaviour
     {
+        //조합
 
-
+        public BaseItemSlot dragitemSlot;
+        public ReSultSlot resultslot;
+        //버리기
+        public Text ScriptTxt;
+        public int MaxDiscount;
+        [SerializeField]
+        private int discount;
+        public int _discount
+        {
+            get
+            {
+                return discount;
+            }
+            set
+            {
+                discount = value;
+                if (discount < 0)
+                {
+                    discount = 0;
+                }
+                if (discount > MaxDiscount)
+                {
+                    discount = MaxDiscount;
+                }
+                if (ScriptTxt != null && ScriptTxt.enabled)
+                {
+                    ScriptTxt.text = discount.ToString();
+                }
+            }
+        }
         [SerializeField] ItemTooltip itemTooltip;
 
         [SerializeField] InventoryNSY iventorynsy;
@@ -28,10 +58,7 @@ namespace NSY.Iven
         private CraftingRecipe carftingRecipe;
 
 
-        //조합
-
-        private BaseItemSlot dragitemSlot;
-        public ReSultSlot resultslot;
+        
 
         //더블클릭
         private float firstClickTime, timeBetweenClicks;
@@ -43,21 +70,21 @@ namespace NSY.Iven
         public RectTransform button_UpDown;
         public bool isUp;
         public bool isDown;
-        //버리기
-        public Text ScriptTxt;
-        int discount = 1;
+      
 
         //빌딩쓰
         bool isBuildingHands = false;
         public Item CheckBuliditem;
 
+        private void OnValidate()
+        {
+            _discount = discount;
+            
+        }
+
         private void Awake()
         {
-            ScriptTxt.text = "1";
-            //조합
-
-
-
+           
             //툴립
             iventorynsy.OnPointerEnterEvent += ShowToolTip;
             //equipPanel.OnPointerEnterEvent += ShowToolTip;
@@ -243,39 +270,27 @@ namespace NSY.Iven
         //버리기
         private void DropItemOutsideUI()
         {
-            Debug.Log("씹년아");
+            Debug.Log("씨발련아 ㅣㅈ나ㅉ");
             if (dragitemSlot == null)
             {
                 return;
             }
-            discount = 1;
-            ScriptTxt.text = discount.ToString();
-
-          
             questionDialog.Show();
             BaseItemSlot baseitemslot = dragitemSlot;
+            MaxDiscount = baseitemslot.Amount;
             questionDialog.OnYesEvent += () => DestroyItem(baseitemslot);
-           // DestroyItem(baseitemslot);
-
         }
+
         public void PlusBtn()
         {
-            discount += 1;
-            ScriptTxt.text = discount.ToString();
-            if (true) //아이템 최대갯수 넘어가면 0
-            {
-
-            }
+            _discount++;
+           
         }
         public void MiuseBtn()
         {
-            discount -= 1;
-            ScriptTxt.text = discount.ToString();
-            if (discount <= 0)
-            {
-                discount = 1;
-            }
+            _discount--;
         }
+
         private void DestroyItem(BaseItemSlot baseitemslot)//버릴떄 쓰는 로직
         {
             baseitemslot.item.GetCountItems -= discount;

@@ -151,10 +151,7 @@ namespace NSY.Iven
             }
             for (int i = 0; i < ItemSlots.Count; i++)
             {
-                if (ItemSlots[i].item != null)
-                {
-                    Debug.Log("좆됨 꽉참쓰");
-                }
+               
                 if (ItemSlots[i].item == null)
                 {
                     ItemSlots[i].item = item;
@@ -353,6 +350,18 @@ namespace NSY.Iven
             return true;
         }
        
+
+       public bool Fulled()
+        {
+            for (int i = 0; i < ItemSlots.Count; i++)
+            {
+                if (ItemSlots[i].item != null)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }
 

@@ -45,8 +45,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4590520742511464444}
-  - component: {fileID: 4590520742511464445}
-  - component: {fileID: 4590520742511464442}
   m_Layer: 5
   m_Name: PopUpUi Contain
   m_TagString: Untagged
@@ -76,45 +74,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 540}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4590520742511464445
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4590520742511464447}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 580f0eb91c56846468ae79e1c27a4f2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MapUi: {fileID: 6741908746335520619}
-  _ivenPopup: {fileID: 0}
-  EscKey: 27
-  inventoryKey: 105
-  MiniMapKey: 109
-  BuildKey: 98
---- !u!114 &4590520742511464442
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4590520742511464447}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19ac349f5f4bb224a977ecc5e5f2f87b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Playertransform: {fileID: 0}
-  FristPost: {fileID: 0}
-  PopUpPost: {fileID: 0}
-  FristApple: {fileID: 0}
-  PopUpApple: {fileID: 0}
-  FirstMiniMap: {fileID: 0}
-  MiniMap: {fileID: 0}
-  Uioffset: {x: 0, y: 1.85, z: 0}
-  PlayTransUioffset: {x: 0, y: 0, z: 0}
 --- !u!1 &4754929001825663498
 GameObject:
   m_ObjectHideFlags: 0
@@ -312,7 +271,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4754929003289182075}
+      - m_Target: {fileID: 0}
         m_MethodName: OnNoButtonClick
         m_Mode: 1
         m_Arguments:
@@ -1195,7 +1154,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4754929003289182072}
-  - component: {fileID: 4754929003289182075}
   m_Layer: 5
   m_Name: Destroy Dialog
   m_TagString: Untagged
@@ -1228,18 +1186,6 @@ RectTransform:
   m_AnchoredPosition: {x: 632.0001, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4754929003289182075
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4754929003289182073}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f486993ae164f64389d065da0c254ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4754929003303314309
 GameObject:
   m_ObjectHideFlags: 0
@@ -1487,7 +1433,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4754929003289182075}
+      - m_Target: {fileID: 0}
         m_MethodName: OnYesButtonClick
         m_Mode: 1
         m_Arguments:
@@ -1575,7 +1521,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 1
+  m_Text: 0
 --- !u!1 &4754929003730169122
 GameObject:
   m_ObjectHideFlags: 0
@@ -4298,19 +4244,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 893b41d749827b24da0216b5a16c5c84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dragitemSlot: {fileID: 0}
+  resultslot: {fileID: 0}
+  ScriptTxt: {fileID: 4754929003719746825}
+  MaxDiscount: 0
+  discount: 0
   itemTooltip: {fileID: 4754929003507663305}
   iventorynsy: {fileID: 5298098809211819915}
   draggableitem: {fileID: 7593476777184508504}
   Dropitemarea: {fileID: 0}
-  questionDialog: {fileID: 4754929003289182075}
+  questionDialog: {fileID: 0}
   PlayerEat: {fileID: 0}
   playerinterract: {fileID: 0}
-  resultslot: {fileID: 0}
   BaseCharcterPanel: {fileID: 4755521435636763246}
   button_UpDown: {fileID: 4754929002382354846}
   isUp: 0
   isDown: 1
-  ScriptTxt: {fileID: 4754929003719746825}
   CheckBuliditem: {fileID: 0}
   isRed: 1
 --- !u!1001 &985475521046755765
