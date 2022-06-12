@@ -85,7 +85,7 @@ namespace DM.Dialog
                     {
                         if (nowCor[i] != null)
                             StopCoroutine(nowCor[i]);
-                        nowCor[i] = StartCoroutine(CanvasAlphaUp(alphaCanvases[i], true, 3));
+                        nowCor[i] = StartCoroutine(CanvasAlphaUp(alphaCanvases[i], true, 10));
                     }
                 }
             }
@@ -119,7 +119,7 @@ namespace DM.Dialog
                 raycastBlockImg.raycastTarget = true;
                 while (canvasGroup.alpha > 0)
                 {
-                    canvasGroup.alpha -= Time.deltaTime;
+                    canvasGroup.alpha -= Time.deltaTime * speed;
                     yield return null;
                 }
             }
@@ -261,7 +261,7 @@ namespace DM.Dialog
             {
                 if (nowCor[i] != null)
                     StopCoroutine(nowCor[i]);
-                nowCor[i] = StartCoroutine(CanvasAlphaUp(alphaCanvases[i], false, 3));
+                nowCor[i] = StartCoroutine(CanvasAlphaUp(alphaCanvases[i], false, 10));
             }
 
             UpdateDialog(ss, sentenceState);
