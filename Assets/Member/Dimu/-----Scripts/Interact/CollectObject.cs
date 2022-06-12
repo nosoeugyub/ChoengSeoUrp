@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class CollectObject : ItemObject
 {
-    [SerializeField] string picksoundName = "item_pick";
+    [SerializeField] protected string picksoundName = "item_pick";
     protected BoxCollider box;
-
+    private new void Awake()
+    {
+        base.Awake();
+        box = GetComponent<BoxCollider>();
+    }
     public override int CanInteract()
     {
         return (int)CursorType.Pickup;
@@ -14,14 +18,13 @@ public class CollectObject : ItemObject
     private new void OnEnable()
     {
         base.OnEnable();
-        box = GetComponent<BoxCollider>();
     }
     public void Collect(Animator animator)
     {
         animator.GetComponent<PlayerAnimator>().PickUp = UpdateCollect;
         animator.SetBool("isPickingUp", true);
     }
-    public void UpdateCollect()
+    public virtual void UpdateCollect()
     {
         inventoryNSY = FindObjectOfType<InventoryNSY>();
         Item itemCopy = item.GetCopy();
@@ -32,11 +35,7 @@ public class CollectObject : ItemObject
         Interact();
         DeactiveDelay();
     }
-
     void DeactiveDelay() => gameObject.SetActive(false);
-    void OnDisable()
-    {
-        ObjectPooler.ReturnToPool(gameObject);  // 한 객체에 한번만
-        CancelInvoke();    // Monobehaviour에 Invoke가 있다면
-    }
+
+
 }

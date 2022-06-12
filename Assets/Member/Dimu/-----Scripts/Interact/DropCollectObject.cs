@@ -13,27 +13,23 @@ public class DropCollectObject : CollectObject
     private new void OnEnable()
     {
         base.OnEnable();
-        box = GetComponent<BoxCollider>();
 
+        Init();
+    }
+
+    private void Init()
+    {
         box.enabled = false;
         StartCoroutine(CanInteractDelay());
-        StartCoroutine(SpawnUpdate());
         canMove = true;
+        StartCoroutine(SpawnUpdate());
         power = powerInit;
     }
+
     public void PlayStartSound()
     {
         SuperManager.Instance.soundManager.PlaySFX(startsoundName);
     }
-    //private void Update()
-    //{
-    //    if (!canMove)
-    //        return;
-        
-    //    Vector3 newVec = new Vector3(transform.position.x, transform.position.y + power, transform.position.z);
-    //    transform.position = newVec;
-    //    power -= Time.deltaTime * 0.5f;
-    //}
     IEnumerator SpawnUpdate()
     {
         while (canMove)
@@ -57,5 +53,10 @@ public class DropCollectObject : CollectObject
     {
         if (other.CompareTag("Ground"))
             canMove = false;
+    }
+    void OnDisable()
+    {
+        ObjectPooler.ReturnToPool(gameObject);  // 한 객체에 한번만
+        CancelInvoke();    // Monobehaviour에 Invoke가 있다면
     }
 }
