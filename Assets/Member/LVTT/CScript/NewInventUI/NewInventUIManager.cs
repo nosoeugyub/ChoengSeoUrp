@@ -1,13 +1,13 @@
 ﻿using DG.Tweening;
 using NSY.Iven;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 public class NewInventUIManager : MonoBehaviour
 {
-    [Header("경고 팝업")]
-    public GameObject NoCraftPopUp;
+    public GameObject NoPopUp;
 
     [Header("오픈될 오브젝트")] [SerializeField] RectTransform BG, invenBtn;
     [SerializeField] GameObject[] TabUI;
@@ -34,7 +34,6 @@ public class NewInventUIManager : MonoBehaviour
     {
         for (int i = 0; i < TabUI.Length; i++)
         {
-            //for (int j = 1; j < TabUI[i].transform.childCount; j++)
             {
                 Transform tabuichild = TabUI[i].transform.GetChild(1);
                 tabuichild.GetComponent<CraftList>().OnLeftClickEventss += ShowRecipe;
@@ -156,8 +155,26 @@ public class NewInventUIManager : MonoBehaviour
     }
     public void Update()
     {
-        if(Input.GetKeyDown(KeyCode.C))
-        CreateMode();
+        if (Input.GetKeyDown(KeyCode.C))
+            CreateMode();
+    }
+    private bool HasItemSlot()
+    {
+        foreach (ItemSlot items in iven.ItemSlots)
+        {
+            if (iven.CanAddItem(items.item))
+            {
+
+                return false;
+            }
+        }
+        return true;
+    }
+    IEnumerator StartPopup()
+    {
+        NoPopUp.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        NoPopUp.SetActive(false);
     }
     public void CreateMode()
     {
@@ -166,13 +183,13 @@ public class NewInventUIManager : MonoBehaviour
     }
     public void BtnSolution()
     {
-     
-        if (isCreateMode == true)
+
+        if (iven.Fulled() && !HasItemSlot())
         {
-            iven.AddItem(nowSelectItem.RecipeItem);
+            Debug.Log("시발이제 못넣어! 새로운걸 못넣어용");
+            StartCoroutine(StartPopup()); //가득찼을때 팝업 
             return;
         }
-
         List<List<ItemSlot>> itemSlots = CanCraftItem();
         if (itemSlots == null || itemSlots[0].Count == 0) return;
 
