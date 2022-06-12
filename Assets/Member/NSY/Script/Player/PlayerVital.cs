@@ -9,6 +9,8 @@ namespace NSY.Player
         public int CurVital;
         public float tired;
 
+
+
         public float Tired
         {
             get

@@ -20,4 +20,9 @@ public class SceneChangeManager : MonoBehaviour
         yield return new WaitForSeconds(3f);
         SceneManager.LoadScene(scenename);
     }
+
+    public void slbal(int scenenuber)
+    {
+        SceneManager.LoadScene(scenenuber);
+    }
 }

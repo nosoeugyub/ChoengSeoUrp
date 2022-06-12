@@ -6,6 +6,9 @@ using UnityEngine;
 using UnityEngine.UI;
 public class NewInventUIManager : MonoBehaviour
 {
+    [Header("경고 팝업")]
+    public GameObject NoCraftPopUp;
+
     [Header("오픈될 오브젝트")] [SerializeField] RectTransform BG, invenBtn;
     [SerializeField] GameObject[] TabUI;
     [SerializeField] ScrollRect TopRect;
@@ -159,6 +162,7 @@ public class NewInventUIManager : MonoBehaviour
     }
     public void BtnSolution()
     {
+     
         if (isCreateMode == true)
         {
             iven.AddItem(nowSelectItem.RecipeItem);
