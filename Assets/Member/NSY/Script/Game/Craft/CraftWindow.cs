@@ -86,12 +86,6 @@ namespace NSY.Iven
                 }
             }
         }
-      
-        public void MiuseBtn()
-        {
-            _haveAmount -= 1;
-        }
-
         public void SetRecipeHaverAmountText(string str)
         {
             RecipeHaverAmount.text = str;
@@ -100,22 +94,22 @@ namespace NSY.Iven
         {
             RecipeCurrentAmount.text = str;
         }
-
+      
         public void OnPointerEnter(PointerEventData eventData)
         {
+            Debug.Log("시발 넌가?");
             TapToolTip.ShowItemTooltip(Item);
            
                 Vector3 ToolVec = TapToolTip.tooltipTransform.transform.position;
-                ToolVec.x = GetComponent<Image>().rectTransform.position.x +0.7f;
-                ToolVec.y = GetComponent<Image>().rectTransform.position.y + 0.3f;
-                ToolVec.z = GetComponent<Image>().rectTransform.position.z;
-            TapToolTip.tooltipTransform.transform.position = ToolVec;
-        }
+                ToolVec.x = GetComponent<Image>().rectTransform.position.x + 1100 ;
+            ToolVec.y = GetComponent<Image>().rectTransform.position.y - 300;
 
+            TapToolTip.tooltipTransform.transform.localPosition = ToolVec;
+        }
         public void OnPointerExit(PointerEventData eventData)
         {
+            Debug.Log("시발 난가?");
             TapToolTip.HideTooltip();
-
         }
     }
 

@@ -92,7 +92,6 @@ namespace NSY.Iven
 
 
             //인벤토리 클레스 이벤트
-
             iventorynsy.OnDubleClickEvent += OnDoubleClickEvent;
             iventorynsy.OnLeftClickEvent += BuildingLeftClick;
             iventorynsy.OnRightClickEvent += InventoryRightClick;
@@ -113,7 +112,7 @@ namespace NSY.Iven
             //드롭
             iventorynsy.OnDropEvent += Drop;
 
-
+            //버리기
             Dropitemarea.OnDropEvent += DropItemOutsideUI;
         }
 

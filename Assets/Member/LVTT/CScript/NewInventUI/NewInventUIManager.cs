@@ -1,6 +1,5 @@
 ﻿using DG.Tweening;
 using NSY.Iven;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,8 +12,6 @@ public class NewInventUIManager : MonoBehaviour
     [SerializeField] GameObject[] TabUI;
     [SerializeField] ScrollRect TopRect;
 
-
-   
     [SerializeField] CraftWindow[] CraftWindows;
     [SerializeField] InventoryNSY iven;
     [SerializeField] CraftSlot nowSelectItem;
@@ -32,6 +29,10 @@ public class NewInventUIManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        for (int i = 0; i < CraftWindows.Length; i++)
+        {
+
+        }
         for (int i = 0; i < TabUI.Length; i++)
         {
             {
@@ -39,18 +40,7 @@ public class NewInventUIManager : MonoBehaviour
                 tabuichild.GetComponent<CraftList>().OnLeftClickEventss += ShowRecipe;
             }
         }
-
         iven.OnAddItemEvent += ShowRecipe;
-    }
-
-    private void OnPointerExitEvent(BaseItemSlot obj)
-    {
-        Debug.Log("김띠용띠용 띠용쓰");
-    }
-
-    private void OnPointerEnterEvent(BaseItemSlot obj)
-    {
-        Debug.Log("김띠용띠용 띠용쓰");
     }
 
     private void Start()
@@ -60,7 +50,6 @@ public class NewInventUIManager : MonoBehaviour
 
         UnLockManager.Unlockmanager.GetItemUnlocks += InterectingItem;
     }
-
     private void OnDisable()
     {
         for (int i = 0; i < TabUI.Length; i++)
@@ -71,7 +60,6 @@ public class NewInventUIManager : MonoBehaviour
             }
         }
         UnLockManager.Unlockmanager.GetItemUnlocks -= InterectingItem;
-
     }
     void InterectingItem()//아이템 n개 획득 시 해금  검사
     {
@@ -79,31 +67,28 @@ public class NewInventUIManager : MonoBehaviour
         {
             for (int r = 0; r < TabUI.Length; r++) //4 
             {
-                //for (int j = 1; j < TabUI[r].transform.childCount; j++)
+                CraftList tempCL = TabUI[r].transform.GetChild(1).GetComponent<CraftList>();
+                for (int k = 0; k < tempCL.Craftslot.Count; k++)
                 {
-                    CraftList tempCL = TabUI[r].transform.GetChild(1).GetComponent<CraftList>();
-                    for (int k = 0; k < tempCL.Craftslot.Count; k++)
+                    if (tempCL.Craftslot[k].RecipeItem != null)
                     {
-                        if (tempCL.Craftslot[k].RecipeItem != null)
+                        for (int n = 0; n < tempCL.Craftslot[k].RecipeItem.UnlockItem.Length; n++) // 이벤토리 슬롯과 탭창의 아이템의 해금재료아이템을 검사
                         {
-                            for (int n = 0; n < tempCL.Craftslot[k].RecipeItem.UnlockItem.Length; n++) // 이벤토리 슬롯과 탭창의 아이템의 해금재료아이템을 검사
+                            if (iven.ItemSlots[i].item != null)
                             {
-                                if (iven.ItemSlots[i].item != null)
+                                if (iven.ItemSlots[i].item.ItemName == tempCL.Craftslot[k].RecipeItem.UnlockItem[n].item.ItemName && //슬롯과 해료 이름이같으면
+                                   iven.ItemSlots[i].item.GetCountItems >= tempCL.Craftslot[k].RecipeItem.UnlockItem[n].count) // 갯수도 같으면
                                 {
-                                    if (iven.ItemSlots[i].item.ItemName == tempCL.Craftslot[k].RecipeItem.UnlockItem[n].item.ItemName && //슬롯과 해료 이름이같으면
-                                       iven.ItemSlots[i].item.GetCountItems >= tempCL.Craftslot[k].RecipeItem.UnlockItem[n].count) // 갯수도 같으면
+                                    if (tempCL.Craftslot[k].isHaveRecipeItem == false)
                                     {
-                                        if (tempCL.Craftslot[k].isHaveRecipeItem == false)
-                                        {
 
-                                            tempCL.Craftslot[k].isHaveRecipeItem = true;
+                                        tempCL.Craftslot[k].isHaveRecipeItem = true;
 
-                                            Debug.Log("해방된 아이템은 이겁니다" + tempCL.Craftslot[k]);
-                                        }
-                                   
+                                        Debug.Log("해방된 아이템은 이겁니다" + tempCL.Craftslot[k]);
                                     }
-                                  
-                                }                              
+
+                                }
+
                             }
                         }
                     }

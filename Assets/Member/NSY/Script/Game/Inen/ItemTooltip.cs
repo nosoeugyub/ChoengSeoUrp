@@ -25,7 +25,6 @@ namespace NSY.Iven
         {
           
             ItemNameTex.text = item.ItemName;
-           // ItemSlotTex.text = item.InItemType.ToString();
             ItemStatsTex.text = item.ItemDescription;
             gameObject.SetActive(true);
         }
