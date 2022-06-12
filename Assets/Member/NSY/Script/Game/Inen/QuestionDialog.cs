@@ -14,6 +14,7 @@ namespace NSY.Iven
         public void Show()
         {
             gameObject.SetActive(true);// 유아이 활성화
+          
             OnYesEvent = null;
             OnNoEvent = null;
         }

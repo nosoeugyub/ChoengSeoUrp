@@ -124,10 +124,8 @@ namespace NSY.Iven
         private void BuildingLeftClick(BaseItemSlot obj)
         {
 
-
             if (CheckBuliditem != null)
             {
-                //DebugText.Instance.SetText("널이 아닙니다 - 인벤");
                 return;
             }
 
@@ -241,9 +239,11 @@ namespace NSY.Iven
                 Swapitems(dropitemslot);
             }
         }
+
         //버리기
         private void DropItemOutsideUI()
         {
+            Debug.Log("씹년아");
             if (dragitemSlot == null)
             {
                 return;
@@ -251,21 +251,30 @@ namespace NSY.Iven
             discount = 1;
             ScriptTxt.text = discount.ToString();
 
+          
+            questionDialog.Show();
             BaseItemSlot baseitemslot = dragitemSlot;
-            //questionDialog.Show();
-            //questionDialog.OnYesEvent += () => DestroyItem(baseitemslot);
-            DestroyItem(baseitemslot);
+            questionDialog.OnYesEvent += () => DestroyItem(baseitemslot);
+           // DestroyItem(baseitemslot);
 
         }
         public void PlusBtn()
         {
             discount += 1;
             ScriptTxt.text = discount.ToString();
+            if (true) //아이템 최대갯수 넘어가면 0
+            {
+
+            }
         }
         public void MiuseBtn()
         {
             discount -= 1;
             ScriptTxt.text = discount.ToString();
+            if (discount <= 0)
+            {
+                discount = 1;
+            }
         }
         private void DestroyItem(BaseItemSlot baseitemslot)//버릴떄 쓰는 로직
         {

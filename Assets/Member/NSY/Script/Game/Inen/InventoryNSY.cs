@@ -10,14 +10,9 @@ namespace NSY.Iven
     public class InventoryNSY : ItemContainer
     {
       //  [FormerlySerializedAs("items")]
-        [SerializeField] Item[] startingitems; // 아이템 리스트
+        [SerializeField] Item[] startingitems;   // 아이템 리스트
         [SerializeField] Transform itemsParent; //this
      
-      
-
-
-       
-        
         protected override void OnValidate()
         {
             if (itemsParent != null)
@@ -30,10 +25,8 @@ namespace NSY.Iven
             base.Awake();
             SetStartingTiems();
         }
-
         private void SetStartingTiems()//아이템 슬롯과 리스트가 일치하게 돌려주는 함수 setstarign
         {
-            
             Clear();
             foreach (Item item in startingitems)
             {
@@ -42,21 +35,7 @@ namespace NSY.Iven
                     AddItem(item.GetCopy());
                 }
             }
-
-
         }
-
-      
-       
-       
-
-
-       
-
-       
-
-       
     }
-
 }
 

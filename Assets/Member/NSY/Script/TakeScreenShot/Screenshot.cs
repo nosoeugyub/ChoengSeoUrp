@@ -474,7 +474,7 @@ public class Screenshot : MonoBehaviour
                 SceenShotCam.enabled = true;
             }
             SceenShotCam.enabled = true;
-
+            Debug.Log("임소정씨발");
             OnPostRender();
          
 

@@ -65,19 +65,7 @@ namespace NSY.Iven
             }
             return freeSpaces >= amount;
         }
-        public virtual bool CanAddItems(Item item, int amount)
-        {
-            int freeSpaces = 0;
-
-            foreach (ItemSlot itemSlot in ItemSlots)
-            {
-                if (itemSlot.item == null || itemSlot.item.ItemName == item.ItemName)
-                {
-                    freeSpaces += item.MaximumStacks - itemSlot.Amount;
-                }
-            }
-            return freeSpaces >= amount;
-        }
+      
 
         public virtual void CheckCanBuildItem(BuildingBlock buildingBlock)//당장 건축 가능한 자재인지 아닌지 판단.
         {
@@ -163,6 +151,10 @@ namespace NSY.Iven
             }
             for (int i = 0; i < ItemSlots.Count; i++)
             {
+                if (ItemSlots[i].item != null)
+                {
+                    Debug.Log("좆됨 꽉참쓰");
+                }
                 if (ItemSlots[i].item == null)
                 {
                     ItemSlots[i].item = item;
@@ -176,13 +168,16 @@ namespace NSY.Iven
 
                     return true;
                 }
+              
             }
             return false;
+
         }
         int resultadd;
 
         public bool AddItem(Item item, int AddCount)//많은 갯수를 먹을때 
         {
+          
             for (int i = 0; i < ItemSlots.Count; i++)
             {
                 if (ItemSlots[i].CanAddStack(item, AddCount))// 최대 
@@ -207,6 +202,7 @@ namespace NSY.Iven
                     AddCount = sub;
                     Debug.Log(AddCount);
                 }
+               
             }
             for (int i = 0; i < ItemSlots.Count; i++)
             {
@@ -227,9 +223,7 @@ namespace NSY.Iven
                     }
                     return true;
                 }
-
             }
-
             return false;
         }
 
@@ -241,11 +235,10 @@ namespace NSY.Iven
 
             int ra = removeCount;
 
-            ItemSlot minSlot;// = itemSlots[itemSlots.Count - 1];
-
+            ItemSlot minSlot;
             do
             {
-                //print(itemSlots[i].Count - 1);
+               
                 minSlot = itemSlots[itemSlots.Count - 1];
 
                 foreach (var itemslot in itemSlots) //최소 슬롯 찾음
@@ -346,7 +339,20 @@ namespace NSY.Iven
                 ItemSlots[i].Amount = 0;
             }
         }
-
+     
+       public bool IsFull()
+        {
+            foreach (ItemSlot itemss in ItemSlots)
+            {
+                if (!CanAddItem(itemss.item, itemss.Amount))
+                {
+                    Debug.Log("짜장면 먹고싶다");
+                    return false;
+                }
+            }
+            return true;
+        }
+       
     }
 }
 
