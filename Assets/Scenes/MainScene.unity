@@ -1374,6 +1374,10 @@ PrefabInstance:
       propertyPath: questMark
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 902165885, guid: 69c1df01a7976764a84a23a9e39a6e1b, type: 3}
+      propertyPath: talkSound
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 229570832180603225, guid: 69c1df01a7976764a84a23a9e39a6e1b,
         type: 3}
       propertyPath: m_Name
@@ -6929,6 +6933,10 @@ PrefabInstance:
       propertyPath: questMark
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1941620804, guid: 8ec1486391b4215489b5962968e7def3, type: 3}
+      propertyPath: talkSound
+      value: 2_low
+      objectReference: {fileID: 0}
     - target: {fileID: 120154420435454313, guid: 8ec1486391b4215489b5962968e7def3,
         type: 3}
       propertyPath: m_Size.z
@@ -8994,6 +9002,11 @@ PrefabInstance:
         type: 3}
       propertyPath: speed
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8987877325106567232, guid: 487850f860457414cbb7bcae28e6d8e8,
+        type: 3}
+      propertyPath: talkSound
+      value: 1_low
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 487850f860457414cbb7bcae28e6d8e8, type: 3}
@@ -25191,7 +25204,7 @@ MonoBehaviour:
   - name: SummerLine
     clip: {fileID: 8300000, guid: b2553abcadcdc8f42bf1e6e219cb3ec3, type: 3}
     output: {fileID: 24300002, guid: 73c2b8ef81d1b854ca1805174e57f970, type: 2}
-    volume: 0.525
+    volume: 0.3
     pitch: 1
     loop: 1
     playInit: 0
@@ -25200,55 +25213,63 @@ MonoBehaviour:
   - name: 1
     clip: {fileID: 8300000, guid: d93d2cb74a84fe64db49af80bdad0e69, type: 3}
     output: {fileID: 0}
-    volume: 1
+    volume: 0.6
     pitch: 1
+    loop: 0
+    playInit: 0
+    source: {fileID: 0}
+  - name: 1_low
+    clip: {fileID: 8300000, guid: d93d2cb74a84fe64db49af80bdad0e69, type: 3}
+    output: {fileID: 0}
+    volume: 0.6
+    pitch: 0.501
     loop: 0
     playInit: 0
     source: {fileID: 0}
   - name: 2
     clip: {fileID: 8300000, guid: d37e777c66db1ed4caca9e5eccdf5d0b, type: 3}
     output: {fileID: 0}
-    volume: 1
+    volume: 0.6
     pitch: 1
+    loop: 0
+    playInit: 0
+    source: {fileID: 0}
+  - name: 2_low
+    clip: {fileID: 8300000, guid: d37e777c66db1ed4caca9e5eccdf5d0b, type: 3}
+    output: {fileID: 0}
+    volume: 0.6
+    pitch: 0.493
     loop: 0
     playInit: 0
     source: {fileID: 0}
   - name: 3
     clip: {fileID: 8300000, guid: 7348985a570905741950e4024d14b1a4, type: 3}
     output: {fileID: 0}
-    volume: 1
+    volume: 0.6
     pitch: 1
+    loop: 0
+    playInit: 0
+    source: {fileID: 0}
+  - name: 3_low
+    clip: {fileID: 8300000, guid: 7348985a570905741950e4024d14b1a4, type: 3}
+    output: {fileID: 0}
+    volume: 0.6
+    pitch: 0.533
     loop: 0
     playInit: 0
     source: {fileID: 0}
   - name: Axe_Tree1
     clip: {fileID: 8300000, guid: 280695d550a671d44a346de04dca9948, type: 3}
     output: {fileID: 0}
-    volume: 1
+    volume: 0.5
     pitch: 1
     loop: 0
     playInit: 1
     source: {fileID: 0}
-  - name: Back_Bird1
-    clip: {fileID: 8300000, guid: 5c3aac93af1760a449264e3f971c0e97, type: 3}
-    output: {fileID: 0}
-    volume: 1
-    pitch: 1
-    loop: 0
-    playInit: 0
-    source: {fileID: 0}
-  - name: CS_Jump
-    clip: {fileID: 8300000, guid: 92680caa029a6c44787a30918739951e, type: 3}
-    output: {fileID: 0}
-    volume: 1
-    pitch: 1
-    loop: 0
-    playInit: 0
-    source: {fileID: 0}
   - name: EndShip
     clip: {fileID: 8300000, guid: 1a6f120df57ebf74c8b75d04dc7ae085, type: 3}
     output: {fileID: 0}
-    volume: 1
+    volume: 0.2
     pitch: 1
     loop: 0
     playInit: 1
@@ -25256,15 +25277,15 @@ MonoBehaviour:
   - name: FootstepGrass01
     clip: {fileID: 8300000, guid: a787c0b37abfd694aa6eac9dd5e77217, type: 3}
     output: {fileID: 0}
-    volume: 1
+    volume: 0.5
     pitch: 0.8
     loop: 0
     playInit: 0
     source: {fileID: 0}
   - name: mining
-    clip: {fileID: 8300000, guid: 78787dbac4ac99c469dfb8397f673fd6, type: 3}
+    clip: {fileID: 8300000, guid: 3d9bf73a5bd07a343a4b8ec340227d42, type: 3}
     output: {fileID: 0}
-    volume: 1
+    volume: 3
     pitch: 1
     loop: 0
     playInit: 1
@@ -25272,7 +25293,7 @@ MonoBehaviour:
   - name: NPCShip
     clip: {fileID: 8300000, guid: 2c9d9239b7e265d4aa20f476d2480103, type: 3}
     output: {fileID: 0}
-    volume: 0.31
+    volume: 0.2
     pitch: 1
     loop: 0
     playInit: 1
@@ -25280,7 +25301,7 @@ MonoBehaviour:
   - name: UI_BT
     clip: {fileID: 8300000, guid: b1b135a13885d0449ad18157d77d31ff, type: 3}
     output: {fileID: 0}
-    volume: 1
+    volume: 0.5
     pitch: 1
     loop: 0
     playInit: 1
@@ -25288,23 +25309,15 @@ MonoBehaviour:
   - name: item_pick
     clip: {fileID: 8300000, guid: 421cc305af57199418be183058b7771d, type: 3}
     output: {fileID: 0}
-    volume: 1
+    volume: 0.5
     pitch: 1
     loop: 0
     playInit: 1
     source: {fileID: 0}
-  - name: item_drop
-    clip: {fileID: 8300000, guid: 0bcb664f141ce8a4bb4f25011356b46b, type: 3}
-    output: {fileID: 0}
-    volume: 0.7
-    pitch: 1
-    loop: 0
-    playInit: 0
-    source: {fileID: 0}
   - name: item_drop1
     clip: {fileID: 8300000, guid: a6ae318f283c48940a821207ea489c48, type: 3}
     output: {fileID: 0}
-    volume: 0.7
+    volume: 0.4
     pitch: 1
     loop: 0
     playInit: 0
@@ -25312,7 +25325,7 @@ MonoBehaviour:
   - name: item_drop2
     clip: {fileID: 8300000, guid: cd813bed060e9264a82ee3a0b9c378d1, type: 3}
     output: {fileID: 0}
-    volume: 0.7
+    volume: 1
     pitch: 1
     loop: 0
     playInit: 0
@@ -50881,6 +50894,10 @@ PrefabInstance:
       propertyPath: questMark
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1586218682, guid: 00801332fbf855c4aa10a72f9604878b, type: 3}
+      propertyPath: talkSound
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 728217955378584943, guid: 00801332fbf855c4aa10a72f9604878b,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -52460,6 +52477,10 @@ PrefabInstance:
     - target: {fileID: 1545768306, guid: 7984467f4282d3a4c983b0f08fcc26f0, type: 3}
       propertyPath: wantToBuildCondition.Array.data[0].buildThema.Array.data[8]
       value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 1545768306, guid: 7984467f4282d3a4c983b0f08fcc26f0, type: 3}
+      propertyPath: talkSound
+      value: 3_low
       objectReference: {fileID: 0}
     - target: {fileID: 2720857700947133672, guid: 7984467f4282d3a4c983b0f08fcc26f0,
         type: 3}
@@ -55386,6 +55407,10 @@ PrefabInstance:
       propertyPath: questMark
       value: 
       objectReference: {fileID: 579629578}
+    - target: {fileID: 1590299397, guid: b4fb6ccce8cc1514ebc9a58956858257, type: 3}
+      propertyPath: talkSound
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1948657730365748217, guid: b4fb6ccce8cc1514ebc9a58956858257,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -58538,12 +58563,12 @@ MonoBehaviour:
   horizonColor: {r: 0.58018863, g: 0.9627194, b: 1, a: 1}
   horizonDistance: 20
   shoreFade: 1
-  shoreColor: {r: 0, g: 0.094264306, b: 0.02885683, a: 0}
+  shoreColor: {r: 0, g: 0.09425425, b: 0.02885683, a: 0}
   shoreStrength: 0
   shoreBlend: 1
   shoreDepth: 0.74
-  waveColor: {r: 0, g: 0.31352383, b: 0.017320469, a: 0}
-  underwaterColor: {r: 0.20339316, g: 0.30924642, b: 0.517647, a: 0}
+  waveColor: {r: 0, g: 0.3135135, b: 0.017320469, a: 0}
+  underwaterColor: {r: 0.20338336, g: 0.30923605, b: 0.517647, a: 0}
   underwaterColorStrength: 0
   underwaterRefractionStrength: 0.099
   surfaceFoamTexture: {fileID: 2800000, guid: ab507ff7ff37d954da98b07bf0bb152e, type: 3}
@@ -59934,6 +59959,10 @@ PrefabInstance:
       propertyPath: questMark
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1537358287, guid: 0325a438969bc624bade25da7f26d8ef, type: 3}
+      propertyPath: talkSound
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 675488286151161535, guid: 0325a438969bc624bade25da7f26d8ef,
         type: 3}
       propertyPath: m_IsActive
@@ -60018,6 +60047,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6301994694009820295, guid: 0325a438969bc624bade25da7f26d8ef,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0325a438969bc624bade25da7f26d8ef, type: 3}
@@ -69569,6 +69603,10 @@ PrefabInstance:
     - target: {fileID: 1330265896, guid: 5fa7f4f4c517eb54d82c5d12d7ee2d91, type: 3}
       propertyPath: speed
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1330265896, guid: 5fa7f4f4c517eb54d82c5d12d7ee2d91, type: 3}
+      propertyPath: talkSound
+      value: 2_low
       objectReference: {fileID: 0}
     - target: {fileID: 546953148910134605, guid: 5fa7f4f4c517eb54d82c5d12d7ee2d91,
         type: 3}

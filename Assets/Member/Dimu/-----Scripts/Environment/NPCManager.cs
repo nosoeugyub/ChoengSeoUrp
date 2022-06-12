@@ -46,20 +46,16 @@ public class NPCManager : MonoBehaviour
         EventManager.EventActions[(int)EventEnum.GotoBearsWithSheep] += MoveToBearsHouseWithSheep;
         EventManager.EventActions[(int)EventEnum.GotoBackWithSheep] += MoveToBackSheep;
 
-        //npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().CharacterMove(teleportPos[0].position);
-
-        //teleportPosButtons[0].onClick.AddListener(() => npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(teleportPos[0].position));
-        //teleportPosButtons[1].onClick.AddListener(() => npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(teleportPos[1].position));
-        //teleportPosButtons[2].onClick.AddListener(() => npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(teleportPos[2].position));
-        //teleportPosButtons[3].onClick.AddListener(() => npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(teleportPos[3].position));
-        //teleportPosButtons[4].onClick.AddListener(() => npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(teleportPos[4].position));
-
         for (int i = 0; i < teleportPosButtons.Length; ++i)
         {
             ButtonInteractable(i, false);
         }
     }
 
+    public void PlayNPCDialogSound(int npcidx)
+    {
+        npcTfs[npcidx].Npctf.PlayDialogSound();
+    }
     private void MoveToBearsHouseWithSheep()
     {
         MoveToNPCSomewhere(8, npcTfs[1].Npctf.MyHouse.FriendTransform.position);

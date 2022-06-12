@@ -175,6 +175,7 @@ namespace DM.Dialog
             IsTalking = true;
             nowNpc = npc;
             npcManager.NowInteractNPCIndex = (int)nowNpc.GetCharacterType();
+            npcManager.PlayNPCDialogSound(npcManager.NowInteractNPCIndex);
             partnerTf = npc.transform; //이 변수 삭제하고 npcmanager 쓰자
             nowSentenceIdx = 0;
 

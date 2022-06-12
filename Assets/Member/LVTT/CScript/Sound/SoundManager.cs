@@ -11,7 +11,7 @@ namespace TT.Sound
         public string name;
         public AudioClip clip;//to add Audio clips
         public AudioMixerGroup output;
-        [Range(0f, 1f)]// this to make a slide in Unity
+        [Range(0f, 3f)]// this to make a slide in Unity
         public float volume;
         [Range(.1f, 3f)]
         public float pitch;

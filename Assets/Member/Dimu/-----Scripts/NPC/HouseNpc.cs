@@ -4,6 +4,7 @@ using NSY.Manager;
 using NSY.Player;
 using System;
 using System.Collections.Generic;
+using TT.Sound;
 using UnityEngine;
 
 public enum BuildingLike { Like, Unlike_Shape, Unlike_Count, Unlike_Empty, Cant, None, }
@@ -21,6 +22,7 @@ namespace DM.NPC
         [SerializeField] private Vector3 dialogMarkScale;
         [SerializeField] private float speed;
         [SerializeField] private bool isFollowPlayer;
+        [SerializeField] private string talkSound;
         private DialogueManager dialogueManager;
         private BuildingLike like = BuildingLike.None;
         float dist;
@@ -42,6 +44,16 @@ namespace DM.NPC
             EventManager.EventActions[((int)EventEnum.MoveToMyHome)] += MoveToMyHome;
             EventManager.EventActions[(int)EventEnum.OnFollowPlayer] += OnFollowPlayer;
         }
+
+        internal void PlayDialogSound()
+        {
+            if (talkSound != "")
+            {
+                SuperManager.Instance.soundManager.StopSFX(talkSound);
+                SuperManager.Instance.soundManager.PlaySFX(talkSound);
+            }
+        }
+
         private void FixedUpdate()
         {
             if (isFollowPlayer)

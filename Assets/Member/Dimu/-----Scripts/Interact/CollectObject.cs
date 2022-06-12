@@ -9,7 +9,9 @@ public class CollectObject : ItemObject
     [SerializeField] float powerInit = 0.3f;
     [SerializeField] float power;
     [SerializeField] bool canMove;
-    [SerializeField] string soundName = "item_pick";
+    [SerializeField] string picktsoundName = "item_pick";
+    [SerializeField] string startsoundName = "item_drop2";
+    [SerializeField] string downsoundName = "item_drop1";
     BoxCollider box;
     public override int CanInteract()
     {
@@ -30,15 +32,18 @@ public class CollectObject : ItemObject
             canMove = true;
             amount = 0;
             power = powerInit;
-            
+
         }
     }
 
-    public void PlaySound()
+    public void PlayStartSound()
     {
-        SuperManager.Instance.soundManager.PlaySFX("item_drop");
+        SuperManager.Instance.soundManager.PlaySFX(startsoundName);
     }
-
+    public void PlayDropSound()
+    {
+        SuperManager.Instance.soundManager.PlaySFX(downsoundName);
+    }
     void DeactiveDelay() => gameObject.SetActive(false);
     public void MoveTrue()
     {
@@ -66,7 +71,7 @@ public class CollectObject : ItemObject
         Item itemCopy = item.GetCopy();
         if (inventoryNSY.AddItem(itemCopy))
         {
-            SuperManager.Instance.soundManager.PlaySFX(soundName);
+            SuperManager.Instance.soundManager.PlaySFX(picktsoundName);
             amount--;
         }
         else
@@ -78,10 +83,11 @@ public class CollectObject : ItemObject
     }
     private void OnTriggerEnter(Collider other)
     {
+        if (isGround) return;
         if (other.CompareTag("Ground"))
         {
-            //print("ground");
             canMove = false;
+            //PlayDropSound();
         }
     }
     void OnDisable()
