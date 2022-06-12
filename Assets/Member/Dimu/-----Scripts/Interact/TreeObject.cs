@@ -77,7 +77,7 @@ public class TreeObject : MineObject
             CalculateUpgradePercent();
 
             upObj.SetActive(false);
-            boxcol.enabled = true;
+            BoxColONOFF(true);
 
             quad.material = nowMatSet.materials[0];
             upMesh.material = nowMatSet.materials[1];
@@ -88,7 +88,7 @@ public class TreeObject : MineObject
         {
             animator.SetBool("IsFalling", true);
             upObj.SetActive(true);
-            boxcol.enabled = false;
+            BoxColONOFF(false);
             quad.material = nowMatSet.materials[2];
             nowChopCount = 0;
 
@@ -96,7 +96,7 @@ public class TreeObject : MineObject
         }
         else
         {
-            boxcol.enabled = false;
+            BoxColONOFF(false);
             animator.SetBool("IsFalling", true);
         }
     }
