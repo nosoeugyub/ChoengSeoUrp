@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -10986,11 +10986,6 @@ MonoBehaviour:
     prefab: {fileID: 4455435920822877759, guid: e35b835e8bdbf3c4da18c50463dc68a0,
       type: 3}
     size: 10
-  - tag: twig_1
-    SpawnPrefab: {fileID: 0}
-    prefab: {fileID: 6819183770864003961, guid: b6c31d3dff37bb14b89403617eb529b6,
-      type: 3}
-    size: 10
   - tag: trash_0
     SpawnPrefab: {fileID: 0}
     prefab: {fileID: 7875340127727919632, guid: 021c503a2d86b2c4999752343ea038d7,
@@ -11000,19 +10995,9 @@ MonoBehaviour:
     SpawnPrefab: {fileID: 0}
     prefab: {fileID: 529243422837345177, guid: 1ecaa0d6260efa2438cb41e6d406972e, type: 3}
     size: 3
-  - tag: log_0
-    SpawnPrefab: {fileID: 0}
-    prefab: {fileID: 5652530333348209454, guid: 9e44d4a56e488d34d8bf080e03faddb5,
-      type: 3}
-    size: 3
   - tag: log_1
     SpawnPrefab: {fileID: 0}
     prefab: {fileID: 7272204889410860834, guid: 0e0ed48e5965f0a409e62dc6d0dc1b6e,
-      type: 3}
-    size: 3
-  - tag: log_2
-    SpawnPrefab: {fileID: 0}
-    prefab: {fileID: 6301211049896208630, guid: 2912950a3737ef54d987be68c996580a,
       type: 3}
     size: 3
   - tag: item_dyes_0_red
@@ -11056,11 +11041,6 @@ MonoBehaviour:
   - tag: item_dyes_8_black
     SpawnPrefab: {fileID: 0}
     prefab: {fileID: 1605973822220197882, guid: 69ecbccb43dfb8a4e8f88342f7fbb419,
-      type: 3}
-    size: 3
-  - tag: item_treewater
-    SpawnPrefab: {fileID: 0}
-    prefab: {fileID: 6101357701479038141, guid: c7e493c2e23fed047b749b3cf8f6ae3d,
       type: 3}
     size: 3
   - tag: item_ores_silver_0
@@ -52864,7 +52844,8 @@ PrefabInstance:
       propertyPath: m_Follow
       value: 
       objectReference: {fileID: 1389654728}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 21825722, guid: d706d87b09a875740ac9fdf06ea2cca7, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d706d87b09a875740ac9fdf06ea2cca7, type: 3}
 --- !u!1001 &1376412147
 PrefabInstance:
@@ -58578,12 +58559,12 @@ MonoBehaviour:
   horizonColor: {r: 0.58018863, g: 0.9627194, b: 1, a: 1}
   horizonDistance: 20
   shoreFade: 1
-  shoreColor: {r: 0, g: 0.09425243, b: 0.02885683, a: 0}
+  shoreColor: {r: 0, g: 0.094238125, b: 0.02885683, a: 0}
   shoreStrength: 0
   shoreBlend: 1
   shoreDepth: 0.74
-  waveColor: {r: 0, g: 0.3135116, b: 0.017320469, a: 0}
-  underwaterColor: {r: 0.20338157, g: 0.30923417, b: 0.517647, a: 0}
+  waveColor: {r: 0, g: 0.31349686, b: 0.017320469, a: 0}
+  underwaterColor: {r: 0.20336759, g: 0.30921942, b: 0.517647, a: 0}
   underwaterColorStrength: 0
   underwaterRefractionStrength: 0.099
   surfaceFoamTexture: {fileID: 2800000, guid: ab507ff7ff37d954da98b07bf0bb152e, type: 3}

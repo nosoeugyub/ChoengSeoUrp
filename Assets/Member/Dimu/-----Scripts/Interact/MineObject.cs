@@ -141,7 +141,7 @@ public class MineObject : ItemObject
             {
                 Vector3 randVec = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f));
                 instantiateItem = ObjectPooler.SpawnFromPool(item.itemObjs[i].itemObj.name, gameObject.transform.position + randVec - gameObject.transform.forward);
-                instantiateItem.GetComponent<CollectObject>().PlayStartSound();
+                instantiateItem.GetComponent<DropCollectObject>().PlayStartSound();
             }
         }
     }

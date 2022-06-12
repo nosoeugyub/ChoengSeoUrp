@@ -23,18 +23,36 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8394522536032744235}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2771acc87e1828841b3fa3228d181e29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: 0fd973446ae977042aed9658bea02137, type: 2}
+  defaultshader: {fileID: 0}
   quad: {fileID: 0}
-  amount: 1
+  item: {fileID: 11400000, guid: 0fd973446ae977042aed9658bea02137, type: 2}
+  picksoundName: item_pick
+--- !u!114 &6993732950900781987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8394522536032744235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf710d6a378b38e4f9936940f4665a8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultshader: {fileID: 0}
+  quad: {fileID: 0}
+  item: {fileID: 11400000, guid: 0fd973446ae977042aed9658bea02137, type: 2}
+  picksoundName: item_pick
   powerInit: 0.3
-  power: 0
+  power: 0.3
   canMove: 0
-  soundName: item_pick
+  startsoundName: item_drop2
+  downsoundName: item_drop1
 --- !u!1001 &2678131872183312850
 PrefabInstance:
   m_ObjectHideFlags: 0

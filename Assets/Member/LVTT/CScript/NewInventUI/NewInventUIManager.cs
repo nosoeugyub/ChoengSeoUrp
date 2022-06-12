@@ -150,7 +150,11 @@ public class NewInventUIManager : MonoBehaviour
     public void FixedUpdate()  //현재 갯수
     {
         scrollbar.size = 0;
-
+    }
+    public void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.C))
+        CreateMode();
     }
     public void CreateMode()
     {
