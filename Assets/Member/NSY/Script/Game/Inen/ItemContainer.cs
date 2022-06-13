@@ -65,7 +65,7 @@ namespace NSY.Iven
             }
             return freeSpaces >= amount;
         }
-      
+
 
         public virtual void CheckCanBuildItem(BuildingBlock buildingBlock)//당장 건축 가능한 자재인지 아닌지 판단.
         {
@@ -122,7 +122,7 @@ namespace NSY.Iven
                 {
                     itemSlot.Interactble(true);
                 }
-              
+
             }
             return;
         }
@@ -134,6 +134,7 @@ namespace NSY.Iven
         }
         public virtual bool AddItem(Item item)
         {
+           
             for (int i = 0; i < ItemSlots.Count; i++)
             {
                 if (ItemSlots[i].CanAddStack(item))
@@ -151,7 +152,7 @@ namespace NSY.Iven
             }
             for (int i = 0; i < ItemSlots.Count; i++)
             {
-               
+
                 if (ItemSlots[i].item == null)
                 {
                     ItemSlots[i].item = item;
@@ -165,7 +166,6 @@ namespace NSY.Iven
 
                     return true;
                 }
-              
             }
             return false;
 
@@ -174,7 +174,7 @@ namespace NSY.Iven
 
         public bool AddItem(Item item, int AddCount)//많은 갯수를 먹을때 
         {
-          
+
             for (int i = 0; i < ItemSlots.Count; i++)
             {
                 if (ItemSlots[i].CanAddStack(item, AddCount))// 최대 
@@ -199,7 +199,7 @@ namespace NSY.Iven
                     AddCount = sub;
                     Debug.Log(AddCount);
                 }
-               
+
             }
             for (int i = 0; i < ItemSlots.Count; i++)
             {
@@ -235,7 +235,7 @@ namespace NSY.Iven
             ItemSlot minSlot;
             do
             {
-               
+
                 minSlot = itemSlots[itemSlots.Count - 1];
 
                 foreach (var itemslot in itemSlots) //최소 슬롯 찾음
@@ -336,22 +336,9 @@ namespace NSY.Iven
                 ItemSlots[i].Amount = 0;
             }
         }
-     
-       public bool IsFull()
-        {
-            foreach (ItemSlot itemss in ItemSlots)
-            {
-                if (!CanAddItem(itemss.item, itemss.Amount))
-                {
-                    Debug.Log("짜장면 먹고싶다");
-                    return false;
-                }
-            }
-            return true;
-        }
-       
 
-       public bool Fulled()
+       
+        public bool Fulled()
         {
             for (int i = 0; i < ItemSlots.Count; i++)
             {

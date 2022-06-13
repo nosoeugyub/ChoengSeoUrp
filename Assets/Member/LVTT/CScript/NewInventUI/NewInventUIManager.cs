@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class NewInventUIManager : MonoBehaviour
 {
     public GameObject NoPopUp;
+    public Button button;
 
     [Header("오픈될 오브젝트")] [SerializeField] RectTransform BG, invenBtn;
     [SerializeField] GameObject[] TabUI;
@@ -134,7 +135,7 @@ public class NewInventUIManager : MonoBehaviour
             CraftWindows[i].SetRecipeHaverAmountText(obj.RecipeItem.recipe[i].item.GetCountItems.ToString());
         }
     }
-    public void FixedUpdate()  //현재 갯수
+    public void FixedUpdate()  
     {
         scrollbar.size = 0;
     }
@@ -143,13 +144,20 @@ public class NewInventUIManager : MonoBehaviour
     {
         foreach (ItemSlot items in iven.ItemSlots)
         {
-            if (iven.CanAddItem(items.item))
+            if (iven.CanAddItem(items.item , items.Amount))
             {
-
-                return false;
+                Debug.Log("No성엽");
+                StartCoroutine(StartPopup());
+                return false;//더할 스택이 있을때 false 반환
             }
+             //
+
         }
         return true;
+    }
+    private bool HaventItems()
+    {
+        return !HasItemSlot() && iven.Fulled();
     }
     IEnumerator StartPopup()
     {
@@ -164,14 +172,19 @@ public class NewInventUIManager : MonoBehaviour
     }
     public void BtnSolution()
     {
-
-        if (iven.Fulled() && !HasItemSlot())
+        if (HaventItems())
         {
-            Debug.Log("시발이제 못넣어! 새로운걸 못넣어용");
-            StartCoroutine(StartPopup()); //가득찼을때 팝업 
-            return;
+           
+          
         }
-        List<List<ItemSlot>> itemSlots = CanCraftItem();
+
+
+        if (isCreateMode == true)
+        {
+            iven.AddItem(nowSelectItem.RecipeItem);
+        }
+
+            List<List<ItemSlot>> itemSlots = CanCraftItem();
         if (itemSlots == null || itemSlots[0].Count == 0) return;
 
         for (int i = 0; i < CraftWindows.Length; i++)
