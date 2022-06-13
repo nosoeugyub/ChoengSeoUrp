@@ -103,6 +103,7 @@ namespace NSY.Iven
                 Vector3 ToolVec = TapToolTip.tooltipTransform.transform.position;
                 ToolVec.x = GetComponent<Image>().rectTransform.position.x + 1100 ;
             ToolVec.y = GetComponent<Image>().rectTransform.position.y - 300;
+            ToolVec.z = 0;
 
             TapToolTip.tooltipTransform.transform.localPosition = ToolVec;
         }
