@@ -9,7 +9,7 @@ namespace NSY.Iven
     public abstract class ItemContainer : MonoBehaviour, IItemContainer
     {
         //  public CraftManager craftslots;
-
+        public GameObject NoPopUp;
         public List<ItemSlot> ItemSlots;
         public List<CraftSlot> Craftslot;
 
@@ -65,7 +65,7 @@ namespace NSY.Iven
             }
             return freeSpaces >= amount;
         }
-      
+
 
         public virtual void CheckCanBuildItem(BuildingBlock buildingBlock)//당장 건축 가능한 자재인지 아닌지 판단.
         {
@@ -122,7 +122,7 @@ namespace NSY.Iven
                 {
                     itemSlot.Interactble(true);
                 }
-              
+
             }
             return;
         }
@@ -134,6 +134,7 @@ namespace NSY.Iven
         }
         public virtual bool AddItem(Item item)
         {
+           
             for (int i = 0; i < ItemSlots.Count; i++)
             {
                 if (ItemSlots[i].CanAddStack(item))
@@ -151,12 +152,12 @@ namespace NSY.Iven
             }
             for (int i = 0; i < ItemSlots.Count; i++)
             {
-               
                 if (ItemSlots[i].item == null)
                 {
                     ItemSlots[i].item = item;
                     ItemSlots[i].Amount++;
                     ItemSlots[i].item.GetCountItems++;
+
                     if (OnAddItemEvent != null)
                         OnAddItemEvent();
 
@@ -164,17 +165,34 @@ namespace NSY.Iven
                     StartCoroutine(DelayUpdateAddValue(item));
 
                     return true;
+
                 }
-              
+            }
+            for (int i = 0; i < ItemSlots.Count; i++)
+            {
+                if (ItemSlots[i].item != null)
+                {
+                    Debug.Log(" 더이상 줍지마!");
+                    StartCoroutine(NoPopUpgo());
+                    return true;
+
+                }
             }
             return false;
 
         }
+
+        IEnumerator NoPopUpgo()
+        {
+            NoPopUp.SetActive(true);
+            yield return new WaitForSeconds(0.3f);
+            NoPopUp.SetActive(false);
+        }
+
         int resultadd;
 
         public bool AddItem(Item item, int AddCount)//많은 갯수를 먹을때 
         {
-          
             for (int i = 0; i < ItemSlots.Count; i++)
             {
                 if (ItemSlots[i].CanAddStack(item, AddCount))// 최대 
@@ -199,7 +217,7 @@ namespace NSY.Iven
                     AddCount = sub;
                     Debug.Log(AddCount);
                 }
-               
+
             }
             for (int i = 0; i < ItemSlots.Count; i++)
             {
@@ -235,7 +253,7 @@ namespace NSY.Iven
             ItemSlot minSlot;
             do
             {
-               
+
                 minSlot = itemSlots[itemSlots.Count - 1];
 
                 foreach (var itemslot in itemSlots) //최소 슬롯 찾음
@@ -336,22 +354,9 @@ namespace NSY.Iven
                 ItemSlots[i].Amount = 0;
             }
         }
-     
-       public bool IsFull()
-        {
-            foreach (ItemSlot itemss in ItemSlots)
-            {
-                if (!CanAddItem(itemss.item, itemss.Amount))
-                {
-                    Debug.Log("짜장면 먹고싶다");
-                    return false;
-                }
-            }
-            return true;
-        }
-       
 
-       public bool Fulled()
+       
+        public bool Fulled()
         {
             for (int i = 0; i < ItemSlots.Count; i++)
             {
@@ -360,6 +365,7 @@ namespace NSY.Iven
                     return false;
                 }
             }
+            Debug.Log("가득찼다고 몇번을쳐말해야 알아듣냐 ");
             return true;
         }
     }

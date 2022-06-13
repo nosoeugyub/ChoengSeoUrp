@@ -12,7 +12,8 @@ namespace NSY.Iven
     {
         //툴팁 이벤트
         public ItemTooltip TapToolTip;
-       
+
+        public Vector3 offset;
 
         public Sprite reimage;
         public Text RecipeCurrentAmount;
@@ -97,19 +98,18 @@ namespace NSY.Iven
       
         public void OnPointerEnter(PointerEventData eventData)
         {
-            Debug.Log("시발 넌가?");
+           
             TapToolTip.ShowItemTooltip(Item);
            
                 Vector3 ToolVec = TapToolTip.tooltipTransform.transform.position;
-                ToolVec.x = GetComponent<Image>().rectTransform.position.x + 1100 ;
-            ToolVec.y = GetComponent<Image>().rectTransform.position.y - 300;
-            ToolVec.z = 0;
+                ToolVec.x = GetComponent<Image>().rectTransform.position.x + offset.x;
+            ToolVec.y = GetComponent<Image>().rectTransform.position.y - offset.y;
 
             TapToolTip.tooltipTransform.transform.localPosition = ToolVec;
         }
         public void OnPointerExit(PointerEventData eventData)
         {
-            Debug.Log("시발 난가?");
+          
             TapToolTip.HideTooltip();
         }
     }
