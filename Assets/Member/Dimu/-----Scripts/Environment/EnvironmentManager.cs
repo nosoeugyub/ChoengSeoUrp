@@ -1,4 +1,5 @@
 ﻿using DM.Dialog;
+using NSY.Manager;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -91,6 +92,8 @@ public class EnvironmentManager : MonoBehaviour
                 cleanliness = 100;
                 endingButton.SetActive(true);
             }
+            else if (cleanliness < 0)
+                cleanliness = 0;
 
             if (cleanLevel < cleanLevels.Count)
             {
@@ -108,6 +111,8 @@ public class EnvironmentManager : MonoBehaviour
     {
         npcManager = FindObjectOfType<NPCManager>();
         dManager = FindObjectOfType<DialogueManager>();
+        EventManager.EventActions[(int)EventEnum.DownClean] += DownCleanliness;
+        EventManager.EventActions[(int)EventEnum.DownCleanDouble] += DownCleanlinessDouble;
     }
     private void Start()
     {
@@ -207,6 +212,19 @@ public class EnvironmentManager : MonoBehaviour
     public void ChangeCleanliness(float cleanAmount)
     {
         Cleanliness += cleanAmount;
+    }
+
+    public void DownCleanliness()
+    {
+        Cleanliness -= 10;
+        DebugText.Instance.SetText("행복도가 감소합니다.");
+        EventManager.EventAction -= EventManager.EventActions[(int)EventEnum.DownClean];
+    }
+    public void DownCleanlinessDouble()
+    {
+        Cleanliness -= 20;
+        DebugText.Instance.SetText("행복도가 대폭 감소합니다.");
+        EventManager.EventAction -= EventManager.EventActions[(int)EventEnum.DownCleanDouble];
     }
 }
 

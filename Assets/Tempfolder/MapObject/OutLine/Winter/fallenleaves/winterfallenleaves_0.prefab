@@ -1,5 +1,23 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-6154669435270962240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2907681714118180231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 797e03ee7e3ca3940b85a54fa98dcc88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultshader: {fileID: 0}
+  quad: {fileID: 0}
+  item: {fileID: 0}
+  picksoundName: item_pick
+  respawnTime: 1000
+  isStartOn: 0
 --- !u!1001 &8723435539987230590
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -108,5 +126,12 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 1.15
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5923666656364360353, guid: 7deaba772b6f60a449b2a082f0b13231, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7deaba772b6f60a449b2a082f0b13231, type: 3}
+--- !u!1 &2907681714118180231 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5860862596338242297, guid: 7deaba772b6f60a449b2a082f0b13231,
+    type: 3}
+  m_PrefabInstance: {fileID: 8723435539987230590}
+  m_PrefabAsset: {fileID: 0}

@@ -396,7 +396,7 @@ namespace DM.Dialog
         {
             if (sentences[nowSentenceIdx].eventIdx > 0)
                 EventManager.EventAction += EventManager.EventActions[sentences[nowSentenceIdx].eventIdx];
-
+            
             if (nowOnFab)
             {
                 nowOnFab.GetComponent<TextBox>().DestroyTextBox();
@@ -472,15 +472,25 @@ namespace DM.Dialog
                             }
                         }
                         break;
+                    case 2:
+                        if (nowDialogData.cuttype != CutType.None)
+                        {
+                            cutSceneManager.PrintImage((int)nowDialogData.cuttype);
+                        }
+                        break;
                     default:
                         break;
                 }
             }
-
-            if (nowDialogData.cuttype != CutType.None)
+            else
             {
-                cutSceneManager.PrintImage((int)nowDialogData.cuttype);
+
+                if (nowDialogData.cuttype != CutType.None)
+                {
+                    cutSceneManager.PrintImage((int)nowDialogData.cuttype); 
+                }
             }
+
 
 
             PlayerInput.OnPressFDown = savedelegate;

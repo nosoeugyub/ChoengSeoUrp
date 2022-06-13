@@ -27,6 +27,7 @@ public class TextBox : MonoBehaviour
     [SerializeField]
     float rectX;
 
+    bool isleft;
     // [SerializeField]
     BoxCollider boxCollider;
     //랜더모드 카메라 생성
@@ -37,7 +38,7 @@ public class TextBox : MonoBehaviour
     private Vector2 screenPoint;
     private Vector2 worldToScreenPoint;
     Transform bubbleTf;
-    Vector3  bubbleposition;
+    Vector3 bubbleposition;
     private void Awake()
     {
         textboxFabImg = transform.Find("Image").GetComponent<Image>();
@@ -59,6 +60,7 @@ public class TextBox : MonoBehaviour
     public Button GetNextButton => textboxFabNextButton;
     public void SetTextbox(string sentence, Transform tf, TextboxType textboxType, bool isLeft)//말풍선 생산
     {
+        isleft = isLeft;
         BuildingBlock.SetTextBox(this);
         transform.SetParent(baseCanvas);
         transform.localScale = Vector3.one;
@@ -70,13 +72,13 @@ public class TextBox : MonoBehaviour
         //StartCoroutine(PosChange());
         //UiCamCanvas.renderMode = RenderMode.ScreenSpaceCamera;
         //UiCamCanvas.worldCamera = UiCam;
-        if (!isLeft)
+        if (!isleft)
         {
             bubbleposition = bubbleTf.position;
             Vector3 rectPos = new Vector3(rectX, textboxFabImg.rectTransform.localPosition.y, textboxFabImg.rectTransform.localPosition.z);
             textboxFabImg.rectTransform.localPosition = rectPos;
             textboxFabImg.GetComponent<RectTransform>().pivot = new Vector2(0, 0);
-        textboxFabImg.sprite = textboxFabImgs_Right[(int)textboxType];
+            textboxFabImg.sprite = textboxFabImgs_Right[(int)textboxType];
         }
         else
         {
@@ -85,7 +87,7 @@ public class TextBox : MonoBehaviour
             Vector3 rectPos = new Vector3(-rectX, textboxFabImg.rectTransform.localPosition.y, textboxFabImg.rectTransform.localPosition.z);
             textboxFabImg.rectTransform.localPosition = rectPos;
             textboxFabImg.GetComponent<RectTransform>().pivot = new Vector2(1, 0);
-        textboxFabImg.sprite = textboxFabImgs_Left[(int)textboxType];
+            textboxFabImg.sprite = textboxFabImgs_Left[(int)textboxType];
         }
         worldToScreenPoint = Camera.main.WorldToScreenPoint(bubbleposition);
         RectTransformUtility.ScreenPointToLocalPointInRectangle(baseCanvas, worldToScreenPoint, UiCam, out screenPoint);
@@ -117,9 +119,12 @@ public class TextBox : MonoBehaviour
         Invoke("Destroy", 0.5f);
 
         //  Rectoffset.
-
-        boomParticle.transform.localPosition = new Vector3(RecImg.GetComponent<RectTransform>().rect.width / 2,
-                                                           RecImg.GetComponent<RectTransform>().rect.height / 2, 0);
+        if (isleft)
+            boomParticle.transform.localPosition = new Vector3(-RecImg.GetComponent<RectTransform>().rect.width / 2,
+                                                               RecImg.GetComponent<RectTransform>().rect.height / 2, 0);
+        else
+            boomParticle.transform.localPosition = new Vector3(RecImg.GetComponent<RectTransform>().rect.width / 2,
+                                                                RecImg.GetComponent<RectTransform>().rect.height / 2, 0);
 
         boomParticle.SetActive(true);
         LayoutRebuilder.ForceRebuildLayoutImmediate(RecImg.rectTransform);

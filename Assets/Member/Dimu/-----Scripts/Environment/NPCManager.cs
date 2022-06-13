@@ -46,7 +46,7 @@ public class NPCManager : MonoBehaviour
         EventManager.EventActions[(int)EventEnum.GotoBearsWithSheep] += MoveToBearsHouseWithSheep;
         EventManager.EventActions[(int)EventEnum.GotoBackWithSheep] += MoveToBackSheep;
 
-        for (int i = 0; i < teleportPosButtons.Length; ++i)
+        for (int i = 0; i < teleportPosButtons.Length-1; ++i)
         {
             ButtonInteractable(i, false);
         }
