@@ -15,7 +15,7 @@ public class MineObject : ItemObject
     [SerializeField] protected InItemType toolType;
 
     [SerializeField] protected Animator animator;
-    [SerializeField] protected BoxCollider boxcol;
+    [SerializeField] protected BoxCollider[] boxcol;
     private new void Awake()
     {
         base.Awake();
@@ -27,9 +27,15 @@ public class MineObject : ItemObject
         nowChopCount = 0;
         nowMat = quad.material;
         animator = quad.transform.parent.GetComponent<Animator>();//transform.Find("Quad").
-        boxcol = GetComponent<BoxCollider>();
+        boxcol = GetComponents<BoxCollider>();
     }
-
+    public void BoxColONOFF(bool isOn)
+    {
+        foreach (var item in boxcol)
+        {
+            item.enabled = isOn;
+        }
+    }
     IEnumerator Respawn()
     {
         yield return new WaitForSeconds(respawnTime + Random.Range(0, 50));
@@ -47,8 +53,8 @@ public class MineObject : ItemObject
         {
             animator.SetBool("IsFalling", false);
             animator.SetTrigger("Finish");
+            BoxColONOFF(true);
 
-            boxcol.GetComponent<BoxCollider>().enabled = true;
             //quad.material = nowMat;
             //quad.material.color = new Color(1, 1, 1, 1);
 
@@ -56,8 +62,8 @@ public class MineObject : ItemObject
         }
         else
         {
-            boxcol = GetComponent<BoxCollider>();
-            boxcol.enabled = false;
+            boxcol = GetComponents<BoxCollider>();
+            BoxColONOFF(false);
             animator.SetBool("IsFalling", true);
             print(animator.transform.parent.name);
         }

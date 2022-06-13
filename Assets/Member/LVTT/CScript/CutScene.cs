@@ -20,6 +20,7 @@ public enum CutType
     ButtingCowToBear,
     BearAndWalrus,
     FakeLuxuryToCow,
+    ComeToPort,
 }
 
 public class CutScene : MonoBehaviour

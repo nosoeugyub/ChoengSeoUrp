@@ -13,6 +13,8 @@ public enum EventEnum
     OnChick,
     GotoBearsWithSheep,
     GotoBackWithSheep,
+    DownClean,
+    DownCleanDouble,
 }
 namespace NSY.Manager
 {
