@@ -9,7 +9,7 @@ namespace NSY.Iven
     public abstract class ItemContainer : MonoBehaviour, IItemContainer
     {
         //  public CraftManager craftslots;
-
+        public GameObject NoPopUp;
         public List<ItemSlot> ItemSlots;
         public List<CraftSlot> Craftslot;
 
@@ -152,12 +152,12 @@ namespace NSY.Iven
             }
             for (int i = 0; i < ItemSlots.Count; i++)
             {
-
                 if (ItemSlots[i].item == null)
                 {
                     ItemSlots[i].item = item;
                     ItemSlots[i].Amount++;
                     ItemSlots[i].item.GetCountItems++;
+
                     if (OnAddItemEvent != null)
                         OnAddItemEvent();
 
@@ -165,16 +165,34 @@ namespace NSY.Iven
                     StartCoroutine(DelayUpdateAddValue(item));
 
                     return true;
+
+                }
+            }
+            for (int i = 0; i < ItemSlots.Count; i++)
+            {
+                if (ItemSlots[i].item != null)
+                {
+                    Debug.Log(" 더이상 줍지마!");
+                    StartCoroutine(NoPopUpgo());
+                    return true;
+
                 }
             }
             return false;
 
         }
+
+        IEnumerator NoPopUpgo()
+        {
+            NoPopUp.SetActive(true);
+            yield return new WaitForSeconds(0.3f);
+            NoPopUp.SetActive(false);
+        }
+
         int resultadd;
 
         public bool AddItem(Item item, int AddCount)//많은 갯수를 먹을때 
         {
-
             for (int i = 0; i < ItemSlots.Count; i++)
             {
                 if (ItemSlots[i].CanAddStack(item, AddCount))// 최대 
@@ -347,6 +365,7 @@ namespace NSY.Iven
                     return false;
                 }
             }
+            Debug.Log("가득찼다고 몇번을쳐말해야 알아듣냐 ");
             return true;
         }
     }
