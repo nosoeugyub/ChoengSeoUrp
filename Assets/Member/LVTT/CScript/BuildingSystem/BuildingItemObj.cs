@@ -68,7 +68,7 @@ namespace DM.Building
             SpawnHandyObjParent = FindObjectOfType<BuildingHandyObjSpawn>();
 
             base.Awake();
-            itemisSet = true;
+            itemisSet = false;
             isFirstDrop = true;
         }
         private void Start()
@@ -77,7 +77,10 @@ namespace DM.Building
             MinScale = 0.3f;
             layerMask = 1 << LayerMask.NameToLayer("Ground");
             if (parentBuildArea)
+            {
                 SetParentBuildArea(parentBuildArea, parentBuildArea.HouseBuild.position);
+                itemisSet = true;
+            }
         }
         private void Update()
         {
@@ -103,11 +106,11 @@ namespace DM.Building
             {
                 var movePos = Input.mousePosition;
                 movePos.z = parentBuildArea.DistanceToNowBuildItemToNewSort(Camera.main.transform.position);
-                            print(movePos.z);
+                print(movePos.z);
                 movePos = Camera.main.ScreenToWorldPoint(movePos);
 
                 HouseBuildAreaCal();
-                print(MaxY +  " "    + MinY);
+                print(MaxY + " " + MinY);
 
                 if (movePos.y >= MaxY) movePos.y = MaxY;
                 if (movePos.y <= MinY) movePos.y = MinY;
@@ -132,7 +135,7 @@ namespace DM.Building
             //onBuildItem interact when not in BuildMode
             else
             {
-     
+
 
 
 
@@ -171,7 +174,7 @@ namespace DM.Building
             parentBuildArea.SetCurInteractObj(this);
             ObjOriginPos = gameObject.transform.position;
             ObjOriginPos.x = housebuildpos.x;
-            ObjOriginPos.z = housebuildpos.z;
+            //ObjOriginPos.z = housebuildpos.z;
         }
         public void SetBuildItemScale(Vector3 scalenum)
         {
