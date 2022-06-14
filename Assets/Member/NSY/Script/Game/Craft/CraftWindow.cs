@@ -14,18 +14,28 @@ namespace NSY.Iven
         public ItemTooltip TapToolTip;
 
         public Vector3 offset;
-
-        public Sprite reimage;
+        private Color normalColor = Color.white;
+        public Image reimage;
         public Text RecipeCurrentAmount;
         public Text RecipeHaverAmount;
-
+        private Color cantInteractColors = new Color(1, 0.3f, 0.3f, 1f);
         private void OnValidate()
         {
             Item = _item;
             RecipeAmount = _RecipeAmount;
             HaveAmount = _haveAmount;
         }
-
+        public void Interactble(bool canInteractable)// 채원이 빨갱잉
+        {
+            if (canInteractable)
+            {
+                reimage.color = normalColor;
+            }
+            else
+            {
+                reimage.color = cantInteractColors;
+            }
+        }
 
         public Item _item;
 		public Item Item
@@ -42,7 +52,9 @@ namespace NSY.Iven
                 {
                     reimage = null;
                 }
-               
+                
+
+
             }
         }
 
@@ -62,6 +74,7 @@ namespace NSY.Iven
                 {
                     SetRecipeCurrentAmountText(" ");
                 }
+                
             }
         }
        // [SerializeField]
@@ -85,6 +98,7 @@ namespace NSY.Iven
                 {
                     SetRecipeHaverAmountText(" ");
                 }
+                
             }
         }
         public void SetRecipeHaverAmountText(string str)

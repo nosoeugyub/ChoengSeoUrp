@@ -19,8 +19,6 @@ namespace NSY.Manager
 
         [Header("매니저")]
         public UiManager uimanager;
-        
-       // public TutorialManager tutorialManager;
         public QuestManager questmanager;
         public DialogueManager dialogueManager;
         public SpawnManager spawnmanager;
