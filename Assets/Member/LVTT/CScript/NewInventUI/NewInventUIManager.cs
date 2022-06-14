@@ -114,6 +114,7 @@ public class NewInventUIManager : MonoBehaviour
         obj.ResultSlotImage.sprite = obj.RecipeItem.ItemSprite; //결과 이미지
         obj.RecipeName.text = obj.RecipeItem.ItemName;
         obj.RecipeExplain.text = obj.RecipeItem.ItemDescription;
+       
 
         for (int i = 0; i < CraftWindows.Length; i++)
         {
@@ -133,6 +134,16 @@ public class NewInventUIManager : MonoBehaviour
             //갯수
             CraftWindows[i].RecipeAmount = obj.RecipeItem.recipe[i].count;
             CraftWindows[i].SetRecipeHaverAmountText(obj.RecipeItem.recipe[i].item.GetCountItems.ToString());
+            if (CraftWindows[i].RecipeAmount > obj.RecipeItem.recipe[i].item.GetCountItems)
+            {
+                CraftWindows[i].GetComponent<Image>().color = Color.red;
+                //빨간색 
+
+            }
+            else
+            {
+                CraftWindows[i].GetComponent<Image>().color = Color.white;
+            }
         }
     }
     public void FixedUpdate()  
@@ -150,16 +161,15 @@ public class NewInventUIManager : MonoBehaviour
         {
             if (iven.ItemSlots[i].CanAddStack(nowSelectItem.RecipeItem , 1))
             {
-                Debug.Log("No성엽 다른거 쳐넣을수있을때");
                 return false;
             }
         }
         StartCoroutine(StartPopup());//더할 스택이 있을때 true 반환
         return true;
     }
-    private bool HaventItems()
+    public bool HaventItems()
     {
-        return  iven.Fulled() && HasItemSlot() == false;
+        return  iven.Fulled() && !HasItemSlot();
     }
     IEnumerator StartPopup()
     {
@@ -178,7 +188,6 @@ public class NewInventUIManager : MonoBehaviour
         {
 
         }
-        
             if (isCreateMode == true)
             {
                 iven.AddItem(nowSelectItem.RecipeItem);

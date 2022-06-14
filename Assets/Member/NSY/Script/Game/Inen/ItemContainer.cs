@@ -4,10 +4,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using NSY.Player;
 namespace NSY.Iven
 {
     public abstract class ItemContainer : MonoBehaviour, IItemContainer
     {
+        public PlayerInteract playrinteract;
         //  public CraftManager craftslots;
         public GameObject NoPopUp;
         public List<ItemSlot> ItemSlots;
@@ -132,13 +134,16 @@ namespace NSY.Iven
             yield return new WaitForEndOfFrame();
             PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.GetItem, PlayerData.ItemData, ((int)ItemBehaviorEnum.length));
         }
+
+        public bool isGettingItem = true;
         public virtual bool AddItem(Item item)
         {
-           
+            isGettingItem = true;
             for (int i = 0; i < ItemSlots.Count; i++)
             {
                 if (ItemSlots[i].CanAddStack(item))
                 {
+                    isGettingItem = true;
                     ItemSlots[i].item = item;
                     ItemSlots[i].Amount++;
                     ItemSlots[i].item.GetCountItems++;
@@ -147,13 +152,16 @@ namespace NSY.Iven
 
                     SuperManager.Instance.unlockmanager.GetInterectItemUnLocking();// 해금
                     StartCoroutine(DelayUpdateAddValue(item));
+                   
                     return true;
                 }
+
             }
             for (int i = 0; i < ItemSlots.Count; i++)
             {
                 if (ItemSlots[i].item == null)
                 {
+                    isGettingItem = true;
                     ItemSlots[i].item = item;
                     ItemSlots[i].Amount++;
                     ItemSlots[i].item.GetCountItems++;
@@ -163,21 +171,24 @@ namespace NSY.Iven
 
                     SuperManager.Instance.unlockmanager.GetInterectItemUnLocking();
                     StartCoroutine(DelayUpdateAddValue(item));
-
+                    
                     return true;
-
                 }
             }
             for (int i = 0; i < ItemSlots.Count; i++)
             {
-                if (ItemSlots[i].item != null)
+                if (ItemSlots[i].item != null && ItemSlots[i].item.ItemName != item.ItemName)
                 {
-                    Debug.Log(" 더이상 줍지마!");
+                    playrinteract.SetIsAnimation(false);
+                    Debug.Log("이제 더할께없으니 임펙트띄웓 되지도 ");
                     StartCoroutine(NoPopUpgo());
-                    return true;
+                    isGettingItem = false;
 
+                    return false;
+                    
                 }
             }
+            
             return false;
 
         }
@@ -354,20 +365,44 @@ namespace NSY.Iven
                 ItemSlots[i].Amount = 0;
             }
         }
+        public bool isFuuled()
+        {
+            for (int i = 0; i < ItemSlots.Count; i++)
+            {
+                if (ItemSlots[i].item != null)  // 가득찼고
+                {
+                    if (isGettingItem == true) 
+                    {
+                        Debug.Log("기존 업");
 
-       
+                        return true;
+                    }
+                    if (isGettingItem == false)
+                    {
+                        Debug.Log("새로운걸 못얻음");
+                        return false;
+                    }
+
+                }
+
+            }
+            return true;
+        }
+
         public bool Fulled()
         {
             for (int i = 0; i < ItemSlots.Count; i++)
             {
-                if (ItemSlots[i].item == null)
+                if (ItemSlots[i].item != null)  // 가득찼고
                 {
-                    return false;
+                        return false;
                 }
+
             }
-            Debug.Log("가득찼다고 몇번을쳐말해야 알아듣냐 ");
             return true;
         }
+        
     }
+  
 }
 

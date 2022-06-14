@@ -3,7 +3,7 @@ using DM.NPC;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-
+using NSY.Manager;
 namespace NSY.Player
 {
     public class PlayerInteract : MonoBehaviour
@@ -90,10 +90,17 @@ namespace NSY.Player
             CollectObject collectObj = interactable.transform.GetComponent<CollectObject>();
             if (collectObj != null)
             {
-                collectObj.Collect(playerAnimator.animator);
+                if (SuperManager.Instance.inventoryManager.isGettingItem == false)
+                {
+                    collectObj.Collect(playerAnimator.animator); //콜렉트에서 애니 발생함
+                    SetIsAnimation(false);
+                    return;
+                }
+                collectObj.Collect(playerAnimator.animator); //콜렉트에서 애니 발생함
                 SetIsAnimation(true);
                 return;
             }
+
             NPC talkable = interactable.transform.GetComponent<NPC>();
             if (talkable != null)
             {

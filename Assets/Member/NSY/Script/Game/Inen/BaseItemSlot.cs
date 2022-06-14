@@ -146,7 +146,6 @@ namespace NSY.Iven
       
         public void Interactble(bool canInteractable)// 채원이 빨갱잉
         {
-
             if (canInteractable)
             {
                 itemImage.color = normalColor;
@@ -155,8 +154,6 @@ namespace NSY.Iven
             {
                 itemImage.color = cantInteractColor;
             }
-
-
         }
 
         public virtual bool CanAddStack(Item Item, int amount = 1)
