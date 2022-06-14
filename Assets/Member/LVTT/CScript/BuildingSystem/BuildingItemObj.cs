@@ -27,7 +27,7 @@ namespace DM.Building
 
         Vector3 ObjOriginPos;
 
-        BuildingBlock parentBuildArea;
+        [SerializeField] BuildingBlock parentBuildArea;
         BuildingHandyObjSpawn SpawnHandyObjParent;
 
         RaycastHit hit;
@@ -68,7 +68,7 @@ namespace DM.Building
             SpawnHandyObjParent = FindObjectOfType<BuildingHandyObjSpawn>();
 
             base.Awake();
-            itemisSet = false;
+            itemisSet = true;
             isFirstDrop = true;
         }
         private void Start()
@@ -76,10 +76,12 @@ namespace DM.Building
             MaxScale = 2f;
             MinScale = 0.3f;
             layerMask = 1 << LayerMask.NameToLayer("Ground");
+            if (parentBuildArea)
+                SetParentBuildArea(parentBuildArea, parentBuildArea.HouseBuild.position);
         }
         private void Update()
         {
-            if (!itemisSet)
+            if (!itemisSet && parentBuildArea == BuildingBlock.nowBuildingBlock)
             {
                 ItemMove();
             }
@@ -105,6 +107,7 @@ namespace DM.Building
                 movePos = Camera.main.ScreenToWorldPoint(movePos);
 
                 HouseBuildAreaCal();
+                print(MaxY +  " "    + MinY);
 
                 if (movePos.y >= MaxY) movePos.y = MaxY;
                 if (movePos.y <= MinY) movePos.y = MinY;
@@ -123,6 +126,7 @@ namespace DM.Building
 
                 //print(parentBuildArea.DistanceFromHouseBuildTo(movePos));
                 transform.position = movePos;
+                print(movePos);
             }
 
             //onBuildItem interact when not in BuildMode
@@ -161,11 +165,13 @@ namespace DM.Building
 
             Destroy(gameObject);
         }
-        public void SetParentBuildArea(BuildingBlock pb)
+        public void SetParentBuildArea(BuildingBlock pb, Vector3 housebuildpos)
         {
             parentBuildArea = pb;
             parentBuildArea.SetCurInteractObj(this);
             ObjOriginPos = gameObject.transform.position;
+            ObjOriginPos.x = housebuildpos.x;
+            ObjOriginPos.z = housebuildpos.z;
         }
         public void SetBuildItemScale(Vector3 scalenum)
         {
