@@ -70,6 +70,7 @@ namespace NSY.Iven
         public RectTransform button_UpDown;
         public bool isUp;
         public bool isDown;
+        public Camera uicamera;
 
 
         //빌딩쓰
@@ -223,6 +224,18 @@ namespace NSY.Iven
                 draggableitem.sprite = itemslot.item.ItemSprite;
                 draggableitem.transform.position = Input.mousePosition;
                 draggableitem.gameObject.SetActive(true);
+
+                //itemTooltip.ShowItemTooltip(itemSlot.item);
+                Vector3 screenpoint  = Input.mousePosition;
+                Vector2 onPoint;
+                RectTransformUtility.ScreenPointToLocalPointInRectangle(BaseCharcterPanel, screenpoint, uicamera, out onPoint);
+                draggableitem.GetComponent<RectTransform>().localPosition = onPoint;
+
+                //Vector3 ToolVec = itemTooltip.tooltipTransform.transform.position;
+                //ToolVec = itemTooltip.tooltipTransform.transform.position;
+
+                //itemTooltip.tooltipTransform.transform.position = ToolVec;
+
             }
         }
         private void Drag(BaseItemSlot itemslot)

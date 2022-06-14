@@ -118,7 +118,7 @@ namespace NSY.Iven
                 Vector3 ToolVec = TapToolTip.tooltipTransform.transform.position;
                 ToolVec.x = GetComponent<Image>().rectTransform.position.x + offset.x;
             ToolVec.y = GetComponent<Image>().rectTransform.position.y - offset.y;
-
+            ToolVec.z = 0;
             TapToolTip.tooltipTransform.transform.localPosition = ToolVec;
         }
         public void OnPointerExit(PointerEventData eventData)

@@ -179,7 +179,7 @@ namespace NSY.Iven
             {
                 if (ItemSlots[i].item != null && ItemSlots[i].item.ItemName != item.ItemName)
                 {
-                    playrinteract.SetIsAnimation(false);
+                    //playrinteract.SetIsAnimation(false);
                     Debug.Log("이제 더할께없으니 임펙트띄웓 되지도 ");
                     StartCoroutine(NoPopUpgo());
                     isGettingItem = false;
