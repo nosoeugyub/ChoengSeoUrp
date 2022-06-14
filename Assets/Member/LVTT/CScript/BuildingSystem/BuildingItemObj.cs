@@ -17,6 +17,7 @@ namespace DM.Building
 
         [SerializeField] private bool itemisSet;
         [SerializeField] private bool isFirstDrop;
+        [SerializeField] private bool isBroken;
 
         [SerializeField] private ParticleSystem particle;
 
@@ -76,10 +77,11 @@ namespace DM.Building
             MaxScale = 2f;
             MinScale = 0.3f;
             layerMask = 1 << LayerMask.NameToLayer("Ground");
-            if (parentBuildArea)
+            if (isBroken)
             {
                 SetParentBuildArea(parentBuildArea, parentBuildArea.HouseBuild.position);
                 itemisSet = true;
+                isFirstDrop = false;
             }
         }
         private void Update()
@@ -88,7 +90,7 @@ namespace DM.Building
             {
                 ItemMove();
             }
-            if (IsFirstDrop)
+            if (IsFirstDrop && parentBuildArea == BuildingBlock.nowBuildingBlock)
             {
                 // print("isFirstDrop");
 
