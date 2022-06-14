@@ -258,6 +258,7 @@ namespace NSY.Iven
             {
                 return;
             }
+            _discount = 1;
             questionDialog.Show();
             BaseItemSlot slot = dragitemSlot;
             MaxDiscount = slot.Amount;
