@@ -50,13 +50,14 @@ namespace NSY.Iven
             set
             {
                 _recipeItem = value;
+                ResultSlotListImage.rectTransform.localScale = Vector3.one;
 
-                if (childImgObject)
-                {
+                ResultSlotListImage.enabled = true;
+                ResultSlotListImage.color = Color.clear;
+                    childImgObject = transform.GetChild(0).GetComponent<Image>();
                     childImgObject.sprite = _recipeItem.ItemSprite;
                     childImgObject.SetNativeSize();
                     childImgObject.rectTransform.localScale = Vector3.one * 0.1f;
-                }
             }
         }
 
@@ -73,11 +74,11 @@ namespace NSY.Iven
                 _isHaverecipeItem = value;
                 if (_isHaverecipeItem == false)
                 {
-                    ResultSlotListImage.color = new Color(0.5f, 0.5f, 0.5f);
+                    childImgObject.color = new Color(0.5f, 0.5f, 0.5f);
                 }
                 else
                 {
-                    ResultSlotListImage.color = new Color(1f, 1f, 1f);
+                    childImgObject.color = new Color(1f, 1f, 1f);
                 }
             }
         }
