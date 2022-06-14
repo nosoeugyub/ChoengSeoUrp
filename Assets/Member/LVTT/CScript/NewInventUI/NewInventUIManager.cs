@@ -26,14 +26,12 @@ public class NewInventUIManager : MonoBehaviour
     public bool isOpen;
     public bool isChange;
     public int TabuiNumber;
-
+    //영역생성
+    public Image image;
     // Start is called before the first frame update
     void Awake()
     {
-        for (int i = 0; i < CraftWindows.Length; i++)
-        {
-
-        }
+      
         for (int i = 0; i < TabUI.Length; i++)
         {
             {
@@ -48,7 +46,7 @@ public class NewInventUIManager : MonoBehaviour
     {
         nowActiveTabIdx = -1;
         //조건 검사 as
-
+       
         UnLockManager.Unlockmanager.GetItemUnlocks += InterectingItem;
     }
     private void OnDisable()
