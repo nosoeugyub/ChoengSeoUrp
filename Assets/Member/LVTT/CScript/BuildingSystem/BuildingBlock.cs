@@ -16,7 +16,7 @@ namespace DM.Building
         [SerializeField] private HouseNpc livingCharacter;
         
 
-        [SerializeField] private Transform HouseBuild;
+        [SerializeField] private Transform houseBuild;
         [SerializeField] private List<GameObject> BuildItemList;
 
         [SerializeField] BuildState buildState;
@@ -59,6 +59,7 @@ namespace DM.Building
 
         public Transform HouseOwnerTransform { get { return houseOwnerTransform; } set { houseOwnerTransform = value; } }
         public Transform FriendTransform { get { return friendTransform; } set { friendTransform = value; } }
+        public Transform HouseBuild { get { return houseBuild; } set { houseBuild = value; } }
         public float AreaWidthsize { get { return areaWidthsize; } set { areaWidthsize = value; } }
         public float AreaHeightsize { get { return areaHeightsize; } set { areaHeightsize = value; } }
         public int BuildingID { get { return buildingId; } set { buildingId = value; } }
@@ -471,7 +472,7 @@ namespace DM.Building
 
             GameObject newPrefab = Instantiate(spawnObj.ItemPrefab, spawnPos, Quaternion.identity, HouseBuild.transform);
             newPrefab.transform.localRotation = Quaternion.Euler(0, 0, 0);
-            newPrefab.GetComponent<BuildingItemObj>().SetParentBuildArea(nowBuildingBlock);
+            newPrefab.GetComponent<BuildingItemObj>().SetParentBuildArea(nowBuildingBlock, HouseBuild.position);
             newPrefab.name = spawnObj.name;
             if (specialHouse)
                 specialHouse.CanExist(curInteractObj, true);

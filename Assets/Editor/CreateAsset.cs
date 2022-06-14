@@ -74,7 +74,7 @@ public class CreateAsset : MonoBehaviour
         foreach (Texture2D texture in _textures)
         {
             string path = AssetDatabase.GetAssetPath(texture);
-            string filename = path.Substring(0, path.Length - 4);
+            string filename = path.Substring(0, path.Length - 7);
 
             TextureImporter textureImporter = AssetImporter.GetAtPath(path) as TextureImporter;
             textureImporter.textureType = TextureImporterType.Sprite;
@@ -225,11 +225,11 @@ public class CreateAsset : MonoBehaviour
             variantRoot.GetComponent<BoxCollider>().size = new Vector3(texture.width * 0.01f, texture.height * 0.01f, 1);
             variantRoot.GetComponent<BoxCollider>().center = new Vector3(0, 0, 0);
 
-            so = AssetDatabase.LoadAssetAtPath(string.Format(string.Format("{0}.asset", path.Substring(0, path.Length - 7))), typeof(Item)) as Item;
-            so.OutItemType = OutItemType.BuildingItemObj;
-            so.ItemName = path.Substring(0, path.Length - 7);
-            so.MaximumStacks = 30;
-            variantRoot.GetComponent<BuildingItemObj>().SetItem(so);
+            //so = AssetDatabase.LoadAssetAtPath(string.Format(string.Format("{0}.asset", path.Substring(0, path.Length - 7))), typeof(Item)) as Item;
+            //so.OutItemType = OutItemType.BuildingItemObj;
+            //so.ItemName = path.Substring(0, path.Length - 7);
+            //so.MaximumStacks = 30;
+            //variantRoot.GetComponent<BuildingItemObj>().SetItem(so);
 
             Transform variantRootChild = variantRoot.transform.GetChild(0);
             variantRootChild.GetComponent<MeshRenderer>().material = material;

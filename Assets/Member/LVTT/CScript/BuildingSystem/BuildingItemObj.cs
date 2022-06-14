@@ -17,6 +17,7 @@ namespace DM.Building
 
         [SerializeField] private bool itemisSet;
         [SerializeField] private bool isFirstDrop;
+        [SerializeField] private bool isBroken;
 
         [SerializeField] private ParticleSystem particle;
 
@@ -27,7 +28,7 @@ namespace DM.Building
 
         Vector3 ObjOriginPos;
 
-        BuildingBlock parentBuildArea;
+        [SerializeField] BuildingBlock parentBuildArea;
         BuildingHandyObjSpawn SpawnHandyObjParent;
 
         RaycastHit hit;
@@ -76,14 +77,20 @@ namespace DM.Building
             MaxScale = 2f;
             MinScale = 0.3f;
             layerMask = 1 << LayerMask.NameToLayer("Ground");
+            if (isBroken)
+            {
+                SetParentBuildArea(parentBuildArea, parentBuildArea.HouseBuild.position);
+                itemisSet = true;
+                isFirstDrop = false;
+            }
         }
         private void Update()
         {
-            if (!itemisSet)
+            if (!itemisSet && parentBuildArea == BuildingBlock.nowBuildingBlock)
             {
                 ItemMove();
             }
-            if (IsFirstDrop)
+            if (IsFirstDrop && parentBuildArea == BuildingBlock.nowBuildingBlock)
             {
                 // print("isFirstDrop");
 
@@ -101,10 +108,11 @@ namespace DM.Building
             {
                 var movePos = Input.mousePosition;
                 movePos.z = parentBuildArea.DistanceToNowBuildItemToNewSort(Camera.main.transform.position);
-                            print(movePos.z);
+                print(movePos.z);
                 movePos = Camera.main.ScreenToWorldPoint(movePos);
 
                 HouseBuildAreaCal();
+                print(MaxY + " " + MinY);
 
                 if (movePos.y >= MaxY) movePos.y = MaxY;
                 if (movePos.y <= MinY) movePos.y = MinY;
@@ -123,12 +131,13 @@ namespace DM.Building
 
                 //print(parentBuildArea.DistanceFromHouseBuildTo(movePos));
                 transform.position = movePos;
+                print(movePos);
             }
 
             //onBuildItem interact when not in BuildMode
             else
             {
-     
+
 
 
 
@@ -161,11 +170,13 @@ namespace DM.Building
 
             Destroy(gameObject);
         }
-        public void SetParentBuildArea(BuildingBlock pb)
+        public void SetParentBuildArea(BuildingBlock pb, Vector3 housebuildpos)
         {
             parentBuildArea = pb;
             parentBuildArea.SetCurInteractObj(this);
             ObjOriginPos = gameObject.transform.position;
+            ObjOriginPos.x = housebuildpos.x;
+            //ObjOriginPos.z = housebuildpos.z;
         }
         public void SetBuildItemScale(Vector3 scalenum)
         {
