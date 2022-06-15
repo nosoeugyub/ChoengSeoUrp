@@ -271,17 +271,17 @@ public class NewInventUIManager : MonoBehaviour
         TabUI[TabNum].SetActive(true);
 
 
-        if (nowActiveTabIdx == TabNum)//같은탭을 눌렀다면
-        {
-            //nowActiveTabIdx = -1;
-            if (isOpen == false) Open(); //닫혀있을 때는 열리기
-            else close();
-        }
-        else //다르면
-        {
-            nowActiveTabIdx = TabNum;
-            if (isOpen == false) Open(); //닫혀있을 때는 열리기
-        }
+        //if (nowActiveTabIdx == TabNum)//같은탭을 눌렀다면
+        //{
+        //    //nowActiveTabIdx = -1;
+        //    if (isOpen == false) Open(); //닫혀있을 때는 열리기
+        //    else close();
+        //}
+        //else //다르면
+        //{
+        //    nowActiveTabIdx = TabNum;
+        //    if (isOpen == false) Open(); //닫혀있을 때는 열리기
+        //}
         TopRect.content = TabUI[TabNum].GetComponent<RectTransform>();
     }
 
@@ -289,12 +289,26 @@ public class NewInventUIManager : MonoBehaviour
     {
         if (isOpen == false)
         {
-            BG.DOLocalMoveX(815, 1).SetEase(Ease.OutQuart);
-            invenBtn.DOLocalMoveX(603 + 25, 1).SetEase(Ease.OutQuart);//630 815 1 85
+            BG.DOLocalMoveX(819, 1).SetEase(Ease.OutQuart);
+            //invenBtn.DOLocalMoveX(607 , 1).SetEase(Ease.OutQuart);//630 815 1 85
             isOpen = true;
         }
     }
-
+    public void ONOFF()
+    {
+        if (isOpen == false)//-960 -1245
+        {
+            BG.DOLocalMoveX(-285, 1).SetEase(Ease.OutQuart);
+            //invenBtn.DOLocalMoveX(607 , 1).SetEase(Ease.OutQuart);//630 815 1 85
+            isOpen = true;
+        }
+        else
+        {
+            BG.DOLocalMoveX(0, 1).SetEase(Ease.OutQuart);
+            //invenBtn.DOLocalMoveX(925, 1).SetEase(Ease.OutQuart); //187
+            isOpen = false;
+        }
+    }
     public void MoveTabs(int index)
     {
         for (int i = 0; i < invenBtn.childCount; i++)
@@ -307,8 +321,8 @@ public class NewInventUIManager : MonoBehaviour
     }
     public void close()
     {
-        BG.DOLocalMoveX(1107, 1).SetEase(Ease.OutQuart);
-        invenBtn.DOLocalMoveX(920, 1).SetEase(Ease.OutQuart); //187
+        BG.DOLocalMoveX(1103, 1).SetEase(Ease.OutQuart);
+        //invenBtn.DOLocalMoveX(925, 1).SetEase(Ease.OutQuart); //187
         isOpen = false;
     }
 }
