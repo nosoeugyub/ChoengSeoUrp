@@ -1,5 +1,6 @@
 ﻿using DM.Dialog;
 using NSY.Manager;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -90,7 +91,10 @@ public class EnvironmentManager : MonoBehaviour
             if (cleanliness > 100)
             {
                 cleanliness = 100;
+               
                 endingButton.SetActive(true);
+                //사진찍엉
+                SuperManager.Instance.scrennshotmangaer.screenshosEvent();
             }
             else if (cleanliness < 0)
                 cleanliness = 0;
@@ -105,12 +109,18 @@ public class EnvironmentManager : MonoBehaviour
         }
     }
 
+    private void shot(Screenshot obj)
+    {
+        Debug.Log("장성원 개변태");
+    }
 
-
+    public Screenshot[] screenshot;
     private void Awake()
     {
+       
         npcManager = FindObjectOfType<NPCManager>();
         dManager = FindObjectOfType<DialogueManager>();
+       
         EventManager.EventActions[(int)EventEnum.DownClean] += DownCleanliness;
         EventManager.EventActions[(int)EventEnum.DownCleanDouble] += DownCleanlinessDouble;
     }
@@ -138,39 +148,7 @@ public class EnvironmentManager : MonoBehaviour
         d1.transform.rotation = Quaternion.Euler(d1.transform.eulerAngles.x, maincamera.transform.eulerAngles.y, d1.transform.eulerAngles.z);
         d2.transform.rotation = Quaternion.Euler(d2.transform.eulerAngles.x, maincamera.transform.eulerAngles.y + 180, d2.transform.eulerAngles.z);
 
-        //세기
-        //d1.intensity = sunintensity.Evaluate(time) * 0.6f + 0.2f;
-        //d2.intensity = sunintensity.Evaluate(time) * 0.6f + 0.2f;
-        //d3.intensity = sunintensity.Evaluate(time) * 0.81f + 0.2f;
-        //d4.intensity = sunintensity.Evaluate(time) * 0.8f + 0.2f;
-        //
-        ////해의 색
-        //d1.color = sunColor.Evaluate(time);
-        //d2.color = sunColor.Evaluate(time);
-        //d3.color = sunColor.Evaluate(time);
-
-        //_lerpSkyColor = Color.Lerp(_DaySkyColor, _NightSkyColor, time);
-        //_lerpEquatorColor = Color.Lerp(_DayEquatorColor, _NightEquatorColor, time);
-        //_lerpEquatorGroundColor = Color.Lerp(_DayEquatorGroundColor, _NightEquatorGroundColor, time);
-        //DayMat.SetColor("_SkyColor", _lerpSkyColor);
-        //DayMat.SetColor("_EquatorColor", _lerpEquatorColor);
-        //DayMat.SetColor("_GroundColor", _lerpEquatorGroundColor);
-
-        //if (d1.intensity < 0.2f)
-        //{
-        //    FireFlyEffect.SetActive(true);
-        //}
-        //else
-        //{
-        //    FireFlyEffect.SetActive(false);
-        //}
-
-        //랜더
-        //RenderSettings.ambientIntensity = lighingIntensityMultipler.Evaluate(time);
-        //RenderSettings.reflectionIntensity = refloectionsIntensityMultipler.Evaluate(time);
-        //이까지
-
-        //RenderSettings.fogColor = fogColor;
+       
         if (Input.GetKeyDown(KeyCode.P))
         {
             //a.isHaveRecipeItem = true;
