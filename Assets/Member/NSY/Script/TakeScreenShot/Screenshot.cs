@@ -98,7 +98,7 @@ public class Screenshot : MonoBehaviour
     private void Awake()
     {
         SceenShotCam = GetComponent<Camera>();
-        SceenShotCam.enabled = false;
+        SceenShotCam.GetComponent<Camera>().enabled = false;
         //  FleshAnim.GetComponent<Animator>();
     }
 
@@ -171,6 +171,7 @@ public class Screenshot : MonoBehaviour
         set
         {
             CamPos = value;
+            SceenShotCam.transform.position = CamPos.transform.position;
         }
     }
 
@@ -467,21 +468,20 @@ public class Screenshot : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Y))
         {//이안에거 갖다붙이면 됩니다.
-
+            SceenShotCam.GetComponent<Camera>().enabled = true;
             if (_WillFakeScreenShot == false)
             {
                 _WillFakeScreenShot = true;
-                SceenShotCam.enabled = true;
             }
-            SceenShotCam.enabled = true;
+          
             Debug.Log("임소정씨발");
+           
             OnPostRender();
          
 
             _WillFakeScreenShot = false;
-            SceenShotCam.enabled = false;
         }
-
+       
 
     }
 
