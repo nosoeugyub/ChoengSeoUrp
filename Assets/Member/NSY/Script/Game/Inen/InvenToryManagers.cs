@@ -162,11 +162,11 @@ namespace NSY.Iven
                     {
                         itemslots.Interactble(false);
                         itemslots.isRedbulid = true;
-
                     }
                     if (itemslots.item == CheckBuliditem)
                     {
                         obj.Amount--;
+                        return;
                     }
                 }
             }
