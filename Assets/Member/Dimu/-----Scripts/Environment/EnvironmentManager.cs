@@ -79,6 +79,7 @@ public class EnvironmentManager : MonoBehaviour
     [SerializeField] HappyUI happyUI;
 
     [SerializeField] GameObject endingButton;
+   
     public float Cleanliness
     {
         get
@@ -94,7 +95,12 @@ public class EnvironmentManager : MonoBehaviour
                
                 endingButton.SetActive(true);
                 //사진찍엉
-                SuperManager.Instance.scrennshotmangaer.screenshosEvent();
+                for (int i = 0; i < screenshot.Length; i++)
+                {
+                    Debug.Log("씨발아 김취라");
+                    screenshot[i].OnSceenShotEvent();
+                }
+                Debug.Log("노성엽 존잘");
             }
             else if (cleanliness < 0)
                 cleanliness = 0;
@@ -109,10 +115,7 @@ public class EnvironmentManager : MonoBehaviour
         }
     }
 
-    private void shot(Screenshot obj)
-    {
-        Debug.Log("장성원 개변태");
-    }
+
 
     public Screenshot[] screenshot;
     private void Awake()

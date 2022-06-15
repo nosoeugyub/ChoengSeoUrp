@@ -39,7 +39,7 @@ public class Screenshot : MonoBehaviour
     {
 
         SceenShotCam = GetComponent<Camera>();
-        SceenShotCam.GetComponent<Camera>().enabled = false;
+      //  SceenShotCam.GetComponent<Camera>().enabled = false;
 
         manager = FindObjectOfType<EnvironmentManager>();
     }
@@ -98,7 +98,11 @@ public class Screenshot : MonoBehaviour
         set
         {
             material1 = value;
-         
+            if (Texutre1 != null)
+            {
+                material1.SetTexture("_MainTex", Texutre1);
+            }
+
         }
     }
 
@@ -113,7 +117,11 @@ public class Screenshot : MonoBehaviour
         set
         {
             material2 = value;
-        
+            if (Texutre2 != null)
+            {
+                material2.SetTexture("_MainTex", Texutre2);
+            }
+          
         }
     }
 
@@ -328,22 +336,28 @@ public class Screenshot : MonoBehaviour
             #endregion
             //Ver 1 . NPC만                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     c                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
             #region
+            Material1.SetTexture("_MainTex", Texutre2);
+            Material2.SetTexture("_MainTex", Texutre1);
             for (int i = 0; i < SuperManager.Instance.buildingManager.buildings.Count; i++)//빌딩스를 체크하여
             {
-
-                if (Page == i &&
+                Debug.Log("호잉호잉");
+                for (int j = 0; i < 14; i++)
+                {
+                    if (Page == j &&
                     SuperManager.Instance.buildingManager.buildings[i]._livingCharacter != null)// 
-                {
-                    Debug.Log(i + "번들어감");
-                    Material1.SetTexture("_MainTex", Texutre2);
-                    Material2.SetTexture("_MainTex", Texutre1);
+                    {
+                        Debug.Log(i + "번들어감");
+                        Material1.SetTexture("_MainTex", Texutre2);
+                        Material2.SetTexture("_MainTex", Texutre1);
+                    }
+                    else
+                    {
+                        Debug.Log("애미");
+                        Material1.SetTexture("_MainTex", Texutre2);
+                        Material2.SetTexture("_MainTex", Texutre1);
+                    }
                 }
-                else
-                {
-                    Debug.Log("애미");
-                    Material1.SetTexture("_MainTex", Texutre2);
-                    Material2.SetTexture("_MainTex", Texutre1);
-                }
+                
 
             }
 
@@ -353,7 +367,7 @@ public class Screenshot : MonoBehaviour
             System.IO.File.WriteAllBytes(TotalPath, screenshotTexture2.EncodeToPNG());
 
             SceenShotCam.targetTexture = null;
-          //  SceenShotCam.GetComponent<Camera>().enabled = false;
+            SceenShotCam.GetComponent<Camera>().enabled = false;
         }
 
 
