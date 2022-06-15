@@ -136,61 +136,69 @@ namespace NSY.Iven
         }
 
         public bool isGettingItem = true;
-        public virtual bool AddItem(Item item)
+        public bool CanAddInven(Item item)
         {
-            isGettingItem = true;
             for (int i = 0; i < ItemSlots.Count; i++)
             {
                 if (ItemSlots[i].CanAddStack(item))
                 {
-                    isGettingItem = true;
-                    ItemSlots[i].item = item;
-                    ItemSlots[i].Amount++;
-                    ItemSlots[i].item.GetCountItems++;
-                    if (OnAddItemEvent != null)
-                        OnAddItemEvent();
-
-                    SuperManager.Instance.unlockmanager.GetInterectItemUnLocking();// 해금
-                    StartCoroutine(DelayUpdateAddValue(item));
-                   
                     return true;
                 }
-
             }
+            //이미 있는 칸에 더할 수 없으면
+
+            //빈 슬롯에 넣기
             for (int i = 0; i < ItemSlots.Count; i++)
             {
                 if (ItemSlots[i].item == null)
                 {
-                    isGettingItem = true;
-                    ItemSlots[i].item = item;
-                    ItemSlots[i].Amount++;
-                    ItemSlots[i].item.GetCountItems++;
-
-                    if (OnAddItemEvent != null)
-                        OnAddItemEvent();
-
-                    SuperManager.Instance.unlockmanager.GetInterectItemUnLocking();
-                    StartCoroutine(DelayUpdateAddValue(item));
-                    
                     return true;
                 }
             }
+            StartCoroutine(NoPopUpgo());
+            return false;
+        }
+        public virtual bool AddItem(Item item)
+        {
+            if (!CanAddInven(item)) return false;
+            //이미 있는 칸에 더할 수 있는지
             for (int i = 0; i < ItemSlots.Count; i++)
             {
-                if (ItemSlots[i].item != null && ItemSlots[i].item.ItemName != item.ItemName)
+                if (ItemSlots[i].CanAddStack(item))
                 {
-                    //playrinteract.SetIsAnimation(false);
-                    Debug.Log("이제 더할께없으니 임펙트띄웓 되지도 ");
-                    StartCoroutine(NoPopUpgo());
-                    isGettingItem = false;
+                    AddInven(item, i);
+                    return true;
+                }
 
-                    return false;
-                    
+            }
+            //이미 있는 칸에 더할 수 없으면
+
+            //빈 슬롯에 넣기
+            for (int i = 0; i < ItemSlots.Count; i++)
+            {
+                if (ItemSlots[i].item == null)
+                {
+                    AddInven(item, i);
+                    return true;
                 }
             }
-            
+            //빈슬롯도 없으면...
             return false;
 
+        }
+
+        private void AddInven(Item item, int i)
+        {
+            isGettingItem = true;
+            ItemSlots[i].item = item;
+            ItemSlots[i].Amount++;
+            ItemSlots[i].item.GetCountItems++;
+
+            if (OnAddItemEvent != null)
+                OnAddItemEvent();
+
+            SuperManager.Instance.unlockmanager.GetInterectItemUnLocking();
+            StartCoroutine(DelayUpdateAddValue(item));
         }
 
         IEnumerator NoPopUpgo()
