@@ -81,7 +81,10 @@ namespace DM.Quest
                     {
                         //아이템 추가
                         print(reward.itemType.ItemName);
-                        SuperManager.Instance.inventoryManager.AddItem(reward.itemType);//, reward.requireCount);
+                        if (SuperManager.Instance.inventoryManager.CanAddInven(reward.itemType))
+                            SuperManager.Instance.inventoryManager.AddItem(reward.itemType);//, reward.requireCount);
+                        else
+                            return false;
                     }
                     else if (reward.rewardType == RewardType.Event)
                     {

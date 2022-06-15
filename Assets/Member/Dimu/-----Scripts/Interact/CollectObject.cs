@@ -1,5 +1,4 @@
-﻿using NSY.Iven;
-using NSY.Manager;
+﻿using NSY.Manager;
 using UnityEngine;
 
 public class CollectObject : ItemObject
@@ -19,16 +18,25 @@ public class CollectObject : ItemObject
     {
         base.OnEnable();
     }
-    public void Collect(Animator animator)
+    public bool Collect(Animator animator)
     {
-        animator.GetComponent<PlayerAnimator>().PickUp = UpdateCollect;
-        animator.SetBool("isPickingUp", true);
+
+
+        if (SuperManager.Instance.inventoryManager.CanAddInven(item))
+        {
+            animator.GetComponent<PlayerAnimator>().PickUp = UpdateCollect;
+            print("인벤에 넣을 수있쓰빈다.ㅇ");
+            animator.SetBool("isPickingUp", true);
+            return true;
+        }
+        else
+            return false;
+
     }
     public virtual void UpdateCollect()
     {
-        inventoryNSY = FindObjectOfType<InventoryNSY>();
         Item itemCopy = item.GetCopy();
-        if (inventoryNSY.AddItem(itemCopy))
+        if (SuperManager.Instance.inventoryManager.AddItem(itemCopy))
             SuperManager.Instance.soundManager.PlaySFX(picksoundName);
         else
             itemCopy.Destroy();
