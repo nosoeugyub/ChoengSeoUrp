@@ -26,6 +26,7 @@ namespace NSY.Manager
         public SoundManager soundManager;
         public UnLockManager unlockmanager;
         public BuildingManager buildingManager;
+        public ScreenshotManager scrennshotmangaer;
 
         public static SuperManager Instance
         {
