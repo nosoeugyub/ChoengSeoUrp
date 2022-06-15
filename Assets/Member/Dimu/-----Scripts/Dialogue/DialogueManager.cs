@@ -396,7 +396,7 @@ namespace DM.Dialog
         {
             if (sentences[nowSentenceIdx].eventIdx > 0)
                 EventManager.EventAction += EventManager.EventActions[sentences[nowSentenceIdx].eventIdx];
-            
+
             if (nowOnFab)
             {
                 nowOnFab.GetComponent<TextBox>().DestroyTextBox();
@@ -445,8 +445,8 @@ namespace DM.Dialog
             testdelegate = null;
 
             IsTalking = false;
-
             nowDialogData.isTalkingOver = true;
+
             //만약 대화데이터에 퀘스트가 있다면
             if (nowDialogData.questId > -1)
             {
@@ -455,14 +455,19 @@ namespace DM.Dialog
                 switch (sentenceState)
                 {
                     case 0://수락 상태라면?
-                        questManager.AcceptQuest(nowDialogData.questId, (int)nowNpc.GetCharacterType());
                         if (nowDialogData.acceptQuestItems.Length > 0)
                         {
                             foreach (DialogData.QuestRewards item in nowDialogData.acceptQuestItems)//아이템추가해야함.
                             {
                                 if (item.rewardType == RewardType.Item)
                                 {
-                                    SuperManager.Instance.inventoryManager.AddItem(item.itemType, item.getCount);
+                                    if (SuperManager.Instance.inventoryManager.CanAddInven(item.itemType))
+                                        SuperManager.Instance.inventoryManager.AddItem(item.itemType, item.getCount);
+                                    else
+                                    {
+                                        nowDialogData.isTalkingOver = false;
+                                        break;
+                                    }
                                 }
                                 else if (item.rewardType == RewardType.Event)
                                 {
@@ -471,6 +476,8 @@ namespace DM.Dialog
                                 //개수만큼 더하게 해야함
                             }
                         }
+                        questManager.AcceptQuest(nowDialogData.questId, (int)nowNpc.GetCharacterType());
+
                         break;
                     case 2:
                         if (nowDialogData.cuttype != CutType.None)
@@ -487,7 +494,7 @@ namespace DM.Dialog
 
                 if (nowDialogData.cuttype != CutType.None)
                 {
-                    cutSceneManager.PrintImage((int)nowDialogData.cuttype); 
+                    cutSceneManager.PrintImage((int)nowDialogData.cuttype);
                 }
             }
 

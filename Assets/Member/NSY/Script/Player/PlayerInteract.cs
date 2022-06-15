@@ -90,15 +90,15 @@ namespace NSY.Player
             CollectObject collectObj = interactable.transform.GetComponent<CollectObject>();
             if (collectObj != null)
             {
-                if (SuperManager.Instance.inventoryManager.isGettingItem == false)
+                //if (SuperManager.Instance.inventoryManager.isGettingItem == false)
                 {
-                    collectObj.Collect(playerAnimator.animator); //콜렉트에서 애니 발생함
+                   if( collectObj.Collect(playerAnimator.animator)) //콜렉트에서 애니 발생함
                     SetIsAnimation(false);
                     return;
                 }
-                collectObj.Collect(playerAnimator.animator); //콜렉트에서 애니 발생함
-                SetIsAnimation(true);
-                return;
+                //collectObj.Collect(playerAnimator.animator); //콜렉트에서 애니 발생함
+                //SetIsAnimation(true);
+                //return;
             }
 
             NPC talkable = interactable.transform.GetComponent<NPC>();
