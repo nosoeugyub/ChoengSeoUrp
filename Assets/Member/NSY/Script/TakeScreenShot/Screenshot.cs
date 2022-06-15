@@ -343,8 +343,8 @@ public class Screenshot : MonoBehaviour
                 Debug.Log("호잉호잉");
                 for (int j = 0; i < 14; i++)
                 {
-                    if (Page == j &&
-                    SuperManager.Instance.buildingManager.buildings[i]._livingCharacter != null)// 
+                    if (Page == i &&
+                    SuperManager.Instance.buildingManager.buildings[j]._livingCharacter != null)// 
                     {
                         Debug.Log(i + "번들어감");
                         Material1.SetTexture("_MainTex", Texutre2);
@@ -352,7 +352,7 @@ public class Screenshot : MonoBehaviour
                     }
                     else
                     {
-                        Debug.Log("애미");
+                        Debug.Log("임소정 애미");
                         Material1.SetTexture("_MainTex", Texutre2);
                         Material2.SetTexture("_MainTex", Texutre1);
                     }
