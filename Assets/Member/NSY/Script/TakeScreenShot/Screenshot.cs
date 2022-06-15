@@ -349,109 +349,110 @@ public class Screenshot : MonoBehaviour
             for (int i = 0; i < SuperManager.Instance.buildingManager.buildings.Count; i++)//빌딩스를 체크하여
             {
 
-                if (Page == 1 && SuperManager.Instance.buildingManager.buildings[0]._livingCharacter != null)// 
+                if (Page == 0 && SuperManager.Instance.buildingManager.buildings[0]._livingCharacter != null )// 
                 {
+                    Debug.Log("1번들어감");
                     PageMat1[0].SetTexture("_MainTex", Texutre2);
-                    PageMat1[0 + 1].SetTexture("_MainTex", Texutre1);
+                    PageMat1[1].SetTexture("_MainTex", Texutre1);
                 }
-                if (Page == 2 && SuperManager.Instance.buildingManager.buildings[i]._livingCharacter != null)
-
+                if (Page == 1 && SuperManager.Instance.buildingManager.buildings[1]._livingCharacter != null)
                 {
+                    Debug.Log("2번들어감");
                     PageMat2[0].SetTexture("_MainTex", Texutre2);
-                    PageMat2[0 + 1].SetTexture("_MainTex", Texutre1);
+                    PageMat2[1].SetTexture("_MainTex", Texutre1);
                 }
-                if (Page == 3 && SuperManager.Instance.buildingManager.buildings[i]._livingCharacter != null
+                if (Page == 2 && SuperManager.Instance.buildingManager.buildings[2]._livingCharacter != null
                  )
                 {
-                    PageMat3[i].SetTexture("_MainTex", Texutre2);
-                    PageMat3[i + 1].SetTexture("_MainTex", Texutre1);
+                    PageMat3[0].SetTexture("_MainTex", Texutre2);
+                    PageMat3[1].SetTexture("_MainTex", Texutre1);
                 }
-                if (Page == 4 && SuperManager.Instance.buildingManager.buildings[i]._livingCharacter != null
+                if (Page == 3 && SuperManager.Instance.buildingManager.buildings[3]._livingCharacter != null
                  )
                 {
                     PageMat4[0].SetTexture("_MainTex", Texutre2);
-                    PageMat4[0 + 1].SetTexture("_MainTex", Texutre1);
+                    PageMat4[1].SetTexture("_MainTex", Texutre1);
                 }
-                if (Page == 5 && SuperManager.Instance.buildingManager.buildings[i]._livingCharacter != null
+                if (Page == 4 && SuperManager.Instance.buildingManager.buildings[4]._livingCharacter != null
                   )
                 {
                     PageMat5[0].SetTexture("_MainTex", Texutre2);
-                    PageMat5[0 + 1].SetTexture("_MainTex", Texutre1);
+                    PageMat5[1].SetTexture("_MainTex", Texutre1);
                 }
-                if (Page == 6 && SuperManager.Instance.buildingManager.buildings[i]._livingCharacter != null
+                if (Page == 5 && SuperManager.Instance.buildingManager.buildings[5]._livingCharacter != null
                   )
                 {
                     PageMat6[0].SetTexture("_MainTex", Texutre2);
-                    PageMat6[0 + 1].SetTexture("_MainTex", Texutre1);
+                    PageMat6[1].SetTexture("_MainTex", Texutre1);
                 }
-                if (Page == 7 && SuperManager.Instance.buildingManager.buildings[i]._livingCharacter != null
+                if (Page == 6 && SuperManager.Instance.buildingManager.buildings[6]._livingCharacter != null
                  )
                 {
                     PageMat7[0].SetTexture("_MainTex", Texutre2);
-                    PageMat7[0 + 1].SetTexture("_MainTex", Texutre1);
+                    PageMat7[1].SetTexture("_MainTex", Texutre1);
                 }
-                if (Page == 8 && SuperManager.Instance.buildingManager.buildings[i]._livingCharacter != null
+                if (Page == 7 && SuperManager.Instance.buildingManager.buildings[7]._livingCharacter != null
                   )
                 {
                     PageMat8[0].SetTexture("_MainTex", Texutre2);
-                    PageMat8[0 + 1].SetTexture("_MainTex", Texutre1);
+                    PageMat8[1].SetTexture("_MainTex", Texutre1);
                 }
-                if (Page == 9 && SuperManager.Instance.buildingManager.buildings[i]._livingCharacter != null
+                if (Page == 8 && SuperManager.Instance.buildingManager.buildings[8]._livingCharacter != null
                  )
                 {
                     PageMat9[0].SetTexture("_MainTex", Texutre2);
-                    PageMat9[0 + 1].SetTexture("_MainTex", Texutre1);
+                    PageMat9[1].SetTexture("_MainTex", Texutre1);
                 }
-                if (Page == 10 && SuperManager.Instance.buildingManager.buildings[i]._livingCharacter != null)
+                if (Page == 9 && SuperManager.Instance.buildingManager.buildings[9]._livingCharacter != null)
                 {
                     PageMat10[0].SetTexture("_MainTex", Texutre2);
-                    PageMat10[0 + 1].SetTexture("_MainTex", Texutre1);
+                    PageMat10[1].SetTexture("_MainTex", Texutre1);
                 }
-                if (Page == 11 && SuperManager.Instance.buildingManager.buildings[i]._livingCharacter != null)
+                if (Page == 10 && SuperManager.Instance.buildingManager.buildings[10]._livingCharacter != null)
                 {
                     PageMat11[0].SetTexture("_MainTex", Texutre2);
-                    PageMat11[0 + 1].SetTexture("_MainTex", Texutre1);
+                    PageMat11[1].SetTexture("_MainTex", Texutre1);
                 }
-                if (Page == 12 && SuperManager.Instance.buildingManager.buildings[i]._livingCharacter != null)
+                if (Page == 11 && SuperManager.Instance.buildingManager.buildings[11]._livingCharacter != null)
                 {
                     PageMat12[0].SetTexture("_MainTex", Texutre2);
-                    PageMat12[0 + 1].SetTexture("_MainTex", Texutre1);
+                    PageMat12[1].SetTexture("_MainTex", Texutre1);
                 }
-                if (Page == 13 && SuperManager.Instance.buildingManager.buildings[i]._livingCharacter != null)
+                if (Page == 12 && SuperManager.Instance.buildingManager.buildings[12]._livingCharacter != null)
                 {
                     PageMat13[0].SetTexture("_MainTex", Texutre2);
-                    PageMat13[0 + 1].SetTexture("_MainTex", Texutre1);
+                    PageMat13[1].SetTexture("_MainTex", Texutre1);
                 }
-                if (Page == 14 && SuperManager.Instance.buildingManager.buildings[i]._livingCharacter != null)
+                if (Page == 13 && SuperManager.Instance.buildingManager.buildings[13]._livingCharacter != null)
                 {
                     PageMat14[0].SetTexture("_MainTex", Texutre2);
-                    PageMat14[0 + 1].SetTexture("_MainTex", Texutre1);
+                    PageMat14[1].SetTexture("_MainTex", Texutre1);
                 }
-                if (Page == 15 && SuperManager.Instance.buildingManager.buildings[i]._livingCharacter != null)
+                if (Page == 14 && SuperManager.Instance.buildingManager.buildings[14]._livingCharacter != null)
                 {
                     PageMat15[0].SetTexture("_MainTex", Texutre2);
-                    PageMat15[0 + 1].SetTexture("_MainTex", Texutre1);
+                    PageMat15[1].SetTexture("_MainTex", Texutre1);
                 }
-                if (Page == 16 && SuperManager.Instance.buildingManager.buildings[i]._livingCharacter != null)
+                if (Page == 15 && SuperManager.Instance.buildingManager.buildings[15]._livingCharacter != null)
                 {
                     PageMat16[0].SetTexture("_MainTex", Texutre2);
-                    PageMat16[0 + 1].SetTexture("_MainTex", Texutre1);
+                    PageMat16[ 1].SetTexture("_MainTex", Texutre1);
                 }
-                if (Page == 17 && SuperManager.Instance.buildingManager.buildings[i]._livingCharacter != null)
+                if (Page == 16 && SuperManager.Instance.buildingManager.buildings[16]._livingCharacter != null)
                 {
                     PageMat17[0].SetTexture("_MainTex", Texutre2);
-                    PageMat17[0 + 1].SetTexture("_MainTex", Texutre1);
+                    PageMat17[ 1].SetTexture("_MainTex", Texutre1);
                 }
 
             }
 
 
             #endregion
-
-
             System.IO.File.WriteAllBytes(TotalPath, screenshotTexture1.EncodeToPNG());
             System.IO.File.WriteAllBytes(TotalPath, screenshotTexture2.EncodeToPNG());
+           
             SceenShotCam.targetTexture = null;
+            SceenShotCam.GetComponent<Camera>().enabled = false;
         }
 
 
@@ -463,22 +464,18 @@ public class Screenshot : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.X))
         {
-           
             FindObjectOfType<SceneChangeManager>().slbal(2);
         }
         if (Input.GetKeyDown(KeyCode.Y))
         {//이안에거 갖다붙이면 됩니다.
-            SceenShotCam.GetComponent<Camera>().enabled = true;
             if (_WillFakeScreenShot == false)
             {
                 _WillFakeScreenShot = true;
-            }
-          
-            Debug.Log("임소정씨발");
-           
-            OnPostRender();
-         
+                SceenShotCam.GetComponent<Camera>().enabled = true;
 
+            }
+            Debug.Log("임소정씨발");
+            OnPostRender();
             _WillFakeScreenShot = false;
         }
        
