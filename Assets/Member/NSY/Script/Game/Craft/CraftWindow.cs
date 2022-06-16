@@ -1,14 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using DM.Inven;
-using System;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace NSY.Iven
 {
-	public class CraftWindow : MonoBehaviour , IPointerEnterHandler , IPointerExitHandler 
+    public class CraftWindow : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         //툴팁 이벤트
         public ItemTooltip TapToolTip;
@@ -38,7 +34,7 @@ namespace NSY.Iven
         }
 
         public Item _item;
-		public Item Item
+        public Item Item
         {
             get
             {
@@ -47,18 +43,18 @@ namespace NSY.Iven
             set
             {
                 _item = value;
-             
+
                 if (_item == null)
                 {
                     reimage = null;
                 }
-                
+
 
 
             }
         }
 
-      
+
         public int _RecipeAmount;
         public int RecipeAmount
         {
@@ -74,10 +70,10 @@ namespace NSY.Iven
                 {
                     SetRecipeCurrentAmountText(" ");
                 }
-                
+
             }
         }
-       // [SerializeField]
+        // [SerializeField]
         public int _haveAmount;
         public int HaveAmount
         {
@@ -92,13 +88,13 @@ namespace NSY.Iven
                 if (_haveAmount <= 0)
                 {
                     _haveAmount = 0;
-                   
+
                 }
-                if (_haveAmount == 0  && Item != null )
+                if (_haveAmount == 0 && Item != null)
                 {
                     SetRecipeHaverAmountText(" ");
                 }
-                
+
             }
         }
         public void SetRecipeHaverAmountText(string str)
@@ -109,21 +105,23 @@ namespace NSY.Iven
         {
             RecipeCurrentAmount.text = str;
         }
-      
+
         public void OnPointerEnter(PointerEventData eventData)
         {
-           
+
             TapToolTip.ShowItemTooltip(Item);
-           
-                Vector3 ToolVec = TapToolTip.tooltipTransform.transform.position;
-                ToolVec.x = GetComponent<Image>().rectTransform.position.x + offset.x;
-            ToolVec.y = GetComponent<Image>().rectTransform.position.y - offset.y;
-            ToolVec.z = 0;
-            TapToolTip.tooltipTransform.transform.localPosition = ToolVec;
+
+
+
+            Vector3 ToolVec = TapToolTip.tooltipTransform.transform.position;
+            ToolVec.x = GetComponent<Image>().rectTransform.position.x;// + offset.x;
+            ToolVec.y = GetComponent<Image>().rectTransform.position.y;// - offset.y;
+            ToolVec.z = GetComponent<Image>().rectTransform.position.z;
+            TapToolTip.tooltipTransform.transform.position = ToolVec;
         }
         public void OnPointerExit(PointerEventData eventData)
         {
-          
+
             TapToolTip.HideTooltip();
         }
     }
