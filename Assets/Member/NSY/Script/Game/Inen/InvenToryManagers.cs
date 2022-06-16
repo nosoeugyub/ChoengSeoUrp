@@ -131,8 +131,8 @@ namespace NSY.Iven
             {
                 itemTooltip.ShowItemTooltip(itemSlot.item);
                 Vector3 ToolVec = itemTooltip.tooltipTransform.transform.position;
-                ToolVec.x = itemSlot.GetComponent<Image>().rectTransform.position.x + 0.7f;
-                ToolVec.y = itemSlot.GetComponent<Image>().rectTransform.position.y + 0.3f;
+                ToolVec.x = itemSlot.GetComponent<Image>().rectTransform.position.x;
+                ToolVec.y = itemSlot.GetComponent<Image>().rectTransform.position.y;
                 ToolVec.z = itemSlot.GetComponent<Image>().rectTransform.position.z;
                 itemTooltip.tooltipTransform.transform.position = ToolVec;
             }
@@ -162,11 +162,11 @@ namespace NSY.Iven
                     {
                         itemslots.Interactble(false);
                         itemslots.isRedbulid = true;
-
                     }
                     if (itemslots.item == CheckBuliditem)
                     {
                         obj.Amount--;
+                        return;
                     }
                 }
             }

@@ -4,8 +4,14 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
+
 public class Screenshot : MonoBehaviour
 {
+
+
+    public event Action OnSceenShot;
+
+
     [Header("플래쉬 애니")]
     private Animator FleshAnim;
 
@@ -16,73 +22,7 @@ public class Screenshot : MonoBehaviour
     [SerializeField]
     private List<Material> EveryMat;
 
-    [Header("1페이지 머테리얼")]
-    [SerializeField]
-    private List<Material> PageMat1;
 
-    [Header("2페이지 머테리얼")]
-    [SerializeField]
-    private List<Material> PageMat2;
-
-    [Header("3페이지 머테리얼")]
-    [SerializeField]
-    private List<Material> PageMat3;
-
-    [Header("4페이지 머테리얼")]
-    [SerializeField]
-    private List<Material> PageMat4;
-
-    [Header("5페이지 머테리얼")]
-    [SerializeField]
-    private List<Material> PageMat5;
-
-    [Header("6페이지 머테리얼")]
-    [SerializeField]
-    private List<Material> PageMat6;
-
-    [Header("7페이지 머테리얼")]
-    [SerializeField]
-    private List<Material> PageMat7;
-
-    [Header("8페이지 머테리얼")]
-    [SerializeField]
-    private List<Material> PageMat8;
-
-    [Header("9페이지 머테리얼")]
-    [SerializeField]
-    private List<Material> PageMat9;
-
-    [Header("10페이지 머테리얼")]
-    [SerializeField]
-    private List<Material> PageMat10;
-
-    [Header("11페이지 머테리얼")]
-    [SerializeField]
-    private List<Material> PageMat11;
-
-    [Header("12페이지 머테리얼")]
-    [SerializeField]
-    private List<Material> PageMat12;
-
-    [Header("13페이지 머테리얼")]
-    [SerializeField]
-    private List<Material> PageMat13;
-
-    [Header("14페이지 머테리얼")]
-    [SerializeField]
-    private List<Material> PageMat14;
-
-    [Header("15페이지 머테리얼")]
-    [SerializeField]
-    private List<Material> PageMat15;
-
-    [Header("16페이지 머테리얼")]
-    [SerializeField]
-    private List<Material> PageMat16;
-
-    [Header("17페이지 머테리얼")]
-    [SerializeField]
-    private List<Material> PageMat17;
 
     private Camera SceenShotCam;//ui카메라가찍히기 전에 게임 카메라에 있는 랜더텍스쳐를 활용해 ui제외한 부분들을 스크린샷처럼 찍음 
     public int Width; //가로
@@ -94,12 +34,14 @@ public class Screenshot : MonoBehaviour
 
     public bool _WillFakeScreenShot;
 
-
+    private EnvironmentManager manager;
     private void Awake()
     {
+
         SceenShotCam = GetComponent<Camera>();
-        SceenShotCam.enabled = false;
-        //  FleshAnim.GetComponent<Animator>();
+      //  SceenShotCam.GetComponent<Camera>().enabled = false;
+
+        manager = FindObjectOfType<EnvironmentManager>();
     }
 
     private string RootPath
@@ -146,6 +88,44 @@ public class Screenshot : MonoBehaviour
         }
     }
     [SerializeField]
+    private Material material1;
+    public Material Material1
+    {
+        get
+        {
+            return material1;
+        }
+        set
+        {
+            material1 = value;
+            if (Texutre1 != null)
+            {
+                material1.SetTexture("_MainTex", Texutre1);
+            }
+
+        }
+    }
+
+    [SerializeField]
+    private Material material2;
+    public Material Material2
+    {
+        get
+        {
+            return material2;
+        }
+        set
+        {
+            material2 = value;
+            if (Texutre2 != null)
+            {
+                material2.SetTexture("_MainTex", Texutre2);
+            }
+          
+        }
+    }
+
+    [SerializeField]
     private int Page;
     public int _Page
     {
@@ -171,9 +151,20 @@ public class Screenshot : MonoBehaviour
         set
         {
             CamPos = value;
+            SceenShotCam.transform.position = CamPos.transform.position;
         }
     }
 
+    private void OnValidate()
+    {
+        Texutre1 = texture1;
+        Texutre2 = texture2;
+        Material1 = material1;
+        Material2 = material2;
+        _Page = Page;
+        _CamPos = CamPos;
+
+    }
     public Camera OringinCAm;
 
 
@@ -345,112 +336,38 @@ public class Screenshot : MonoBehaviour
             #endregion
             //Ver 1 . NPC만                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     c                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
             #region
+            Material1.SetTexture("_MainTex", Texutre2);
+            Material2.SetTexture("_MainTex", Texutre1);
             for (int i = 0; i < SuperManager.Instance.buildingManager.buildings.Count; i++)//빌딩스를 체크하여
             {
-
-                if (Page == 1 && SuperManager.Instance.buildingManager.buildings[0]._livingCharacter != null)// 
+                Debug.Log("호잉호잉");
+                for (int j = 0; i < 14; i++)
                 {
-                    PageMat1[0].SetTexture("_MainTex", Texutre2);
-                    PageMat1[0 + 1].SetTexture("_MainTex", Texutre1);
+                    if (Page == i &&
+                    SuperManager.Instance.buildingManager.buildings[j]._livingCharacter != null)// 
+                    {
+                        Debug.Log(i + "번들어감");
+                        Material1.SetTexture("_MainTex", Texutre2);
+                        Material2.SetTexture("_MainTex", Texutre1);
+                    }
+                    else
+                    {
+                        Debug.Log("임소정 애미");
+                        Material1.SetTexture("_MainTex", Texutre2);
+                        Material2.SetTexture("_MainTex", Texutre1);
+                    }
                 }
-                if (Page == 2 && SuperManager.Instance.buildingManager.buildings[i]._livingCharacter != null)
-
-                {
-                    PageMat2[0].SetTexture("_MainTex", Texutre2);
-                    PageMat2[0 + 1].SetTexture("_MainTex", Texutre1);
-                }
-                if (Page == 3 && SuperManager.Instance.buildingManager.buildings[i]._livingCharacter != null
-                 )
-                {
-                    PageMat3[i].SetTexture("_MainTex", Texutre2);
-                    PageMat3[i + 1].SetTexture("_MainTex", Texutre1);
-                }
-                if (Page == 4 && SuperManager.Instance.buildingManager.buildings[i]._livingCharacter != null
-                 )
-                {
-                    PageMat4[0].SetTexture("_MainTex", Texutre2);
-                    PageMat4[0 + 1].SetTexture("_MainTex", Texutre1);
-                }
-                if (Page == 5 && SuperManager.Instance.buildingManager.buildings[i]._livingCharacter != null
-                  )
-                {
-                    PageMat5[0].SetTexture("_MainTex", Texutre2);
-                    PageMat5[0 + 1].SetTexture("_MainTex", Texutre1);
-                }
-                if (Page == 6 && SuperManager.Instance.buildingManager.buildings[i]._livingCharacter != null
-                  )
-                {
-                    PageMat6[0].SetTexture("_MainTex", Texutre2);
-                    PageMat6[0 + 1].SetTexture("_MainTex", Texutre1);
-                }
-                if (Page == 7 && SuperManager.Instance.buildingManager.buildings[i]._livingCharacter != null
-                 )
-                {
-                    PageMat7[0].SetTexture("_MainTex", Texutre2);
-                    PageMat7[0 + 1].SetTexture("_MainTex", Texutre1);
-                }
-                if (Page == 8 && SuperManager.Instance.buildingManager.buildings[i]._livingCharacter != null
-                  )
-                {
-                    PageMat8[0].SetTexture("_MainTex", Texutre2);
-                    PageMat8[0 + 1].SetTexture("_MainTex", Texutre1);
-                }
-                if (Page == 9 && SuperManager.Instance.buildingManager.buildings[i]._livingCharacter != null
-                 )
-                {
-                    PageMat9[0].SetTexture("_MainTex", Texutre2);
-                    PageMat9[0 + 1].SetTexture("_MainTex", Texutre1);
-                }
-                if (Page == 10 && SuperManager.Instance.buildingManager.buildings[i]._livingCharacter != null)
-                {
-                    PageMat10[0].SetTexture("_MainTex", Texutre2);
-                    PageMat10[0 + 1].SetTexture("_MainTex", Texutre1);
-                }
-                if (Page == 11 && SuperManager.Instance.buildingManager.buildings[i]._livingCharacter != null)
-                {
-                    PageMat11[0].SetTexture("_MainTex", Texutre2);
-                    PageMat11[0 + 1].SetTexture("_MainTex", Texutre1);
-                }
-                if (Page == 12 && SuperManager.Instance.buildingManager.buildings[i]._livingCharacter != null)
-                {
-                    PageMat12[0].SetTexture("_MainTex", Texutre2);
-                    PageMat12[0 + 1].SetTexture("_MainTex", Texutre1);
-                }
-                if (Page == 13 && SuperManager.Instance.buildingManager.buildings[i]._livingCharacter != null)
-                {
-                    PageMat13[0].SetTexture("_MainTex", Texutre2);
-                    PageMat13[0 + 1].SetTexture("_MainTex", Texutre1);
-                }
-                if (Page == 14 && SuperManager.Instance.buildingManager.buildings[i]._livingCharacter != null)
-                {
-                    PageMat14[0].SetTexture("_MainTex", Texutre2);
-                    PageMat14[0 + 1].SetTexture("_MainTex", Texutre1);
-                }
-                if (Page == 15 && SuperManager.Instance.buildingManager.buildings[i]._livingCharacter != null)
-                {
-                    PageMat15[0].SetTexture("_MainTex", Texutre2);
-                    PageMat15[0 + 1].SetTexture("_MainTex", Texutre1);
-                }
-                if (Page == 16 && SuperManager.Instance.buildingManager.buildings[i]._livingCharacter != null)
-                {
-                    PageMat16[0].SetTexture("_MainTex", Texutre2);
-                    PageMat16[0 + 1].SetTexture("_MainTex", Texutre1);
-                }
-                if (Page == 17 && SuperManager.Instance.buildingManager.buildings[i]._livingCharacter != null)
-                {
-                    PageMat17[0].SetTexture("_MainTex", Texutre2);
-                    PageMat17[0 + 1].SetTexture("_MainTex", Texutre1);
-                }
+                
 
             }
 
 
             #endregion
-
-
             System.IO.File.WriteAllBytes(TotalPath, screenshotTexture1.EncodeToPNG());
             System.IO.File.WriteAllBytes(TotalPath, screenshotTexture2.EncodeToPNG());
+
             SceenShotCam.targetTexture = null;
+            SceenShotCam.GetComponent<Camera>().enabled = false;
         }
 
 
@@ -458,33 +375,21 @@ public class Screenshot : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void OnSceenShotEvent()
     {
-        if (Input.GetKeyDown(KeyCode.X))
+
+
+        Debug.Log("씨발련아");
+        if (_WillFakeScreenShot == false)
         {
-           
-            FindObjectOfType<SceneChangeManager>().slbal(2);
+            _WillFakeScreenShot = true;
+            SceenShotCam.GetComponent<Camera>().enabled = true;
+
         }
-        if (Input.GetKeyDown(KeyCode.Y))
-        {//이안에거 갖다붙이면 됩니다.
-
-            if (_WillFakeScreenShot == false)
-            {
-                _WillFakeScreenShot = true;
-                SceenShotCam.enabled = true;
-            }
-            SceenShotCam.enabled = true;
-            Debug.Log("임소정씨발");
-            OnPostRender();
-         
-
-            _WillFakeScreenShot = false;
-            SceenShotCam.enabled = false;
-        }
-
-
+        Debug.Log("임소정씨발");
+        OnPostRender();
+        _WillFakeScreenShot = false;
     }
-
 
 
 
