@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -8979,7 +8979,7 @@ PrefabInstance:
     - target: {fileID: 1780839142005684332, guid: 487850f860457414cbb7bcae28e6d8e8,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -237.37
+      value: -236.71
       objectReference: {fileID: 0}
     - target: {fileID: 1780839142005684332, guid: 487850f860457414cbb7bcae28e6d8e8,
         type: 3}
@@ -26092,13 +26092,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1037853173}
-  m_LocalRotation: {x: 0.77454776, y: -0.13176008, z: -0.1717131, w: -0.5943313}
+  m_LocalRotation: {x: 0.60876137, y: 0, z: 0, w: 0.7933534}
   m_LocalPosition: {x: -385.5, y: -92.06, z: 22.22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 380936307}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 255, y: 25, z: 0}
+  m_LocalEulerAnglesHint: {x: 75, y: 0, z: 0}
 --- !u!108 &1037853175
 Light:
   m_ObjectHideFlags: 0
@@ -71634,9 +71634,9 @@ MonoBehaviour:
   intersectionEffectsExpanded: 0
   planarReflectionsExpanded: 0
   causticsExpanded: 0
-  reflectionStrength: 0.771
-  reflectionFresnel: 5.37
-  causticsStrength: 2.08
+  reflectionStrength: 0.82
+  reflectionFresnel: 2.5
+  causticsStrength: 2.09
   causticsTexture: {fileID: 2800000, guid: f2c40b951cee11943a1f6d5ec1b42f2c, type: 3}
   causticsSplit: 0.318
   causticsSpeed: 0.219
@@ -71691,83 +71691,84 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  colorGradientTexture: {fileID: 0}
-  shallowColor: {r: 0, g: 0.64495605, b: 1, a: 0.8666667}
-  deepColor: {r: 0, g: 0.5179992, b: 1, a: 1}
-  colorDepth: 1
-  horizonColor: {r: 0.58018863, g: 0.9627194, b: 1, a: 1}
+  colorGradientTexture: {fileID: 2800000, guid: b3f9fed74fb5f1c4ea4fe5b062c3b953,
+    type: 3}
+  shallowColor: {r: 0.1432021, g: 0, b: 1, a: 0.5019608}
+  deepColor: {r: 0, g: 0.053767033, b: 1, a: 1}
+  colorDepth: 0.88
+  horizonColor: {r: 0.4346665, g: 0.54712445, b: 0.8301887, a: 1}
   horizonDistance: 20
   shoreFade: 1
-  shoreColor: {r: 0, g: 0.09418837, b: 0.02885683, a: 0}
+  shoreColor: {r: 0, g: 0.98039216, b: 0.3019154, a: 0}
   shoreStrength: 0
   shoreBlend: 1
   shoreDepth: 0.74
-  waveColor: {r: 0, g: 0.31344548, b: 0.017320469, a: 0}
-  underwaterColor: {r: 0.2033189, g: 0.30916804, b: 0.517647, a: 0}
+  waveColor: {r: 0, g: 0, b: 0, a: 0}
+  underwaterColor: {r: 0.20387855, g: 0.30975848, b: 0.517647, a: 1}
   underwaterColorStrength: 0
   underwaterRefractionStrength: 0.099
-  surfaceFoamTexture: {fileID: 2800000, guid: ab507ff7ff37d954da98b07bf0bb152e, type: 3}
-  surfaceFoamSampling: {x: 0.83, y: 0.922}
-  surfaceFoamCutoff: 0.83
-  surfaceFoamDistortion: 0.922
+  surfaceFoamTexture: {fileID: 2800000, guid: d3b0d77dfe711a04c8ff18ecc260aa66, type: 3}
+  surfaceFoamSampling: {x: 0.62, y: 0}
+  surfaceFoamCutoff: 0.62
+  surfaceFoamDistortion: 0
   surfaceFoamBlend: 1
-  surfaceFoamColor1: {r: 1, g: 1, b: 1, a: 0.6509804}
-  surfaceFoamColor2: {r: 1, g: 1, b: 1, a: 0}
+  surfaceFoamColor1: {r: 1, g: 1, b: 1, a: 0.3215686}
+  surfaceFoamColor2: {r: 1, g: 1, b: 1, a: 0.7294118}
   surfaceFoamMovement: {x: 0.7, y: 0, z: 0.47, w: 0.01}
   surfaceFoamDirection1: 0.7
   surfaceFoamDirection2: 0.47
   surfaceFoamSpeed1: 0
   surfaceFoamSpeed2: 0.01
-  surfaceFoamTilingAndOffset: {x: -1, y: -1, z: 0.77, w: 0.22}
+  surfaceFoamTilingAndOffset: {x: -1, y: -1, z: 0.57, w: 0.22}
   surfaceFoamOffsetX: -1
   surfaceFoamOffsetY: -1
-  surfaceFoamScale1: 0.77
+  surfaceFoamScale1: 0.57
   surfaceFoamScale2: 0.22
-  enableSurfaceFoam: 1
-  surfaceFoamHeightMask: 0.099
-  surfaceFoamHeightMaskSmoothness: 0.034
+  enableSurfaceFoam: 0
+  surfaceFoamHeightMask: 0
+  surfaceFoamHeightMaskSmoothness: 0
   enableHeightMask: 1
-  foamShadowStrength: 0.71
-  foamShadowDepth: 7.08
+  foamShadowStrength: 0.45
+  foamShadowDepth: 10
   surfaceFoamShadowProjection: 15
   intersectionFoamShadowProjection: 4.6
   foamMovement: 0
-  intersectionFoamDepth: 1.692
+  intersectionFoamDepth: 0.72
   intersectionFoamTexture: {fileID: 2800000, guid: 772031b03d9d46e4ab03e15c8e17718c,
     type: 3}
   intersectionFoamColor: {r: 1, g: 1, b: 1, a: 1}
   intersectionFoamMovement: {x: 0, y: 0}
   intersectionFoamDirection: 0
   intersectionFoamSpeed: 0
-  intersectionFoamScale: 0.552
-  intersectionFoamSampling: {x: 1, y: 0.829}
-  intersectionFoamCutoff: 1
-  intersectionFoamDistortion: 0.829
+  intersectionFoamScale: 0.19
+  intersectionFoamSampling: {x: 0.59, y: 0}
+  intersectionFoamCutoff: 0.59
+  intersectionFoamDistortion: 0
   enableIntersectionEffects: 1
   intersectionFoamBlend: 1
-  intersectionWaterBlend: 1
+  intersectionWaterBlend: 0
   shoreFoamSpeed: 0
   shoreFoamWidth: 0
   shoreFoamFrequency: 0
   shoreFoamBreakupStrength: 0
   shoreFoamBreakupScale: 0
   lighting: 0
-  lightingSmoothness: 0.911
+  lightingSmoothness: 0.71
   lightingSpecularColor: {r: 1, g: 1, b: 1, a: 0}
   lightingDiffuseColor: {r: 0, g: 0, b: 0, a: 0}
-  lightingHardness: 0.394
-  normalsTexture: {fileID: 2800000, guid: bdb620c7bb6658e469cadc832bb58edc, type: 3}
-  normalsMovement: {x: 0.0117, y: 1.118}
-  normalsStrength: 1
-  normalsScale: 1.118
-  normalsSpeed: 0.0117
-  refractionStrength: 0.0393
-  waveVisuals: {x: 0.045, y: 16.02, z: 0.591}
-  waveSteepness: 0.045
-  waveLength: 16.02
-  waveSpeed: 0.591
-  waveDirections: {x: 0.158, y: 0.64, z: 1, w: 0.33}
-  waveDirection1: 0.158
+  lightingHardness: 0
+  normalsTexture: {fileID: 2800000, guid: a41da5f5671718b47bbc71e9ef691103, type: 3}
+  normalsMovement: {x: 0.04, y: 0.36}
+  normalsStrength: 0.42
+  normalsScale: 0.36
+  normalsSpeed: 0.04
+  refractionStrength: 0.022
+  waveVisuals: {x: 0.132, y: 7.9, z: 1.38}
+  waveSteepness: 0.132
+  waveLength: 7.9
+  waveSpeed: 1.38
+  waveDirections: {x: 0, y: 0.64, z: 1, w: 0.33}
+  waveDirection1: 0
   waveDirection2: 0.64
   waveDirection3: 1
   waveDirection4: 0.33
@@ -71777,7 +71778,7 @@ MonoBehaviour:
   enableRefraction: 0
   meshRenderer: {fileID: 1568433217}
   meshFilter: {fileID: 1568433218}
-  material: {fileID: 2100000, guid: 55017f1a01259744a8e40a41b5c5920d, type: 2}
+  material: {fileID: 2100000, guid: d337fc5282607644ebb2f3575513265e, type: 2}
 --- !u!23 &1568433217
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -71796,7 +71797,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 55017f1a01259744a8e40a41b5c5920d, type: 2}
+  - {fileID: 2100000, guid: d337fc5282607644ebb2f3575513265e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -87774,9 +87775,49 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4754929002903564938, guid: b6cbd17208d857d43835a995b27087a6,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 78.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4754929002903564938, guid: b6cbd17208d857d43835a995b27087a6,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4754929002903564938, guid: b6cbd17208d857d43835a995b27087a6,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4754929002903564938, guid: b6cbd17208d857d43835a995b27087a6,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4754929002903564938, guid: b6cbd17208d857d43835a995b27087a6,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4754929002903564938, guid: b6cbd17208d857d43835a995b27087a6,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4754929003289182073, guid: b6cbd17208d857d43835a995b27087a6,
         type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4754929003303314308, guid: b6cbd17208d857d43835a995b27087a6,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4754929003303314308, guid: b6cbd17208d857d43835a995b27087a6,
+        type: 3}
+      propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4754929003622199215, guid: b6cbd17208d857d43835a995b27087a6,
@@ -92897,27 +92938,27 @@ PrefabInstance:
     - target: {fileID: 7852749225287480107, guid: bfc88b5f2f266104d962c08ee8492316,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.0000000038097254
+      value: -0.3513437
       objectReference: {fileID: 0}
     - target: {fileID: 7852749225287480107, guid: bfc88b5f2f266104d962c08ee8492316,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.9961947
+      value: 0.6478854
       objectReference: {fileID: 0}
     - target: {fileID: 7852749225287480107, guid: bfc88b5f2f266104d962c08ee8492316,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.08715577
+      value: -0.49713987
       objectReference: {fileID: 0}
     - target: {fileID: 7852749225287480107, guid: bfc88b5f2f266104d962c08ee8492316,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.000000043545057
+      value: -0.45788005
       objectReference: {fileID: 0}
     - target: {fileID: 7852749225287480107, guid: bfc88b5f2f266104d962c08ee8492316,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 10
+      value: 75
       objectReference: {fileID: 0}
     - target: {fileID: 7852749225287480107, guid: bfc88b5f2f266104d962c08ee8492316,
         type: 3}
@@ -92927,7 +92968,7 @@ PrefabInstance:
     - target: {fileID: 7852749225287480107, guid: bfc88b5f2f266104d962c08ee8492316,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 250.5
       objectReference: {fileID: 0}
     - target: {fileID: 7852749225287480108, guid: bfc88b5f2f266104d962c08ee8492316,
         type: 3}
@@ -93018,6 +93059,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 22.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 7852749226125243735, guid: bfc88b5f2f266104d962c08ee8492316,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.60876137
+      objectReference: {fileID: 0}
+    - target: {fileID: 7852749226125243735, guid: bfc88b5f2f266104d962c08ee8492316,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7852749226125243735, guid: bfc88b5f2f266104d962c08ee8492316,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7852749226125243735, guid: bfc88b5f2f266104d962c08ee8492316,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7933534
+      objectReference: {fileID: 0}
+    - target: {fileID: 7852749226125243735, guid: bfc88b5f2f266104d962c08ee8492316,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7852749226596700314, guid: bfc88b5f2f266104d962c08ee8492316,
         type: 3}
