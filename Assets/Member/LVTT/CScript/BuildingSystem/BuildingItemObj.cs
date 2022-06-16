@@ -175,6 +175,8 @@ namespace DM.Building
             parentBuildArea = pb;
             parentBuildArea.SetCurInteractObj(this);
             ObjOriginPos = gameObject.transform.position;
+
+            ObjOriginPos.y = housebuildpos.y + (parentBuildArea.AreaHeightsize / 2);
             ObjOriginPos.x = housebuildpos.x;
             //ObjOriginPos.z = housebuildpos.z;
         }
