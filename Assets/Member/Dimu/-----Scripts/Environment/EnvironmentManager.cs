@@ -97,10 +97,9 @@ public class EnvironmentManager : MonoBehaviour
                 //사진찍엉
                 for (int i = 0; i < screenshot.Length; i++)
                 {
-                    Debug.Log("씨발아 김취라");
                     screenshot[i].OnSceenShotEvent();
                 }
-                Debug.Log("노성엽 존잘");
+             
             }
             else if (cleanliness < 0)
                 cleanliness = 0;
