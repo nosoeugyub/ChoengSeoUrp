@@ -83,7 +83,7 @@ public class NewInventUIManager : MonoBehaviour
 
                                         tempCL.Craftslot[k].isHaveRecipeItem = true;
 
-                                        Debug.Log("해방된 아이템은 이겁니다" + tempCL.Craftslot[k]);
+                                        DebugText.Instance.SetText(string.Format("{0} 자재를 제작할 수 있게 되었습니다.",tempCL.Craftslot[k].RecipeItem.ItemName));
                                     }
 
                                 }

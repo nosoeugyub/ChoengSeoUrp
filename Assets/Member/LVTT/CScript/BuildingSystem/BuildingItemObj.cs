@@ -131,7 +131,6 @@ namespace DM.Building
 
                 //print(parentBuildArea.DistanceFromHouseBuildTo(movePos));
                 transform.position = movePos;
-                print(movePos);
             }
 
             //onBuildItem interact when not in BuildMode
@@ -175,6 +174,8 @@ namespace DM.Building
             parentBuildArea = pb;
             parentBuildArea.SetCurInteractObj(this);
             ObjOriginPos = gameObject.transform.position;
+
+            ObjOriginPos.y = housebuildpos.y + (parentBuildArea.AreaHeightsize / 2);
             ObjOriginPos.x = housebuildpos.x;
             //ObjOriginPos.z = housebuildpos.z;
         }

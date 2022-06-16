@@ -251,6 +251,7 @@ namespace NSY.Player
 
             foreach (var item in interacts)
             {
+                if (item == null) interacts.Remove(item);
                 if (item.gameObject.layer != 9) continue;
                 float dist = Vector3.Distance(transform.position, item.transform.position);
                 if (dist < shortestDist)
