@@ -131,7 +131,6 @@ namespace DM.Building
 
                 //print(parentBuildArea.DistanceFromHouseBuildTo(movePos));
                 transform.position = movePos;
-                print(movePos);
             }
 
             //onBuildItem interact when not in BuildMode
