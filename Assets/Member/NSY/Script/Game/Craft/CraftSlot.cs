@@ -1,22 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
-using DM.Inven;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using System;
 
 
 namespace NSY.Iven
 {
-    public class CraftSlot : MonoBehaviour , IPointerDownHandler
+    public class CraftSlot : MonoBehaviour, IPointerDownHandler
     {
         [Header("재료 갯수")]
-       
+
 
         [Header("현재 흭득한 갯수")]
         public Text[] ReCipeamountText;
-        
+
 
         [Header("결과 이미지")]
         public Image ResultSlotListImage;
@@ -24,7 +21,7 @@ namespace NSY.Iven
 
         [Header("재료 이미지")]
         public Image[] RecipeSlot;
-       
+
         [Header("결과 이름")]
         public Text RecipeName;
 
@@ -36,7 +33,7 @@ namespace NSY.Iven
 
 
         public event Action<CraftSlot> OnLeftClickEventss;
-         [SerializeField]
+        [SerializeField]
         private Item _recipeItem;
         [SerializeField]
         private Image childImgObject;
@@ -50,14 +47,40 @@ namespace NSY.Iven
             set
             {
                 _recipeItem = value;
-                ResultSlotListImage.rectTransform.localScale = Vector3.one;
 
                 ResultSlotListImage.enabled = true;
                 ResultSlotListImage.color = Color.clear;
-                    childImgObject = transform.GetChild(0).GetComponent<Image>();
-                    childImgObject.sprite = _recipeItem.ItemSprite;
-                    childImgObject.SetNativeSize();
-                    childImgObject.rectTransform.localScale = Vector3.one * 0.1f;
+
+                ResizeChildImg();
+            }
+        }
+
+        private void ResizeChildImg()
+        {
+            if (transform.childCount > 0)
+            {
+                childImgObject = transform.GetChild(0).GetComponent<Image>();
+                childImgObject.sprite = _recipeItem.ItemSprite;
+                childImgObject.SetNativeSize();
+
+                float maxsizeWH = childImgObject.sprite.texture.height;
+                if (childImgObject.sprite.texture.width >= childImgObject.sprite.texture.height)
+                {
+                    maxsizeWH = childImgObject.sprite.texture.width;
+                }
+
+                float scale = ResultSlotListImage.rectTransform.rect.width / maxsizeWH;
+                if (scale != 0)
+                {
+                    print(ResultSlotListImage.rectTransform.rect.width);
+                    Vector3 scaleVec = new Vector3(scale, scale, 1);
+                    childImgObject.rectTransform.localScale = scaleVec;// ResultSlotListImage.rectTransform.rect.width /maxsizeWH;
+                }
+                else
+                {
+                 //   childImgObject.rectTransform.localScale = Vector3.one * 0.1f;// ResultSlotListImage.rectTransform.rect.width /maxsizeWH;
+
+                }
             }
         }
 
@@ -72,6 +95,8 @@ namespace NSY.Iven
             set
             {
                 _isHaverecipeItem = value;
+
+                if (!childImgObject) return;
                 if (_isHaverecipeItem == false)
                 {
                     childImgObject.color = new Color(0.5f, 0.5f, 0.5f);
@@ -99,7 +124,7 @@ namespace NSY.Iven
         {
 
         }
-       
+
 
         public void OnPointerDown(PointerEventData eventData)
         {
@@ -114,7 +139,7 @@ namespace NSY.Iven
                     }
                 }
             }
-           
+
         }
     }
 
