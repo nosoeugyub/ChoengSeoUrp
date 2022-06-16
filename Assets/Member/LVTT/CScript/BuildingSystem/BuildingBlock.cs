@@ -28,6 +28,7 @@ namespace DM.Building
 
         [SerializeField] Transform houseOwnerTransform;
         [SerializeField] Transform friendTransform;
+        [SerializeField] Transform constructsign; 
 
         private bool buildButtonFuncAdded;
 
@@ -50,6 +51,7 @@ namespace DM.Building
         Ray ray;
         int layerMask;   // Player 레이어만 충돌 체크함
 
+        bool isEmpty;
 
         public HouseNpc _livingCharacter { get { return livingCharacter; }  set { livingCharacter = value; } }
         public SpecialHouse SpecialHouse { get { return specialHouse; } set { specialHouse = value; } }
@@ -81,6 +83,8 @@ namespace DM.Building
             layerMask = 1 << LayerMask.NameToLayer("Wall");
             buildButtonFuncAdded = false;
             buildManager.SetbuildOffButtonEvents(BuildModeOff);
+
+            constructsign.gameObject.SetActive(!IsCompleteBuilding());
         }
 
         public void SetCurInteractObj(BuildingItemObj buildingItemObj)
@@ -300,6 +304,7 @@ namespace DM.Building
             TutoUI(true);
             buildManager.PlayerOnOff(false);
             BuildOffUI(true);
+            nowBuildingBlock.constructsign.gameObject.SetActive(false);
             nowBuildingBlock.GetComponent<BoxCollider>().enabled = false;
 
             CamManager.ChangeFollowTarger(gameObject.transform, 1);
@@ -370,7 +375,10 @@ namespace DM.Building
                 buildManager.AddBuilding(nowBuildingBlock);
             }
             else
+            {
                 SetBuildingState(BuildState.NotFinish);
+                nowBuildingBlock.constructsign.gameObject.SetActive(true);
+            }
 
             BuildOffUI(false);
             buildManager.PlayerOnOff(true);
