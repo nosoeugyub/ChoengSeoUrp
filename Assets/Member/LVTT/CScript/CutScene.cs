@@ -12,15 +12,15 @@ public class CutSceneImage
 public enum CutType
 {
     None,
-    BearChick,
-    WatchDearAndSheepExercising,
-    BearRibbonToHen,
-    WatchSheepAndRabbit,
-    WatchDearExercising,
-    ButtingCowToBear,
-    BearAndWalrus,
-    FakeLuxuryToCow,
-    ComeToPort,
+    BearChick,//닭
+    WatchDearAndSheepExercising,//벌
+    BearRibbonToHen, //곰
+    WatchSheepAndRabbit, // 닭
+    WatchDearExercising, //벌
+    ButtingCowToBear, //벌
+    BearAndWalrus,//바다
+    FakeLuxuryToCow,//바다
+    ComeToPort,//곰
 }
 
 public class CutScene : MonoBehaviour

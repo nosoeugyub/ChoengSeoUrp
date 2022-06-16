@@ -10,7 +10,7 @@ public class TreeObject : MineObject
     [SerializeField] MeshRenderer upMesh;
     [SerializeField] MeshRenderer downMesh;
     [SerializeField] GameObject upObj;
-    [SerializeField] Item sadtree;
+    [SerializeField] Tree sadtree;
     Item origintree;
     [SerializeField] TreeType nowTreeType;
 
@@ -133,6 +133,10 @@ public class TreeObject : MineObject
     {
         if (treetype == TreeType.Sad)
         {
+            sadMatSet.materials[0] = sadtree.TreeMat;
+            sadMatSet.materials[1] = sadtree.TreeUpMat;
+            sadMatSet.materials[2] = sadtree.TreeDownMat;
+
             nowMatSet = sadMatSet;
             SetItem(sadtree);
         }
