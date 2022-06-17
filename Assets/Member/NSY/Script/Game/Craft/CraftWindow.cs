@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -8,16 +10,20 @@ namespace NSY.Iven
     {
         //툴팁 이벤트
         public ItemTooltip TapToolTip;
+        private Image childImgObject;
+        [SerializeField] Image slotBackgroundImg;
 
         public Vector3 offset;
-        private Color normalColor = Color.white;
         public Image reimage;
         public Text RecipeCurrentAmount;
         public Text RecipeHaverAmount;
+        private Color normalColor = Color.white;
         private Color cantInteractColors = new Color(1, 0.3f, 0.3f, 1f);
         private void OnValidate()
         {
-            Item = _item;
+            slotBackgroundImg = transform.GetChild(0).GetComponent<Image>();
+            childImgObject = transform.GetChild(1).GetComponent<Image>();
+            //Item = _item;
             RecipeAmount = _RecipeAmount;
             HaveAmount = _haveAmount;
         }
@@ -25,15 +31,15 @@ namespace NSY.Iven
         {
             if (canInteractable)
             {
-                reimage.color = normalColor;
+                slotBackgroundImg.color = normalColor;
             }
             else
             {
-                reimage.color = cantInteractColors;
+                slotBackgroundImg.color = cantInteractColors;
             }
         }
 
-        public Item _item;
+        private Item _item;
         public Item Item
         {
             get
@@ -46,7 +52,28 @@ namespace NSY.Iven
 
                 if (_item == null)
                 {
-                    reimage = null;
+                    childImgObject.sprite = null;
+                    childImgObject.color = Color.clear;
+                    Interactble(true);
+                    //reimage = null;
+                    SetRecipeCurrentAmountText(" ");
+                    SetRecipeHaverAmountText(" ");
+                }
+                else
+                {
+                    childImgObject.sprite = _item.ItemSprite;
+                    childImgObject.color = normalColor;
+                    Interactble(true);
+
+                    SetRecipeHaverAmountText(_item.GetCountItems.ToString());
+
+                    if (RecipeAmount > _item.GetCountItems)
+                        Interactble(false);
+                    else
+                        Interactble(true);
+
+                    ResizeChildImg();
+                    //StartCoroutine(DelayChangSize());
                 }
 
 
@@ -123,6 +150,56 @@ namespace NSY.Iven
         {
 
             TapToolTip.HideTooltip();
+        }
+
+        public IEnumerator DelayChangSize()
+        {
+            if (transform.childCount > 0)
+            {
+                childImgObject.enabled = true;
+                childImgObject.sprite = _item.ItemSprite;
+                childImgObject.SetNativeSize();
+
+                float maxsizeWH = childImgObject.sprite.texture.height;
+                if (childImgObject.sprite.texture.width >= childImgObject.sprite.texture.height)
+                {
+                    maxsizeWH = childImgObject.sprite.texture.width;
+                }
+
+                LayoutRebuilder.ForceRebuildLayoutImmediate(reimage.rectTransform);
+                print(reimage.rectTransform.rect.width);
+                yield return new WaitForSeconds(0.001f);
+                ScaleSlotImg(maxsizeWH);
+            }
+        }
+        private void ResizeChildImg()
+        {
+            if (transform.childCount > 0)
+            {
+                childImgObject.enabled = true;
+                childImgObject.sprite = _item.ItemSprite;
+                childImgObject.SetNativeSize();
+
+                float maxsizeWH = childImgObject.sprite.texture.height;
+                if (childImgObject.sprite.texture.width >= childImgObject.sprite.texture.height)
+                {
+                    maxsizeWH = childImgObject.sprite.texture.width;
+                }
+
+                LayoutRebuilder.ForceRebuildLayoutImmediate(reimage.rectTransform);
+                print(reimage.rectTransform.rect.width);
+                ScaleSlotImg(maxsizeWH);
+            }
+        }
+
+        private void ScaleSlotImg(float maxsizeWH)
+        {
+            float scale = reimage.rectTransform.rect.width / maxsizeWH;
+            if (scale != 0)
+            {
+                Vector3 scaleVec = new Vector3(scale, scale, 1);
+                childImgObject.rectTransform.localScale = scaleVec;// ResultSlotListImage.rectTransform.rect.width /maxsizeWH;
+            }
         }
     }
 

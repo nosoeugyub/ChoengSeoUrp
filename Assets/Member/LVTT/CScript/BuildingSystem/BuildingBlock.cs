@@ -14,7 +14,7 @@ namespace DM.Building
         [SerializeField] private int buildingId;
         [SerializeField] private BuildMode CurBuildMode;
         [SerializeField] private HouseNpc livingCharacter;
-        
+
 
         [SerializeField] private Transform houseBuild;
         [SerializeField] private List<GameObject> BuildItemList;
@@ -28,7 +28,7 @@ namespace DM.Building
 
         [SerializeField] Transform houseOwnerTransform;
         [SerializeField] Transform friendTransform;
-        [SerializeField] Transform constructsign; 
+        [SerializeField] Transform constructsign;
 
         private bool buildButtonFuncAdded;
 
@@ -53,7 +53,7 @@ namespace DM.Building
 
         bool isEmpty;
 
-        public HouseNpc _livingCharacter { get { return livingCharacter; }  set { livingCharacter = value; } }
+        public HouseNpc _livingCharacter { get { return livingCharacter; } set { livingCharacter = value; } }
         public SpecialHouse SpecialHouse { get { return specialHouse; } set { specialHouse = value; } }
         public static bool isBuildMode { get; set; } = false;
         public static bool isBuildDemolishMode { get; set; } = false;
@@ -76,7 +76,7 @@ namespace DM.Building
             buildManager = FindObjectOfType<BuildingManager>();
             specialHouse = GetComponent<SpecialHouse>();
             invenmanager = FindObjectOfType<InvenToryManagers>();
-            inventory = FindObjectOfType<InventoryNSY>();
+            inventory = SuperManager.Instance.inventoryManager;
         }
         void Start()
         {
@@ -90,7 +90,7 @@ namespace DM.Building
         public void SetCurInteractObj(BuildingItemObj buildingItemObj)
         {
             //if(curInteractObj.ParentBuildArea == this)
-            print(buildingItemObj);
+            //print(buildingItemObj);
             curInteractObj = buildingItemObj;
         }
 
@@ -137,7 +137,7 @@ namespace DM.Building
                                 if (curInteractObj.ItemisSet) //자재 클릭 + 세팅된 자재일 때  세팅 >> 논세팅
                                 {
                                     invenmanager.CheckBuliditem = hit.collider.GetComponent<BuildingItemObj>().item;//  건축 슬롯말고 건축존에서 다시 클릭할때
-                                    InvenItemCantBuild();
+                                    inventory.InvenAllOnOff(false);
                                     SetCurInteractObj(hit.collider.GetComponent<BuildingItemObj>());
                                     curInteractObj.ItemisSet = false;
                                     //BuildingItemObjAndSorting();
@@ -150,10 +150,10 @@ namespace DM.Building
                             else
                             {
                                 invenmanager.CheckBuliditem = hit.collider.GetComponent<BuildingItemObj>().item;//  건축 슬롯말고 건축존에서 다시 클릭할때
-                                InvenItemCantBuild();
+                                inventory.InvenAllOnOff(false);
                                 SetCurInteractObj(hit.collider.GetComponent<BuildingItemObj>());
                                 curInteractObj.ItemisSet = false;
-                               // BuildingItemObjAndSorting();
+                                // BuildingItemObjAndSorting();
                             }
                         }
                     }
@@ -183,22 +183,22 @@ namespace DM.Building
 
         }
 
-        public void InvenItemCantBuild()
-        {
-            //DebugText.Instance.SetText("널이 아닙니다");
+        //public void InvenItemCantBuild()
+        //{
+        //    //DebugText.Instance.SetText("널이 아닙니다");
 
-            foreach (ItemSlot itemslot in inventory.ItemSlots)
-            {
-                if (itemslot.item == null)
-                {
-                    continue;
-                }
-                if (itemslot.item.OutItemType == OutItemType.BuildingItemObj && itemslot.item.ItemName != hit.collider.GetComponent<BuildingItemObj>().item.ItemName)
-                {
-                    itemslot.Interactble(false);
-                }
-            }
-        }
+        //    foreach (ItemSlot itemslot in inventory.ItemSlots)
+        //    {
+        //        if (itemslot.item == null)
+        //        {
+        //            continue;
+        //        }
+        //        if (itemslot.item.OutItemType == OutItemType.BuildingItemObj)// && itemslot.item.ItemName != hit.collider.GetComponent<BuildingItemObj>().item.ItemName)
+        //        {
+        //            itemslot.Interactble(false);
+        //        }
+        //    }
+        //}
 
         public void InvenSlotResetCanBuildMode()
         {
@@ -215,7 +215,7 @@ namespace DM.Building
                 if (itemslot.item.OutItemType == OutItemType.BuildingItemObj)// 건축슬롯들을dnsjtkdqhrrngo
                 {
                     itemslot.Interactble(true);
-                    itemslot.isRedbulid = false;
+                    // itemslot.isRedbulid = false;
                 }
             }
         }
@@ -318,7 +318,7 @@ namespace DM.Building
             CamManager.ActiveSubCamera(1);
 
             //주석 부분
-            SuperManager.Instance.inventoryManager.CheckCanBuildItem(nowBuildingBlock);
+            SuperManager.Instance.inventoryManager.CheckCanBuildItem();
             //Inventory UI On + Can't turn Off while in build mode + Press X button, Invoke BuildModeOff method
             //FindObjectOfType<PopUpManager>().OpenPopup(FindObjectOfType<PopUpManager>()._ivenPopup);
         }
@@ -347,7 +347,7 @@ namespace DM.Building
 
             foreach (ItemSlot itemSlot in inventory.ItemSlots)
             {
-                itemSlot.isCheckBulid = false;
+                itemSlot.canInteractWithSlot = false;
             }
 
             if (!isBuildMode && !isBuildDemolishMode) return;
@@ -385,7 +385,7 @@ namespace DM.Building
             isBuildMode = false;
             isBuildDemolishMode = false;
             //주석 부분
-            SuperManager.Instance.inventoryManager.CheckCanBuildItem(null);
+            SuperManager.Instance.inventoryManager.InvenAllOnOff(true);
         }
         public void CancleUI(bool on)
         {
@@ -555,7 +555,7 @@ namespace DM.Building
                 }
                 if (nearObj)
                 {
-                print("Up Near Obj is " + nearObj.name);
+                    print("Up Near Obj is " + nearObj.name);
                     nearObj.transform.position += nearObj.transform.forward * BuildItemGap; //가장 가까운 자재후진
                     nearObj.GetComponent<BuildingItemObj>().MyOrder--;
                     curInteractObj.transform.position -= curInteractObj.transform.forward * BuildItemGap; //선택중인 자재 전진
@@ -587,7 +587,7 @@ namespace DM.Building
                 }
                 if (nearObj)
                 {
-                print("Down Near Obj is " + nearObj.name);
+                    print("Down Near Obj is " + nearObj.name);
                     nearObj.transform.position -= nearObj.transform.forward * BuildItemGap; //가장 가까운 자재전진
                     nearObj.GetComponent<BuildingItemObj>().MyOrder++;
                     curInteractObj.transform.position += curInteractObj.transform.forward * BuildItemGap; //선택중인 자재 후진
@@ -633,7 +633,7 @@ namespace DM.Building
             float disc = ((BuildItemList.Count - 1f) / 2f) * BuildItemGap;
             float closeDist = dist - disc;
             //gap* count -1 - order(2)
-            float dis2c = ((BuildItemList.Count - 1)- curInteractObj.MyOrder) * BuildItemGap + closeDist;
+            float dis2c = ((BuildItemList.Count - 1) - curInteractObj.MyOrder) * BuildItemGap + closeDist;
 
             return dis2c;
         }

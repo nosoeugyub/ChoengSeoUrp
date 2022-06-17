@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -51,7 +52,37 @@ namespace NSY.Iven
                 ResultSlotListImage.enabled = true;
                 ResultSlotListImage.color = Color.clear;
 
-                ResizeChildImg();
+                StartCoroutine(DelayChangSize());
+            }
+        }
+        public IEnumerator DelayChangSize()
+        {
+            if (transform.childCount > 0)
+            {
+                childImgObject.enabled = true;
+                childImgObject.sprite = _recipeItem.ItemSprite;
+                childImgObject.SetNativeSize();
+
+                float maxsizeWH = childImgObject.sprite.texture.height;
+                if (childImgObject.sprite.texture.width >= childImgObject.sprite.texture.height)
+                {
+                    maxsizeWH = childImgObject.sprite.texture.width;
+                }
+
+                LayoutRebuilder.ForceRebuildLayoutImmediate(ResultSlotListImage.rectTransform);
+                print(ResultSlotListImage.rectTransform.rect.width);
+                ScaleSlotImg(maxsizeWH);
+                yield return new WaitForSeconds(0.01f);
+            }
+        }
+
+        private void ScaleSlotImg(float maxsizeWH)
+        {
+            float scale = ResultSlotListImage.rectTransform.rect.width / maxsizeWH;
+            if (scale != 0)
+            {
+                Vector3 scaleVec = new Vector3(scale, scale, 1);
+                childImgObject.rectTransform.localScale = scaleVec;// ResultSlotListImage.rectTransform.rect.width /maxsizeWH;
             }
         }
 
@@ -69,18 +100,8 @@ namespace NSY.Iven
                     maxsizeWH = childImgObject.sprite.texture.width;
                 }
 
-                float scale = ResultSlotListImage.rectTransform.rect.width / maxsizeWH;
-                if (scale != 0)
-                {
-                    print(ResultSlotListImage.rectTransform.rect.width);
-                    Vector3 scaleVec = new Vector3(scale, scale, 1);
-                    childImgObject.rectTransform.localScale = scaleVec;// ResultSlotListImage.rectTransform.rect.width /maxsizeWH;
-                }
-                else
-                {
-                 //   childImgObject.rectTransform.localScale = Vector3.one * 0.1f;// ResultSlotListImage.rectTransform.rect.width /maxsizeWH;
-
-                }
+                LayoutRebuilder.ForceRebuildLayoutImmediate(ResultSlotListImage.rectTransform);
+                ScaleSlotImg(maxsizeWH);
             }
         }
 

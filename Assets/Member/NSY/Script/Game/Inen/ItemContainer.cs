@@ -1,10 +1,9 @@
-﻿using DM.Building;
-using NSY.Manager;
+﻿using NSY.Manager;
+using NSY.Player;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using NSY.Player;
 namespace NSY.Iven
 {
     public abstract class ItemContainer : MonoBehaviour, IItemContainer
@@ -68,66 +67,39 @@ namespace NSY.Iven
             return freeSpaces >= amount;
         }
 
-
-        public virtual void CheckCanBuildItem(BuildingBlock buildingBlock)//당장 건축 가능한 자재인지 아닌지 판단.
-        {
-
-            if (!buildingBlock) //임시 처리 정확한 기획 없음
-            {
-                foreach (ItemSlot itemSlot in ItemSlots)
-                {
-                    if (itemSlot.item == null) continue;
-                    itemSlot.Interactble(true); //채원이는 착한 이쁜 빨갱이
-                }
-                return;
-            }
-            foreach (ItemSlot itemSlot in ItemSlots)
-            {
-                if (itemSlot.item == null)
-                {
-                    continue;
-                }
-                else
-                {
-                    if (itemSlot.item.InItemType == InItemType.BuildSign || itemSlot.item.InItemType != InItemType.BuildWall && itemSlot.item.InItemType != InItemType.BuildNormal)//벽이면
-                    {
-                        itemSlot.Interactble(false);
-                    }
-                    else
-                    {
-                        itemSlot.Interactble(true);
-                    }
-                }
-
-                if (itemSlot.item.OutItemType == OutItemType.BuildingItemObj && itemSlot.item != null)// 건축가능한 친구
-                {
-                    itemSlot.isCheckBulid = false;
-                    itemSlot.Interactble(true);
-                }
-                else// 건축 불가능한친구면
-                {
-
-                    itemSlot.isCheckBulid = true;
-                    itemSlot.Interactble(false);
-
-                }
-
-            }
-        }
-
-        public void BulidRed() // 건축자재 빨갱이 
+        public virtual void InvenAllOnOff(bool isOn) //전체 상호작용 불가능, 가능 처리
         {
             foreach (ItemSlot itemSlot in ItemSlots)
             {
                 if (itemSlot.item == null) continue;
-                if (itemSlot.item.OutItemType == OutItemType.BuildingItemObj)
-                {
-                    itemSlot.Interactble(true);
-                }
 
+                itemSlot.Interactble(isOn);
+                //itemSlot.isRedbulid = !isOn;
             }
-            return;
         }
+        public virtual void CheckCanBuildItem()//건축자재
+        {
+            foreach (ItemSlot itemSlot in ItemSlots)
+            {
+                if (itemSlot.item == null) continue;
+                if (itemSlot.item.OutItemType != OutItemType.BuildingItemObj)//건축자재가 아니면 끄기
+                    itemSlot.Interactble(false);
+            }
+        }
+
+        //public void BulidRed() // 건축자재 빨갱이 
+        //{
+        //    foreach (ItemSlot itemSlot in ItemSlots)
+        //    {
+        //        if (itemSlot.item == null) continue;
+        //        if (itemSlot.item.OutItemType == OutItemType.BuildingItemObj)
+        //        {
+        //            itemSlot.Interactble(true);
+        //        }
+
+        //    }
+        //    return;
+        //}
 
         IEnumerator DelayUpdateAddValue(Item item)
         {
@@ -379,7 +351,7 @@ namespace NSY.Iven
             {
                 if (ItemSlots[i].item != null)  // 가득찼고
                 {
-                    if (isGettingItem == true) 
+                    if (isGettingItem == true)
                     {
                         Debug.Log("기존 업");
 
@@ -403,14 +375,14 @@ namespace NSY.Iven
             {
                 if (ItemSlots[i].item != null)  // 가득찼고
                 {
-                        return false;
+                    return false;
                 }
 
             }
             return true;
         }
-        
+
     }
-  
+
 }
 

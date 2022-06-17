@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -13,6 +14,8 @@ namespace NSY.Iven
 
         [SerializeField]
         ItemTooltip tooltip;
+        [SerializeField]
+        private Image childImgObject;
         //슬롯갯수
         public TextMeshProUGUI amountText;
         //public Text amountText;
@@ -22,7 +25,7 @@ namespace NSY.Iven
 
         private Color normalColor = Color.white;
         private Color disabledColor = new Color(1, 1, 1, 0);
-        private Color cantInteractColor = new Color(1, 0.3f, 0.3f, 0.5f); //채원이 빨갱이
+        private Color cantInteractColor = new Color(1, 0.5f, 0.5f, 1); //채원이 빨갱이
         public event Action<BaseItemSlot> OnRightClickEvent;
         public event Action<BaseItemSlot> OnLeftClickEvent;
         public event Action<BaseItemSlot> OnPointerEnterEvent;
@@ -30,13 +33,7 @@ namespace NSY.Iven
         public event Action<BaseItemSlot> OnDubleClickEvent;
         //  public event Action<BaseItemSlot> OnLeftClickEvent;
 
-
-        public bool isCheckBulid = false;
-
-
-
-
-
+        public bool canInteractWithSlot = true;
 
 
         /// <summary>
@@ -57,16 +54,16 @@ namespace NSY.Iven
 
                 if (_item == null)
                 {
-                    itemImage.sprite = null;
-                    itemImage.color = disabledColor;
+                    childImgObject.sprite = null;
+                    childImgObject.color = disabledColor;
                 }
-                
 
-                if(_item != null)
+                childImgObject.enabled = false;
+                if (_item != null)
                 {
-                    itemImage.sprite = _item.ItemSprite;
-                    itemImage.color = normalColor;
-
+                    childImgObject.sprite = _item.ItemSprite;
+                    childImgObject.color = normalColor;
+                    StartCoroutine(DelayChangSize());
                 }
 
                 if (isPointerOver)
@@ -109,7 +106,7 @@ namespace NSY.Iven
                         amountText.text = _amount.ToString();
                     }
                 }
-     
+
 
             }
         }
@@ -143,16 +140,45 @@ namespace NSY.Iven
                 OnPointerExit(null);
             }
         }
-      
+        IEnumerator DelayChangSize()
+        {
+            yield return new WaitForEndOfFrame();
+            ResizeChildImg();
+        }
+        private void ResizeChildImg()
+        {
+            if (transform.childCount > 0)
+            {
+                childImgObject.enabled = true;
+                childImgObject = transform.GetChild(0).GetComponent<Image>();
+                childImgObject.sprite = _item.ItemSprite;
+                childImgObject.SetNativeSize();
+
+                float maxsizeWH = childImgObject.sprite.texture.height;
+                if (childImgObject.sprite.texture.width >= childImgObject.sprite.texture.height)
+                    maxsizeWH = childImgObject.sprite.texture.width;
+
+                LayoutRebuilder.ForceRebuildLayoutImmediate(itemImage.rectTransform);
+                print(itemImage.rectTransform.rect.width);
+                float scale = itemImage.rectTransform.rect.width / maxsizeWH;
+                if (scale != 0)
+                {
+                    Vector3 scaleVec = new Vector3(scale, scale, 1);
+                    childImgObject.rectTransform.localScale = scaleVec;// ResultSlotListImage.rectTransform.rect.width /maxsizeWH;
+                }
+            }
+        }
         public void Interactble(bool canInteractable)// 채원이 빨갱잉
         {
-            if (canInteractable)
+            canInteractWithSlot = canInteractable;
+            if (canInteractWithSlot)
             {
-                itemImage.color = normalColor;
+                childImgObject.color = normalColor;
             }
             else
             {
-                itemImage.color = cantInteractColor;
+                childImgObject.color = cantInteractColor;
+                print(item.ItemName);
             }
         }
 
@@ -160,7 +186,7 @@ namespace NSY.Iven
         {
             return item != null && item.ItemName == Item.ItemName;
         }
-     
+
         //갯수채우기 함수
 
         public virtual bool CanReceiveItem(Item item)
@@ -191,7 +217,7 @@ namespace NSY.Iven
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            if (isCheckBulid == true)
+            if (canInteractWithSlot == false)
             {
                 return;
             }

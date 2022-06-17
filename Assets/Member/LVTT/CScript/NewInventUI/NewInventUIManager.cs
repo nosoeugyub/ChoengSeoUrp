@@ -31,7 +31,7 @@ public class NewInventUIManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-      
+
         for (int i = 0; i < TabUI.Length; i++)
         {
             {
@@ -46,7 +46,7 @@ public class NewInventUIManager : MonoBehaviour
     {
         nowActiveTabIdx = -1;
         //조건 검사 as
-       
+
         UnLockManager.Unlockmanager.GetItemUnlocks += InterectingItem;
     }
     private void OnDisable()
@@ -83,7 +83,7 @@ public class NewInventUIManager : MonoBehaviour
 
                                         tempCL.Craftslot[k].isHaveRecipeItem = true;
 
-                                        DebugText.Instance.SetText(string.Format("{0} 자재를 제작할 수 있게 되었습니다.",tempCL.Craftslot[k].RecipeItem.ItemName));
+                                        DebugText.Instance.SetText(string.Format("{0} 자재를 제작할 수 있게 되었습니다.", tempCL.Craftslot[k].RecipeItem.ItemName));
                                     }
 
                                 }
@@ -109,42 +109,19 @@ public class NewInventUIManager : MonoBehaviour
     public void ShowRecipe(CraftSlot obj)
     {
         nowSelectItem = obj;
-        obj.ResultSlotImage.sprite = obj.RecipeItem.ItemSprite; //결과 이미지
         obj.RecipeName.text = obj.RecipeItem.ItemName;
-        obj.RecipeExplain.text = obj.RecipeItem.ItemDescription;
-       
 
         for (int i = 0; i < CraftWindows.Length; i++)
         {
-            CraftWindows[i]._item = obj.RecipeItem.recipe[i].item;
+
             if (obj.RecipeItem.recipe[i].item)
             {
-                CraftWindows[i].GetComponent<Image>().enabled = true;
-                CraftWindows[i].GetComponent<Image>().sprite = obj.RecipeItem.recipe[i].item.ItemSprite;
+                CraftWindows[i].RecipeAmount = obj.RecipeItem.recipe[i].count;
             }
-            else
-            {
-                CraftWindows[i].GetComponent<Image>().enabled = false;
-                CraftWindows[i].SetRecipeCurrentAmountText(" ");
-                CraftWindows[i].SetRecipeHaverAmountText(" ");
-                continue;
-            }
-            //갯수
-            CraftWindows[i].RecipeAmount = obj.RecipeItem.recipe[i].count;
-            CraftWindows[i].SetRecipeHaverAmountText(obj.RecipeItem.recipe[i].item.GetCountItems.ToString());
-            if (CraftWindows[i].RecipeAmount > obj.RecipeItem.recipe[i].item.GetCountItems)
-            {
-                CraftWindows[i].GetComponent<Image>().color = Color.red;
-                //빨간색 
-
-            }
-            else
-            {
-                CraftWindows[i].GetComponent<Image>().color = Color.white;
-            }
+            CraftWindows[i].Item = obj.RecipeItem.recipe[i].item;
         }
     }
-    public void FixedUpdate()  
+    public void FixedUpdate()
     {
         scrollbar.size = 0;
     }
@@ -157,7 +134,7 @@ public class NewInventUIManager : MonoBehaviour
     {
         for (int i = 0; i < iven.ItemSlots.Count; i++)
         {
-            if (iven.ItemSlots[i].CanAddStack(nowSelectItem.RecipeItem , 1))
+            if (iven.ItemSlots[i].CanAddStack(nowSelectItem.RecipeItem, 1))
             {
                 return false;
             }
@@ -167,7 +144,7 @@ public class NewInventUIManager : MonoBehaviour
     }
     public bool HaventItems()
     {
-        return  iven.Fulled() && !HasItemSlot();
+        return iven.Fulled() && !HasItemSlot();
     }
     IEnumerator StartPopup()
     {
@@ -186,55 +163,55 @@ public class NewInventUIManager : MonoBehaviour
         {
 
         }
-            if (isCreateMode == true)
-            {
-                iven.AddItem(nowSelectItem.RecipeItem);
-            }
-
-            List<List<ItemSlot>> itemSlots = CanCraftItem();
-            if (itemSlots == null || itemSlots[0].Count == 0) return;
-
-            for (int i = 0; i < CraftWindows.Length; i++)
-            {
-                if (itemSlots[i].Count == 0) continue;
-
-                //슬롯 중 숫자가 제일 작은 슬롯 구해올 변수
-                int ra = CraftWindows[i].RecipeAmount;
-
-                ItemSlot minSlot = itemSlots[i][itemSlots[i].Count - 1];
-
-                do
-                {
-                    //print(itemSlots[i].Count - 1);
-                    minSlot = itemSlots[i][itemSlots[i].Count - 1];
-
-                    foreach (var item in itemSlots[i]) //최소 슬롯 찾음
-                    {
-                        if (item.Amount < minSlot.Amount)
-                        {
-                            minSlot = item;
-                        }
-                    }
-
-                    if (minSlot.Amount < ra) //전체 6  민 칸 1개, 필요 2개일 경우 
-                    {
-                        minSlot.item.GetCountItems -= minSlot.Amount;//6- 1
-                        ra -= minSlot.Amount; //2 -= 1
-                        minSlot.Amount = 0;
-                        itemSlots[i].Remove(minSlot);
-                    }
-                    else
-                        break;
-                }
-                while (ra > 0);// 그런데도
-
-                minSlot.item.GetCountItems -= ra;
-                CraftWindows[i].SetRecipeHaverAmountText(minSlot.item.GetCountItems.ToString());
-
-                minSlot.Amount -= ra;
-            }
+        if (isCreateMode == true)
+        {
             iven.AddItem(nowSelectItem.RecipeItem);
-        
+        }
+
+        List<List<ItemSlot>> itemSlots = CanCraftItem();
+        if (itemSlots == null || itemSlots[0].Count == 0) return;
+
+        for (int i = 0; i < CraftWindows.Length; i++)
+        {
+            if (itemSlots[i].Count == 0) continue;
+
+            //슬롯 중 숫자가 제일 작은 슬롯 구해올 변수
+            int ra = CraftWindows[i].RecipeAmount;
+
+            ItemSlot minSlot = itemSlots[i][itemSlots[i].Count - 1];
+
+            do
+            {
+                //print(itemSlots[i].Count - 1);
+                minSlot = itemSlots[i][itemSlots[i].Count - 1];
+
+                foreach (var item in itemSlots[i]) //최소 슬롯 찾음
+                {
+                    if (item.Amount < minSlot.Amount)
+                    {
+                        minSlot = item;
+                    }
+                }
+
+                if (minSlot.Amount < ra) //전체 6  민 칸 1개, 필요 2개일 경우 
+                {
+                    minSlot.item.GetCountItems -= minSlot.Amount;//6- 1
+                    ra -= minSlot.Amount; //2 -= 1
+                    minSlot.Amount = 0;
+                    itemSlots[i].Remove(minSlot);
+                }
+                else
+                    break;
+            }
+            while (ra > 0);// 그런데도
+
+            minSlot.item.GetCountItems -= ra;
+            CraftWindows[i].SetRecipeHaverAmountText(minSlot.item.GetCountItems.ToString());
+
+            minSlot.Amount -= ra;
+        }
+        iven.AddItem(nowSelectItem.RecipeItem);
+
     }
 
     private List<List<ItemSlot>> CanCraftItem()

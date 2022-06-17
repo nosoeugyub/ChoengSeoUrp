@@ -154,14 +154,13 @@ namespace NSY.Iven
             {
                 CheckBuliditem = obj.item;
                 BuildingBlock.nowBuildingBlock.BtnSpawnHouseBuildItem(obj.item);
+                iventorynsy.InvenAllOnOff(false);
 
                 foreach (ItemSlot itemslots in iventorynsy.ItemSlots) //인벤 빌딩슬롯 정검 
                 {
                     if (!itemslots.item) continue;
                     if (itemslots.item.OutItemType == OutItemType.BuildingItemObj || CheckBuliditem.ItemName != itemslots.item.ItemName)
                     {
-                        itemslots.Interactble(false);
-                        itemslots.isRedbulid = true;
                     }
                     if (itemslots.item == CheckBuliditem)
                     {
