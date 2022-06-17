@@ -77,7 +77,7 @@ namespace NSY.Iven
                 //itemSlot.isRedbulid = !isOn;
             }
         }
-        public virtual void CheckCanBuildItem()//건축자재
+        public virtual void CheckCanBuildItem()//건축자재만 켜기
         {
             foreach (ItemSlot itemSlot in ItemSlots)
             {
@@ -86,21 +86,6 @@ namespace NSY.Iven
                     itemSlot.Interactble(false);
             }
         }
-
-        //public void BulidRed() // 건축자재 빨갱이 
-        //{
-        //    foreach (ItemSlot itemSlot in ItemSlots)
-        //    {
-        //        if (itemSlot.item == null) continue;
-        //        if (itemSlot.item.OutItemType == OutItemType.BuildingItemObj)
-        //        {
-        //            itemSlot.Interactble(true);
-        //        }
-
-        //    }
-        //    return;
-        //}
-
         IEnumerator DelayUpdateAddValue(Item item)
         {
             yield return new WaitForEndOfFrame();

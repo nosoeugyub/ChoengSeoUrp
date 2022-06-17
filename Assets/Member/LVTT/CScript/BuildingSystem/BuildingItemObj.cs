@@ -11,8 +11,8 @@ namespace DM.Building
         [Tooltip("이 오브젝트를 채집할 수 있는 도구 타입")]
         public InItemType toolType;
 
-        [SerializeField] float MaxScale = 3f;
-        [SerializeField] float MinScale = 0.3f;
+         float MaxScale = 3f;
+         float MinScale = 0.3f;
         public int breakCount;
 
         [SerializeField] private bool itemisSet;

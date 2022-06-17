@@ -63,7 +63,7 @@ namespace NSY.Iven
                 {
                     childImgObject.sprite = _item.ItemSprite;
                     childImgObject.color = normalColor;
-                    StartCoroutine(DelayChangSize());
+                    StartCoroutine(DelayChangeSize());
                 }
 
                 if (isPointerOver)
@@ -91,11 +91,12 @@ namespace NSY.Iven
                 if (_amount < 0)
                 {
                     //item.GetCountItems = 0;
-                    _amount = 0;
+                    _amount = 0; canInteractWithSlot = true;
                 }
                 if (_amount == 0 && item != null)
                 {
                     //item.GetCountItems = 0;
+                    canInteractWithSlot = true;
                     item = null;
                 }
                 if (amountText != null) //&& _item.MaximumStacks > 1 
@@ -140,7 +141,7 @@ namespace NSY.Iven
                 OnPointerExit(null);
             }
         }
-        IEnumerator DelayChangSize()
+        IEnumerator DelayChangeSize()
         {
             yield return new WaitForEndOfFrame();
             ResizeChildImg();
