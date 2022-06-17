@@ -78,7 +78,7 @@ public class IntroManager : MonoBehaviour
     /// <summary>
     /// The mini-scenes that are rendered to textures for the book pages
     /// </summary>
-   // public PageView[] pageViews;
+    public PageView[] pageViews;
 
     CameraIntro introCam;
     // Start is called before the first frame update
