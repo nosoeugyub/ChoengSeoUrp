@@ -52,6 +52,7 @@ namespace NSY.Iven
                 ResultSlotListImage.enabled = true;
                 ResultSlotListImage.color = Color.clear;
 
+                if(isActiveAndEnabled)
                 StartCoroutine(DelayChangSize());
             }
         }

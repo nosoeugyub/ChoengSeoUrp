@@ -72,8 +72,8 @@ namespace NSY.Iven
                     else
                         Interactble(true);
 
-                    ResizeChildImg();
-                    //StartCoroutine(DelayChangSize());
+                    //ResizeChildImg();
+                    StartCoroutine(DelayChangSize());
                 }
 
 
