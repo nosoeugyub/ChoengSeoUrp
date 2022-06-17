@@ -3710,6 +3710,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 65536
   maxRayCastDistance: 1000
+  NPCindex: 0
   continentText: {fileID: 814067175}
   mapTransform: {fileID: 49065203}
   inertiaMoveFactor: {x: 1000, y: 1000}
@@ -4123,8 +4124,8 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 182752f61f05f834a98507e2591ad633, type: 2}
-  - {fileID: 2100000, guid: d02e3d5022092fc42be3c3c25e92b689, type: 2}
-  - {fileID: 2100000, guid: d02e3d5022092fc42be3c3c25e92b689, type: 2}
+  - {fileID: 2100000, guid: 994cb9cc3369e7046a93b91ab44ddfbb, type: 2}
+  - {fileID: 2100000, guid: 994cb9cc3369e7046a93b91ab44ddfbb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9133,6 +9134,7 @@ MonoBehaviour:
   pagesFlippingSound: {fileID: 1639028947}
   pagesFlippingSoundDelay: 0.3
   touchPad: {fileID: 2033642787}
+  pageViews: []
 --- !u!4 &1210794581
 Transform:
   m_ObjectHideFlags: 0
@@ -9265,6 +9267,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4096
   maxRayCastDistance: 1000
+  NPCindex: 0
   chapterJumps:
   - gameObjectName: Chapter 01
     pageNumber: 3
@@ -10947,8 +10950,8 @@ SkinnedMeshRenderer:
   m_Materials:
   - {fileID: 2100000, guid: 182752f61f05f834a98507e2591ad633, type: 2}
   - {fileID: 2100000, guid: 203443d95a43b144b9ad9bc9eae6079a, type: 2}
-  - {fileID: 2100000, guid: d02e3d5022092fc42be3c3c25e92b689, type: 2}
-  - {fileID: 2100000, guid: d02e3d5022092fc42be3c3c25e92b689, type: 2}
+  - {fileID: 2100000, guid: 994cb9cc3369e7046a93b91ab44ddfbb, type: 2}
+  - {fileID: 2100000, guid: 994cb9cc3369e7046a93b91ab44ddfbb, type: 2}
   - {fileID: 2100000, guid: cd678c2baf31bac4496edecf2be0b628, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -13097,7 +13100,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.5197133, y: 1}
+    m_SensorSize: {x: 1.7777778, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -13290,8 +13293,8 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 182752f61f05f834a98507e2591ad633, type: 2}
   - {fileID: 2100000, guid: 203443d95a43b144b9ad9bc9eae6079a, type: 2}
   - {fileID: 2100000, guid: cd678c2baf31bac4496edecf2be0b628, type: 2}
-  - {fileID: 2100000, guid: d02e3d5022092fc42be3c3c25e92b689, type: 2}
-  - {fileID: 2100000, guid: d02e3d5022092fc42be3c3c25e92b689, type: 2}
+  - {fileID: 2100000, guid: 994cb9cc3369e7046a93b91ab44ddfbb, type: 2}
+  - {fileID: 2100000, guid: 994cb9cc3369e7046a93b91ab44ddfbb, type: 2}
   materialMappings:
   - materialType: 0
     mappings:
@@ -13367,26 +13370,23 @@ MonoBehaviour:
   - materialType: 7
     mappings: []
   pageData:
-  - material: {fileID: 2100000, guid: d02e3d5022092fc42be3c3c25e92b689, type: 2}
-  - material: {fileID: 2100000, guid: d02e3d5022092fc42be3c3c25e92b689, type: 2}
-  - material: {fileID: 2100000, guid: d02e3d5022092fc42be3c3c25e92b689, type: 2}
-  - material: {fileID: 2100000, guid: d02e3d5022092fc42be3c3c25e92b689, type: 2}
-  - material: {fileID: 2100000, guid: d02e3d5022092fc42be3c3c25e92b689, type: 2}
-  - material: {fileID: 2100000, guid: d02e3d5022092fc42be3c3c25e92b689, type: 2}
-  - material: {fileID: 2100000, guid: d02e3d5022092fc42be3c3c25e92b689, type: 2}
-  - material: {fileID: 2100000, guid: d02e3d5022092fc42be3c3c25e92b689, type: 2}
-  - material: {fileID: 2100000, guid: d02e3d5022092fc42be3c3c25e92b689, type: 2}
-  - material: {fileID: 2100000, guid: d02e3d5022092fc42be3c3c25e92b689, type: 2}
-  - material: {fileID: 2100000, guid: d02e3d5022092fc42be3c3c25e92b689, type: 2}
-  - material: {fileID: 2100000, guid: d02e3d5022092fc42be3c3c25e92b689, type: 2}
-  - material: {fileID: 2100000, guid: d02e3d5022092fc42be3c3c25e92b689, type: 2}
-  - material: {fileID: 2100000, guid: d02e3d5022092fc42be3c3c25e92b689, type: 2}
-  - material: {fileID: 2100000, guid: d02e3d5022092fc42be3c3c25e92b689, type: 2}
-  - material: {fileID: 2100000, guid: d02e3d5022092fc42be3c3c25e92b689, type: 2}
-  - material: {fileID: 2100000, guid: d02e3d5022092fc42be3c3c25e92b689, type: 2}
-  - material: {fileID: 2100000, guid: d02e3d5022092fc42be3c3c25e92b689, type: 2}
-  - material: {fileID: 2100000, guid: d02e3d5022092fc42be3c3c25e92b689, type: 2}
-  - material: {fileID: 2100000, guid: d02e3d5022092fc42be3c3c25e92b689, type: 2}
+  - material: {fileID: 2100000, guid: 994cb9cc3369e7046a93b91ab44ddfbb, type: 2}
+  - material: {fileID: 2100000, guid: 994cb9cc3369e7046a93b91ab44ddfbb, type: 2}
+  - material: {fileID: 2100000, guid: 994cb9cc3369e7046a93b91ab44ddfbb, type: 2}
+  - material: {fileID: 2100000, guid: 994cb9cc3369e7046a93b91ab44ddfbb, type: 2}
+  - material: {fileID: 2100000, guid: 994cb9cc3369e7046a93b91ab44ddfbb, type: 2}
+  - material: {fileID: 2100000, guid: 994cb9cc3369e7046a93b91ab44ddfbb, type: 2}
+  - material: {fileID: 2100000, guid: 994cb9cc3369e7046a93b91ab44ddfbb, type: 2}
+  - material: {fileID: 2100000, guid: 994cb9cc3369e7046a93b91ab44ddfbb, type: 2}
+  - material: {fileID: 2100000, guid: 994cb9cc3369e7046a93b91ab44ddfbb, type: 2}
+  - material: {fileID: 2100000, guid: 994cb9cc3369e7046a93b91ab44ddfbb, type: 2}
+  - material: {fileID: 2100000, guid: 994cb9cc3369e7046a93b91ab44ddfbb, type: 2}
+  - material: {fileID: 2100000, guid: 994cb9cc3369e7046a93b91ab44ddfbb, type: 2}
+  - material: {fileID: 2100000, guid: 994cb9cc3369e7046a93b91ab44ddfbb, type: 2}
+  - material: {fileID: 2100000, guid: 994cb9cc3369e7046a93b91ab44ddfbb, type: 2}
+  - material: {fileID: 2100000, guid: 994cb9cc3369e7046a93b91ab44ddfbb, type: 2}
+  - material: {fileID: 2100000, guid: 994cb9cc3369e7046a93b91ab44ddfbb, type: 2}
+  - material: {fileID: 2100000, guid: 994cb9cc3369e7046a93b91ab44ddfbb, type: 2}
   pages:
   - {fileID: 502405817}
   - {fileID: 967675952}
@@ -14249,6 +14249,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   maxRayCastDistance: 1000
+  NPCindex: 0
   book: {fileID: 977976583}
   pageTurnTime: 0.7
 --- !u!1 &1911471067
@@ -15027,6 +15028,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 65536
   maxRayCastDistance: 1000
+  NPCindex: 0
   continentText: {fileID: 814067175}
 --- !u!1 &2066251106
 GameObject:
@@ -15324,6 +15326,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   maxRayCastDistance: 1000
+  NPCindex: 0
 --- !u!114 &2091239093
 MonoBehaviour:
   m_ObjectHideFlags: 0
