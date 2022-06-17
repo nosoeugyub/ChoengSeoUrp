@@ -27,7 +27,7 @@ public class RespawnCollectObject : CollectObject
 
     IEnumerator RespawnWaitTime()
     {
-        yield return new WaitForSeconds(respawnTime);
+        yield return new WaitForSeconds(respawnTime + Random.Range(-100,100));
         Init();
     }
 
