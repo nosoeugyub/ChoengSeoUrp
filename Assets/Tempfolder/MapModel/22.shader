@@ -83,7 +83,7 @@
                 float NdotL = saturate(dot(_MainLightPosition.xyz, i.normal))*0.5f + 0.7f; // NdotL로 간단히 라이팅한다.
                 half3 ambient = SampleSH(i.normal);
 
-                col.rgb *= NdotL * _MainLightColor.rgb * mainLight.shadowAttenuation * mainLight.distanceAttenuation + ambient;
+                col.rgb *= pow(NdotL, 5) * _MainLightColor.rgb * mainLight.shadowAttenuation * mainLight.distanceAttenuation + ambient;
                
 
                 return col;
