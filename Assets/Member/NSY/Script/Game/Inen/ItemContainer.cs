@@ -90,6 +90,8 @@ namespace NSY.Iven
         {
             yield return new WaitForEndOfFrame();
             PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.GetItem, PlayerData.ItemData, ((int)ItemBehaviorEnum.length));
+            if (OnAddItemEvent != null)
+                OnAddItemEvent();
         }
 
         public bool isGettingItem = true;
@@ -151,8 +153,7 @@ namespace NSY.Iven
             ItemSlots[i].Amount++;
             ItemSlots[i].item.GetCountItems++;
 
-            if (OnAddItemEvent != null)
-                OnAddItemEvent();
+      
 
             SuperManager.Instance.unlockmanager.GetInterectItemUnLocking();
             StartCoroutine(DelayUpdateAddValue(item));

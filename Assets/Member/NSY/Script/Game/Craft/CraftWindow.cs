@@ -49,38 +49,42 @@ namespace NSY.Iven
             set
             {
                 _item = value;
-
-                if (_item == null)
-                {
-                    childImgObject.sprite = null;
-                    childImgObject.color = Color.clear;
-                    Interactble(true);
-                    //reimage = null;
-                    SetRecipeCurrentAmountText(" ");
-                    SetRecipeHaverAmountText(" ");
-                }
-                else
-                {
-                    childImgObject.sprite = _item.ItemSprite;
-                    childImgObject.color = normalColor;
-                    Interactble(true);
-
-                    SetRecipeHaverAmountText(_item.GetCountItems.ToString());
-
-                    if (RecipeAmount > _item.GetCountItems)
-                        Interactble(false);
-                    else
-                        Interactble(true);
-
-                    //ResizeChildImg();
-                    StartCoroutine(DelayChangSize());
-                }
-
-
-
+                UpdateWindowState();
             }
         }
+        public void UpdateWindowState()
+        {
+            if (_item == null)
+            {
+                if (!childImgObject) childImgObject = transform.GetChild(1).GetComponent<Image>();
 
+                childImgObject.sprite = null;
+                childImgObject.color = Color.clear;
+                Interactble(true);
+
+                SetRecipeCurrentAmountText(" ");
+                SetRecipeHaverAmountText(" ");
+            }
+            else
+            {
+                if (!childImgObject) childImgObject = transform.GetChild(1).GetComponent<Image>();
+
+                childImgObject.sprite = _item.ItemSprite;
+                childImgObject.color = normalColor;
+                Interactble(true);
+
+                SetRecipeHaverAmountText(_item.GetCountItems.ToString());
+
+                if (RecipeAmount > _item.GetCountItems)
+                    Interactble(false);
+                else
+                    Interactble(true);
+
+                ResizeChildImg();
+                //StartCoroutine(DelayChangSize());
+            }
+
+        }
 
         public int _RecipeAmount;
         public int RecipeAmount

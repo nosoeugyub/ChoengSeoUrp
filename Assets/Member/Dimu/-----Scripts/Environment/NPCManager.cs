@@ -46,7 +46,8 @@ public class NPCManager : MonoBehaviour
         EventManager.EventActions[(int)EventEnum.GotoBearsWithSheep] += MoveToBearsHouseWithSheep;
         EventManager.EventActions[(int)EventEnum.GotoBackWithSheep] += MoveToBackSheep;
 
-        for (int i = 0; i < teleportPosButtons.Length-1; ++i)
+        //텔포 따로 나눠야 할듯
+        for (int i = 0; i < teleportPosButtons.Length - 1; ++i)
         {
             ButtonInteractable(i, false);
         }
@@ -56,46 +57,33 @@ public class NPCManager : MonoBehaviour
     {
         npcTfs[npcidx].Npctf.PlayDialogSound();
     }
-    private void MoveToBearsHouseWithSheep()
-    {
-        MoveToNPCSomewhere(8, npcTfs[1].Npctf.MyHouse.FriendTransform.position);
-        Vector3 randPos = new Vector3(Random.Range(-1.5f, 1.5f), 0, Random.Range(-1.5f, 1.5f));
 
-        npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(npcTfs[1].Npctf.MyHouse.FriendTransform.position + randPos);
-        EventManager.EventAction -= EventManager.EventActions[(int)EventEnum.GotoBearsWithSheep];
-    }
-    private void MoveToBackSheep()
-    {
-        MoveToNPCSomewhere(8, npcTfs[8].Npctf.MyHouse.HouseOwnerTransform.position);
-        npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(npcTfs[8].Npctf.MyHouse.FriendTransform.position);
-        EventManager.EventAction -= EventManager.EventActions[(int)EventEnum.GotoBackWithSheep];
-
-    }
     public void ButtonInteractable(int i, bool interactable)
     {
         teleportPosButtons[i].interactable = interactable;
     }
-    public void OnOfftelePickUI(bool isOn)
+    public void MoveToNPCSomewhere(int npcIdx, Vector3 location)
     {
-        telePickUI.gameObject.SetActive(isOn);
+        npcTfs[npcIdx].Npctf.gameObject.transform.position = location;
+        print(npcTfs[npcIdx].Npctf.gameObject.transform.position);
     }
-    public void OpenTeleportUI(int i)
+    public void NpcSetActive(int npcIdx, bool isActive)
     {
-        teleUI.gameObject.SetActive(true);
-        teleUIYesButton.onClick.RemoveAllListeners();
-        teleUIYesButton.onClick.AddListener(() =>
+        npcTfs[npcIdx].Npctf.gameObject.SetActive(isActive);
+    }
+    public void AllNpcActive(bool isActive)
+    {
+        for (int i = 0; i < npcTfs.Length; i++)
         {
-            //if (SuperManager.Instance.inventoryManager.RemoveItem(removeitem, removeCount))
-            npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(teleportPos[i].position);
-            //else
-            //teleFailUI.gameObject.SetActive(true);
-        });
+            NpcSetActive(i, isActive);
+        }
     }
-    public void GoNPCsHouse()
+    public bool HaveHouse(int npcnum)
     {
-        Vector3 MovePos = npcTfs[NowInteractNPCIndex].Npctf.MyHouse.FriendTransform.position + npcTfs[NowInteractNPCIndex].Npctf.transform.right*2;
-        npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(MovePos);
+        return npcTfs[npcnum].Npctf.IsHaveHouse();
     }
+
+    //ComeToPort
     public bool ComeToPort()
     {
         if (!npcTfs[2].IsField) return false;
@@ -130,19 +118,33 @@ public class NPCManager : MonoBehaviour
             portInformUI.DOLocalMoveY(600, 1).SetEase(Ease.OutQuart);
         }
     }
-
     IEnumerator ComeToPortCor()
     {
         yield return new WaitForSeconds(3f);
         ComeToPortUIAction(false);
     }
 
-    public void MoveToNPCSomewhere(int npcIdx, Vector3 location)
+    //teleport
+    public void OnOfftelePickUI(bool isOn)
     {
-        npcTfs[npcIdx].Npctf.gameObject.transform.position = location;
-        print(npcTfs[npcIdx].Npctf.gameObject.transform.position);
+        telePickUI.gameObject.SetActive(isOn);
     }
+    public void OpenTeleportUI(int i)
+    {
+        teleUI.gameObject.SetActive(true);
+        teleUIYesButton.onClick.RemoveAllListeners();
+        teleUIYesButton.onClick.AddListener(() =>
+        {
+            npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(teleportPos[i].position);
+        });
+    }
+
     //////////////event Methods
+    public void GoNPCsHouse()
+    {
+        Vector3 MovePos = npcTfs[NowInteractNPCIndex].Npctf.MyHouse.FriendTransform.position + npcTfs[NowInteractNPCIndex].Npctf.transform.right * 2;
+        npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(MovePos);
+    }
     public void MoveToBearsHouse()
     {
         MoveToNPCSomewhere(2, npcTfs[1].Npctf.MyHouse.FriendTransform.position);
@@ -158,9 +160,20 @@ public class NPCManager : MonoBehaviour
         npcTfs[2].IsField = true;
         EventManager.EventAction -= EventManager.EventActions[5];
     }
-    public bool HaveHouse(int npcnum)
+    private void MoveToBearsHouseWithSheep()
     {
-        return npcTfs[npcnum].Npctf.IsHaveHouse();
+        MoveToNPCSomewhere(8, npcTfs[1].Npctf.MyHouse.FriendTransform.position);
+        Vector3 randPos = new Vector3(Random.Range(-1.5f, 1.5f), 0, Random.Range(-1.5f, 1.5f));
+
+        npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(npcTfs[1].Npctf.MyHouse.FriendTransform.position + randPos);
+        EventManager.EventAction -= EventManager.EventActions[(int)EventEnum.GotoBearsWithSheep];
+    }
+    private void MoveToBackSheep()
+    {
+        MoveToNPCSomewhere(8, npcTfs[8].Npctf.MyHouse.HouseOwnerTransform.position);
+        npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(npcTfs[8].Npctf.MyHouse.FriendTransform.position);
+        EventManager.EventAction -= EventManager.EventActions[(int)EventEnum.GotoBackWithSheep];
+
     }
 }
 [System.Serializable]

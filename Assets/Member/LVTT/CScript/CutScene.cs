@@ -32,9 +32,11 @@ public class CutScene : MonoBehaviour
     [SerializeField] GameObject CutSceneLibrary;
     Image curImage;
 
+    public static bool IsCutSceneOn { get; set; }
 
     public void PrintImage(int index)//Calling this will also unlock the Image in the Library
     {
+        ChangeIsCutSceneOn(true);
         index--;
         if (Image[index] != null && !Image[index].isOpen)
         {
@@ -83,5 +85,10 @@ public class CutScene : MonoBehaviour
     public void CloseCutSceneLibrary()
     {
 
+    }
+
+    public void ChangeIsCutSceneOn(bool ison)
+    {
+        IsCutSceneOn = ison;
     }
 }

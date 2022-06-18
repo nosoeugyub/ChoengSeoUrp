@@ -102,8 +102,9 @@ public class NewInventUIManager : MonoBehaviour
     {
         for (int i = 0; i < CraftWindows.Length; i++)
         {
-            if (nowSelectItem != null && nowSelectItem.RecipeItem.recipe[i].item != null)
-                CraftWindows[i].SetRecipeHaverAmountText(nowSelectItem.RecipeItem.recipe[i].item.GetCountItems.ToString());
+            CraftWindows[i].UpdateWindowState();
+            //if (nowSelectItem != null && nowSelectItem.RecipeItem.recipe[i].item != null)
+            //    CraftWindows[i].SetRecipeHaverAmountText(nowSelectItem.RecipeItem.recipe[i].item.GetCountItems.ToString());
         }
     }
     public void ShowRecipe(CraftSlot obj)

@@ -182,42 +182,10 @@ namespace DM.Building
             }
 
         }
-
-        //public void InvenItemCantBuild()
-        //{
-        //    //DebugText.Instance.SetText("널이 아닙니다");
-
-        //    foreach (ItemSlot itemslot in inventory.ItemSlots)
-        //    {
-        //        if (itemslot.item == null)
-        //        {
-        //            continue;
-        //        }
-        //        if (itemslot.item.OutItemType == OutItemType.BuildingItemObj)// && itemslot.item.ItemName != hit.collider.GetComponent<BuildingItemObj>().item.ItemName)
-        //        {
-        //            itemslot.Interactble(false);
-        //        }
-        //    }
-        //}
-
         public void InvenSlotResetCanBuildMode()
         {
             invenmanager.CheckBuliditem = null; //설치하면 다른거 할수없음
-            //DebugText.Instance.SetText("널입니다");
-
-
-            foreach (ItemSlot itemslot in inventory.ItemSlots) //건축슬롯 원상복구
-            {
-                if (itemslot.item == null)
-                {
-                    continue;
-                }
-                if (itemslot.item.OutItemType == OutItemType.BuildingItemObj)// 건축슬롯들을dnsjtkdqhrrngo
-                {
-                    itemslot.Interactble(true);
-                    // itemslot.isRedbulid = false;
-                }
-            }
+            inventory.InvenAllOnOff(true);
         }
 
         private void SetBuildingItemObj()//설치하기
@@ -302,7 +270,8 @@ namespace DM.Building
                 textBox.gameObject.SetActive(false);
             buildButtonFuncAdded = false;
             TutoUI(true);
-            buildManager.PlayerOnOff(false);
+            SuperManager.Instance.npcManager.AllNpcActive(false);
+            //buildManager.PlayerOnOff(false);
             BuildOffUI(true);
             nowBuildingBlock.constructsign.gameObject.SetActive(false);
             nowBuildingBlock.GetComponent<BoxCollider>().enabled = false;
@@ -381,7 +350,8 @@ namespace DM.Building
             }
 
             BuildOffUI(false);
-            buildManager.PlayerOnOff(true);
+            //buildManager.PlayerOnOff(true);
+            SuperManager.Instance.npcManager.AllNpcActive(true);
             isBuildMode = false;
             isBuildDemolishMode = false;
             //주석 부분
