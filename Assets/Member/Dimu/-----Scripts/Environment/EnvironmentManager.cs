@@ -110,11 +110,14 @@ public class EnvironmentManager : MonoBehaviour
 
     public void TakePictures()
     {
+
         for (int i = 0; i < screenshot.Length; i++)
         {
             screenshot[i].OnSceenShotEvent();
         }
     }
+
+   
 
     public Screenshot[] screenshot;
     private void Awake()

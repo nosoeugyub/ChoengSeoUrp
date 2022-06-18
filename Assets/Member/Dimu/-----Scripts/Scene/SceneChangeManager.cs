@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using NSY.Manager;
 public class SceneChangeManager : MonoBehaviour
 {
     [SerializeField] Animator fadeAnim;
@@ -16,6 +16,8 @@ public class SceneChangeManager : MonoBehaviour
     }
     IEnumerator Fade(string scenename)
     {
+        
+        yield return new WaitForSeconds(1f);
         fadeAnim.SetTrigger("whitescreen");
         yield return new WaitForSeconds(3f);
         SceneManager.LoadScene(scenename);
