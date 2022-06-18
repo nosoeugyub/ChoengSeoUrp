@@ -28,7 +28,7 @@ namespace DM.Building
 
         [SerializeField] Transform houseOwnerTransform;
         [SerializeField] Transform friendTransform;
-        [SerializeField] Transform constructsign;
+        [SerializeField] Transform[] constructsign;
 
         private bool buildButtonFuncAdded;
 
@@ -83,10 +83,16 @@ namespace DM.Building
             layerMask = 1 << LayerMask.NameToLayer("Wall");
             buildButtonFuncAdded = false;
             buildManager.SetbuildOffButtonEvents(BuildModeOff);
-
-            constructsign.gameObject.SetActive(!IsCompleteBuilding());
+            ConstructSignsActive(!IsCompleteBuilding());
         }
+        public void ConstructSignsActive(bool isActive)
+        {
+            for (int i = 0; i < constructsign.Length; i++)
+            {
+                constructsign[i].gameObject.SetActive(isActive);
 
+            }
+        }
         public void SetCurInteractObj(BuildingItemObj buildingItemObj)
         {
             //if(curInteractObj.ParentBuildArea == this)
@@ -273,7 +279,7 @@ namespace DM.Building
             SuperManager.Instance.npcManager.AllNpcActive(false);
             //buildManager.PlayerOnOff(false);
             BuildOffUI(true);
-            nowBuildingBlock.constructsign.gameObject.SetActive(false);
+            nowBuildingBlock.ConstructSignsActive(false);
             nowBuildingBlock.GetComponent<BoxCollider>().enabled = false;
 
             CamManager.ChangeFollowTarger(gameObject.transform, 1);
@@ -346,7 +352,7 @@ namespace DM.Building
             else
             {
                 SetBuildingState(BuildState.NotFinish);
-                nowBuildingBlock.constructsign.gameObject.SetActive(true);
+                nowBuildingBlock.ConstructSignsActive(true);
             }
 
             BuildOffUI(false);

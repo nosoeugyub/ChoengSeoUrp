@@ -92,14 +92,8 @@ public class EnvironmentManager : MonoBehaviour
             if (cleanliness > 100)
             {
                 cleanliness = 100;
-               
+
                 endingButton.SetActive(true);
-                //사진찍엉
-                for (int i = 0; i < screenshot.Length; i++)
-                {
-                    screenshot[i].OnSceenShotEvent();
-                }
-             
             }
             else if (cleanliness < 0)
                 cleanliness = 0;
@@ -114,7 +108,13 @@ public class EnvironmentManager : MonoBehaviour
         }
     }
 
-
+    public void TakePictures()
+    {
+        for (int i = 0; i < screenshot.Length; i++)
+        {
+            screenshot[i].OnSceenShotEvent();
+        }
+    }
 
     public Screenshot[] screenshot;
     private void Awake()
