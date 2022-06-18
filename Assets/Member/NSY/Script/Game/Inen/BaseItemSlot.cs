@@ -15,7 +15,7 @@ namespace NSY.Iven
         [SerializeField]
         ItemTooltip tooltip;
         [SerializeField]
-        private Image childImgObject;
+        protected Image childImgObject;
         //슬롯갯수
         public TextMeshProUGUI amountText;
         //public Text amountText;

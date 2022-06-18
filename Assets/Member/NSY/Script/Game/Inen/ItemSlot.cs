@@ -66,7 +66,7 @@ namespace NSY.Iven
             }
             if (item != null)
             {
-                itemImage.color = dragColor;
+                childImgObject.color = dragColor;
             }
             if (OnBeginDragEvent != null)
             {
@@ -86,7 +86,7 @@ namespace NSY.Iven
             }
             if (item != null)
             {
-                itemImage.color = normalColor;
+                childImgObject.color = normalColor;
             }
             if (OnEndDragEvent != null)
             {
