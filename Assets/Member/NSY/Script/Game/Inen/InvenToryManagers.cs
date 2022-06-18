@@ -224,14 +224,10 @@ namespace NSY.Iven
                 Debug.Log("드래그시작함");
                 dragitemSlot = itemslot;
                 draggableitem.sprite = itemslot.item.ItemSprite;
-                draggableitem.transform.position = Input.mousePosition;
+                //draggableitem.transform.position = Input.mousePosition;
                 draggableitem.gameObject.SetActive(true);
 
                 //itemTooltip.ShowItemTooltip(itemSlot.item);
-                Vector3 screenpoint  = Input.mousePosition;
-                Vector2 onPoint;
-                RectTransformUtility.ScreenPointToLocalPointInRectangle(BaseCharcterPanel, screenpoint, uicamera, out onPoint);
-                draggableitem.GetComponent<RectTransform>().localPosition = onPoint;
 
                 //Vector3 ToolVec = itemTooltip.tooltipTransform.transform.position;
                 //ToolVec = itemTooltip.tooltipTransform.transform.position;
@@ -242,7 +238,12 @@ namespace NSY.Iven
         }
         private void Drag(BaseItemSlot itemslot)
         {
-            draggableitem.transform.position = Input.mousePosition;
+            //draggableitem.transform.position = Input.mousePosition;
+            Vector3 screenpoint = Input.mousePosition;
+            Vector2 onPoint;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(BaseCharcterPanel, screenpoint, uicamera, out onPoint);
+            draggableitem.GetComponent<RectTransform>().localPosition = Input.mousePosition;
+            print(draggableitem.GetComponent<RectTransform>().position);
         }
         private void EndDrag(BaseItemSlot itemslot)
         {
@@ -441,7 +442,7 @@ namespace NSY.Iven
         }
         void Down()
         {
-            BaseCharcterPanel.DOLocalMoveY(-160, 1).SetEase(Ease.OutQuart);
+            BaseCharcterPanel.DOLocalMoveY(-140, 1).SetEase(Ease.OutQuart);
             button_UpDown.DOBlendableLocalRotateBy(new Vector3(0, 0, 180), 1, RotateMode.Fast).SetEase(Ease.OutQuart);
 
             //BaseCharcterPanel.anchoredPosition = new Vector3(0, -170, 0);

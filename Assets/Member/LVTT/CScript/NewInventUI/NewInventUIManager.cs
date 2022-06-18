@@ -103,8 +103,6 @@ public class NewInventUIManager : MonoBehaviour
         for (int i = 0; i < CraftWindows.Length; i++)
         {
             CraftWindows[i].UpdateWindowState();
-            //if (nowSelectItem != null && nowSelectItem.RecipeItem.recipe[i].item != null)
-            //    CraftWindows[i].SetRecipeHaverAmountText(nowSelectItem.RecipeItem.recipe[i].item.GetCountItems.ToString());
         }
     }
     public void ShowRecipe(CraftSlot obj)
@@ -114,17 +112,12 @@ public class NewInventUIManager : MonoBehaviour
 
         for (int i = 0; i < CraftWindows.Length; i++)
         {
-
             if (obj.RecipeItem.recipe[i].item)
             {
                 CraftWindows[i].RecipeAmount = obj.RecipeItem.recipe[i].count;
             }
             CraftWindows[i].Item = obj.RecipeItem.recipe[i].item;
         }
-    }
-    public void FixedUpdate()
-    {
-        scrollbar.size = 0;
     }
     public void Update()
     {
@@ -269,7 +262,7 @@ public class NewInventUIManager : MonoBehaviour
         if (isOpen == false)
         {
             BG.DOLocalMoveX(819, 1).SetEase(Ease.OutQuart);
-            invenBtn.DOLocalMoveX(636, 1).SetEase(Ease.OutQuart);//630 815 1 85
+            invenBtn.DOLocalMoveX(666, 1).SetEase(Ease.OutQuart);//630 815 1 85
             isOpen = true;
         }
     }
@@ -279,15 +272,15 @@ public class NewInventUIManager : MonoBehaviour
         for (int i = 0; i < invenBtn.childCount; i++)
         {
             if (index == i)
-                invenBtn.GetChild(i).DOLocalMoveX(15, 1).SetEase(Ease.OutQuart);
+                invenBtn.GetChild(i).DOLocalMoveX(-15, 1).SetEase(Ease.OutQuart);
             else
-                invenBtn.GetChild(i).DOLocalMoveX(25, 1).SetEase(Ease.OutQuart);
+                invenBtn.GetChild(i).DOLocalMoveX(0, 1).SetEase(Ease.OutQuart);
         }
     }
     public void close()
     {
         BG.DOLocalMoveX(1105, 1).SetEase(Ease.OutQuart);
-        invenBtn.DOLocalMoveX(922, 1).SetEase(Ease.OutQuart); //187
+        invenBtn.DOLocalMoveX(952, 1).SetEase(Ease.OutQuart); //187
         isOpen = false;
     }
 }
