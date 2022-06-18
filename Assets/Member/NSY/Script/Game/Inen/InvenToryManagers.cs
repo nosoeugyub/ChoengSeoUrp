@@ -240,10 +240,13 @@ namespace NSY.Iven
         {
             //draggableitem.transform.position = Input.mousePosition;
             Vector3 screenpoint = Input.mousePosition;
+            //screenpoint.x -= 960;
+            //screenpoint.y -= 540;
             Vector2 onPoint;
             RectTransformUtility.ScreenPointToLocalPointInRectangle(BaseCharcterPanel, screenpoint, uicamera, out onPoint);
-            draggableitem.GetComponent<RectTransform>().localPosition = Input.mousePosition;
-            print(draggableitem.GetComponent<RectTransform>().position);
+            draggableitem.GetComponent<RectTransform>().localPosition = onPoint;
+           // print(draggableitem.GetComponent<RectTransform>().localPosition);
+            print(onPoint);
         }
         private void EndDrag(BaseItemSlot itemslot)
         {
