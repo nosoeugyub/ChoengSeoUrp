@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 
 [System.Serializable]
@@ -7,6 +8,9 @@ public class CutSceneImage
     public bool isOpen = false;
     public Image img;
     public Image LockedImage;
+    public Image LibraryImage;
+    public GameObject Numtext;
+
 }
 
 public enum CutType
@@ -30,6 +34,9 @@ public class CutScene : MonoBehaviour
     [SerializeField] Transform ImageSpawn;
     [SerializeField] Button ConfirmButton;
     [SerializeField] GameObject CutSceneLibrary;
+    [SerializeField] GameObject FadeIn;
+    [SerializeField] GameObject FadeOut;
+
     Image curImage;
     int num = 1;
 
@@ -50,13 +57,28 @@ public class CutScene : MonoBehaviour
         {
             Image[index].isOpen = true;
             Image[index].LockedImage.gameObject.SetActive(false);
-            curImage = Instantiate(Image[index].img, ImageSpawn.position, ImageSpawn.rotation, ImageSpawn);
-            curImage.rectTransform.sizeDelta = new Vector2(1920, 1080);
-            Invoke("ShowConfirmButton", 3f);
+            Image[index].Numtext.gameObject.SetActive(false);
+            Image[index].LibraryImage.sprite = Image[index].img.sprite;
+
+            StartCoroutine(GetImage(index));
 
         }
+    }
+
+    IEnumerator GetImage(int index)
+    {
+        GameObject fadein = Instantiate(FadeIn, ImageSpawn.position, ImageSpawn.rotation, ImageSpawn);
+        yield return new WaitForSeconds(1.5f);
+        Destroy(fadein, 0.5f);
+        curImage = Instantiate(Image[index].img, ImageSpawn.position, ImageSpawn.rotation, ImageSpawn);
+        curImage.rectTransform.sizeDelta = new Vector2(1920, 1080);
+        GameObject fadeout = Instantiate(FadeOut, ImageSpawn.position, ImageSpawn.rotation, ImageSpawn);
+        yield return new WaitForSeconds(3f);
+        Destroy(fadeout, 0.5f);
+        ShowConfirmButton();
 
     }
+
 
     public void OpenImage(int index) //Open the unlocked Image and show the "확인" button without 3sec waiting ->Use in Image Library
     {
