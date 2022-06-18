@@ -216,7 +216,7 @@ namespace DM.Dialog
                     sentenceState = 2;//클리어
                 }
 
-                else if (isAcceptedQuests.Count > 0) // 진행중인 대화가 있다면?
+                else if (isAcceptedQuests.Count > 0 && CanAccept(isAcceptedQuests)) // 진행중인 대화가 있다면?
                 {
                     nowDialogData = activeQuestDialogLists[(int)nowNpc.GetCharacterType()].dialogList[FindDialogIndex(isAcceptedQuests[0])];
 
@@ -266,6 +266,22 @@ namespace DM.Dialog
 
             UpdateDialog(ss, sentenceState);
         }
+
+        private bool CanAccept(List<QuestData> isAcceptedQuests)
+        {
+            if(isAcceptedQuests[0].tasks.npcs.Length > 0)//npc 항목 있고
+            {
+                if (isAcceptedQuests[0].tasks.npcs[0].behaviorType != 1) //집 퀘스트 아니면 
+                    return true;
+                else //집퀘면
+                    return false;
+            }
+            else //없다면
+            {
+                return true;
+            }
+        }
+
         public int FindDialogIndex(QuestData questData)
         {
             for (int i = 0; i < activeQuestDialogLists[questData.npcID].dialogList.Length; ++i)
@@ -394,6 +410,10 @@ namespace DM.Dialog
 
         private void UpdateDialogText(Sentence[] sentences, int sentenceState)
         {
+            if (sentences.Length == 0)
+            {
+                LastDialogNextEvent(sentenceState);
+            }
             if (sentences[nowSentenceIdx].eventIdx > 0)
                 EventManager.EventAction += EventManager.EventActions[sentences[nowSentenceIdx].eventIdx];
 
@@ -440,8 +460,11 @@ namespace DM.Dialog
         private void LastDialogNextEvent(int sentenceState)
         {
             Debug.Log("isTalking false");
-            nowOnFab.GetComponent<TextBox>().DestroyTextBox();
-            nowOnFab = null;
+            if (nowOnFab)
+            {
+                nowOnFab.GetComponent<TextBox>().DestroyTextBox();
+                nowOnFab = null;
+            }
             testdelegate = null;
 
             IsTalking = false;

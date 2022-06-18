@@ -143,6 +143,8 @@ namespace DM.NPC
                 myHouse = block;
                 myHouse.SetLivingChar(this);
                 print("Find My House");
+                PlayerData.AddValue((int)GetCharacterType(), (int)NpcBehaviorEnum.gethouse, PlayerData.npcData, (int)NpcBehaviorEnum.length);
+                SuperManager.Instance.questmanager.ClearQuest(SuperManager.Instance.questmanager.questLists[(int)GetCharacterType()].questList.Length-1, (int)GetCharacterType());
                 GoHomeEvent();
             }
         }

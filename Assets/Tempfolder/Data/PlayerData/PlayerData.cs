@@ -80,7 +80,7 @@ public enum BuildingBehaviorEnum //건축 지역
 }
 public enum NpcBehaviorEnum
 {
-    Interact, length
+    Interact,gethouse, length
 }
 public enum LocationBehaviorEnum
 {

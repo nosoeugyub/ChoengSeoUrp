@@ -143,7 +143,7 @@ namespace DM.Quest
                     PlayerData.AddDictionary(npc.objType, PlayerData.npcData, (int)NpcBehaviorEnum.length);
                     Debug.Log(string.Format("fin: {0}, now: {1}", npc.finishData, PlayerData.npcData[npc.objType].amounts[npc.behaviorType] - npc.initData));
 
-                    if (npc.finishData > PlayerData.npcData[npc.objType].amounts[0] - npc.initData)
+                    if (npc.finishData > PlayerData.npcData[npc.objType].amounts[npc.behaviorType] - npc.initData)
                     {
                         return false;
                     }
