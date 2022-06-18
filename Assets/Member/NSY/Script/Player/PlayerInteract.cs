@@ -184,7 +184,6 @@ namespace NSY.Player
                 nowInteractable.EndInteract();
             if (Physics.Raycast(ray, out hit, 20, layerMask2.value) && !BuildingBlock.isBuildMode)
             {
-                print(hit.collider.name);
                 nowInteractable = hit.collider.GetComponent<Interactable>();
                 if (nowInteractable != null && IsInteracted(nowInteractable))// 클릭한 옵젝이 닿은 옵젝 리스트에 있다면 통과ds
                 {
@@ -206,7 +205,6 @@ namespace NSY.Player
                     nowInteractable = hit.collider.GetComponent<Interactable>();
                     if (nowInteractable != null && IsInteracted(nowInteractable))
                     {
-                        Debug.Log("상호작용한 물체: " + hit.collider.name);
                         InvokeInteract(nowInteractable);
                     }
                 }

@@ -88,14 +88,17 @@ namespace NSY.Iven
             set
             {
                 _amount = value;
-                if (_amount < 0)
+                if (_amount <= 0)
                 {
                     //item.GetCountItems = 0;
-                    _amount = 0; canInteractWithSlot = true;
+                    canInteractWithSlot = true;
+                    print("canInteractWithSlot = true");
+                    _amount = 0;
                 }
                 if (_amount == 0 && item != null)
                 {
                     //item.GetCountItems = 0;
+                    print("canInteractWithSlot = true");
                     canInteractWithSlot = true;
                     item = null;
                 }
@@ -160,7 +163,6 @@ namespace NSY.Iven
                     maxsizeWH = childImgObject.sprite.texture.width;
 
                 LayoutRebuilder.ForceRebuildLayoutImmediate(itemImage.rectTransform);
-                print(itemImage.rectTransform.rect.width);
                 float scale = itemImage.rectTransform.rect.width / maxsizeWH;
                 if (scale != 0)
                 {
@@ -179,7 +181,6 @@ namespace NSY.Iven
             else
             {
                 childImgObject.color = cantInteractColor;
-                print(item.ItemName);
             }
         }
 
@@ -218,8 +219,10 @@ namespace NSY.Iven
 
         public void OnPointerDown(PointerEventData eventData)
         {
+                    print("OnPointerDown");
             if (canInteractWithSlot == false)
             {
+                    print("canInteractWithSlot false");
                 return;
             }
 
@@ -235,6 +238,7 @@ namespace NSY.Iven
             {
                 if (OnLeftClickEvent != null)
                 {
+                    print("왼쪽클릭");
 
                     OnLeftClickEvent(this);
                 }

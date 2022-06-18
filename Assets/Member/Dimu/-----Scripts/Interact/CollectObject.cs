@@ -25,7 +25,6 @@ public class CollectObject : ItemObject
         if (SuperManager.Instance.inventoryManager.CanAddInven(item))
         {
             animator.GetComponent<PlayerAnimator>().PickUp = UpdateCollect;
-            print("인벤에 넣을 수있쓰빈다.ㅇ");
             animator.SetBool("isPickingUp", true);
             return true;
         }

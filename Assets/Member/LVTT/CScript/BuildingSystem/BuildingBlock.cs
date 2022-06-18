@@ -441,7 +441,6 @@ namespace DM.Building
             foreach (GameObject item in BuildItemList)
             {
                 item.transform.position += item.transform.forward * BuildItemGap / 2;
-                print(item.transform.position.z);
             }
 
             //새로 설치할 건축자재 앞으로 이동 및 y 세팅

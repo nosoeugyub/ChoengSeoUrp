@@ -51,6 +51,10 @@ namespace NSY.Iven
         {
             if (action != null)
                 action(itemSlot);
+            else
+            {
+                print("이벤트가없음");
+            }
         }
 
         public virtual bool CanAddItem(Item item, int amount = 1)
@@ -84,6 +88,8 @@ namespace NSY.Iven
                 if (itemSlot.item == null) continue;
                 if (itemSlot.item.OutItemType != OutItemType.BuildingItemObj)//건축자재가 아니면 끄기
                     itemSlot.Interactble(false);
+                else
+                    itemSlot.Interactble(true);
             }
         }
         IEnumerator DelayUpdateAddValue(Item item)
@@ -255,7 +261,7 @@ namespace NSY.Iven
 
             minSlot.item.GetCountItems -= ra;
             minSlot.Amount -= ra;
-
+            OnAddItemEvent();
             return true;
         }
 

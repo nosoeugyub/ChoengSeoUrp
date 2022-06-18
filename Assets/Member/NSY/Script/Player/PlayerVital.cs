@@ -20,6 +20,7 @@ namespace NSY.Player
             set
             {
                 tired = value;
+                if (tired >= 100) tired = 100;
                 tiredUi.SetTiredUI(Tired, MaxVital);
                 //DebugText.Instance.SetText(tired.ToString());
             }

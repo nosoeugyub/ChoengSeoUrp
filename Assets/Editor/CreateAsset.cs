@@ -225,11 +225,11 @@ public class CreateAsset : MonoBehaviour
             variantRoot.GetComponent<BoxCollider>().size = new Vector3(texture.width * 0.01f, texture.height * 0.01f, 1);
             variantRoot.GetComponent<BoxCollider>().center = new Vector3(0, 0, 0);
 
-            //so = AssetDatabase.LoadAssetAtPath(string.Format(string.Format("{0}.asset", path.Substring(0, path.Length - 7))), typeof(Item)) as Item;
+            so = AssetDatabase.LoadAssetAtPath(string.Format(string.Format("{0}.asset", path.Substring(0, path.Length - 7))), typeof(Item)) as Item;
             //so.OutItemType = OutItemType.BuildingItemObj;
             //so.ItemName = path.Substring(0, path.Length - 7);
             //so.MaximumStacks = 30;
-            //variantRoot.GetComponent<BuildingItemObj>().SetItem(so);
+            variantRoot.GetComponent<BuildingItemObj>().SetItem(so);
 
             Transform variantRootChild = variantRoot.transform.GetChild(0);
             variantRootChild.GetComponent<MeshRenderer>().material = material;
@@ -374,6 +374,7 @@ public class CreateAsset : MonoBehaviour
 
             so.MaximumStacks = 5;
             so.InItemType = InItemType.BuildNormal;
+            so.OutItemType = OutItemType.BuildingItemObj;
             so.recipe = new RecipeIteminfo[3];
 
             AssetDatabase.CreateAsset(so, string.Format("{0}.asset", filename));

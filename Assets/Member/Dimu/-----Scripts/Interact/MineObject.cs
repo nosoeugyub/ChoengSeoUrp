@@ -70,7 +70,6 @@ public class MineObject : ItemObject
             boxcol = GetComponents<BoxCollider>();
             BoxColONOFF(false);
             animator.SetTrigger("IsFalling");
-            print(animator.transform.parent.name);
         }
     }
     public override int CanInteract()

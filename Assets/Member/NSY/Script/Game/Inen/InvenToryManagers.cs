@@ -144,6 +144,9 @@ namespace NSY.Iven
         public bool isRed = false;
         private void BuildingLeftClick(BaseItemSlot obj)
         {
+            print("빌딩왼쪽클릭");
+            if (obj.item.OutItemType != OutItemType.BuildingItemObj) return;
+            print("빌딩템임!");
 
             if (CheckBuliditem != null)
             {

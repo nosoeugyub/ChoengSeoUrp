@@ -191,7 +191,6 @@ namespace NSY.Iven
                 }
 
                 LayoutRebuilder.ForceRebuildLayoutImmediate(reimage.rectTransform);
-                print(reimage.rectTransform.rect.width);
                 ScaleSlotImg(maxsizeWH);
             }
         }
