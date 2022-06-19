@@ -314,135 +314,27 @@ public class Screenshot : MonoBehaviour
             byte[] byteArray3 = screenshotTexture3.EncodeToPNG(); // 전체 이미지 저장
                                                                   //
                                                                   //Ver 2  . 무지성 저장 카메라 영역에대한
-            #region
-            //if (Page == 1 &&
-            //     EveryMat[0].GetTexture("_MainTex") == null)
-            //{
-            //    SceenShotCam.enabled = true;
-            //    EveryMat[0].SetTexture("_MainTex", Texutre2);
-            //    EveryMat[1].SetTexture("_MainTex", Texutre1);
-            //}
-            //if (Page == 2 &&
-            //   EveryMat[2].GetTexture("_MainTex") == null)
-            //{
-            //    EveryMat[2].SetTexture("_MainTex", Texutre2);
-            //    EveryMat[3].SetTexture("_MainTex", Texutre1);
-            //}
-            //if (Page == 3 &&
-            //   EveryMat[4].GetTexture("_MainTex") == null)
-            //{
-            //    EveryMat[4].SetTexture("_MainTex", Texutre2);
-            //    EveryMat[5].SetTexture("_MainTex", Texutre1);
-            //}
-            //if (Page == 4 &&
-            //   EveryMat[6].GetTexture("_MainTex") == null)
-            //{
-            //    EveryMat[6].SetTexture("_MainTex", Texutre2);
-            //    EveryMat[7].SetTexture("_MainTex", Texutre1);
-            //}
-            //if (Page == 5 &&
-            //   EveryMat[8].GetTexture("_MainTex") == null)
-            //{
-            //    EveryMat[8].SetTexture("_MainTex", Texutre2);
-            //    EveryMat[9].SetTexture("_MainTex", Texutre1);
-            //}
-            //if (Page == 6 &&
-            //   EveryMat[10].GetTexture("_MainTex") == null)
-            //{
-            //    EveryMat[10].SetTexture("_MainTex", Texutre2);
-            //    EveryMat[11].SetTexture("_MainTex", Texutre1);
-            //}
-            //if (Page == 7 &&
-            //   EveryMat[12].GetTexture("_MainTex") == null)
-            //{
-            //    EveryMat[12].SetTexture("_MainTex", Texutre2);
-            //    EveryMat[13].SetTexture("_MainTex", Texutre1);
-            //}
-            //if (Page == 8 &&
-            // EveryMat[14].GetTexture("_MainTex") == null)
-            //{
-            //    EveryMat[14].SetTexture("_MainTex", Texutre2);
-            //    EveryMat[15].SetTexture("_MainTex", Texutre1);
-            //}
-            //if (Page == 9 &&
-            // EveryMat[16].GetTexture("_MainTex") == null)
-            //{
-            //    EveryMat[16].SetTexture("_MainTex", Texutre2);
-            //    EveryMat[17].SetTexture("_MainTex", Texutre1);
-            //}
-            //if (Page == 10 &&
-            // EveryMat[18].GetTexture("_MainTex") == null)
-            //{
-            //    EveryMat[18].SetTexture("_MainTex", Texutre2);
-            //    EveryMat[19].SetTexture("_MainTex", Texutre1);
-            //}
-            //if (Page == 11 &&
-            // EveryMat[20].GetTexture("_MainTex") == null)
-            //{
-            //    EveryMat[20].SetTexture("_MainTex", Texutre2);
-            //    EveryMat[21].SetTexture("_MainTex", Texutre1);
-            //}
-            //if (Page == 12 &&
-            // EveryMat[22].GetTexture("_MainTex") == null)
-            //{
-            //    EveryMat[22].SetTexture("_MainTex", Texutre2);
-            //    EveryMat[23].SetTexture("_MainTex", Texutre1);
-            //}
-            //if (Page == 13 &&
-            // EveryMat[24].GetTexture("_MainTex") == null)
-            //{
-            //    EveryMat[24].SetTexture("_MainTex", Texutre2);
-            //    EveryMat[25].SetTexture("_MainTex", Texutre1);
-            //}
-            //if (Page == 14 &&
-            // EveryMat[26].GetTexture("_MainTex") == null)
-            //{
-            //    EveryMat[26].SetTexture("_MainTex", Texutre2);
-            //    EveryMat[27].SetTexture("_MainTex", Texutre1);
-            //}
-            //if (Page == 15 &&
-            // EveryMat[28].GetTexture("_MainTex") == null)
-            //{
-            //    EveryMat[28].SetTexture("_MainTex", Texutre2);
-            //    EveryMat[29].SetTexture("_MainTex", Texutre1);
-            //}
-            //if (Page == 16 &&
-            // EveryMat[30].GetTexture("_MainTex") == null)
-            //{
-            //    EveryMat[30].SetTexture("_MainTex", Texutre2);
-            //    EveryMat[31].SetTexture("_MainTex", Texutre1);
-            //}
-            //if (Page == 17 &&
-            // EveryMat[32].GetTexture("_MainTex") == null)
-            //{
-            //    EveryMat[32].SetTexture("_MainTex", Texutre2);
-            //    EveryMat[33].SetTexture("_MainTex", Texutre1);
-            //     GetComponent<Camera>().targetTexture = null;
-            //    SceenShotCam.enabled = false;
-            //}
-            #endregion
-            //Ver 1 . NPC만                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     c                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
-            #region
-            Debug.Log("홀로롤로 할머니22");
+         
+           
             Material1.SetTexture("_MainTex", Texutre2);
             Material2.SetTexture("_MainTex", Texutre1);
             Material3.SetTexture("_MainTex", Texutre3);
             for (int i = 0; i < SuperManager.Instance.buildingManager.buildings.Count; i++)//빌딩스를 체크하여
             {
                 Debug.Log("호잉호잉");
-                for (int j = 0; i < 14; i++)
+                for (int j = 0; i < 17; i++)
                 {
                     if (Page == i &&
                     SuperManager.Instance.buildingManager.buildings[j]._livingCharacter != null)// 
                     {
-                        Debug.Log(i + "번들어감");
+                       
                         Material1.SetTexture("_MainTex", Texutre2);
                         Material2.SetTexture("_MainTex", Texutre1);
                         Material3.SetTexture("_MainTex", Texutre3);
                     }
                     else
                     {
-                        Debug.Log("임소정 애미");
+                      
                         Material1.SetTexture("_MainTex", Texutre2);
                         Material2.SetTexture("_MainTex", Texutre1);
                         Material3.SetTexture("_MainTex", Texutre3);
@@ -453,7 +345,7 @@ public class Screenshot : MonoBehaviour
             }
 
 
-            #endregion
+         
             System.IO.File.WriteAllBytes(TotalPath, screenshotTexture1.EncodeToPNG());
             System.IO.File.WriteAllBytes(TotalPath, screenshotTexture2.EncodeToPNG());
             System.IO.File.WriteAllBytes(publicTotalPath, screenshotTexture3.EncodeToPNG()); //publicTotalPath
@@ -466,13 +358,10 @@ public class Screenshot : MonoBehaviour
 
     }
 
-
     // Update is called once per frame
     public void OnSceenShotEvent()
     {
 
-
-        
         if (_WillFakeScreenShot == false)
         {
             _WillFakeScreenShot = true;
