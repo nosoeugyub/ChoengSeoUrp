@@ -93,7 +93,7 @@ namespace NSY.Player
                 //if (SuperManager.Instance.inventoryManager.isGettingItem == false)
                 {
                    if( collectObj.Collect(playerAnimator.animator)) //콜렉트에서 애니 발생함
-                    SetIsAnimation(false);
+                    SetIsAnimation(true);
                     return;
                 }
                 //collectObj.Collect(playerAnimator.animator); //콜렉트에서 애니 발생함

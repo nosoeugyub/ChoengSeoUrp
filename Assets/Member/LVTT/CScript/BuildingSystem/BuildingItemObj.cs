@@ -12,7 +12,7 @@ namespace DM.Building
         public InItemType toolType;
 
          float MaxScale = 3f;
-         float MinScale = 0.3f;
+         float MinScale = 0.1f;
         public int breakCount;
 
         [SerializeField] private bool itemisSet;
