@@ -8,7 +8,17 @@ public class SceneChangeManager : MonoBehaviour
     [SerializeField] Animator fadeAnim;
     public void LoadSceneString(string scenename)
     {
+        if (scenename == "CreditDemo")
+            StartCoroutine(LoadSceneLong(scenename));
+        else
+            SceneManager.LoadScene(scenename);
+    }
+
+    IEnumerator LoadSceneLong(string scenename )
+    {
+        yield return new WaitForSeconds(10f);
         SceneManager.LoadScene(scenename);
+
     }
     public void LoadSceneFadeString(string scenename)
     {
