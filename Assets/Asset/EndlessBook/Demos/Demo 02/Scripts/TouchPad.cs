@@ -1,8 +1,6 @@
 ﻿namespace echo17.EndlessBook.Demo02
 {
     using System;
-    using System.Collections;
-    using System.Collections.Generic;
     using UnityEngine;
 
     /// <summary>
@@ -67,6 +65,7 @@
         /// The colliders for each page
         /// </summary>
         public Collider[] pageColliders;
+        public Collider[] pageColliders2;
 
         /// <summary>
         /// The upper left "button" used to go back to the table of contents
@@ -77,6 +76,7 @@
         /// The mask of the touchpad colliders
         /// </summary>
         public LayerMask pageTouchPadLayerMask;
+        public LayerMask messageLayerMask;
 
         /// <summary>
         /// Handler for when a touch down is detected
@@ -97,6 +97,8 @@
         /// Handler for when the table of contents "button" is clicked
         /// </summary>
         public Action tableOfContentsDetected;
+        public Action messageDetected;
+
 
         void Awake()
         {
@@ -124,7 +126,7 @@
             else if (touchDown && Input.GetMouseButton(0))
             {
                 // dragging
-                DetectDrag(Input.mousePosition);
+               // DetectDrag(Input.mousePosition);
             }
         }
 
@@ -139,6 +141,8 @@
         {
             // activate or deactive the collider
             pageColliders[(int)page].gameObject.SetActive(on);
+            if(page == PageEnum.Left)
+            pageColliders2[0].gameObject.SetActive(on);
         }
 
         /// <summary>
@@ -163,9 +167,9 @@
             Vector2 hitPositionNormalized;
             PageEnum page;
             bool tableOfContents;
-
+            bool isMessage;
             // get the hit point if we can
-            if (GetHitPoint(position, out hitPosition, out hitPositionNormalized, out page, out tableOfContents))
+            if (GetHitPoint(position, out hitPosition, out hitPositionNormalized, out page, out tableOfContents, out isMessage))
             {
                 // touched down and stopped dragging
                 touchDown = true;
@@ -175,6 +179,10 @@
                 {
                     // table of contents "button" clicked
                     tableOfContentsDetected();
+                }
+                else if (isMessage)
+                {
+                   // messageDetected();
                 }
                 else
                 {
@@ -188,6 +196,7 @@
                         touchDownDetected(page, hitPositionNormalized);
                     }
                 }
+
             }
         }
 
@@ -204,9 +213,10 @@
             Vector2 hitPositionNormalized;
             PageEnum page;
             bool tableOfContents;
+            bool isMessage;
 
             // get the hit point if we can
-            if (GetHitPoint(position, out hitPosition, out hitPositionNormalized, out page, out tableOfContents))
+            if (GetHitPoint(position, out hitPosition, out hitPositionNormalized, out page, out tableOfContents, out isMessage))
             {
                 // get the offset from the last drag position
                 var offset = hitPosition - lastDragPosition;
@@ -236,15 +246,23 @@
             Vector2 hitPositionNormalized;
             PageEnum page;
             bool tableOfContents;
+            bool isMessage;
 
             // get the hit point if we can
-            if (GetHitPoint(position, out hitPosition, out hitPositionNormalized, out page, out tableOfContents))
+            if (GetHitPoint(position, out hitPosition, out hitPositionNormalized, out page, out tableOfContents, out isMessage))
             {
                 // no longer touching.
                 touchDown = false;
+                if (isMessage)
+                {
+                    messageDetected();
+                }
+                else
 
-                // call the handler
-                touchUpDetected(page, hitPositionNormalized, dragging);
+                {
+                    // call the handler
+                    touchUpDetected(page, hitPositionNormalized, dragging);
+                }
             }
         }
 
@@ -257,7 +275,7 @@
         /// <param name="page">Which page was hit</param>
         /// <param name="tableOfContents">Whether the table of contents "button" was hit</param>
         /// <returns></returns>
-        protected virtual bool GetHitPoint(Vector3 mousePosition, out Vector2 hitPosition, out Vector2 hitPositionNormalized, out PageEnum page, out bool tableOfContents)
+        protected virtual bool GetHitPoint(Vector3 mousePosition, out Vector2 hitPosition, out Vector2 hitPositionNormalized, out PageEnum page, out bool tableOfContents, out bool isMessage)
         {
             hitPosition = Vector2.zero;
             hitPositionNormalized = Vector2.zero;
@@ -289,10 +307,19 @@
                 hitPositionNormalized = new Vector2((hit.point.x - pageRects[pageIndex].xMin) / pageRects[pageIndex].width,
                                                         (hit.point.z - pageRects[pageIndex].yMin) / pageRects[pageIndex].height
                                                         );
-
+                isMessage = false;
                 return true;
             }
+            else if (Physics.Raycast(ray, out hit, 1000, messageLayerMask))
+            {
+                isMessage = true;
+                print("isMessage");
+                return true;
 
+            }
+
+
+            isMessage = false;
             return false;
         }
     }
