@@ -340,6 +340,7 @@ namespace DM.NPC
             {
                 player.SetNpc(null);
                 isFollowPlayer = false;
+                DebugText.Instance.SetText("소개를 중단했습니다.");
             }
             return true;
         }
@@ -349,6 +350,7 @@ namespace DM.NPC
             {
                 player.SetNpc(null);
                 isFollowPlayer = false;
+                DebugText.Instance.SetText("소개를 중단했습니다.");
             }
             else
                 PlayDialog();
