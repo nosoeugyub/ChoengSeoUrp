@@ -50,6 +50,8 @@ namespace NSY.Iven
                 if (inventory.AddItem(item.GetCopy(), 8))
                 {
                     itemCopy.GetCountItems++;
+                    itemCopy.GetnuCountItems++;
+
                     if (itemCopy.CleanAmount == 0)
                     {
                         //spriteRenderer.color = emptyColor;

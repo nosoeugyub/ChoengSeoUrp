@@ -1,4 +1,5 @@
 ﻿using DM.Building;
+using NSY.Manager;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -28,6 +29,7 @@ public class TextBox : MonoBehaviour
     float rectX;
 
     bool isleft;
+    [SerializeField] string boomsoundname;
     // [SerializeField]
     BoxCollider boxCollider;
     //랜더모드 카메라 생성
@@ -114,7 +116,8 @@ public class TextBox : MonoBehaviour
         textboxFabImg.gameObject.SetActive(false);
         textboxFabText.gameObject.SetActive(false);
         BuildingBlock.SetTextBox(null);
-
+        SuperManager.Instance.soundManager.StopSFX(boomsoundname);
+        SuperManager.Instance.soundManager.PlaySFX(boomsoundname);
         textboxFabNextButton.gameObject.SetActive(false);
         Invoke("Destroy", 0.5f);
 

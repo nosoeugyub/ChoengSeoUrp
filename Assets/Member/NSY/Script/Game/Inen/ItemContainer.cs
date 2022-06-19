@@ -113,16 +113,32 @@ namespace NSY.Iven
             //이미 있는 칸에 더할 수 없으면
 
             //빈 슬롯에 넣기
+            if (IsFullInven())
+            {
+                NoPopupOn();
+                return false;
+            }
+            else
+                return true;
+        }
+
+        public bool IsFullInven()
+        {
             for (int i = 0; i < ItemSlots.Count; i++)
             {
                 if (ItemSlots[i].item == null)
                 {
-                    return true;
+                    return false;
                 }
             }
-            StartCoroutine(NoPopUpgo());
-            return false;
+            return true;
         }
+
+        public void NoPopupOn()
+        {
+            StartCoroutine(NoPopUpgo());
+        }
+
         public virtual bool AddItem(Item item)
         {
             if (!CanAddInven(item)) return false;
@@ -158,6 +174,7 @@ namespace NSY.Iven
             ItemSlots[i].item = item;
             ItemSlots[i].Amount++;
             ItemSlots[i].item.GetCountItems++;
+            ItemSlots[i].item.GetnuCountItems++;
 
       
 
@@ -185,6 +202,7 @@ namespace NSY.Iven
                         ItemSlots[i].item = item;
                         ItemSlots[i].Amount++;
                         ItemSlots[i].item.GetCountItems++;
+                        ItemSlots[i].item.GetnuCountItems++;
                         if (OnAddItemEvent != null)
                             OnAddItemEvent();
 
@@ -212,6 +230,7 @@ namespace NSY.Iven
                         ItemSlots[i].item = item;
                         ItemSlots[i].Amount++;
                         ItemSlots[i].item.GetCountItems++;
+                        ItemSlots[i].item.GetnuCountItems++;
                         if (OnAddItemEvent != null)
                             OnAddItemEvent();
 
