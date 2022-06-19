@@ -452,6 +452,8 @@ namespace DM.Building
             newPrefab.transform.localRotation = Quaternion.Euler(0, 0, 0);
             newPrefab.GetComponent<BuildingItemObj>().SetParentBuildArea(nowBuildingBlock, HouseBuild.position);
             newPrefab.name = spawnObj.name;
+            //spawnObj.GetCountItems--;
+            //inventory.OnAddItemEvent();
             if (specialHouse)
                 specialHouse.CanExist(curInteractObj, true);
             curInteractObj.MyOrder = BuildItemList.Count;

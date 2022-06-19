@@ -167,7 +167,9 @@ namespace NSY.Iven
                     }
                     if (itemslots.item == CheckBuliditem)
                     {
+                        obj.item.GetCountItems--;
                         obj.Amount--;
+                        iventorynsy.AddItemEvent();
                         return;
                     }
                 }

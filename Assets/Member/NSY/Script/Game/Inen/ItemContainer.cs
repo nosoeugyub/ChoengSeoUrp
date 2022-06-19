@@ -264,7 +264,10 @@ namespace NSY.Iven
             OnAddItemEvent();
             return true;
         }
-
+        public void AddItemEvent()
+        {
+            OnAddItemEvent();
+        }
         private List<ItemSlot> GetItemSlotList(Item item)
         {
             List<ItemSlot> itemSlot = new List<ItemSlot>();

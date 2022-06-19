@@ -232,7 +232,6 @@ namespace NSY.Player
 
                 RectTransformUtility.ScreenPointToLocalPointInRectangle(targetRectTr, vector3, uiCamera, out screenPoint);
                 interactUI.GetComponent<RectTransform>().localPosition = screenPoint;
-                print(screenPoint);
                 //interactUI.transform.position = RectTransformUtility.WorldToScreenPoint(Camera.main, interactUI.transform.position);
 
                 //ChangeLightShader(closestObj);
