@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using NSY.Manager;
 
 namespace NSY.Player
 {
@@ -22,7 +23,7 @@ namespace NSY.Player
                 tired = value;
                 if (tired >= 100) tired = 100;
                 tiredUi.SetTiredUI(Tired, MaxVital);
-                //DebugText.Instance.SetText(tired.ToString());
+              
             }
         }
         [SerializeField]
@@ -60,8 +61,10 @@ namespace NSY.Player
                 }
             }
             else
+            {
+                SuperManager.Instance.envirmanager.TakePictures();
                 FindObjectOfType<SceneChangeManager>().LoadSceneString("CreditDemo");
-
+            }
             yield return null;
         }
 

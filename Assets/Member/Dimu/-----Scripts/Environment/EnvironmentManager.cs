@@ -117,16 +117,7 @@ public class EnvironmentManager : MonoBehaviour
         }
 
     }
-    private void Update()
-    {
-        if (Input.GetKey(KeyCode.M))
-        {
-            for (int i = 0; i < screenshot.Length; i++)
-            {
-                screenshot[i].OnSceenShotEvent();
-            }
-        }
-    }
+   
 
 
     public Screenshot[] screenshot;
