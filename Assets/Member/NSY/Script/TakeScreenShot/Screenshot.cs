@@ -252,16 +252,7 @@ public class Screenshot : MonoBehaviour
         if (_WillFakeScreenShot)
         {
 
-            if (Directory.Exists(FolderPath) == false)
-            {
-                Debug.Log("폴더없으니 만들겠음");
-                Directory.CreateDirectory(FolderPath);
-            }
-            if (Directory.Exists(publicFolder) == false)
-            {
-                Debug.Log("밖에폴더없으니 만들겠음");
-                Directory.CreateDirectory(publicFolder);
-            }
+            
 
 
             _WillFakeScreenShot = false;
@@ -346,9 +337,33 @@ public class Screenshot : MonoBehaviour
 
 
          
-            System.IO.File.WriteAllBytes(TotalPath, screenshotTexture1.EncodeToPNG());
-            System.IO.File.WriteAllBytes(TotalPath, screenshotTexture2.EncodeToPNG());
-            System.IO.File.WriteAllBytes(publicTotalPath, screenshotTexture3.EncodeToPNG()); //publicTotalPath
+          
+           
+
+            if (Directory.Exists(FolderPath) == false)
+            {
+                Debug.Log("폴더없으니 만들겠음");
+                Directory.CreateDirectory(FolderPath);
+                System.IO.File.WriteAllBytes(TotalPath, screenshotTexture1.EncodeToPNG());
+                System.IO.File.WriteAllBytes(TotalPath, screenshotTexture2.EncodeToPNG());
+            }
+            else
+            {
+                System.IO.File.WriteAllBytes(TotalPath, screenshotTexture1.EncodeToPNG());
+                System.IO.File.WriteAllBytes(TotalPath, screenshotTexture2.EncodeToPNG());
+            }
+
+
+            if (Directory.Exists(publicFolder) == false)
+            {
+                Debug.Log("밖에폴더없으니 만들겠음");
+                Directory.CreateDirectory(publicFolder);
+                System.IO.File.WriteAllBytes(publicTotalPath, screenshotTexture3.EncodeToPNG()); //publicTotalPath
+            }
+            else
+            {
+                System.IO.File.WriteAllBytes(publicTotalPath, screenshotTexture3.EncodeToPNG()); //publicTotalPath
+            }
 
             SceenShotCam.targetTexture = null;
             SceenShotCam.GetComponent<Camera>().enabled = false;
@@ -368,7 +383,6 @@ public class Screenshot : MonoBehaviour
             SceenShotCam.GetComponent<Camera>().enabled = true;
 
         }
-        Debug.Log("임소정씨발");
         OnPostRender();
         _WillFakeScreenShot = false;
     }
