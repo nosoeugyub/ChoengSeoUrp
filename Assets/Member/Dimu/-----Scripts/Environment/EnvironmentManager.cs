@@ -209,13 +209,13 @@ public class EnvironmentManager : MonoBehaviour
 
     public void DownCleanliness()
     {
-        Cleanliness -= 10;
+        Cleanliness -= 4;
         DebugText.Instance.SetText("행복도가 감소합니다.");
         EventManager.EventAction -= EventManager.EventActions[(int)EventEnum.DownClean];
     }
     public void DownCleanlinessDouble()
     {
-        Cleanliness -= 20;
+        Cleanliness -= 8;
         DebugText.Instance.SetText("행복도가 대폭 감소합니다.");
         EventManager.EventAction -= EventManager.EventActions[(int)EventEnum.DownCleanDouble];
     }
