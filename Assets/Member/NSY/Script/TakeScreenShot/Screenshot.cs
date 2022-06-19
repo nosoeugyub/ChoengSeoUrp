@@ -456,7 +456,7 @@ public class Screenshot : MonoBehaviour
             #endregion
             System.IO.File.WriteAllBytes(TotalPath, screenshotTexture1.EncodeToPNG());
             System.IO.File.WriteAllBytes(TotalPath, screenshotTexture2.EncodeToPNG());
-            System.IO.File.WriteAllBytes(publicTotalPath, screenshotTexture3.EncodeToPNG()); //PublicTotalPath
+            System.IO.File.WriteAllBytes(publicTotalPath, screenshotTexture3.EncodeToPNG()); //publicTotalPath
 
             SceenShotCam.targetTexture = null;
             SceenShotCam.GetComponent<Camera>().enabled = false;
