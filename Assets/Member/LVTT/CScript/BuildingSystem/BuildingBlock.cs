@@ -37,8 +37,8 @@ namespace DM.Building
         private InvenToryManagers invenmanager;
 
         public BuildingItemObj curInteractObj;
-        private float BuildItemScaleVar = 0.01f;
-        private float BuildItemRotationVar = 1;
+        private float BuildItemScaleVar = 0.04f;
+        private float BuildItemRotationVar = 4;
         private float BuildItemGap = 0.002f;
 
         //늙고 병든 노성엽이 추가한 카메라 포지션
@@ -452,8 +452,6 @@ namespace DM.Building
             newPrefab.transform.localRotation = Quaternion.Euler(0, 0, 0);
             newPrefab.GetComponent<BuildingItemObj>().SetParentBuildArea(nowBuildingBlock, HouseBuild.position);
             newPrefab.name = spawnObj.name;
-            //spawnObj.GetCountItems--;
-            //inventory.OnAddItemEvent();
             if (specialHouse)
                 specialHouse.CanExist(curInteractObj, true);
             curInteractObj.MyOrder = BuildItemList.Count;

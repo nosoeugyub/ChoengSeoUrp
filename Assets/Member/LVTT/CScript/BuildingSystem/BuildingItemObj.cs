@@ -11,8 +11,8 @@ namespace DM.Building
         [Tooltip("이 오브젝트를 채집할 수 있는 도구 타입")]
         public InItemType toolType;
 
-         float MaxScale = 3f;
-         float MinScale = 0.1f;
+        float MaxScale = 3f;
+        float MinScale = 0.1f;
         public int breakCount;
 
         [SerializeField] private bool itemisSet;
@@ -75,7 +75,7 @@ namespace DM.Building
         private void Start()
         {
             MaxScale = 2f;
-            MinScale = 0.3f;
+            MinScale = 0.1f;
             layerMask = 1 << LayerMask.NameToLayer("Ground");
             if (isBroken)
             {
