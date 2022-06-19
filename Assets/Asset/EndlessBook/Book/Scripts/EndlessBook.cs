@@ -323,7 +323,7 @@
         /// (and possibly rendered scenes) at once.
         /// </summary>
         [SerializeField]
-        protected int maxPagesTurningCount = 5;
+        protected int maxPagesTurningCount = 17;
 
         /// <summary>
         /// Whether the book uses Time.deltaTime or Time.unscaledDeltaTime
