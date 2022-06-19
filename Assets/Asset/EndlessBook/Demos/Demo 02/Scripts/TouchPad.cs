@@ -141,7 +141,7 @@
         {
             // activate or deactive the collider
             pageColliders[(int)page].gameObject.SetActive(on);
-            if(page == PageEnum.Left)
+            if(page == PageEnum.Left && pageColliders2.Length>0)
             pageColliders2[0].gameObject.SetActive(on);
         }
 
