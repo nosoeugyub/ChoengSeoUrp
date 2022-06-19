@@ -10,7 +10,8 @@ namespace NSY.Iven
     public class CraftSlot : MonoBehaviour, IPointerDownHandler
     {
         [Header("재료 갯수")]
-
+        public Sprite lockSprite;
+        public static Sprite lockSprite2;
 
         [Header("현재 흭득한 갯수")]
         public Text[] ReCipeamountText;
@@ -38,6 +39,7 @@ namespace NSY.Iven
         private Item _recipeItem;
         [SerializeField]
         private Image childImgObject;
+        public Image childImgObject_copy;
         //지금 갖고있는아이템
         public Item RecipeItem
         {
@@ -52,8 +54,8 @@ namespace NSY.Iven
                 ResultSlotListImage.enabled = true;
                 ResultSlotListImage.color = Color.clear;
 
-                if(isActiveAndEnabled)
-                StartCoroutine(DelayChangSize());
+                if (isActiveAndEnabled)
+                    StartCoroutine(DelayChangSize());
             }
         }
         public IEnumerator DelayChangSize()
@@ -119,32 +121,61 @@ namespace NSY.Iven
                 _isHaverecipeItem = value;
 
                 if (!childImgObject) return;
-                if (_isHaverecipeItem == false)
-                {
-                    childImgObject.color = new Color(0.5f, 0.5f, 0.5f);
-                }
-                else
-                {
-                    childImgObject.color = new Color(1f, 1f, 1f);
-                }
+                HaveRecipeUpdate();
             }
         }
 
+        private void HaveRecipeUpdate()
+        {
+            if (_isHaverecipeItem == false)
+            {
+                childImgObject.color = new Color(1f, 1f, 1f);
+                childImgObject_copy.color = new Color(1f, 1f, 1f);
+                //childImgObject.color = new Color(1f, 0.5f, 0.5f);
+                if (childImgObject_copy)
+                    childImgObject_copy.enabled=true;
+            }
+            else
+            {
+                if (childImgObject_copy)
+                    childImgObject_copy.enabled=false;
+                childImgObject.color = new Color(1f, 1f, 1f);
+                childImgObject_copy.color = new Color(1f, 1f, 1f);
+            }
+        }
 
+        private void Awake()
+        {
+            childImgObject_copy = transform.GetChild(1).GetComponent<Image>();
+            childImgObject_copy.gameObject.SetActive(true);
+            childImgObject_copy.rectTransform.localScale = Vector3.one*0.5f;
+            childImgObject_copy.sprite = Resources.Load<Sprite>("Lock_v0");
+            childImgObject_copy.SetNativeSize();
+            HaveRecipeUpdate();
+        }
+        public void SetSpriteLock(Sprite sprite)
+        {
+            lockSprite = sprite;
+            if (!childImgObject_copy)
+            {
+                SetLockObj();
+            }
+            if(lockSprite)
+                childImgObject_copy.GetComponent<Image>().sprite = lockSprite;
 
+            HaveRecipeUpdate();
 
+        }
 
+        private void SetLockObj()
+        {
+            //childImgObject_copy = Instantiate(childImgObject.gameObject, transform);
+        }
 
         private void OnValidate()
         {
             RecipeItem = _recipeItem;
             isHaveRecipeItem = _isHaverecipeItem;
-        }
-
-
-        void Update()
-        {
-
         }
 
 
