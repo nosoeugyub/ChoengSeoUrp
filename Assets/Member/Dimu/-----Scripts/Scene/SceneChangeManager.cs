@@ -12,17 +12,28 @@ public class SceneChangeManager : MonoBehaviour
     }
     public void LoadSceneFadeString(string scenename)
     {
-        StartCoroutine(Fade(scenename));
+        StartCoroutine(LoadSceneFadeStringCo(scenename));
     }
-    IEnumerator Fade(string scenename)
+    IEnumerator LoadSceneFadeStringCo(string scenename)
     {
-        
+        yield return Fade();
+        LoadSceneString(scenename);
+    }
+    IEnumerator Fade()
+    {
         yield return new WaitForSeconds(1f);
         fadeAnim.SetTrigger("whitescreen");
         yield return new WaitForSeconds(3f);
-        SceneManager.LoadScene(scenename);
     }
-
+    public void EndGame()
+    {
+        StartCoroutine(Quit());
+    }
+    IEnumerator Quit()
+    {
+        yield return Fade();
+        Application.Quit();
+    }
     public void slbal(int scenenuber)
     {
         SceneManager.LoadScene(scenenuber);
