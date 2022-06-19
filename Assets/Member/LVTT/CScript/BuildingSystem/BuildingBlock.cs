@@ -191,7 +191,8 @@ namespace DM.Building
         public void InvenSlotResetCanBuildMode()
         {
             invenmanager.CheckBuliditem = null; //설치하면 다른거 할수없음
-            inventory.InvenAllOnOff(true);
+            inventory.CheckCanBuildItem();
+
         }
 
         private void SetBuildingItemObj()//설치하기
@@ -293,7 +294,7 @@ namespace DM.Building
             CamManager.ActiveSubCamera(1);
 
             //주석 부분
-            SuperManager.Instance.inventoryManager.CheckCanBuildItem();
+            inventory.CheckCanBuildItem();
             //Inventory UI On + Can't turn Off while in build mode + Press X button, Invoke BuildModeOff method
             //FindObjectOfType<PopUpManager>().OpenPopup(FindObjectOfType<PopUpManager>()._ivenPopup);
         }
@@ -355,7 +356,7 @@ namespace DM.Building
             isBuildMode = false;
             isBuildDemolishMode = false;
             //주석 부분
-            SuperManager.Instance.inventoryManager.InvenAllOnOff(true);
+            inventory.InvenAllOnOff(true);
         }
         public void CancleUI(bool on)
         {

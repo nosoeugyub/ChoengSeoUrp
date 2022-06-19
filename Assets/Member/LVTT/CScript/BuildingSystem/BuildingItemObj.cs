@@ -163,7 +163,9 @@ namespace DM.Building
         {
             parentBuildArea.CancleUI(false);
             SuperManager.Instance.inventoryManager.AddItem(item);
+
             parentBuildArea.InvenSlotResetCanBuildMode();
+
             parentBuildArea.RemoveBuildItemToList(gameObject);
             parentBuildArea.DeleteBuildingItemObjSorting(gameObject);
 
