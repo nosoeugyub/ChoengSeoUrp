@@ -319,12 +319,6 @@ namespace DM.Building
 
         public void BuildModeOff()
         {
-
-            foreach (ItemSlot itemSlot in inventory.ItemSlots)
-            {
-                itemSlot.canInteractWithSlot = false;
-            }
-
             if (!isBuildMode && !isBuildDemolishMode) return;
 
             CamManager.DeactiveSubCamera(1);
