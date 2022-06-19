@@ -89,7 +89,7 @@ public class EnvironmentManager : MonoBehaviour
         set
         {
             cleanliness = value;
-            if (cleanliness > 100)
+            if (cleanliness >= 100)
             {
                 cleanliness = 100;
 
