@@ -16,6 +16,8 @@ namespace NSY.Iven
         ItemTooltip tooltip;
         [SerializeField]
         protected Image childImgObject;
+        [SerializeField]
+        protected Image backgroundObject;
         //슬롯갯수
         public TextMeshProUGUI amountText;
         //public Text amountText;
@@ -24,7 +26,7 @@ namespace NSY.Iven
         protected bool isPointerOver;
 
         private Color normalColor = Color.white;
-        private Color disabledColor = new Color(1, 1, 1, 0);
+        private Color disabledColor = new Color(0.5f, 0.5f, 0.5f, 1);
         private Color cantInteractColor = new Color(1, 0.5f, 0.5f, 1); //채원이 빨갱이
         public event Action<BaseItemSlot> OnRightClickEvent;
         public event Action<BaseItemSlot> OnLeftClickEvent;
@@ -55,7 +57,8 @@ namespace NSY.Iven
                 if (_item == null)
                 {
                     childImgObject.sprite = null;
-                    childImgObject.color = disabledColor;
+                    childImgObject.color = normalColor;
+                    backgroundObject.color = normalColor;
                 }
 
                 childImgObject.enabled = false;
@@ -63,6 +66,8 @@ namespace NSY.Iven
                 {
                     childImgObject.sprite = _item.ItemSprite;
                     childImgObject.color = normalColor;
+                    backgroundObject.color = normalColor;
+
                     StartCoroutine(DelayChangeSize());
                 }
 
@@ -176,11 +181,11 @@ namespace NSY.Iven
             canInteractWithSlot = canInteractable;
             if (canInteractWithSlot)
             {
-                childImgObject.color = normalColor;
+                backgroundObject.color = normalColor;
             }
             else
             {
-                childImgObject.color = cantInteractColor;
+                backgroundObject.color = cantInteractColor;
             }
         }
 
