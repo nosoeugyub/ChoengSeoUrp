@@ -97,6 +97,12 @@ public class EnvironmentManager : MonoBehaviour
             }
             else if (cleanliness < 0)
                 cleanliness = 0;
+            else
+
+            {
+                endingButton.SetActive(false);
+
+            }
 
             if (cleanLevel < cleanLevels.Count)
             {

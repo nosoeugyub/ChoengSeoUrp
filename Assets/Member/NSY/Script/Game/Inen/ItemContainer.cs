@@ -41,6 +41,15 @@ namespace NSY.Iven
                 ItemSlots[i].OnDragEvent += slot => EventHelper(slot, OnDragEvent);
                 ItemSlots[i].OnDropEvent += slot => EventHelper(slot, OnDropEvent);
             }
+
+        }
+
+        public void SetLockSpriteToCraftSlot(Sprite locksprite)
+        {
+            for (int i = 0; i < Craftslot.Count; i++)
+            {
+                Craftslot[i].SetSpriteLock(locksprite);
+            }
         }
 
         protected virtual void OnValidate()

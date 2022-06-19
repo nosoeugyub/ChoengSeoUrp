@@ -14,6 +14,7 @@ namespace NSY.Iven
         public ReSultSlot resultslot;
         //버리기
         public Text ScriptTxt;
+        public Sprite locksprite;
         public int MaxDiscount;
         [SerializeField]
         private int discount;
@@ -115,6 +116,9 @@ namespace NSY.Iven
 
             //버리기
             Dropitemarea.OnDropEvent += DropItemOutsideUI;
+
+
+            iventorynsy.SetLockSpriteToCraftSlot(locksprite);
         }
 
         private void HideTootip(BaseItemSlot itemSlot)
@@ -144,9 +148,7 @@ namespace NSY.Iven
         public bool isRed = false;
         private void BuildingLeftClick(BaseItemSlot obj)
         {
-            print("빌딩왼쪽클릭");
             if (obj.item.OutItemType != OutItemType.BuildingItemObj) return;
-            print("빌딩템임!");
 
             if (CheckBuliditem != null)
             {
@@ -223,7 +225,6 @@ namespace NSY.Iven
         {
             if (itemslot.item != null)
             {
-                Debug.Log("드래그시작함");
                 dragitemSlot = itemslot;
                 draggableitem.sprite = itemslot.item.ItemSprite;
                 //draggableitem.transform.position = Input.mousePosition;
