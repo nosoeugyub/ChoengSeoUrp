@@ -47,6 +47,7 @@ public class Screenshot : MonoBehaviour
         manager = FindObjectOfType<EnvironmentManager>();
     }
 
+
     private string RootPath
     {
         get
@@ -54,6 +55,30 @@ public class Screenshot : MonoBehaviour
             return Application.dataPath;
         }
     }
+
+    [SerializeField]
+    private Light lighting;
+    public Light _Lighting
+    {
+        get
+        {
+            return lighting;
+        }
+        set
+        {
+            lighting = value;
+            if (texture1 == null)
+            {
+                return;
+            }
+        }
+    }
+
+
+
+
+
+
 
     [SerializeField]
     private Texture2D texture1;
@@ -205,6 +230,7 @@ public class Screenshot : MonoBehaviour
         Material3 = material3;
         _Page = Page;
         _CamPos = CamPos;
+        _Lighting = lighting;
 
     }
     public Camera OringinCAm;
@@ -215,6 +241,9 @@ public class Screenshot : MonoBehaviour
     private string TotalPath => $"{FolderPath}/{fileName}_{DateTime.Now.ToString("MMdd_HHmmss")}.{extName}";
     private string publicFolder => $"{publicfolderName}"; //밖에 생성됨 
     private string publicTotalPath => $"{publicFolder}/{fileNames}_{DateTime.Now.ToString("MMdd_HHmmss")}.{extName}";
+
+
+  
 
 
     private void OnPostRender()
@@ -436,14 +465,7 @@ public class Screenshot : MonoBehaviour
 
 
     }
-    private void Update()
-    {
-        if (Input.GetKey(KeyCode.M))
-        {
-            Debug.Log("씨발련아");
-            OnSceenShotEvent();
-        }
-    }
+
 
     // Update is called once per frame
     public void OnSceenShotEvent()
