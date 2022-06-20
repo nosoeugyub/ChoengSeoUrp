@@ -243,7 +243,7 @@ public class Screenshot : MonoBehaviour
     private string publicTotalPath => $"{publicFolder}/{fileNames}_{DateTime.Now.ToString("MMdd_HHmmss")}.{extName}";
 
 
-  
+    public int count;
 
 
     private void OnPostRender()
@@ -302,6 +302,7 @@ public class Screenshot : MonoBehaviour
             //pc 저장
             byte[] byteArray = screenshotTexture1.EncodeToPNG(); // 이미지 저장
             byte[] byteArray2 = screenshotTexture2.EncodeToPNG(); // 이미지 저장
+
             byte[] byteArray3 = screenshotTexture3.EncodeToPNG(); // 전체 이미지 저장
                                                                   //
                                                                   //Ver 2  . 무지성 저장 카메라 영역에대한
@@ -321,6 +322,7 @@ public class Screenshot : MonoBehaviour
                        
                         Material1.SetTexture("_MainTex", Texutre2);
                         Material2.SetTexture("_MainTex", Texutre1);
+
                         Material3.SetTexture("_MainTex", Texutre3);
                     }
                     else
@@ -328,6 +330,7 @@ public class Screenshot : MonoBehaviour
                       
                         Material1.SetTexture("_MainTex", Texutre2);
                         Material2.SetTexture("_MainTex", Texutre1);
+
                         Material3.SetTexture("_MainTex", Texutre3);
                     }
                 }
@@ -347,10 +350,12 @@ public class Screenshot : MonoBehaviour
                 System.IO.File.WriteAllBytes(TotalPath, screenshotTexture1.EncodeToPNG());
                 System.IO.File.WriteAllBytes(TotalPath, screenshotTexture2.EncodeToPNG());
             }
-            else
+            else if(Directory.Exists(FolderPath) == true)
             {
+                Debug.Log("폴더없으니 만들겠음ssssssss" + count);
                 System.IO.File.WriteAllBytes(TotalPath, screenshotTexture1.EncodeToPNG());
                 System.IO.File.WriteAllBytes(TotalPath, screenshotTexture2.EncodeToPNG());
+                count++;
             }
 
 
@@ -360,8 +365,9 @@ public class Screenshot : MonoBehaviour
                 Directory.CreateDirectory(publicFolder);
                 System.IO.File.WriteAllBytes(publicTotalPath, screenshotTexture3.EncodeToPNG()); //publicTotalPath
             }
-            else
+            else if (Directory.Exists(publicFolder) == true)
             {
+                Debug.Log("밖에폴더없으니 만들겠음ssss");
                 System.IO.File.WriteAllBytes(publicTotalPath, screenshotTexture3.EncodeToPNG()); //publicTotalPath
             }
 
@@ -372,6 +378,8 @@ public class Screenshot : MonoBehaviour
 
 
     }
+
+    
 
     // Update is called once per frame
     public void OnSceenShotEvent()
@@ -384,7 +392,10 @@ public class Screenshot : MonoBehaviour
 
         }
         OnPostRender();
-        _WillFakeScreenShot = false;
+         _WillFakeScreenShot = false;
+
+        
+
     }
 
 

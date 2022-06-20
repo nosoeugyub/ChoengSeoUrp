@@ -63,7 +63,7 @@ namespace NSY.Player
             else
             {
                 SuperManager.Instance.envirmanager.TakePictures();
-                FindObjectOfType<SceneChangeManager>().LoadSceneString("CreditDemo");
+              //  FindObjectOfType<SceneChangeManager>().LoadSceneString("CreditDemo");
             }
             yield return null;
         }
