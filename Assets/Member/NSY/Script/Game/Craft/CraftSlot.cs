@@ -11,7 +11,6 @@ namespace NSY.Iven
     {
         [Header("재료 갯수")]
         public Sprite lockSprite;
-        public static Sprite lockSprite2;
 
         [Header("현재 흭득한 갯수")]
         public Text[] ReCipeamountText;
