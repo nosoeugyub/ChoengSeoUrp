@@ -130,17 +130,21 @@ namespace NSY.Iven
             if (_isHaverecipeItem == false)
             {
                 childImgObject.color = new Color(1f, 1f, 1f);
-                childImgObject_copy.color = new Color(1f, 1f, 1f);
                 //childImgObject.color = new Color(1f, 0.5f, 0.5f);
                 if (childImgObject_copy)
-                    childImgObject_copy.enabled=true;
+                {
+                    childImgObject_copy.enabled = true;
+                childImgObject_copy.color = new Color(1f, 1f, 1f);
+                }
             }
             else
             {
                 if (childImgObject_copy)
-                    childImgObject_copy.enabled=false;
-                childImgObject.color = new Color(1f, 1f, 1f);
+                {
                 childImgObject_copy.color = new Color(1f, 1f, 1f);
+                    childImgObject_copy.enabled = false;
+                }
+                childImgObject.color = new Color(1f, 1f, 1f);
             }
         }
 

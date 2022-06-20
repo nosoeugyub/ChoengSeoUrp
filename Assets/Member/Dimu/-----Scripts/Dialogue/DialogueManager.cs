@@ -559,25 +559,7 @@ namespace DM.Dialog
                     npcManager.NpcTfs[i].Npctf.SetQuestMark(DialogMarkType.None);//, false);
                 }
 
-                //if (qd != null || isAcceptedQuests.Count > 0 || canStartDialogs.Count > 0)
-                //{
-                //    npcManager.NpcTfs[i].Npctf.SetQuestMark(DialogMarkType.CanClear,true);
 
-                //    if (isAcceptedQuests.Count > 0)
-                //    {
-                //        //Debug.Log(string.Format("{0} {1}", npcManager.NpcTfs[i].Npctf.name, isAcceptedQuests[0]));
-
-                //    }
-                //    if (canStartDialogs.Count > 0)
-                //    {
-                //        //Debug.Log(string.Format("{0} {1}", npcManager.NpcTfs[i].Npctf.name, canStartDialogs[0]));
-                //    }
-                //}
-                //else
-                //{
-                //    npcManager.NpcTfs[i].Npctf.SetQuestMark(DialogMarkType.CanStart, false);
-
-                //}
             }
         }
 

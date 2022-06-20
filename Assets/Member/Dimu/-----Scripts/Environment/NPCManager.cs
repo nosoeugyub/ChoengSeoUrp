@@ -33,7 +33,6 @@ public class NPCManager : MonoBehaviour
     {
         get { return npcTfs; }
     }
-
     private void Start()
     {
         for (int i = 1; i < npcTfs.Length; i++)
@@ -124,6 +123,10 @@ public class NPCManager : MonoBehaviour
         ComeToPortUIAction(false);
     }
 
+    public void IOnUI()
+    {
+    }
+
     //teleport
     public void OnOfftelePickUI(bool isOn)
     {
@@ -158,6 +161,8 @@ public class NPCManager : MonoBehaviour
     {
         MoveToNPCSomewhere(2, WalPos.position);
         npcTfs[2].IsField = true;
+        npcTfs[2].Npctf.UIOnEvent(2);
+
         EventManager.EventAction -= EventManager.EventActions[5];
     }
     private void MoveToBearsHouseWithSheep()
