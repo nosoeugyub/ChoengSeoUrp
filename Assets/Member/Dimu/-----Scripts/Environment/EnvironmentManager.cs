@@ -113,17 +113,27 @@ public class EnvironmentManager : MonoBehaviour
             happyUI.HappyUISetting(cleanliness);
         }
     }
-
+    public string name = "CreditDemo";
     public void TakePictures()
     {
 
+        StartCoroutine(takepictures());
+    }
+
+    public GameObject Loading;
+    IEnumerator takepictures()
+    {
         for (int i = 0; i < screenshot.Length; i++)
         {
             screenshot[i].OnSceenShotEvent();
+            Loading.SetActive(true);
+            yield return new WaitForSeconds(1f);
         }
-
+        yield return new WaitForSeconds(12f);
+        Loading.SetActive(false);
+        SuperManager.Instance.scenechagemanage.LoadSceneFadeString(name);
     }
-   
+
 
 
     public Screenshot[] screenshot;

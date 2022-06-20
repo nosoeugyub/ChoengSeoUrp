@@ -243,7 +243,7 @@ public class Screenshot : MonoBehaviour
     private string publicTotalPath => $"{publicFolder}/{fileNames}_{DateTime.Now.ToString("MMdd_HHmmss")}.{extName}";
 
 
-  
+    public int count;
 
 
     private void OnPostRender()
@@ -352,8 +352,10 @@ public class Screenshot : MonoBehaviour
             }
             else if(Directory.Exists(FolderPath) == true)
             {
+                Debug.Log("폴더없으니 만들겠음ssssssss" + count);
                 System.IO.File.WriteAllBytes(TotalPath, screenshotTexture1.EncodeToPNG());
                 System.IO.File.WriteAllBytes(TotalPath, screenshotTexture2.EncodeToPNG());
+                count++;
             }
 
 
@@ -365,6 +367,7 @@ public class Screenshot : MonoBehaviour
             }
             else if (Directory.Exists(publicFolder) == true)
             {
+                Debug.Log("밖에폴더없으니 만들겠음ssss");
                 System.IO.File.WriteAllBytes(publicTotalPath, screenshotTexture3.EncodeToPNG()); //publicTotalPath
             }
 
@@ -376,14 +379,7 @@ public class Screenshot : MonoBehaviour
 
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            Debug.Log("임소정씨발련");
-            OnSceenShotEvent();
-        }
-    }
+    
 
     // Update is called once per frame
     public void OnSceenShotEvent()

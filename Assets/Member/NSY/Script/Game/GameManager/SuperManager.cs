@@ -29,6 +29,7 @@ namespace NSY.Manager
         public ScreenshotManager scrennshotmangaer;
         public NPCManager npcManager;
         public EnvironmentManager envirmanager;
+        public SceneChangeManager scenechagemanage;
         public static SuperManager Instance
         {
             get
