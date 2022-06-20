@@ -119,11 +119,11 @@ public class NewInventUIManager : MonoBehaviour
             CraftWindows[i].Item = obj.RecipeItem.recipe[i].item;
         }
     }
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.C))
-            CreateMode();
-    }
+    //public void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.C))
+    //        CreateMode();
+    //}
     private bool HasItemSlot()
     {
         for (int i = 0; i < iven.ItemSlots.Count; i++)
