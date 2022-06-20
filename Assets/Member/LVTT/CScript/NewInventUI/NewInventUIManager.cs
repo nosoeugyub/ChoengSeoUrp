@@ -119,11 +119,11 @@ public class NewInventUIManager : MonoBehaviour
             CraftWindows[i].Item = obj.RecipeItem.recipe[i].item;
         }
     }
-    //public void Update()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.C))
-    //        CreateMode();
-    //}
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.C))
+            CreateMode();
+    }
     private bool HasItemSlot()
     {
         for (int i = 0; i < iven.ItemSlots.Count; i++)
@@ -212,16 +212,35 @@ public class NewInventUIManager : MonoBehaviour
             minSlot.Amount -= ra;
         }
 
-        if(!iven.AddItem(nowSelectItem.RecipeItem))
+        if (!iven.AddItem(nowSelectItem.RecipeItem))
         {
-            foreach (var item in itemSlots)
+            int small= 100;
+            int smallidx= 100;
+            for (int i = 0; i < itemSlots.Count; i++)
             {
-                if (item.Count == 0) continue;
+                if (itemSlots[i].Count == 0)
+                    continue;
 
-                item[0].Amount++;
-                item[0].item.GetCountItems++;
+                for (int j = 0; j < itemSlots[i].Count; j++)
+                {
+                    if (small > itemSlots[i][j].Amount)
+                    {
+                        small = itemSlots[i][j].Amount;
+                        smallidx = j;
+                    }
+                }
+
+                itemSlots[i][smallidx].Amount += CraftWindows[i].RecipeAmount;
+                itemSlots[i][smallidx].item.GetCountItems += CraftWindows[i].RecipeAmount;
                 continue;
             }
+            //foreach (var item in itemSlots)
+            //{
+            //    if (item.Count == 0) continue;
+
+            //    item[item.Count - 1].Amount++;
+            //    item[item.Count - 1].item.GetCountItems += CraftWindows[i].RecipeAmount;
+            //    continue;
         }
     }
 
