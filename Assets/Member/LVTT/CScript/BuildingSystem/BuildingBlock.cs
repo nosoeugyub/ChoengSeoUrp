@@ -14,6 +14,7 @@ namespace DM.Building
         [SerializeField] private int buildingId;
         [SerializeField] private BuildMode CurBuildMode;
         [SerializeField] private HouseNpc livingCharacter;
+        [SerializeField] private int seasonnum;
 
 
         [SerializeField] private Transform houseBuild;
@@ -54,6 +55,7 @@ namespace DM.Building
         bool isEmpty;
 
         public HouseNpc _livingCharacter { get { return livingCharacter; } set { livingCharacter = value; } }
+        public int Seasonnum { get { return seasonnum; } set { seasonnum = value; } }
         public SpecialHouse SpecialHouse { get { return specialHouse; } set { specialHouse = value; } }
         public static bool isBuildMode { get; set; } = false;
         public static bool isBuildDemolishMode { get; set; } = false;
