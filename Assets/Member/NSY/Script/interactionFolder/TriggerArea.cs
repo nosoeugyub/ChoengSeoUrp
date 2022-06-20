@@ -35,10 +35,7 @@
 //        singisid = SignNpc.SignIsid;
 
 //    }
-//    private void Update()
-//    {
-//        isSign = Input.GetKeyDown(KeyCode.R);
-//    }
+//   
 
 
 //     void OnTriggerStay(Collider col)

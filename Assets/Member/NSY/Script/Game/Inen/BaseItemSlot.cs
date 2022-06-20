@@ -97,13 +97,13 @@ namespace NSY.Iven
                 {
                     //item.GetCountItems = 0;
                     canInteractWithSlot = true;
-                    print("canInteractWithSlot = true");
+                  
                     _amount = 0;
                 }
                 if (_amount == 0 && item != null)
                 {
                     //item.GetCountItems = 0;
-                    print("canInteractWithSlot = true");
+                 
                     canInteractWithSlot = true;
                     item = null;
                 }

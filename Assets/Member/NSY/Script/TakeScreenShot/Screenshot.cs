@@ -313,7 +313,7 @@ public class Screenshot : MonoBehaviour
             Material3.SetTexture("_MainTex", Texutre3);
             for (int i = 0; i < SuperManager.Instance.buildingManager.buildings.Count; i++)//빌딩스를 체크하여
             {
-                Debug.Log("호잉호잉");
+              
                 for (int j = 0; i < 17; i++)
                 {
                     if (Page == i &&
@@ -345,14 +345,14 @@ public class Screenshot : MonoBehaviour
 
             if (Directory.Exists(FolderPath) == false)
             {
-                Debug.Log("폴더없으니 만들겠음");
+              
                 Directory.CreateDirectory(FolderPath);
                 System.IO.File.WriteAllBytes(TotalPath, screenshotTexture1.EncodeToPNG());
                 System.IO.File.WriteAllBytes(TotalPath, screenshotTexture2.EncodeToPNG());
             }
             else if(Directory.Exists(FolderPath) == true)
             {
-                Debug.Log("폴더없으니 만들겠음ssssssss" + count);
+               
                 System.IO.File.WriteAllBytes(TotalPath, screenshotTexture1.EncodeToPNG());
                 System.IO.File.WriteAllBytes(TotalPath, screenshotTexture2.EncodeToPNG());
                 count++;
@@ -361,13 +361,13 @@ public class Screenshot : MonoBehaviour
 
             if (Directory.Exists(publicFolder) == false)
             {
-                Debug.Log("밖에폴더없으니 만들겠음");
+                
                 Directory.CreateDirectory(publicFolder);
                 System.IO.File.WriteAllBytes(publicTotalPath, screenshotTexture3.EncodeToPNG()); //publicTotalPath
             }
             else if (Directory.Exists(publicFolder) == true)
             {
-                Debug.Log("밖에폴더없으니 만들겠음ssss");
+               
                 System.IO.File.WriteAllBytes(publicTotalPath, screenshotTexture3.EncodeToPNG()); //publicTotalPath
             }
 

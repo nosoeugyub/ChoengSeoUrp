@@ -440,7 +440,7 @@ namespace DM.Dialog
                 testdelegate = (() =>
                 {
                     UpdateDialog(sentences, sentenceState);
-                    Debug.Log("testdelegete");
+                  
                 });
                 PlayerInput.OnPressFDown = testdelegate;
             }
@@ -452,14 +452,14 @@ namespace DM.Dialog
             testdelegate = (() =>
             {
                 LastDialogNextEvent(sentenceState);
-                Debug.Log("Remove_Last");
+               
             });
             PlayerInput.OnPressFDown = testdelegate;
         }
 
         private void LastDialogNextEvent(int sentenceState)
         {
-            Debug.Log("isTalking false");
+          
             if (nowOnFab)
             {
                 nowOnFab.GetComponent<TextBox>().DestroyTextBox();

@@ -19,7 +19,7 @@ namespace DM.Building
 
                 if (Physics.Raycast(ray, out hit, 100000, 1 << 8))
                 {
-                    Debug.Log("땅 레이 쏘는중");
+                 
                     instanceObj.transform.position = hit.point;
                 }
                 else
@@ -27,7 +27,7 @@ namespace DM.Building
 
                 if (Input.GetMouseButtonUp(0))
                 {
-                    Debug.Log("클릭업");
+                  
                     OffBuildMode();
                 }
             }

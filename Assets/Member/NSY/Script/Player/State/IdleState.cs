@@ -26,7 +26,7 @@ namespace NSY.PlayerState
         public override void EnterState(FrutStateManager state)
         {
             state.transform.localScale = StartApplesize;
-            Debug.Log("크기 처음임");
+          
         }
 
         public override void UpdateState(FrutStateManager state)

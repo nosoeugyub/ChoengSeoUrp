@@ -110,7 +110,7 @@ namespace Crystal
 
             if (Panel == null)
             {
-                Debug.LogError ("Cannot apply safe area - no RectTransform found on " + name);
+            
                 Destroy (gameObject);
             }
 

@@ -1102,7 +1102,7 @@
         /// </summary>
         protected virtual void LogInvalidPageNumber()
         {
-            Debug.LogWarning("Invalid page number. Must be in the range [1.." + pageData.Count + "]");
+           
         }
 
         /// <summary>
