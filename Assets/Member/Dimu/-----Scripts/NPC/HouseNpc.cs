@@ -84,7 +84,7 @@ namespace DM.NPC
             if (dialogMarkType != DialogMarkType.None)
             {
                 dialogMarks[(int)nowDialogMarkType].gameObject.SetActive(true);
-                print(this.name + nowDialogMarkType.ToString());
+              
             }
             UIUpdateEvent((int)GetCharacterType(), dialogMarkType);
         }

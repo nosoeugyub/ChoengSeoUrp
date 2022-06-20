@@ -41,14 +41,7 @@ public class CutScene : MonoBehaviour
     int num = 1;
 
     public static bool IsCutSceneOn { get; set; }
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            PrintImage(num);
-            num++;
-        }
-    }
+    
     public void PrintImage(int index)//Calling this will also unlock the Image in the Library
     {
         ChangeIsCutSceneOn(true);

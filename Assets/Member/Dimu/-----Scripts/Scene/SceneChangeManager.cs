@@ -16,7 +16,7 @@ public class SceneChangeManager : MonoBehaviour
 
     IEnumerator LoadSceneLong(string scenename )
     {
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(0.1f);
         SceneManager.LoadScene(scenename);
 
     }

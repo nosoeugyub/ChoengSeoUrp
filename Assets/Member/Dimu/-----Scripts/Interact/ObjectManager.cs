@@ -18,12 +18,12 @@ public class ObjectManager : MonoBehaviour
         magnifyObjects[randnum].InstantiateBubble();
         isBubbleOn = true;
         tick = 0;
-        Debug.Log(magnifyObjects[randnum].name);
+       
     }
     public static void CheckBubble()
     {
         isBubbleOn = false;
-        Debug.Log("Bubble OFF");
+       
 
     }
     private void Update()

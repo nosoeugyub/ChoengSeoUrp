@@ -65,7 +65,7 @@ namespace DM.Building
 
         public void GetIngredient(InItemType ingredientype, int idx)
         {
-            Debug.Log("GetIngredient " + ingredientype);
+          
 
             for (int i = 0; i < buildingInfo.recipe.Length; i++)
             {

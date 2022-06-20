@@ -127,9 +127,9 @@ public class EnvironmentManager : MonoBehaviour
         {
             screenshot[i].OnSceenShotEvent();
             Loading.SetActive(true);
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(3f);
         }
-        yield return new WaitForSeconds(12f);
+        yield return new WaitForSeconds(2f);
         Loading.SetActive(false);
         SuperManager.Instance.scenechagemanage.LoadSceneFadeString(name);
     }

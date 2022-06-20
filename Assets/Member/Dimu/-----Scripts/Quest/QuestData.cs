@@ -121,7 +121,6 @@ namespace DM.Quest
                 foreach (QuestTask item in tasks.items)
                 {
                     PlayerData.AddDictionary(item.objType, PlayerData.ItemData, (int)ItemBehaviorEnum.length);
-                    Debug.Log(string.Format("fin: {0}, now: {1}", item.finishData, PlayerData.ItemData[item.objType].amounts[item.behaviorType] - item.initData));
                     
                     int questdata=0;
 
@@ -141,7 +140,6 @@ namespace DM.Quest
                 foreach (QuestTask npc in tasks.npcs)
                 {
                     PlayerData.AddDictionary(npc.objType, PlayerData.npcData, (int)NpcBehaviorEnum.length);
-                    Debug.Log(string.Format("fin: {0}, now: {1}", npc.finishData, PlayerData.npcData[npc.objType].amounts[npc.behaviorType] - npc.initData));
 
                     if (npc.finishData > PlayerData.npcData[npc.objType].amounts[npc.behaviorType] - npc.initData)
                     {
@@ -154,7 +152,6 @@ namespace DM.Quest
                 foreach (QuestTask location in tasks.locations)
                 {
                     PlayerData.AddDictionary(location.objType, PlayerData.locationData, (int)LocationBehaviorEnum.length);
-                    Debug.Log(string.Format("fin: {0}, now: {1}", location.finishData, PlayerData.locationData[location.objType].amounts[location.behaviorType] - location.initData));
 
                     if (location.finishData > PlayerData.locationData[location.objType].amounts[0] - location.initData)
                     {
@@ -175,7 +172,7 @@ namespace DM.Quest
                     }
                 }
             }
-            Debug.Log("해당 사항 없음");
+           
             return true;
         }
 

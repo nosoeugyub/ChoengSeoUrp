@@ -73,7 +73,7 @@ namespace NSY.Iven
                 }
 
                 LayoutRebuilder.ForceRebuildLayoutImmediate(ResultSlotListImage.rectTransform);
-                print(ResultSlotListImage.rectTransform.rect.width);
+              
                 ScaleSlotImg(maxsizeWH);
                 yield return new WaitForSeconds(0.01f);
             }

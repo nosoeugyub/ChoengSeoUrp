@@ -125,7 +125,7 @@ public class SunAndMoon : MonoBehaviour
 
             sun.gameObject.SetActive(false);
             sun_2.gameObject.SetActive(false);
-            Debug.Log("밤임");
+           
 
         }
         else if (sun.intensity > 0.3f && !sun.gameObject.activeInHierarchy && sun_2.intensity > 0.3f && !sun_2.gameObject.activeInHierarchy)
@@ -133,7 +133,7 @@ public class SunAndMoon : MonoBehaviour
             
             sun.gameObject.SetActive(true);
             sun_2.gameObject.SetActive(true);
-            Debug.Log("낮임");
+           
         }
 
 

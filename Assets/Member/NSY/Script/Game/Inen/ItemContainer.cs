@@ -225,7 +225,7 @@ namespace NSY.Iven
                     int sub = ItemSlots[i].Amount + AddCount - ItemSlots[i].item.MaximumStacks;
                     ItemSlots[i].Amount = ItemSlots[i].item.MaximumStacks;
                     AddCount = sub;
-                    Debug.Log(AddCount);
+                   
                 }
 
             }
@@ -376,13 +376,13 @@ namespace NSY.Iven
                 {
                     if (isGettingItem == true)
                     {
-                        Debug.Log("기존 업");
+                       
 
                         return true;
                     }
                     if (isGettingItem == false)
                     {
-                        Debug.Log("새로운걸 못얻음");
+                       
                         return false;
                     }
 

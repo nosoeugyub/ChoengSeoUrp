@@ -201,13 +201,11 @@ namespace DM.Building
         public void Demolish()
         {
             breakCount--;
-            Debug.Log("뚜가" + breakCount);
             //이펙트 등
             particle.Play();
 
             if (breakCount == 0)
             {
-                Debug.Log("파괴");
                 //if (item.InItemType == InItemType.BuildWall)
                 //    parentBuildArea.hasWall = false;
                 //else if (item.InItemType == InItemType.BuildSign)

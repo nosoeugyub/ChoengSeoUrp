@@ -40,7 +40,6 @@ namespace NSY.Manager
 
                     if (_instance == null)
                     {
-                        Debug.Log("싱글톤 없음 ");
                     }
                 }
                 return _instance;

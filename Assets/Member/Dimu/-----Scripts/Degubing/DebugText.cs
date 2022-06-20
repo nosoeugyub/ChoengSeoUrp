@@ -54,11 +54,5 @@ public class DebugText : MonoBehaviour
         textlist.Remove(go);
         Destroy(go);
     }
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.O))
-        {
-            SetText("디무는 채고야");
-        }
-    }
+ 
 }
