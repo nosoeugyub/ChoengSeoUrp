@@ -252,11 +252,7 @@ public class Screenshot : MonoBehaviour
         if (_WillFakeScreenShot)
         {
 
-            
-
-
             _WillFakeScreenShot = false;
-
 
             Width = Screen.width;
             Hight = Screen.height;
