@@ -170,13 +170,13 @@ public class EnvironmentManager : MonoBehaviour
         d1.transform.rotation = Quaternion.Euler(d1.transform.eulerAngles.x, maincamera.transform.eulerAngles.y, d1.transform.eulerAngles.z);
         d2.transform.rotation = Quaternion.Euler(d2.transform.eulerAngles.x, maincamera.transform.eulerAngles.y + 180, d2.transform.eulerAngles.z);
 
-       
-        //if (Input.GetKeyDown(KeyCode.P))
-        //{
-        //    //a.isHaveRecipeItem = true;
-        //    Cleanliness += 3;
-        //    //days++;
-        //}
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            //a.isHaveRecipeItem = true;
+            Cleanliness += 3;
+            //days++;
+        }
 
         if (canChange)
             Cleanliness = _cleanliness;

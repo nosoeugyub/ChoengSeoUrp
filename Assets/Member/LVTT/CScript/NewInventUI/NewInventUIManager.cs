@@ -121,7 +121,7 @@ public class NewInventUIManager : MonoBehaviour
     }
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.L))
             CreateMode();
     }
     private bool HasItemSlot()
