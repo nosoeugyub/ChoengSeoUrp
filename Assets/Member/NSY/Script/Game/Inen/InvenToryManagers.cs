@@ -86,38 +86,23 @@ namespace NSY.Iven
 
         private void Awake()
         {
-
             //툴립
             iventorynsy.OnPointerEnterEvent += ShowToolTip;
             iventorynsy.OnPointerExitEvent += HideTootip;
-
-
-
             //인벤토리 클레스 이벤트
             iventorynsy.OnDubleClickEvent += OnDoubleClickEvent;
             iventorynsy.OnLeftClickEvent += BuildingLeftClick;
             iventorynsy.OnRightClickEvent += InventoryRightClick;
-
-
             //드래그 시작
             iventorynsy.OnBeginDragEvent += BeginDrag;
-
-
             //드래그 끝
             iventorynsy.OnEndDragEvent += EndDrag;
-
-
             //드래그
             iventorynsy.OnDragEvent += Drag;
-
-
             //드롭
             iventorynsy.OnDropEvent += Drop;
-
             //버리기
             Dropitemarea.OnDropEvent += DropItemOutsideUI;
-
-
             iventorynsy.SetLockSpriteToCraftSlot(locksprite);
         }
 
@@ -227,28 +212,15 @@ namespace NSY.Iven
             {
                 dragitemSlot = itemslot;
                 draggableitem.sprite = itemslot.item.ItemSprite;
-                //draggableitem.transform.position = Input.mousePosition;
                 draggableitem.gameObject.SetActive(true);
-
-                //itemTooltip.ShowItemTooltip(itemSlot.item);
-
-                //Vector3 ToolVec = itemTooltip.tooltipTransform.transform.position;
-                //ToolVec = itemTooltip.tooltipTransform.transform.position;
-
-                //itemTooltip.tooltipTransform.transform.position = ToolVec;
-
             }
         }
         private void Drag(BaseItemSlot itemslot)
         {
-            //draggableitem.transform.position = Input.mousePosition;
             Vector3 screenpoint = Input.mousePosition;
-            //screenpoint.x -= 960;
-            //screenpoint.y -= 540;
             Vector2 onPoint;
             RectTransformUtility.ScreenPointToLocalPointInRectangle(BaseCharcterPanel, screenpoint, uicamera, out onPoint);
             draggableitem.GetComponent<RectTransform>().localPosition = onPoint;
-           // print(draggableitem.GetComponent<RectTransform>().localPosition);
             print(onPoint);
         }
         private void EndDrag(BaseItemSlot itemslot)

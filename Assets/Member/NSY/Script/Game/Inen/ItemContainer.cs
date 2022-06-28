@@ -51,7 +51,7 @@ namespace NSY.Iven
                 Craftslot[i].SetSpriteLock(locksprite);
             }
         }
-
+        
         protected virtual void OnValidate()
         {
             GetComponentsInChildren(includeInactive: true, result: ItemSlots);

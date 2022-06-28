@@ -60,12 +60,7 @@ namespace NSY.Player
                 }
             }
             idle();
-            //////Zess's code//////
-            //if (Maptravel)
-            //{
-            //    CharacterTravel();
-            //}
-            //////End of "Zess's code"//////
+           
         }
 
         protected void Move()
@@ -88,7 +83,7 @@ namespace NSY.Player
                 Vector3 CurVec = MoveVec;
                 Vector3 movement = (CurVec + idleMove) * Time.deltaTime;
                 playerController.characterCtrl.Move(movement);
-                //CurVec에 MapTravel 백터를 수정하시면 됩니다.
+                
 
             }
             else
@@ -163,65 +158,4 @@ namespace NSY.Player
     }
 }
 
-////////Zess's code//////
-//void CharacterTravel()
-//{
-//    Maptravel = false;
-//    switch (curAreaNum)
-//    {
-//        case 0:
-//            TravelToOuterArea(1);
-//            break;
-//        case 1:
-//            TravelToInnerArea(0);
-//            break;
-//        case 2:
-//            TravelToInnerArea(1);
-//            break;
-//        case 3:
-//            TravelToInnerArea(2);
-//            break;
-//        case 4:
-//            TravelToInnerArea(3);
-//            break;
-//        case 5:
-//            TravelToInnerArea(4);
-//            break;
-//        case 6:
-//            TravelToInnerArea(5);
-//            break;
-//        case 7:
-//            TravelToInnerArea(6);
-//            break;
-//        case 8:
-//            TravelToInnerArea(7);
-//            break;
-//        case 9:
-//            TravelToInnerArea(8);
-//            break;
-//        case 10:
-//            TravelToInnerArea(9);
-//            break;
-//        case 11:
-//            TravelToInnerArea(10);
-//            break;
-//        case 12:
-//            TravelToInnerArea(11);
-//            break;
 
-//    }
-//}
-//void TravelToOuterArea(int AreaNum)
-//{
-//    Vector3 newPos = MapTravel.OuterAreaList[AreaNum].transform.position;
-//    newPos.y = transform.position.y;
-//    transform.position = newPos;
-//}
-
-//void TravelToInnerArea(int AreaNum)
-//{
-//    Vector3 newPos = MapTravel.InnerAreaList[AreaNum].transform.position;
-//    newPos.y = transform.position.y;
-//    transform.position = newPos;
-//}
-////////End of "Zess's code"//////
