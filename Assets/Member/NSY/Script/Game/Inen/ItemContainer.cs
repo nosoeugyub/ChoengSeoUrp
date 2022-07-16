@@ -78,6 +78,7 @@ namespace NSY.Iven
                 }
             }
             return freeSpaces >= amount;
+                
         }
 
         public virtual void InvenAllOnOff(bool isOn) //전체 상호작용 불가능, 가능 처리
