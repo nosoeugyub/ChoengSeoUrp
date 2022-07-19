@@ -23,7 +23,7 @@ public class ES3
     public enum CompressionType { None, Gzip};
     public enum Format 			{ JSON };
 	public enum ReferenceMode	{ ByRef, ByValue, ByRefAndValue};
-
+ 
     #region ES3.Save
 
     // <summary>Saves the value to the default file with the given key.</summary>
