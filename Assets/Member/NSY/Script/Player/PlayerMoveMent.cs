@@ -5,7 +5,7 @@ using TT.MapTravel;
 using UnityEngine;
 namespace NSY.Player
 {
-    public class PlayerMoveMent : MonoBehaviour
+    public class PlayerMoveMent : MonoBehaviour, IDataManager
     {
         //플립
         [SerializeField]
@@ -18,7 +18,8 @@ namespace NSY.Player
         internal Vector3 idleMove = Vector3.zero;
         internal Vector3 lookForward;
         internal Vector3 LookRight;
-        internal Vector3 MoveVec;
+        public Vector3 MoveVec;
+        public Vector3 movement;
 
         internal bool isMove;
         //////Zess's code//////
@@ -81,7 +82,9 @@ namespace NSY.Player
                 MoveVec *= playerController.PlayerSpeed;
 
                 Vector3 CurVec = MoveVec;
-                Vector3 movement = (CurVec + idleMove) * Time.deltaTime;
+                movement = (CurVec + idleMove) * Time.deltaTime;
+
+
                 playerController.characterCtrl.Move(movement);
                 
 
@@ -101,6 +104,9 @@ namespace NSY.Player
 
             playerController.characterCtrl.Move(move * Time.deltaTime);
         }
+
+
+
 
         public void Flip()
         {
@@ -154,6 +160,16 @@ namespace NSY.Player
                 ChangeYAngles(180);
 
             }
+        }
+
+        public void LoadData(SaveData data)
+        {
+           
+        }
+
+        public void SaveData(ref SaveData data)
+        {
+            this.movement = data.PlayerVector;
         }
     }
 }

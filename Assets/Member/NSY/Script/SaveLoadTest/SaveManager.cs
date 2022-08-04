@@ -2,32 +2,50 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-public class SaveManager : MonoBehaviour
+
+
+public class SaveManager : MonoBehaviour 
 {
-    public static readonly string SAVE_FOLDER = Application.dataPath + "/Saves/";
+  public static SaveManager instance { get; private set; }
 
-    public static void Init()
+    private SaveData saveData;
+
+    
+    private void Awake()
     {
-        if (!Directory.Exists(SAVE_FOLDER))
+        if (instance != null)
         {
-            Directory.CreateDirectory(SAVE_FOLDER);
+            Debug.Log("싱글톤 없음");
+        }
+        instance = this;
+    }
+
+    private void Start()
+    {
+        LoadGame();
+    }
+    public void NewGame()
+    {
+        this.saveData = new SaveData();
+    }
+
+    public void LoadGame()
+    {
+        //저장된 데이터들 불러오기
+        if (this.saveData == null)
+        {
+            Debug.Log("없엉");
+            NewGame();
         }
     }
 
-    public static void Save(string saveString)
+    public void SaveGame()
     {
-        File.WriteAllText(SAVE_FOLDER + "save.txt", saveString);
+
     }
-    public static string Load()
+
+    private void OnApplicationQuit()
     {
-        if (File.Exists(SAVE_FOLDER + "/save.txt"))
-        {
-            string saveString = File.ReadAllText(SAVE_FOLDER + "/save.txt");
-            return saveString;
-        }
-        else
-        {
-            return null;
-        }
+        SaveGame();
     }
 }

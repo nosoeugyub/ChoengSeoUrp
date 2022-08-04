@@ -3,50 +3,49 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-public class SaveData : MonoBehaviour
+//기본적인 게임 데이터 저장
+//시작할때는 모두 초기화
+[System.Serializable]
+public class SaveData
 {
-   private void Save()
+    public Vector3 PlayerVector; 
+
+    public SaveData()
     {
-        SaveDataInfo SaveDatainfo = new SaveDataInfo
-        {
-        //    PlayerPostion = 
-        };
-        string _saveJson = JsonUtility.ToJson(SaveDatainfo);
-
-        File.WriteAllText(Application.dataPath + "/save.txt", _saveJson);
-
-    }
-    private void Load()
-    {
-
+       
     }
 }
 
-public class SaveDataInfo
+
+
+
+
+
+
+/// <summary>
+///  아이템 슬롯 저장 
+/// </summary>
+
+[System.Serializable]
+public class ItemSloatSaveData
 {
-    public Vector3 PlayerPostion;
+    public string ItemID;
+    public int Amount;
 
-   
-   public class ItemslotSaveData
+    public ItemSloatSaveData(string id, int amount)
     {
-        public string ItemID;
-        public int Amount;
-
-        public ItemslotSaveData(string id, int amount)
-        {
-            ItemID = id;
-            Amount = amount;
-        }
-
+        ItemID = id;
+        Amount = amount;
     }
-    public class itemContainerSaveData
+}
+
+[System.Serializable]
+public class ItemsContainerSaveData
+{
+    public ItemSloatSaveData[] SavedSlots;
+
+    public ItemsContainerSaveData(int numItems)
     {
-        public ItemslotSaveData[] SaveSlot;
-
-        public itemContainerSaveData(int numItems)
-        {
-            SaveSlot = new ItemslotSaveData[numItems];
-        }
+        SavedSlots = new ItemSloatSaveData[numItems];
     }
-
 }
