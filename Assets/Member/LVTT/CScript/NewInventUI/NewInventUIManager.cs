@@ -159,6 +159,7 @@ public class NewInventUIManager : MonoBehaviour
         }
         if (isCreateMode == true)
         {
+            PlayerData.AddValue((int)nowSelectItem.RecipeItem.InItemType, (int)ItemBehaviorEnum.Craft, PlayerData.ItemData, (int)ItemBehaviorEnum.length);
             iven.AddItem(nowSelectItem.RecipeItem);
         }
 
@@ -241,6 +242,11 @@ public class NewInventUIManager : MonoBehaviour
             //    item[item.Count - 1].Amount++;
             //    item[item.Count - 1].item.GetCountItems += CraftWindows[i].RecipeAmount;
             //    continue;
+        }
+        else
+        {
+            PlayerData.AddValue((int)nowSelectItem.RecipeItem.InItemType, (int)ItemBehaviorEnum.Craft, PlayerData.ItemData, (int)ItemBehaviorEnum.length);
+
         }
     }
 

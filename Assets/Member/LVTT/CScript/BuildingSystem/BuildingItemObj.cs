@@ -214,6 +214,7 @@ namespace DM.Building
                 DropItems();
                 parentBuildArea.RemoveBuildItemToList(gameObject);
                 parentBuildArea.DeleteBuildingItemObjSorting(gameObject);
+                PlayerData.AddValue(0, (int)BuildInputBehaviorEnum.Demolish, PlayerData.BuildInputData, (int)BuildInputBehaviorEnum.length);
                 Destroy(gameObject);
             }
         }

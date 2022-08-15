@@ -15,6 +15,10 @@ public enum EventEnum
     GotoBackWithSheep,
     DownClean,
     DownCleanDouble,
+    GotoStartPos,
+    FadeIn,
+    FadeOut,
+    StartTalk,
 }
 namespace NSY.Manager
 {
@@ -44,7 +48,7 @@ namespace NSY.Manager
         //public static event OpenRoad OpenRoadFall;
 
 
-        public static Action[] EventActions = new Action[15];
+        public static Action[] EventActions = new Action[20];
         public static Action<CutType> testevent;
         public static Action EventAction;
         //EventAction 는 항상 실행중.
@@ -80,7 +84,6 @@ namespace NSY.Manager
             EventActions[((int)EventEnum.OpenRoad1)] = OpenPortCol1;
             EventActions[((int)EventEnum.OpenRoad2)] = OpenPortCol2;
             EventActions[((int)EventEnum.OnChick)] = OnEnableChick;
-
         }
         private void Update()
         {

@@ -13,6 +13,7 @@ public class NPCManager : MonoBehaviour
     [SerializeField] Button[] teleportPosButtons;
     [SerializeField] Transform PortPos;
     [SerializeField] Transform WalPos;
+    [SerializeField] Transform StartPos;
     [SerializeField] Transform portInformUI;
 
     [SerializeField] Transform teleUI;
@@ -44,6 +45,7 @@ public class NPCManager : MonoBehaviour
         EventManager.EventActions[(int)EventEnum.MoveToWalPort] += MoveToWalPort;
         EventManager.EventActions[(int)EventEnum.GotoBearsWithSheep] += MoveToBearsHouseWithSheep;
         EventManager.EventActions[(int)EventEnum.GotoBackWithSheep] += MoveToBackSheep;
+        EventManager.EventActions[(int)EventEnum.GotoStartPos] += GotoStartPos;
 
         //텔포 따로 나눠야 할듯
         for (int i = 0; i < teleportPosButtons.Length - 1; ++i)
@@ -179,6 +181,21 @@ public class NPCManager : MonoBehaviour
         npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(npcTfs[8].Npctf.MyHouse.FriendTransform.position);
         EventManager.EventAction -= EventManager.EventActions[(int)EventEnum.GotoBackWithSheep];
 
+    }
+
+    private void GotoStartPos()
+    {
+        EventManager.EventAction -= EventManager.EventActions[(int)EventEnum.GotoStartPos];
+        //npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(StartPos.position);
+        StartCoroutine(DelayMove());
+    }
+    IEnumerator DelayMove()
+    {
+        EventManager.EventActions[(int)EventEnum.FadeOut].Invoke();
+        yield return new WaitForSeconds(4);
+        npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(StartPos.position);
+        EventManager.EventActions[(int)EventEnum.FadeIn].Invoke();
+        EventManager.EventActions[(int)EventEnum.StartTalk].Invoke();
     }
 }
 [System.Serializable]

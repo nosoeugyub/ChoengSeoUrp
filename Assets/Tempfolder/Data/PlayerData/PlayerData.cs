@@ -1,5 +1,4 @@
 ﻿using NSY.Manager;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,41 +11,15 @@ public class PlayerData : ScriptableObject
     public static Dictionary<int, Behavior> npcData = new Dictionary<int, Behavior>();
     public static Dictionary<int, Behavior> locationData = new Dictionary<int, Behavior>();//장소에 방문한 횟수
     public static Dictionary<int, Behavior> gotItemData = new Dictionary<int, Behavior>();//인벤토리에 있는 아이템 개수
-    public static Dictionary<int, Behavior> craftData = new Dictionary<int, Behavior>();//아이템 제작 횟수
+    public static Dictionary<int, Behavior> BuildInputData = new Dictionary<int, Behavior>();//암튼 건축 데이터
+    //public static Dictionary<int, Behavior> craftData = new Dictionary<int, Behavior>();//아이템 제작 횟수
 
-    public static void AddValue(int dataid, int behav, Dictionary<int,Behavior> pairs, int listCount)
+    public static void AddValue(int dataid, int behav, Dictionary<int, Behavior> pairs, int listCount)
     {
         AddDictionary(dataid, pairs, listCount);
         pairs[dataid].amounts[behav]++;
+        Debug.Log(dataid + "++");
         SuperManager.Instance.dialogueManager.UpdateNpcsQuestMark();
-    }
-    private static void Fail()
-    {
-        foreach (var accectQuest in SuperManager.Instance.questmanager.GetAcceptQuests())
-        {
-            foreach (var item in accectQuest.Key.tasks.builds)
-            {
-            }
-            foreach (var item in accectQuest.Key.tasks.gotItems)
-            {
-
-            }
-            foreach (var item in accectQuest.Key.tasks.items)
-            {
-
-            }
-            foreach (var item in accectQuest.Key.tasks.locations)
-            {
-
-            }
-            foreach (var item in accectQuest.Key.tasks.npcs)
-            {
-
-            }
-            //.
-            //.
-            //.
-        }
     }
 
     public static void AddDictionary(int dataid, Dictionary<int, Behavior> pairs, int listCount)
@@ -72,7 +45,7 @@ public class PlayerData : ScriptableObject
 
 public enum ItemBehaviorEnum//아이템에는 드랍아이템, 맵 아이템이 있다. (나뭇가지, 쓰레기, 쓰레기통, 나무, 돌, 음식, 건축자재)
 {
-    GetItem, DropItem, EatItem, InteractItem, MineItem,InvenItem, alreadyitem ,length
+    GetItem, DropItem, EatItem, InteractItem, MineItem, InvenItem, alreadyitem, Craft, builditem, length
 }
 public enum BuildingBehaviorEnum //건축 지역
 {
@@ -80,15 +53,15 @@ public enum BuildingBehaviorEnum //건축 지역
 }
 public enum NpcBehaviorEnum
 {
-    Interact,gethouse, length
+    Interact, gethouse, length
 }
 public enum LocationBehaviorEnum
 {
     Interact, length
 }
-public enum CraftBehaviorEnum
+public enum BuildInputBehaviorEnum
 {
-    Craft, length
+    ScaleUp, ScaleDown, RotationLeft, RotationRight, LayerUp, LayerDown, EndBuilding, Demolish, length
 }
 public class Behavior
 {
@@ -102,19 +75,19 @@ public class Behavior
 public enum OutItemType
 {
     Talk, Tool, Mineral, Food, Collect, BuildingItemObj, BuildingItemObj_Mini,
-     Etc,
+    Etc,
 }
 public enum InItemType
 {
     //1차 재료
-    None = 0, Twigs, Cutgrass, Rocks, Petal, leaf, Mud, Trash, Grass, Marble, ChickHair, HenHair, Paper, Rubber,Egg,Milk,Sap,Firefly,
-    Sheephair,moss,Iron,Gold,Silver,Sand, Glass, Woodp0, Woodp1,Woodp2, Log0, Log1,Log2, Trash2,
+    None = 0, Twigs, Cutgrass, Rocks, Petal, leaf, Mud, Trash, Grass, Marble, ChickHair, HenHair, Paper, Rubber, Egg, Milk, Sap, Firefly,
+    Sheephair, moss, Iron, Gold, Silver, Sand, Glass, Woodp0, Woodp1, Woodp2, Log0, Log1, Log2, Trash2,
     //1차 염료
     Red = 9900, Orange, Yellow, Green, Mint, Blue, Pupple, White, Black,
     //1차 식량
-    Seed = 10000, Apple,Applejuice,
+    Seed = 10000, Apple, Applejuice,
     //2차재료
-    Woodplank = 20000, Cutstone, String, torch, Ironplate,SilverPlate,GoldPlate,bulbs,
+    Woodplank = 20000, Cutstone, String, torch, Ironplate, SilverPlate, GoldPlate, bulbs,
     //2차 식량
 
     //3차재료
@@ -129,7 +102,7 @@ public enum InItemType
     //돋보기 아이템
     MagnifyObject = 70000,
     //1차 건축자재
-    BuildWall, BuildSign, BuildNormal,RedRibbon, Plant, Redflower, GreenBalloon, BlackMirror, Giftbox,Button,
+    BuildWall, BuildSign, BuildNormal, RedRibbon, Plant, Redflower, GreenBalloon, BlackMirror, Giftbox, Button,
     //간이 건축물
     BuildingItemObj_Essential = 80000, BuildingItemObj_Additional,
 }

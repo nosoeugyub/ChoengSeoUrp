@@ -27,6 +27,7 @@ namespace DM.Quest
             [SerializeField] public QuestTask[] npcs; //npc 상호작용 등
             [SerializeField] public QuestTask[] locations; //지역 상호작용 등
             [SerializeField] public QuestTask[] gotItems; //인벤에 보유중인 친구들
+            [SerializeField] public QuestTask[] buildInputs; //건축.. 
             //재료 줍기
             //뭐 행동하기 (해당 행동을 했을 때 퀘스트로 들어오게 추가해야함.) 
         }
@@ -68,20 +69,16 @@ namespace DM.Quest
 
         public void InitData() //퀘스트에 필요한 항목을 현재 플레이어 데이터 값으로 초기화
         {
-
-            foreach (QuestTask_Build building in tasks.builds)
-            {
-                //PlayerData.AddDictionary(building.objType, PlayerData.BuildBuildingData, (int)BuildingBehaviorEnum.length);
-                //building.initData = PlayerData.BuildBuildingData[building.objType].amounts[building.behaviorType];
-
-
-
-            }
-
             foreach (QuestTask item in tasks.items)
             {
                 PlayerData.AddDictionary(item.objType, PlayerData.ItemData, (int)ItemBehaviorEnum.length);
                 item.initData = PlayerData.ItemData[item.objType].amounts[item.behaviorType];
+            }
+
+            foreach (QuestTask item in tasks.buildInputs)
+            {
+                PlayerData.AddDictionary(item.objType, PlayerData.BuildInputData, (int)ItemBehaviorEnum.length);
+                item.initData = PlayerData.BuildInputData[item.objType].amounts[item.behaviorType];
             }
         }
         public bool CanClear()
@@ -121,8 +118,8 @@ namespace DM.Quest
                 foreach (QuestTask item in tasks.items)
                 {
                     PlayerData.AddDictionary(item.objType, PlayerData.ItemData, (int)ItemBehaviorEnum.length);
-                    
-                    int questdata=0;
+
+                    int questdata = 0;
 
                     if (item.behaviorType != (int)ItemBehaviorEnum.alreadyitem)
                         questdata = PlayerData.ItemData[item.objType].amounts[item.behaviorType] - item.initData;
@@ -172,7 +169,16 @@ namespace DM.Quest
                     }
                 }
             }
-           
+            if (tasks.buildInputs.Length > 0)
+            {
+                foreach (QuestTask gotItem in tasks.buildInputs)
+                {
+                    if (gotItem.finishData > PlayerData.BuildInputData[gotItem.objType].amounts[gotItem.behaviorType] - gotItem.initData)
+                    {
+                        return false;
+                    }
+                }
+            }
             return true;
         }
 

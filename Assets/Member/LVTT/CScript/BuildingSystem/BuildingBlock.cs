@@ -127,18 +127,24 @@ namespace DM.Building
 
                     if (Physics.Raycast(ray, out hit, 100, layerMask))
                     {
-                        if (hit.collider.GetComponent<BuildingItemObj>() == null) //자재가 아닌걸 클릭 시
-                        {
-                            if (curInteractObj != null)
-                            {
-                                if (!curInteractObj.ItemisSet && !curInteractObj.IsFirstDrop)
-                                {
-                                    print("ItemisSet = true 1 ");
-                                    SetBuildingItemObj();
-                                }
-                            }
-                        }
-                        else //자재인걸 클릭 시
+                        //if (hit.collider.GetComponent<BuildingItemObj>() == null) //자재가 아닌걸 클릭 시
+                        //{
+                        //    if (curInteractObj != null)
+                        //    {
+                        //        if (!curInteractObj.ItemisSet && !curInteractObj.IsFirstDrop)
+                        //        {
+                        //            print("ItemisSet = true 1 ");
+                        //            SetBuildingItemObj();
+                        //            PlayerData.AddValue((int)curInteractObj.GetItem().InItemType, (int)ItemBehaviorEnum.builditem, PlayerData.ItemData, (int)ItemBehaviorEnum.length);
+                        //        }
+                        //        else
+                        //        {
+                        //            print("ItemisSet = true2222 ");
+
+                        //        }
+                        //    }
+                        //}
+                        //else //자재인걸 클릭 시
                         {
                             if (curInteractObj != null)
                             {
@@ -200,9 +206,12 @@ namespace DM.Building
         private void SetBuildingItemObj()//설치하기
         {
             InvenSlotResetCanBuildMode(); //빌딩가능모드로 인벤 리셋
-
             curInteractObj.ItemisSet = true;
-            curInteractObj.IsFirstDrop = false;
+            if (curInteractObj.IsFirstDrop)
+            {
+                curInteractObj.IsFirstDrop = false;
+                PlayerData.AddValue((int)curInteractObj.GetItem().InItemType, (int)ItemBehaviorEnum.builditem, PlayerData.ItemData, (int)ItemBehaviorEnum.length);
+            }
             CancleUI(false);
             curInteractObj.PutDownBuildingItemObj(AreaWidthsize, AreaHeightsize);
         }
@@ -351,6 +360,7 @@ namespace DM.Building
                 SetBuildingState(BuildState.NotFinish);
                 nowBuildingBlock.ConstructSignsActive(true);
             }
+            PlayerData.AddValue(0, (int)BuildInputBehaviorEnum.EndBuilding, PlayerData.BuildInputData, (int)BuildInputBehaviorEnum.length);
 
             BuildOffUI(false);
             //buildManager.PlayerOnOff(true);
@@ -403,6 +413,8 @@ namespace DM.Building
                 var.x += BuildItemScaleVar;
                 var.y += BuildItemScaleVar;
                 curInteractObj.SetBuildItemScale(var);
+                PlayerData.AddValue(0, (int)BuildInputBehaviorEnum.ScaleUp, PlayerData.BuildInputData, (int)BuildInputBehaviorEnum.length);
+
             }
             else if (Input.GetKey(buildManager.scaleDownKey))
             {
@@ -410,6 +422,7 @@ namespace DM.Building
                 var.x -= BuildItemScaleVar;
                 var.y -= BuildItemScaleVar;
                 curInteractObj.SetBuildItemScale(var);
+                PlayerData.AddValue(0, (int)BuildInputBehaviorEnum.ScaleDown, PlayerData.BuildInputData, (int)BuildInputBehaviorEnum.length);
             }
         }
         void RotateBuildItem()
@@ -417,10 +430,13 @@ namespace DM.Building
             if (Input.GetKey(buildManager.rotateLeftKey))
             {
                 curInteractObj.SetBuildItemRotation(+BuildItemRotationVar);
+                PlayerData.AddValue(0, (int)BuildInputBehaviorEnum.RotationLeft, PlayerData.BuildInputData, (int)BuildInputBehaviorEnum.length);
+
             }
             else if (Input.GetKey(buildManager.rotateRightKey))
             {
                 curInteractObj.SetBuildItemRotation(-BuildItemRotationVar);
+                PlayerData.AddValue(0, (int)BuildInputBehaviorEnum.RotationRight, PlayerData.BuildInputData, (int)BuildInputBehaviorEnum.length);
             }
         }
         void FrontBackMoveBuildItem()
@@ -428,10 +444,13 @@ namespace DM.Building
             if (Input.GetKeyDown(buildManager.frontKey))
             {
                 SwitchBuildingItemObjZPos(true);
+                PlayerData.AddValue(0, (int)BuildInputBehaviorEnum.LayerUp, PlayerData.BuildInputData, (int)BuildInputBehaviorEnum.length);
+
             }
             else if (Input.GetKeyDown(buildManager.BackKey))
             {
                 SwitchBuildingItemObjZPos(false);
+                PlayerData.AddValue(0, (int)BuildInputBehaviorEnum.LayerDown, PlayerData.BuildInputData, (int)BuildInputBehaviorEnum.length);
             }
         }
         /// <summary>

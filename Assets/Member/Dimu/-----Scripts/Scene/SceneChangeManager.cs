@@ -6,6 +6,23 @@ using NSY.Manager;
 public class SceneChangeManager : MonoBehaviour
 {
     [SerializeField] Animator fadeAnim;
+
+    public void Start()
+    {
+        StartCoroutine(IFadeIn());
+        EventManager.EventActions[(int)EventEnum.FadeOut] = FadeOut;
+        EventManager.EventActions[(int)EventEnum.FadeIn] = FadeIn;
+
+    }
+
+    public void FadeOut()
+    {
+        StartCoroutine(IFadeOut());
+    }
+    public void FadeIn()
+    {
+        StartCoroutine(IFadeIn());
+    }
     public void LoadSceneString(string scenename)
     {
         if (scenename == "CreditDemo")
@@ -18,7 +35,6 @@ public class SceneChangeManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         SceneManager.LoadScene(scenename);
-
     }
     public void LoadSceneFadeString(string scenename)
     {
@@ -26,13 +42,19 @@ public class SceneChangeManager : MonoBehaviour
     }
     IEnumerator LoadSceneFadeStringCo(string scenename)
     {
-        yield return Fade();
+        yield return IFadeOut();
         LoadSceneString(scenename);
     }
-    IEnumerator Fade()
+    IEnumerator IFadeOut()
     {
         yield return new WaitForSeconds(1f);
         fadeAnim.SetTrigger("whitescreen");
+        yield return new WaitForSeconds(3f);
+    }
+    IEnumerator IFadeIn()
+    {
+        yield return new WaitForSeconds(1f);
+        fadeAnim.SetTrigger("startwhitescreen");
         yield return new WaitForSeconds(3f);
     }
     public void EndGame()
@@ -41,7 +63,7 @@ public class SceneChangeManager : MonoBehaviour
     }
     IEnumerator Quit()
     {
-        yield return Fade();
+        yield return IFadeOut();
         Application.Quit();
     }
     public void slbal(int scenenuber)
