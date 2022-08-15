@@ -112,7 +112,7 @@ namespace DM.Building
                 movePos = Camera.main.ScreenToWorldPoint(movePos);
 
                 HouseBuildAreaCal();
-                print(MaxY + " " + MinY);
+                //print(MaxY + " " + MinY);
 
                 if (movePos.y >= MaxY) movePos.y = MaxY;
                 if (movePos.y <= MinY) movePos.y = MinY;
