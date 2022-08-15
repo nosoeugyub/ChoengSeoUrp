@@ -1,6 +1,5 @@
 ﻿using DM.Dialog;
 using NSY.Manager;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -79,7 +78,8 @@ public class EnvironmentManager : MonoBehaviour
     [SerializeField] HappyUI happyUI;
 
     [SerializeField] GameObject endingButton;
-   
+    [SerializeField] GameObject endingButtoninfo;
+
     public float Cleanliness
     {
         get
@@ -94,14 +94,14 @@ public class EnvironmentManager : MonoBehaviour
                 cleanliness = 100;
 
                 endingButton.SetActive(true);
+                endingButtoninfo.SetActive(true);
             }
             else if (cleanliness < 0)
                 cleanliness = 0;
             else
-
             {
                 endingButton.SetActive(false);
-
+                endingButtoninfo.SetActive(false);
             }
 
             if (cleanLevel < cleanLevels.Count)
@@ -109,7 +109,7 @@ public class EnvironmentManager : MonoBehaviour
                 if (cleanLevels[cleanLevel] <= cleanliness)
                     ComeToPort();
             }
-            
+
             happyUI.HappyUISetting(cleanliness);
         }
     }
@@ -139,10 +139,10 @@ public class EnvironmentManager : MonoBehaviour
     public Screenshot[] screenshot;
     private void Awake()
     {
-       
+
         npcManager = FindObjectOfType<NPCManager>();
         dManager = FindObjectOfType<DialogueManager>();
-       
+
         EventManager.EventActions[(int)EventEnum.DownClean] += DownCleanliness;
         EventManager.EventActions[(int)EventEnum.DownCleanDouble] += DownCleanlinessDouble;
     }
@@ -191,7 +191,7 @@ public class EnvironmentManager : MonoBehaviour
 
     private void ComeToPort()
     {
-        if(npcManager.ComeToPort())
+        if (npcManager.ComeToPort())
         {
             dManager.UpdateNpcsQuestMark();
             AddCleanLevel();
