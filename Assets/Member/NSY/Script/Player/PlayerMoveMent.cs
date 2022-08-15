@@ -13,7 +13,7 @@ namespace NSY.Player
 
         [SerializeField]
         PlayerController playerController;
-        float Mass = 10;
+        float Mass = 30;
 
         internal Vector3 idleMove = Vector3.zero;
         internal Vector3 lookForward;
