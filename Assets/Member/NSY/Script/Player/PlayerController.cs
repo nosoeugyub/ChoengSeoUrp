@@ -18,10 +18,8 @@ namespace NSY.Player
         internal PlayerInput playerinput;
         [SerializeField]
         internal PlayerMoveMent playermove;
-       
         [SerializeField]
         internal PlayerInteract playerinteract;
-
         //Player 상태
         //[SerializeField]
         internal CharacterController characterCtrl;

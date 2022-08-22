@@ -38,7 +38,12 @@ public class MineObject : ItemObject
     }
     IEnumerator Respawn()
     {
+        yield return new WaitForSeconds(5);
+        animator.SetTrigger("Finish");
+        quad.gameObject.SetActive(false);
         yield return new WaitForSeconds(respawnTime + Random.Range(0, 50));
+        quad.gameObject.SetActive(true);
+
         ChangeMineState(MineState.Normal);
     }
     IEnumerator Destroy()
@@ -51,8 +56,8 @@ public class MineObject : ItemObject
         mineState = state;
         if (state == MineState.Normal)
         {
-            animator.SetBool("IsFalling", false);
-            animator.SetTrigger("Finish");
+            animator.ResetTrigger("IsFalling");
+            animator.ResetTrigger("Finish");
             BoxColONOFF(true);
 
             //quad.material = nowMat;
@@ -64,8 +69,7 @@ public class MineObject : ItemObject
         {
             boxcol = GetComponents<BoxCollider>();
             BoxColONOFF(false);
-            animator.SetBool("IsFalling", true);
-            print(animator.transform.parent.name);
+            animator.SetTrigger("IsFalling");
         }
     }
     public override int CanInteract()
@@ -82,7 +86,7 @@ public class MineObject : ItemObject
         //}
         Interact();
 
-        animator.SetBool("IsFalling", false);
+        //animator.SetBool("IsFalling", false);
         if (GetItem().InItemType == InItemType.tree)
             playerAnimator.SetBool("isAxing", true);
         else

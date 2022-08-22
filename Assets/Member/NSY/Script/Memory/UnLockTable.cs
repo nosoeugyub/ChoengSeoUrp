@@ -24,7 +24,7 @@ public class UnLockTable : ScriptableObject
         {
             if (itemIndex >= _LockItem.Length)
             {
-                Debug.Log("아니 인덱스 개크다니깐");
+              
                 return _LockItem[0];
             }
             else
@@ -39,7 +39,7 @@ public class UnLockTable : ScriptableObject
            
             if (itemIndex >= _LockItem.Length)
             {
-                Debug.Log("인덱스 너무 큼!");
+               
             }
             else
             {

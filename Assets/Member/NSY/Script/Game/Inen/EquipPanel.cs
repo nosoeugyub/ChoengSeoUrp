@@ -86,7 +86,7 @@ namespace NSY.Iven
                     ResultEquip.Amount = 1;
                     equipmentSlots[i].item = null;
                     equipmentSlots[i].Amount = 0;
-                    //Debug.Log("바로들어갓");
+                   
                     return true;
                 }
          
@@ -118,7 +118,7 @@ namespace NSY.Iven
             {
                 if (ResultEquip.item == item && equipmentSlots[i].item == null)
                 {
-                    Debug.Log("라자냐 쳐먹고싶다");
+                  
                     equipmentSlots[i].item = item;
                     equipmentSlots[i].Amount = 1;
                     ResultEquip.item = null;
@@ -130,7 +130,7 @@ namespace NSY.Iven
                  if (ResultEquip.item == item && equipmentSlots[i+1].item == null)
                 {
 
-                    Debug.Log("권경수 바부");
+                  
                     equipmentSlots[i+1].item = item;
                     equipmentSlots[i+1].Amount = 1;
                     ResultEquip.item = null;
@@ -141,7 +141,7 @@ namespace NSY.Iven
                 }
                  if(ResultEquip.item == item && equipmentSlots[i+2].item == null)
                 {
-                    Debug.Log("권경수 tq");
+                  
                     equipmentSlots[i + 2].item = item;
                     equipmentSlots[i + 2].Amount = 1;
                     ResultEquip.item = null;
@@ -163,7 +163,7 @@ namespace NSY.Iven
                 if (ResultEquip.item != null)
                 {
 
-                    Debug.Log("바꿔라");
+                  
                     equipmentSlots[i].item = item;
                     equipmentSlots[i].Amount = 1;
                     return true;

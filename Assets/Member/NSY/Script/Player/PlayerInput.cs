@@ -51,8 +51,10 @@ namespace NSY.Player
 
             if (Input.GetKeyDown(KeyCode.F))
             {
-                print("상호작용");
-                OnPressFDown();
+                if (CutScene.IsCutSceneOn == false)
+                {
+                    OnPressFDown();
+                }
             }
         }
 

@@ -20,25 +20,12 @@ namespace NSY.Iven
         public List<RecipeSlot> Recipeslot = new List<RecipeSlot>();
         public int AddStack = 0;
        
-        public void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                
-                    AddToolRecipe(testitem);
-              
-
-
-                Debug.Log("스페이스바는 누름 ㅋ");
-            }
-            
-        }
-
+      
         public  void AddToolRecipe(Item item)
         {
             if (NoneRecipeList == null)
             {
-                Debug.Log("레시피 다떨어짐");
+               
             }
 
             for (int i = 0; i < NoneRecipeList.Length; i++)
@@ -49,7 +36,7 @@ namespace NSY.Iven
                     RecipeList.Add(NoneRecipeList[i]);
                     Destroy(NoneRecipeList[i]);
                     NoneRecipeList[i] = null;
-                    Debug.Log("레시피 미획득=> 획득");
+                  
                     UpdateListRecipe();
                 }
               

@@ -39,7 +39,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 560084449}
-  m_IndirectSpecularColor: {r: 0.3277756, g: 0.2752588, b: 0.5974989, a: 1}
+  m_IndirectSpecularColor: {r: 0.7163253, g: 0.7931365, b: 0.6918283, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1117,7 +1117,7 @@ Transform:
   m_LocalPosition: {x: 8.23, y: 13.66, z: 99.47}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1480960680}
+  - {fileID: 1480960681}
   m_Father: {fileID: 635591933}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -1134,6 +1134,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 82019782}
+  _InputInterBtn: 102
 --- !u!114 &82019781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1146,7 +1147,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1afcb1600d21dcb41af1e96047463d13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  meshrender: {fileID: 0}
   playerController: {fileID: 82019782}
+  curAreaNum: 0
+  Maptravel: 0
 --- !u!114 &82019782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1159,12 +1163,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01446065fa522ab4baad4ea8bc1d30fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerVital: {fileID: 0}
   playerinput: {fileID: 82019780}
   playermove: {fileID: 82019781}
-  playercollision: {fileID: 0}
-  characterCtrl: {fileID: 82019785}
+  playerinteract: {fileID: 0}
   maincamera: {fileID: 289718873}
   PlayerSpeed: 7
+  SpritePlayerAnim: {fileID: 0}
 --- !u!114 &82019784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2006,6 +2011,11 @@ PrefabInstance:
         type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7eda0865693407e428a1a9502db7f9c7, type: 3}
+--- !u!4 &128222112 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 128222111}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &153053117
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2761,9 +2771,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4410d7343ced5c9429dba702b111134c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartCamXRot: 180
+  MinRotX: 0
+  MaxRotX: 0
+  CamYRot: 0
   RotateXSpeed: 700
   target: {fileID: 0}
+  YRotMoveRight: 0
+  YRotMoveLeft: 0
+  reverseRotation: 0
+  RotatewhileMove: 0
 --- !u!114 &192029439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2776,9 +2792,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b595a7a53b0444343809a8cb630c752e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
   Character: {fileID: 2072464379}
-  defaultMat: {fileID: 0}
-  TargetMat: {fileID: 0}
+  defaultShader: {fileID: 0}
+  targetShader: {fileID: 0}
   transparentObjs: []
 --- !u!114 &192029440
 MonoBehaviour:
@@ -5190,12 +5209,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 323793628}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &324165128 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5580603138978630501, guid: 7eda0865693407e428a1a9502db7f9c7,
-    type: 3}
-  m_PrefabInstance: {fileID: 128222111}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &329395166
 GameObject:
   m_ObjectHideFlags: 0
@@ -6966,10 +6979,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 580f0eb91c56846468ae79e1c27a4f2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inventroyPopup: {fileID: 0}
-  _dialoguePopup: {fileID: 0}
+  MapUi: {fileID: 0}
+  _ivenPopup: {fileID: 0}
   EscKey: 27
   inventoryKey: 105
+  MiniMapKey: 109
+  BuildKey: 98
 --- !u!1001 &447067257
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10185,6 +10200,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11e2139cc9934c044b46e1a1c800cb7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultshader: {fileID: 0}
+  quad: {fileID: 0}
+  item: {fileID: 0}
 --- !u!4 &632044077
 Transform:
   m_ObjectHideFlags: 0
@@ -12875,8 +12893,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f771d70b6b47d1d4a96de6e59845f85d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MainNPCID: 1000
-  MainNPCIsid: 1
+  defaultshader: {fileID: 0}
+  quad: {fileID: 0}
+  characterType: 0
+  myHouse: {fileID: 0}
+  wantToBuildCondition: []
+  player: {fileID: 0}
+  dialogMarks: []
+  nowDialogMarkType: 2
+  dialogMarkScale: {x: 0, y: 0, z: 0}
+  speed: 0
+  isFollowPlayer: 0
+  talkSound: 
 --- !u!114 &812153364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12890,8 +12918,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gotQuests:
-  - {fileID: 11400000, guid: 9d9b61eeacd91e8479c29a6a7a04dd41, type: 2}
-  - {fileID: 11400000, guid: b4196cd4134ca814b8d10488fff31963, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
   questProgress: 0
 --- !u!1001 &812498872
 PrefabInstance:
@@ -14926,7 +14954,7 @@ SpriteRenderer:
   m_Size: {x: 0.72, y: 0.72}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1001 &934607840
@@ -15153,7 +15181,7 @@ SpriteRenderer:
   m_Size: {x: 0.57, y: 0.59}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1001 &963368386
@@ -18799,8 +18827,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 3.61, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1647368013}
-  - {fileID: 324165128}
+  - {fileID: 128222112}
+  - {fileID: 2056376865}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -23638,6 +23666,11 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1480960679}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1480960681 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 1480960679}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1484011578
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24445,9 +24478,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4410d7343ced5c9429dba702b111134c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartCamXRot: 180
+  MinRotX: 0
+  MaxRotX: 0
+  CamYRot: 0
   RotateXSpeed: 700
   target: {fileID: 0}
+  YRotMoveRight: 0
+  YRotMoveLeft: 0
+  reverseRotation: 0
+  RotatewhileMove: 0
 --- !u!1001 &1529575938
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26014,12 +26053,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1647368013 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5580603138978630501, guid: 7eda0865693407e428a1a9502db7f9c7,
-    type: 3}
-  m_PrefabInstance: {fileID: 2056376864}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1648889705
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29608,10 +29641,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72c8a419515df34286ee48950a881cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Panel: {fileID: 1947486473}
-  EscPanel: {fileID: 1263871981}
-  QuestWindow: {fileID: 975818152}
-  State: 0
+  cols: []
+  chick: {fileID: 0}
 --- !u!1001 &1853454434
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30948,7 +30979,7 @@ SpriteRenderer:
   m_Size: {x: 7.4, y: 6.76}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &1912468929
@@ -31357,8 +31388,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e41fe2f838923df4a84227c8da253053, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LookIn: 0
+  IsZoom: 0
+  MainCamera: {fileID: 0}
+  SideCamera: []
+  CornerCamera: []
   virtualCamera:
-  - {fileID: 1523273624}
+  - {fileID: 0}
 --- !u!1 &1933469456
 GameObject:
   m_ObjectHideFlags: 0
@@ -32577,6 +32613,16 @@ PrefabInstance:
     - target: {fileID: 2740575334027277843, guid: 05f774a23446850449458835ba4cd194,
         type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7284249313467977076, guid: 05f774a23446850449458835ba4cd194,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7284249313467977076, guid: 05f774a23446850449458835ba4cd194,
+        type: 3}
+      propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -34264,6 +34310,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7eda0865693407e428a1a9502db7f9c7, type: 3}
+--- !u!4 &2056376865 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 2056376864}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2056423121
 GameObject:
   m_ObjectHideFlags: 0
@@ -34315,11 +34366,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a420877d58a0a4498e6a12741e2529d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 1933469458}
+  uimanager: {fileID: 0}
   questmanager: {fileID: 1376082003}
-  talkmanager: {fileID: 737348814}
-  soundmanager: {fileID: 1586877742}
-  playerStatemanager: {fileID: 632044076}
+  dialogueManager: {fileID: 0}
+  spawnmanager: {fileID: 0}
+  inventoryManager: {fileID: 0}
+  soundManager: {fileID: 0}
+  unlockmanager: {fileID: 0}
+  buildingManager: {fileID: 0}
+  scrennshotmangaer: {fileID: 0}
+  npcManager: {fileID: 0}
+  envirmanager: {fileID: 0}
+  scenechagemanage: {fileID: 0}
 --- !u!1 &2067595571
 GameObject:
   m_ObjectHideFlags: 0

@@ -23,11 +23,14 @@ namespace DM.NPC
         [SerializeField] private float speed;
         [SerializeField] private bool isFollowPlayer;
         [SerializeField] private string talkSound;
+
         private DialogueManager dialogueManager;
         private BuildingLike like = BuildingLike.None;
         float dist;
 
         public Action GoHomeEvent;
+        public Action<int> UIOnEvent;
+        public Action<int, DialogMarkType> UIUpdateEvent;
 
         public BuildingBlock MyHouse { get { return myHouse; } set { myHouse = value; } }
 
@@ -72,7 +75,7 @@ namespace DM.NPC
 
             if (nowDialogMarkType != DialogMarkType.None)
             {
-                dialogMarks[(int)nowDialogMarkType].gameObject.SetActive(false);
+                //dialogMarks[(int)nowDialogMarkType].gameObject.SetActive(false);
                 print(this.name + nowDialogMarkType.ToString());
             }
 
@@ -80,11 +83,17 @@ namespace DM.NPC
 
             if (dialogMarkType != DialogMarkType.None)
             {
-                dialogMarks[(int)nowDialogMarkType].gameObject.SetActive(true);
-                print(this.name + nowDialogMarkType.ToString());
+                //dialogMarks[(int)nowDialogMarkType].gameObject.SetActive(true);
 
             }
+            NPCStateUIUptate(dialogMarkType);
         }
+
+        public void NPCStateUIUptate(DialogMarkType dialogMarkType)
+        {
+            UIUpdateEvent((int)GetCharacterType(), dialogMarkType);
+        }
+
         public void OnFollowPlayer()
         {
             //현재 대화 상대와 같다면
@@ -143,7 +152,10 @@ namespace DM.NPC
                 myHouse = block;
                 myHouse.SetLivingChar(this);
                 print("Find My House");
+                PlayerData.AddValue((int)GetCharacterType(), (int)NpcBehaviorEnum.gethouse, PlayerData.npcData, (int)NpcBehaviorEnum.length);
+                SuperManager.Instance.questmanager.ClearQuest(SuperManager.Instance.questmanager.questLists[(int)GetCharacterType()].questList.Length-1, (int)GetCharacterType());
                 GoHomeEvent();
+                UIOnEvent((int)GetCharacterType());
             }
         }
         public BuildingLike GetBuildingLikeable(BuildingBlock buildingBlock) //bool형
@@ -347,6 +359,7 @@ namespace DM.NPC
             {
                 player.SetNpc(null);
                 isFollowPlayer = false;
+                DebugText.Instance.SetText("소개를 중단했습니다.");
             }
             else
                 PlayDialog();

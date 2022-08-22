@@ -14,6 +14,7 @@ namespace NSY.Iven
         public ReSultSlot resultslot;
         //버리기
         public Text ScriptTxt;
+        public Sprite locksprite;
         public int MaxDiscount;
         [SerializeField]
         private int discount;
@@ -85,36 +86,24 @@ namespace NSY.Iven
 
         private void Awake()
         {
-
             //툴립
             iventorynsy.OnPointerEnterEvent += ShowToolTip;
             iventorynsy.OnPointerExitEvent += HideTootip;
-
-
-
             //인벤토리 클레스 이벤트
             iventorynsy.OnDubleClickEvent += OnDoubleClickEvent;
             iventorynsy.OnLeftClickEvent += BuildingLeftClick;
             iventorynsy.OnRightClickEvent += InventoryRightClick;
-
-
             //드래그 시작
             iventorynsy.OnBeginDragEvent += BeginDrag;
-
-
             //드래그 끝
             iventorynsy.OnEndDragEvent += EndDrag;
-
-
             //드래그
             iventorynsy.OnDragEvent += Drag;
-
-
             //드롭
             iventorynsy.OnDropEvent += Drop;
-
             //버리기
             Dropitemarea.OnDropEvent += DropItemOutsideUI;
+            iventorynsy.SetLockSpriteToCraftSlot(locksprite);
         }
 
         private void HideTootip(BaseItemSlot itemSlot)
@@ -131,8 +120,8 @@ namespace NSY.Iven
             {
                 itemTooltip.ShowItemTooltip(itemSlot.item);
                 Vector3 ToolVec = itemTooltip.tooltipTransform.transform.position;
-                ToolVec.x = itemSlot.GetComponent<Image>().rectTransform.position.x + 0.7f;
-                ToolVec.y = itemSlot.GetComponent<Image>().rectTransform.position.y + 0.3f;
+                ToolVec.x = itemSlot.GetComponent<Image>().rectTransform.position.x;
+                ToolVec.y = itemSlot.GetComponent<Image>().rectTransform.position.y;
                 ToolVec.z = itemSlot.GetComponent<Image>().rectTransform.position.z;
                 itemTooltip.tooltipTransform.transform.position = ToolVec;
             }
@@ -144,6 +133,7 @@ namespace NSY.Iven
         public bool isRed = false;
         private void BuildingLeftClick(BaseItemSlot obj)
         {
+            if (obj.item.OutItemType != OutItemType.BuildingItemObj) return;
 
             if (CheckBuliditem != null)
             {
@@ -154,19 +144,20 @@ namespace NSY.Iven
             {
                 CheckBuliditem = obj.item;
                 BuildingBlock.nowBuildingBlock.BtnSpawnHouseBuildItem(obj.item);
+                iventorynsy.InvenAllOnOff(false);
 
                 foreach (ItemSlot itemslots in iventorynsy.ItemSlots) //인벤 빌딩슬롯 정검 
                 {
                     if (!itemslots.item) continue;
                     if (itemslots.item.OutItemType == OutItemType.BuildingItemObj || CheckBuliditem.ItemName != itemslots.item.ItemName)
                     {
-                        itemslots.Interactble(false);
-                        itemslots.isRedbulid = true;
-
                     }
                     if (itemslots.item == CheckBuliditem)
                     {
+                        obj.item.GetCountItems--;
                         obj.Amount--;
+                        iventorynsy.AddItemEvent();
+                        return;
                     }
                 }
             }
@@ -219,28 +210,18 @@ namespace NSY.Iven
         {
             if (itemslot.item != null)
             {
-                Debug.Log("드래그시작함");
                 dragitemSlot = itemslot;
                 draggableitem.sprite = itemslot.item.ItemSprite;
-                draggableitem.transform.position = Input.mousePosition;
                 draggableitem.gameObject.SetActive(true);
-
-                //itemTooltip.ShowItemTooltip(itemSlot.item);
-                Vector3 screenpoint  = Input.mousePosition;
-                Vector2 onPoint;
-                RectTransformUtility.ScreenPointToLocalPointInRectangle(BaseCharcterPanel, screenpoint, uicamera, out onPoint);
-                draggableitem.GetComponent<RectTransform>().localPosition = onPoint;
-
-                //Vector3 ToolVec = itemTooltip.tooltipTransform.transform.position;
-                //ToolVec = itemTooltip.tooltipTransform.transform.position;
-
-                //itemTooltip.tooltipTransform.transform.position = ToolVec;
-
             }
         }
         private void Drag(BaseItemSlot itemslot)
         {
-            draggableitem.transform.position = Input.mousePosition;
+            Vector3 screenpoint = Input.mousePosition;
+            Vector2 onPoint;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(BaseCharcterPanel, screenpoint, uicamera, out onPoint);
+            draggableitem.GetComponent<RectTransform>().localPosition = onPoint;
+            print(onPoint);
         }
         private void EndDrag(BaseItemSlot itemslot)
         {
@@ -439,7 +420,7 @@ namespace NSY.Iven
         }
         void Down()
         {
-            BaseCharcterPanel.DOLocalMoveY(-160, 1).SetEase(Ease.OutQuart);
+            BaseCharcterPanel.DOLocalMoveY(-140, 1).SetEase(Ease.OutQuart);
             button_UpDown.DOBlendableLocalRotateBy(new Vector3(0, 0, 180), 1, RotateMode.Fast).SetEase(Ease.OutQuart);
 
             //BaseCharcterPanel.anchoredPosition = new Vector3(0, -170, 0);

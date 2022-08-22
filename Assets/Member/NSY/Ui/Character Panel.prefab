@@ -1291,6 +1291,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd1ed67dfce6ff1428d97e1f214dcd97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playrinteract: {fileID: 0}
+  NoPopUp: {fileID: 0}
   ItemSlots:
   - {fileID: 6796473155974799721}
   - {fileID: 6796473155381335375}
@@ -1308,13 +1310,14 @@ MonoBehaviour:
   - {fileID: 6796473155894441235}
   - {fileID: 6796473155567272140}
   Craftslot: []
+  isGettingItem: 1
   startingitems:
   - {fileID: 11400000, guid: bf2e58205a4b1f345bbff4b9bf8eca3a, type: 2}
   - {fileID: 11400000, guid: c977c9f102d087e409cf45b7c9776feb, type: 2}
-  - {fileID: 11400000, guid: bf4d34ddaf818e0418797d5967387f4d, type: 2}
-  - {fileID: 11400000, guid: c3cd8447081b5624da0de7303450768d, type: 2}
-  - {fileID: 11400000, guid: 4a4fa3951a7c31a4f9037fba06a73aaa, type: 2}
-  - {fileID: 11400000, guid: 6d3e06416c08d964891db98811159d69, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   itemsParent: {fileID: 6796473154034611440}
 --- !u!1 &6796473154040062415
 GameObject:
@@ -1406,7 +1409,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemImage: {fileID: 6796473154040062402}
   tooltip: {fileID: 6796473156001652693}
+  childImgObject: {fileID: 0}
+  backgroundObject: {fileID: 0}
   amountText: {fileID: 0}
+  canInteractWithSlot: 1
   _item: {fileID: 0}
 --- !u!1 &6796473154053194541
 GameObject:
@@ -1469,7 +1475,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1497,6 +1503,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dfe93994b2b59e418c3a1d54251a0f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lockSprite: {fileID: 0}
   ReCipeamountText: []
   ResultSlotListImage: {fileID: 6796473154053194529}
   ResultSlotImage: {fileID: 6796473154053194529}
@@ -1506,6 +1513,8 @@ MonoBehaviour:
   reamountText: {fileID: 0}
   HaveAmount: {fileID: 0}
   _recipeItem: {fileID: 0}
+  childImgObject: {fileID: 0}
+  childImgObject_copy: {fileID: 0}
   _isHaverecipeItem: 0
 --- !u!114 &6796473154053194531
 MonoBehaviour:
@@ -1596,7 +1605,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1624,6 +1633,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dfe93994b2b59e418c3a1d54251a0f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lockSprite: {fileID: 0}
   ReCipeamountText: []
   ResultSlotListImage: {fileID: 6796473154054023845}
   ResultSlotImage: {fileID: 6796473154054023845}
@@ -1633,6 +1643,8 @@ MonoBehaviour:
   reamountText: {fileID: 0}
   HaveAmount: {fileID: 0}
   _recipeItem: {fileID: 0}
+  childImgObject: {fileID: 0}
+  childImgObject_copy: {fileID: 0}
   _isHaverecipeItem: 0
 --- !u!114 &6796473154054023847
 MonoBehaviour:
@@ -1801,7 +1813,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1829,6 +1841,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dfe93994b2b59e418c3a1d54251a0f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lockSprite: {fileID: 0}
   ReCipeamountText: []
   ResultSlotListImage: {fileID: 6796473154153082572}
   ResultSlotImage: {fileID: 6796473154153082572}
@@ -1838,6 +1851,8 @@ MonoBehaviour:
   reamountText: {fileID: 0}
   HaveAmount: {fileID: 0}
   _recipeItem: {fileID: 0}
+  childImgObject: {fileID: 0}
+  childImgObject_copy: {fileID: 0}
   _isHaverecipeItem: 0
 --- !u!114 &6796473154153082562
 MonoBehaviour:
@@ -3059,7 +3074,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemImage: {fileID: 6796473154286242077}
   tooltip: {fileID: 6796473156001652693}
+  childImgObject: {fileID: 0}
+  backgroundObject: {fileID: 0}
   amountText: {fileID: 0}
+  canInteractWithSlot: 1
   _item: {fileID: 0}
 --- !u!1 &6796473154354537569
 GameObject:
@@ -3416,7 +3434,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemImage: {fileID: 6796473154379692469}
   tooltip: {fileID: 0}
+  childImgObject: {fileID: 0}
+  backgroundObject: {fileID: 0}
   amountText: {fileID: 0}
+  canInteractWithSlot: 1
   _item: {fileID: 0}
   ResultImg: {fileID: 6796473154662358585}
   MatImage:
@@ -3427,7 +3448,7 @@ MonoBehaviour:
   - {fileID: 6796473154879187951}
   - {fileID: 6796473155009026692}
   - {fileID: 6796473154173116636}
-  _RecipeItem: {fileID: 11400000, guid: 6d3e06416c08d964891db98811159d69, type: 2}
+  _RecipeItem: {fileID: 0}
   _RecipeAmount: 0
 --- !u!1 &6796473154394723901
 GameObject:
@@ -3522,7 +3543,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemImage: {fileID: 6796473154394723888}
   tooltip: {fileID: 0}
+  childImgObject: {fileID: 0}
+  backgroundObject: {fileID: 0}
   amountText: {fileID: 0}
+  canInteractWithSlot: 1
   _item: {fileID: 0}
   ResultImg: {fileID: 6796473154531767394}
   MatImage:
@@ -4139,7 +4163,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemImage: {fileID: 6796473154458311672}
   tooltip: {fileID: 6796473156001652693}
+  childImgObject: {fileID: 0}
+  backgroundObject: {fileID: 0}
   amountText: {fileID: 0}
+  canInteractWithSlot: 1
   _item: {fileID: 0}
 --- !u!1 &6796473154472404615
 GameObject:
@@ -4418,7 +4445,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemImage: {fileID: 6796473154504135548}
   tooltip: {fileID: 0}
+  childImgObject: {fileID: 0}
+  backgroundObject: {fileID: 0}
   amountText: {fileID: 0}
+  canInteractWithSlot: 1
   _item: {fileID: 0}
   ResultImg: {fileID: 6796473154193597621}
   MatImage:
@@ -4599,7 +4629,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemImage: {fileID: 6796473154520969318}
   tooltip: {fileID: 6796473156001652693}
+  childImgObject: {fileID: 0}
+  backgroundObject: {fileID: 0}
   amountText: {fileID: 0}
+  canInteractWithSlot: 1
   _item: {fileID: 0}
 --- !u!1 &6796473154531767407
 GameObject:
@@ -4768,7 +4801,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemImage: {fileID: 6796473154541165623}
   tooltip: {fileID: 0}
+  childImgObject: {fileID: 0}
+  backgroundObject: {fileID: 0}
   amountText: {fileID: 0}
+  canInteractWithSlot: 1
   _item: {fileID: 0}
   ResultImg: {fileID: 6796473154472404613}
   MatImage:
@@ -4871,7 +4907,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemImage: {fileID: 6796473154543342354}
   tooltip: {fileID: 6796473156001652693}
+  childImgObject: {fileID: 0}
+  backgroundObject: {fileID: 0}
   amountText: {fileID: 0}
+  canInteractWithSlot: 1
   _item: {fileID: 0}
 --- !u!1 &6796473154544596303
 GameObject:
@@ -5225,10 +5264,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemImage: {fileID: 6796473154621225502}
   tooltip: {fileID: 6796473156001652693}
+  childImgObject: {fileID: 0}
+  backgroundObject: {fileID: 0}
   amountText: {fileID: 0}
+  canInteractWithSlot: 1
   _item: {fileID: 0}
   equipmentType: 0
-  GetImg: {fileID: 0}
+  GetImg: {fileID: 6796473154621225502}
 --- !u!1 &6796473154647722107
 GameObject:
   m_ObjectHideFlags: 0
@@ -6274,7 +6316,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemImage: {fileID: 6796473154851955542}
   tooltip: {fileID: 6796473156001652693}
+  childImgObject: {fileID: 0}
+  backgroundObject: {fileID: 0}
   amountText: {fileID: 0}
+  canInteractWithSlot: 1
   _item: {fileID: 0}
 --- !u!1 &6796473154865316547
 GameObject:
@@ -6586,7 +6631,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -6614,6 +6659,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dfe93994b2b59e418c3a1d54251a0f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lockSprite: {fileID: 0}
   ReCipeamountText: []
   ResultSlotListImage: {fileID: 6796473154916881098}
   ResultSlotImage: {fileID: 6796473154916881098}
@@ -6623,6 +6669,8 @@ MonoBehaviour:
   reamountText: {fileID: 0}
   HaveAmount: {fileID: 0}
   _recipeItem: {fileID: 0}
+  childImgObject: {fileID: 0}
+  childImgObject_copy: {fileID: 0}
   _isHaverecipeItem: 0
 --- !u!1 &6796473154936084523
 GameObject:
@@ -7798,7 +7846,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemImage: {fileID: 6796473155099888688}
   tooltip: {fileID: 6796473156001652693}
+  childImgObject: {fileID: 0}
+  backgroundObject: {fileID: 0}
   amountText: {fileID: 0}
+  canInteractWithSlot: 1
   _item: {fileID: 0}
 --- !u!1 &6796473155104319445
 GameObject:
@@ -8358,7 +8409,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemImage: {fileID: 6796473155201209661}
   tooltip: {fileID: 6796473156001652693}
+  childImgObject: {fileID: 0}
+  backgroundObject: {fileID: 0}
   amountText: {fileID: 0}
+  canInteractWithSlot: 1
   _item: {fileID: 0}
 --- !u!1 &6796473155232814331
 GameObject:
@@ -8799,7 +8853,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemImage: {fileID: 6796473155340599844}
   tooltip: {fileID: 6796473156001652693}
+  childImgObject: {fileID: 0}
+  backgroundObject: {fileID: 0}
   amountText: {fileID: 0}
+  canInteractWithSlot: 1
   _item: {fileID: 0}
 --- !u!1 &6796473155342237140
 GameObject:
@@ -8956,7 +9013,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemImage: {fileID: 6796473155351281079}
   tooltip: {fileID: 6796473156001652693}
+  childImgObject: {fileID: 0}
+  backgroundObject: {fileID: 0}
   amountText: {fileID: 0}
+  canInteractWithSlot: 1
   _item: {fileID: 0}
 --- !u!1 &6796473155355296086
 GameObject:
@@ -9014,9 +9074,9 @@ MonoBehaviour:
   RecipeList:
   - {fileID: 11400000, guid: 8690f4cd27aa9f84db4817ec89d2192b, type: 2}
   - {fileID: 11400000, guid: 1ffb55bc714d7e643bc1db1c76386512, type: 2}
-  - {fileID: 11400000, guid: 6d3e06416c08d964891db98811159d69, type: 2}
-  - {fileID: 11400000, guid: 6d3e06416c08d964891db98811159d69, type: 2}
-  - {fileID: 11400000, guid: 4a4fa3951a7c31a4f9037fba06a73aaa, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   NoneRecipeList:
   - {fileID: 0}
   - {fileID: 11400000, guid: 4f38e51d9e174fe4abdd1d4917068fac, type: 2}
@@ -9342,21 +9402,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 893b41d749827b24da0216b5a16c5c84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Vital: 100
+  dragitemSlot: {fileID: 0}
+  resultslot: {fileID: 0}
+  ScriptTxt: {fileID: 5744656818630785454}
+  locksprite: {fileID: 0}
+  MaxDiscount: 0
+  discount: 0
   itemTooltip: {fileID: 0}
   iventorynsy: {fileID: 6796473154034611441}
-  equipPanel: {fileID: 6796473154439762115}
   draggableitem: {fileID: 6796473154483515993}
   Dropitemarea: {fileID: 6796473155490433060}
   questionDialog: {fileID: 6796473154354537575}
   PlayerEat: {fileID: 0}
   playerinterract: {fileID: 0}
-  resultslot: {fileID: 0}
   BaseCharcterPanel: {fileID: 0}
   button_UpDown: {fileID: 0}
   isUp: 1
   isDown: 0
-  ScriptTxt: {fileID: 5744656818630785454}
+  uicamera: {fileID: 0}
+  CheckBuliditem: {fileID: 0}
+  isRed: 0
 --- !u!114 &6796473155368569941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9488,7 +9553,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemImage: {fileID: 6796473155381335372}
   tooltip: {fileID: 6796473156001652693}
+  childImgObject: {fileID: 0}
+  backgroundObject: {fileID: 0}
   amountText: {fileID: 0}
+  canInteractWithSlot: 1
   _item: {fileID: 0}
 --- !u!1 &6796473155403021934
 GameObject:
@@ -10428,7 +10496,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemImage: {fileID: 6796473155567272141}
   tooltip: {fileID: 6796473156001652693}
+  childImgObject: {fileID: 0}
+  backgroundObject: {fileID: 0}
   amountText: {fileID: 0}
+  canInteractWithSlot: 1
   _item: {fileID: 0}
 --- !u!1 &6796473155572957588
 GameObject:
@@ -11269,7 +11340,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemImage: {fileID: 6796473155807896822}
   tooltip: {fileID: 6796473156001652693}
+  childImgObject: {fileID: 0}
+  backgroundObject: {fileID: 0}
   amountText: {fileID: 0}
+  canInteractWithSlot: 1
   _item: {fileID: 0}
 --- !u!1 &6796473155824565361
 GameObject:
@@ -11617,7 +11691,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemImage: {fileID: 6796473155894441232}
   tooltip: {fileID: 6796473156001652693}
+  childImgObject: {fileID: 0}
+  backgroundObject: {fileID: 0}
   amountText: {fileID: 0}
+  canInteractWithSlot: 1
   _item: {fileID: 0}
 --- !u!1 &6796473155895265206
 GameObject:
@@ -12031,7 +12108,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemImage: {fileID: 6796473155974799726}
   tooltip: {fileID: 6796473156001652693}
+  childImgObject: {fileID: 0}
+  backgroundObject: {fileID: 0}
   amountText: {fileID: 0}
+  canInteractWithSlot: 1
   _item: {fileID: 0}
 --- !u!1 &6796473155979247874
 GameObject:
@@ -12253,6 +12333,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemNameTex: {fileID: 6796473155105369755}
   ItemStatsTex: {fileID: 6796473154656254150}
+  backgroundImg: {fileID: 0}
   tooltipTransform: {fileID: 0}
 --- !u!1 &6796473156020285625
 GameObject:
@@ -12722,7 +12803,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 1
+  m_Text: 0
 --- !u!1 &7724610863361469691
 GameObject:
   m_ObjectHideFlags: 0

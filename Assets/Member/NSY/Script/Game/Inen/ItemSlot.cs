@@ -22,7 +22,7 @@ namespace NSY.Iven
       //  private Color disabledColor = new Color(1, 1, 1, 0);
         private Color dragColor = new Color(1, 1, 1, 0.2f);
 
-      public bool isRedbulid = false;
+      //public bool isRedbulid = false;
       
 
 
@@ -31,7 +31,6 @@ namespace NSY.Iven
             return base.CanAddStack(item, amount) && Amount + amount <= item.MaximumStacks; 
         }
      
-
         public override bool CanReceiveItem(Item item)
         {
             return true;
@@ -47,7 +46,7 @@ namespace NSY.Iven
         }
         public void OnDrag(PointerEventData eventData)
         {
-            if (isCheckBulid == true || isRedbulid == true)
+            if (canInteractWithSlot == false)// || isRedbulid == true)
             {
                return;
             }
@@ -60,13 +59,13 @@ namespace NSY.Iven
         public void OnBeginDrag(PointerEventData eventData)
         {
             isDragging = true;
-            if (isCheckBulid == true || isRedbulid==true)
+            if (canInteractWithSlot == false)// || isRedbulid==true)
             {
                 return;
             }
             if (item != null)
             {
-                itemImage.color = dragColor;
+                childImgObject.color = dragColor;
             }
             if (OnBeginDragEvent != null)
             {
@@ -79,14 +78,14 @@ namespace NSY.Iven
         {
             isDragging = false;
            
-            if (isCheckBulid == true || isRedbulid == true)
+            if (canInteractWithSlot == false)// || isRedbulid == true)
             {
                
                 return;
             }
             if (item != null)
             {
-                itemImage.color = normalColor;
+                childImgObject.color = normalColor;
             }
             if (OnEndDragEvent != null)
             {
@@ -97,7 +96,7 @@ namespace NSY.Iven
 
         public void OnDrop(PointerEventData eventData)
         {
-            if (isCheckBulid == true || isRedbulid == true)
+            if (canInteractWithSlot == false)// || isRedbulid == true)
             {
                 //  OnDropEvent(null); ;
                 return;

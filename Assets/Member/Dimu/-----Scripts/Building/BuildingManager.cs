@@ -84,23 +84,23 @@ namespace DM.Building
             button.onClick.RemoveAllListeners();
             //DebugText.Instance.SetText(string.Format("RemoveAllListeners"));
         }
-        public void SetBuildButtonEvents(Action buildmodeOn, Action demomodeOn)
-        {
-            buildingButtons[0].onClick.AddListener(() =>
-            {
-                buildmodeOn();
-                PlayerOnOff(false);
-                ResetButtonEvents(buildingButtons[0]);
-                //ResetButtonEvents(buildingButtons[1]);
-            });
-            //buildingButtons[1].onClick.AddListener(() =>
-            //{
-            //    demomodeOn();
-            //    PlayerOnOff(false);
-            //    ResetButtonEvents(buildingButtons[0]);
-            //    ResetButtonEvents(buildingButtons[1]);
-            //});
-        }
+        //public void SetBuildButtonEvents(Action buildmodeOn, Action demomodeOn)
+        //{
+        //    buildingButtons[0].onClick.AddListener(() =>
+        //    {
+        //        buildmodeOn();
+        //        PlayerOnOff(false);
+        //        ResetButtonEvents(buildingButtons[0]);
+        //        //ResetButtonEvents(buildingButtons[1]);
+        //    });
+        //    //buildingButtons[1].onClick.AddListener(() =>
+        //    //{
+        //    //    demomodeOn();
+        //    //    PlayerOnOff(false);
+        //    //    ResetButtonEvents(buildingButtons[0]);
+        //    //    ResetButtonEvents(buildingButtons[1]);
+        //    //});
+        //}
         public void PlayerOnOff(bool isOn)
         {
             player.gameObject.SetActive(isOn);

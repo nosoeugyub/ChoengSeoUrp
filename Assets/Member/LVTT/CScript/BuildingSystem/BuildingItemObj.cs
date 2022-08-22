@@ -11,8 +11,8 @@ namespace DM.Building
         [Tooltip("이 오브젝트를 채집할 수 있는 도구 타입")]
         public InItemType toolType;
 
-        [SerializeField] float MaxScale = 3f;
-        [SerializeField] float MinScale = 0.3f;
+        float MaxScale = 3f;
+        float MinScale = 0.1f;
         public int breakCount;
 
         [SerializeField] private bool itemisSet;
@@ -75,7 +75,7 @@ namespace DM.Building
         private void Start()
         {
             MaxScale = 2f;
-            MinScale = 0.3f;
+            MinScale = 0.1f;
             layerMask = 1 << LayerMask.NameToLayer("Ground");
             if (isBroken)
             {
@@ -112,7 +112,7 @@ namespace DM.Building
                 movePos = Camera.main.ScreenToWorldPoint(movePos);
 
                 HouseBuildAreaCal();
-                print(MaxY + " " + MinY);
+                //print(MaxY + " " + MinY);
 
                 if (movePos.y >= MaxY) movePos.y = MaxY;
                 if (movePos.y <= MinY) movePos.y = MinY;
@@ -131,7 +131,6 @@ namespace DM.Building
 
                 //print(parentBuildArea.DistanceFromHouseBuildTo(movePos));
                 transform.position = movePos;
-                print(movePos);
             }
 
             //onBuildItem interact when not in BuildMode
@@ -164,7 +163,9 @@ namespace DM.Building
         {
             parentBuildArea.CancleUI(false);
             SuperManager.Instance.inventoryManager.AddItem(item);
+
             parentBuildArea.InvenSlotResetCanBuildMode();
+
             parentBuildArea.RemoveBuildItemToList(gameObject);
             parentBuildArea.DeleteBuildingItemObjSorting(gameObject);
 
@@ -175,6 +176,8 @@ namespace DM.Building
             parentBuildArea = pb;
             parentBuildArea.SetCurInteractObj(this);
             ObjOriginPos = gameObject.transform.position;
+
+            ObjOriginPos.y = housebuildpos.y + (parentBuildArea.AreaHeightsize / 2);
             ObjOriginPos.x = housebuildpos.x;
             //ObjOriginPos.z = housebuildpos.z;
         }
@@ -198,13 +201,11 @@ namespace DM.Building
         public void Demolish()
         {
             breakCount--;
-            Debug.Log("뚜가" + breakCount);
             //이펙트 등
             particle.Play();
 
             if (breakCount == 0)
             {
-                Debug.Log("파괴");
                 //if (item.InItemType == InItemType.BuildWall)
                 //    parentBuildArea.hasWall = false;
                 //else if (item.InItemType == InItemType.BuildSign)
@@ -213,6 +214,7 @@ namespace DM.Building
                 DropItems();
                 parentBuildArea.RemoveBuildItemToList(gameObject);
                 parentBuildArea.DeleteBuildingItemObjSorting(gameObject);
+                PlayerData.AddValue(0, (int)BuildInputBehaviorEnum.Demolish, PlayerData.BuildInputData, (int)BuildInputBehaviorEnum.length);
                 Destroy(gameObject);
             }
         }

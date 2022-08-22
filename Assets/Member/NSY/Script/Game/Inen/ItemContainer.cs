@@ -1,10 +1,9 @@
-﻿using DM.Building;
-using NSY.Manager;
+﻿using NSY.Manager;
+using NSY.Player;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using NSY.Player;
 namespace NSY.Iven
 {
     public abstract class ItemContainer : MonoBehaviour, IItemContainer
@@ -42,8 +41,17 @@ namespace NSY.Iven
                 ItemSlots[i].OnDragEvent += slot => EventHelper(slot, OnDragEvent);
                 ItemSlots[i].OnDropEvent += slot => EventHelper(slot, OnDropEvent);
             }
+
         }
 
+        public void SetLockSpriteToCraftSlot(Sprite locksprite)
+        {
+            for (int i = 0; i < Craftslot.Count; i++)
+            {
+                Craftslot[i].SetSpriteLock(locksprite);
+            }
+        }
+        
         protected virtual void OnValidate()
         {
             GetComponentsInChildren(includeInactive: true, result: ItemSlots);
@@ -52,6 +60,10 @@ namespace NSY.Iven
         {
             if (action != null)
                 action(itemSlot);
+            else
+            {
+                print("이벤트가없음");
+            }
         }
 
         public virtual bool CanAddItem(Item item, int amount = 1)
@@ -66,73 +78,36 @@ namespace NSY.Iven
                 }
             }
             return freeSpaces >= amount;
+                
         }
 
-
-        public virtual void CheckCanBuildItem(BuildingBlock buildingBlock)//당장 건축 가능한 자재인지 아닌지 판단.
-        {
-
-            if (!buildingBlock) //임시 처리 정확한 기획 없음
-            {
-                foreach (ItemSlot itemSlot in ItemSlots)
-                {
-                    if (itemSlot.item == null) continue;
-                    itemSlot.Interactble(true); //채원이는 착한 이쁜 빨갱이
-                }
-                return;
-            }
-            foreach (ItemSlot itemSlot in ItemSlots)
-            {
-                if (itemSlot.item == null)
-                {
-                    continue;
-                }
-                else
-                {
-                    if (itemSlot.item.InItemType == InItemType.BuildSign || itemSlot.item.InItemType != InItemType.BuildWall && itemSlot.item.InItemType != InItemType.BuildNormal)//벽이면
-                    {
-                        itemSlot.Interactble(false);
-                    }
-                    else
-                    {
-                        itemSlot.Interactble(true);
-                    }
-                }
-
-                if (itemSlot.item.OutItemType == OutItemType.BuildingItemObj && itemSlot.item != null)// 건축가능한 친구
-                {
-                    itemSlot.isCheckBulid = false;
-                    itemSlot.Interactble(true);
-                }
-                else// 건축 불가능한친구면
-                {
-
-                    itemSlot.isCheckBulid = true;
-                    itemSlot.Interactble(false);
-
-                }
-
-            }
-        }
-
-        public void BulidRed() // 건축자재 빨갱이 
+        public virtual void InvenAllOnOff(bool isOn) //전체 상호작용 불가능, 가능 처리
         {
             foreach (ItemSlot itemSlot in ItemSlots)
             {
                 if (itemSlot.item == null) continue;
-                if (itemSlot.item.OutItemType == OutItemType.BuildingItemObj)
-                {
-                    itemSlot.Interactble(true);
-                }
 
+                itemSlot.Interactble(isOn);
+                //itemSlot.isRedbulid = !isOn;
             }
-            return;
         }
-
+        public virtual void CheckCanBuildItem()//건축자재만 켜기
+        {
+            foreach (ItemSlot itemSlot in ItemSlots)
+            {
+                if (itemSlot.item == null) continue;
+                if (itemSlot.item.OutItemType != OutItemType.BuildingItemObj)//건축자재가 아니면 끄기
+                    itemSlot.Interactble(false);
+                else
+                    itemSlot.Interactble(true);
+            }
+        }
         IEnumerator DelayUpdateAddValue(Item item)
         {
             yield return new WaitForEndOfFrame();
             PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.GetItem, PlayerData.ItemData, ((int)ItemBehaviorEnum.length));
+            if (OnAddItemEvent != null)
+                OnAddItemEvent();
         }
 
         public bool isGettingItem = true;
@@ -148,16 +123,32 @@ namespace NSY.Iven
             //이미 있는 칸에 더할 수 없으면
 
             //빈 슬롯에 넣기
+            if (IsFullInven())
+            {
+                NoPopupOn();
+                return false;
+            }
+            else
+                return true;
+        }
+
+        public bool IsFullInven()
+        {
             for (int i = 0; i < ItemSlots.Count; i++)
             {
                 if (ItemSlots[i].item == null)
                 {
-                    return true;
+                    return false;
                 }
             }
-            StartCoroutine(NoPopUpgo());
-            return false;
+            return true;
         }
+
+        public void NoPopupOn()
+        {
+            StartCoroutine(NoPopUpgo());
+        }
+
         public virtual bool AddItem(Item item)
         {
             if (!CanAddInven(item)) return false;
@@ -193,9 +184,9 @@ namespace NSY.Iven
             ItemSlots[i].item = item;
             ItemSlots[i].Amount++;
             ItemSlots[i].item.GetCountItems++;
+            ItemSlots[i].item.GetnuCountItems++;
 
-            if (OnAddItemEvent != null)
-                OnAddItemEvent();
+      
 
             SuperManager.Instance.unlockmanager.GetInterectItemUnLocking();
             StartCoroutine(DelayUpdateAddValue(item));
@@ -221,6 +212,7 @@ namespace NSY.Iven
                         ItemSlots[i].item = item;
                         ItemSlots[i].Amount++;
                         ItemSlots[i].item.GetCountItems++;
+                        ItemSlots[i].item.GetnuCountItems++;
                         if (OnAddItemEvent != null)
                             OnAddItemEvent();
 
@@ -234,7 +226,7 @@ namespace NSY.Iven
                     int sub = ItemSlots[i].Amount + AddCount - ItemSlots[i].item.MaximumStacks;
                     ItemSlots[i].Amount = ItemSlots[i].item.MaximumStacks;
                     AddCount = sub;
-                    Debug.Log(AddCount);
+                   
                 }
 
             }
@@ -248,6 +240,7 @@ namespace NSY.Iven
                         ItemSlots[i].item = item;
                         ItemSlots[i].Amount++;
                         ItemSlots[i].item.GetCountItems++;
+                        ItemSlots[i].item.GetnuCountItems++;
                         if (OnAddItemEvent != null)
                             OnAddItemEvent();
 
@@ -297,10 +290,13 @@ namespace NSY.Iven
 
             minSlot.item.GetCountItems -= ra;
             minSlot.Amount -= ra;
-
+            OnAddItemEvent();
             return true;
         }
-
+        public void AddItemEvent()
+        {
+            OnAddItemEvent();
+        }
         private List<ItemSlot> GetItemSlotList(Item item)
         {
             List<ItemSlot> itemSlot = new List<ItemSlot>();
@@ -379,15 +375,15 @@ namespace NSY.Iven
             {
                 if (ItemSlots[i].item != null)  // 가득찼고
                 {
-                    if (isGettingItem == true) 
+                    if (isGettingItem == true)
                     {
-                        Debug.Log("기존 업");
+                       
 
                         return true;
                     }
                     if (isGettingItem == false)
                     {
-                        Debug.Log("새로운걸 못얻음");
+                       
                         return false;
                     }
 
@@ -403,14 +399,14 @@ namespace NSY.Iven
             {
                 if (ItemSlots[i].item != null)  // 가득찼고
                 {
-                        return false;
+                    return false;
                 }
 
             }
             return true;
         }
-        
+
     }
-  
+
 }
 

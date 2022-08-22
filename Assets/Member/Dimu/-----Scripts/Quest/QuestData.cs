@@ -27,6 +27,7 @@ namespace DM.Quest
             [SerializeField] public QuestTask[] npcs; //npc 상호작용 등
             [SerializeField] public QuestTask[] locations; //지역 상호작용 등
             [SerializeField] public QuestTask[] gotItems; //인벤에 보유중인 친구들
+            [SerializeField] public QuestTask[] buildInputs; //건축.. 
             //재료 줍기
             //뭐 행동하기 (해당 행동을 했을 때 퀘스트로 들어오게 추가해야함.) 
         }
@@ -68,20 +69,16 @@ namespace DM.Quest
 
         public void InitData() //퀘스트에 필요한 항목을 현재 플레이어 데이터 값으로 초기화
         {
-
-            foreach (QuestTask_Build building in tasks.builds)
-            {
-                //PlayerData.AddDictionary(building.objType, PlayerData.BuildBuildingData, (int)BuildingBehaviorEnum.length);
-                //building.initData = PlayerData.BuildBuildingData[building.objType].amounts[building.behaviorType];
-
-
-
-            }
-
             foreach (QuestTask item in tasks.items)
             {
                 PlayerData.AddDictionary(item.objType, PlayerData.ItemData, (int)ItemBehaviorEnum.length);
                 item.initData = PlayerData.ItemData[item.objType].amounts[item.behaviorType];
+            }
+
+            foreach (QuestTask item in tasks.buildInputs)
+            {
+                PlayerData.AddDictionary(item.objType, PlayerData.BuildInputData, (int)ItemBehaviorEnum.length);
+                item.initData = PlayerData.BuildInputData[item.objType].amounts[item.behaviorType];
             }
         }
         public bool CanClear()
@@ -121,9 +118,8 @@ namespace DM.Quest
                 foreach (QuestTask item in tasks.items)
                 {
                     PlayerData.AddDictionary(item.objType, PlayerData.ItemData, (int)ItemBehaviorEnum.length);
-                    Debug.Log(string.Format("fin: {0}, now: {1}", item.finishData, PlayerData.ItemData[item.objType].amounts[item.behaviorType] - item.initData));
-                    
-                    int questdata=0;
+
+                    int questdata = 0;
 
                     if (item.behaviorType != (int)ItemBehaviorEnum.alreadyitem)
                         questdata = PlayerData.ItemData[item.objType].amounts[item.behaviorType] - item.initData;
@@ -141,9 +137,8 @@ namespace DM.Quest
                 foreach (QuestTask npc in tasks.npcs)
                 {
                     PlayerData.AddDictionary(npc.objType, PlayerData.npcData, (int)NpcBehaviorEnum.length);
-                    Debug.Log(string.Format("fin: {0}, now: {1}", npc.finishData, PlayerData.npcData[npc.objType].amounts[npc.behaviorType] - npc.initData));
 
-                    if (npc.finishData > PlayerData.npcData[npc.objType].amounts[0] - npc.initData)
+                    if (npc.finishData > PlayerData.npcData[npc.objType].amounts[npc.behaviorType] - npc.initData)
                     {
                         return false;
                     }
@@ -154,7 +149,6 @@ namespace DM.Quest
                 foreach (QuestTask location in tasks.locations)
                 {
                     PlayerData.AddDictionary(location.objType, PlayerData.locationData, (int)LocationBehaviorEnum.length);
-                    Debug.Log(string.Format("fin: {0}, now: {1}", location.finishData, PlayerData.locationData[location.objType].amounts[location.behaviorType] - location.initData));
 
                     if (location.finishData > PlayerData.locationData[location.objType].amounts[0] - location.initData)
                     {
@@ -175,7 +169,16 @@ namespace DM.Quest
                     }
                 }
             }
-            Debug.Log("해당 사항 없음");
+            if (tasks.buildInputs.Length > 0)
+            {
+                foreach (QuestTask gotItem in tasks.buildInputs)
+                {
+                    if (gotItem.finishData > PlayerData.BuildInputData[gotItem.objType].amounts[gotItem.behaviorType] - gotItem.initData)
+                    {
+                        return false;
+                    }
+                }
+            }
             return true;
         }
 

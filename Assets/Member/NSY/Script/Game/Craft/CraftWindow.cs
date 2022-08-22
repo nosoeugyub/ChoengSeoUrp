@@ -1,27 +1,29 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
-using DM.Inven;
-using System;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace NSY.Iven
 {
-	public class CraftWindow : MonoBehaviour , IPointerEnterHandler , IPointerExitHandler 
+    public class CraftWindow : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         //툴팁 이벤트
         public ItemTooltip TapToolTip;
+        private Image childImgObject;
+        [SerializeField] Image slotBackgroundImg;
 
         public Vector3 offset;
-        private Color normalColor = Color.white;
         public Image reimage;
         public Text RecipeCurrentAmount;
         public Text RecipeHaverAmount;
+        private Color normalColor = Color.white;
         private Color cantInteractColors = new Color(1, 0.3f, 0.3f, 1f);
         private void OnValidate()
         {
-            Item = _item;
+            slotBackgroundImg = transform.GetChild(0).GetComponent<Image>();
+            childImgObject = transform.GetChild(1).GetComponent<Image>();
+            //Item = _item;
             RecipeAmount = _RecipeAmount;
             HaveAmount = _haveAmount;
         }
@@ -29,16 +31,16 @@ namespace NSY.Iven
         {
             if (canInteractable)
             {
-                reimage.color = normalColor;
+                slotBackgroundImg.color = normalColor;
             }
             else
             {
-                reimage.color = cantInteractColors;
+                slotBackgroundImg.color = cantInteractColors;
             }
         }
 
-        public Item _item;
-		public Item Item
+        private Item _item;
+        public Item Item
         {
             get
             {
@@ -47,18 +49,43 @@ namespace NSY.Iven
             set
             {
                 _item = value;
-             
-                if (_item == null)
-                {
-                    reimage = null;
-                }
-                
-
-
+                UpdateWindowState();
             }
         }
+        public void UpdateWindowState()
+        {
+            if (_item == null)
+            {
+                if (!childImgObject) childImgObject = transform.GetChild(1).GetComponent<Image>();
 
-      
+                childImgObject.sprite = null;
+                childImgObject.color = Color.clear;
+                Interactble(true);
+
+                SetRecipeCurrentAmountText(" ");
+                SetRecipeHaverAmountText(" ");
+            }
+            else
+            {
+                if (!childImgObject) childImgObject = transform.GetChild(1).GetComponent<Image>();
+
+                childImgObject.sprite = _item.ItemSprite;
+                childImgObject.color = normalColor;
+                Interactble(true);
+
+                SetRecipeHaverAmountText(_item.GetCountItems.ToString());
+
+                if (RecipeAmount > _item.GetCountItems)
+                    Interactble(false);
+                else
+                    Interactble(true);
+
+                ResizeChildImg();
+                //StartCoroutine(DelayChangSize());
+            }
+
+        }
+
         public int _RecipeAmount;
         public int RecipeAmount
         {
@@ -74,10 +101,10 @@ namespace NSY.Iven
                 {
                     SetRecipeCurrentAmountText(" ");
                 }
-                
+
             }
         }
-       // [SerializeField]
+        // [SerializeField]
         public int _haveAmount;
         public int HaveAmount
         {
@@ -92,13 +119,13 @@ namespace NSY.Iven
                 if (_haveAmount <= 0)
                 {
                     _haveAmount = 0;
-                   
+
                 }
-                if (_haveAmount == 0  && Item != null )
+                if (_haveAmount == 0 && Item != null)
                 {
                     SetRecipeHaverAmountText(" ");
                 }
-                
+
             }
         }
         public void SetRecipeHaverAmountText(string str)
@@ -109,22 +136,73 @@ namespace NSY.Iven
         {
             RecipeCurrentAmount.text = str;
         }
-      
+
         public void OnPointerEnter(PointerEventData eventData)
         {
-           
+
             TapToolTip.ShowItemTooltip(Item);
-           
-                Vector3 ToolVec = TapToolTip.tooltipTransform.transform.position;
-                ToolVec.x = GetComponent<Image>().rectTransform.position.x + offset.x;
-            ToolVec.y = GetComponent<Image>().rectTransform.position.y - offset.y;
-            ToolVec.z = 0;
-            TapToolTip.tooltipTransform.transform.localPosition = ToolVec;
+
+
+
+            Vector3 ToolVec = TapToolTip.tooltipTransform.transform.position;
+            ToolVec.x = GetComponent<Image>().rectTransform.position.x;// + offset.x;
+            ToolVec.y = GetComponent<Image>().rectTransform.position.y;// - offset.y;
+            ToolVec.z = GetComponent<Image>().rectTransform.position.z;
+            TapToolTip.tooltipTransform.transform.position = ToolVec;
         }
         public void OnPointerExit(PointerEventData eventData)
         {
-          
+
             TapToolTip.HideTooltip();
+        }
+
+        public IEnumerator DelayChangSize()
+        {
+            if (transform.childCount > 0)
+            {
+                childImgObject.enabled = true;
+                childImgObject.sprite = _item.ItemSprite;
+                childImgObject.SetNativeSize();
+
+                float maxsizeWH = childImgObject.sprite.texture.height;
+                if (childImgObject.sprite.texture.width >= childImgObject.sprite.texture.height)
+                {
+                    maxsizeWH = childImgObject.sprite.texture.width;
+                }
+
+                LayoutRebuilder.ForceRebuildLayoutImmediate(reimage.rectTransform);
+                print(reimage.rectTransform.rect.width);
+                yield return new WaitForSeconds(0.001f);
+                ScaleSlotImg(maxsizeWH);
+            }
+        }
+        private void ResizeChildImg()
+        {
+            if (transform.childCount > 0)
+            {
+                childImgObject.enabled = true;
+                childImgObject.sprite = _item.ItemSprite;
+                childImgObject.SetNativeSize();
+
+                float maxsizeWH = childImgObject.sprite.texture.height;
+                if (childImgObject.sprite.texture.width >= childImgObject.sprite.texture.height)
+                {
+                    maxsizeWH = childImgObject.sprite.texture.width;
+                }
+
+                LayoutRebuilder.ForceRebuildLayoutImmediate(reimage.rectTransform);
+                ScaleSlotImg(maxsizeWH);
+            }
+        }
+
+        private void ScaleSlotImg(float maxsizeWH)
+        {
+            float scale = reimage.rectTransform.rect.width / maxsizeWH;
+            if (scale != 0)
+            {
+                Vector3 scaleVec = new Vector3(scale, scale, 1);
+                childImgObject.rectTransform.localScale = scaleVec;// ResultSlotListImage.rectTransform.rect.width /maxsizeWH;
+            }
         }
     }
 

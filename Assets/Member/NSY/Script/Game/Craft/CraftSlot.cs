@@ -1,22 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using System.Collections;
 using UnityEngine;
-using DM.Inven;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using System;
 
 
 namespace NSY.Iven
 {
-    public class CraftSlot : MonoBehaviour , IPointerDownHandler
+    public class CraftSlot : MonoBehaviour, IPointerDownHandler
     {
         [Header("재료 갯수")]
-       
+        public Sprite lockSprite;
 
         [Header("현재 흭득한 갯수")]
         public Text[] ReCipeamountText;
-        
+
 
         [Header("결과 이미지")]
         public Image ResultSlotListImage;
@@ -24,7 +22,7 @@ namespace NSY.Iven
 
         [Header("재료 이미지")]
         public Image[] RecipeSlot;
-       
+
         [Header("결과 이름")]
         public Text RecipeName;
 
@@ -36,10 +34,11 @@ namespace NSY.Iven
 
 
         public event Action<CraftSlot> OnLeftClickEventss;
-         [SerializeField]
+        [SerializeField]
         private Item _recipeItem;
         [SerializeField]
         private Image childImgObject;
+        public Image childImgObject_copy;
         //지금 갖고있는아이템
         public Item RecipeItem
         {
@@ -50,14 +49,61 @@ namespace NSY.Iven
             set
             {
                 _recipeItem = value;
-                ResultSlotListImage.rectTransform.localScale = Vector3.one;
 
                 ResultSlotListImage.enabled = true;
                 ResultSlotListImage.color = Color.clear;
-                    childImgObject = transform.GetChild(0).GetComponent<Image>();
-                    childImgObject.sprite = _recipeItem.ItemSprite;
-                    childImgObject.SetNativeSize();
-                    childImgObject.rectTransform.localScale = Vector3.one * 0.1f;
+
+                if (isActiveAndEnabled)
+                    StartCoroutine(DelayChangSize());
+            }
+        }
+        public IEnumerator DelayChangSize()
+        {
+            if (transform.childCount > 0)
+            {
+                childImgObject.enabled = true;
+                childImgObject.sprite = _recipeItem.ItemSprite;
+                childImgObject.SetNativeSize();
+
+                float maxsizeWH = childImgObject.sprite.texture.height;
+                if (childImgObject.sprite.texture.width >= childImgObject.sprite.texture.height)
+                {
+                    maxsizeWH = childImgObject.sprite.texture.width;
+                }
+
+                LayoutRebuilder.ForceRebuildLayoutImmediate(ResultSlotListImage.rectTransform);
+              
+                ScaleSlotImg(maxsizeWH);
+                yield return new WaitForSeconds(0.01f);
+            }
+        }
+
+        private void ScaleSlotImg(float maxsizeWH)
+        {
+            float scale = ResultSlotListImage.rectTransform.rect.width / maxsizeWH;
+            if (scale != 0)
+            {
+                Vector3 scaleVec = new Vector3(scale, scale, 1);
+                childImgObject.rectTransform.localScale = scaleVec;// ResultSlotListImage.rectTransform.rect.width /maxsizeWH;
+            }
+        }
+
+        private void ResizeChildImg()
+        {
+            if (transform.childCount > 0)
+            {
+                childImgObject = transform.GetChild(0).GetComponent<Image>();
+                childImgObject.sprite = _recipeItem.ItemSprite;
+                childImgObject.SetNativeSize();
+
+                float maxsizeWH = childImgObject.sprite.texture.height;
+                if (childImgObject.sprite.texture.width >= childImgObject.sprite.texture.height)
+                {
+                    maxsizeWH = childImgObject.sprite.texture.width;
+                }
+
+                LayoutRebuilder.ForceRebuildLayoutImmediate(ResultSlotListImage.rectTransform);
+                ScaleSlotImg(maxsizeWH);
             }
         }
 
@@ -72,21 +118,62 @@ namespace NSY.Iven
             set
             {
                 _isHaverecipeItem = value;
-                if (_isHaverecipeItem == false)
-                {
-                    childImgObject.color = new Color(0.5f, 0.5f, 0.5f);
-                }
-                else
-                {
-                    childImgObject.color = new Color(1f, 1f, 1f);
-                }
+
+                if (!childImgObject) return;
+                HaveRecipeUpdate();
             }
         }
 
+        private void HaveRecipeUpdate()
+        {
+            if (_isHaverecipeItem == false)
+            {
+                childImgObject.color = new Color(1f, 1f, 1f);
+                //childImgObject.color = new Color(1f, 0.5f, 0.5f);
+                if (childImgObject_copy)
+                {
+                    childImgObject_copy.enabled = true;
+                childImgObject_copy.color = new Color(1f, 1f, 1f);
+                }
+            }
+            else
+            {
+                if (childImgObject_copy)
+                {
+                childImgObject_copy.color = new Color(1f, 1f, 1f);
+                    childImgObject_copy.enabled = false;
+                }
+                childImgObject.color = new Color(1f, 1f, 1f);
+            }
+        }
 
+        private void Awake()
+        {
+            childImgObject_copy = transform.GetChild(1).GetComponent<Image>();
+            childImgObject_copy.gameObject.SetActive(true);
+            childImgObject_copy.rectTransform.localScale = Vector3.one*0.5f;
+            childImgObject_copy.sprite = Resources.Load<Sprite>("Lock_v0");
+            childImgObject_copy.SetNativeSize();
+            HaveRecipeUpdate();
+        }
+        public void SetSpriteLock(Sprite sprite)
+        {
+            lockSprite = sprite;
+            if (!childImgObject_copy)
+            {
+                SetLockObj();
+            }
+            if(lockSprite)
+                childImgObject_copy.GetComponent<Image>().sprite = lockSprite;
 
+            HaveRecipeUpdate();
 
+        }
 
+        private void SetLockObj()
+        {
+            //childImgObject_copy = Instantiate(childImgObject.gameObject, transform);
+        }
 
         private void OnValidate()
         {
@@ -94,12 +181,6 @@ namespace NSY.Iven
             isHaveRecipeItem = _isHaverecipeItem;
         }
 
-
-        void Update()
-        {
-
-        }
-       
 
         public void OnPointerDown(PointerEventData eventData)
         {
@@ -114,7 +195,7 @@ namespace NSY.Iven
                     }
                 }
             }
-           
+
         }
     }
 

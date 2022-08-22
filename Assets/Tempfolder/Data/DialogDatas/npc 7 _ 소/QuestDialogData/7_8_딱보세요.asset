@@ -18,10 +18,12 @@ MonoBehaviour:
     characterId: 7
     eventIdx: 0
     textboxType: 0
+    isLeft: 0
   proceedingSentenceInfo: []
   clearSentenceInfo: []
   dialogTasks:
-    haveToClearQuest: []
+    haveToClearQuest:
+    - questdata: {fileID: 11400000, guid: 41f11ae770c80d04c91292805ac3811f, type: 2}
     haveToEndDialog:
     - {fileID: 11400000, guid: 453b1962b0356a048b4a60083f6c8967, type: 2}
     DonthaveToClearQuest: []
@@ -29,7 +31,6 @@ MonoBehaviour:
     - {fileID: 11400000}
     haveToDoingQuest: []
     buildBuildings: []
-    itemIndexToHand: 0
   questId: -1
   subjectCharacterID: 7
   isTalkingOver: 0
@@ -38,3 +39,4 @@ MonoBehaviour:
   haveToHaveNPCHouse: 
   acceptQuestItems: []
   needHappyAmount: 0
+  cuttype: 0

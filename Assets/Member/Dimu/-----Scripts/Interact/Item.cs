@@ -47,6 +47,7 @@ public class Item : ScriptableObject
 
     [SerializeField]
     private int GetCountitems = 0;
+
     public int GetCountItems
     {
         get
@@ -56,11 +57,20 @@ public class Item : ScriptableObject
         set
         {
             GetCountitems = value;
-           
-
         }
     }
-
+    private int GetnuCountitems = 0;
+    public int GetnuCountItems
+    {
+        get
+        {
+            return GetnuCountitems;
+        }
+        set
+        {
+           GetnuCountitems=value;
+        }
+    }
     public Sprite ItemSprite
     {
         get
@@ -150,6 +160,7 @@ public class Item : ScriptableObject
     private void OnEnable()
     {
         GetCountItems = 0;
+        GetnuCountItems = 0;
         //MaximumStacks = 20;
         //itemName = itemPrefab.name;
         MaximumStacks = 30;

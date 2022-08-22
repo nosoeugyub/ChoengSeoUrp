@@ -1,10 +1,8 @@
 ﻿namespace echo17.EndlessBook.Demo02
 {
-    using System.Collections;
-    using System.Collections.Generic;
+    using echo17.EndlessBook;
     using System.Linq;
     using UnityEngine;
-    using echo17.EndlessBook;
 
     /// <summary>
     /// The type of action to occur from a page view
@@ -44,6 +42,7 @@
         /// Whether pages are being flipped
         /// </summary>
         protected bool flipping = false;
+        protected bool isMessageOn = false;
 
         /// <summary>
         /// The book
@@ -109,6 +108,7 @@
         /// The mini-scenes that are rendered to textures for the book pages
         /// </summary>
         public PageView[] pageViews;
+        public GameObject[] messages;//0: OffM 1: ONM
 
         void Start()
         {
@@ -119,6 +119,7 @@
             touchPad.touchDownDetected = TouchPadTouchDownDetected;
             touchPad.touchUpDetected = TouchPadTouchUpDetected;
             touchPad.tableOfContentsDetected = TableOfContentsDetected;
+            touchPad.messageDetected = MessageDetected;
             touchPad.dragDetected = TouchPadDragDetected;
 
             // set the book closed
@@ -366,7 +367,20 @@
                 }
             }
         }
+        protected virtual void MessageDetected()
+        {
+            OnOffMessage();
+        }
 
+        private void OnOffMessage()
+        {
+            isMessageOn = !isMessageOn;
+
+            messages[0].SetActive(!isMessageOn);
+            messages[1].SetActive(isMessageOn);
+            if (isMessageOn)
+                messages[2].SetActive(true);
+        }
         /// <summary>
         /// Handles the touch up event from the touchpad
         /// </summary>

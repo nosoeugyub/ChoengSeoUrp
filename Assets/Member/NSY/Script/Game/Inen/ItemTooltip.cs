@@ -10,6 +10,7 @@ namespace NSY.Iven
         //이벤토리
         [SerializeField] Text ItemNameTex;
         [SerializeField] Text ItemStatsTex;
+        [SerializeField] Image backgroundImg;
         public Transform tooltipTransform;
        
 
@@ -17,16 +18,17 @@ namespace NSY.Iven
         public void ShowEqulTooltip(EquippableItem eqitem)
         {
             ItemNameTex.text = eqitem.ItemName;
-            ItemStatsTex.text = eqitem.ItemDescription;
+            //ItemStatsTex.text = eqitem.ItemDescription;
             gameObject.SetActive(true);
-
+            LayoutRebuilder.ForceRebuildLayoutImmediate(backgroundImg.rectTransform);
         }
         public void ShowItemTooltip(Item item)
         {
           
             ItemNameTex.text = item.ItemName;
-            ItemStatsTex.text = item.ItemDescription;
+            //ItemStatsTex.text = item.ItemDescription;
             gameObject.SetActive(true);
+            LayoutRebuilder.ForceRebuildLayoutImmediate(backgroundImg.rectTransform);
         }
      
         

@@ -58,20 +58,24 @@ public class TreeObject : MineObject
     }
     IEnumerator Respawn()
     {
+        yield return new WaitForSeconds(5);
+        upObj.SetActive(false);
+        animator.SetTrigger("Finish");
+
         yield return new WaitForSeconds(respawnTime + Random.Range(0, 50));
         ChangeMineState(MineState.Normal);
         yield return new WaitForSeconds(0.1f);
+        //upObj.SetActive(true);
         quad.transform.SetParent(animator.transform);
     }
     protected new void ChangeMineState(MineState state)
     {
         mineState = state;
-        //Debug.Log("Tree ChangeMineState");
 
         if (state == MineState.Normal) //처음으로 초기화
         {
-            animator.SetBool("IsFalling", false);
-            animator.SetTrigger("Finish");
+            animator.ResetTrigger("IsFalling");
+            Debug.Log("state == MineState.Normal");
 
             //확률계산
             CalculateUpgradePercent();
@@ -86,7 +90,8 @@ public class TreeObject : MineObject
         }
         else if (state == MineState.Trunk) //무너질 때로 초기화
         {
-            animator.SetBool("IsFalling", true);
+            Debug.Log("state == MineState.Trunk");
+            animator.SetTrigger("IsFalling");
             upObj.SetActive(true);
             BoxColONOFF(false);
             quad.material = nowMatSet.materials[2];
@@ -96,8 +101,10 @@ public class TreeObject : MineObject
         }
         else
         {
+            Debug.Log("else");
+
+            animator.SetTrigger("IsFalling");
             BoxColONOFF(false);
-            animator.SetBool("IsFalling", true);
         }
     }
     public override void UpdateMineState()

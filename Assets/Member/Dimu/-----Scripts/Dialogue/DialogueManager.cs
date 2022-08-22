@@ -100,6 +100,7 @@ namespace DM.Dialog
         void Start()
         {
             EventManager.EventActions[((int)EventEnum.Test)] = Test;
+            EventManager.EventActions[(int)EventEnum.StartTalk] += StartNewDialog;
             SetDialogSet(nowLanguageType);
             StartCoroutine(firstDialog());
         }
@@ -131,7 +132,13 @@ namespace DM.Dialog
 
             FirstShowDialog(npcManager.NpcTfs[0].Npctf, false, -1);
         }
-
+        private void StartNewDialog()
+        {
+            nowDialogData.isTalkingOver = true;
+            IsTalking = false;
+            FirstShowDialog(npcManager.NpcTfs[0].Npctf, false, -1);
+            EventManager.EventActions[(int)EventEnum.StartTalk] -= StartNewDialog;
+        }
         public void SetDialogSet(LanguageType languageType)
         {
             switch (languageType)
@@ -216,7 +223,7 @@ namespace DM.Dialog
                     sentenceState = 2;//클리어
                 }
 
-                else if (isAcceptedQuests.Count > 0) // 진행중인 대화가 있다면?
+                else if (isAcceptedQuests.Count > 0 && CanAccept(isAcceptedQuests)) // 진행중인 대화가 있다면?
                 {
                     nowDialogData = activeQuestDialogLists[(int)nowNpc.GetCharacterType()].dialogList[FindDialogIndex(isAcceptedQuests[0])];
 
@@ -266,6 +273,22 @@ namespace DM.Dialog
 
             UpdateDialog(ss, sentenceState);
         }
+
+        private bool CanAccept(List<QuestData> isAcceptedQuests)
+        {
+            if (isAcceptedQuests[0].tasks.npcs.Length > 0)//npc 항목 있고
+            {
+                if (isAcceptedQuests[0].tasks.npcs[0].behaviorType != 1) //집 퀘스트 아니면 
+                    return true;
+                else //집퀘면
+                    return false;
+            }
+            else //없다면
+            {
+                return true;
+            }
+        }
+
         public int FindDialogIndex(QuestData questData)
         {
             for (int i = 0; i < activeQuestDialogLists[questData.npcID].dialogList.Length; ++i)
@@ -394,6 +417,10 @@ namespace DM.Dialog
 
         private void UpdateDialogText(Sentence[] sentences, int sentenceState)
         {
+            if (sentences.Length == 0)
+            {
+                LastDialogNextEvent(sentenceState);
+            }
             if (sentences[nowSentenceIdx].eventIdx > 0)
                 EventManager.EventAction += EventManager.EventActions[sentences[nowSentenceIdx].eventIdx];
 
@@ -420,7 +447,7 @@ namespace DM.Dialog
                 testdelegate = (() =>
                 {
                     UpdateDialog(sentences, sentenceState);
-                    Debug.Log("testdelegete");
+
                 });
                 PlayerInput.OnPressFDown = testdelegate;
             }
@@ -432,16 +459,19 @@ namespace DM.Dialog
             testdelegate = (() =>
             {
                 LastDialogNextEvent(sentenceState);
-                Debug.Log("Remove_Last");
+
             });
             PlayerInput.OnPressFDown = testdelegate;
         }
 
         private void LastDialogNextEvent(int sentenceState)
         {
-            Debug.Log("isTalking false");
-            nowOnFab.GetComponent<TextBox>().DestroyTextBox();
-            nowOnFab = null;
+
+            if (nowOnFab)
+            {
+                nowOnFab.GetComponent<TextBox>().DestroyTextBox();
+                nowOnFab = null;
+            }
             testdelegate = null;
 
             IsTalking = false;
@@ -517,9 +547,27 @@ namespace DM.Dialog
         }
         public void UpdateNpcsQuestMark()
         {
+            QuestData qd = questManager.ReturnCanClearQuestRequireNpc(0); //클리어가능한 퀘스트 0번 인덱스
+
+            if (qd && qd.npcID == 0)
+            {
+                if (qd.questID > -1)
+                {
+                    if (questManager.ClearQuest(qd.questID, qd.npcID))
+                    {
+                        if (qd.questID < 7)
+                            questManager.AcceptQuest(qd.questID + 1, qd.npcID);
+                        else
+                        {
+                            FirstShowDialog(npcManager.NpcTfs[0].Npctf, false, -1);
+                        }
+                    }
+                }
+            }
+
             for (int i = 1; i < npcManager.NpcTfs.Length; i++)
             {
-                QuestData qd = questManager.ReturnCanClearQuestRequireNpc(i); //클리어가능한 퀘스트 0번 인덱스
+                qd = questManager.ReturnCanClearQuestRequireNpc(i); //클리어가능한 퀘스트 0번 인덱스
                 //List<QuestData> isAcceptedQuests = questManager.GetIsAcceptedQuestList(i);//진행중인 대화 
                 List<DialogData> canStartDialogs = GetCanAcceptDialogList(i);//시작가능 대화
 
@@ -530,31 +578,14 @@ namespace DM.Dialog
                 else if (canStartDialogs.Count > 0)
                 {
                     npcManager.NpcTfs[i].Npctf.SetQuestMark(DialogMarkType.CanStart);//, true);
+
                 }
                 else
                 {
                     npcManager.NpcTfs[i].Npctf.SetQuestMark(DialogMarkType.None);//, false);
                 }
 
-                //if (qd != null || isAcceptedQuests.Count > 0 || canStartDialogs.Count > 0)
-                //{
-                //    npcManager.NpcTfs[i].Npctf.SetQuestMark(DialogMarkType.CanClear,true);
 
-                //    if (isAcceptedQuests.Count > 0)
-                //    {
-                //        //Debug.Log(string.Format("{0} {1}", npcManager.NpcTfs[i].Npctf.name, isAcceptedQuests[0]));
-
-                //    }
-                //    if (canStartDialogs.Count > 0)
-                //    {
-                //        //Debug.Log(string.Format("{0} {1}", npcManager.NpcTfs[i].Npctf.name, canStartDialogs[0]));
-                //    }
-                //}
-                //else
-                //{
-                //    npcManager.NpcTfs[i].Npctf.SetQuestMark(DialogMarkType.CanStart, false);
-
-                //}
             }
         }
 

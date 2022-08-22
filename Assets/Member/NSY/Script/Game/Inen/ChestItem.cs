@@ -40,29 +40,7 @@ namespace NSY.Iven
 
         }
 
-        public void Update()
-        {
-            isInRange = true;
-            if (isInRange && Input.GetKeyDown(KeyCode.N))
-            {
-                Item itemCopy = item.GetCopy();
-                
-                if (inventory.AddItem(item.GetCopy(), 8))
-                {
-                    itemCopy.GetCountItems++;
-                    if (itemCopy.CleanAmount == 0)
-                    {
-                        //spriteRenderer.color = emptyColor;
-                    }
-                }
-                else
-                {
-                    itemCopy.Destroy();
-
-                }
-            }
-            
-        }
+       
 
         private void OnTriggerEnter(Collider other)
         {

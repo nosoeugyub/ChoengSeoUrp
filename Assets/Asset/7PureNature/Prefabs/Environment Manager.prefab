@@ -45,10 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cleanliness: 0
-  cleanLevels: 0a00000015000000210000002e0000003c0000004b000000
+  cleanLevels: 0a00000019000000280000003700000046000000
   canChange: 0
   _cleanliness: 0
-  cleanGageImage: {fileID: 0}
   skyBox: {fileID: 2100000, guid: 59aad1f773be33f42bcea9135ebc73b3, type: 2}
   goodFogColor: {r: 0.7176471, g: 0.9372549, b: 1, a: 0}
   badFogColor: {r: 0.22745098, g: 0.22745098, b: 0.22745098, a: 1}
@@ -59,7 +58,7 @@ MonoBehaviour:
   _fogColor: {r: 0, g: 0, b: 0, a: 0}
   maincamera: {fileID: 0}
   time: 0.1
-  fullDayLength: 200
+  fullDayLength: 20
   startTime: 0.1
   d1: {fileID: 0}
   d2: {fileID: 0}
@@ -119,9 +118,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   DayMat: {fileID: 2100000, guid: 59aad1f773be33f42bcea9135ebc73b3, type: 2}
-  _DaySkyColor: {r: 0.3372549, g: 0.43137255, b: 0.9529412, a: 1}
-  _DayEquatorColor: {r: 0.5294118, g: 0.77254903, b: 0.8862745, a: 1}
-  _DayEquatorGroundColor: {r: 0.8784314, g: 0.59607846, b: 0.46666667, a: 1}
+  _DaySkyColor: {r: 0.3529412, g: 0.654902, b: 1, a: 1}
+  _DayEquatorColor: {r: 0.61960787, g: 0.94509804, b: 1, a: 1}
+  _DayEquatorGroundColor: {r: 0.15686275, g: 0.15686275, b: 0.15686275, a: 1}
   _lerpSkyColor: {r: 1, g: 1, b: 1, a: 1}
   _lerpEquatorColor: {r: 0.99215686, g: 0.972549, b: 0.9843137, a: 0.9843137}
   _lerpEquatorGroundColor: {r: 0.6784314, g: 0.7294118, b: 0.7921569, a: 1}
@@ -215,7 +214,28 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   FireFlyEffect: {fileID: 7971092023410648028}
-  a: {fileID: 0}
+  happyUI: {fileID: 0}
+  endingButton: {fileID: 0}
+  name: CreditDemo
+  Loading: {fileID: 0}
+  screenshot:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1001 &62373590
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -282,6 +302,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Particle System
+      objectReference: {fileID: 0}
+    - target: {fileID: 7971092023369325834, guid: 8d4d01b808b362f47b13f0948d1a1327,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7971092023369325835, guid: 8d4d01b808b362f47b13f0948d1a1327,
         type: 3}

@@ -217,7 +217,7 @@ namespace JMBasic
             {
                 case 4:
                     {
-                        Debug.Log("[" + beforestr + "]" + " == " + message);
+                       
                     }
                     break;
             }

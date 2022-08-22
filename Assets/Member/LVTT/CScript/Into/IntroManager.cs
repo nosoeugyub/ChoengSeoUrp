@@ -1,8 +1,7 @@
-﻿using UnityEngine;
+﻿using echo17.EndlessBook;
 using echo17.EndlessBook.Demo02;
-using System.Linq;
-using echo17.EndlessBook;
 using Game.Cam;
+using UnityEngine;
 public class IntroManager : MonoBehaviour
 {
     /// <summary>
@@ -14,6 +13,9 @@ public class IntroManager : MonoBehaviour
     /// Whether pages are being flipped
     /// </summary>
     protected bool flipping = false;
+
+
+
 
     /// <summary>
     /// The book
@@ -78,7 +80,7 @@ public class IntroManager : MonoBehaviour
     /// <summary>
     /// The mini-scenes that are rendered to textures for the book pages
     /// </summary>
-   // public PageView[] pageViews;
+    public PageView[] pageViews;
 
     CameraIntro introCam;
     // Start is called before the first frame update
@@ -245,7 +247,7 @@ public class IntroManager : MonoBehaviour
             case Page.TurnDirectionEnum.TurnForward:
 
                 // turn on the last visible page view if necessary
-               // TogglePageView(pageNumberLastVisible, true);
+                // TogglePageView(pageNumberLastVisible, true);
 
                 break;
 
@@ -298,6 +300,7 @@ public class IntroManager : MonoBehaviour
         TurnToPage(tableOfContentsPageNumber);
     }
 
+
     /// <summary>
     /// Handles whether a mouse down was detected on the touchpad
     /// </summary>
@@ -314,7 +317,7 @@ public class IntroManager : MonoBehaviour
                 case TouchPad.PageEnum.Left:
 
                     // get the left page view if available
-                   // pageView = GetPageView(book.CurrentLeftPageNumber);
+                    // pageView = GetPageView(book.CurrentLeftPageNumber);
 
                     //if (pageView != null)
                     //{
@@ -327,7 +330,7 @@ public class IntroManager : MonoBehaviour
                 case TouchPad.PageEnum.Right:
 
                     // get the right page view if available
-                  //  pageView = GetPageView(book.CurrentRightPageNumber);
+                    //  pageView = GetPageView(book.CurrentRightPageNumber);
 
                     //if (pageView != null)
                     //{
@@ -362,13 +365,13 @@ public class IntroManager : MonoBehaviour
                         {
 
                         }
-                            if (introCam.State == Introstate.Second)
+                        if (introCam.State == Introstate.Second)
                         {
                             TurnToPage(17);
                             introCam.OnSecondstate();
                             introCam.State = Introstate.Third;
                         }
-                       
+
                         //// transition from the ClosedFront to the OpenFront states
                         //OpenFront();
 
@@ -408,7 +411,7 @@ public class IntroManager : MonoBehaviour
                     // get the left page view if available.
                     // in this demo we only have one group of pages that handle the drag: the map.
                     // instead of having logic for dragging on both pages, we'll just handle it on the left
-                   // pageView = GetPageView(book.CurrentLeftPageNumber);
+                    // pageView = GetPageView(book.CurrentLeftPageNumber);
 
                     //if (pageView != null)
                     //{

@@ -26,7 +26,10 @@ namespace NSY.Manager
         public SoundManager soundManager;
         public UnLockManager unlockmanager;
         public BuildingManager buildingManager;
-
+        public ScreenshotManager scrennshotmangaer;
+        public NPCManager npcManager;
+        public EnvironmentManager envirmanager;
+        public SceneChangeManager scenechagemanage;
         public static SuperManager Instance
         {
             get
@@ -37,7 +40,6 @@ namespace NSY.Manager
 
                     if (_instance == null)
                     {
-                        Debug.Log("싱글톤 없음 ");
                     }
                 }
                 return _instance;
