@@ -134,8 +134,6 @@ public class EnvironmentManager : MonoBehaviour
         SuperManager.Instance.scenechagemanage.LoadSceneFadeString(name);
     }
 
-
-
     public Screenshot[] screenshot;
     private void Awake()
     {
