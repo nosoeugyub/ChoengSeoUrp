@@ -14,7 +14,7 @@ namespace NSY.Player
         CursorManager cursorManager;
 
         public GameObject interactUI;//띄울 UI
-        //public Text interactUiText;//띄울 UI
+        public GameObject buildinginteractUi;//띄울 UI
         public TextMeshProUGUI interactUiText2;
 
         //[SerializeField] Item handItem;
@@ -158,6 +158,7 @@ namespace NSY.Player
                 else
                 {
                     print(buildAreaObject.name);
+                    buildinginteractUi.SetActive(false);
                     buildAreaObject.OnBuildMode();
                 }
                 return;
@@ -180,21 +181,35 @@ namespace NSY.Player
             Vector3 nordir = (Camera.main.ScreenToWorldPoint(mousepos) - Camera.main.transform.position).normalized;
             ray = new Ray(Camera.main.transform.position + nordir * 10, nordir);
             Debug.DrawRay(ray.origin, ray.direction * 20, Color.blue, 0.3f);
+
             if (nowInteractable)
                 nowInteractable.EndInteract();
+    
+            buildinginteractUi.SetActive(false);
+
             if (Physics.Raycast(ray, out hit, 20, layerMask2.value) && !BuildingBlock.isBuildMode)
             {
                 nowInteractable = hit.collider.GetComponent<Interactable>();
                 if (nowInteractable != null && IsInteracted(nowInteractable))// 클릭한 옵젝이 닿은 옵젝 리스트에 있다면 통과ds
                 {
                     StartCoroutine(cursorManager.SetCursor(nowInteractable.CanInteract()));
-                    //Vector3 uiPos = new Vector3(nowInteractable.transform.position.x, nowInteractable.transform.position.y + 2, nowInteractable.transform.position.z);
+
+                    if (nowInteractable.GetComponent<BuildingBlock>())
+                    {
+                        buildinginteractUi.SetActive(true);
+                     Vector3 uiPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y + 40, Input.mousePosition.z);
+
+                        RectTransformUtility.ScreenPointToLocalPointInRectangle(targetRectTr, uiPos, uiCamera, out screenPoint);
+                        buildinginteractUi.GetComponent<RectTransform>().localPosition = screenPoint;
+                    }
+
                     //형광 셰이더로 변환....
                     //ChangeLightShader(nowInteractable);
-
                 }
                 else
+                {
                     StartCoroutine(cursorManager.SetCursor((int)CursorType.Normal));
+                }
             }
 
 

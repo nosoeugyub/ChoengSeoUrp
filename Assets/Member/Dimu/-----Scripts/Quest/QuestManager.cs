@@ -18,6 +18,7 @@ namespace DM.Quest
         public QuestList[] questLists_viet;
         public List<QuestData> clearQuestLists;
         public Sprite[] TaskImg;
+        public string questClearSoundName;
         //[SerializeField] InventoryNSY inventoryNSY;
         [SerializeField] LanguageType nowLanguageType;
 
@@ -93,6 +94,8 @@ namespace DM.Quest
                 }
                 clearQuestLists.Add(nowQuestData);
                 acceptQuests[nowQuestData].SetActive(false);
+                SuperManager.Instance.soundManager.StopSFX(questClearSoundName);
+                SuperManager.Instance.soundManager.PlaySFX(questClearSoundName);
                 acceptQuests.Remove(nowQuestData);
 
 
