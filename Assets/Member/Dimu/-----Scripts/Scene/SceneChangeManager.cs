@@ -53,7 +53,7 @@ public class SceneChangeManager : MonoBehaviour
     }
     IEnumerator IFadeIn()
     {
-        yield return new WaitForSeconds(1f);
+        //yield return new WaitForSeconds(1f);
         fadeAnim.SetTrigger("startwhitescreen");
         yield return new WaitForSeconds(3f);
     }
