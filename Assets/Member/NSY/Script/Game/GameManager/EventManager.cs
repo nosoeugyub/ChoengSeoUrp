@@ -19,6 +19,13 @@ public enum EventEnum
     FadeIn,
     FadeOut,
     StartTalk,
+    ChickenGOBearHOuse,
+    ThreeGoSheepHouse,
+    ChickSuddenlyAppear,
+    ChickenAppearAndGetChick,
+    ChickenGone,
+    DearAppear,
+    SheepDearGone,
 }
 namespace NSY.Manager
 {
@@ -48,7 +55,7 @@ namespace NSY.Manager
         //public static event OpenRoad OpenRoadFall;
 
 
-        public static Action[] EventActions = new Action[20];
+        public static Action[] EventActions = new Action[25];
         public static Action<CutType> testevent;
         public static Action EventAction;
         //EventAction 는 항상 실행중.
