@@ -12,25 +12,18 @@ namespace NSY.Player
 
         public bool Eat(BaseItemSlot _eatItem) //player Animator
         {
-            eatItem = _eatItem;
-            pi.SetIsAnimation(true);
-            pa.SetBool("isEating", true);
-            pa.GetComponent<PlayerAnimator>().Eat = UpdateEat;
+            //eatItem = _eatItem;
+            //pi.SetIsAnimation(true);
+            //pa.SetBool("isEating", true);
+            //pa.GetComponent<PlayerAnimator>().Eat = UpdateEat;
             return true;
         }
         public void UpdateEat()
         {
-            pc.playerVital.Tired += eatItem.item.EatAmount;
-            eatItem.Amount--;
-            eatItem.item.GetCountItems--;
-            eatItem = null;
-        }
-        public void Update()
-        {
-            if(Input.GetKeyDown(KeyCode.Z))
-            {
-                Eat(eatItem);
-            }
+            //pc.playerVital.Tired += eatItem.item.EatAmount;
+            //eatItem.Amount--;
+            //eatItem.item.GetCountItems--;
+            //eatItem = null;
         }
     }
 

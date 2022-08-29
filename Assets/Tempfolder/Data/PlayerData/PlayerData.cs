@@ -18,7 +18,6 @@ public class PlayerData : ScriptableObject
     {
         AddDictionary(dataid, pairs, listCount);
         pairs[dataid].amounts[behav]++;
-        Debug.Log(dataid + "++");
         SuperManager.Instance.dialogueManager.UpdateNpcsQuestMark();
     }
 

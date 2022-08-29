@@ -75,7 +75,7 @@ public class TreeObject : MineObject
         if (state == MineState.Normal) //처음으로 초기화
         {
             animator.ResetTrigger("IsFalling");
-            Debug.Log("state == MineState.Normal");
+            //Debug.Log("state == MineState.Normal");
 
             //확률계산
             CalculateUpgradePercent();
@@ -90,7 +90,7 @@ public class TreeObject : MineObject
         }
         else if (state == MineState.Trunk) //무너질 때로 초기화
         {
-            Debug.Log("state == MineState.Trunk");
+            //Debug.Log("state == MineState.Trunk");
             animator.SetTrigger("IsFalling");
             upObj.SetActive(true);
             BoxColONOFF(false);
@@ -109,7 +109,7 @@ public class TreeObject : MineObject
     }
     public override void UpdateMineState()
     {
-        Debug.Log("Tree UpdateMineState");
+        //Debug.Log("Tree UpdateMineState");
         SuperManager.Instance.soundManager.PlaySFX(item.UsingToolSoundName);
         if (++nowChopCount >= item.ChopCount)
         {

@@ -86,6 +86,7 @@ namespace DM.Building
         }
         private void Update()
         {
+            if (!BuildingBlock.isBuildMode) return;
             if (!itemisSet && parentBuildArea == BuildingBlock.nowBuildingBlock)
             {
                 ItemMove();

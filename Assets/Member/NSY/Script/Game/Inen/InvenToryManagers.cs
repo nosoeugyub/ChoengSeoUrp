@@ -184,7 +184,7 @@ namespace NSY.Iven
         {
             if (itemslot.item.OutItemType == OutItemType.Food)
             {
-                PlayerEat.Eat(itemslot);
+                //PlayerEat.Eat(itemslot);
             }
         }
         private void InventoryRightClick(BaseItemSlot itemslot)
@@ -221,7 +221,7 @@ namespace NSY.Iven
             Vector2 onPoint;
             RectTransformUtility.ScreenPointToLocalPointInRectangle(BaseCharcterPanel, screenpoint, uicamera, out onPoint);
             draggableitem.GetComponent<RectTransform>().localPosition = onPoint;
-            print(onPoint);
+            //print(onPoint);
         }
         private void EndDrag(BaseItemSlot itemslot)
         {
