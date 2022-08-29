@@ -15,7 +15,7 @@ public class Screenshot : MonoBehaviour
     [Header("플래쉬 애니")]
     private Animator FleshAnim;
 
-
+    public bool isShot = false;
 
 
     [Header("모두의 페이지")]

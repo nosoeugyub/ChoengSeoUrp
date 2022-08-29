@@ -114,29 +114,40 @@ public class EnvironmentManager : MonoBehaviour
         }
     }
     public string name = "CreditDemo";
+    public GameObject Loading;
+    public Screenshot[] screenshot;
+    bool isShot = false;
     public void TakePictures()
     {
-
+       
         StartCoroutine(takepictures());
     }
 
-    public GameObject Loading;
+   
     IEnumerator takepictures()
     {
-        for (int i = 0; i < screenshot.Length; i++)
+        if (isShot)
         {
-            screenshot[i].OnSceenShotEvent();
-            Loading.SetActive(true);
-            yield return new WaitForSeconds(2f);
+            Debug.Log("두번은 안통하지 ㅋㅋ");
+            yield return null;
         }
-        yield return new WaitForSeconds(2f);
-        Loading.SetActive(false);
-        SuperManager.Instance.scenechagemanage.LoadSceneFadeString(name);
+
+            isShot = true;
+            for (int i = 0; i < screenshot.Length; i++)
+            {
+                screenshot[i].OnSceenShotEvent();
+                Loading.SetActive(true);
+                yield return new WaitForSeconds(2f);
+            }
+            yield return new WaitForSeconds(2f);
+            Loading.SetActive(false);
+            SuperManager.Instance.scenechagemanage.LoadSceneFadeString(name);
+        
     }
 
 
 
-    public Screenshot[] screenshot;
+  
     private void Awake()
     {
 
