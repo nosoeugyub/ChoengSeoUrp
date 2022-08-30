@@ -84,6 +84,7 @@ public class TextBox : MonoBehaviour
         }
         else
         {
+            print("왼 쪽 대 화");
             bubbleposition = bubbleTf.position;
             //bubbleposition.x = -bubbleTf.position.x;
             Vector3 rectPos = new Vector3(-rectX, textboxFabImg.rectTransform.localPosition.y, textboxFabImg.rectTransform.localPosition.z);
