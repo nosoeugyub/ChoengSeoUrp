@@ -45,19 +45,22 @@ public class NPCManager : MonoBehaviour
             npcTfs[i].Npctf.GoHomeEvent += GoNPCsHouse;
         }
 
-        EventManager.EventActions[(int)EventEnum.MoveToBearsHouse] += MoveToBearsHouse;
+        EventManager.BackEventActions[(int)EventEnum.MoveToBearsHouse] += MoveToBearsHouse;
         EventManager.EventActions[(int)EventEnum.MoveToWalPort] += MoveToWalPort;
         EventManager.EventActions[(int)EventEnum.GotoBearsWithSheep] += MoveToBearsHouseWithSheep;
         EventManager.EventActions[(int)EventEnum.GotoBackWithSheep] += MoveToBackSheep;
         EventManager.EventActions[(int)EventEnum.GotoStartPos] += GotoStartPos;
 
-        EventManager.EventActions[(int)EventEnum.ChickenGOBearHOuse] += ChickenGOBearHOuse;
-        EventManager.EventActions[(int)EventEnum.ThreeGoSheepHouse] += ThreeGoSheepHouse;
+        EventManager.BackEventActions[(int)EventEnum.ChickenGOBearHOuse] += ChickenGOBearHOuse;
+        EventManager.BackEventActions[(int)EventEnum.ChickenGoSheepHouse] += ChickenGoSheepHouse;
         EventManager.EventActions[(int)EventEnum.ChickSuddenlyAppear] += ChickSuddenlyAppear;
         EventManager.EventActions[(int)EventEnum.ChickenAppearAndGetChick] += ChickenAppearAndGetChick;
-        EventManager.EventActions[(int)EventEnum.ChickenGone] += ChickenGone;
+        EventManager.BackEventActions[(int)EventEnum.ChickenGone] += ChickenGone;
         EventManager.EventActions[(int)EventEnum.DearAppear] += DearAppear;
-        EventManager.EventActions[(int)EventEnum.SheepDearGone] += SheepDearGone;
+        EventManager.BackEventActions[(int)EventEnum.SheepDearGone] += SheepDearGone;
+
+        EventManager.BackEventActions[(int)EventEnum.BearGoSheepHouse] += BearGoSheepHouse;
+        EventManager.BackEventActions[(int)EventEnum.BearGoHisHouse] += BearGoHisHouse;
         //텔포 따로 나눠야 할듯
         for (int i = 0; i < teleportPosButtons.Length - 1; ++i)
         {
@@ -168,7 +171,7 @@ public class NPCManager : MonoBehaviour
         Vector3 randPos = new Vector3(Random.Range(-1.5f, 1.5f), 0, Random.Range(-1.5f, 1.5f));
         npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(npcTfs[1].Npctf.MyHouse.FriendTransform.position + randPos);
 
-        EventManager.EventAction -= EventManager.EventActions[3];
+        EventManager.EventAction -= EventManager.BackEventActions[(int)EventEnum.MoveToBearsHouse];
     }
     public void MoveToWalPort()
     {
@@ -215,51 +218,69 @@ public class NPCManager : MonoBehaviour
     private void ChickenGOBearHOuse()
     {
         MoveToNPCSomewhere(3, npcTfs[1].Npctf.MyHouse.FriendTransform.position);
-        MoveToNPCSomewhere(1, npcTfs[1].Npctf.MyHouse.FriendTransform.position);
-        MoveToNPCSomewhere(6, npcTfs[6].Npctf.MyHouse.FriendTransform.position);
-        MoveToNPCSomewhere(8, npcTfs[8].Npctf.MyHouse.FriendTransform.position);
+        MoveToNPCSomewhere(1, npcTfs[1].Npctf.MyHouse.HouseOwnerTransform.position);
+        MoveToNPCSomewhere(6, npcTfs[6].Npctf.MyHouse.HouseOwnerTransform.position);
+        MoveToNPCSomewhere(8, npcTfs[8].Npctf.MyHouse.HouseOwnerTransform.position);
         Vector3 randPos = new Vector3(Random.Range(-1.5f, 1.5f), 0, Random.Range(-1.5f, 1.5f));
         npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(npcTfs[1].Npctf.MyHouse.FriendTransform.position + randPos);
-        EventManager.EventAction -= EventManager.EventActions[(int)EventEnum.ChickenGOBearHOuse];
+        EventManager.EventAction -= EventManager.BackEventActions[(int)EventEnum.ChickenGOBearHOuse];
     }
-    private void ThreeGoSheepHouse()
+    private void BearGoSheepHouse()
     {
-        Vector3 MovePos = npcTfs[8].Npctf.MyHouse.FriendTransform.position + npcTfs[NowInteractNPCIndex].Npctf.transform.forward * -10;
+        MoveToNPCSomewhere(1, npcTfs[8].Npctf.MyHouse.FriendTransform.position);
+        EventManager.EventAction -= EventManager.BackEventActions[(int)EventEnum.BearGoSheepHouse];
+
+    }
+    private void ChickenGoSheepHouse()
+    {
+        Vector3 MovePos = npcTfs[8].Npctf.MyHouse.FriendTransform.position + npcTfs[NowInteractNPCIndex].Npctf.transform.forward * -5;
         Vector3 randPos = new Vector3(Random.Range(-1.5f, 1.5f), 0, Random.Range(-1.5f, 1.5f));
 
         MoveToNPCSomewhere(3, MovePos);
-        MoveToNPCSomewhere(1, npcTfs[8].Npctf.MyHouse.FriendTransform.position);
 
         npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(npcTfs[8].Npctf.MyHouse.FriendTransform.position + randPos);
-        EventManager.EventAction -= EventManager.EventActions[(int)EventEnum.ThreeGoSheepHouse];
+        EventManager.EventAction -= EventManager.BackEventActions[(int)EventEnum.ChickenGoSheepHouse];
     }
     private void ChickSuddenlyAppear()
     {
-        chick.transform.position = npcTfs[8].Npctf.MyHouse.FriendTransform.position + npcTfs[NowInteractNPCIndex].Npctf.transform.right * 2;
+        float chicktpos = chick.transform.position.y;
+        chick.transform.position = npcTfs[8].Npctf.MyHouse.FriendTransform.position + npcTfs[1].Npctf.transform.right * 2;
+        chick.transform.position = new Vector3(chick.transform.position.x, chicktpos, chick.transform.position.z);
         EventManager.EventAction -= EventManager.EventActions[(int)EventEnum.ChickSuddenlyAppear];
     }
     private void ChickenAppearAndGetChick()
     {
-        MoveToNPCSomewhere(3, npcTfs[8].Npctf.MyHouse.FriendTransform.position + npcTfs[NowInteractNPCIndex].Npctf.transform.right * 2);
+        MoveToNPCSomewhere(3, npcTfs[8].Npctf.MyHouse.FriendTransform.position + npcTfs[1].Npctf.transform.right * 4);
+        float chicktpos = chick.transform.position.y;
+        chick.transform.position = npcTfs[3].Npctf.transform.position + npcTfs[3].Npctf.transform.right * 1.5f;
+        chick.transform.position = new Vector3(chick.transform.position.x, chicktpos, chick.transform.position.z);
+
         EventManager.EventAction -= EventManager.EventActions[(int)EventEnum.ChickenAppearAndGetChick];
     }
     private void ChickenGone()
     {
         MoveToNPCSomewhere(3, npcTfs[3].Npctf.MyHouse.HouseOwnerTransform.position);
-        chick.transform.position = npcTfs[3].Npctf.MyHouse.HouseOwnerTransform.position + npcTfs[NowInteractNPCIndex].Npctf.transform.right * 1.5f;
-        EventManager.EventAction -= EventManager.EventActions[(int)EventEnum.ChickenGone];
+        chick.transform.position = npcTfs[3].Npctf.MyHouse.HouseOwnerTransform.position + npcTfs[3].Npctf.transform.right * 1.5f;
+        EventManager.EventAction -= EventManager.BackEventActions[(int)EventEnum.ChickenGone];
     }
     private void DearAppear()
     {
-        MoveToNPCSomewhere(6, npcTfs[8].Npctf.MyHouse.HouseOwnerTransform.position + npcTfs[NowInteractNPCIndex].Npctf.transform.right * 5);
+        MoveToNPCSomewhere(6, npcTfs[8].Npctf.MyHouse.HouseOwnerTransform.position + npcTfs[8].Npctf.transform.right * 5);
         EventManager.EventAction -= EventManager.EventActions[(int)EventEnum.DearAppear];
     }
     private void SheepDearGone()
     {
         MoveToNPCSomewhere(6, npcTfs[6].Npctf.MyHouse.HouseOwnerTransform.position);
         MoveToNPCSomewhere(8, npcTfs[6].Npctf.MyHouse.FriendTransform.position);
-        EventManager.EventAction -= EventManager.EventActions[(int)EventEnum.SheepDearGone];
+        EventManager.EventAction -= EventManager.BackEventActions[(int)EventEnum.SheepDearGone];
     }
+
+    private void BearGoHisHouse()
+    {
+        MoveToNPCSomewhere(1, npcTfs[1].Npctf.MyHouse.HouseOwnerTransform.position);
+        EventManager.EventAction -= EventManager.BackEventActions[(int)EventEnum.BearGoHisHouse];
+    }
+
 }
 [System.Serializable]
 public class NPCField

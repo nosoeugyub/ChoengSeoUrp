@@ -95,6 +95,7 @@ public class Sentence
     [TextArea] public string sentence;
     public int characterId;
     public int eventIdx;
+    public int backeventIdx;
     public TextboxType textboxType;
     public bool isLeft;
 

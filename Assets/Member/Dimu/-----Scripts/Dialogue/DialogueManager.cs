@@ -271,7 +271,7 @@ namespace DM.Dialog
                 nowCor[i] = StartCoroutine(CanvasAlphaUp(alphaCanvases[i], false, 10));
             }
 
-            UpdateDialog(ss, sentenceState);
+            UpdateDialogText(ss, sentenceState);
         }
 
         private bool CanAccept(List<QuestData> isAcceptedQuests)
@@ -410,20 +410,21 @@ namespace DM.Dialog
             }
             return true;
         }
-        public void UpdateDialog(Sentence[] sentences, int sentenceState)
-        {
-            UpdateDialogText(sentences, sentenceState);
-        }
+        //public void UpdateDialog(Sentence[] sentences, int sentenceState)
+        //{
+        //    UpdateDialogText(sentences, sentenceState);
+        //}
 
         private void UpdateDialogText(Sentence[] sentences, int sentenceState)
         {
             if (sentences.Length == 0)
             {
-                LastDialogNextEvent(sentenceState);
+                LastDialogNextEvent(sentences, sentenceState);
             }
+
+
             if (sentences[nowSentenceIdx].eventIdx > 0)
                 EventManager.EventAction += EventManager.EventActions[sentences[nowSentenceIdx].eventIdx];
-
             if (nowOnFab)
             {
                 nowOnFab.GetComponent<TextBox>().DestroyTextBox();
@@ -440,31 +441,32 @@ namespace DM.Dialog
 
             if (dialogLength <= nowSentenceIdx)
             {
-                LastDialog(sentenceState);
+                LastDialog(sentences, sentenceState);
             }
             else
             {
                 testdelegate = (() =>
                 {
-                    UpdateDialog(sentences, sentenceState);
-
+                    if (sentences[nowSentenceIdx - 1].backeventIdx > 0)
+                        EventManager.EventAction += EventManager.BackEventActions[sentences[nowSentenceIdx - 1].backeventIdx];
+                    UpdateDialogText(sentences, sentenceState);
                 });
                 PlayerInput.OnPressFDown = testdelegate;
             }
         }
 
         //마지막 대사일 때 작동
-        private void LastDialog(int sentenceState)
+        private void LastDialog(Sentence[] sentences, int sentenceState)
         {
             testdelegate = (() =>
             {
-                LastDialogNextEvent(sentenceState);
+                LastDialogNextEvent(sentences, sentenceState);
 
             });
             PlayerInput.OnPressFDown = testdelegate;
         }
 
-        private void LastDialogNextEvent(int sentenceState)
+        private void LastDialogNextEvent(Sentence[] sentences, int sentenceState)
         {
 
             if (nowOnFab)
@@ -528,6 +530,8 @@ namespace DM.Dialog
                 }
             }
 
+            if (sentences[nowSentenceIdx-1].backeventIdx > 0)
+                EventManager.EventAction += EventManager.BackEventActions[sentences[nowSentenceIdx-1].backeventIdx];
 
 
             PlayerInput.OnPressFDown = savedelegate;
