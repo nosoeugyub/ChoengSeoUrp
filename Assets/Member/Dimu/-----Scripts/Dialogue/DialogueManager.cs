@@ -117,7 +117,7 @@ namespace DM.Dialog
             }
             else
             {
-                raycastBlockImg.raycastTarget = true;
+               raycastBlockImg.raycastTarget = true;
                 while (canvasGroup.alpha > 0)
                 {
                     canvasGroup.alpha -= Time.deltaTime * speed;

@@ -31,7 +31,7 @@ namespace NSY.Player
         RaycastHit hit;
         Ray ray;
         Interactable nowInteractable;
-        bool canInteract = false;
+        public bool canInteract = true;
         int layerMask;   // Player 레이어만 충돌 체크함
         [SerializeField] LayerMask layerMask2;   // Player 레이어만 충돌 체크함
 
@@ -57,6 +57,7 @@ namespace NSY.Player
         }
         private void Update()
         {
+            if (!canInteract) return;
             InteractWithObjects();
             LightClosestObj();
         }

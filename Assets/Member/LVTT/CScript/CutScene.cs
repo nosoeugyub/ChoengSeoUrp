@@ -7,7 +7,7 @@ public class CutSceneImage
 {
     public bool isOpen = false;
     public Image img;
-    public Image LockedImage;
+    public Button button;
     public Image LibraryImage;
     public GameObject Numtext;
 
@@ -38,7 +38,6 @@ public class CutScene : MonoBehaviour
     [SerializeField] GameObject FadeOut;
 
     Image curImage;
-    int num = 1;
 
     public static bool IsCutSceneOn { get; set; }
     
@@ -49,9 +48,10 @@ public class CutScene : MonoBehaviour
         if (Image[index] != null && !Image[index].isOpen)
         {
             Image[index].isOpen = true;
-            Image[index].LockedImage.gameObject.SetActive(false);
+            Image[index].button.interactable = true;
+            //Image[index].LockedImage.gameObject.SetActive(false);
             Image[index].Numtext.gameObject.SetActive(false);
-            Image[index].LibraryImage.sprite = Image[index].img.sprite;
+            Image[index].LibraryImage.enabled = true;
 
             StartCoroutine(GetImage(index));
 

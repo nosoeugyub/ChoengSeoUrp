@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using DM.Building;
 using DM.NPC;
 using NSY.Manager;
 using NSY.Player;
@@ -201,11 +202,14 @@ public class NPCManager : MonoBehaviour
     }
     IEnumerator DelayMove()
     {
+        npcTfs[0].Npctf.transform.GetChild(0).GetComponent<PlayerInteract>().canInteract = false;
         EventManager.EventActions[(int)EventEnum.FadeOut].Invoke();
         yield return new WaitForSeconds(4);
         npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(StartPos.position);
         EventManager.EventActions[(int)EventEnum.FadeIn].Invoke();
         EventManager.EventActions[(int)EventEnum.StartTalk].Invoke();
+        npcTfs[0].Npctf.transform.GetChild(0).GetComponent<PlayerInteract>().canInteract = true;
+
     }
 
     private void ChickenGOBearHOuse()
