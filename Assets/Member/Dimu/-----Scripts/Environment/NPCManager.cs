@@ -1,5 +1,4 @@
 ﻿using DG.Tweening;
-using DM.Building;
 using DM.NPC;
 using NSY.Manager;
 using NSY.Player;
@@ -21,6 +20,7 @@ public class NPCManager : MonoBehaviour
     [SerializeField] Transform telePickUI;
     [SerializeField] Transform teleFailUI;
     [SerializeField] Button teleUIYesButton;
+    AreaType nowSeason = AreaType.Fallter;
 
     [SerializeField] NPCField nowNpcStandAtPort;
 
@@ -144,13 +144,23 @@ public class NPCManager : MonoBehaviour
     }
 
     //teleport
-    public void OnOfftelePickUI(bool isOn)
+    public void OnOfftelePickUI(bool isOn, AreaType areaType)
     {
+        nowSeason = areaType;
         telePickUI.gameObject.SetActive(isOn);
     }
     public void OpenTeleportUI(int i)
     {
-        teleUI.gameObject.SetActive(true);
+        if (i == (int)nowSeason)
+        {
+            teleFailUI.gameObject.SetActive(true);
+            teleUI.gameObject.SetActive(false);
+        }
+        else
+        {
+            teleFailUI.gameObject.SetActive(false);
+            teleUI.gameObject.SetActive(true);
+        }
         teleUIYesButton.onClick.RemoveAllListeners();
         teleUIYesButton.onClick.AddListener(() =>
         {

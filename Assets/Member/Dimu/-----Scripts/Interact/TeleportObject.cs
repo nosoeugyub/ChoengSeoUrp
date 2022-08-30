@@ -19,7 +19,7 @@ public class TeleportObject : AreaInteract
         {
             playerObj = transform;
             isUIOn = true;
-            npcManager.OnOfftelePickUI(isUIOn);
+            npcManager.OnOfftelePickUI(isUIOn, areaType);
             StartCoroutine(TeleportUIOffCheck());
         }
     }
@@ -30,7 +30,7 @@ public class TeleportObject : AreaInteract
             if (Vector3.Distance(playerObj.position, transform.position) > distfromplayer)
             {
                 isUIOn = false;
-                npcManager.OnOfftelePickUI(isUIOn);
+                npcManager.OnOfftelePickUI(isUIOn, areaType);
             }
             yield return null;
         }
