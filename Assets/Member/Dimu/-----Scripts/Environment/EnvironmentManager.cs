@@ -114,15 +114,24 @@ public class EnvironmentManager : MonoBehaviour
         }
     }
     public string name = "CreditDemo";
+    public GameObject Loading;
+    public Screenshot[] screenshot;
+    bool isShot = false;
     public void TakePictures()
     {
 
         StartCoroutine(takepictures());
     }
 
-    public GameObject Loading;
+
     IEnumerator takepictures()
     {
+        if (isShot)
+        {
+            yield return null;
+        }
+
+        isShot = true;
         for (int i = 0; i < screenshot.Length; i++)
         {
             screenshot[i].OnSceenShotEvent();
@@ -132,9 +141,9 @@ public class EnvironmentManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         Loading.SetActive(false);
         SuperManager.Instance.scenechagemanage.LoadSceneFadeString(name);
+
     }
 
-    public Screenshot[] screenshot;
     private void Awake()
     {
 

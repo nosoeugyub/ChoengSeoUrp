@@ -231,7 +231,8 @@ namespace DM.Building
         public void AddBuildItemToList(GameObject Item)
         {
             BuildItemList.Add(Item);
-        }
+           // print(BuildItemList.Count);
+        }   
         public void RemoveBuildItemToList(GameObject Item)
         {
             if (specialHouse)

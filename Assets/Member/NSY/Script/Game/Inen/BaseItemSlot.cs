@@ -243,7 +243,7 @@ namespace NSY.Iven
             {
                 if (OnLeftClickEvent != null)
                 {
-                    print("왼쪽클릭");
+                    //print("왼쪽클릭");
 
                     OnLeftClickEvent(this);
                 }

@@ -53,12 +53,16 @@ public class SceneChangeManager : MonoBehaviour
         fadeImg.raycastTarget = true;
         yield return new WaitForSeconds(1f);
         Debug.Log(fadeImg.raycastTarget);
+        fadeAnim.ResetTrigger("whitescreen");
+        fadeAnim.ResetTrigger("startwhitescreen");
         fadeAnim.SetTrigger("whitescreen");
         yield return new WaitForSeconds(2f);
     }
     IEnumerator IFadeIn()
     {
         fadeImg.raycastTarget = true;
+        fadeAnim.ResetTrigger("startwhitescreen");
+        fadeAnim.ResetTrigger("whitescreen");
         fadeAnim.SetTrigger("startwhitescreen");
         yield return new WaitForSeconds(2f);
         fadeImg.raycastTarget = false;
