@@ -270,7 +270,9 @@ public class NPCManager : MonoBehaviour
     private void ChickenGone()
     {
         MoveToNPCSomewhere(3, npcTfs[3].Npctf.MyHouse.HouseOwnerTransform.position);
+        float chicktpos = chick.transform.position.y;
         chick.transform.position = npcTfs[3].Npctf.MyHouse.HouseOwnerTransform.position + npcTfs[3].Npctf.transform.right * 1.5f;
+        chick.transform.position = new Vector3(chick.transform.position.x, chicktpos, chick.transform.position.z);
         EventManager.EventAction -= EventManager.BackEventActions[(int)EventEnum.ChickenGone];
     }
     private void DearAppear()
