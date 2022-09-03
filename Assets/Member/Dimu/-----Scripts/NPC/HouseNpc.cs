@@ -75,7 +75,7 @@ namespace DM.NPC
 
             if (nowDialogMarkType != DialogMarkType.None)
             {
-                //dialogMarks[(int)nowDialogMarkType].gameObject.SetActive(false);
+                dialogMarks[(int)nowDialogMarkType].gameObject.SetActive(false);
                 print(this.name + nowDialogMarkType.ToString());
             }
 
@@ -83,7 +83,7 @@ namespace DM.NPC
 
             if (dialogMarkType != DialogMarkType.None)
             {
-                //dialogMarks[(int)nowDialogMarkType].gameObject.SetActive(true);
+                dialogMarks[(int)nowDialogMarkType].gameObject.SetActive(true);
 
             }
             NPCStateUIUptate(dialogMarkType);
