@@ -149,6 +149,7 @@ namespace DM.NPC
             if (!SettingBuildingTalk()) return;
             if (block)
             {
+                if (block.SpecialHouse) return;
                 myHouse = block;
                 myHouse.SetLivingChar(this);
                 print("Find My House");
