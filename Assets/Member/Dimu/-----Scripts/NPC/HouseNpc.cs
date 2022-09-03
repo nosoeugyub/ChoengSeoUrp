@@ -146,10 +146,14 @@ namespace DM.NPC
         public void SetMyHouse(BuildingBlock block, BuildingLike l)
         {
             like = l;
+            if (block && block.SpecialHouse)
+            {
+                DebugText.Instance.SetText("특수 건축 영역의 건물은 소개할 수 없습니다.");
+                return;
+            }
             if (!SettingBuildingTalk()) return;
             if (block)
             {
-                if (block.SpecialHouse) return;
                 myHouse = block;
                 myHouse.SetLivingChar(this);
                 print("Find My House");
