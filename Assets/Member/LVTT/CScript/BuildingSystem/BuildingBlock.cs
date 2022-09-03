@@ -76,7 +76,7 @@ namespace DM.Building
         {
             CamManager = FindObjectOfType<CameraManager>();
             buildManager = FindObjectOfType<BuildingManager>();
-            specialHouse = GetComponent<SpecialHouse>();
+            SpecialHouse = GetComponent<SpecialHouse>();
             invenmanager = FindObjectOfType<InvenToryManagers>();
             inventory = SuperManager.Instance.inventoryManager;
         }
@@ -218,8 +218,8 @@ namespace DM.Building
         }   
         public void RemoveBuildItemToList(GameObject Item)
         {
-            if (specialHouse)
-                specialHouse.CanExist(curInteractObj, false);
+            if (SpecialHouse)
+                SpecialHouse.CanExist(curInteractObj, false);
 
             FindObjectOfType<EnvironmentManager>().ChangeCleanliness(-(Item.GetComponent<BuildingItemObj>().GetItem().CleanAmount + 1));
             BuildItemList.Remove(Item);
@@ -457,8 +457,8 @@ namespace DM.Building
             newPrefab.transform.localRotation = Quaternion.Euler(0, 0, 0);
             newPrefab.GetComponent<BuildingItemObj>().SetParentBuildArea(nowBuildingBlock, HouseBuild.position);
             newPrefab.name = spawnObj.name;
-            if (specialHouse)
-                specialHouse.CanExist(curInteractObj, true);
+            if (SpecialHouse)
+                SpecialHouse.CanExist(curInteractObj, true);
             curInteractObj.MyOrder = BuildItemList.Count;
             AddBuildItemToList(newPrefab);
             FindObjectOfType<EnvironmentManager>().ChangeCleanliness(newPrefab.GetComponent<BuildingItemObj>().GetItem().CleanAmount + 1);

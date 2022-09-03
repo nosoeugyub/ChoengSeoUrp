@@ -75,7 +75,7 @@ namespace DM.NPC
 
             if (nowDialogMarkType != DialogMarkType.None)
             {
-                //dialogMarks[(int)nowDialogMarkType].gameObject.SetActive(false);
+                dialogMarks[(int)nowDialogMarkType].gameObject.SetActive(false);
                 print(this.name + nowDialogMarkType.ToString());
             }
 
@@ -83,7 +83,7 @@ namespace DM.NPC
 
             if (dialogMarkType != DialogMarkType.None)
             {
-                //dialogMarks[(int)nowDialogMarkType].gameObject.SetActive(true);
+                dialogMarks[(int)nowDialogMarkType].gameObject.SetActive(true);
 
             }
             NPCStateUIUptate(dialogMarkType);
@@ -149,6 +149,7 @@ namespace DM.NPC
             if (!SettingBuildingTalk()) return;
             if (block)
             {
+                if (block.SpecialHouse) return;
                 myHouse = block;
                 myHouse.SetLivingChar(this);
                 print("Find My House");
