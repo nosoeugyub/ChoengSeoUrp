@@ -62,10 +62,10 @@ public class NPCManager : MonoBehaviour
         EventManager.BackEventActions[(int)EventEnum.BearGoSheepHouse] += BearGoSheepHouse;
         EventManager.BackEventActions[(int)EventEnum.BearGoHisHouse] += BearGoHisHouse;
         //텔포 따로 나눠야 할듯
-        for (int i = 0; i < teleportPosButtons.Length - 1; ++i)
-        {
-            ButtonInteractable(i, false);
-        }
+        //for (int i = 0; i < teleportPosButtons.Length - 1; ++i)
+        //{
+        //    ButtonInteractable(i, false);
+        //}
     }
 
     public void PlayNPCDialogSound(int npcidx)

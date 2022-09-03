@@ -199,7 +199,8 @@ namespace DM.Building
         {
             return (int)CursorType.Build;
         }
-        public void Demolish()
+
+        public bool Demolish()
         {
             breakCount--;
             //이펙트 등
@@ -216,8 +217,12 @@ namespace DM.Building
                 parentBuildArea.RemoveBuildItemToList(gameObject);
                 parentBuildArea.DeleteBuildingItemObjSorting(gameObject);
                 PlayerData.AddValue(0, (int)BuildInputBehaviorEnum.Demolish, PlayerData.BuildInputData, (int)BuildInputBehaviorEnum.length);
+
                 Destroy(gameObject);
+                return true;
             }
+            return false;
+
         }
         public void DropItems()
         {
