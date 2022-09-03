@@ -127,24 +127,6 @@ namespace DM.Building
 
                     if (Physics.Raycast(ray, out hit, 100, layerMask))
                     {
-                        //if (hit.collider.GetComponent<BuildingItemObj>() == null) //자재가 아닌걸 클릭 시
-                        //{
-                        //    if (curInteractObj != null)
-                        //    {
-                        //        if (!curInteractObj.ItemisSet && !curInteractObj.IsFirstDrop)
-                        //        {
-                        //            print("ItemisSet = true 1 ");
-                        //            SetBuildingItemObj();
-                        //            PlayerData.AddValue((int)curInteractObj.GetItem().InItemType, (int)ItemBehaviorEnum.builditem, PlayerData.ItemData, (int)ItemBehaviorEnum.length);
-                        //        }
-                        //        else
-                        //        {
-                        //            print("ItemisSet = true2222 ");
-
-                        //        }
-                        //    }
-                        //}
-                        //else //자재인걸 클릭 시
                         {
                             if (curInteractObj != null)
                             {
@@ -177,13 +159,15 @@ namespace DM.Building
                     ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                     Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue, 0.3f);
 
-                    if (Physics.Raycast(ray, out hit, 100, layerMask))
+                    if (!curInteractObj.ItemisSet && Physics.Raycast(ray, out hit, 100, layerMask))
                     {
-                        if (hit.collider.GetComponent<BuildingItemObj>() == null ||
-                            !hit.collider.GetComponent<BuildingItemObj>().ItemisSet) return;
+                        if (hit.collider.GetComponent<BuildingItemObj>() == null ) return;
 
                         SetCurInteractObj(hit.collider.GetComponent<BuildingItemObj>());
-                        curInteractObj.Demolish();
+                        if(curInteractObj.Demolish())
+                        {
+                            InvenSlotResetCanBuildMode(); //빌딩가능모드로 인벤 리셋
+                        }
                     }
                 }
 
@@ -200,7 +184,6 @@ namespace DM.Building
         {
             invenmanager.CheckBuliditem = null; //설치하면 다른거 할수없음
             inventory.CheckCanBuildItem();
-
         }
 
         private void SetBuildingItemObj()//설치하기
