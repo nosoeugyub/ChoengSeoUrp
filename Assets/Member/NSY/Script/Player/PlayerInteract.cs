@@ -12,6 +12,7 @@ namespace NSY.Player
         Interactable closestObj;//가장 가까운 친구
 
         CursorManager cursorManager;
+        BuildingManager buildingManager;
 
         public GameObject interactUI;//띄울 UI
         public GameObject buildinginteractUi;//띄울 UI
@@ -49,7 +50,9 @@ namespace NSY.Player
         {
             layerMask = 1 << LayerMask.NameToLayer("Interactable");
             //마우스 상호작용 오브젝트는 Interactable 이라는 레이어를 가지고 있어야 합니다.
+
             cursorManager = FindObjectOfType<CursorManager>();
+            buildingManager = FindObjectOfType<BuildingManager>();
         }
         private void Start()
         {
@@ -160,7 +163,7 @@ namespace NSY.Player
                 {
                     print(buildAreaObject.name);
                     buildinginteractUi.SetActive(false);
-                    buildAreaObject.OnBuildMode();
+                    buildingManager.BuildModeOn(buildAreaObject);
                 }
                 return;
             }
@@ -188,7 +191,7 @@ namespace NSY.Player
     
             buildinginteractUi.SetActive(false);
 
-            if (Physics.Raycast(ray, out hit, 20, layerMask2.value) && !BuildingBlock.isBuildMode)
+            if (Physics.Raycast(ray, out hit, 20, layerMask2.value) && !buildingManager.isBuildMode)
             {
                 nowInteractable = hit.collider.GetComponent<Interactable>();
                 if (nowInteractable != null && IsInteracted(nowInteractable))// 클릭한 옵젝이 닿은 옵젝 리스트에 있다면 통과ds
@@ -203,9 +206,6 @@ namespace NSY.Player
                         RectTransformUtility.ScreenPointToLocalPointInRectangle(targetRectTr, uiPos, uiCamera, out screenPoint);
                         buildinginteractUi.GetComponent<RectTransform>().localPosition = screenPoint;
                     }
-
-                    //형광 셰이더로 변환....
-                    //ChangeLightShader(nowInteractable);
                 }
                 else
                 {
@@ -319,9 +319,9 @@ namespace NSY.Player
         {
             if (interactable)
             {
-                BuildingBlock buildAreaObject = interactable.transform.GetComponent<BuildingBlock>();
-                if (buildAreaObject)
-                    buildAreaObject.EndInteract_();
+                //BuildingBlock buildAreaObject = interactable.transform.GetComponent<BuildingBlock>();
+                //if (buildAreaObject)
+                //    buildAreaObject.EndInteract_();
             }
         }
         /*

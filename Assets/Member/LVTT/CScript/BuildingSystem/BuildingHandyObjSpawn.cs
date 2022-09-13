@@ -211,7 +211,6 @@ namespace DM.Building
         private void SetEssentialItemObj()
         {
             curInteractHandyObj.ItemisSet = true;
-            curInteractHandyObj.IsFirstDrop = false;
         }
 
         private void SetAdditionalItemObj(Transform parent)
@@ -219,7 +218,6 @@ namespace DM.Building
             //if (curMouseOverEssentialObj != null)
             {
                 curInteractHandyObj.ItemisSet = true;
-                curInteractHandyObj.IsFirstDrop = false;
                 curInteractHandyObj.transform.parent = parent;// curMouseOverEssentialObj.transform;
                 Vector3 SetAdditionalObjPos = curInteractHandyObj.transform.localPosition;
                 SetAdditionalObjPos.z = -0.1f;

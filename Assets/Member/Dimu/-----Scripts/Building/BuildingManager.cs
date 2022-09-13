@@ -1,43 +1,82 @@
-﻿using System;
+﻿using Game.Cam;
+using NSY.Manager;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace DM.Building
 {
     public class BuildingManager : MonoBehaviour
     {
         public List<BuildingBlock> buildings = new List<BuildingBlock>();
-        [Space]
-        public KeyCode scaleUpKey = KeyCode.W;
-        public KeyCode scaleDownKey = KeyCode.S;
-        public KeyCode rotateLeftKey = KeyCode.A;
-        public KeyCode rotateRightKey = KeyCode.D;
-        public KeyCode frontKey = KeyCode.E;
-        public KeyCode BackKey = KeyCode.Q;
 
-        [SerializeField] Button[] buildingButtons;
-        [SerializeField] Button buildOffUi;
-        [SerializeField] Transform player;
+        private CameraManager CamManager;
+        private BuildingDisplay buildingDisplay;
 
-        [SerializeField] GameObject cancleUi;
-        [SerializeField] GameObject buildingTutorialImg;
+        public bool isBuildMode { get; set; } = false;
+        private BuildingBlock nowBuildingBlock { get; set; } = null; //static에서 private로...
 
 
-        public void SetbuildOffButtonEvents(Action buildmodeOff)
+        private void Awake()
         {
-            // if (buildOffUi.onClick == null)
-            buildOffUi.onClick.RemoveAllListeners();
-            buildOffUi.onClick.AddListener(() => buildmodeOff());
+            CamManager = FindObjectOfType<CameraManager>();
+            buildingDisplay = FindObjectOfType<BuildingDisplay>();
+        }
+        private void Start()
+        {
+            buildingDisplay.SetButtonEvent(BuildModeOff);
         }
 
+        public void BuildModeOn(BuildingBlock nowBuildingBlock_)
+        {
+            if (SuperManager.Instance.dialogueManager.IsTalking) return;
+
+            isBuildMode = true;
+
+            //NPC Off
+            SuperManager.Instance.npcManager.AllNpcActive(false);
+
+            //BuildingBlockSetting
+            nowBuildingBlock = nowBuildingBlock_;
+            nowBuildingBlock_.CancelUIAction(buildingDisplay.CancelUIState);
+            nowBuildingBlock_.BuildModeOnSetting();
+
+            //UI
+            buildingDisplay.BuildDisplayOn(true); //UI Display 추가
+
+            //camera
+            CamManager.ChangeFollowTarger(nowBuildingBlock.gameObject.transform, 1);
+            CamManager.ActiveSubCamera(1);
+
+        }
+
+        public void BuildModeOff()
+        {
+            if (!isBuildMode) return;
+
+            isBuildMode = false;
+
+            //NPC On
+            SuperManager.Instance.npcManager.AllNpcActive(true);
+
+            //BuildingBlockSetting
+            nowBuildingBlock.BuildModeOffSetting(AddBuilding);
+
+            //Data
+            PlayerData.AddValue(0, (int)BuildInputBehaviorEnum.EndBuilding, PlayerData.BuildInputData, (int)BuildInputBehaviorEnum.length);
+
+            //UI
+            buildingDisplay.CancelUIState(false);
+            buildingDisplay.BuildDisplayOn(false);
+
+            //camera
+            CamManager.DeactiveSubCamera(1);
+        }
         public void AddBuilding(BuildingBlock buildingBlock)
         {
             if (!buildings.Contains(buildingBlock))
             {
                 buildingBlock.BuildingID = buildings.Count;
                 buildings.Add(buildingBlock);
-                Debug.Log(buildingBlock.BuildingID);
             }
         }
         public int GetId(BuildingBlock buildingBlock)
@@ -45,13 +84,12 @@ namespace DM.Building
             if (!buildings.Contains(buildingBlock))
             {
                 return buildingBlock.BuildingID;
-
             }
             return -1;
         }
         public BuildingBlock GetNPCsHouse(int npctype)
         {
-            foreach (var item in buildings)//
+            foreach (var item in buildings)
             {
                 if (item.GetLivingChar() == null) continue;
                 if ((int)item.GetLivingChar().GetCharacterType() == npctype)
@@ -61,6 +99,12 @@ namespace DM.Building
             }
             return null;
         }
+
+        internal void BtnSpawnHouseBuildItem(Item item)
+        {
+            nowBuildingBlock.BtnSpawnHouseBuildItem(item);
+        }
+
         public List<BuildingBlock> GetCompleteBuildings()
         {
             List<BuildingBlock> buildingBlocks = new List<BuildingBlock>();
@@ -70,52 +114,6 @@ namespace DM.Building
                     buildingBlocks.Add(block);
             }
             return buildingBlocks;
-        }
-        public void BuildingInteractButtonOnOff(bool isOn)
-        {
-            foreach (var button in buildingButtons)
-            {
-                button.gameObject.SetActive(isOn);
-            }
-        }
-        public void ResetButtonEvents(Button button)
-        {
-            button.gameObject.SetActive(false);
-            button.onClick.RemoveAllListeners();
-            //DebugText.Instance.SetText(string.Format("RemoveAllListeners"));
-        }
-        //public void SetBuildButtonEvents(Action buildmodeOn, Action demomodeOn)
-        //{
-        //    buildingButtons[0].onClick.AddListener(() =>
-        //    {
-        //        buildmodeOn();
-        //        PlayerOnOff(false);
-        //        ResetButtonEvents(buildingButtons[0]);
-        //        //ResetButtonEvents(buildingButtons[1]);
-        //    });
-        //    //buildingButtons[1].onClick.AddListener(() =>
-        //    //{
-        //    //    demomodeOn();
-        //    //    PlayerOnOff(false);
-        //    //    ResetButtonEvents(buildingButtons[0]);
-        //    //    ResetButtonEvents(buildingButtons[1]);
-        //    //});
-        //}
-        public void PlayerOnOff(bool isOn)
-        {
-            player.gameObject.SetActive(isOn);
-        }
-        public void CancleUIState(bool isOn)
-        {
-            cancleUi.SetActive(isOn);
-        }
-        public void BuildOffUiState(bool isOn)
-        {
-            buildOffUi.gameObject.SetActive(isOn);
-        }
-        public void TutoUIState(bool isOn)
-        {
-            buildingTutorialImg.SetActive(isOn);
         }
     }
 }

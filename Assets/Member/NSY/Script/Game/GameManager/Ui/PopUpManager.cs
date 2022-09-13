@@ -125,8 +125,8 @@ public class PopUpManager : MonoBehaviour
         _activePopupList.Remove(popup);
         popup.gameObject.SetActive(false);
         RefreshAllPopupDepth();
-        if(BuildingBlock.isBuildMode|| BuildingBlock.isBuildDemolishMode)
-        BuildingBlock.nowBuildingBlock.BuildModeOff();
+        //if(BuildingBlock.isBuildMode|| BuildingBlock.isBuildDemolishMode)
+        //BuildingBlock.nowBuildingBlock.BuildModeOff();
 
     }
     /// <summary> 링크드리스트 내 모든 팝업의 자식 순서 재배치 </summary>

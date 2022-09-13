@@ -1,4 +1,5 @@
 ﻿using NSY.Manager;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace DM.Building
@@ -58,6 +59,7 @@ namespace DM.Building
             set
             {
                 itemisSet = value;
+                if (itemisSet) IsFirstDrop = false; //한번 놓으면 어차피 첫 드랍 아니게 됨
             }
         }
         public BuildObjAttribute GetAttribute()
@@ -86,70 +88,42 @@ namespace DM.Building
         }
         private void Update()
         {
-            if (!BuildingBlock.isBuildMode) return;
-            if (!itemisSet && parentBuildArea == BuildingBlock.nowBuildingBlock)
+            if (!itemisSet)
             {
                 ItemMove();
             }
-            if (IsFirstDrop && parentBuildArea == BuildingBlock.nowBuildingBlock)
-            {
-                // print("isFirstDrop");
-
-                if (Input.GetMouseButtonDown(1))
-                {
-                    BackToInventory();
-                }
-            }
+    
         }
         /// <summary>
         /////////////////////////Update
         private void ItemMove()
-        { //onBuildItem interact during BuildMode
-            if (BuildingBlock.isBuildMode)
+        { 
+            //onBuildItem interact during BuildMode
+            var movePos = Input.mousePosition;
+            movePos.z = parentBuildArea.DistanceToNowBuildItemToNewSort(Camera.main.transform.position);
+            print(movePos.z);
+            movePos = Camera.main.ScreenToWorldPoint(movePos);
+
+            HouseBuildAreaCal();
+            //print(MaxY + " " + MinY);
+
+            if (movePos.y >= MaxY) movePos.y = MaxY;
+            if (movePos.y <= MinY) movePos.y = MinY;
+
+            if (parentBuildArea.DistanceToNowBuildItem(movePos) > MaxX)
             {
-                var movePos = Input.mousePosition;
-                movePos.z = parentBuildArea.DistanceToNowBuildItemToNewSort(Camera.main.transform.position);
-                print(movePos.z);
-                movePos = Camera.main.ScreenToWorldPoint(movePos);
-
-                HouseBuildAreaCal();
-                //print(MaxY + " " + MinY);
-
-                if (movePos.y >= MaxY) movePos.y = MaxY;
-                if (movePos.y <= MinY) movePos.y = MinY;
-
-                if (parentBuildArea.DistanceToNowBuildItem(movePos) > MaxX)
-                {
-                    //print(" 여어 멈추라고");
-                    movePos.x = transform.position.x;
-                    movePos.z = transform.position.z;
-                }
-
-
-                //if (movePos.x >= MaxX) movePos.x = MaxX;
-                //if (movePos.x <= MinX) movePos.x = MinX;
-
-
-                //print(parentBuildArea.DistanceFromHouseBuildTo(movePos));
-                transform.position = movePos;
+                //print(" 여어 멈추라고");
+                movePos.x = transform.position.x;
+                movePos.z = transform.position.z;
             }
 
-            //onBuildItem interact when not in BuildMode
-            else
-            {
+            //if (movePos.x >= MaxX) movePos.x = MaxX;
+            //if (movePos.x <= MinX) movePos.x = MinX;
 
-
-
-
-                ////SpawnHandyObjParent.curInteractHandyObj.gameObject.GetComponent<Billboard>().enabled = true;
-                //var movePos = Input.mousePosition;
-                //movePos.z = SpawnHandyObjParent.DistanceFromCharacterTo(Camera.main.transform.position);
-                //movePos = Camera.main.ScreenToWorldPoint(movePos);
-                //transform.position = movePos;
-            }
-
+            //print(parentBuildArea.DistanceFromHouseBuildTo(movePos));
+            transform.position = movePos;
         }
-        void HouseBuildAreaCal()
+        void HouseBuildAreaCal() //엄마를 왜 불러
         {
             //원래 위치 + 건축영역가로 반 길이 - 스케일 길이 
             MaxX = /*ObjOriginPos.x + */ parentBuildArea.AreaWidthsize / 2 - (quad.transform.localScale.x * transform.localScale.x) / 2;
@@ -157,32 +131,18 @@ namespace DM.Building
             MaxY = ObjOriginPos.y + parentBuildArea.AreaHeightsize / 2 - quad.transform.localScale.y * transform.localScale.y / 2;
             MinY = ObjOriginPos.y - parentBuildArea.AreaHeightsize / 2 + quad.transform.localScale.y * transform.localScale.y / 2;
         }
-        /// 
-        /// </summary>
-        /// 
-        public void BackToInventory()
-        {
-            parentBuildArea.CancleUI(false);
-            SuperManager.Instance.inventoryManager.AddItem(item);
-
-            parentBuildArea.InvenSlotResetCanBuildMode();
-
-            parentBuildArea.RemoveBuildItemToList(gameObject);
-            parentBuildArea.DeleteBuildingItemObjSorting(gameObject);
-
-            Destroy(gameObject);
-        }
+        
         public void SetParentBuildArea(BuildingBlock pb, Vector3 housebuildpos)
         {
             parentBuildArea = pb;
-            parentBuildArea.SetCurInteractObj(this);
+            //parentBuildArea.SetCurInteractObj(this);
             ObjOriginPos = gameObject.transform.position;
 
             ObjOriginPos.y = housebuildpos.y + (parentBuildArea.AreaHeightsize / 2);
             ObjOriginPos.x = housebuildpos.x;
             //ObjOriginPos.z = housebuildpos.z;
         }
-        public void SetBuildItemScale(Vector3 scalenum)
+        private void SetBuildItemScale(Vector3 scalenum)
         {
             if (scalenum.x >= MaxScale) scalenum.x = MaxScale;
             if (scalenum.x <= MinScale) scalenum.x = MinScale;
@@ -190,6 +150,14 @@ namespace DM.Building
             if (scalenum.y <= MinScale) scalenum.y = MinScale;
             transform.localScale = scalenum;
         }
+        public void SetBuildingItemScale(float BuildItemScaleVar)
+        {
+            Vector3 var = transform.localScale;
+            var.x += BuildItemScaleVar;
+            var.y += BuildItemScaleVar;
+            SetBuildItemScale(var);
+        }
+
         public void SetBuildItemRotation(float scalenum)
         {
             transform.Rotate(new Vector3(0, 0, scalenum));
@@ -208,17 +176,8 @@ namespace DM.Building
 
             if (breakCount == 0)
             {
-                //if (item.InItemType == InItemType.BuildWall)
-                //    parentBuildArea.hasWall = false;
-                //else if (item.InItemType == InItemType.BuildSign)
-                //    parentBuildArea.hasSign = false;
-                //파괴 임시 처리
                 DropItems();
-                parentBuildArea.RemoveBuildItemToList(gameObject);
-                parentBuildArea.DeleteBuildingItemObjSorting(gameObject);
                 PlayerData.AddValue(0, (int)BuildInputBehaviorEnum.Demolish, PlayerData.BuildInputData, (int)BuildInputBehaviorEnum.length);
-
-                Destroy(gameObject);
                 return true;
             }
             return false;
@@ -256,7 +215,77 @@ namespace DM.Building
                 }
             }
         }
+        public void SwitchBuildingItemObjZPos(bool isUp, List<GameObject> buildItemList, float buildItemGap)
+        {
+            GameObject nearObj = null;
+            float curObjZ = transform.localPosition.z;//선택한 오브젝트의 z값
+            float bujildItemZ = 10000;
+            //float minDIst = 10000;
+            if (isUp)
+            {
+                foreach (GameObject item in buildItemList)
+                {
+                    bujildItemZ = item.transform.localPosition.z;
+                    if (!nearObj)
+                    {
+                        if (curObjZ > bujildItemZ)
+                        {
+                            nearObj = item;
+                        }
+                    }
+                    else
+                    {
+                        if (curObjZ > bujildItemZ && nearObj.transform.localPosition.z < bujildItemZ)//해당 자재가 나보다 더 가깝고, 현재 가까운 오브젝트보다 
+                        {
+                            nearObj = item;
+                        }
+                    }
+                }
+                if (nearObj)
+                {
+                    print("Up Near Obj is " + nearObj.name);
+                    nearObj.transform.position += nearObj.transform.forward * buildItemGap; //가장 가까운 자재후진
+                    nearObj.GetComponent<BuildingItemObj>().MyOrder--;
+                    transform.position -= transform.forward * buildItemGap; //선택중인 자재 전진
+                    MyOrder++;
+                }
+                else
+                    print("NO NEAROBJ");
 
+            }
+            else
+            {
+                foreach (GameObject item in buildItemList)
+                {
+                    bujildItemZ = item.transform.localPosition.z;
+                    if (!nearObj)
+                    {
+                        if (curObjZ < bujildItemZ)
+                        {
+                            nearObj = item;
+                        }
+                    }
+                    else
+                    {
+                        if (curObjZ < bujildItemZ && nearObj.transform.localPosition.z > bujildItemZ)//해당 자재가 나보다 더 가깝고, 현재 가까운 오브젝트보다 
+                        {
+                            nearObj = item;
+                        }
+                    }
+                }
+                if (nearObj)
+                {
+                    print("Down Near Obj is " + nearObj.name);
+                    nearObj.transform.position -= nearObj.transform.forward * buildItemGap; //가장 가까운 자재전진
+                    nearObj.GetComponent<BuildingItemObj>().MyOrder++;
+                    transform.position += transform.forward * buildItemGap; //선택중인 자재 후진
+                    MyOrder--;
+                }
+                else
+                    print("NO NEAROBJ");
+
+            }
+        }
         public void PutDownBuildingItemObj(float areaWidthSize, float areaHeightSize)
         {
             //위치 저장
@@ -295,6 +324,11 @@ namespace DM.Building
                 attributes.buildSize = BuildSize.Normal;
             else
                 attributes.buildSize = BuildSize.Big;
+        }
+
+        internal void SetOrder(int count)
+        {
+            myOrder = count;
         }
     }
 

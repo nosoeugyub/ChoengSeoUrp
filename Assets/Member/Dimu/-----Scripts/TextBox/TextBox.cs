@@ -63,7 +63,6 @@ public class TextBox : MonoBehaviour
     public void SetTextbox(string sentence, Transform tf, TextboxType textboxType, bool isLeft)//말풍선 생산
     {
         isleft = isLeft;
-        BuildingBlock.SetTextBox(this);
         transform.SetParent(baseCanvas);
         transform.localScale = Vector3.one;
         transform.localRotation = Quaternion.identity;
@@ -116,7 +115,6 @@ public class TextBox : MonoBehaviour
         //    InstactiateNote();
         textboxFabImg.gameObject.SetActive(false);
         textboxFabText.gameObject.SetActive(false);
-        BuildingBlock.SetTextBox(null);
         SuperManager.Instance.soundManager.StopSFX(boomsoundname);
         SuperManager.Instance.soundManager.PlaySFX(boomsoundname);
         textboxFabNextButton.gameObject.SetActive(false);
