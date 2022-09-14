@@ -1,6 +1,5 @@
 ﻿using DM.NPC;
 using NSY.Iven;
-using NSY.Manager;
 using NSY.Player;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,7 +20,6 @@ namespace DM.Building
         [SerializeField] private Transform houseBuild;
         [SerializeField] private List<GameObject> BuildItemList;
 
-
         [SerializeField] BuildState buildState;
 
         [SerializeField] private float areaWidthsize;
@@ -36,7 +34,7 @@ namespace DM.Building
         private InventoryNSY inventory;
         private PlayerInput playerInput;
 
-        public BuildingItemObj curInteractObj;
+        [SerializeField] BuildingItemObj curInteractObj;
         private float BuildItemScaleVar = 0.04f;
         private float BuildItemRotationVar = 4;
         private float BuildItemGap = 0.002f;
@@ -49,8 +47,6 @@ namespace DM.Building
         Ray ray;
         int layerMask;   // Player 레이어만 충돌 체크함
 
-        bool isEmpty;
-
         public HouseNpc _livingCharacter { get { return livingCharacter; } set { livingCharacter = value; } }
         public int Seasonnum { get { return seasonnum; } set { seasonnum = value; } }
         public SpecialHouse SpecialHouse { get { return specialHouse; } set { specialHouse = value; } }
@@ -61,6 +57,7 @@ namespace DM.Building
         public float AreaHeightsize { get { return areaHeightsize; } set { areaHeightsize = value; } }
         public int BuildingID { get { return buildingId; } set { buildingId = value; } }
 
+        //액션을 사용해보기
         public delegate void VoidDelegate(BuildingBlock buildingBlock);
         public delegate void CancelUIDelegate(bool ison);
         public CancelUIDelegate cancelUIDelegate;
@@ -76,9 +73,9 @@ namespace DM.Building
             layerMask = 1 << LayerMask.NameToLayer("Wall");
             ConstructSignsActive(!IsCompleteBuilding());
         }
-        public void CancelUIAction(CancelUIDelegate action)
+        public void SetCancelUIAction(CancelUIDelegate action)
         {
-            cancelUIDelegate += action;
+            cancelUIDelegate = action;
         }
         public void BuildModeOnSetting()
         {
@@ -88,14 +85,14 @@ namespace DM.Building
             GetComponent<BoxCollider>().enabled = false;
             SetBuildMode(BuildMode.BuildHouseMode);
         }
+
         public void BuildModeOffSetting(VoidDelegate addBuilding)
         {
             GetComponent<BoxCollider>().enabled = true;
             SetBuildMode(BuildMode.None);
             inventory.InvenAllOnOff(true);
 
-            if (curInteractObj)
-                curInteractObj.ItemisSet = true;
+            SetCurInteractObj(null);
 
             if (IsCompleteBuilding())
             {
@@ -108,6 +105,7 @@ namespace DM.Building
                 ConstructSignsActive(true);
             }
         }
+
         public void ConstructSignsActive(bool isActive)
         {
             for (int i = 0; i < constructsign.Length; i++)
@@ -115,24 +113,21 @@ namespace DM.Building
                 constructsign[i].gameObject.SetActive(isActive);
             }
         }
+
         public void SetCurInteractObj(BuildingItemObj buildingItemObj)
         {
-            //if(curInteractObj.ParentBuildArea == this)
-            curInteractObj = buildingItemObj;
+            if (curInteractObj)
+            {
+                curInteractObj.ItemisSet = true;
+                curInteractObj = buildingItemObj;
+            }
+            else
+            {
+                curInteractObj = buildingItemObj;
+                curInteractObj.ItemisSet = false;
+            }
         }
 
-        public HouseNpc GetLivingChar()
-        {
-            return livingCharacter;
-        }
-        public void SetLivingChar(HouseNpc mainNpc)
-        {
-            livingCharacter = mainNpc;
-        }
-        public bool HaveLivingChar()
-        {
-            return livingCharacter;
-        }
         private void Update()
         {
             if (CurBuildMode != BuildMode.BuildHouseMode) return;
@@ -142,36 +137,9 @@ namespace DM.Building
                 ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 Debug.DrawRay(ray.origin, ray.direction * 20, Color.blue, 0.3f);
 
-                if (Physics.Raycast(ray, out hit, 20) && !IsPointerOverUIObject())// 
+                if (Physics.Raycast(ray, out hit, 20) && !IsPointerOverUIObject())
                 {
-                    //if (curInteractObj != null)
-                    //{
-                    //    if (curInteractObj.ItemisSet) //고정된 상태라면...
-                    //    {
-                    //        Debug.Log("curInteractObj.ItemisSet");
-                    //        invenmanager.CheckBuliditem = hit.collider.GetComponent<BuildingItemObj>().item;//  건축 슬롯말고 건축존에서 다시 클릭할때
-                    //        inventory.InvenAllOnOff(false);
-                    //        SetCurInteractObj(hit.collider.GetComponent<BuildingItemObj>());
-
-                    //        curInteractObj.ItemisSet = false;
-                    //    }
-                    //    else //움직이고 있는 상태라면...
-                    //    {
-                    //        SetBuildingItemObj();
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    //if (IsChildItemObj(hit.collider.GetComponent<BuildingItemObj>()))
-                    //    {
-                    //        SetCurInteractObj(hit.collider.GetComponent<BuildingItemObj>());
-                    //        invenmanager.CheckBuliditem = curInteractObj.item;//  건축 슬롯말고 건축존에서 다시 클릭할때
-                    //        inventory.InvenAllOnOff(false);
-                    //        curInteractObj.ItemisSet = false;
-                    //        // BuildingItemObjAndSorting();
-                    //    }
-                    //}
-                    if (curInteractObj != null) //내려놓았거나 든 게 없는 상태  && !curInteractObj.IsFirstDrop
+                    if (curInteractObj != null)//뭘 이미 들고 있다면?
                     {
                         SetBuildingItemObj();
                     }
@@ -180,19 +148,17 @@ namespace DM.Building
                         inventory.SetCheckBuildItem(hit.collider.GetComponent<BuildingItemObj>().item);
                         inventory.InvenAllOnOff(false);
                         SetCurInteractObj(hit.collider.GetComponent<BuildingItemObj>());
-
-                        curInteractObj.ItemisSet = false;
                     }
                 }
             }
             if (!curInteractObj) return;
 
-            if (!curInteractObj.ItemisSet)
-            {
-                ScaleBuildItem();
-                RotateBuildItem();
-                FrontBackMoveBuildItem();
-            }
+            //자재를 들고있을 때
+            curInteractObj.CallUpdate(DistanceToNowBuildItemToNewSort(Camera.main.transform.position));
+            ScaleBuildItem();
+            RotateBuildItem();
+            FrontBackMoveBuildItem();
+
             if (Input.GetMouseButtonDown(1))
             {
                 if (curInteractObj.IsFirstDrop)
@@ -201,28 +167,20 @@ namespace DM.Building
                 }
                 else
                 {
-                    ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                    Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue, 0.3f);
-
-                    if (!curInteractObj.ItemisSet && Physics.Raycast(ray, out hit, 100, layerMask))
+                    // 직관적이지 않은 부분 존재
+                    if (curInteractObj.Demolish())
                     {
-                        if (hit.collider.GetComponent<BuildingItemObj>() == null) return;
+                        RemoveBuildItemToList(curInteractObj);
+                        DeleteBuildingItemObjSorting(curInteractObj.gameObject);
+                        Destroy(curInteractObj.gameObject);
 
-                        SetCurInteractObj(hit.collider.GetComponent<BuildingItemObj>());
-                        if (curInteractObj.Demolish()) //삭제에 성공했다면? 하지만 삭제에 성공하려면 그 전에 RemoveBuildItemToList 해야...
-                                                       //하지만 그러려면 curInteractObj에서 건축 영역의 메서드를 호출해야함
-                        {
-                            RemoveBuildItemToList(curInteractObj);
-                            DeleteBuildingItemObjSorting(curInteractObj.gameObject);
-                            Destroy(curInteractObj.gameObject);
-
-                            inventory.InvenSlotResetCanBuildMode(); //빌딩가능모드로 인벤 리셋
-                        }
+                        inventory.InvenSlotResetCanBuildMode(); //빌딩가능모드로 인벤 리셋
                     }
                 }
             }
         }
 
+        //UI 위에라면 레이 안쏨
         public bool IsPointerOverUIObject()
         {
             PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
@@ -232,9 +190,9 @@ namespace DM.Building
             return results.Count > 0;
         }
 
-        public void BackToInventory() //인벤토리로 넘기기
+        public void BackToInventory()
         {
-            SuperManager.Instance.inventoryManager.AddItem(curInteractObj.item);
+            inventory.AddItem(curInteractObj.item);
             inventory.InvenSlotResetCanBuildMode(); //빌딩가능모드로 인벤 리셋
 
             RemoveBuildItemToList(curInteractObj);
@@ -247,13 +205,6 @@ namespace DM.Building
         private void SetBuildingItemObj()//설치하기
         {
             inventory.InvenSlotResetCanBuildMode(); //빌딩가능모드로 인벤 리셋
-            curInteractObj.ItemisSet = true;
-            if (curInteractObj.IsFirstDrop)
-            {
-                curInteractObj.IsFirstDrop = false;
-                //어..
-                PlayerData.AddValue((int)curInteractObj.GetItem().InItemType, (int)ItemBehaviorEnum.builditem, PlayerData.ItemData, (int)ItemBehaviorEnum.length);
-            }
             cancelUIDelegate(false);
             curInteractObj.PutDownBuildingItemObj(AreaWidthsize, AreaHeightsize);
             SetCurInteractObj(null);
@@ -298,6 +249,7 @@ namespace DM.Building
             CurBuildMode = buildmode;
             //DebugText.Instance.SetText(string.Format("CurBuildMode: {0}", CurBuildMode.ToString()));
         }
+
         void ScaleBuildItem()
         {
             if (Input.GetKey(playerInput.scaleUpKey))
@@ -311,6 +263,7 @@ namespace DM.Building
                 PlayerData.AddValue(0, (int)BuildInputBehaviorEnum.ScaleDown, PlayerData.BuildInputData, (int)BuildInputBehaviorEnum.length);
             }
         }
+
         void RotateBuildItem()
         {
             if (Input.GetKey(playerInput.rotateLeftKey))
@@ -325,6 +278,7 @@ namespace DM.Building
                 PlayerData.AddValue(0, (int)BuildInputBehaviorEnum.RotationRight, PlayerData.BuildInputData, (int)BuildInputBehaviorEnum.length);
             }
         }
+
         void FrontBackMoveBuildItem()
         {
             if (Input.GetKeyDown(playerInput.frontKey))
@@ -340,9 +294,7 @@ namespace DM.Building
             }
         }
 
-        ///
-        /// <summary>
-        /// //////////BuildObj Sorting
+        // 메서드 나누기 필요. + instantiate 부분 개선 필요
         public void BtnSpawnHouseBuildItem(Item spawnObj)
         {
             Vector3 spawnPos = HouseBuild.transform.position;
@@ -359,33 +311,18 @@ namespace DM.Building
 
             GameObject newPrefab = Instantiate(spawnObj.ItemPrefab, spawnPos, Quaternion.identity, HouseBuild.transform);
             newPrefab.transform.localRotation = Quaternion.Euler(0, 0, 0);
-            newPrefab.GetComponent<BuildingItemObj>().SetParentBuildArea(this, HouseBuild.position);
             SetCurInteractObj(newPrefab.GetComponent<BuildingItemObj>());
             newPrefab.name = spawnObj.name;
             if (specialHouse)
                 specialHouse.CanExist(curInteractObj, true);
             curInteractObj.SetOrder(BuildItemList.Count);
+            curInteractObj.SetAreaSize(AreaWidthsize, AreaHeightsize);
+            curInteractObj.SetPivotPos(HouseBuild.position);
             AddBuildItemToList(newPrefab);
             FindObjectOfType<EnvironmentManager>().ChangeCleanliness(newPrefab.GetComponent<BuildingItemObj>().GetItem().CleanAmount + 1);
             cancelUIDelegate(true);
         }
 
-        //void BuildingItemObjAndSorting()//n개 
-        //{
-        //    int frontCount = 0;
-        //    foreach (GameObject item in BuildItemList)
-        //    {
-        //        float bigZinWalls = curInteractObj.transform.localPosition.z;//클릭한 오브젝트의 z값
-
-        //        if (bigZinWalls <= item.transform.localPosition.z) continue;//선택한게 다른 옵젝보다 더 가깝다면 검사 패스 z가 크면 멀음
-
-        //        item.transform.position += item.transform.forward * BuildItemGap;
-
-        //        frontCount++;
-        //        print(frontCount);
-        //    }
-        //    curInteractObj.transform.position -= curInteractObj.transform.forward * (BuildItemGap * frontCount);
-        //}
         public void DeleteBuildingItemObjSorting(GameObject deleteObj) //있는 아이템을 소팅함.
         {
             foreach (GameObject item in BuildItemList)
@@ -419,32 +356,19 @@ namespace DM.Building
         {
             buildState = buildstate;
         }
-        public float DistanceToNowBuildItem(Vector3 movePos)
+        public float DistanceToNowBuildItemToNewSort(Vector3 cameraPos)
         {
-            Vector3 VecY = new Vector3(HouseBuild.transform.position.x, 0, HouseBuild.transform.position.z);
-            Vector3 moveposY = new Vector3(movePos.x, 0, movePos.z);
-            float dist = Vector3.Distance(moveposY, VecY);
-            float disc = ((BuildItemList.Count - 1f) / 2f) * BuildItemGap;
-            dist -= disc;
+            Vector3 houseBuildPosXZ = new Vector3(HouseBuild.transform.position.x, cameraPos.y, HouseBuild.transform.position.z);
+            float camToPivotDist = Vector3.Distance(cameraPos, houseBuildPosXZ);
 
-            return dist;
-
-        }
-        public float DistanceToNowBuildItemToNewSort(Vector3 movePos)
-        {
-            Vector3 VecY = new Vector3(HouseBuild.transform.position.x, 0, HouseBuild.transform.position.z);
-            Vector3 moveposY = new Vector3(movePos.x, 0, movePos.z);
-            float dist = Vector3.Distance(moveposY, VecY);
             float disc = ((BuildItemList.Count - 1f) / 2f) * BuildItemGap;
-            float closeDist = dist - disc;
-            //gap* count -1 - order(2)
-            float dis2c = ((BuildItemList.Count - 1) - curInteractObj.MyOrder) * BuildItemGap + closeDist;
+            float toClosestItemDist = camToPivotDist - disc;
+            float dis2c = ((BuildItemList.Count - 1) - curInteractObj.MyOrder) * BuildItemGap + toClosestItemDist;
 
             return dis2c;
         }
         public override int CanInteract()
         {
-            //EndInteract();
             return (int)CursorType.Build;
         }
         public void EndInteract_()

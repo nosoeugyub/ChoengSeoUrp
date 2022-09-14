@@ -10,10 +10,7 @@ namespace DM.Building
         [SerializeField] Button buildOffUi;
         [SerializeField] GameObject cancelUi;
         [SerializeField] GameObject buildingTutorialImg;
-        void Start()
-        {
 
-        }
         public void BuildDisplayOn(bool isOn)
         {
             BuildOffUiState(isOn);
@@ -24,12 +21,13 @@ namespace DM.Building
         {
             cancelUi.SetActive(isOn);
         }
+
         private void BuildOffUiState(bool isOn)
         {
             buildOffUi.gameObject.SetActive(isOn);
         }
 
-        internal void SetButtonEvent(params Action[] ps)
+        public void SetBuildModeOffButtonEvent(params Action[] ps)
         {
             foreach (Action action in ps)
             {
@@ -41,6 +39,5 @@ namespace DM.Building
         {
             buildingTutorialImg.SetActive(isOn);
         }
-
     }
 }

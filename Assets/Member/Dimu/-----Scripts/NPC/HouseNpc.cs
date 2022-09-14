@@ -4,7 +4,6 @@ using NSY.Manager;
 using NSY.Player;
 using System;
 using System.Collections.Generic;
-using TT.Sound;
 using UnityEngine;
 
 public enum BuildingLike { Like, Unlike_Shape, Unlike_Count, Unlike_Empty, Cant, None, }
@@ -121,7 +120,7 @@ namespace DM.NPC
         }
         public void FindLikeHouse(BuildingBlock buildAreaObject) //해당 건축물에 입주 가능한지.
         {
-            if (buildAreaObject.HaveLivingChar())
+            if (buildAreaObject._livingCharacter)
             {
                 like = BuildingLike.Cant;
                 SettingBuildingTalk();
@@ -150,10 +149,10 @@ namespace DM.NPC
             if (block)
             {
                 myHouse = block;
-                myHouse.SetLivingChar(this);
+                myHouse._livingCharacter = this;
                 print("Find My House");
                 PlayerData.AddValue((int)GetCharacterType(), (int)NpcBehaviorEnum.gethouse, PlayerData.npcData, (int)NpcBehaviorEnum.length);
-                SuperManager.Instance.questmanager.ClearQuest(SuperManager.Instance.questmanager.questLists[(int)GetCharacterType()].questList.Length-1, (int)GetCharacterType());
+                SuperManager.Instance.questmanager.ClearQuest(SuperManager.Instance.questmanager.questLists[(int)GetCharacterType()].questList.Length - 1, (int)GetCharacterType());
                 GoHomeEvent();
                 UIOnEvent((int)GetCharacterType());
             }

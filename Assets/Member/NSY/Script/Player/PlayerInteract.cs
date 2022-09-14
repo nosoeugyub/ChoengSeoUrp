@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using NSY.Manager;
+using UnityEngine.EventSystems;
+
 namespace NSY.Player
 {
     public class PlayerInteract : MonoBehaviour
@@ -219,7 +221,7 @@ namespace NSY.Player
                 if (Physics.Raycast(ray, out hit, 10000, layerMask2.value))
                 {
                     nowInteractable = hit.collider.GetComponent<Interactable>();
-                    if (nowInteractable != null && IsInteracted(nowInteractable))
+                    if (nowInteractable != null && IsInteracted(nowInteractable) && !IsPointerOverUIObject())
                     {
                         InvokeInteract(nowInteractable);
                     }
@@ -314,7 +316,14 @@ namespace NSY.Player
                 EndInteract(interactable);
             }
         }
-
+        public bool IsPointerOverUIObject()
+        {
+            PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+            eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+            List<RaycastResult> results = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+            return results.Count > 0;
+        }
         private void EndInteract(Interactable interactable)
         {
             if (interactable)

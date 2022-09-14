@@ -23,7 +23,7 @@ namespace DM.Building
         }
         private void Start()
         {
-            buildingDisplay.SetButtonEvent(BuildModeOff);
+            buildingDisplay.SetBuildModeOffButtonEvent(BuildModeOff);
         }
 
         public void BuildModeOn(BuildingBlock nowBuildingBlock_)
@@ -37,7 +37,7 @@ namespace DM.Building
 
             //BuildingBlockSetting
             nowBuildingBlock = nowBuildingBlock_;
-            nowBuildingBlock_.CancelUIAction(buildingDisplay.CancelUIState);
+            nowBuildingBlock_.SetCancelUIAction(buildingDisplay.CancelUIState);
             nowBuildingBlock_.BuildModeOnSetting();
 
             //UI
@@ -91,8 +91,8 @@ namespace DM.Building
         {
             foreach (var item in buildings)
             {
-                if (item.GetLivingChar() == null) continue;
-                if ((int)item.GetLivingChar().GetCharacterType() == npctype)
+                if (item._livingCharacter == null) continue;
+                if ((int)item._livingCharacter.GetCharacterType() == npctype)
                 {
                     return item;
                 }
