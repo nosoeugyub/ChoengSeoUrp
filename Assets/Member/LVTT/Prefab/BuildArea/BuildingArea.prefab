@@ -424,7 +424,6 @@ GameObject:
   - component: {fileID: 4123280055350815966}
   - component: {fileID: 4123280055350815965}
   - component: {fileID: 973698088}
-  - component: {fileID: 636429364}
   m_Layer: 10
   m_Name: BuildingArea
   m_TagString: BuildingArea
@@ -469,7 +468,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4123280055350815963}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 25, y: 15, z: 2}
@@ -524,26 +523,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &636429364
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4123280055350815963}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1da8599408c2dd41b95f55312331b94, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nessBuildItems:
-  - nessBuildItem: {fileID: 11400000, guid: 96d7db460decc344d8bc0253e4de2661, type: 2}
-    isHave: 0
-  - nessBuildItem: {fileID: 11400000, guid: ac257b61dc248fc479fcc25fea515fdb, type: 2}
-    isHave: 0
-  - nessBuildItem: {fileID: 11400000, guid: 7229a892b0fbddf458c7b670bc99d092, type: 2}
-    isHave: 0
-  spetype: 0
 --- !u!1 &4123280055626430900
 GameObject:
   m_ObjectHideFlags: 0
@@ -1137,7 +1116,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a1884458af6947a4fb6d395f3db29aaf, type: 2}
+  - {fileID: 2100000, guid: 53a9bcf110b756248b96f5ae50c2bf1c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1192,7 +1171,7 @@ PrefabInstance:
     - target: {fileID: 442868448699089243, guid: f9b0d3e40b30e4e498b148ead52544bc,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5231669315082340929, guid: f9b0d3e40b30e4e498b148ead52544bc,
         type: 3}
@@ -1337,7 +1316,7 @@ PrefabInstance:
     - target: {fileID: 6805972927156384088, guid: 7f0d4ac3a20d9d8468b0bad38dc60812,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7f0d4ac3a20d9d8468b0bad38dc60812, type: 3}
@@ -1367,7 +1346,7 @@ PrefabInstance:
     - target: {fileID: 2480135272527122899, guid: 68e9981f23e2c0b42b99646f39157fda,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5776676840567992691, guid: 68e9981f23e2c0b42b99646f39157fda,
         type: 3}
@@ -1462,7 +1441,7 @@ PrefabInstance:
     - target: {fileID: 2509309986930456358, guid: fb5d18858e927364586f0808831e8de3,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5805994490463704966, guid: fb5d18858e927364586f0808831e8de3,
         type: 3}
@@ -1622,7 +1601,7 @@ PrefabInstance:
     - target: {fileID: 5323277331873245290, guid: a0b89d4fb6af8d84db9e29e9b18fde81,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a0b89d4fb6af8d84db9e29e9b18fde81, type: 3}

@@ -176,7 +176,7 @@ namespace NSY.Iven
                 }
             }
         }
-        public void Interactble(bool canInteractable)// 채원이 빨갱잉
+        public void Interactble(bool canInteractable)
         {
             canInteractWithSlot = canInteractable;
             if (canInteractWithSlot)
@@ -243,7 +243,7 @@ namespace NSY.Iven
             {
                 if (OnLeftClickEvent != null)
                 {
-                    print("왼쪽클릭");
+                    //print("왼쪽클릭");
 
                     OnLeftClickEvent(this);
                 }

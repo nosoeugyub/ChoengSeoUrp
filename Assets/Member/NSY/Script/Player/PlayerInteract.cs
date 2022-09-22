@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using NSY.Manager;
+using UnityEngine.EventSystems;
+
 namespace NSY.Player
 {
     public class PlayerInteract : MonoBehaviour
@@ -12,9 +14,10 @@ namespace NSY.Player
         Interactable closestObj;//가장 가까운 친구
 
         CursorManager cursorManager;
+        BuildingManager buildingManager;
 
         public GameObject interactUI;//띄울 UI
-        //public Text interactUiText;//띄울 UI
+        public GameObject buildinginteractUi;//띄울 UI
         public TextMeshProUGUI interactUiText2;
 
         //[SerializeField] Item handItem;
@@ -31,8 +34,8 @@ namespace NSY.Player
         RaycastHit hit;
         Ray ray;
         Interactable nowInteractable;
-        bool canInteract = false;
-        int layerMask;   // Player 레이어만 충돌 체크함
+        public bool canInteract = true;
+       [HideInInspector] public  int layerMask;   // Player 레이어만 충돌 체크함
         [SerializeField] LayerMask layerMask2;   // Player 레이어만 충돌 체크함
 
         public RectTransform targetRectTr;
@@ -49,7 +52,9 @@ namespace NSY.Player
         {
             layerMask = 1 << LayerMask.NameToLayer("Interactable");
             //마우스 상호작용 오브젝트는 Interactable 이라는 레이어를 가지고 있어야 합니다.
+
             cursorManager = FindObjectOfType<CursorManager>();
+            buildingManager = FindObjectOfType<BuildingManager>();
         }
         private void Start()
         {
@@ -57,6 +62,7 @@ namespace NSY.Player
         }
         private void Update()
         {
+            if (!canInteract) return;
             InteractWithObjects();
             LightClosestObj();
         }
@@ -158,7 +164,8 @@ namespace NSY.Player
                 else
                 {
                     print(buildAreaObject.name);
-                    buildAreaObject.OnBuildMode();
+                    buildinginteractUi.SetActive(false);
+                    buildingManager.BuildModeOn(buildAreaObject);
                 }
                 return;
             }
@@ -180,21 +187,32 @@ namespace NSY.Player
             Vector3 nordir = (Camera.main.ScreenToWorldPoint(mousepos) - Camera.main.transform.position).normalized;
             ray = new Ray(Camera.main.transform.position + nordir * 10, nordir);
             Debug.DrawRay(ray.origin, ray.direction * 20, Color.blue, 0.3f);
+
             if (nowInteractable)
                 nowInteractable.EndInteract();
-            if (Physics.Raycast(ray, out hit, 20, layerMask2.value) && !BuildingBlock.isBuildMode)
+    
+            buildinginteractUi.SetActive(false);
+
+            if (Physics.Raycast(ray, out hit, 20, layerMask2.value) && !buildingManager.isBuildMode)
             {
                 nowInteractable = hit.collider.GetComponent<Interactable>();
                 if (nowInteractable != null && IsInteracted(nowInteractable))// 클릭한 옵젝이 닿은 옵젝 리스트에 있다면 통과ds
                 {
                     StartCoroutine(cursorManager.SetCursor(nowInteractable.CanInteract()));
-                    //Vector3 uiPos = new Vector3(nowInteractable.transform.position.x, nowInteractable.transform.position.y + 2, nowInteractable.transform.position.z);
-                    //형광 셰이더로 변환....
-                    //ChangeLightShader(nowInteractable);
 
+                    if (nowInteractable.GetComponent<BuildingBlock>())
+                    {
+                        buildinginteractUi.SetActive(true);
+                     Vector3 uiPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y + 40, Input.mousePosition.z);
+
+                        RectTransformUtility.ScreenPointToLocalPointInRectangle(targetRectTr, uiPos, uiCamera, out screenPoint);
+                        buildinginteractUi.GetComponent<RectTransform>().localPosition = screenPoint;
+                    }
                 }
                 else
+                {
                     StartCoroutine(cursorManager.SetCursor((int)CursorType.Normal));
+                }
             }
 
 
@@ -203,7 +221,7 @@ namespace NSY.Player
                 if (Physics.Raycast(ray, out hit, 10000, layerMask2.value))
                 {
                     nowInteractable = hit.collider.GetComponent<Interactable>();
-                    if (nowInteractable != null && IsInteracted(nowInteractable))
+                    if (nowInteractable != null && IsInteracted(nowInteractable) && !IsPointerOverUIObject())
                     {
                         InvokeInteract(nowInteractable);
                     }
@@ -298,14 +316,21 @@ namespace NSY.Player
                 EndInteract(interactable);
             }
         }
-
+        public bool IsPointerOverUIObject()
+        {
+            PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+            eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+            List<RaycastResult> results = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+            return results.Count > 0;
+        }
         private void EndInteract(Interactable interactable)
         {
             if (interactable)
             {
-                BuildingBlock buildAreaObject = interactable.transform.GetComponent<BuildingBlock>();
-                if (buildAreaObject)
-                    buildAreaObject.EndInteract_();
+                //BuildingBlock buildAreaObject = interactable.transform.GetComponent<BuildingBlock>();
+                //if (buildAreaObject)
+                //    buildAreaObject.EndInteract_();
             }
         }
         /*

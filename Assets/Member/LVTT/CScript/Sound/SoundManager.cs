@@ -5,12 +5,14 @@ using UnityEngine.Audio;
 
 namespace TT.Sound
 {
+
     [System.Serializable]
     public class Sound
     {
         public string name;
         public AudioClip clip;//to add Audio clips
         public AudioMixerGroup output;
+
         [Range(0f, 3f)]// this to make a slide in Unity
         public float volume;
         [Range(.1f, 3f)]
@@ -24,8 +26,14 @@ namespace TT.Sound
     {
         public Sound[] BGM;
         public Sound[] SFX;
+        public AudioMixerGroup bgmoutput;
+        public AudioMixerGroup sfxoutput;
+        public string testSound;
+        [SerializeField] AudioMixer audioMixer;
 
         [SerializeField] PlayerMoveMent playerMoveMent;
+        private float volume;
+
         void Awake()
         {
             foreach (Sound s in BGM)
@@ -35,6 +43,7 @@ namespace TT.Sound
                 s.source.volume = s.volume;
                 s.source.pitch = s.pitch;
                 s.source.loop = s.loop;
+                s.output = bgmoutput;
                 s.source.outputAudioMixerGroup = s.output;
             }
 
@@ -45,6 +54,7 @@ namespace TT.Sound
                 s.source.volume = s.volume;
                 s.source.pitch = s.pitch;
                 s.source.loop = s.loop;
+                s.output = sfxoutput;
                 s.source.outputAudioMixerGroup = s.output;
             }
 
@@ -95,6 +105,38 @@ namespace TT.Sound
             s.source.Stop();
         }
 
+        public void PlayTestSound()
+        {
+            StopSFX(testSound);
+            PlaySFX(testSound);
+        }
+
+        public float BGMVolume
+        {
+            get { audioMixer.GetFloat("BGM", out volume); return volume; }
+            set
+            {
+                if (value <= -30)
+                {
+                    audioMixer.SetFloat("BGM", -80);
+                    return;
+                }
+                audioMixer.SetFloat("BGM", value);
+            }
+        }
+        public float SFXVolume
+        {
+            get { audioMixer.GetFloat("SFX", out volume); return volume; }
+            set
+            {
+                if (value <= -30)
+                {
+                    audioMixer.SetFloat("SFX", -80);
+                    return;
+                }
+                audioMixer.SetFloat("SFX", value);
+            }
+        }
     }
 
 }

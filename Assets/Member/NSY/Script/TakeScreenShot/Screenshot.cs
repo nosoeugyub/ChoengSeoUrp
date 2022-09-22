@@ -315,7 +315,7 @@ public class Screenshot : MonoBehaviour
                     if (Page == i &&
                     SuperManager.Instance.buildingManager.buildings[j]._livingCharacter != null)// 
                     {
-                       
+                        print(SuperManager.Instance.buildingManager.buildings[j]._livingCharacter.GetCharacterType().ToString());
                         Material1.SetTexture("_MainTex", Texutre2);
                         Material2.SetTexture("_MainTex", Texutre1);
 

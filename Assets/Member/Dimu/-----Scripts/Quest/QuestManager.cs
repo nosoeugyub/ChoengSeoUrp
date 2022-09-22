@@ -7,6 +7,8 @@ namespace DM.Quest
 {
     public class QuestManager : MonoBehaviour
     {
+        [SerializeField] bool istestmode;
+
         private List<QuestData> totalPlayQuests;//플레이하면서 만났던 퀘스트 모음 아직 안쓰임
         public Dictionary<QuestData, GameObject> acceptQuests;
         public Transform questInfoMom;
@@ -18,6 +20,7 @@ namespace DM.Quest
         public QuestList[] questLists_viet;
         public List<QuestData> clearQuestLists;
         public Sprite[] TaskImg;
+        public string questClearSoundName;
         //[SerializeField] InventoryNSY inventoryNSY;
         [SerializeField] LanguageType nowLanguageType;
 
@@ -65,6 +68,7 @@ namespace DM.Quest
         }
         public bool ClearQuest(int questId, int npcID) //퀘스트 클리어하기
         {
+            if (istestmode) return true;
             if (CanClear(questId, npcID))//소모아이템이 존재한다면 추가
             {
                 QuestData nowQuestData = nowQuestLists[npcID].questList[questId];
@@ -93,6 +97,8 @@ namespace DM.Quest
                 }
                 clearQuestLists.Add(nowQuestData);
                 acceptQuests[nowQuestData].SetActive(false);
+                SuperManager.Instance.soundManager.StopSFX(questClearSoundName);
+                SuperManager.Instance.soundManager.PlaySFX(questClearSoundName);
                 acceptQuests.Remove(nowQuestData);
 
 

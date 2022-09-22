@@ -139,11 +139,7 @@ namespace NSY.Iven
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-
             TapToolTip.ShowItemTooltip(Item);
-
-
-
             Vector3 ToolVec = TapToolTip.tooltipTransform.transform.position;
             ToolVec.x = GetComponent<Image>().rectTransform.position.x;// + offset.x;
             ToolVec.y = GetComponent<Image>().rectTransform.position.y;// - offset.y;
@@ -152,7 +148,6 @@ namespace NSY.Iven
         }
         public void OnPointerExit(PointerEventData eventData)
         {
-
             TapToolTip.HideTooltip();
         }
 

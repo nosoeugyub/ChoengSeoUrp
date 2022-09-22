@@ -198,7 +198,6 @@ GameObject:
   m_Component:
   - component: {fileID: 317872889060726238}
   - component: {fileID: 317872889060726233}
-  - component: {fileID: 845625289}
   - component: {fileID: 1161184377}
   m_Layer: 0
   m_Name: BuildManager
@@ -237,36 +236,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildings: []
-  scaleUpKey: 119
-  scaleDownKey: 115
-  rotateLeftKey: 97
-  rotateRightKey: 100
-  frontKey: 101
-  BackKey: 113
+  player: {fileID: 0}
   buildingButtons:
   - {fileID: 0}
   buildOffUi: {fileID: 0}
-  player: {fileID: 0}
   cancleUi: {fileID: 0}
   buildingTutorialImg: {fileID: 0}
---- !u!114 &845625289
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 317872889060726239}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eeeefcad320544547b95ea2eeefba364, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UIList:
-  - {fileID: 0}
-  - {fileID: 0}
-  CurBuilding: {fileID: 0}
-  SetOffsetPos: {x: -460, y: 0, z: 0}
-  IsBuildMode: 0
 --- !u!114 &1161184377
 MonoBehaviour:
   m_ObjectHideFlags: 0

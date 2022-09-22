@@ -1,5 +1,4 @@
 ﻿using DG.Tweening;
-using DM.Building;
 using NSY.Player;
 using UnityEngine;
 using UnityEngine.UI;
@@ -44,7 +43,6 @@ namespace NSY.Iven
         [SerializeField] ItemTooltip itemTooltip;
 
         [SerializeField] InventoryNSY iventorynsy;
-        //[SerializeField] EquipPanel equipPanel;
 
         [SerializeField] Image draggableitem;
         [SerializeField] DropItemArea Dropitemarea;
@@ -60,7 +58,6 @@ namespace NSY.Iven
 
 
 
-
         //더블클릭
         private float firstClickTime, timeBetweenClicks;
         private bool coroutineAllowed;
@@ -72,11 +69,6 @@ namespace NSY.Iven
         public bool isUp;
         public bool isDown;
         public Camera uicamera;
-
-
-        //빌딩쓰
-        bool isBuildingHands = false;
-        public Item CheckBuliditem;
 
         private void OnValidate()
         {
@@ -127,83 +119,33 @@ namespace NSY.Iven
             }
         }
 
-
-
-
         public bool isRed = false;
         private void BuildingLeftClick(BaseItemSlot obj)
         {
             if (obj.item.OutItemType != OutItemType.BuildingItemObj) return;
-
-            if (CheckBuliditem != null)
-            {
-                return;
-            }
-
-            if (BuildingBlock.isBuildMode && CheckBuliditem == null)
-            {
-                CheckBuliditem = obj.item;
-                BuildingBlock.nowBuildingBlock.BtnSpawnHouseBuildItem(obj.item);
-                iventorynsy.InvenAllOnOff(false);
-
-                foreach (ItemSlot itemslots in iventorynsy.ItemSlots) //인벤 빌딩슬롯 정검 
-                {
-                    if (!itemslots.item) continue;
-                    if (itemslots.item.OutItemType == OutItemType.BuildingItemObj || CheckBuliditem.ItemName != itemslots.item.ItemName)
-                    {
-                    }
-                    if (itemslots.item == CheckBuliditem)
-                    {
-                        obj.item.GetCountItems--;
-                        obj.Amount--;
-                        iventorynsy.AddItemEvent();
-                        return;
-                    }
-                }
-            }
-            else
-            {
-                BuildingHandyObjSpawn HandySpawnObj = FindObjectOfType<BuildingHandyObjSpawn>();
-                switch (obj.item.InItemType)
-                {
-                    case InItemType.BuildingItemObj_Essential:
-                        HandySpawnObj.HandySpawnBuildItem(obj.item);
-
-                        break;
-                    case InItemType.BuildingItemObj_Additional:
-                        HandySpawnObj.HandySpawnBuildItem(obj.item);
-
-                        break;
-                }
-            }
+            iventorynsy.SpawnBuildingItemObj(obj);
         }
-
-
         //더블클릭
         public void OnDoubleClickEvent(BaseItemSlot itemslot)
         {
-            if (itemslot.item.OutItemType == OutItemType.Food)
-            {
-                PlayerEat.Eat(itemslot);
-            }
         }
         private void InventoryRightClick(BaseItemSlot itemslot)
         {
-            if (itemslot.item.OutItemType == OutItemType.Tool)
-            {
-                Unequip(itemslot.item);
-            }
-            else if (itemslot.item is UseableItem)
-            {
-                UseableItem usableitem = (UseableItem)itemslot.item;
-                usableitem.Use(this);
+            //if (itemslot.item.OutItemType == OutItemType.Tool)
+            //{
+            //    Unequip(itemslot.item);
+            //}
+            //else if (itemslot.item is UseableItem)
+            //{
+            //    UseableItem usableitem = (UseableItem)itemslot.item;
+            //    usableitem.Use(this);
 
-                if (usableitem.isConsumable)
-                {
-                    iventorynsy.RemoveItem(usableitem);
-                    usableitem.Destroy();
-                }
-            }
+            //    if (usableitem.isConsumable)
+            //    {
+            //        iventorynsy.RemoveItem(usableitem);
+            //        usableitem.Destroy();
+            //    }
+            //}
         }
 
         private void BeginDrag(BaseItemSlot itemslot)
@@ -221,11 +163,9 @@ namespace NSY.Iven
             Vector2 onPoint;
             RectTransformUtility.ScreenPointToLocalPointInRectangle(BaseCharcterPanel, screenpoint, uicamera, out onPoint);
             draggableitem.GetComponent<RectTransform>().localPosition = onPoint;
-            print(onPoint);
         }
         private void EndDrag(BaseItemSlot itemslot)
         {
-
             dragitemSlot = null;
             draggableitem.gameObject.SetActive(false);
         }
@@ -247,7 +187,7 @@ namespace NSY.Iven
         //버리기
         private void DropItemOutsideUI()
         {
-          
+
             if (dragitemSlot == null)
             {
                 return;

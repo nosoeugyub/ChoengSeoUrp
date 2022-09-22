@@ -1,5 +1,5 @@
-﻿using NSY.Manager;
-using NSY.Player;
+﻿using DM.Building;
+using NSY.Manager;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,11 +8,14 @@ namespace NSY.Iven
 {
     public abstract class ItemContainer : MonoBehaviour, IItemContainer
     {
-        public PlayerInteract playrinteract;
+        //public PlayerInteract playrinteract;
         //  public CraftManager craftslots;
         public GameObject NoPopUp;
         public List<ItemSlot> ItemSlots;
         public List<CraftSlot> Craftslot;
+        public Item CheckBuliditem;
+        [SerializeField] BuildingManager buildingManager;
+
 
         public event Action<BaseItemSlot> OnPointerEnterEvent;
         public event Action<BaseItemSlot> OnPointerExitEvent;
@@ -28,6 +31,8 @@ namespace NSY.Iven
 
         protected virtual void Awake()
         {
+            buildingManager = FindObjectOfType<BuildingManager>();
+
             for (int i = 0; i < ItemSlots.Count; i++)
             {
 
@@ -43,7 +48,55 @@ namespace NSY.Iven
             }
 
         }
+        public void SetCheckBuildItem(Item item)
+        {
+            CheckBuliditem = item;
+        }
 
+        public void InvenSlotResetCanBuildMode()
+        {
+            SetCheckBuildItem(null); //설치하면 다른거 할수없음
+            EnableCanBuildItem();
+        }
+        public void SpawnBuildingItemObj(BaseItemSlot obj)
+        {
+            if (CheckBuliditem == null)
+            {
+                if (buildingManager.isBuildMode)// && iventorynsy.CheckBuliditem == null
+                {
+                    SetCheckBuildItem(obj.item);
+                    buildingManager.BtnSpawnHouseBuildItem(obj.item);
+                    InvenAllOnOff(false);
+
+                    foreach (ItemSlot itemslots in ItemSlots) //인벤 빌딩슬롯 정검 
+                    {
+                        if (!itemslots.item) continue;
+                        if (obj.item == itemslots.item)
+                        {
+                            obj.item.GetCountItems--;
+                            obj.Amount--;
+                            AddItemEvent();
+                            return;
+                        }
+                    }
+                }
+                else
+                {
+                    //BuildingHandyObjSpawn HandySpawnObj = FindObjectOfType<BuildingHandyObjSpawn>();
+                    //switch (obj.item.InItemType)
+                    //{
+                    //    case InItemType.BuildingItemObj_Essential:
+                    //        HandySpawnObj.HandySpawnBuildItem(obj.item);
+
+                    //        break;
+                    //    case InItemType.BuildingItemObj_Additional:
+                    //        HandySpawnObj.HandySpawnBuildItem(obj.item);
+
+                    //        break;
+                    //}
+                }
+            }
+        }
         public void SetLockSpriteToCraftSlot(Sprite locksprite)
         {
             for (int i = 0; i < Craftslot.Count; i++)
@@ -51,7 +104,7 @@ namespace NSY.Iven
                 Craftslot[i].SetSpriteLock(locksprite);
             }
         }
-        
+
         protected virtual void OnValidate()
         {
             GetComponentsInChildren(includeInactive: true, result: ItemSlots);
@@ -78,7 +131,7 @@ namespace NSY.Iven
                 }
             }
             return freeSpaces >= amount;
-                
+
         }
 
         public virtual void InvenAllOnOff(bool isOn) //전체 상호작용 불가능, 가능 처리
@@ -91,15 +144,12 @@ namespace NSY.Iven
                 //itemSlot.isRedbulid = !isOn;
             }
         }
-        public virtual void CheckCanBuildItem()//건축자재만 켜기
+        public virtual void EnableCanBuildItem()//건축자재만 켜기
         {
             foreach (ItemSlot itemSlot in ItemSlots)
             {
                 if (itemSlot.item == null) continue;
-                if (itemSlot.item.OutItemType != OutItemType.BuildingItemObj)//건축자재가 아니면 끄기
-                    itemSlot.Interactble(false);
-                else
-                    itemSlot.Interactble(true);
+                itemSlot.Interactble(itemSlot.item.OutItemType == OutItemType.BuildingItemObj);
             }
         }
         IEnumerator DelayUpdateAddValue(Item item)
@@ -186,7 +236,7 @@ namespace NSY.Iven
             ItemSlots[i].item.GetCountItems++;
             ItemSlots[i].item.GetnuCountItems++;
 
-      
+
 
             SuperManager.Instance.unlockmanager.GetInterectItemUnLocking();
             StartCoroutine(DelayUpdateAddValue(item));
@@ -226,7 +276,7 @@ namespace NSY.Iven
                     int sub = ItemSlots[i].Amount + AddCount - ItemSlots[i].item.MaximumStacks;
                     ItemSlots[i].Amount = ItemSlots[i].item.MaximumStacks;
                     AddCount = sub;
-                   
+
                 }
 
             }
@@ -377,13 +427,13 @@ namespace NSY.Iven
                 {
                     if (isGettingItem == true)
                     {
-                       
+
 
                         return true;
                     }
                     if (isGettingItem == false)
                     {
-                       
+
                         return false;
                     }
 

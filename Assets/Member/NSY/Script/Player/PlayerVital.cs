@@ -43,7 +43,7 @@ namespace NSY.Player
 
         private void Update()
         {
-            StartCoroutine(disVital());
+            //StartCoroutine(disVital());
         }
 
         IEnumerator disVital()

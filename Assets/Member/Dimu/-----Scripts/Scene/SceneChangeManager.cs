@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using NSY.Manager;
+using UnityEngine.UI;
+
 public class SceneChangeManager : MonoBehaviour
 {
     [SerializeField] Animator fadeAnim;
+    [SerializeField] Image fadeImg;
 
     public void Start()
     {
@@ -47,15 +50,21 @@ public class SceneChangeManager : MonoBehaviour
     }
     IEnumerator IFadeOut()
     {
+        fadeImg.raycastTarget = true;
         yield return new WaitForSeconds(1f);
+        fadeAnim.ResetTrigger("whitescreen");
+        fadeAnim.ResetTrigger("startwhitescreen");
         fadeAnim.SetTrigger("whitescreen");
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
     }
     IEnumerator IFadeIn()
     {
-        yield return new WaitForSeconds(1f);
+        fadeImg.raycastTarget = true;
+        fadeAnim.ResetTrigger("startwhitescreen");
+        fadeAnim.ResetTrigger("whitescreen");
         fadeAnim.SetTrigger("startwhitescreen");
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
+        fadeImg.raycastTarget = false;
     }
     public void EndGame()
     {

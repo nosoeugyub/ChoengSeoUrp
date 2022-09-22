@@ -19,6 +19,15 @@ public enum EventEnum
     FadeIn,
     FadeOut,
     StartTalk,
+    ChickenGOBearHOuse,
+    ChickenGoSheepHouse,
+    ChickSuddenlyAppear,
+    ChickenAppearAndGetChick,
+    ChickenGone,
+    DearAppear,
+    SheepDearGone,
+    BearGoSheepHouse,
+    BearGoHisHouse,
 }
 namespace NSY.Manager
 {
@@ -32,35 +41,14 @@ namespace NSY.Manager
         public GameObject[] cols;
         public GameObject chick;
 
-        ////이벤트 델리게이트, 표지판 튜토리얼
-        //public delegate void StartSignPost();
-        //public static event StartSignPost FirstPostCollder;
-
-        //public delegate void EndSignPost();
-        //public static event EndSignPost UnFirstPostCollder;
-
-        ////이벤트 델리게이트 ,사과나무초반 튜토리얼
-        //public delegate void StartTreeTutor();
-        //public static event StartTreeTutor FristTreeCollder;
-
-        //public delegate void OpenRoad();
-        //public static event OpenRoad OpenRoadPort;
-        //public static event OpenRoad OpenRoadFall;
-
-
-        public static Action[] EventActions = new Action[20];
+        public static Action[] EventActions = new Action[30];
+        public static Action[] BackEventActions = new Action[30];
         public static Action<CutType> testevent;
         public static Action EventAction;
         //EventAction 는 항상 실행중.
         //이벤트 바로 넣기 >> EventActions[0] = ~~~;
         //이벤트 실행 >>      EventAction += EventActions[0];
         //이벤트 종료 >>      EventAction -= EventActions[0];
-
-        //일반 과일나무와 상호작용 했을띠
-        //FrutStateManager state;
-
-        //public delegate void ActiveFruitTree();
-        //public static event ActiveFruitTree activefruittree;
 
         public static EventManager _Instace
         {

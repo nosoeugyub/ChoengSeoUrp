@@ -123,7 +123,6 @@ public class EnvironmentManager : MonoBehaviour
         StartCoroutine(takepictures());
     }
 
-   
     IEnumerator takepictures()
     {
         if (isShot)
@@ -143,11 +142,9 @@ public class EnvironmentManager : MonoBehaviour
             Loading.SetActive(false);
             SuperManager.Instance.scenechagemanage.LoadSceneFadeString(name);
         
+
     }
 
-
-
-  
     private void Awake()
     {
 

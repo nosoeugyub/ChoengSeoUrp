@@ -15,29 +15,22 @@ namespace NSY.Player
         //플레이어가 누르는 키입력
         [Space]
         public KeyCode _InputInterBtn = KeyCode.F;
-      
-       
+
+        [Space]
+        public KeyCode scaleUpKey = KeyCode.W;
+        public KeyCode scaleDownKey = KeyCode.S;
+        public KeyCode rotateLeftKey = KeyCode.A;
+        public KeyCode rotateRightKey = KeyCode.D;
+        public KeyCode frontKey = KeyCode.E;
+        public KeyCode BackKey = KeyCode.Q;
+
         internal bool interectObj;
 
-
-        // Update is called once per frame
         void Update()
         {
 
             ActiveObj();
         }
-        /// <summary> 튜토리얼 인풋
-        
-
-
-
-
-
-        /// </summary>
-
-
-
-       
         public void ActiveObj()
         {
             if (Input.GetKey(_InputInterBtn))
@@ -57,9 +50,6 @@ namespace NSY.Player
                 }
             }
         }
-
-
-     
     }
 }
 
