@@ -33,6 +33,8 @@ public class NPCManager : MonoBehaviour
     [SerializeField] GameEvent playerCanInteractEvent;
     [SerializeField] GameEvent playerCantInteractEvent;
 
+    [SerializeField] GameEvent playerMoveOnEvent;
+    [SerializeField] GameEvent playerMoveOffEvent;
     public int NowInteractNPCIndex { get; set; }
 
     Coroutine nowCor;
@@ -167,15 +169,28 @@ public class NPCManager : MonoBehaviour
         teleUIYesButton.onClick.RemoveAllListeners();
         teleUIYesButton.onClick.AddListener(() =>
         {
-                Vector3 randPos = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f));
-            npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(teleportPos[i].position);
-            for (int j = 1; j < npcTfs.Length; j++)
-            {
-                npcTfs[j].Npctf.TeleportToPlayer(teleportPos[i].position + randPos);
-            }
+           
+            StartCoroutine(TeleportWithFader(i));
         });
     }
-
+    IEnumerator TeleportWithFader(int i)
+    {
+        playerMoveOffEvent.Raise();
+        playerCantInteractEvent.Raise();
+        yield return fader.IFadeOut(Color.white,0.3f);
+        Vector3 randPos = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f));
+        npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(teleportPos[i].position);
+        for (int j = 1; j < npcTfs.Length; j++)
+        {
+            npcTfs[j].Npctf.TeleportToPlayer(teleportPos[i].position + randPos);
+        }
+        yield return new WaitForSeconds(1);
+        npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().InitForward();
+        yield return new WaitForSeconds(1);
+        yield return fader.IFadeIn(Color.white, 0.3f);
+        playerMoveOnEvent.Raise();
+        playerCanInteractEvent.Raise();
+    }
     //////////////event Methods
     public void GoNPCsHouse()
     {
@@ -223,11 +238,16 @@ public class NPCManager : MonoBehaviour
     }
     IEnumerator DelayMove()
     {
+        playerMoveOffEvent.Raise();
         playerCantInteractEvent.Raise();
         yield return fader.IFadeOut(Color.white, 2);
         npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(StartPos.position);
+        yield return new WaitForSeconds(1);
+        npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().InitForward();
+        yield return new WaitForSeconds(1);
         yield return fader.IFadeIn(Color.white, 2);
         DIalogEventManager.EventActions[(int)EventEnum.StartTalk].Invoke();
+        playerMoveOnEvent.Raise();
         playerCanInteractEvent.Raise();
 
     }

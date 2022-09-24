@@ -10,9 +10,7 @@ public class Fader : MonoBehaviour
 
     public void Start()
     {
-        StartCoroutine(IFadeIn());
-        DIalogEventManager.EventActions[(int)EventEnum.FadeOut] = FadeOutEvent;
-        DIalogEventManager.EventActions[(int)EventEnum.FadeIn] = FadeInEvent;
+        StartCoroutine(IFadeIn(Color.white, 2));
     }
 
     public void FadeOut(Color color, float speed)
@@ -42,37 +40,6 @@ public class Fader : MonoBehaviour
         fadeAnim.SetTrigger("startwhitescreen");
         fadeAnim.speed = 1 / speed;
         yield return new WaitForSeconds(speed);
-        fadeImg.raycastTarget = false;
-    }
-
-    //event method//////////////////////////////////////////
-
-    public void FadeOutEvent()
-    {
-        StartCoroutine(IFadeOut());
-    }
-    public void FadeInEvent()
-    {
-        StartCoroutine(IFadeIn());
-    }
-    public IEnumerator IFadeOut()
-    {
-        fadeImg.raycastTarget = true;
-        //yield return new WaitForSeconds(1f);
-        fadeAnim.ResetTrigger("whitescreen");
-        fadeAnim.ResetTrigger("startwhitescreen");
-        fadeAnim.SetTrigger("whitescreen");
-        fadeAnim.speed = 1f;
-        yield return new WaitForSeconds(fadeAnim.speed);
-    }
-    public IEnumerator IFadeIn()
-    {
-        fadeImg.raycastTarget = true;
-        fadeAnim.ResetTrigger("startwhitescreen");
-        fadeAnim.ResetTrigger("whitescreen");
-        fadeAnim.SetTrigger("startwhitescreen");
-        fadeAnim.speed = 1f;
-        yield return new WaitForSeconds(fadeAnim.speed);
         fadeImg.raycastTarget = false;
     }
 }

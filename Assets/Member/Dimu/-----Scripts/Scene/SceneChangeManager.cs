@@ -22,7 +22,7 @@ public class SceneChangeManager : MonoBehaviour
     {
         playerMoveOffEvent.Raise();
         playerCantInteractEvent.Raise();
-        yield return fader.IFadeIn();
+        yield return fader.IFadeIn(loadscenecolor, loadscenespeed);
         playerMoveOnEvent.Raise();
         playerCanInteractEvent.Raise();
     }
