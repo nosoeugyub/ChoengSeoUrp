@@ -60,6 +60,7 @@ namespace DM.Building
 
             //BuildingBlockSetting
             nowBuildingBlock.BuildModeOffSetting(AddBuilding);
+            nowBuildingBlock.InitItemDestroyCount();
 
             //Data
             PlayerData.AddValue(0, (int)BuildInputBehaviorEnum.EndBuilding, PlayerData.BuildInputData, (int)BuildInputBehaviorEnum.length);

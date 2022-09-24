@@ -69,7 +69,7 @@ namespace NSY.Iven
             {
                 for (int i = 0; i < itemAmount.Amount; i++)
                 {
-                    itemContainer.AddItem(itemAmount.item.GetCopy());
+                    itemContainer.AddItem(itemAmount.item.GetCopy(), true);
                 }
             }
         }

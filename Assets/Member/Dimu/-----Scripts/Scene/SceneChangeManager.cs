@@ -1,32 +1,29 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using NSY.Manager;
-using UnityEngine.UI;
 
 public class SceneChangeManager : MonoBehaviour
 {
-    [SerializeField] Animator fadeAnim;
-    [SerializeField] Image fadeImg;
-
-    public void Start()
+    [SerializeField] Fader fader;
+    Color loadscenecolor;
+    float loadscenespeed;
+    private void Start()
     {
-        StartCoroutine(IFadeIn());
-        EventManager.EventActions[(int)EventEnum.FadeOut] = FadeOut;
-        EventManager.EventActions[(int)EventEnum.FadeIn] = FadeIn;
-
+        loadscenecolor = Color.white;
+        loadscenespeed = 1;
+    }
+    public void LoadSceneFadeString(string scenename)
+    {
+        StartCoroutine(LoadSceneFadeStringCo(scenename));
     }
 
-    public void FadeOut()
+    IEnumerator LoadSceneFadeStringCo(string scenename)
     {
-        StartCoroutine(IFadeOut());
+        yield return fader.IFadeOut(loadscenecolor,loadscenespeed);
+        LoadSceneAsString(scenename);
     }
-    public void FadeIn()
-    {
-        StartCoroutine(IFadeIn());
-    }
-    public void LoadSceneString(string scenename)
+
+    private void LoadSceneAsString(string scenename)
     {
         if (scenename == "CreditDemo")
             StartCoroutine(LoadSceneLong(scenename));
@@ -34,48 +31,22 @@ public class SceneChangeManager : MonoBehaviour
             SceneManager.LoadScene(scenename);
     }
 
-    IEnumerator LoadSceneLong(string scenename )
+    IEnumerator LoadSceneLong(string scenename)
     {
         yield return new WaitForSeconds(0.1f);
         SceneManager.LoadScene(scenename);
     }
-    public void LoadSceneFadeString(string scenename)
-    {
-        StartCoroutine(LoadSceneFadeStringCo(scenename));
-    }
-    IEnumerator LoadSceneFadeStringCo(string scenename)
-    {
-        yield return IFadeOut();
-        LoadSceneString(scenename);
-    }
-    IEnumerator IFadeOut()
-    {
-        fadeImg.raycastTarget = true;
-        yield return new WaitForSeconds(1f);
-        fadeAnim.ResetTrigger("whitescreen");
-        fadeAnim.ResetTrigger("startwhitescreen");
-        fadeAnim.SetTrigger("whitescreen");
-        yield return new WaitForSeconds(2f);
-    }
-    IEnumerator IFadeIn()
-    {
-        fadeImg.raycastTarget = true;
-        fadeAnim.ResetTrigger("startwhitescreen");
-        fadeAnim.ResetTrigger("whitescreen");
-        fadeAnim.SetTrigger("startwhitescreen");
-        yield return new WaitForSeconds(2f);
-        fadeImg.raycastTarget = false;
-    }
+
     public void EndGame()
     {
         StartCoroutine(Quit());
     }
     IEnumerator Quit()
     {
-        yield return IFadeOut();
+        yield return fader.IFadeOut(loadscenecolor, loadscenespeed);
         Application.Quit();
     }
-    public void slbal(int scenenuber)
+    public void LoadSceneAsNumber(int scenenuber)
     {
         SceneManager.LoadScene(scenenuber);
     }

@@ -43,8 +43,8 @@ namespace DM.NPC
         private void Start()
         {
             GoHomeEvent += MoveToMyHome;
-            EventManager.EventActions[((int)EventEnum.MoveToMyHome)] += MoveToMyHome;
-            EventManager.EventActions[(int)EventEnum.OnFollowPlayer] += OnFollowPlayer;
+            DIalogEventManager.EventActions[((int)EventEnum.MoveToMyHome)] += MoveToMyHome;
+            DIalogEventManager.EventActions[(int)EventEnum.OnFollowPlayer] += OnFollowPlayer;
         }
 
         internal void PlayDialogSound()
@@ -102,7 +102,7 @@ namespace DM.NPC
                 {
                     isFollowPlayer = true;
                 }
-                EventManager.EventAction -= EventManager.EventActions[4];
+                DIalogEventManager.EventAction -= DIalogEventManager.EventActions[4];
             }
         }
         public bool IsHaveHouse()
@@ -371,6 +371,11 @@ namespace DM.NPC
         {
             transform.position = pos;
         }
+        public void TeleportToPlayer(Vector3 pos)
+        {
+            if(isFollowPlayer)
+             MoveTo(pos);
+        }
         public void MoveToMyHome()
         {
             if (myHouse)
@@ -378,7 +383,7 @@ namespace DM.NPC
                 Vector3 vec = myHouse.HouseOwnerTransform.position;
                 MoveTo(vec);
             }
-            EventManager.EventAction -= EventManager.EventActions[2];
+            DIalogEventManager.EventAction -= DIalogEventManager.EventActions[2];
         }
     }
 }

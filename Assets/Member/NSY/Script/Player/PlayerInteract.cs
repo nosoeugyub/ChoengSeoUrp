@@ -1,9 +1,10 @@
 ﻿using DM.Building;
+using DM.Event;
 using DM.NPC;
+using NSY.Manager;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using NSY.Manager;
 using UnityEngine.EventSystems;
 
 namespace NSY.Player
@@ -15,6 +16,7 @@ namespace NSY.Player
 
         CursorManager cursorManager;
         BuildingManager buildingManager;
+        EventContainer eventContainer;
 
         public GameObject interactUI;//띄울 UI
         public GameObject buildinginteractUi;//띄울 UI
@@ -35,14 +37,15 @@ namespace NSY.Player
         Ray ray;
         Interactable nowInteractable;
         public bool canInteract = true;
-       [HideInInspector] public  int layerMask;   // Player 레이어만 충돌 체크함
+        [HideInInspector] public int layerMask;   // Player 레이어만 충돌 체크함
         [SerializeField] LayerMask layerMask2;   // Player 레이어만 충돌 체크함
 
         public RectTransform targetRectTr;
         public bool isAnimating = false;
         private Vector2 screenPoint;
 
-
+        [SerializeField] GameEvent playerMoveOnEvent;
+        [SerializeField] GameEvent playerMoveOffEvent;
 
         [SerializeField] Shader GlowColor;
 
@@ -87,6 +90,10 @@ namespace NSY.Player
 
         public void SetIsAnimation(bool isTrue)
         {
+            //eventContainer.MoveOnOff(isTrue);
+            //MoveOnOffEvent.Invoke();
+            if (isTrue) playerMoveOffEvent.Raise();
+            else playerMoveOnEvent.Raise();
             isAnimating = isTrue;
         }
 
@@ -98,8 +105,8 @@ namespace NSY.Player
             {
                 //if (SuperManager.Instance.inventoryManager.isGettingItem == false)
                 {
-                   if( collectObj.Collect(playerAnimator.animator)) //콜렉트에서 애니 발생함
-                    SetIsAnimation(true);
+                    if (collectObj.Collect(playerAnimator.animator)) //콜렉트에서 애니 발생함
+                        SetIsAnimation(true);
                     return;
                 }
                 //collectObj.Collect(playerAnimator.animator); //콜렉트에서 애니 발생함
@@ -190,7 +197,7 @@ namespace NSY.Player
 
             if (nowInteractable)
                 nowInteractable.EndInteract();
-    
+
             buildinginteractUi.SetActive(false);
 
             if (Physics.Raycast(ray, out hit, 20, layerMask2.value) && !buildingManager.isBuildMode)
@@ -200,10 +207,10 @@ namespace NSY.Player
                 {
                     StartCoroutine(cursorManager.SetCursor(nowInteractable.CanInteract()));
 
-                    if (nowInteractable.GetComponent<BuildingBlock>())
+                    if (nowInteractable.GetComponent<BuildingBlock>() && !IsPointerOverUIObject())
                     {
                         buildinginteractUi.SetActive(true);
-                     Vector3 uiPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y + 40, Input.mousePosition.z);
+                        Vector3 uiPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y + 40, Input.mousePosition.z);
 
                         RectTransformUtility.ScreenPointToLocalPointInRectangle(targetRectTr, uiPos, uiCamera, out screenPoint);
                         buildinginteractUi.GetComponent<RectTransform>().localPosition = screenPoint;

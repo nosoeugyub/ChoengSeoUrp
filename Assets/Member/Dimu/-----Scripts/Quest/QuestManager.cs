@@ -73,10 +73,7 @@ namespace DM.Quest
             {
                 QuestData nowQuestData = nowQuestLists[npcID].questList[questId];
 
-                foreach (QuestData.Rewards item in nowQuestData.returnRewards)
-                {
-                    SuperManager.Instance.inventoryManager.RemoveItem(item.itemType, item.getCount);//, reward.requireCount);
-                }
+ 
 
                 //reward
                 foreach (var reward in nowQuestData.rewards)
@@ -86,15 +83,20 @@ namespace DM.Quest
                         //아이템 추가
                         print(reward.itemType.ItemName);
                         if (SuperManager.Instance.inventoryManager.CanAddInven(reward.itemType))
-                            SuperManager.Instance.inventoryManager.AddItem(reward.itemType);//, reward.requireCount);
+                            SuperManager.Instance.inventoryManager.AddItem(reward.itemType,true);//, reward.requireCount);
                         else
                             return false;
                     }
                     else if (reward.rewardType == RewardType.Event)
                     {
-                        EventManager.EventAction += EventManager.EventActions[reward.getCount];
+                        DIalogEventManager.EventAction += DIalogEventManager.EventActions[reward.getCount];
                     }
                 }
+                foreach (QuestData.Rewards item in nowQuestData.returnRewards)
+                {
+                    SuperManager.Instance.inventoryManager.RemoveItem(item.itemType, item.getCount);//, reward.requireCount);
+                }
+
                 clearQuestLists.Add(nowQuestData);
                 acceptQuests[nowQuestData].SetActive(false);
                 SuperManager.Instance.soundManager.StopSFX(questClearSoundName);

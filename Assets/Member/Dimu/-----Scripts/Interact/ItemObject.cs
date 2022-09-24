@@ -1,14 +1,11 @@
-﻿using NSY.Iven;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ItemObject : Interactable//, IInteractable
 {
     public Item item;
-    protected InventoryNSY inventoryNSY;
 
     public void Awake()
     {
-        inventoryNSY = FindObjectOfType<InventoryNSY>();
         if (!quad)
         {
             if (transform.Find("Quad"))

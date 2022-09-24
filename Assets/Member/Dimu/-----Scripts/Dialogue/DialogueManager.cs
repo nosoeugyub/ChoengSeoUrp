@@ -23,13 +23,9 @@ namespace DM.Dialog
         public Transform[] npcTalkBubbleTfs;
 
         [Header("UI")]
-        //public GameObject dialogUI;//대화창 조상
-        //public Button nextButton; //다음 버튼 >> 별로다
-        //public Button speedNextButton; //다음 버튼 >> 별로다
         public Text dialogText;
         public Text nameText;
 
-        //public delegate void InputEvent();
         PlayerInput.InputEvent testdelegate;
         PlayerInput.InputEvent savedelegate;
 
@@ -99,10 +95,18 @@ namespace DM.Dialog
         }
         void Start()
         {
-            EventManager.EventActions[((int)EventEnum.Test)] = Test;
-            EventManager.EventActions[(int)EventEnum.StartTalk] += StartNewDialog;
+            DIalogEventManager.EventActions[((int)EventEnum.Test)] = Test;
+            DIalogEventManager.EventActions[(int)EventEnum.StartTalk] += StartNewDialog;
             SetDialogSet(nowLanguageType);
             StartCoroutine(firstDialog());
+        }
+        public void Update()
+        {
+            if (IsTalking && Vector3.Distance(GetNowNpc().transform.position, npcManager.NpcTfs[0].Npctf.transform.position) > 10)
+            {
+                CancleDIalog();
+                DebugText.Instance.SetText(string.Format("대화 중인 상대와 거리가 멀어져 대화가 취소되었습니다."));
+            }
         }
         IEnumerator CanvasAlphaUp(CanvasGroup canvasGroup, bool isUp, float speed)
         {
@@ -137,7 +141,7 @@ namespace DM.Dialog
             nowDialogData.isTalkingOver = true;
             IsTalking = false;
             FirstShowDialog(npcManager.NpcTfs[0].Npctf, false, -1);
-            EventManager.EventActions[(int)EventEnum.StartTalk] -= StartNewDialog;
+            DIalogEventManager.EventActions[(int)EventEnum.StartTalk] -= StartNewDialog;
         }
         public void SetDialogSet(LanguageType languageType)
         {
@@ -170,7 +174,7 @@ namespace DM.Dialog
         {
             print("event test");
             times += Time.deltaTime;
-            if (times > 3) { EventManager.EventAction -= EventManager.EventActions[1]; }
+            if (times > 3) { DIalogEventManager.EventAction -= DIalogEventManager.EventActions[1]; }
         }
         public bool FirstShowDialog(HouseNpc npc, bool isFollowPlayer, int isLike) //첫 상호작용 시 호출. 어떤 대화를 호출할지 결정
         {
@@ -424,7 +428,7 @@ namespace DM.Dialog
 
 
             if (sentences[nowSentenceIdx].eventIdx > 0)
-                EventManager.EventAction += EventManager.EventActions[sentences[nowSentenceIdx].eventIdx];
+                DIalogEventManager.EventAction += DIalogEventManager.EventActions[sentences[nowSentenceIdx].eventIdx];
             if (nowOnFab)
             {
                 nowOnFab.GetComponent<TextBox>().DestroyTextBox();
@@ -448,7 +452,7 @@ namespace DM.Dialog
                 testdelegate = (() =>
                 {
                     if (sentences[nowSentenceIdx - 1].backeventIdx > 0)
-                        EventManager.EventAction += EventManager.BackEventActions[sentences[nowSentenceIdx - 1].backeventIdx];
+                        DIalogEventManager.EventAction += DIalogEventManager.BackEventActions[sentences[nowSentenceIdx - 1].backeventIdx];
                     UpdateDialogText(sentences, sentenceState);
                 });
                 PlayerInput.OnPressFDown = testdelegate;
@@ -494,7 +498,7 @@ namespace DM.Dialog
                                 if (item.rewardType == RewardType.Item)
                                 {
                                     if (SuperManager.Instance.inventoryManager.CanAddInven(item.itemType))
-                                        SuperManager.Instance.inventoryManager.AddItem(item.itemType, item.getCount);
+                                        SuperManager.Instance.inventoryManager.AddItem(item.itemType, item.getCount, true);
                                     else
                                     {
                                         nowDialogData.isTalkingOver = false;
@@ -503,7 +507,7 @@ namespace DM.Dialog
                                 }
                                 else if (item.rewardType == RewardType.Event)
                                 {
-                                    EventManager.EventAction += EventManager.EventActions[item.getCount];
+                                    DIalogEventManager.EventAction += DIalogEventManager.EventActions[item.getCount];
                                 }
                                 //개수만큼 더하게 해야함
                             }
@@ -531,7 +535,7 @@ namespace DM.Dialog
             }
 
             if (sentences[nowSentenceIdx-1].backeventIdx > 0)
-                EventManager.EventAction += EventManager.BackEventActions[sentences[nowSentenceIdx-1].backeventIdx];
+                DIalogEventManager.EventAction += DIalogEventManager.BackEventActions[sentences[nowSentenceIdx-1].backeventIdx];
 
 
             PlayerInput.OnPressFDown = savedelegate;
@@ -553,6 +557,7 @@ namespace DM.Dialog
         {
             QuestData qd = questManager.ReturnCanClearQuestRequireNpc(0); //클리어가능한 퀘스트 0번 인덱스
 
+            //흠.. 얘가 왜 여기에.
             if (qd && qd.npcID == 0)
             {
                 if (qd.questID > -1)

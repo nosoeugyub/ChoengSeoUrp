@@ -208,7 +208,15 @@ namespace NSY.Iven
         {
             _discount--;
         }
+        public void PlusMaxBtn()
+        {
+            _discount = MaxDiscount;
 
+        }
+        public void MiuseMinBtn()
+        {
+            _discount=0;
+        }
         private void DestroyItem(BaseItemSlot baseitemslot)//버릴떄 쓰는 로직
         {
             baseitemslot.item.GetCountItems -= discount;
@@ -291,7 +299,7 @@ namespace NSY.Iven
             if (item != null && openItemContainer.CanAddItem(item))
             {
                 iventorynsy.RemoveItem(item);
-                openItemContainer.AddItem(item);
+                openItemContainer.AddItem(item, false);
             }
         }
 
@@ -301,7 +309,7 @@ namespace NSY.Iven
             if (item != null && iventorynsy.CanAddItem(item))
             {
                 openItemContainer.RemoveItem(item);
-                iventorynsy.AddItem(item);
+                iventorynsy.AddItem(item, false);
             }
         }
 

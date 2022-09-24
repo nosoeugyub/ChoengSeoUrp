@@ -4,13 +4,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
+
 namespace NSY.Iven
 {
     public abstract class ItemContainer : MonoBehaviour, IItemContainer
     {
         //public PlayerInteract playrinteract;
         //  public CraftManager craftslots;
-        public GameObject NoPopUp;
+        public RectTransform NoPopUp;
         public List<ItemSlot> ItemSlots;
         public List<CraftSlot> Craftslot;
         public Item CheckBuliditem;
@@ -48,6 +50,12 @@ namespace NSY.Iven
             }
 
         }
+
+        private void Start()
+        {
+            NoPopUp.localScale = Vector3.zero;
+        }
+
         public void SetCheckBuildItem(Item item)
         {
             CheckBuliditem = item;
@@ -199,7 +207,7 @@ namespace NSY.Iven
             StartCoroutine(NoPopUpgo());
         }
 
-        public virtual bool AddItem(Item item)
+        public virtual bool AddItem(Item item, bool isAdddata)
         {
             if (!CanAddInven(item)) return false;
             //이미 있는 칸에 더할 수 있는지
@@ -207,7 +215,7 @@ namespace NSY.Iven
             {
                 if (ItemSlots[i].CanAddStack(item))
                 {
-                    AddInven(item, i);
+                    AddInven(item, i, isAdddata);
                     return true;
                 }
 
@@ -219,7 +227,7 @@ namespace NSY.Iven
             {
                 if (ItemSlots[i].item == null)
                 {
-                    AddInven(item, i);
+                    AddInven(item, i, isAdddata);
                     return true;
                 }
             }
@@ -228,7 +236,7 @@ namespace NSY.Iven
 
         }
 
-        private void AddInven(Item item, int i)
+        private void AddInven(Item item, int i, bool isAdddata)
         {
             isGettingItem = true;
             ItemSlots[i].item = item;
@@ -238,20 +246,27 @@ namespace NSY.Iven
 
 
 
-            SuperManager.Instance.unlockmanager.GetInterectItemUnLocking();
-            StartCoroutine(DelayUpdateAddValue(item));
+            if (isAdddata)
+            {
+                SuperManager.Instance.unlockmanager.GetInterectItemUnLocking();
+                StartCoroutine(DelayUpdateAddValue(item));
+            }
         }
 
         IEnumerator NoPopUpgo()
         {
-            NoPopUp.SetActive(true);
-            yield return new WaitForSeconds(0.3f);
-            NoPopUp.SetActive(false);
+            NoPopUp.gameObject.SetActive(true);
+            NoPopUp.DOScale(1, 0.2f);
+            yield return new WaitForSeconds(1f);
+            NoPopUp.DOScale(0, 0.2f);
+            yield return new WaitForSeconds(0.2f);
+            NoPopUp.gameObject.SetActive(false);
+
         }
 
         int resultadd;
 
-        public bool AddItem(Item item, int AddCount)//많은 갯수를 먹을때 
+        public bool AddItem(Item item, int AddCount, bool isAddData)//많은 갯수를 먹을때 
         {
             for (int i = 0; i < ItemSlots.Count; i++)
             {
@@ -266,8 +281,11 @@ namespace NSY.Iven
                         if (OnAddItemEvent != null)
                             OnAddItemEvent();
 
-                        SuperManager.Instance.unlockmanager.GetInterectItemUnLocking();// 해금
-                        StartCoroutine(DelayUpdateAddValue(item));
+                        if (isAddData)
+                        {
+                            SuperManager.Instance.unlockmanager.GetInterectItemUnLocking();// 해금
+                            StartCoroutine(DelayUpdateAddValue(item));
+                        }
                     }
                     return true;
                 }
@@ -294,8 +312,11 @@ namespace NSY.Iven
                         if (OnAddItemEvent != null)
                             OnAddItemEvent();
 
-                        SuperManager.Instance.unlockmanager.GetInterectItemUnLocking();
-                        StartCoroutine(DelayUpdateAddValue(item));
+                        if (isAddData)
+                        {
+                            SuperManager.Instance.unlockmanager.GetInterectItemUnLocking();
+                            StartCoroutine(DelayUpdateAddValue(item));
+                        }
 
                     }
                     return true;

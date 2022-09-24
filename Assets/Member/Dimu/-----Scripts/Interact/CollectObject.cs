@@ -35,7 +35,7 @@ public class CollectObject : ItemObject
     public virtual void UpdateCollect()
     {
         Item itemCopy = item.GetCopy();
-        if (SuperManager.Instance.inventoryManager.AddItem(itemCopy))
+        if (SuperManager.Instance.inventoryManager.AddItem(itemCopy, true))
             SuperManager.Instance.soundManager.PlaySFX(picksoundName);
         else
             itemCopy.Destroy();

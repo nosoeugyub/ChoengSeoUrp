@@ -107,7 +107,8 @@ public class MineObject : ItemObject
         {
             DropItems();
             PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.MineItem, PlayerData.ItemData, ((int)ItemBehaviorEnum.length));
-            FindObjectOfType<EnvironmentManager>().ChangeCleanliness(item.CleanAmount);
+            if (item.CleanAmount > 0)
+                FindObjectOfType<EnvironmentManager>().ChangeCleanliness(item.CleanAmount);
 
             ChangeMineState(MineState.Gone);
             if (!cantRespown)
