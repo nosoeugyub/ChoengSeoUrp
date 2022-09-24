@@ -37,6 +37,12 @@ public class CutScene : MonoBehaviour
     [SerializeField] Fader fader;
     Image curImage;
 
+    [SerializeField] GameEvent playerMoveOnEvent;
+    [SerializeField] GameEvent playerMoveOffEvent;
+
+    [SerializeField] GameEvent playerCanInteractEvent;
+    [SerializeField] GameEvent playerCantInteractEvent;
+
     public static bool IsCutSceneOn { get; set; }
 
     private void Update()
@@ -64,6 +70,8 @@ public class CutScene : MonoBehaviour
 
     IEnumerator GetImage(int index)
     {
+        playerMoveOffEvent.Raise();
+        playerCantInteractEvent.Raise();
         yield return fader.IFadeOut(Color.black,2);
         curImage = Instantiate(Image[index].img, ImageSpawn.position, ImageSpawn.rotation, ImageSpawn);
         curImage.rectTransform.sizeDelta = new Vector2(1920, 1080);
@@ -87,6 +95,8 @@ public class CutScene : MonoBehaviour
     public void CloseImage()
     {
         Destroy(curImage.gameObject);
+        playerMoveOnEvent.Raise();
+        playerCanInteractEvent.Raise();
         ConfirmButton.gameObject.SetActive(false);
         foreach (CutSceneImage image in Image)
         {

@@ -25,10 +25,13 @@ public class NPCManager : MonoBehaviour
     [SerializeField] NPCField nowNpcStandAtPort;
 
     [SerializeField] GameObject chick;
-
+    [SerializeField] Fader fader;
 
     [SerializeField] Item removeitem;
     [SerializeField] int removeCount;
+
+    [SerializeField] GameEvent playerCanInteractEvent;
+    [SerializeField] GameEvent playerCantInteractEvent;
 
     public int NowInteractNPCIndex { get; set; }
 
@@ -220,13 +223,12 @@ public class NPCManager : MonoBehaviour
     }
     IEnumerator DelayMove()
     {
-        npcTfs[0].Npctf.transform.GetChild(0).GetComponent<PlayerInteract>().canInteract = false;
-        DIalogEventManager.EventActions[(int)EventEnum.FadeOut].Invoke();
-        yield return new WaitForSeconds(4);
+        playerCantInteractEvent.Raise();
+        yield return fader.IFadeOut(Color.white, 2);
         npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(StartPos.position);
-        DIalogEventManager.EventActions[(int)EventEnum.FadeIn].Invoke();
+        yield return fader.IFadeIn(Color.white, 2);
         DIalogEventManager.EventActions[(int)EventEnum.StartTalk].Invoke();
-        npcTfs[0].Npctf.transform.GetChild(0).GetComponent<PlayerInteract>().canInteract = true;
+        playerCanInteractEvent.Raise();
 
     }
 

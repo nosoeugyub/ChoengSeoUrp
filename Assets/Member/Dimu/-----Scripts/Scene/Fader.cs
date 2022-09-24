@@ -31,8 +31,6 @@ public class Fader : MonoBehaviour
         fadeAnim.ResetTrigger("startwhitescreen");
         fadeAnim.SetTrigger("whitescreen");
         fadeAnim.speed = 1 / speed;
-        Debug.Log(fadeAnim.speed);
-        Debug.Log(speed);
         yield return new WaitForSeconds(speed);
     }
     public IEnumerator IFadeIn(Color color, float speed)

@@ -7,10 +7,24 @@ public class SceneChangeManager : MonoBehaviour
     [SerializeField] Fader fader;
     Color loadscenecolor;
     float loadscenespeed;
+    [SerializeField] GameEvent playerMoveOnEvent;
+    [SerializeField] GameEvent playerMoveOffEvent;
+
+    [SerializeField] GameEvent playerCanInteractEvent;
+    [SerializeField] GameEvent playerCantInteractEvent;
     private void Start()
     {
         loadscenecolor = Color.white;
         loadscenespeed = 1;
+        StartCoroutine(StartSceneFade());
+    }
+    public IEnumerator StartSceneFade()
+    {
+        playerMoveOffEvent.Raise();
+        playerCantInteractEvent.Raise();
+        yield return fader.IFadeIn();
+        playerMoveOnEvent.Raise();
+        playerCanInteractEvent.Raise();
     }
     public void LoadSceneFadeString(string scenename)
     {
@@ -19,6 +33,7 @@ public class SceneChangeManager : MonoBehaviour
 
     IEnumerator LoadSceneFadeStringCo(string scenename)
     {
+        playerMoveOffEvent.Raise();
         yield return fader.IFadeOut(loadscenecolor,loadscenespeed);
         LoadSceneAsString(scenename);
     }
@@ -43,6 +58,7 @@ public class SceneChangeManager : MonoBehaviour
     }
     IEnumerator Quit()
     {
+        playerMoveOffEvent.Raise();
         yield return fader.IFadeOut(loadscenecolor, loadscenespeed);
         Application.Quit();
     }

@@ -1,7 +1,6 @@
 ﻿using DM.Building;
 using DM.Event;
 using DM.NPC;
-using NSY.Manager;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -12,7 +11,7 @@ namespace NSY.Player
     public class PlayerInteract : MonoBehaviour
     {
         [SerializeField] List<Interactable> interacts = new List<Interactable>();//상호작용 범위 내 있는 IInteractable오브젝트 리스트
-        Interactable closestObj;//가장 가까운 친구
+        [SerializeField]  Interactable closestObj;//가장 가까운 친구
 
         CursorManager cursorManager;
         BuildingManager buildingManager;
@@ -37,6 +36,7 @@ namespace NSY.Player
         Ray ray;
         Interactable nowInteractable;
         public bool canInteract = true;
+        public int canInteractCount;
         [HideInInspector] public int layerMask;   // Player 레이어만 충돌 체크함
         [SerializeField] LayerMask layerMask2;   // Player 레이어만 충돌 체크함
 
@@ -55,7 +55,7 @@ namespace NSY.Player
         {
             layerMask = 1 << LayerMask.NameToLayer("Interactable");
             //마우스 상호작용 오브젝트는 Interactable 이라는 레이어를 가지고 있어야 합니다.
-
+            canInteractCount = 0;
             cursorManager = FindObjectOfType<CursorManager>();
             buildingManager = FindObjectOfType<BuildingManager>();
         }
@@ -65,9 +65,29 @@ namespace NSY.Player
         }
         private void Update()
         {
+            LightClosestObj();
             if (!canInteract) return;
             InteractWithObjects();
-            LightClosestObj();
+        }
+
+        public void SetCanInteract(bool _canInteract)
+        {
+            if (_canInteract)
+            {
+                canInteractCount--;
+
+                if (canInteractCount <= 0)
+                {
+                    Debug.Log("SetInteract true");
+                    canInteract = _canInteract;
+                }
+            }
+            else
+            {
+                canInteractCount++;
+                    Debug.Log("SetInteract false");
+                canInteract = _canInteract;
+            }
         }
         public bool SetNpc(HouseNpc npc)
         {
@@ -90,10 +110,22 @@ namespace NSY.Player
 
         public void SetIsAnimation(bool isTrue)
         {
-            //eventContainer.MoveOnOff(isTrue);
-            //MoveOnOffEvent.Invoke();
-            if (isTrue) playerMoveOffEvent.Raise();
-            else playerMoveOnEvent.Raise();
+            if (isTrue)
+            {
+                if (!isAnimating)
+                {
+                    SetCanInteract(false);
+                    playerMoveOffEvent.Raise();
+                }
+            }
+            else
+            {
+                if (isAnimating)
+                {
+                    SetCanInteract(true);
+                    playerMoveOnEvent.Raise();
+                }
+            }
             isAnimating = isTrue;
         }
 
@@ -103,6 +135,7 @@ namespace NSY.Player
             CollectObject collectObj = interactable.transform.GetComponent<CollectObject>();
             if (collectObj != null)
             {
+                Debug.Log(collectObj.item.ItemName);
                 //if (SuperManager.Instance.inventoryManager.isGettingItem == false)
                 {
                     if (collectObj.Collect(playerAnimator.animator)) //콜렉트에서 애니 발생함
@@ -247,7 +280,7 @@ namespace NSY.Player
 
             if (interacts.Count <= 1) return;
 
-            DistChect();
+            DistCheck();
 
             if (closestObj)
             {
@@ -264,10 +297,12 @@ namespace NSY.Player
         }
         public void InvokeInteractClosestObj()
         {
+            if (!canInteract) return;
+            Debug.Log(canInteract);
             InvokeInteract(closestObj);
         }
-        //거리 계산
-        public void DistChect()
+        //거리 계산. 한 메서드가 하는 일 많음.
+        public void DistCheck()
         {
             float shortestDist = 1000000;
 

@@ -487,7 +487,6 @@ namespace DM.Dialog
             if (nowDialogData.questId > -1)
             {
                 //완료 상태 아니라면 강제수락
-                print(sentenceState);
                 switch (sentenceState)
                 {
                     case 0://수락 상태라면?

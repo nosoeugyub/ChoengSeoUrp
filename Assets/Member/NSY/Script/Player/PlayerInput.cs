@@ -44,10 +44,7 @@ namespace NSY.Player
 
             if (Input.GetKeyDown(KeyCode.F))
             {
-                if (CutScene.IsCutSceneOn == false)
-                {
-                    OnPressFDown();
-                }
+                OnPressFDown();
             }
         }
     }
