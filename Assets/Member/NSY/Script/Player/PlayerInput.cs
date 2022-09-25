@@ -38,6 +38,7 @@ namespace NSY.Player
         {
             if (Input.GetKey(_InputInterBtn))
             {
+                OnPressFDown();
                 interectObj = true;
             }
             else
@@ -47,7 +48,7 @@ namespace NSY.Player
 
             if (Input.GetKeyDown(_InputInterBtn))
             {
-                OnPressFDown();
+                //OnPressFDown();
             }
             if (Input.GetKeyDown(_escKey))
             {

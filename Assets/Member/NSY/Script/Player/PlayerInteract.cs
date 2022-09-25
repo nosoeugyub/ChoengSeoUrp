@@ -298,7 +298,7 @@ namespace NSY.Player
         }
         public void InvokeInteractClosestObj()
         {
-            if (!canInteract) return;
+            if (!canInteract && isAnimating) return;
             Debug.Log(canInteract);
             InvokeInteract(closestObj);
         }

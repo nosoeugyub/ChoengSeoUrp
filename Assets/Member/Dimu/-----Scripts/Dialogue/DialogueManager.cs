@@ -56,6 +56,8 @@ namespace DM.Dialog
         HouseNpc nowNpc;
         [SerializeField] bool isTalking = false;
         float times = 0;
+        [SerializeField] float interactdelaytime;
+        bool isenddelay = true;
 
         QuestManager questManager;
         NPCManager npcManager;
@@ -283,13 +285,6 @@ namespace DM.Dialog
                     dialogLength = nowDialogData.acceptSentenceInfo.Length;
                 }
             }
-            ////청설모 위치 이동
-            //if (partnerTf != npcManager.NpcTfs[0].Npctf.transform)
-            //{
-            //    npcManager.NpcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(partnerTf.position + (-partnerTf.right * 4), true);
-            //            DebugText.Instance.SetText(string.Format("{0}님 옆으로 이동!",nowNpc.GetCharacterType().ToString()));
-            //}
-            //존나 구림
 
             for (int i = 0; i < alphaCanvases.Length; ++i)
             {
@@ -439,13 +434,11 @@ namespace DM.Dialog
             }
             return true;
         }
-        //public void UpdateDialog(Sentence[] sentences, int sentenceState)
-        //{
-        //    UpdateDialogText(sentences, sentenceState);
-        //}
 
         private void UpdateDialogText(Sentence[] sentences, int sentenceState)
         {
+            if (isenddelay == false) return;
+
             if (sentences.Length == 0)
             {
                 LastDialogNextEvent(sentences, sentenceState);
@@ -466,7 +459,8 @@ namespace DM.Dialog
             nowOnFab.GetComponent<TextBox>().SetTextbox(nowSentences.sentence, npcTalkBubbleTfs[nowSentences.characterId], nowSentences.textboxType, nowSentences.isLeft);
 
             nameText.text = activeQuestDialogLists[sentences[nowSentenceIdx++].characterId].charName;
-
+            isenddelay = false;
+            StartCoroutine(DelayUpdateBool(sentences, sentenceState));
 
             if (dialogLength <= nowSentenceIdx)
             {
@@ -478,12 +472,18 @@ namespace DM.Dialog
                 {
                     if (sentences[nowSentenceIdx - 1].backeventIdx > 0)
                         DIalogEventManager.EventAction += DIalogEventManager.BackEventActions[sentences[nowSentenceIdx - 1].backeventIdx];
+
+
                     UpdateDialogText(sentences, sentenceState);
                 });
                 PlayerInput.OnPressFDown = dialogdelegate;
             }
         }
-
+        IEnumerator DelayUpdateBool(Sentence[] sentences, int sentenceState)
+        {
+            yield return new WaitForSeconds(interactdelaytime);
+            isenddelay = true;
+        }
         //마지막 대사일 때 작동
         private void LastDialog(Sentence[] sentences, int sentenceState)
         {
@@ -497,7 +497,7 @@ namespace DM.Dialog
 
         private void LastDialogNextEvent(Sentence[] sentences, int sentenceState)
         {
-
+            if (isenddelay == false) return;
             if (nowOnFab)
             {
                 nowOnFab.GetComponent<TextBox>().DestroyTextBox();
