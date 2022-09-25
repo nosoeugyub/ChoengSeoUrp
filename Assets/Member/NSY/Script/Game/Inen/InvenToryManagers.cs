@@ -131,21 +131,6 @@ namespace NSY.Iven
         }
         private void InventoryRightClick(BaseItemSlot itemslot)
         {
-            //if (itemslot.item.OutItemType == OutItemType.Tool)
-            //{
-            //    Unequip(itemslot.item);
-            //}
-            //else if (itemslot.item is UseableItem)
-            //{
-            //    UseableItem usableitem = (UseableItem)itemslot.item;
-            //    usableitem.Use(this);
-
-            //    if (usableitem.isConsumable)
-            //    {
-            //        iventorynsy.RemoveItem(usableitem);
-            //        usableitem.Destroy();
-            //    }
-            //}
         }
 
         private void BeginDrag(BaseItemSlot itemslot)
@@ -154,7 +139,24 @@ namespace NSY.Iven
             {
                 dragitemSlot = itemslot;
                 draggableitem.sprite = itemslot.item.ItemSprite;
+                ResizeDraggableitemImg();
                 draggableitem.gameObject.SetActive(true);
+            }
+        }
+        private void ResizeDraggableitemImg()
+        {
+            draggableitem.SetNativeSize();
+
+            float maxsizeWH = draggableitem.sprite.texture.height;
+            if (draggableitem.sprite.texture.width >= draggableitem.sprite.texture.height)
+                maxsizeWH = draggableitem.sprite.texture.width;
+
+            LayoutRebuilder.ForceRebuildLayoutImmediate(draggableitem.rectTransform);
+            float resizeSize = dragitemSlot.itemImage.rectTransform.rect.width / maxsizeWH;
+            if (resizeSize != 0)
+            {
+                Vector3 scaleVec = new Vector3(resizeSize, resizeSize, 1);
+                draggableitem.rectTransform.localScale = scaleVec;// ResultSlotListImage.rectTransform.rect.width /maxsizeWH;
             }
         }
         private void Drag(BaseItemSlot itemslot)
@@ -215,7 +217,7 @@ namespace NSY.Iven
         }
         public void MiuseMinBtn()
         {
-            _discount=0;
+            _discount = 0;
         }
         private void DestroyItem(BaseItemSlot baseitemslot)//버릴떄 쓰는 로직
         {

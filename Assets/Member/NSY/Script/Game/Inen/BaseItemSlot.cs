@@ -21,13 +21,14 @@ namespace NSY.Iven
         //슬롯갯수
         public TextMeshProUGUI amountText;
         //public Text amountText;
+        public float resizeSize;
 
 
         protected bool isPointerOver;
 
         private Color normalColor = Color.white;
         private Color disabledColor = new Color(0.5f, 0.5f, 0.5f, 1);
-        private Color cantInteractColor = new Color(1, 0.5f, 0.5f, 1); //채원이 빨갱이
+        private Color cantInteractColor = new Color(1, 0.5f, 0.5f, 1);
         public event Action<BaseItemSlot> OnRightClickEvent;
         public event Action<BaseItemSlot> OnLeftClickEvent;
         public event Action<BaseItemSlot> OnPointerEnterEvent;
@@ -68,7 +69,8 @@ namespace NSY.Iven
                     childImgObject.color = normalColor;
                     backgroundObject.color = normalColor;
 
-                    StartCoroutine(DelayChangeSize());
+                    ResizeChildImg();
+                    //StartCoroutine(DelayChangeSize());
                 }
 
                 if (isPointerOver)
@@ -141,6 +143,10 @@ namespace NSY.Iven
             Amount = _amount;
 
         }
+        private void OnEnable()
+        {
+            StartCoroutine(DelayChangeSize());
+        }
         protected virtual void OnDisable()
         {
             if (isPointerOver)
@@ -158,9 +164,12 @@ namespace NSY.Iven
         {
             if (transform.childCount > 0)
             {
-                childImgObject.enabled = true;
                 childImgObject = transform.GetChild(0).GetComponent<Image>();
-                childImgObject.sprite = _item.ItemSprite;
+                if (_item)
+                {
+                    childImgObject.enabled = true;
+                    childImgObject.sprite = _item.ItemSprite;
+                }
                 childImgObject.SetNativeSize();
 
                 float maxsizeWH = childImgObject.sprite.texture.height;
@@ -168,10 +177,10 @@ namespace NSY.Iven
                     maxsizeWH = childImgObject.sprite.texture.width;
 
                 LayoutRebuilder.ForceRebuildLayoutImmediate(itemImage.rectTransform);
-                float scale = itemImage.rectTransform.rect.width / maxsizeWH;
-                if (scale != 0)
+                resizeSize = itemImage.rectTransform.rect.width / maxsizeWH;
+                if (resizeSize != 0)
                 {
-                    Vector3 scaleVec = new Vector3(scale, scale, 1);
+                    Vector3 scaleVec = new Vector3(resizeSize, resizeSize, 1);
                     childImgObject.rectTransform.localScale = scaleVec;// ResultSlotListImage.rectTransform.rect.width /maxsizeWH;
                 }
             }

@@ -11,7 +11,7 @@ namespace NSY.Player
     public class PlayerInteract : MonoBehaviour
     {
         [SerializeField] List<Interactable> interacts = new List<Interactable>();//상호작용 범위 내 있는 IInteractable오브젝트 리스트
-        [SerializeField]  Interactable closestObj;//가장 가까운 친구
+        [SerializeField] Interactable closestObj;//가장 가까운 친구
 
         CursorManager cursorManager;
         BuildingManager buildingManager;
@@ -85,7 +85,7 @@ namespace NSY.Player
             else
             {
                 canInteractCount++;
-                    Debug.Log("SetInteract false");
+                Debug.Log("SetInteract false");
                 canInteract = _canInteract;
             }
         }
@@ -232,16 +232,17 @@ namespace NSY.Player
                 nowInteractable.EndInteract();
 
             buildinginteractUi.SetActive(false);
+            StartCoroutine(cursorManager.SetCursor((int)CursorType.Normal));
 
             if (Physics.Raycast(ray, out hit, 20, layerMask2.value) && !buildingManager.isBuildMode)
             {
                 nowInteractable = hit.collider.GetComponent<Interactable>();
                 if (nowInteractable != null && IsInteracted(nowInteractable))// 클릭한 옵젝이 닿은 옵젝 리스트에 있다면 통과ds
                 {
-                    StartCoroutine(cursorManager.SetCursor(nowInteractable.CanInteract()));
 
                     if (nowInteractable.GetComponent<BuildingBlock>() && !IsPointerOverUIObject())
                     {
+                        StartCoroutine(cursorManager.SetCursor(nowInteractable.CanInteract()));//건축 외에는 변하지 않음
                         buildinginteractUi.SetActive(true);
                         Vector3 uiPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y + 40, Input.mousePosition.z);
 
@@ -251,7 +252,6 @@ namespace NSY.Player
                 }
                 else
                 {
-                    StartCoroutine(cursorManager.SetCursor((int)CursorType.Normal));
                 }
             }
 

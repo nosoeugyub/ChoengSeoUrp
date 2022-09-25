@@ -211,8 +211,8 @@ public class NPCManager : MonoBehaviour
         MoveToNPCSomewhere(2, WalPos.position);
         npcTfs[2].IsField = true;
         npcTfs[2].Npctf.UIOnEvent(2);
-
-        DIalogEventManager.EventAction -= DIalogEventManager.EventActions[5];
+        
+        DIalogEventManager.EventAction -= DIalogEventManager.EventActions[(int)EventEnum.MoveToWalPort];
     }
     private void MoveToBearsHouseWithSheep()
     {

@@ -37,6 +37,8 @@ namespace NSY.Manager
         private static DIalogEventManager _instace = null;
 
         public GameObject[] cols;
+        public GameObject[] portColBefore;
+        public GameObject[] portColAfter;
         public GameObject chick;
 
         public static Action[] EventActions = new Action[30];
@@ -70,6 +72,7 @@ namespace NSY.Manager
             EventActions[((int)EventEnum.OpenRoad1)] = OpenPortCol1;
             EventActions[((int)EventEnum.OpenRoad2)] = OpenPortCol2;
             EventActions[((int)EventEnum.OnChick)] = OnEnableChick;
+            EventActions[((int)EventEnum.MoveToWalPort)] = PortColiderChange;
         }
         private void Update()
         {
@@ -89,6 +92,18 @@ namespace NSY.Manager
         {
             chick.SetActive(true);
         }
+        public void PortColiderChange()
+        {
+            //foreach (GameObject item in portColBefore)
+            //{
+            //    item.SetActive(false);
+            //}
+            //foreach (GameObject item in portColAfter)
+            //{
+            //    item.SetActive(true);
+            //}
+        }
+
     }
 }
 
