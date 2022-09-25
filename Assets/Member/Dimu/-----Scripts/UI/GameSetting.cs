@@ -1,4 +1,5 @@
-﻿using StylizedWater;
+﻿using NSY.Player;
+using StylizedWater;
 using System.Collections;
 using UnityEngine;
 
@@ -7,16 +8,32 @@ public class GameSetting : MonoBehaviour
     [SerializeField] GameObject settingUI;
     [SerializeField] PlanarReflections reflection;
     [SerializeField] Fader fader;
-    public void Update()
+
+    PlayerInput.InputEvent savedelegate;
+
+    private void Start()
     {
-        if (Input.GetKeyUp(KeyCode.Escape))
-        {
-            SettingUIONOff();
-        }
+        PlayerInput.OnPressESCDown = SettingUIONOff;
     }
+    //public void Update()
+    //{
+    //    if (Input.GetKeyUp(KeyCode.Escape))
+    //    {
+    //        SettingUIONOff();
+    //    }
+    //}
 
     public void SettingUIONOff()
     {
+        if (!settingUI.activeSelf)
+        {
+            savedelegate = PlayerInput.OnPressESCDown;
+            PlayerInput.OnPressESCDown = SettingUIONOff;
+        }
+        else
+        {
+            PlayerInput.OnPressESCDown = savedelegate;
+        }
         settingUI.SetActive(!settingUI.activeSelf);
     }
     public void ReflectionONOff(bool value)

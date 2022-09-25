@@ -268,6 +268,7 @@ namespace NSY.Player
                 }
             }
         }
+
         ////가장 가까운 오브젝트 검출
         public void LightClosestObj()
         {

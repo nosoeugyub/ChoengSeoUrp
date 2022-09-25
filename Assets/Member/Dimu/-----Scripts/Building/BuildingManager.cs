@@ -1,5 +1,6 @@
 ﻿using Game.Cam;
 using NSY.Manager;
+using NSY.Player;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +13,12 @@ namespace DM.Building
         private CameraManager CamManager;
         private BuildingDisplay buildingDisplay;
 
+        PlayerInput.InputEvent savedelegate_ESC;
+        PlayerInput.InputEvent savedelegate_F;
+
+        [SerializeField] GameEvent playerCanInteractEvent;
+        [SerializeField] GameEvent playerCantInteractEvent;
+
         public bool isBuildMode { get; set; } = false;
         private BuildingBlock nowBuildingBlock { get; set; } = null; //static에서 private로...
 
@@ -21,14 +28,21 @@ namespace DM.Building
             CamManager = FindObjectOfType<CameraManager>();
             buildingDisplay = FindObjectOfType<BuildingDisplay>();
         }
-        private void Start()
-        {
-            buildingDisplay.SetBuildModeOffButtonEvent(BuildModeOff);
-        }
+
+        //private void Start()
+        //{
+        //    //buildingDisplay.SetBuildModeOffButtonEvent(BuildModeOff);
+        //}
 
         public void BuildModeOn(BuildingBlock nowBuildingBlock_)
         {
             if (SuperManager.Instance.dialogueManager.IsTalking) return;
+
+            savedelegate_ESC =PlayerInput.OnPressESCDown;
+            savedelegate_F = PlayerInput.OnPressFDown;
+            PlayerInput.OnPressESCDown = BuildModeOff;
+            PlayerInput.OnPressFDown = null;
+            Debug.Log(savedelegate_F + " set null");
 
             isBuildMode = true;
 
@@ -41,7 +55,7 @@ namespace DM.Building
             nowBuildingBlock_.BuildModeOnSetting();
 
             //UI
-            buildingDisplay.BuildDisplayOn(true); //UI Display 추가
+            //buildingDisplay.BuildDisplayOn(true); //UI Display 추가
 
             //camera
             CamManager.ChangeFollowTarger(nowBuildingBlock.gameObject.transform, 1);
@@ -52,6 +66,9 @@ namespace DM.Building
         public void BuildModeOff()
         {
             if (!isBuildMode) return;
+
+            PlayerInput.OnPressESCDown = savedelegate_ESC;
+            PlayerInput.OnPressFDown = savedelegate_F;
 
             isBuildMode = false;
 
@@ -67,7 +84,7 @@ namespace DM.Building
 
             //UI
             buildingDisplay.CancelUIState(false);
-            buildingDisplay.BuildDisplayOn(false);
+            //buildingDisplay.BuildDisplayOn(false);
 
             //camera
             CamManager.DeactiveSubCamera(1);

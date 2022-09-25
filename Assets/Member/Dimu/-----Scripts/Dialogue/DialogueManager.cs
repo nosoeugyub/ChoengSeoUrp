@@ -26,7 +26,7 @@ namespace DM.Dialog
         public Text dialogText;
         public Text nameText;
 
-        PlayerInput.InputEvent testdelegate;
+        PlayerInput.InputEvent dialogdelegate;
         PlayerInput.InputEvent savedelegate;
 
         public List<DialogList> activeQuestDialogLists; //퀘스트 있는 대화
@@ -121,7 +121,7 @@ namespace DM.Dialog
             }
             else
             {
-               raycastBlockImg.raycastTarget = true;
+                raycastBlockImg.raycastTarget = true;
                 while (canvasGroup.alpha > 0)
                 {
                     canvasGroup.alpha -= Time.deltaTime * speed;
@@ -216,6 +216,27 @@ namespace DM.Dialog
 
                 List<QuestData> isAcceptedQuests = questManager.GetIsAcceptedQuestList((int)nowNpc.GetCharacterType());//진행중인 대화 
                 List<DialogData> canStartDialogs = GetCanAcceptDialogList((int)nowNpc.GetCharacterType(), true);//시작가능 대화
+                DialogData canStartDialog = null;
+
+                foreach (DialogData data in canStartDialogs)
+                {
+                    if (data.questId < 0)
+                    {
+                        Debug.Log("canStartDialog = data");
+                        canStartDialog = data;
+                        break;
+                    }
+                    else
+                    {
+                        if (!questManager.IsQuestAccepted(questManager.nowQuestLists[(int)nowNpc.GetCharacterType()].questList[data.questId]))
+                        {
+                            Debug.Log("canStartDialog = data");
+                            canStartDialog = data;
+                            break;
+                        }
+                    }
+                }
+
 
                 //완료자가 nowPartner(현재 대화 상대)인 퀘스트 받아옴. 제공자는 같을 수도,  다를 수 있음.
                 if (canClearqd != null && questManager.ClearQuest(canClearqd.questID, canClearqd.npcID))//있거나 클리어할 수 있다면
@@ -226,7 +247,17 @@ namespace DM.Dialog
                     dialogLength = nowDialogData.clearSentenceInfo.Length;
                     sentenceState = 2;//클리어
                 }
+                //하 슈발 코드 개기네 일단 대화 가능한 
+                else if (canStartDialog)//시작가능 대화가 있다면?
+                {
+                    //nowDialogData = questDialogLists[nowPartner].dialogList[canStartDialogs[0].questId];
 
+                    nowDialogData = canStartDialog;
+
+                    ss = nowDialogData.acceptSentenceInfo;
+                    dialogLength = nowDialogData.acceptSentenceInfo.Length;
+                    sentenceState = 0;//수락
+                }
                 else if (isAcceptedQuests.Count > 0 && CanAccept(isAcceptedQuests)) // 진행중인 대화가 있다면?
                 {
                     nowDialogData = activeQuestDialogLists[(int)nowNpc.GetCharacterType()].dialogList[FindDialogIndex(isAcceptedQuests[0])];
@@ -235,15 +266,7 @@ namespace DM.Dialog
                     dialogLength = nowDialogData.proceedingSentenceInfo.Length;
                     sentenceState = 1;//진행중
                 }
-                else if (canStartDialogs.Count > 0)//시작가능 대화가 있다면?
-                {
-                    //nowDialogData = questDialogLists[nowPartner].dialogList[canStartDialogs[0].questId];
-                    nowDialogData = canStartDialogs[0];
 
-                    ss = nowDialogData.acceptSentenceInfo;
-                    dialogLength = nowDialogData.acceptSentenceInfo.Length;
-                    sentenceState = 0;//수락
-                }
                 else //아무것도 없다면?
                 {
                     canStartDialogs = GetCanAcceptDialogList((int)nowNpc.GetCharacterType(), false);
@@ -349,6 +372,8 @@ namespace DM.Dialog
         }
         public bool CanStartTalk(DialogData dialogData, HouseNpc npc)
         {
+            // if (dialogData.isTalkingOver) return false;
+
             if (dialogData.haveToHaveAndLikeHouse)//입주 필수 인가?
             {
                 if (!npc.IsHaveHouse()) return false;//그렇다면 이 npc는 집을 갖고 있는가?
@@ -449,25 +474,25 @@ namespace DM.Dialog
             }
             else
             {
-                testdelegate = (() =>
+                dialogdelegate = (() =>
                 {
                     if (sentences[nowSentenceIdx - 1].backeventIdx > 0)
                         DIalogEventManager.EventAction += DIalogEventManager.BackEventActions[sentences[nowSentenceIdx - 1].backeventIdx];
                     UpdateDialogText(sentences, sentenceState);
                 });
-                PlayerInput.OnPressFDown = testdelegate;
+                PlayerInput.OnPressFDown = dialogdelegate;
             }
         }
 
         //마지막 대사일 때 작동
         private void LastDialog(Sentence[] sentences, int sentenceState)
         {
-            testdelegate = (() =>
+            dialogdelegate = (() =>
             {
                 LastDialogNextEvent(sentences, sentenceState);
 
             });
-            PlayerInput.OnPressFDown = testdelegate;
+            PlayerInput.OnPressFDown = dialogdelegate;
         }
 
         private void LastDialogNextEvent(Sentence[] sentences, int sentenceState)
@@ -478,7 +503,7 @@ namespace DM.Dialog
                 nowOnFab.GetComponent<TextBox>().DestroyTextBox();
                 nowOnFab = null;
             }
-            testdelegate = null;
+            dialogdelegate = null;
 
             IsTalking = false;
             nowDialogData.isTalkingOver = true;
@@ -533,8 +558,8 @@ namespace DM.Dialog
                 }
             }
 
-            if (sentences[nowSentenceIdx-1].backeventIdx > 0)
-                DIalogEventManager.EventAction += DIalogEventManager.BackEventActions[sentences[nowSentenceIdx-1].backeventIdx];
+            if (sentences[nowSentenceIdx - 1].backeventIdx > 0)
+                DIalogEventManager.EventAction += DIalogEventManager.BackEventActions[sentences[nowSentenceIdx - 1].backeventIdx];
 
 
             PlayerInput.OnPressFDown = savedelegate;
@@ -545,7 +570,7 @@ namespace DM.Dialog
         {
             nowOnFab.GetComponent<TextBox>().DestroyTextBox();
             nowOnFab = null;
-            testdelegate = null;
+            dialogdelegate = null;
             IsTalking = false;
 
             PlayerInput.OnPressFDown = savedelegate;

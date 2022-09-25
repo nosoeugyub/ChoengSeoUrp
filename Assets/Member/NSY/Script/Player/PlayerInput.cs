@@ -11,10 +11,12 @@ namespace NSY.Player
 
         public delegate void InputEvent();
         public static InputEvent OnPressFDown; //F 누를 때 실행할 메서드 갈아껴주는 용도
+        public static InputEvent OnPressESCDown; //F 누를 때 실행할 메서드 갈아껴주는 용도
 
         //플레이어가 누르는 키입력
         [Space]
         public KeyCode _InputInterBtn = KeyCode.F;
+        public KeyCode _escKey = KeyCode.Escape;
 
         [Space]
         public KeyCode scaleUpKey = KeyCode.W;
@@ -23,6 +25,7 @@ namespace NSY.Player
         public KeyCode rotateRightKey = KeyCode.D;
         public KeyCode frontKey = KeyCode.E;
         public KeyCode BackKey = KeyCode.Q;
+
 
         internal bool interectObj;
 
@@ -42,9 +45,13 @@ namespace NSY.Player
                 interectObj = false;
             }
 
-            if (Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKeyDown(_InputInterBtn))
             {
                 OnPressFDown();
+            }
+            if (Input.GetKeyDown(_escKey))
+            {
+                OnPressESCDown();
             }
         }
     }

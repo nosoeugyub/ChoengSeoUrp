@@ -131,7 +131,7 @@ namespace DM.Building
 
         public void CanInteract()
         {
-            NSY.Player.PlayerInput.OnPressFDown = Interact;
+           // NSY.Player.PlayerInput.OnPressFDown = Interact;
         }
 
         public void EndInteract()
