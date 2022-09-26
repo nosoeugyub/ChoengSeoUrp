@@ -17,8 +17,8 @@ namespace NSY.Player
         BuildingManager buildingManager;
         EventContainer eventContainer;
 
-        public GameObject interactUI;//띄울 UI
-        public GameObject buildinginteractUi;//띄울 UI
+        public RectTransform interactUI;//띄울 UI
+        public RectTransform buildinginteractUi;//띄울 UI
         public TextMeshProUGUI interactUiText2;
 
         //[SerializeField] Item handItem;
@@ -49,24 +49,24 @@ namespace NSY.Player
 
         [SerializeField] Shader GlowColor;
 
-
+        Camera mainCam;
 
         private void Awake()
         {
             layerMask = 1 << LayerMask.NameToLayer("Interactable");
-            //마우스 상호작용 오브젝트는 Interactable 이라는 레이어를 가지고 있어야 합니다.
-            canInteractCount = 0;
             cursorManager = FindObjectOfType<CursorManager>();
             buildingManager = FindObjectOfType<BuildingManager>();
+            mainCam = Camera.main;
         }
         private void Start()
         {
+            canInteractCount = 0;
             PlayerInput.OnPressFDown = InvokeInteractClosestObj;
         }
         private void Update()
         {
-            LightClosestObj();
             if (!canInteract) return;
+            LightClosestObj();
             InteractWithObjects();
         }
 
@@ -78,15 +78,15 @@ namespace NSY.Player
 
                 if (canInteractCount <= 0)
                 {
-                    Debug.Log("SetInteract true");
                     canInteract = _canInteract;
+                    //Debug.Log("SetInteract true  " + closestObj);
                 }
             }
             else
             {
                 canInteractCount++;
-                Debug.Log("SetInteract false");
                 canInteract = _canInteract;
+                //Debug.Log("SetInteract false  " + closestObj);
             }
         }
         public bool SetNpc(HouseNpc npc)
@@ -188,6 +188,7 @@ namespace NSY.Player
                 }
                 else
                 {
+                Debug.Log(mineable.item.ItemName);
                     SetIsAnimation(true);
                     return;
                 }
@@ -204,7 +205,7 @@ namespace NSY.Player
                 else
                 {
                     print(buildAreaObject.name);
-                    buildinginteractUi.SetActive(false);
+                    buildinginteractUi.gameObject.SetActive(false);
                     buildingManager.BuildModeOn(buildAreaObject);
                 }
                 return;
@@ -231,7 +232,7 @@ namespace NSY.Player
             if (nowInteractable)
                 nowInteractable.EndInteract();
 
-            buildinginteractUi.SetActive(false);
+            buildinginteractUi.gameObject.SetActive(false);
             StartCoroutine(cursorManager.SetCursor((int)CursorType.Normal));
 
             if (Physics.Raycast(ray, out hit, 20, layerMask2.value) && !buildingManager.isBuildMode)
@@ -243,11 +244,11 @@ namespace NSY.Player
                     if (nowInteractable.GetComponent<BuildingBlock>() && !IsPointerOverUIObject())
                     {
                         StartCoroutine(cursorManager.SetCursor(nowInteractable.CanInteract()));//건축 외에는 변하지 않음
-                        buildinginteractUi.SetActive(true);
+                        buildinginteractUi.gameObject.SetActive(true);
                         Vector3 uiPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y + 40, Input.mousePosition.z);
 
                         RectTransformUtility.ScreenPointToLocalPointInRectangle(targetRectTr, uiPos, uiCamera, out screenPoint);
-                        buildinginteractUi.GetComponent<RectTransform>().localPosition = screenPoint;
+                        buildinginteractUi.localPosition = screenPoint;
                     }
                 }
                 else
@@ -276,7 +277,7 @@ namespace NSY.Player
             {
                 closestObj.EndInteract();
                 closestObj = null;
-                interactUI.SetActive(false);
+                interactUI.gameObject.SetActive(false);
             }
 
             if (interacts.Count <= 1) return;
@@ -286,20 +287,16 @@ namespace NSY.Player
             if (closestObj)
             {
                 closestObj.CanInteract();
-                interactUI.SetActive(true);
-                Vector3 vector3 = Camera.main.WorldToScreenPoint(closestObj.transform.position);
-
+                interactUI.gameObject.SetActive(true);
+                Vector3 vector3 = mainCam.WorldToScreenPoint(closestObj.transform.position);
                 RectTransformUtility.ScreenPointToLocalPointInRectangle(targetRectTr, vector3, uiCamera, out screenPoint);
-                interactUI.GetComponent<RectTransform>().localPosition = screenPoint;
-                //interactUI.transform.position = RectTransformUtility.WorldToScreenPoint(Camera.main, interactUI.transform.position);
-
-                //ChangeLightShader(closestObj);
+                interactUI.localPosition = screenPoint;
             }
         }
         public void InvokeInteractClosestObj()
         {
             if (!canInteract && isAnimating) return;
-            Debug.Log(canInteract);
+            LightClosestObj();
             InvokeInteract(closestObj);
         }
         //거리 계산. 한 메서드가 하는 일 많음.
@@ -307,15 +304,18 @@ namespace NSY.Player
         {
             float shortestDist = 1000000;
 
-            foreach (var item in interacts)
+            for (int i = 0; i < interacts.Count; i++)
             {
-                if (item == null) interacts.Remove(item);
-                if (item.gameObject.layer != 9) continue;
-                float dist = Vector3.Distance(transform.position, item.transform.position);
+                if (interacts[i] == null) 
+                    interacts.Remove(interacts[i]);
+                if (interacts[i].gameObject.layer != 9) continue;
+
+                float dist = Vector3.Distance(transform.position, interacts[i].transform.position);
                 if (dist < shortestDist)
                 {
                     shortestDist = dist;
-                    closestObj = item;
+                    closestObj = interacts[i];
+                    //Debug.Log(string.Format("closestObj: {0} // i: {1} // length: {2}", closestObj,i, interacts.Count));
                 }
             }
         }
@@ -325,11 +325,6 @@ namespace NSY.Player
             {
                 interactableobj.gameObject.GetComponentInChildren<MeshRenderer>().material.shader = GlowColor;
             }
-        }
-
-        public bool IsAnimating()
-        {
-            return isAnimating;
         }
 
         public bool IsInteracted(Interactable it)
@@ -356,6 +351,7 @@ namespace NSY.Player
             if (interactable != null)
             {
                 interacts.Remove(interactable);
+                //Debug.LogWarning("Remove: "+interactable.name);
                 EndInteract(interactable);
             }
         }

@@ -42,7 +42,7 @@ namespace DM.Building
             savedelegate_F = PlayerInput.OnPressFDown;
             PlayerInput.OnPressESCDown = BuildModeOff;
             PlayerInput.OnPressFDown = null;
-            Debug.Log(savedelegate_F + " set null");
+            //Debug.Log(savedelegate_F + " set null");
 
             isBuildMode = true;
 

@@ -56,6 +56,7 @@ public class DropCollectObject : CollectObject
     }
     void OnDisable()
     {
+        Debug.LogWarning("ReturnToPool");
         ObjectPooler.ReturnToPool(gameObject);  // 한 객체에 한번만
         CancelInvoke();    // Monobehaviour에 Invoke가 있다면
     }

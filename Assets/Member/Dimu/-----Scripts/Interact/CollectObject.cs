@@ -34,11 +34,11 @@ public class CollectObject : ItemObject
     }
     public virtual void UpdateCollect()
     {
-        Item itemCopy = item.GetCopy();
-        if (SuperManager.Instance.inventoryManager.AddItem(itemCopy, true))
+        //Item itemCopy = item.GetCopy();
+        if (SuperManager.Instance.inventoryManager.AddItem(item, true))
             SuperManager.Instance.soundManager.PlaySFX(picksoundName);
-        else
-            itemCopy.Destroy();
+        //else
+        //    itemCopy.Destroy();
         Interact();
         DeactiveDelay();
     }

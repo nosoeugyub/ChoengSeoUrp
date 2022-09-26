@@ -171,7 +171,7 @@ namespace DM.Building
         public void SetBuildItemRotation(float scalenum)
         {
             transform.Rotate(new Vector3(0, 0, scalenum));
-            print(transform.rotation);
+            //print(transform.rotation);
         }
         public override int CanInteract()
         {

@@ -91,17 +91,13 @@ public class EnvironmentManager : MonoBehaviour
             cleanliness = value;
             if (cleanliness >= 100)
             {
-                if (endingButton)
-                    endingButton.SetActive(true);
+                endingButton.SetActive(true);
                 if (endingButtoninfo)
                     endingButtoninfo.SetActive(true);
             }
-            else if (cleanliness < 0)
-                cleanliness = 0;
             else
             {
-                if (endingButton)
-                    endingButton.SetActive(false);
+                endingButton.SetActive(false);
                 if (endingButtoninfo)
                     endingButtoninfo.SetActive(false);
 
@@ -113,7 +109,7 @@ public class EnvironmentManager : MonoBehaviour
                     ComeToPort();
             }
 
-            happyUI.HappyUISetting( Mathf.Min( cleanliness,100));
+            happyUI.HappyUISetting(Mathf.Max(Mathf.Min(cleanliness, 100), 0));
         }
     }
     public string name = "CreditDemo";
@@ -128,7 +124,7 @@ public class EnvironmentManager : MonoBehaviour
 
     public void SetEndingButtonNull()
     {
-        endingButton = null;
+        //endingButton = null;
         endingButtoninfo = null;
     }
     IEnumerator takepictures()

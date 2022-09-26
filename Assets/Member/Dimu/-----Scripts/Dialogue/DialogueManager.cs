@@ -180,6 +180,7 @@ namespace DM.Dialog
         }
         public bool FirstShowDialog(HouseNpc npc, bool isFollowPlayer, int isLike) //첫 상호작용 시 호출. 어떤 대화를 호출할지 결정
         {
+            if (isenddelay == false) return false;
             if (isTalking)
             {
                 DebugText.Instance.SetText(string.Format("{0}님과 대화중입니다!", nowNpc.name));
@@ -224,7 +225,7 @@ namespace DM.Dialog
                 {
                     if (data.questId < 0)
                     {
-                        Debug.Log("canStartDialog = data");
+                        //Debug.Log("canStartDialog = data");
                         canStartDialog = data;
                         break;
                     }
@@ -232,7 +233,7 @@ namespace DM.Dialog
                     {
                         if (!questManager.IsQuestAccepted(questManager.nowQuestLists[(int)nowNpc.GetCharacterType()].questList[data.questId]))
                         {
-                            Debug.Log("canStartDialog = data");
+                            //Debug.Log("canStartDialog = data");
                             canStartDialog = data;
                             break;
                         }
@@ -459,7 +460,6 @@ namespace DM.Dialog
             nowOnFab.GetComponent<TextBox>().SetTextbox(nowSentences.sentence, npcTalkBubbleTfs[nowSentences.characterId], nowSentences.textboxType, nowSentences.isLeft);
 
             nameText.text = activeQuestDialogLists[sentences[nowSentenceIdx++].characterId].charName;
-            isenddelay = false;
             StartCoroutine(DelayUpdateBool(sentences, sentenceState));
 
             if (dialogLength <= nowSentenceIdx)
@@ -481,6 +481,7 @@ namespace DM.Dialog
         }
         IEnumerator DelayUpdateBool(Sentence[] sentences, int sentenceState)
         {
+            isenddelay = false;
             yield return new WaitForSeconds(interactdelaytime);
             isenddelay = true;
         }
@@ -507,6 +508,8 @@ namespace DM.Dialog
 
             IsTalking = false;
             nowDialogData.isTalkingOver = true;
+            
+            StartCoroutine(DelayUpdateBool(sentences, sentenceState));
 
             //만약 대화데이터에 퀘스트가 있다면
             if (nowDialogData.questId > -1)
@@ -557,6 +560,8 @@ namespace DM.Dialog
                     cutSceneManager.PrintImage((int)nowDialogData.cuttype);
                 }
             }
+
+
 
             if (sentences[nowSentenceIdx - 1].backeventIdx > 0)
                 DIalogEventManager.EventAction += DIalogEventManager.BackEventActions[sentences[nowSentenceIdx - 1].backeventIdx];
