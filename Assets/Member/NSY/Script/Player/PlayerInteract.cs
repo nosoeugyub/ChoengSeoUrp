@@ -240,7 +240,6 @@ namespace NSY.Player
                 nowInteractable = hit.collider.GetComponent<Interactable>();
                 if (nowInteractable != null && IsInteracted(nowInteractable))// 클릭한 옵젝이 닿은 옵젝 리스트에 있다면 통과ds
                 {
-
                     if (nowInteractable.GetComponent<BuildingBlock>() && !IsPointerOverUIObject())
                     {
                         StartCoroutine(cursorManager.SetCursor(nowInteractable.CanInteract()));//건축 외에는 변하지 않음
@@ -390,9 +389,12 @@ namespace NSY.Player
                     //interactUI.transform.position = RectTransformUtility.WorldToScreenPoint(Camera.main, interactUI.transform.position);
 
         */
-
+        private void OnDisable()
+        {
+            interactUI.gameObject.SetActive(false);
+        }
     }
-
+    
 }
 
 //[SerializeField] Dictionary<IInteractable, T> interactss= new Dictionary<IInteractable>();//상호작용 범위 내 있는 IInteractable오브젝트 리스트

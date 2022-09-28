@@ -1,42 +1,83 @@
-﻿using NSY.Manager;
+﻿using System;
+using System.Collections;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class NPCNoticeUI : MonoBehaviour
 {
     [SerializeField] Sprite[] season;
-    [SerializeField] Image[] animals;
-    [SerializeField] Image[] animalSeason;
+    [SerializeField] NpcNoticeEntity[] animals;
     [SerializeField] Color onColor;
     [SerializeField] Color offColor;
+    [SerializeField] GameObject informUI;
+    [SerializeField] TextMeshProUGUI informUICheckText;
+    [SerializeField] TextMeshProUGUI informUITutoText;
+    bool isFirstUIOn;
+    [SerializeField] NPCManager npcManager;
+
+    [TextArea]
+    [SerializeField] string informTextFormat;
+    [TextArea]
+    [SerializeField] string failInformTextFormat;
+
 
     private void Start()
     {
-        for (int i = 1; i < SuperManager.Instance.npcManager.NpcTfs.Length; i++)
+        isFirstUIOn = true;
+        informUI.SetActive(false);
+        for (int i = 1; i < npcManager.NpcTfs.Length; i++)
         {
-            SuperManager.Instance.npcManager.NpcTfs[i].Npctf.UIOnEvent =SetAnimalImgOnOff;
-            SuperManager.Instance.npcManager.NpcTfs[i].Npctf.UIUpdateEvent = UpdateNotice;
+            npcManager.NpcTfs[i].Npctf.UIOnEvent = SetAnimalImgOn;
+            npcManager.NpcTfs[i].Npctf.UIUpdateEvent = UpdateNoticeColor;
+        }
+        for (int i = 1; i < animals.Length; i++)
+        {
+            animals[i].SetInitColor(onColor, offColor);
+            animals[i].SetinformUIOnOffEvent = InformUIOnOff;
+            animals[i].UpdateText = UpdateText;
         }
     }
-    public void SetAnimalImgOnOff(int npcnum)
+    public void InformUIOnOff(bool isuion, bool ishavenextdialog, Vector3 movePos, string npctext)
     {
-        animals[npcnum].gameObject.SetActive(true);
-        if(SuperManager.Instance.npcManager.NpcTfs[npcnum].Npctf.MyHouse)
-        SetAnimalSeason(npcnum, SuperManager.Instance.npcManager.NpcTfs[npcnum].Npctf.MyHouse.Seasonnum);
-    }
-    public void SetAnimalSeason(int npcnum, int seasonnum)
-    {
-        animalSeason[npcnum].sprite = season[seasonnum];
-    }
+        informUI.SetActive(isuion);
 
-    public void UpdateNotice(int npcnum, DialogMarkType dialogMarkType)
-    {
-        if (dialogMarkType != DialogMarkType.None)
+        if (!isFirstUIOn)
+            informUITutoText.gameObject.SetActive(false);
+
+        if (isuion)
         {
-            animals[npcnum].color = onColor;
+            UpdateText(ishavenextdialog, npctext);
+
+            informUI.transform.position = movePos;
+            Debug.Log(movePos);
         }
+    }
+    public void UpdateText(bool ishavenextdialog, string npctext)
+    {
+        if (ishavenextdialog)
+            informUICheckText.text = string.Format(informTextFormat, npctext);
         else
-            animals[npcnum].color = offColor;
+            informUICheckText.text = string.Format(failInformTextFormat, npctext);
+    }
+    public void SetAnimalImgOn(int npcnum)
+    {
+        if (isFirstUIOn)
+            StartCoroutine(DelayFirstMethod(npcnum));
 
+        animals[npcnum].gameObject.SetActive(true);
+        if (npcManager.NpcTfs[npcnum].Npctf.MyHouse)
+            animals[npcnum].SetSeasonSprite(season[npcManager.NpcTfs[npcnum].Npctf.MyHouse.Seasonnum]);
+    }
+
+    IEnumerator DelayFirstMethod(int npcnum)
+    {
+        yield return new WaitForSeconds(0.1f);
+        animals[npcnum].FirstUIOnMethod();
+        isFirstUIOn = false;
+    }
+
+    public void UpdateNoticeColor(int npcnum, DialogMarkType dialogMarkType)
+    {
+        animals[npcnum].UpdateNoticeColor(dialogMarkType);
     }
 }
