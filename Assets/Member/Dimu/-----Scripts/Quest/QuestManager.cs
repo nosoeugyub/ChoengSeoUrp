@@ -10,7 +10,7 @@ namespace DM.Quest
         [SerializeField] bool istestmode;
 
         private List<QuestData> totalPlayQuests;//플레이하면서 만났던 퀘스트 모음 아직 안쓰임
-        public Dictionary<QuestData, GameObject> acceptQuests;
+        public Dictionary<QuestData, QuestInfoUI> acceptQuests;
         public Transform questInfoMom;
         public GameObject questInfoUI;
         public QuestData testSoData;
@@ -27,7 +27,7 @@ namespace DM.Quest
         private void Awake()
         {
             //inventoryNSY = FindObjectOfType<InventoryNSY>();
-            acceptQuests = new Dictionary<QuestData, GameObject>();
+            acceptQuests = new Dictionary<QuestData, QuestInfoUI>();
             clearQuestLists = new List<QuestData>();
         }
 
@@ -60,11 +60,10 @@ namespace DM.Quest
 
             nowQuestData.npcID = npcID;
             GameObject qui = Instantiate(questInfoUI, questInfoMom) as GameObject;
-            UpdateQuestInfoUI(qui, nowQuestData);
+            qui.GetComponent<QuestInfoUI>().UpdateQuestInfoUI(nowQuestData, TaskImg[nowQuestData.interactNpcID]);
 
             nowQuestData.InitData();
-            acceptQuests.Add(nowQuestData, qui);
-
+            acceptQuests.Add(nowQuestData,qui.GetComponent<QuestInfoUI>());
         }
         public bool ClearQuest(int questId, int npcID) //퀘스트 클리어하기
         {
@@ -98,7 +97,7 @@ namespace DM.Quest
                 }
 
                 clearQuestLists.Add(nowQuestData);
-                acceptQuests[nowQuestData].SetActive(false);
+                acceptQuests[nowQuestData].SetDisable();
                 SuperManager.Instance.soundManager.StopSFX(questClearSoundName);
                 SuperManager.Instance.soundManager.PlaySFX(questClearSoundName);
                 acceptQuests.Remove(nowQuestData);
@@ -108,17 +107,7 @@ namespace DM.Quest
             }
             return false;
         }
-        public void UpdateQuestInfoUI(GameObject qui, QuestData questData)
-        {
-            qui.transform.Find("QuestNameText").GetComponent<Text>().text
-                = string.Format("{0}", questData.questName);
-            qui.transform.Find("DescriptionText").GetComponent<Text>().text
-                = string.Format(questData.description);
-            //qui.transform.Find("ProgressText").GetComponent<Text>().text
-            //    = string.Format(questData.description);
-            qui.transform.Find("BuildingImg").GetComponent<Image>().sprite
-                = TaskImg[questData.interactNpcID];
-        }
+ 
 
         public bool CanClear(int questId, int npcID)//퀘스트 클리어 가능한지?
         {
@@ -169,7 +158,7 @@ namespace DM.Quest
             return canAcceptQuests;
         }
 
-        public Dictionary<QuestData, GameObject> GetAcceptQuests()
+        public Dictionary<QuestData, QuestInfoUI> GetAcceptQuests()
         {
             return acceptQuests;
         }

@@ -1,5 +1,4 @@
 ﻿using DM.Building;
-using DM.Dialog;
 using NSY.Manager;
 using NSY.Player;
 using System;
@@ -23,7 +22,6 @@ namespace DM.NPC
         [SerializeField] private bool isFollowPlayer;
         [SerializeField] private string talkSound;
 
-        private DialogueManager dialogueManager;
         private BuildingLike like = BuildingLike.None;
         float dist;
 
@@ -35,7 +33,6 @@ namespace DM.NPC
 
         private void Awake()
         {
-            dialogueManager = FindObjectOfType<DialogueManager>();
             player = FindObjectOfType<PlayerInteract>();
             if (dialogMarks.Length > 0)
                 dialogMarkScale = dialogMarks[0].localScale;
@@ -44,7 +41,7 @@ namespace DM.NPC
         {
             GoHomeEvent += MoveToMyHome;
             DIalogEventManager.EventActions[((int)EventEnum.MoveToMyHome)] += MoveToMyHome;
-            DIalogEventManager.EventActions[(int)EventEnum.OnFollowPlayer] += OnFollowPlayer;
+            //DIalogEventManager.EventActions[(int)EventEnum.OnFollowPlayer] += OnFollowPlayer;
         }
 
         internal void PlayDialogSound()
@@ -93,17 +90,9 @@ namespace DM.NPC
             UIUpdateEvent((int)GetCharacterType(), dialogMarkType);
         }
 
-        public void OnFollowPlayer()
+        public void SetIsFollowPlayer(bool ison)
         {
-            //현재 대화 상대와 같다면
-            if (dialogueManager.GetNowNpc() == this)
-            {
-                if (player.SetNpc(this))
-                {
-                    isFollowPlayer = true;
-                }
-                DIalogEventManager.EventAction -= DIalogEventManager.EventActions[4];
-            }
+            isFollowPlayer = ison;
         }
         public bool IsHaveHouse()
         {
@@ -157,6 +146,12 @@ namespace DM.NPC
                 UIOnEvent((int)GetCharacterType());
             }
         }
+
+        internal bool IsFollowPlayer()
+        {
+            return isFollowPlayer;
+        }
+
         public BuildingLike GetBuildingLikeable(BuildingBlock buildingBlock) //bool형
         {
             if (!buildingBlock) return BuildingLike.None;
@@ -345,26 +340,17 @@ namespace DM.NPC
         public bool SettingBuildingTalk()
         {
             if (!PlayDialog()) return false;
-            if (isFollowPlayer)
-            {
-                player.SetNpc(null);
-                isFollowPlayer = false;
-            }
+            SetIsFollowPlayer(false);
             return true;
         }
         public override void Talk()
         {
-            if (isFollowPlayer)
-            {
-                player.SetNpc(null);
-                isFollowPlayer = false;
-                DebugText.Instance.SetText("소개를 중단했습니다.");
-            }
-            else
-                PlayDialog();
+            PlayDialog();
         }
         public bool PlayDialog()
         {
+            if (IsFollowPlayer()) return false;
+
             return SuperManager.Instance.dialogueManager.FirstShowDialog(this, isFollowPlayer, (int)like);
         }
         public void MoveTo(Vector3 pos)
@@ -373,8 +359,8 @@ namespace DM.NPC
         }
         public void TeleportToPlayer(Vector3 pos)
         {
-            if(isFollowPlayer)
-             MoveTo(pos);
+            if (isFollowPlayer)
+                MoveTo(pos);
         }
         public void MoveToMyHome()
         {

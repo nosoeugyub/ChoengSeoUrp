@@ -49,7 +49,6 @@ public class NPCNoticeUI : MonoBehaviour
             UpdateText(ishavenextdialog, npctext);
 
             informUI.transform.position = movePos;
-            Debug.Log(movePos);
         }
     }
     public void UpdateText(bool ishavenextdialog, string npctext)
@@ -65,6 +64,7 @@ public class NPCNoticeUI : MonoBehaviour
             StartCoroutine(DelayFirstMethod(npcnum));
 
         animals[npcnum].gameObject.SetActive(true);
+        animals[npcnum].StartAnimation();
         if (npcManager.NpcTfs[npcnum].Npctf.MyHouse)
             animals[npcnum].SetSeasonSprite(season[npcManager.NpcTfs[npcnum].Npctf.MyHouse.Seasonnum]);
     }
@@ -79,5 +79,6 @@ public class NPCNoticeUI : MonoBehaviour
     public void UpdateNoticeColor(int npcnum, DialogMarkType dialogMarkType)
     {
         animals[npcnum].UpdateNoticeColor(dialogMarkType);
+        animals[npcnum].StartAnimation();
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class NpcNoticeEntity : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -17,6 +18,11 @@ public class NpcNoticeEntity : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public Action<bool, bool, Vector3, string> SetinformUIOnOffEvent;
     public Action<bool, string> UpdateText;
 
+    [SerializeField] Ease _ease;
+     int rotateAmount = 10;
+    float _iconrotatespeed = 1;
+
+    Coroutine coroutine;
     private void Awake()
     {
         isPoint = false;
@@ -37,7 +43,9 @@ public class NpcNoticeEntity : MonoBehaviour, IPointerEnterHandler, IPointerExit
     internal void UpdateNoticeColor(DialogMarkType dialogMarkType)
     {
         if (dialogMarkType != DialogMarkType.None)
+        {
             _image.color = _onColor;
+        }
         else
             _image.color = _offColor;
 
@@ -52,6 +60,42 @@ public class NpcNoticeEntity : MonoBehaviour, IPointerEnterHandler, IPointerExit
         _season.sprite = sprite;
     }
 
+    public void StartAnimation()
+    {
+        if (isHaveNewDialog() && coroutine == null && gameObject.activeSelf)
+            coroutine = StartCoroutine(IconRotation());
+    }
+
+    public IEnumerator IconRotation()
+    {
+        float time = _iconrotatespeed;
+        bool isRIght = false;
+        while (isHaveNewDialog())
+        {
+            time += Time.deltaTime;
+            if (time >= _iconrotatespeed)
+            {
+                isRIght = !isRIght;
+
+                if (isRIght)
+                    transform.DOLocalRotate(new Vector3(0, 0, -rotateAmount), _iconrotatespeed, RotateMode.Fast).SetEase(_ease);
+                else
+                    transform.DOLocalRotate(new Vector3(0, 0, rotateAmount), _iconrotatespeed, RotateMode.Fast).SetEase(_ease);
+
+                time = 0;
+            }
+            yield return null;
+        }
+        transform.DOLocalRotate(new Vector3(0, 0, 0), _iconrotatespeed, RotateMode.Fast).SetEase(_ease);
+        coroutine = null;
+        yield return null;
+    }
+
+    bool isHaveNewDialog()
+    {
+        return _onColor == _image.color;
+    }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         isPoint = true;
@@ -62,9 +106,5 @@ public class NpcNoticeEntity : MonoBehaviour, IPointerEnterHandler, IPointerExit
     {
         isPoint = false;
         SetinformUIOnOffEvent(false, isHaveNewDialog(), transform.position, npcNameText);
-    }
-    bool isHaveNewDialog()
-    {
-        return _onColor == _image.color;
     }
 }

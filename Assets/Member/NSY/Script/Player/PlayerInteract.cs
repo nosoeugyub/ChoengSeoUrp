@@ -1,6 +1,7 @@
 ﻿using DM.Building;
 using DM.Event;
 using DM.NPC;
+using NSY.Manager;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -19,6 +20,7 @@ namespace NSY.Player
 
         public RectTransform interactUI;//띄울 UI
         public RectTransform buildinginteractUi;//띄울 UI
+        public RectTransform introduceUi;//띄울 UI
         public TextMeshProUGUI interactUiText2;
 
         //[SerializeField] Item handItem;
@@ -49,6 +51,9 @@ namespace NSY.Player
 
         [SerializeField] Shader GlowColor;
 
+        [SerializeField]
+
+
         Camera mainCam;
 
         private void Awake()
@@ -62,6 +67,7 @@ namespace NSY.Player
         {
             canInteractCount = 0;
             PlayerInput.OnPressFDown = InvokeInteractClosestObj;
+            DIalogEventManager.EventActions[(int)EventEnum.OnFollowPlayer] = NPCIntroduceSetting;
         }
         private void Update()
         {
@@ -89,6 +95,7 @@ namespace NSY.Player
                 //Debug.Log("SetInteract false  " + closestObj);
             }
         }
+
         public bool SetNpc(HouseNpc npc)
         {
             if (npc == null)
@@ -97,15 +104,15 @@ namespace NSY.Player
                 return true;
             }
 
-            if (followNpc == null)
+            //if (followNpc == null)
             {
                 followNpc = npc;
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            //else
+            //{
+            //    return false;
+            //}
         }
 
         public void SetIsAnimation(bool isTrue)
@@ -129,6 +136,28 @@ namespace NSY.Player
             isAnimating = isTrue;
         }
 
+        private void NPCIntroduceSetting()
+        {
+            followNpc.SetIsFollowPlayer(true);
+            introduceUi.gameObject.SetActive(true);
+
+            DIalogEventManager.EventAction -= DIalogEventManager.EventActions[(int)EventEnum.OnFollowPlayer];
+
+        }
+        public void IntroduceCancel()
+        {
+            followNpc.SetIsFollowPlayer(false);
+            introduceUi.gameObject.SetActive(false);
+            SetNpc(null);
+            DebugText.Instance.SetText("소개를 중단했습니다.");
+        }
+        public void EndIntroduce()
+        {
+            followNpc.SetIsFollowPlayer(false);
+            introduceUi.gameObject.SetActive(false);
+            SetNpc(null);
+        }
+
         private void InvokeInteract(Interactable interactable)
         {
             if (!interactable) return;
@@ -136,29 +165,19 @@ namespace NSY.Player
             if (collectObj != null)
             {
                 Debug.Log(collectObj.item.ItemName);
-                //if (SuperManager.Instance.inventoryManager.isGettingItem == false)
-                {
-                    if (collectObj.Collect(playerAnimator.animator)) //콜렉트에서 애니 발생함
-                        SetIsAnimation(true);
-                    return;
-                }
-                //collectObj.Collect(playerAnimator.animator); //콜렉트에서 애니 발생함
-                //SetIsAnimation(true);
-                //return;
+                if (collectObj.Collect(playerAnimator.animator)) //콜렉트에서 애니 발생함
+                    SetIsAnimation(true);
+                return;
             }
 
             NPC talkable = interactable.transform.GetComponent<NPC>();
             if (talkable != null)
             {
+                SetNpc(interactable.transform.GetComponent<HouseNpc>());
                 talkable.Talk();
                 return;
             }
-            //IEventable eventable = interactable.transform.GetComponent<IEventable>();
-            //if (eventable != null)
-            //{
-            //    eventable.EtcEvent(handItem);
-            //    return;
-            //}
+
             TeleportObject teleportable = interactable.transform.GetComponent<TeleportObject>();
             if (teleportable != null)
             {
@@ -188,7 +207,7 @@ namespace NSY.Player
                 }
                 else
                 {
-                Debug.Log(mineable.item.ItemName);
+                    Debug.Log(mineable.item.ItemName);
                     SetIsAnimation(true);
                     return;
                 }
@@ -198,9 +217,10 @@ namespace NSY.Player
             {
                 SetIsAnimation(false);
 
-                if (followNpc)
+                if (followNpc && followNpc.IsFollowPlayer())
                 {
                     followNpc.FindLikeHouse(buildAreaObject);
+                    EndIntroduce();
                 }
                 else
                 {
@@ -305,7 +325,7 @@ namespace NSY.Player
 
             for (int i = 0; i < interacts.Count; i++)
             {
-                if (interacts[i] == null) 
+                if (interacts[i] == null)
                     interacts.Remove(interacts[i]);
                 if (interacts[i].gameObject.layer != 9) continue;
 
@@ -394,7 +414,7 @@ namespace NSY.Player
             interactUI.gameObject.SetActive(false);
         }
     }
-    
+
 }
 
 //[SerializeField] Dictionary<IInteractable, T> interactss= new Dictionary<IInteractable>();//상호작용 범위 내 있는 IInteractable오브젝트 리스트
