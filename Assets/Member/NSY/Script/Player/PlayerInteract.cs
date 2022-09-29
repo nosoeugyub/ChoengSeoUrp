@@ -174,8 +174,11 @@ namespace NSY.Player
             if (talkable != null)
             {
                 SetNpc(interactable.transform.GetComponent<HouseNpc>());
-                talkable.Talk();
-                return;
+                if (!followNpc.IsFollowPlayer())
+                {
+                    talkable.Talk();
+                    return;
+                }
             }
 
             TeleportObject teleportable = interactable.transform.GetComponent<TeleportObject>();

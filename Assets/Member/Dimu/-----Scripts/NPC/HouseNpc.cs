@@ -349,7 +349,7 @@ namespace DM.NPC
         }
         public bool PlayDialog()
         {
-            if (IsFollowPlayer()) return false;
+            //if (IsFollowPlayer()) return false;
 
             return SuperManager.Instance.dialogueManager.FirstShowDialog(this, isFollowPlayer, (int)like);
         }
