@@ -102,6 +102,7 @@ namespace DM.Building
             GetComponent<BoxCollider>().enabled = true;
             SetBuildMode(BuildMode.None);
             inventory.InvenAllOnOff(true);
+            inventory.SetCheckBuildItem(null);
 
             SetCurInteractObj(null);
 
