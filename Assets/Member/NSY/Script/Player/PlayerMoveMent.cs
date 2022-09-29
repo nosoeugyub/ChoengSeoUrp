@@ -63,6 +63,7 @@ namespace NSY.Player
                 Move();
                 Flip();
             }
+            InitForward();
             idle();
         }
         public void InitForward()
@@ -77,7 +78,7 @@ namespace NSY.Player
             isMove = MoveDelta.magnitude != 0; // 0이면 이동입력이 없는것 
             playerController.SpritePlayerAnim.SetBool("isWalk", isMove);
 
-            lookForward = new Vector3(playerController.maincamera.transform.forward.x, 0f, playerController.maincamera.transform.forward.z).normalized;//보는 방향을 바라보는 방향 카메라
+            //lookForward = new Vector3(playerController.maincamera.transform.forward.x, 0f, playerController.maincamera.transform.forward.z).normalized;//보는 방향을 바라보는 방향 카메라
 
             if (isMove)
             {
@@ -94,7 +95,7 @@ namespace NSY.Player
             else
                 playerController.characterCtrl.Move(idleMove);
 
-            transform.forward = lookForward;
+           // transform.forward = lookForward;
         }
 
         public void idle()
