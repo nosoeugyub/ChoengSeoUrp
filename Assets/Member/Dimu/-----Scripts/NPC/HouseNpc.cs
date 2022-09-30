@@ -349,8 +349,11 @@ namespace DM.NPC
         }
         public bool PlayDialog()
         {
-            //if (IsFollowPlayer()) return false;
-
+            if (IsFollowPlayer())
+            {
+                Debug.Log("ResetDelay()");
+                SuperManager.Instance.dialogueManager.ResetDelay();
+            }
             return SuperManager.Instance.dialogueManager.FirstShowDialog(this, isFollowPlayer, (int)like);
         }
         public void MoveTo(Vector3 pos)

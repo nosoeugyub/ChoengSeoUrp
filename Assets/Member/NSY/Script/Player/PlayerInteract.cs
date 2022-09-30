@@ -21,6 +21,7 @@ namespace NSY.Player
         public RectTransform interactUI;//띄울 UI
         public RectTransform buildinginteractUi;//띄울 UI
         public RectTransform introduceUi;//띄울 UI
+        public RectTransform introduceUituto;//띄울 UI
         public TextMeshProUGUI interactUiText2;
 
         //[SerializeField] Item handItem;
@@ -154,8 +155,10 @@ namespace NSY.Player
         public void EndIntroduce()
         {
             followNpc.SetIsFollowPlayer(false);
+            introduceUituto.gameObject.SetActive(false);
             introduceUi.gameObject.SetActive(false);
             SetNpc(null);
+
         }
 
         private void InvokeInteract(Interactable interactable)

@@ -54,7 +54,7 @@ public class NPCManager : MonoBehaviour
         DIalogEventManager.EventActions[(int)EventEnum.MoveToWalPort] += MoveToWalPort;
         DIalogEventManager.EventActions[(int)EventEnum.GotoBearsWithSheep] += MoveToBearsHouseWithSheep;
         DIalogEventManager.EventActions[(int)EventEnum.GotoBackWithSheep] += MoveToBackSheep;
-        DIalogEventManager.EventActions[(int)EventEnum.GotoStartPos] += GotoStartPos;
+        DIalogEventManager.BackEventActions[(int)EventEnum.GotoStartPos] += GotoStartPos;
 
         DIalogEventManager.BackEventActions[(int)EventEnum.ChickenGOBearHOuse] += ChickenGOBearHOuse;
         DIalogEventManager.BackEventActions[(int)EventEnum.ChickenGoSheepHouse] += ChickenGoSheepHouse;
@@ -232,7 +232,7 @@ public class NPCManager : MonoBehaviour
 
     private void GotoStartPos()
     {
-        DIalogEventManager.EventAction -= DIalogEventManager.EventActions[(int)EventEnum.GotoStartPos];
+        DIalogEventManager.EventAction -= DIalogEventManager.BackEventActions[(int)EventEnum.GotoStartPos];
         //npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(StartPos.position);
         StartCoroutine(DelayMove());
     }
@@ -245,8 +245,8 @@ public class NPCManager : MonoBehaviour
         yield return new WaitForSeconds(1);
         npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().InitForward();
         yield return new WaitForSeconds(1);
+        DIalogEventManager.EventAction += DIalogEventManager.EventActions[(int)EventEnum.StartTalk];
         yield return fader.IFadeIn(Color.white, 2);
-        DIalogEventManager.EventActions[(int)EventEnum.StartTalk].Invoke();
         playerMoveOnEvent.Raise();
         playerCanInteractEvent.Raise();
 

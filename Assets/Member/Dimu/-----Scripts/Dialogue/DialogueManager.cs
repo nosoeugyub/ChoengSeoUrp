@@ -69,7 +69,7 @@ namespace DM.Dialog
         [SerializeField] Image raycastBlockImg;
 
         Coroutine[] nowCor;
-
+        Coroutine coroutine;
 
         public bool IsTalking
         {
@@ -143,7 +143,7 @@ namespace DM.Dialog
             nowDialogData.isTalkingOver = true;
             IsTalking = false;
             FirstShowDialog(npcManager.NpcTfs[0].Npctf, false, -1);
-            DIalogEventManager.EventActions[(int)EventEnum.StartTalk] -= StartNewDialog;
+            DIalogEventManager.EventAction -= DIalogEventManager.EventActions[(int)EventEnum.StartTalk];
         }
         public void SetDialogSet(LanguageType languageType)
         {
@@ -177,6 +177,11 @@ namespace DM.Dialog
             print("event test");
             times += Time.deltaTime;
             if (times > 3) { DIalogEventManager.EventAction -= DIalogEventManager.EventActions[1]; }
+        }
+        public void ResetDelay()
+        {
+            StopCoroutine(coroutine);
+            isenddelay = true;
         }
         public bool FirstShowDialog(HouseNpc npc, bool isFollowPlayer, int isLike) //첫 상호작용 시 호출. 어떤 대화를 호출할지 결정
         {
@@ -439,7 +444,6 @@ namespace DM.Dialog
         private void UpdateDialogText(Sentence[] sentences, int sentenceState)
         {
             if (isenddelay == false) return;
-
             if (sentences.Length == 0)
             {
                 LastDialogNextEvent(sentences, sentenceState);
@@ -460,7 +464,7 @@ namespace DM.Dialog
             nowOnFab.GetComponent<TextBox>().SetTextbox(nowSentences.sentence, npcTalkBubbleTfs[nowSentences.characterId], nowSentences.textboxType, nowSentences.isLeft);
 
             nameText.text = activeQuestDialogLists[sentences[nowSentenceIdx++].characterId].charName;
-            StartCoroutine(DelayUpdateBool(sentences, sentenceState));
+            coroutine =  StartCoroutine(DelayUpdateBool(sentences, sentenceState));
 
             if (dialogLength <= nowSentenceIdx)
             {
@@ -508,8 +512,8 @@ namespace DM.Dialog
 
             IsTalking = false;
             nowDialogData.isTalkingOver = true;
-            
-            StartCoroutine(DelayUpdateBool(sentences, sentenceState));
+
+            coroutine = StartCoroutine(DelayUpdateBool(sentences, sentenceState));
 
             //만약 대화데이터에 퀘스트가 있다면
             if (nowDialogData.questId > -1)
