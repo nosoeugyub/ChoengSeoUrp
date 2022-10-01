@@ -187,12 +187,12 @@ public class EnvironmentManager : MonoBehaviour
             Cleanliness += 3;
             //days++;
         }
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            //a.isHaveRecipeItem = true;
-            Cleanliness -= 3;
-            //days++;
-        }
+        //if (Input.GetKeyDown(KeyCode.M))
+        //{
+        //    //a.isHaveRecipeItem = true;
+        //    Cleanliness -= 3;
+        //    //days++;
+        //}
         if (canChange)
             Cleanliness = _cleanliness;
 

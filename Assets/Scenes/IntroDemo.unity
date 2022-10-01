@@ -226,6 +226,7 @@ GameObject:
   - component: {fileID: 13419462}
   - component: {fileID: 13419461}
   - component: {fileID: 13419460}
+  - component: {fileID: 13419465}
   m_Layer: 5
   m_Name: Crossfade_Transition
   m_TagString: Untagged
@@ -332,6 +333,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &13419465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 13419459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e31997b44cd6654f9198db811f29189, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeAnim: {fileID: 13419460}
+  fadeImg: {fileID: 341211867}
 --- !u!1 &26204472
 GameObject:
   m_ObjectHideFlags: 0
@@ -11441,8 +11456,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da8282c8464bb9e4abbe2f71e113fb33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeAnim: {fileID: 13419460}
-  fadeImg: {fileID: 341211867}
+  fader: {fileID: 13419465}
+  playerMoveOnEvent: {fileID: 0}
+  playerMoveOffEvent: {fileID: 0}
+  playerCanInteractEvent: {fileID: 0}
+  playerCantInteractEvent: {fileID: 0}
 --- !u!4 &1607234348
 Transform:
   m_ObjectHideFlags: 0
@@ -11540,11 +11558,11 @@ MonoBehaviour:
   m_ShowCameraFrustum: 1
   m_IgnoreTimeScale: 0
   m_WorldUpOverride: {fileID: 0}
-  m_UpdateMethod: 1
+  m_UpdateMethod: 0
   m_BlendUpdateMethod: 1
   m_DefaultBlend:
     m_Style: 1
-    m_Time: 1.5
+    m_Time: 2
     m_CustomCurve:
       serializedVersion: 2
       m_Curve: []

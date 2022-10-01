@@ -20,11 +20,15 @@ public class SceneChangeManager : MonoBehaviour
     }
     public IEnumerator StartSceneFade()
     {
-        playerMoveOffEvent.Raise();
-        playerCantInteractEvent.Raise();
+        if (playerMoveOffEvent)
+            playerMoveOffEvent.Raise();
+        if (playerCantInteractEvent)
+            playerCantInteractEvent.Raise();
         yield return fader.IFadeIn(loadscenecolor, loadscenespeed);
-        playerMoveOnEvent.Raise();
-        playerCanInteractEvent.Raise();
+        if (playerMoveOnEvent)
+            playerMoveOnEvent.Raise();
+        if (playerCanInteractEvent)
+            playerCanInteractEvent.Raise();
     }
     public void LoadSceneFadeString(string scenename)
     {
@@ -33,8 +37,9 @@ public class SceneChangeManager : MonoBehaviour
 
     IEnumerator LoadSceneFadeStringCo(string scenename)
     {
+        if (playerMoveOffEvent)
         playerMoveOffEvent.Raise();
-        yield return fader.IFadeOut(loadscenecolor,loadscenespeed);
+        yield return fader.IFadeOut(loadscenecolor, loadscenespeed);
         LoadSceneAsString(scenename);
     }
 
@@ -58,6 +63,7 @@ public class SceneChangeManager : MonoBehaviour
     }
     IEnumerator Quit()
     {
+        if (playerMoveOffEvent)
         playerMoveOffEvent.Raise();
         yield return fader.IFadeOut(loadscenecolor, loadscenespeed);
         Application.Quit();

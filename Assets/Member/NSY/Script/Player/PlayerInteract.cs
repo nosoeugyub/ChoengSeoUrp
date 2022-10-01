@@ -176,9 +176,9 @@ namespace NSY.Player
             NPC talkable = interactable.transform.GetComponent<NPC>();
             if (talkable != null)
             {
-                SetNpc(interactable.transform.GetComponent<HouseNpc>());
-                if (!followNpc.IsFollowPlayer())
+                if (!followNpc || !followNpc.IsFollowPlayer())
                 {
+                    SetNpc(interactable.transform.GetComponent<HouseNpc>());
                     talkable.Talk();
                     return;
                 }
