@@ -444,6 +444,8 @@ namespace DM.Dialog
         private void UpdateDialogText(Sentence[] sentences, int sentenceState)
         {
             if (isenddelay == false) return;
+
+
             if (sentences.Length == 0)
             {
                 LastDialogNextEvent(sentences, sentenceState);
@@ -452,6 +454,13 @@ namespace DM.Dialog
 
             if (sentences[nowSentenceIdx].eventIdx > 0)
                 DIalogEventManager.EventAction += DIalogEventManager.EventActions[sentences[nowSentenceIdx].eventIdx];
+
+            if (nowSentenceIdx > 0 && sentences[nowSentenceIdx - 1].backeventIdx > 0)
+            {
+                DIalogEventManager.EventAction += DIalogEventManager.BackEventActions[sentences[nowSentenceIdx - 1].backeventIdx];
+                Debug.Log(nowSentenceIdx + " back 이벤트실행!");
+            }
+
             if (nowOnFab)
             {
                 nowOnFab.GetComponent<TextBox>().DestroyTextBox();
@@ -474,8 +483,11 @@ namespace DM.Dialog
             {
                 dialogdelegate = (() =>
                 {
-                    if (sentences[nowSentenceIdx - 1].backeventIdx > 0)
-                        DIalogEventManager.EventAction += DIalogEventManager.BackEventActions[sentences[nowSentenceIdx - 1].backeventIdx];
+                    //if (sentences[nowSentenceIdx - 1].backeventIdx > 0)
+                    //{
+                    //    DIalogEventManager.EventAction += DIalogEventManager.BackEventActions[sentences[nowSentenceIdx - 1].backeventIdx];
+                    //    Debug.Log(nowSentenceIdx + " back 이벤트실행!");
+                    //}
 
 
                     UpdateDialogText(sentences, sentenceState);
@@ -568,8 +580,10 @@ namespace DM.Dialog
 
 
             if (sentences[nowSentenceIdx - 1].backeventIdx > 0)
+            {
                 DIalogEventManager.EventAction += DIalogEventManager.BackEventActions[sentences[nowSentenceIdx - 1].backeventIdx];
-
+                Debug.Log(nowSentenceIdx + " last back 이벤트실행!");
+            }
 
             PlayerInput.OnPressFDown = savedelegate;
             nowNpc = null;
