@@ -152,7 +152,7 @@ namespace DM.Building
                 ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 Debug.DrawRay(ray.origin, ray.direction * 20, Color.blue, 0.3f);
 
-                if (Physics.Raycast(ray, out hit, 20) && !IsPointerOverUIObject())
+                if (Physics.Raycast(ray, out hit, 20, layerMask) && !IsPointerOverUIObject())
                 {
                     if (curInteractObj != null)//뭘 이미 들고 있다면?
                     {

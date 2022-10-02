@@ -304,7 +304,7 @@ public class NPCManager : MonoBehaviour
     }
     private void DearAppear()
     {
-        MoveToNPCSomewhere(6, npcTfs[8].Npctf.MyHouse.HouseOwnerTransform.position + npcTfs[8].Npctf.transform.right * 5);
+        MoveToNPCSomewhere(6, npcTfs[8].Npctf.MyHouse.HouseOwnerTransform.position + npcTfs[8].Npctf.transform.right * 2);
         DIalogEventManager.EventAction -= DIalogEventManager.EventActions[(int)EventEnum.DearAppear];
     }
     private void SheepDearGone()

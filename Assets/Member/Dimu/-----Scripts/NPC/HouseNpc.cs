@@ -109,6 +109,11 @@ namespace DM.NPC
         }
         public void FindLikeHouse(BuildingBlock buildAreaObject) //해당 건축물에 입주 가능한지.
         {
+            if (buildAreaObject.SpecialHouse)
+            {
+                DebugText.Instance.SetText("특수 건물은 소개할 수 없어요!");
+                return;
+            }
             if (buildAreaObject._livingCharacter)
             {
                 like = BuildingLike.Cant;
