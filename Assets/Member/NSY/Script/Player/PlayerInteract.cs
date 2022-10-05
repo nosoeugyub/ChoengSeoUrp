@@ -190,20 +190,6 @@ namespace NSY.Player
                 teleportable.Teleport(this.transform);
                 return;
             }
-
-            MagnifyObject bubbleCollectable = interactable.transform.GetComponent<MagnifyObject>();
-            if (bubbleCollectable != null)
-            {
-                if (!bubbleCollectable.CheckBubble(playerAnimator.animator))
-                {
-                    SetIsAnimation(false);
-                }
-                else
-                {
-                    SetIsAnimation(true);
-                    return;
-                }
-            }
             MineObject mineable = interactable.transform.GetComponent<MineObject>();
             if (mineable != null)
             {

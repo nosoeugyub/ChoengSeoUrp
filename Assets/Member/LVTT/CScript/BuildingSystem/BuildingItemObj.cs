@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace DM.Building
 {
-    public class BuildingItemObj : ItemObject//, IDropable
+    public class BuildingItemObj : ItemObject
     {
         [SerializeField] BuildObjAttribute attributes;
 
@@ -171,7 +171,6 @@ namespace DM.Building
         public void SetBuildItemRotation(float scalenum)
         {
             transform.Rotate(new Vector3(0, 0, scalenum));
-            //print(transform.rotation);
         }
         public override int CanInteract()
         {
@@ -258,9 +257,6 @@ namespace DM.Building
                     transform.position -= transform.forward * buildItemGap; //선택중인 자재 전진
                     MyOrder++;
                 }
-                //else
-                //    print("NO NEAROBJ");
-
             }
             else
             {
@@ -284,15 +280,11 @@ namespace DM.Building
                 }
                 if (nearObj)
                 {
-                    //print("Down Near Obj is " + nearObj.name);
                     nearObj.transform.position -= nearObj.transform.forward * buildItemGap; //가장 가까운 자재전진
                     nearObj.GetComponent<BuildingItemObj>().MyOrder++;
                     transform.position += transform.forward * buildItemGap; //선택중인 자재 후진
                     MyOrder--;
                 }
-                // else
-                //     print("NO NEAROBJ");
-
             }
         }
         public void PutDownBuildingItemObj(float areaWidthSize, float areaHeightSize)
