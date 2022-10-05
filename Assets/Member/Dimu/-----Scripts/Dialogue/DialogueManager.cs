@@ -604,7 +604,7 @@ namespace DM.Dialog
         {
             QuestData qd = questManager.ReturnCanClearQuestRequireNpc(0); //클리어가능한 퀘스트 0번 인덱스
 
-            //흠.. 얘가 왜 여기에.
+            // 튜토리얼
             if (qd && qd.npcID == 0)
             {
                 if (qd.questID > -1)

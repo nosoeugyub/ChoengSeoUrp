@@ -70,18 +70,13 @@ namespace DM.NPC
             if (dialogMarkType == nowDialogMarkType) return;
 
             if (nowDialogMarkType != DialogMarkType.None)
-            {
                 dialogMarks[(int)nowDialogMarkType].gameObject.SetActive(false);
-                print(this.name + nowDialogMarkType.ToString());
-            }
 
             nowDialogMarkType = dialogMarkType;
 
             if (dialogMarkType != DialogMarkType.None)
-            {
                 dialogMarks[(int)nowDialogMarkType].gameObject.SetActive(true);
 
-            }
             NPCStateUIUptate(dialogMarkType);
         }
 
@@ -176,141 +171,26 @@ namespace DM.NPC
                     bool canContinue = true;
                     ints[i]++;
 
-                    foreach (var preferkind in wantToBuildCondition[i].buildItemKind)//설정한 종류들 중 하나 체크
-                    {
-                        canContinue = false;
-                        //희망 조건에 있는 종류와 설치된 자재와 같은지
-                        if (preferkind == buildItem.GetAttribute().buildItemKind)
-                        {
-                            print(preferkind.ToString());
-                            canContinue = true;
-                            break;
-                        }
-                        count++;
-                    }
-                    //설정된게 있는데 하나도 해당되는게 없으면...
-                    if (wantToBuildCondition[i].buildItemKind.Length != 0 && count == wantToBuildCondition[i].buildItemKind.Length)
-                    {
-                        ++failBuildItemCount; //틀린 자재 개수 증가.
-
-                        //return BuildingLike.Unlike_Shape;
-                    }
-
+                    Test(wantToBuildCondition[i].buildItemKind, buildItem.GetAttribute().buildItemKind, ref canContinue, ref count, ref failBuildItemCount);
                     if (!canContinue) break;
 
-                    count = 0;
-                    foreach (var kind in wantToBuildCondition[i].buildHPos)
-                    {
-                        canContinue = false;
-                        if (kind == buildItem.GetAttribute().buildHPos)
-                        {
-                            print(kind.ToString());
-                            canContinue = true;
-                            break;
-                        }
-                        count++;
-                    }
-                    if (wantToBuildCondition[i].buildHPos.Length != 0 && count == wantToBuildCondition[i].buildHPos.Length)
-                        ++failBuildItemCount;
-                    //return BuildingLike.Unlike_Shape;
-
+                    Test(wantToBuildCondition[i].buildHPos, buildItem.GetAttribute().buildHPos, ref canContinue, ref count, ref failBuildItemCount);
                     if (!canContinue) break;
 
-                    count = 0;
-                    foreach (var kind in wantToBuildCondition[i].buildVPos)
-                    {
-                        canContinue = false;
-                        if (kind == buildItem.GetAttribute().buildVPos)
-                        {
-                            print(kind.ToString());
-                            canContinue = true;
-                            break;
-                        }
-                        count++;
-                    }
-                    if (wantToBuildCondition[i].buildVPos.Length != 0 && count == wantToBuildCondition[i].buildVPos.Length)
-                        ++failBuildItemCount;
-                    //return BuildingLike.Unlike_Shape;
-
+                    Test(wantToBuildCondition[i].buildVPos, buildItem.GetAttribute().buildVPos, ref canContinue, ref count, ref failBuildItemCount);
                     if (!canContinue) break;
 
-                    count = 0;
-                    foreach (var kind in wantToBuildCondition[i].buildSize)
-                    {
-                        canContinue = false;
-                        if (kind == buildItem.GetAttribute().buildSize)
-                        {
-                            print(kind.ToString());
-                            canContinue = true;
-                            break;
-                        }
-                        count++;
-                    }
-                    if (wantToBuildCondition[i].buildSize.Length != 0 && count == wantToBuildCondition[i].buildSize.Length)
-                        ++failBuildItemCount;
-                    //return BuildingLike.Unlike_Shape;
-
+                    Test(wantToBuildCondition[i].buildSize, buildItem.GetAttribute().buildSize, ref canContinue, ref count, ref failBuildItemCount);
                     if (!canContinue) break;
 
-                    count = 0;
-                    foreach (var kind in wantToBuildCondition[i].buildColor)
-                    {
-                        canContinue = false;
-                        if (kind == buildItem.GetAttribute().buildColor)
-                        {
-                            print(kind.ToString());
-                            canContinue = true;
-                            break;
-                        }
-                        count++;
-                    }
-                    if (wantToBuildCondition[i].buildColor.Length != 0 && count == wantToBuildCondition[i].buildColor.Length)
-                        ++failBuildItemCount;
-                    //return BuildingLike.Unlike_Shape;
-
+                    Test(wantToBuildCondition[i].buildColor, buildItem.GetAttribute().buildColor, ref canContinue, ref count, ref failBuildItemCount);
                     if (!canContinue) break;
 
-                    count = 0;
-                    foreach (var kind in wantToBuildCondition[i].buildShape)
-                    {
-                        canContinue = false;
-                        if (kind == buildItem.GetAttribute().buildShape)
-                        {
-                            print(kind.ToString());
-                            canContinue = true;
-                            break;
-                        }
-                        count++;
-                    }
-                    if (wantToBuildCondition[i].buildShape.Length != 0 && count == wantToBuildCondition[i].buildShape.Length)
-                        ++failBuildItemCount;
-                    //return BuildingLike.Unlike_Shape;
-
+                    Test(wantToBuildCondition[i].buildShape, buildItem.GetAttribute().buildShape, ref canContinue, ref count, ref failBuildItemCount);
                     if (!canContinue) break;
 
-                    count = 0;
-                    foreach (var kind in wantToBuildCondition[i].buildThema)
-                    {
-                        canContinue = false;
-                        foreach (var thema in buildItem.GetAttribute().buildThema)
-                        {
-                            print(kind.ToString());
-                            if (kind == thema)
-                            {
-                                canContinue = true;
-                                break;
-                            }
-                        }
-                        if (canContinue) break;
-                        count++;
-                    }
-                    if (wantToBuildCondition[i].buildThema.Length != 0 && count == wantToBuildCondition[i].buildThema.Length)
-                        ++failBuildItemCount;
-                    //return BuildingLike.Unlike_Shape;
-
+                    Test(wantToBuildCondition[i].buildThema, buildItem.GetAttribute().buildThema, ref canContinue, ref count, ref failBuildItemCount);
                     if (!canContinue) break;
-
-
                 }
             }
 
@@ -337,7 +217,23 @@ namespace DM.NPC
             else
                 return BuildingLike.Unlike_Shape;
         }
-
+        public void Test<T>(T[] d, dynamic attr, ref bool canContinue, ref int count, ref int failBuildItemCount)
+        {
+            count = 0;
+            foreach (var kind in d)
+            {
+                canContinue = false;
+                if (kind == attr)
+                {
+                    print(kind.ToString());
+                    canContinue = true;
+                    break;
+                }
+                count++;
+            }
+            if (d.Length != 0 && count == d.Length)
+                ++failBuildItemCount;
+        }
         public override int CanInteract()
         {
             return (int)CursorType.Talk;
