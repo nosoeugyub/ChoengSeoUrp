@@ -1,21 +1,20 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace DM.Event
 {
     public class EventContainer : MonoBehaviour
     {
-        //public GameEvent gameEvent;
-        //public Event Response;
-    
+        [SerializeField] GameEvent[] gameEvent;
 
-        //private void OnEnable()
-        //{ gameEvent.RegisterListener(this); }
+        public void RaiseEvent(GameEventType gameEventType)
+        {
+            if (gameEvent[(int)gameEventType])
+                gameEvent[(int)gameEventType].Raise();
+        }
+    }
 
-        //private void OnDisable()
-        //{ gameEvent.UnregisterListener(this); }
-
-        //public void OnEventRaised()
-        //{ Response.Invoke(); }
+    public enum GameEventType
+    {
+        playerMoveOnEvent, playerMoveOffEvent, playerCanInteractEvent, playerCantInteractEvent
     }
 }

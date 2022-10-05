@@ -1,4 +1,5 @@
-﻿using Game.Cam;
+﻿using DM.Event;
+using Game.Cam;
 using NSY.Manager;
 using NSY.Player;
 using System.Collections.Generic;
@@ -16,23 +17,14 @@ namespace DM.Building
         PlayerInput.InputEvent savedelegate_ESC;
         PlayerInput.InputEvent savedelegate_F;
 
-        [SerializeField] GameEvent playerCanInteractEvent;
-        [SerializeField] GameEvent playerCantInteractEvent;
-
         public bool isBuildMode { get; set; } = false;
         private BuildingBlock nowBuildingBlock { get; set; } = null; //static에서 private로...
-
 
         private void Awake()
         {
             CamManager = FindObjectOfType<CameraManager>();
             buildingDisplay = FindObjectOfType<BuildingDisplay>();
         }
-
-        //private void Start()
-        //{
-        //    //buildingDisplay.SetBuildModeOffButtonEvent(BuildModeOff);
-        //}
 
         public void BuildModeOn(BuildingBlock nowBuildingBlock_)
         {
@@ -42,7 +34,6 @@ namespace DM.Building
             savedelegate_F = PlayerInput.OnPressFDown;
             PlayerInput.OnPressESCDown = BuildModeOff;
             PlayerInput.OnPressFDown = null;
-            //Debug.Log(savedelegate_F + " set null");
 
             isBuildMode = true;
 

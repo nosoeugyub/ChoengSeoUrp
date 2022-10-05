@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using DM.Event;
 using DM.NPC;
 using NSY.Manager;
 using NSY.Player;
@@ -30,18 +31,19 @@ public class NPCManager : MonoBehaviour
     [SerializeField] Item removeitem;
     [SerializeField] int removeCount;
 
-    [SerializeField] GameEvent playerCanInteractEvent;
-    [SerializeField] GameEvent playerCantInteractEvent;
-
-    [SerializeField] GameEvent playerMoveOnEvent;
-    [SerializeField] GameEvent playerMoveOffEvent;
     public int NowInteractNPCIndex { get; set; }
 
     Coroutine nowCor;
 
+    EventContainer eventContainer;
+
     public NPCField[] NpcTfs
     {
         get { return npcTfs; }
+    }
+    private void Awake()
+    {
+        eventContainer = FindObjectOfType<EventContainer>();
     }
     private void Start()
     {
@@ -175,8 +177,8 @@ public class NPCManager : MonoBehaviour
     }
     IEnumerator TeleportWithFader(int i)
     {
-        playerMoveOffEvent.Raise();
-        playerCantInteractEvent.Raise();
+        eventContainer.RaiseEvent(GameEventType.playerMoveOffEvent);
+        eventContainer.RaiseEvent(GameEventType.playerCantInteractEvent);
         yield return fader.IFadeOut(Color.white,0.3f);
         Vector3 randPos = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f));
         npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(teleportPos[i].position);
@@ -188,8 +190,8 @@ public class NPCManager : MonoBehaviour
         npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().InitForward();
         yield return new WaitForSeconds(1);
         yield return fader.IFadeIn(Color.white, 0.3f);
-        playerMoveOnEvent.Raise();
-        playerCanInteractEvent.Raise();
+        eventContainer.RaiseEvent(GameEventType.playerMoveOnEvent);
+        eventContainer.RaiseEvent(GameEventType.playerCanInteractEvent);
     }
     //////////////event Methods
     public void GoNPCsHouse()
@@ -238,8 +240,8 @@ public class NPCManager : MonoBehaviour
     }
     IEnumerator DelayMove()
     {
-        playerMoveOffEvent.Raise();
-        playerCantInteractEvent.Raise();
+        eventContainer.RaiseEvent(GameEventType.playerMoveOffEvent);
+        eventContainer.RaiseEvent(GameEventType.playerCantInteractEvent);
         yield return fader.IFadeOut(Color.white, 2);
         npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(StartPos.position);
         yield return new WaitForSeconds(1);
@@ -247,8 +249,8 @@ public class NPCManager : MonoBehaviour
         yield return new WaitForSeconds(1);
         DIalogEventManager.EventAction += DIalogEventManager.EventActions[(int)EventEnum.StartTalk];
         yield return fader.IFadeIn(Color.white, 2);
-        playerMoveOnEvent.Raise();
-        playerCanInteractEvent.Raise();
+        eventContainer.RaiseEvent(GameEventType.playerMoveOnEvent);
+        eventContainer.RaiseEvent(GameEventType.playerCanInteractEvent);
 
     }
 

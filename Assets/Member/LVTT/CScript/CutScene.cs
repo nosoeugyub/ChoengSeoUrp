@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using DM.Event;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -37,19 +38,19 @@ public class CutScene : MonoBehaviour
     [SerializeField] Fader fader;
     Image curImage;
 
-    [SerializeField] GameEvent playerMoveOnEvent;
-    [SerializeField] GameEvent playerMoveOffEvent;
-
-    [SerializeField] GameEvent playerCanInteractEvent;
-    [SerializeField] GameEvent playerCantInteractEvent;
+    EventContainer eventContainer;
 
     public static bool IsCutSceneOn { get; set; }
 
-    private void Update()
+    private void Awake()
     {
-        if (Input.GetKeyDown(KeyCode.C))
-            PrintImage(3);
+        eventContainer = FindObjectOfType<EventContainer>();
     }
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.C))
+    //        PrintImage(3);
+    //}
     public void PrintImage(int index)//Calling this will also unlock the Image in the Library
     {
         ChangeIsCutSceneOn(true);
@@ -69,9 +70,9 @@ public class CutScene : MonoBehaviour
 
     IEnumerator GetImage(int index)
     {
-        playerMoveOffEvent.Raise();
-        playerCantInteractEvent.Raise();
-        yield return fader.IFadeOut(Color.black,2);
+        eventContainer.RaiseEvent(GameEventType.playerMoveOffEvent);
+        eventContainer.RaiseEvent(GameEventType.playerCantInteractEvent);
+        yield return fader.IFadeOut(Color.black, 2);
         curImage = Instantiate(Image[index].img, ImageSpawn.position, ImageSpawn.rotation, ImageSpawn);
         curImage.rectTransform.sizeDelta = new Vector2(1920, 1080);
         yield return fader.IFadeIn(Color.black, 2);
@@ -94,8 +95,8 @@ public class CutScene : MonoBehaviour
     public void CloseImage()
     {
         Destroy(curImage.gameObject);
-        playerMoveOnEvent.Raise();
-        playerCanInteractEvent.Raise();
+        eventContainer.RaiseEvent(GameEventType.playerMoveOnEvent);
+        eventContainer.RaiseEvent(GameEventType.playerCanInteractEvent);
         ConfirmButton.gameObject.SetActive(false);
         foreach (CutSceneImage image in Image)
         {

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using DM.Event;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,11 +8,20 @@ public class SceneChangeManager : MonoBehaviour
     [SerializeField] Fader fader;
     Color loadscenecolor;
     float loadscenespeed;
-    [SerializeField] GameEvent playerMoveOnEvent;
-    [SerializeField] GameEvent playerMoveOffEvent;
 
-    [SerializeField] GameEvent playerCanInteractEvent;
-    [SerializeField] GameEvent playerCantInteractEvent;
+    EventContainer eventContainer;
+
+    //[SerializeField] GameEvent playerMoveOnEvent;
+    //[SerializeField] GameEvent playerMoveOffEvent;
+    //
+    //[SerializeField] GameEvent playerCanInteractEvent;
+    //[SerializeField] GameEvent playerCantInteractEvent;
+
+    private void Awake()
+    {
+        eventContainer = FindObjectOfType<EventContainer>();
+
+    }
     private void Start()
     {
         loadscenecolor = Color.white;
@@ -20,15 +30,11 @@ public class SceneChangeManager : MonoBehaviour
     }
     public IEnumerator StartSceneFade()
     {
-        if (playerMoveOffEvent)
-            playerMoveOffEvent.Raise();
-        if (playerCantInteractEvent)
-            playerCantInteractEvent.Raise();
+        eventContainer.RaiseEvent(GameEventType.playerMoveOffEvent);
+        eventContainer.RaiseEvent(GameEventType.playerCantInteractEvent);
         yield return fader.IFadeIn(loadscenecolor, loadscenespeed);
-        if (playerMoveOnEvent)
-            playerMoveOnEvent.Raise();
-        if (playerCanInteractEvent)
-            playerCanInteractEvent.Raise();
+        eventContainer.RaiseEvent(GameEventType.playerMoveOnEvent);
+        eventContainer.RaiseEvent(GameEventType.playerCanInteractEvent);
     }
     public void LoadSceneFadeString(string scenename)
     {
@@ -37,8 +43,7 @@ public class SceneChangeManager : MonoBehaviour
 
     IEnumerator LoadSceneFadeStringCo(string scenename)
     {
-        if (playerMoveOffEvent)
-        playerMoveOffEvent.Raise();
+        eventContainer.RaiseEvent(GameEventType.playerMoveOffEvent);
         yield return fader.IFadeOut(loadscenecolor, loadscenespeed);
         LoadSceneAsString(scenename);
     }
@@ -63,8 +68,7 @@ public class SceneChangeManager : MonoBehaviour
     }
     IEnumerator Quit()
     {
-        if (playerMoveOffEvent)
-        playerMoveOffEvent.Raise();
+        eventContainer.RaiseEvent(GameEventType.playerMoveOffEvent);
         yield return fader.IFadeOut(loadscenecolor, loadscenespeed);
         Application.Quit();
     }

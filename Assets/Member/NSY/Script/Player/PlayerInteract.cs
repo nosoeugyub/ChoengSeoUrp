@@ -47,13 +47,7 @@ namespace NSY.Player
         public bool isAnimating = false;
         private Vector2 screenPoint;
 
-        [SerializeField] GameEvent playerMoveOnEvent;
-        [SerializeField] GameEvent playerMoveOffEvent;
-
         [SerializeField] Shader GlowColor;
-
-        [SerializeField]
-
 
         Camera mainCam;
 
@@ -62,6 +56,7 @@ namespace NSY.Player
             layerMask = 1 << LayerMask.NameToLayer("Interactable");
             cursorManager = FindObjectOfType<CursorManager>();
             buildingManager = FindObjectOfType<BuildingManager>();
+            eventContainer = FindObjectOfType<EventContainer>();
             mainCam = Camera.main;
         }
         private void Start()
@@ -123,7 +118,7 @@ namespace NSY.Player
                 if (!isAnimating)
                 {
                     SetCanInteract(false);
-                    playerMoveOffEvent.Raise();
+                    eventContainer.RaiseEvent(GameEventType.playerMoveOffEvent);// playerMoveOffEvent.Raise();
                 }
             }
             else
@@ -131,7 +126,7 @@ namespace NSY.Player
                 if (isAnimating)
                 {
                     SetCanInteract(true);
-                    playerMoveOnEvent.Raise();
+                    eventContainer.RaiseEvent(GameEventType.playerMoveOnEvent); // playerMoveOnEvent.Raise();
                 }
             }
             isAnimating = isTrue;
