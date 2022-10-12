@@ -128,7 +128,6 @@ namespace DM.Building
 }
 public enum BuildVPos { Top, Mid, Bottom, Length }
 public enum BuildHPos { Left, Right, Mid, Length }
-
 public enum BuildSize { Small, Normal, Big, Length }
 public enum BuildColor { None, Red, Orange, Yellow, Green, Blue, Mint, Pupple, White, Black, Pink, Length }
 public enum BuildMaterial//타이어

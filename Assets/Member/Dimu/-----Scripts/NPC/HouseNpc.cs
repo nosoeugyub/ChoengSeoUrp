@@ -127,10 +127,6 @@ namespace DM.NPC
                     break;
             }
         }
-        public BuildingLike CanGetMyHouse()
-        {
-            return GetBuildingLikeable(myHouse);
-        }
         public void SetMyHouse(BuildingBlock block, BuildingLike l)
         {
             like = l;
@@ -163,34 +159,59 @@ namespace DM.NPC
 
             int failBuildItemCount = 0;
 
+            dynamic[] dynamics1 = new dynamic[7];
+            dynamic[] dynamics2 = new dynamic[7];
+
             foreach (BuildingItemObj buildItem in buildItemList)//건축자재 하나씩
             {
-                int count = 0;
+                dynamics1[0] = buildItem.GetAttribute().buildItemKind;
+                dynamics1[1] = buildItem.GetAttribute().buildHPos;
+                dynamics1[2] = buildItem.GetAttribute().buildVPos;
+                dynamics1[3] = buildItem.GetAttribute().buildSize;
+                dynamics1[4] = buildItem.GetAttribute().buildColor;
+                dynamics1[5] = buildItem.GetAttribute().buildShape;
+                dynamics1[6] = buildItem.GetAttribute().buildThema;
+
                 for (int i = 0; i < wantToBuildCondition.Length; i++)
                 {
                     bool canContinue = true;
                     ints[i]++;
 
-                    Test(wantToBuildCondition[i].buildItemKind, buildItem.GetAttribute().buildItemKind, ref canContinue, ref count, ref failBuildItemCount);
-                    if (!canContinue) break;
+                    dynamics2[0] = wantToBuildCondition[i].buildItemKind;
+                    dynamics2[1] = wantToBuildCondition[i].buildHPos;
+                    dynamics2[2] = wantToBuildCondition[i].buildVPos;
+                    dynamics2[3] = wantToBuildCondition[i].buildSize;
+                    dynamics2[4] = wantToBuildCondition[i].buildColor;
+                    dynamics2[5] = wantToBuildCondition[i].buildShape;
+                    dynamics2[6] = wantToBuildCondition[i].buildThema;
 
-                    Test(wantToBuildCondition[i].buildHPos, buildItem.GetAttribute().buildHPos, ref canContinue, ref count, ref failBuildItemCount);
-                    if (!canContinue) break;
+                    for (int d = 0; d < dynamics2.Length; d++)
+                    {
+                        Test(dynamics2[d], dynamics1[d], ref canContinue, ref failBuildItemCount);
+                        if (!canContinue)
+                            break;
+                    }
 
-                    Test(wantToBuildCondition[i].buildVPos, buildItem.GetAttribute().buildVPos, ref canContinue, ref count, ref failBuildItemCount);
-                    if (!canContinue) break;
-
-                    Test(wantToBuildCondition[i].buildSize, buildItem.GetAttribute().buildSize, ref canContinue, ref count, ref failBuildItemCount);
-                    if (!canContinue) break;
-
-                    Test(wantToBuildCondition[i].buildColor, buildItem.GetAttribute().buildColor, ref canContinue, ref count, ref failBuildItemCount);
-                    if (!canContinue) break;
-
-                    Test(wantToBuildCondition[i].buildShape, buildItem.GetAttribute().buildShape, ref canContinue, ref count, ref failBuildItemCount);
-                    if (!canContinue) break;
-
-                    Test(wantToBuildCondition[i].buildThema, buildItem.GetAttribute().buildThema, ref canContinue, ref count, ref failBuildItemCount);
-                    if (!canContinue) break;
+                    //Test(wantToBuildCondition[i].buildItemKind, buildItem.GetAttribute().buildItemKind, ref canContinue, ref failBuildItemCount);
+                    //if (!canContinue) break;
+                    //
+                    //Test(wantToBuildCondition[i].buildHPos, buildItem.GetAttribute().buildHPos, ref canContinue, ref failBuildItemCount);
+                    //if (!canContinue) break;
+                    //
+                    //Test(wantToBuildCondition[i].buildVPos, buildItem.GetAttribute().buildVPos, ref canContinue, ref failBuildItemCount);
+                    //if (!canContinue) break;
+                    //
+                    //Test(wantToBuildCondition[i].buildSize, buildItem.GetAttribute().buildSize, ref canContinue, ref failBuildItemCount);
+                    //if (!canContinue) break;
+                    //
+                    //Test(wantToBuildCondition[i].buildColor, buildItem.GetAttribute().buildColor, ref canContinue, ref failBuildItemCount);
+                    //if (!canContinue) break;
+                    //
+                    //Test(wantToBuildCondition[i].buildShape, buildItem.GetAttribute().buildShape, ref canContinue, ref failBuildItemCount);
+                    //if (!canContinue) break;
+                    //
+                    //Test(wantToBuildCondition[i].buildThema, buildItem.GetAttribute().buildThema, ref canContinue, ref failBuildItemCount);
+                    //if (!canContinue) break;
                 }
             }
 
@@ -202,28 +223,27 @@ namespace DM.NPC
                 }
             }
 
-            for (int i = 0; i < wantToBuildCondition.Length; i++)
-            {
-                if (wantToBuildCondition[i].buildPerfactCount > ints[i])
-                {
-                    return BuildingLike.Unlike_Count; // false
-                }
-            }
+            //for (int i = 0; i < wantToBuildCondition.Length; i++)
+            //{
+            //    if (wantToBuildCondition[i].buildPerfactCount > ints[i])
+            //    {
+            //        return BuildingLike.Unlike_Count; // false
+            //    }
+            //}
 
-            print(failBuildItemCount);
             int halfbuildcount = buildItemList.Count / 2;
             if (halfbuildcount >= failBuildItemCount)
                 return BuildingLike.Like;
             else
                 return BuildingLike.Unlike_Shape;
         }
-        public void Test<T>(T[] d, dynamic attr, ref bool canContinue, ref int count, ref int failBuildItemCount)
+        public void Test<T>(T[] d, T attr, ref bool canContinue, ref int failBuildItemCount)
         {
-            count = 0;
-            foreach (var kind in d)
+            int count = 0;
+            foreach (T kind in d)
             {
                 canContinue = false;
-                if (kind == attr)
+                if (kind.Equals(attr))
                 {
                     print(kind.ToString());
                     canContinue = true;
@@ -234,6 +254,29 @@ namespace DM.NPC
             if (d.Length != 0 && count == d.Length)
                 ++failBuildItemCount;
         }
+        public void Test<T>(T[] d, T[] attrs, ref bool canContinue, ref int failBuildItemCount)
+        {
+            int count = 0;
+            foreach (T kind in d)
+            {
+                canContinue = false;
+                foreach (T attr in attrs)
+                {
+                    if (kind.Equals(attr))
+                    {
+                        print(kind.ToString());
+                        canContinue = true;
+                        break;
+                    }
+                }
+                if (canContinue) break;
+
+                count++;
+            }
+            if (d.Length != 0 && count == d.Length)
+                ++failBuildItemCount;
+        }
+
         public override int CanInteract()
         {
             return (int)CursorType.Talk;
