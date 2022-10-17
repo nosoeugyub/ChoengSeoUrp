@@ -344,7 +344,7 @@ public class CreateAsset : MonoBehaviour
             variantRootChild.localScale = new Vector3(texture.width * 0.01f, texture.height * 0.01f, 1);
 
             variantRootChild.position = new Vector3(variantRoot.transform.position.x, texture.height * 0.01f / 2 + 0.001f, variantRoot.transform.position.z);
-            variantRootChild.localScale = new Vector3(texture.width * 0.01f, texture.height * 0.01f, 1);
+            //variantRootChild.localScale = new Vector3(texture.width * 0.01f, texture.height * 0.01f, 1);
 
             Debug.Log(AssetDatabase.GetAssetPath(material));
             AssetDatabase.Refresh();

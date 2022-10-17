@@ -159,6 +159,7 @@ namespace NSY.Player
         private void InvokeInteract(Interactable interactable)
         {
             if (!interactable) return;
+
             CollectObject collectObj = interactable.transform.GetComponent<CollectObject>();
             if (collectObj != null)
             {

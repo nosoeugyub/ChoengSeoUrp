@@ -9,18 +9,15 @@ public class QuestInfoUI : MonoBehaviour
     [SerializeField] Text _descriptionText;
     [SerializeField] Image _npcImg;
     [SerializeField] Transform moveChild;
-    Vector3 moveChildorg;
     [SerializeField] Ease ease;
     [SerializeField] float moveDuration;
     [SerializeField] GameObject boomParticle;
     private void Start()
     {
         boomParticle.SetActive(false);
-        //moveChildorg = moveChild.transform.position;
     }
     public void OnEnable()
     {
-        //moveChild.transform.position = moveChildorg;
         moveChild.transform.DOLocalMove(Vector3.zero, moveDuration).SetEase(ease);
     }
     public void SetDisable()
