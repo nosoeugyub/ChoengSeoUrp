@@ -171,7 +171,7 @@ public class NPCManager : MonoBehaviour
         teleUIYesButton.onClick.RemoveAllListeners();
         teleUIYesButton.onClick.AddListener(() =>
         {
-           
+
             StartCoroutine(TeleportWithFader(i));
         });
     }
@@ -179,7 +179,7 @@ public class NPCManager : MonoBehaviour
     {
         eventContainer.RaiseEvent(GameEventType.playerMoveOffEvent);
         eventContainer.RaiseEvent(GameEventType.playerCantInteractEvent);
-        yield return fader.IFadeOut(Color.white,0.3f);
+        yield return fader.IFadeOut(Color.white, 0.3f);
         Vector3 randPos = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f));
         npcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(teleportPos[i].position);
         for (int j = 1; j < npcTfs.Length; j++)
@@ -213,7 +213,7 @@ public class NPCManager : MonoBehaviour
         MoveToNPCSomewhere(2, WalPos.position);
         npcTfs[2].IsField = true;
         npcTfs[2].Npctf.UIOnEvent(2);
-        
+
         DIalogEventManager.EventAction -= DIalogEventManager.EventActions[(int)EventEnum.MoveToWalPort];
     }
     private void MoveToBearsHouseWithSheep()

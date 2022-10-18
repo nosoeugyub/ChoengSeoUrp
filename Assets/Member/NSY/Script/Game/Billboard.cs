@@ -18,16 +18,16 @@ public class Billboard : MonoBehaviour
     void LateUpdate()
     {
         MainCam = Camera.main;
-        if (!useStaticLookCam)
-        {
-            cameraDir = MainCam.transform.forward;
-            cameraDir.y = 0;
-            transform.rotation = Quaternion.LookRotation(cameraDir);
-        }
-        else
-        {
+        //if (!useStaticLookCam)
+        //{
+        //    cameraDir = MainCam.transform.forward;
+        //    cameraDir.y = 0;
+        //    transform.rotation = Quaternion.LookRotation(cameraDir);
+        //}
+        //else
+        //{
             transform.rotation = MainCam.transform.rotation;
-        }
+        //}
         transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.eulerAngles.y, transform.rotation.z);
     }
 

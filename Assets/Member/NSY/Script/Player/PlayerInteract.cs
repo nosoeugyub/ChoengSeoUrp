@@ -241,7 +241,7 @@ namespace NSY.Player
                 nowInteractable.EndInteract();
 
             buildinginteractUi.gameObject.SetActive(false);
-            StartCoroutine(cursorManager.SetCursor((int)CursorType.Normal));
+            //StartCoroutine(cursorManager.SetCursor((int)CursorType.Normal));
 
             if (Physics.Raycast(ray, out hit, 20, layerMask2.value) && !buildingManager.isBuildMode)
             {
@@ -250,7 +250,7 @@ namespace NSY.Player
                 {
                     if (nowInteractable.GetComponent<BuildingBlock>() && !IsPointerOverUIObject())
                     {
-                        StartCoroutine(cursorManager.SetCursor(nowInteractable.CanInteract()));//건축 외에는 변하지 않음
+                        //StartCoroutine(cursorManager.SetCursor(nowInteractable.CanInteract()));//건축 외에는 변하지 않음
                         buildinginteractUi.gameObject.SetActive(true);
                         Vector3 uiPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y + 40, Input.mousePosition.z);
 

@@ -1,5 +1,4 @@
-﻿using DM.Event;
-using Game.Cam;
+﻿using Game.Cam;
 using NSY.Manager;
 using NSY.Player;
 using System.Collections.Generic;
@@ -30,7 +29,7 @@ namespace DM.Building
         {
             if (SuperManager.Instance.dialogueManager.IsTalking) return;
 
-            savedelegate_ESC =PlayerInput.OnPressESCDown;
+            savedelegate_ESC = PlayerInput.OnPressESCDown;
             savedelegate_F = PlayerInput.OnPressFDown;
             PlayerInput.OnPressESCDown = BuildModeOff;
             PlayerInput.OnPressFDown = null;
@@ -78,6 +77,7 @@ namespace DM.Building
             //buildingDisplay.BuildDisplayOn(false);
 
             //camera
+            Camerazone.camcount--;
             CamManager.DeactiveSubCamera(1);
         }
         public void AddBuilding(BuildingBlock buildingBlock)
