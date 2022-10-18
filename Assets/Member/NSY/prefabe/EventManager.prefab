@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6385682441756640105}
   - component: {fileID: 6385682441756640104}
+  - component: {fileID: 3710077305561227979}
   m_Layer: 0
   m_Name: EventManager
   m_TagString: Untagged
@@ -43,3 +44,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72c8a419515df34286ee48950a881cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cols: []
+  portColBefore: []
+  portColAfter: []
+  chick: {fileID: 0}
+--- !u!114 &3710077305561227979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6385682441756640107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f6e1c3285c205c488a55dea096cc15b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent:
+  - {fileID: 11400000, guid: 98d4b1515bd44f442b7a5802c24507a4, type: 2}
+  - {fileID: 11400000, guid: beba0450816827a4b92043b965656c34, type: 2}
+  - {fileID: 11400000, guid: 8b440837830075a41a07fba546ca2f7b, type: 2}
+  - {fileID: 11400000, guid: 082593513da34184a88cd9a9b14d6b85, type: 2}

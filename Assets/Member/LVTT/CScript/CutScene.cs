@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using DM.Event;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -34,13 +35,22 @@ public class CutScene : MonoBehaviour
     [SerializeField] Transform ImageSpawn;
     [SerializeField] Button ConfirmButton;
     [SerializeField] GameObject CutSceneLibrary;
-    [SerializeField] GameObject FadeIn;
-    [SerializeField] GameObject FadeOut;
-
+    [SerializeField] Fader fader;
     Image curImage;
 
+    EventContainer eventContainer;
+
     public static bool IsCutSceneOn { get; set; }
-    
+
+    private void Awake()
+    {
+        eventContainer = FindObjectOfType<EventContainer>();
+    }
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.C))
+    //        PrintImage(3);
+    //}
     public void PrintImage(int index)//Calling this will also unlock the Image in the Library
     {
         ChangeIsCutSceneOn(true);
@@ -60,18 +70,15 @@ public class CutScene : MonoBehaviour
 
     IEnumerator GetImage(int index)
     {
-        GameObject fadein = Instantiate(FadeIn, ImageSpawn.position, ImageSpawn.rotation, ImageSpawn);
-        yield return new WaitForSeconds(1.5f);
-        Destroy(fadein, 0.5f);
+        eventContainer.RaiseEvent(GameEventType.playerMoveOffEvent);
+        eventContainer.RaiseEvent(GameEventType.playerCantInteractEvent);
+        yield return fader.IFadeOut(Color.black, 2);
         curImage = Instantiate(Image[index].img, ImageSpawn.position, ImageSpawn.rotation, ImageSpawn);
         curImage.rectTransform.sizeDelta = new Vector2(1920, 1080);
-        GameObject fadeout = Instantiate(FadeOut, ImageSpawn.position, ImageSpawn.rotation, ImageSpawn);
-        yield return new WaitForSeconds(3f);
-        Destroy(fadeout, 0.5f);
+        yield return fader.IFadeIn(Color.black, 2);
+        yield return new WaitForSeconds(1);
         ShowConfirmButton();
-
     }
-
 
     public void OpenImage(int index) //Open the unlocked Image and show the "확인" button without 3sec waiting ->Use in Image Library
     {
@@ -88,6 +95,8 @@ public class CutScene : MonoBehaviour
     public void CloseImage()
     {
         Destroy(curImage.gameObject);
+        eventContainer.RaiseEvent(GameEventType.playerMoveOnEvent);
+        eventContainer.RaiseEvent(GameEventType.playerCanInteractEvent);
         ConfirmButton.gameObject.SetActive(false);
         foreach (CutSceneImage image in Image)
         {

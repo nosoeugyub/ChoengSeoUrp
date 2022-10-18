@@ -31,14 +31,14 @@ public enum EventEnum
 }
 namespace NSY.Manager
 {
-    //ㅈㅅ합니다 개같은 코드
-    public class EventManager : MonoBehaviour
+    public class DIalogEventManager : MonoBehaviour
     {
-        //싱글턴
-        private EventManager() { }
-        private static EventManager _instace = null;
+        private DIalogEventManager() { }
+        private static DIalogEventManager _instace = null;
 
         public GameObject[] cols;
+        public GameObject[] portColBefore;
+        public GameObject[] portColAfter;
         public GameObject chick;
 
         public static Action[] EventActions = new Action[30];
@@ -50,13 +50,13 @@ namespace NSY.Manager
         //이벤트 실행 >>      EventAction += EventActions[0];
         //이벤트 종료 >>      EventAction -= EventActions[0];
 
-        public static EventManager _Instace
+        public static DIalogEventManager _Instace
         {
             get
             {
                 if (_instace == null)
                 {
-                    _instace = new EventManager();
+                    _instace = new DIalogEventManager();
                 }
                 return _instace;
 
@@ -72,6 +72,7 @@ namespace NSY.Manager
             EventActions[((int)EventEnum.OpenRoad1)] = OpenPortCol1;
             EventActions[((int)EventEnum.OpenRoad2)] = OpenPortCol2;
             EventActions[((int)EventEnum.OnChick)] = OnEnableChick;
+           
         }
         private void Update()
         {

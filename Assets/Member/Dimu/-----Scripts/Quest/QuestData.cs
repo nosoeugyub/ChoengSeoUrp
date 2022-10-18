@@ -69,6 +69,7 @@ namespace DM.Quest
 
         public void InitData() //퀘스트에 필요한 항목을 현재 플레이어 데이터 값으로 초기화
         {
+            
             foreach (QuestTask item in tasks.items)
             {
                 PlayerData.AddDictionary(item.objType, PlayerData.ItemData, (int)ItemBehaviorEnum.length);

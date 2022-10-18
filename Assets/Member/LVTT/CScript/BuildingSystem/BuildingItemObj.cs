@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace DM.Building
 {
-    public class BuildingItemObj : ItemObject//, IDropable
+    public class BuildingItemObj : ItemObject
     {
         [SerializeField] BuildObjAttribute attributes;
 
@@ -13,6 +13,7 @@ namespace DM.Building
         float MaxScale = 3f;
         float MinScale = 0.1f;
         public int breakCount;
+        int originbreakCount;
 
         [SerializeField] private bool itemisSet;
         [SerializeField] private bool isFirstDrop;
@@ -24,10 +25,10 @@ namespace DM.Building
         float MinX;
         float MaxY;
         float MinY;
-        float _areaWidthsize;
-        float _areaHeightsize;
+       [SerializeField] float _areaWidthsize;
+        [SerializeField] float _areaHeightsize;
 
-        Vector3 _houseBuildPos;
+        [SerializeField]  Vector3 _houseBuildPos;
         Vector3 ObjOriginPos;
 
         BuildingHandyObjSpawn SpawnHandyObjParent;
@@ -74,18 +75,33 @@ namespace DM.Building
             SpawnHandyObjParent = FindObjectOfType<BuildingHandyObjSpawn>();
 
             base.Awake();
-            ItemisSet = false;
-            isFirstDrop = true;
-        }
-        private void Start()
-        {
-            MaxScale = 2f;
-            MinScale = 0.1f;
             if (isBroken)
             {
                 ItemisSet = true;
                 isFirstDrop = false;
             }
+            else
+            {
+                ItemisSet = false;
+                isFirstDrop = true;
+            }
+
+            originbreakCount = breakCount;
+        }
+
+        internal void InitDestroyCount()
+        {
+            breakCount = originbreakCount;
+        }
+
+        private void Start()
+        {
+            MaxScale = 2f;
+            MinScale = 0.1f;
+            if (transform.parent)
+                SetPivotPos(transform.parent.position);
+ 
+
         }
         public void CallUpdate(float _distanceToNowBuildItemToNewSort)
         {
@@ -155,7 +171,6 @@ namespace DM.Building
         public void SetBuildItemRotation(float scalenum)
         {
             transform.Rotate(new Vector3(0, 0, scalenum));
-            print(transform.rotation);
         }
         public override int CanInteract()
         {
@@ -242,9 +257,6 @@ namespace DM.Building
                     transform.position -= transform.forward * buildItemGap; //선택중인 자재 전진
                     MyOrder++;
                 }
-                //else
-                //    print("NO NEAROBJ");
-
             }
             else
             {
@@ -268,15 +280,11 @@ namespace DM.Building
                 }
                 if (nearObj)
                 {
-                    //print("Down Near Obj is " + nearObj.name);
                     nearObj.transform.position -= nearObj.transform.forward * buildItemGap; //가장 가까운 자재전진
                     nearObj.GetComponent<BuildingItemObj>().MyOrder++;
                     transform.position += transform.forward * buildItemGap; //선택중인 자재 후진
                     MyOrder--;
                 }
-                // else
-                //     print("NO NEAROBJ");
-
             }
         }
         public void PutDownBuildingItemObj(float areaWidthSize, float areaHeightSize)

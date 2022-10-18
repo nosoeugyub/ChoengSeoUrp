@@ -13,7 +13,7 @@ public class SpecialHouse : MonoBehaviour
     {
         buildingBlock = GetComponent<BuildingBlock>();
     }
-    public void CanExist(BuildingItemObj buildingItemObj, bool isAdd)
+    public void CheckExist(BuildingItemObj buildingItemObj, bool isAdd)
     {
         int count = 0;
         if (!isAdd)

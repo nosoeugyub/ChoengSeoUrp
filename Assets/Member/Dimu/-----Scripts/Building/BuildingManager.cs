@@ -1,5 +1,6 @@
 ﻿using Game.Cam;
 using NSY.Manager;
+using NSY.Player;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,23 +13,26 @@ namespace DM.Building
         private CameraManager CamManager;
         private BuildingDisplay buildingDisplay;
 
+        PlayerInput.InputEvent savedelegate_ESC;
+        PlayerInput.InputEvent savedelegate_F;
+
         public bool isBuildMode { get; set; } = false;
         private BuildingBlock nowBuildingBlock { get; set; } = null; //static에서 private로...
-
 
         private void Awake()
         {
             CamManager = FindObjectOfType<CameraManager>();
             buildingDisplay = FindObjectOfType<BuildingDisplay>();
         }
-        private void Start()
-        {
-            buildingDisplay.SetBuildModeOffButtonEvent(BuildModeOff);
-        }
 
         public void BuildModeOn(BuildingBlock nowBuildingBlock_)
         {
             if (SuperManager.Instance.dialogueManager.IsTalking) return;
+
+            savedelegate_ESC = PlayerInput.OnPressESCDown;
+            savedelegate_F = PlayerInput.OnPressFDown;
+            PlayerInput.OnPressESCDown = BuildModeOff;
+            PlayerInput.OnPressFDown = null;
 
             isBuildMode = true;
 
@@ -41,7 +45,7 @@ namespace DM.Building
             nowBuildingBlock_.BuildModeOnSetting();
 
             //UI
-            buildingDisplay.BuildDisplayOn(true); //UI Display 추가
+            //buildingDisplay.BuildDisplayOn(true); //UI Display 추가
 
             //camera
             CamManager.ChangeFollowTarger(nowBuildingBlock.gameObject.transform, 1);
@@ -53,6 +57,9 @@ namespace DM.Building
         {
             if (!isBuildMode) return;
 
+            PlayerInput.OnPressESCDown = savedelegate_ESC;
+            PlayerInput.OnPressFDown = savedelegate_F;
+
             isBuildMode = false;
 
             //NPC On
@@ -60,15 +67,17 @@ namespace DM.Building
 
             //BuildingBlockSetting
             nowBuildingBlock.BuildModeOffSetting(AddBuilding);
+            nowBuildingBlock.InitItemDestroyCount();
 
             //Data
             PlayerData.AddValue(0, (int)BuildInputBehaviorEnum.EndBuilding, PlayerData.BuildInputData, (int)BuildInputBehaviorEnum.length);
 
             //UI
             buildingDisplay.CancelUIState(false);
-            buildingDisplay.BuildDisplayOn(false);
+            //buildingDisplay.BuildDisplayOn(false);
 
             //camera
+            Camerazone.camcount--;
             CamManager.DeactiveSubCamera(1);
         }
         public void AddBuilding(BuildingBlock buildingBlock)
@@ -119,7 +128,6 @@ namespace DM.Building
 }
 public enum BuildVPos { Top, Mid, Bottom, Length }
 public enum BuildHPos { Left, Right, Mid, Length }
-
 public enum BuildSize { Small, Normal, Big, Length }
 public enum BuildColor { None, Red, Orange, Yellow, Green, Blue, Mint, Pupple, White, Black, Pink, Length }
 public enum BuildMaterial//타이어

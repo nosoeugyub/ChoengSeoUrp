@@ -118,7 +118,7 @@ namespace Game.Cam
         IEnumerator ChangeScene()
         {
             yield return new WaitForSeconds(2.5f);
-            FindObjectOfType<SceneChangeManager>().LoadSceneString("MainScene");
+            FindObjectOfType<SceneChangeManager>().LoadSceneFadeString("MainScene");
         }
         public void ChangeCam()
         {

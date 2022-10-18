@@ -32,7 +32,7 @@ namespace NSY.Iven
             {
                 if (item)
                 {
-                    AddItem(item.GetCopy());
+                    AddItem(item.GetCopy(),false);
                 }
             }
         }

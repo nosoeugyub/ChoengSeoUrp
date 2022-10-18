@@ -115,7 +115,8 @@ public class TreeObject : MineObject
         {
             DropItems();
             PlayerData.AddValue((int)item.InItemType, (int)ItemBehaviorEnum.MineItem, PlayerData.ItemData, ((int)ItemBehaviorEnum.length));
-            FindObjectOfType<EnvironmentManager>().ChangeCleanliness(item.CleanAmount);
+            if (item.CleanAmount > 0)
+                FindObjectOfType<EnvironmentManager>().ChangeCleanliness(item.CleanAmount);
 
             if (mineState == MineState.Normal)
             {
@@ -165,8 +166,8 @@ public class TreeObject : MineObject
         }
         else
         {
-            int randnum = Random.Range(0,7);
-            if(randnum<1)
+            int randnum = Random.Range(0, 7);
+            if (randnum < 1)
             {
                 ChangeTreeType(TreeType.Original);
                 nowSadTreeCount--;

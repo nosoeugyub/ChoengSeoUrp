@@ -18,9 +18,11 @@ namespace Game.Cam
         bool CanSwitchCam;
         CameraManager CamManager;
         static GameObject nowCam;
+        public static int camcount;
         void Start()
         {
             CamManager = FindObjectOfType<CameraManager>();
+            camcount = 0;
             //LookIn = true;
 
         }
@@ -60,57 +62,33 @@ namespace Game.Cam
         //}
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Player") && other.GetComponent<CharacterController>())
-            {
-
-                //CanSwitchCam = true;
-
-                //MainCam.SetActive(false);
-                //virtualCamera.SetActive(true);
-                nowCam = virtualCamera;
-                // switch (CamManager.LookIn)
-                //{
-                //    case true:
-                //        virtualCamera.SetActive(true);
-                //        break;
-                //    case false:
-                //        virtualCamera2.SetActive(true);
-                //        break;
-                //}
-
-            }
-        }
-
-        private void OnTriggerStay(Collider other)
-        {
-            // 채원아.. CompareTag보다는 Layer 비교연산이 더 빠르단다..
-            // GetCompont를 Stay에 호출하면 어떡하니..
-
-            /*
-            if (other.CompareTag("Player") && other.GetComponent<CharacterController>())
-            {
-                virtualCamera.SetActive(true);
-            }
-            */
-
-            // 차라리 이렇게 쓰렴..... 안느리단다..
             if (other.CompareTag("Player"))
             {
                 if (other.GetComponent<CharacterController>())
-                    virtualCamera.SetActive(true);
-            }
+                {
+                    nowCam = virtualCamera;
 
+                    if (camcount <= 0)
+                        nowCam.SetActive(true);
+
+                    camcount++;
+
+                    Debug.Log(virtualCamera);
+                }
+            }
         }
-        private void OnTriggerExit(Collider other)
+        public void OnTriggerExit(Collider other)
         {
             if (other.CompareTag("Player") && other.GetComponent<CharacterController>())
             {
-                //CanSwitchCam = false;
-                //virtualCamera.enabled = false;
+                Debug.Log(nowCam);
                 virtualCamera.SetActive(false);
-                //virtualCamera2.SetActive(false);
-                //MainCam.SetActive(true);
+
+                if (camcount > 1)
+                    nowCam.SetActive(true);
+
                 CamManager.LookIn = true;
+                camcount--;
             }
         }
 

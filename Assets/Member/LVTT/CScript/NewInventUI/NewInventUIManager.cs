@@ -160,7 +160,7 @@ public class NewInventUIManager : MonoBehaviour
         if (isCreateMode == true)
         {
             PlayerData.AddValue((int)nowSelectItem.RecipeItem.InItemType, (int)ItemBehaviorEnum.Craft, PlayerData.ItemData, (int)ItemBehaviorEnum.length);
-            iven.AddItem(nowSelectItem.RecipeItem);
+            iven.AddItem(nowSelectItem.RecipeItem, true);
         }
 
         List<List<ItemSlot>> itemSlots = CanCraftItem();
@@ -213,7 +213,7 @@ public class NewInventUIManager : MonoBehaviour
             minSlot.Amount -= ra;
         }
 
-        if (!iven.AddItem(nowSelectItem.RecipeItem))
+        if (!iven.AddItem(nowSelectItem.RecipeItem, true))
         {
             int small= 100;
             int smallidx= 100;

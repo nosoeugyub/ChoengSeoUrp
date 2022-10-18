@@ -1,6 +1,7 @@
 ﻿using DM.NPC;
 using NSY.Iven;
 using NSY.Player;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -39,7 +40,7 @@ namespace DM.Building
         private float BuildItemRotationVar = 4;
         private float BuildItemGap = 0.002f;
 
-        public Transform CameraPos;
+        [SerializeField] Transform CameraPos;
 
         SpecialHouse specialHouse;
 
@@ -47,14 +48,24 @@ namespace DM.Building
         Ray ray;
         int layerMask;   // Player 레이어만 충돌 체크함
 
+        private Transform HouseBuild { get { return houseBuild; } set { houseBuild = value; } }
+        private float AreaWidthsize { get { return areaWidthsize; } set { areaWidthsize = value; } }
+        private float AreaHeightsize { get { return areaHeightsize; } set { areaHeightsize = value; } }
+
         public HouseNpc _livingCharacter { get { return livingCharacter; } set { livingCharacter = value; } }
+
+        internal void InitItemDestroyCount()
+        {
+            foreach (GameObject item in BuildItemList)
+            {
+                item.GetComponent<BuildingItemObj>().InitDestroyCount();
+            }
+        }
+
         public int Seasonnum { get { return seasonnum; } set { seasonnum = value; } }
         public SpecialHouse SpecialHouse { get { return specialHouse; } set { specialHouse = value; } }
         public Transform HouseOwnerTransform { get { return houseOwnerTransform; } set { houseOwnerTransform = value; } }
         public Transform FriendTransform { get { return friendTransform; } set { friendTransform = value; } }
-        public Transform HouseBuild { get { return houseBuild; } set { houseBuild = value; } }
-        public float AreaWidthsize { get { return areaWidthsize; } set { areaWidthsize = value; } }
-        public float AreaHeightsize { get { return areaHeightsize; } set { areaHeightsize = value; } }
         public int BuildingID { get { return buildingId; } set { buildingId = value; } }
 
         //액션을 사용해보기
@@ -91,6 +102,7 @@ namespace DM.Building
             GetComponent<BoxCollider>().enabled = true;
             SetBuildMode(BuildMode.None);
             inventory.InvenAllOnOff(true);
+            inventory.SetCheckBuildItem(null);
 
             SetCurInteractObj(null);
 
@@ -123,8 +135,11 @@ namespace DM.Building
             }
             else
             {
-                curInteractObj = buildingItemObj;
-                curInteractObj.ItemisSet = false;
+                if (buildingItemObj)
+                {
+                    curInteractObj = buildingItemObj;
+                    curInteractObj.ItemisSet = false;
+                }
             }
         }
 
@@ -137,7 +152,7 @@ namespace DM.Building
                 ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 Debug.DrawRay(ray.origin, ray.direction * 20, Color.blue, 0.3f);
 
-                if (Physics.Raycast(ray, out hit, 20) && !IsPointerOverUIObject())
+                if (Physics.Raycast(ray, out hit, 20, layerMask) && !IsPointerOverUIObject())
                 {
                     if (curInteractObj != null)//뭘 이미 들고 있다면?
                     {
@@ -192,7 +207,7 @@ namespace DM.Building
 
         public void BackToInventory()
         {
-            inventory.AddItem(curInteractObj.item);
+            inventory.AddItem(curInteractObj.item,false);
             inventory.InvenSlotResetCanBuildMode(); //빌딩가능모드로 인벤 리셋
 
             RemoveBuildItemToList(curInteractObj);
@@ -229,7 +244,7 @@ namespace DM.Building
         public void RemoveBuildItemToList(BuildingItemObj Item)
         {
             if (specialHouse)
-                specialHouse.CanExist(curInteractObj, false);
+                specialHouse.CheckExist(curInteractObj, false);
 
             FindObjectOfType<EnvironmentManager>().ChangeCleanliness(-(Item.GetItem().CleanAmount + 1));
             BuildItemList.Remove(Item.gameObject);
@@ -299,28 +314,41 @@ namespace DM.Building
         {
             Vector3 spawnPos = HouseBuild.transform.position;
 
+            MoveBackBuildItems();
+
+            GameObject newPrefab = Instantiate(spawnObj.ItemPrefab, CalculateNewBuildItemSpawnPos(spawnPos), Quaternion.identity, HouseBuild.transform);
+            newPrefab.transform.localRotation = Quaternion.Euler(0, 0, 0);
+
+            SetCurInteractObj(newPrefab.GetComponent<BuildingItemObj>());
+
+            if (specialHouse)
+                specialHouse.CheckExist(curInteractObj, true);
+
+            curInteractObj.name = spawnObj.name;
+            curInteractObj.SetOrder(BuildItemList.Count);
+            curInteractObj.SetAreaSize(AreaWidthsize, AreaHeightsize);
+            curInteractObj.SetPivotPos(HouseBuild.position);
+
+            AddBuildItemToList(newPrefab);
+            FindObjectOfType<EnvironmentManager>().ChangeCleanliness(curInteractObj.GetItem().CleanAmount + 1);
+            cancelUIDelegate(true);
+        }
+
+        private Vector3 CalculateNewBuildItemSpawnPos(Vector3 spawnPos)
+        {
+            //새로 설치할 건축자재 앞으로 이동 및 y 세팅
+            spawnPos += HouseBuild.forward * -(BuildItemGap / 2 * BuildItemList.Count);
+            spawnPos.y = HouseBuild.transform.position.y + AreaHeightsize / 2;
+            return spawnPos;
+        }
+
+        private void MoveBackBuildItems()
+        {
             //기존에 설치되어있던 건축자재 뒤로 이동
             foreach (GameObject item in BuildItemList)
             {
                 item.transform.position += item.transform.forward * BuildItemGap / 2;
             }
-
-            //새로 설치할 건축자재 앞으로 이동 및 y 세팅
-            spawnPos += HouseBuild.forward * -(BuildItemGap / 2 * BuildItemList.Count);
-            spawnPos.y = HouseBuild.transform.position.y + AreaHeightsize / 2;
-
-            GameObject newPrefab = Instantiate(spawnObj.ItemPrefab, spawnPos, Quaternion.identity, HouseBuild.transform);
-            newPrefab.transform.localRotation = Quaternion.Euler(0, 0, 0);
-            SetCurInteractObj(newPrefab.GetComponent<BuildingItemObj>());
-            newPrefab.name = spawnObj.name;
-            if (specialHouse)
-                specialHouse.CanExist(curInteractObj, true);
-            curInteractObj.SetOrder(BuildItemList.Count);
-            curInteractObj.SetAreaSize(AreaWidthsize, AreaHeightsize);
-            curInteractObj.SetPivotPos(HouseBuild.position);
-            AddBuildItemToList(newPrefab);
-            FindObjectOfType<EnvironmentManager>().ChangeCleanliness(newPrefab.GetComponent<BuildingItemObj>().GetItem().CleanAmount + 1);
-            cancelUIDelegate(true);
         }
 
         public void DeleteBuildingItemObjSorting(GameObject deleteObj) //있는 아이템을 소팅함.
@@ -370,12 +398,6 @@ namespace DM.Building
         public override int CanInteract()
         {
             return (int)CursorType.Build;
-        }
-        public void EndInteract_()
-        {
-            //inventory.InvenAllOnOff(true);
-            //buildManager.BuildingInteractButtonOnOff(false);
-            //EndInteract();
         }
     }
 }

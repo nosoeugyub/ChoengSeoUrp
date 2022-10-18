@@ -23,14 +23,10 @@ namespace DM.Dialog
         public Transform[] npcTalkBubbleTfs;
 
         [Header("UI")]
-        //public GameObject dialogUI;//대화창 조상
-        //public Button nextButton; //다음 버튼 >> 별로다
-        //public Button speedNextButton; //다음 버튼 >> 별로다
         public Text dialogText;
         public Text nameText;
 
-        //public delegate void InputEvent();
-        PlayerInput.InputEvent testdelegate;
+        PlayerInput.InputEvent dialogdelegate;
         PlayerInput.InputEvent savedelegate;
 
         public List<DialogList> activeQuestDialogLists; //퀘스트 있는 대화
@@ -60,6 +56,8 @@ namespace DM.Dialog
         HouseNpc nowNpc;
         [SerializeField] bool isTalking = false;
         float times = 0;
+        [SerializeField] float interactdelaytime;
+        bool isenddelay = true;
 
         QuestManager questManager;
         NPCManager npcManager;
@@ -71,7 +69,7 @@ namespace DM.Dialog
         [SerializeField] Image raycastBlockImg;
 
         Coroutine[] nowCor;
-
+        Coroutine coroutine;
 
         public bool IsTalking
         {
@@ -99,10 +97,18 @@ namespace DM.Dialog
         }
         void Start()
         {
-            EventManager.EventActions[((int)EventEnum.Test)] = Test;
-            EventManager.EventActions[(int)EventEnum.StartTalk] += StartNewDialog;
+            DIalogEventManager.EventActions[((int)EventEnum.Test)] = Test;
+            DIalogEventManager.EventActions[(int)EventEnum.StartTalk] += StartNewDialog;
             SetDialogSet(nowLanguageType);
             StartCoroutine(firstDialog());
+        }
+        public void Update()
+        {
+            if (IsTalking && Vector3.Distance(GetNowNpc().transform.position, npcManager.NpcTfs[0].Npctf.transform.position) > 10)
+            {
+                CancleDIalog();
+                DebugText.Instance.SetText(string.Format("대화 중인 상대와 거리가 멀어져 대화가 취소되었습니다."));
+            }
         }
         IEnumerator CanvasAlphaUp(CanvasGroup canvasGroup, bool isUp, float speed)
         {
@@ -117,7 +123,7 @@ namespace DM.Dialog
             }
             else
             {
-               raycastBlockImg.raycastTarget = true;
+                raycastBlockImg.raycastTarget = true;
                 while (canvasGroup.alpha > 0)
                 {
                     canvasGroup.alpha -= Time.deltaTime * speed;
@@ -137,7 +143,7 @@ namespace DM.Dialog
             nowDialogData.isTalkingOver = true;
             IsTalking = false;
             FirstShowDialog(npcManager.NpcTfs[0].Npctf, false, -1);
-            EventManager.EventActions[(int)EventEnum.StartTalk] -= StartNewDialog;
+            DIalogEventManager.EventAction -= DIalogEventManager.EventActions[(int)EventEnum.StartTalk];
         }
         public void SetDialogSet(LanguageType languageType)
         {
@@ -170,10 +176,16 @@ namespace DM.Dialog
         {
             print("event test");
             times += Time.deltaTime;
-            if (times > 3) { EventManager.EventAction -= EventManager.EventActions[1]; }
+            if (times > 3) { DIalogEventManager.EventAction -= DIalogEventManager.EventActions[1]; }
+        }
+        public void ResetDelay()
+        {
+            StopCoroutine(coroutine);
+            isenddelay = true;
         }
         public bool FirstShowDialog(HouseNpc npc, bool isFollowPlayer, int isLike) //첫 상호작용 시 호출. 어떤 대화를 호출할지 결정
         {
+            if (isenddelay == false) return false;
             if (isTalking)
             {
                 DebugText.Instance.SetText(string.Format("{0}님과 대화중입니다!", nowNpc.name));
@@ -212,6 +224,27 @@ namespace DM.Dialog
 
                 List<QuestData> isAcceptedQuests = questManager.GetIsAcceptedQuestList((int)nowNpc.GetCharacterType());//진행중인 대화 
                 List<DialogData> canStartDialogs = GetCanAcceptDialogList((int)nowNpc.GetCharacterType(), true);//시작가능 대화
+                DialogData canStartDialog = null;
+
+                foreach (DialogData data in canStartDialogs)
+                {
+                    if (data.questId < 0)
+                    {
+                        //Debug.Log("canStartDialog = data");
+                        canStartDialog = data;
+                        break;
+                    }
+                    else
+                    {
+                        if (!questManager.IsQuestAccepted(questManager.nowQuestLists[(int)nowNpc.GetCharacterType()].questList[data.questId]))
+                        {
+                            //Debug.Log("canStartDialog = data");
+                            canStartDialog = data;
+                            break;
+                        }
+                    }
+                }
+
 
                 //완료자가 nowPartner(현재 대화 상대)인 퀘스트 받아옴. 제공자는 같을 수도,  다를 수 있음.
                 if (canClearqd != null && questManager.ClearQuest(canClearqd.questID, canClearqd.npcID))//있거나 클리어할 수 있다면
@@ -222,7 +255,17 @@ namespace DM.Dialog
                     dialogLength = nowDialogData.clearSentenceInfo.Length;
                     sentenceState = 2;//클리어
                 }
+                //하 슈발 코드 개기네 일단 대화 가능한 
+                else if (canStartDialog)//시작가능 대화가 있다면?
+                {
+                    //nowDialogData = questDialogLists[nowPartner].dialogList[canStartDialogs[0].questId];
 
+                    nowDialogData = canStartDialog;
+
+                    ss = nowDialogData.acceptSentenceInfo;
+                    dialogLength = nowDialogData.acceptSentenceInfo.Length;
+                    sentenceState = 0;//수락
+                }
                 else if (isAcceptedQuests.Count > 0 && CanAccept(isAcceptedQuests)) // 진행중인 대화가 있다면?
                 {
                     nowDialogData = activeQuestDialogLists[(int)nowNpc.GetCharacterType()].dialogList[FindDialogIndex(isAcceptedQuests[0])];
@@ -231,15 +274,7 @@ namespace DM.Dialog
                     dialogLength = nowDialogData.proceedingSentenceInfo.Length;
                     sentenceState = 1;//진행중
                 }
-                else if (canStartDialogs.Count > 0)//시작가능 대화가 있다면?
-                {
-                    //nowDialogData = questDialogLists[nowPartner].dialogList[canStartDialogs[0].questId];
-                    nowDialogData = canStartDialogs[0];
 
-                    ss = nowDialogData.acceptSentenceInfo;
-                    dialogLength = nowDialogData.acceptSentenceInfo.Length;
-                    sentenceState = 0;//수락
-                }
                 else //아무것도 없다면?
                 {
                     canStartDialogs = GetCanAcceptDialogList((int)nowNpc.GetCharacterType(), false);
@@ -256,13 +291,6 @@ namespace DM.Dialog
                     dialogLength = nowDialogData.acceptSentenceInfo.Length;
                 }
             }
-            ////청설모 위치 이동
-            //if (partnerTf != npcManager.NpcTfs[0].Npctf.transform)
-            //{
-            //    npcManager.NpcTfs[0].Npctf.GetComponent<PlayerMoveMent>().MoveTowardsTarget(partnerTf.position + (-partnerTf.right * 4), true);
-            //            DebugText.Instance.SetText(string.Format("{0}님 옆으로 이동!",nowNpc.GetCharacterType().ToString()));
-            //}
-            //존나 구림
 
             for (int i = 0; i < alphaCanvases.Length; ++i)
             {
@@ -345,6 +373,8 @@ namespace DM.Dialog
         }
         public bool CanStartTalk(DialogData dialogData, HouseNpc npc)
         {
+            // if (dialogData.isTalkingOver) return false;
+
             if (dialogData.haveToHaveAndLikeHouse)//입주 필수 인가?
             {
                 if (!npc.IsHaveHouse()) return false;//그렇다면 이 npc는 집을 갖고 있는가?
@@ -410,13 +440,12 @@ namespace DM.Dialog
             }
             return true;
         }
-        //public void UpdateDialog(Sentence[] sentences, int sentenceState)
-        //{
-        //    UpdateDialogText(sentences, sentenceState);
-        //}
 
         private void UpdateDialogText(Sentence[] sentences, int sentenceState)
         {
+            if (isenddelay == false) return;
+
+
             if (sentences.Length == 0)
             {
                 LastDialogNextEvent(sentences, sentenceState);
@@ -424,7 +453,13 @@ namespace DM.Dialog
 
 
             if (sentences[nowSentenceIdx].eventIdx > 0)
-                EventManager.EventAction += EventManager.EventActions[sentences[nowSentenceIdx].eventIdx];
+                DIalogEventManager.EventAction += DIalogEventManager.EventActions[sentences[nowSentenceIdx].eventIdx];
+
+            if (nowSentenceIdx > 0 && sentences[nowSentenceIdx - 1].backeventIdx > 0)
+            {
+                DIalogEventManager.EventAction += DIalogEventManager.BackEventActions[sentences[nowSentenceIdx - 1].backeventIdx];
+            }
+
             if (nowOnFab)
             {
                 nowOnFab.GetComponent<TextBox>().DestroyTextBox();
@@ -437,7 +472,7 @@ namespace DM.Dialog
             nowOnFab.GetComponent<TextBox>().SetTextbox(nowSentences.sentence, npcTalkBubbleTfs[nowSentences.characterId], nowSentences.textboxType, nowSentences.isLeft);
 
             nameText.text = activeQuestDialogLists[sentences[nowSentenceIdx++].characterId].charName;
-
+            coroutine =  StartCoroutine(DelayUpdateBool(sentences, sentenceState));
 
             if (dialogLength <= nowSentenceIdx)
             {
@@ -445,45 +480,56 @@ namespace DM.Dialog
             }
             else
             {
-                testdelegate = (() =>
+                dialogdelegate = (() =>
                 {
-                    if (sentences[nowSentenceIdx - 1].backeventIdx > 0)
-                        EventManager.EventAction += EventManager.BackEventActions[sentences[nowSentenceIdx - 1].backeventIdx];
+                    //if (sentences[nowSentenceIdx - 1].backeventIdx > 0)
+                    //{
+                    //    DIalogEventManager.EventAction += DIalogEventManager.BackEventActions[sentences[nowSentenceIdx - 1].backeventIdx];
+                    //    Debug.Log(nowSentenceIdx + " back 이벤트실행!");
+                    //}
+
+
                     UpdateDialogText(sentences, sentenceState);
                 });
-                PlayerInput.OnPressFDown = testdelegate;
+                PlayerInput.OnPressFDown = dialogdelegate;
             }
         }
-
+        IEnumerator DelayUpdateBool(Sentence[] sentences, int sentenceState)
+        {
+            isenddelay = false;
+            yield return new WaitForSeconds(interactdelaytime);
+            isenddelay = true;
+        }
         //마지막 대사일 때 작동
         private void LastDialog(Sentence[] sentences, int sentenceState)
         {
-            testdelegate = (() =>
+            dialogdelegate = (() =>
             {
                 LastDialogNextEvent(sentences, sentenceState);
 
             });
-            PlayerInput.OnPressFDown = testdelegate;
+            PlayerInput.OnPressFDown = dialogdelegate;
         }
 
         private void LastDialogNextEvent(Sentence[] sentences, int sentenceState)
         {
-
+            if (isenddelay == false) return;
             if (nowOnFab)
             {
                 nowOnFab.GetComponent<TextBox>().DestroyTextBox();
                 nowOnFab = null;
             }
-            testdelegate = null;
+            dialogdelegate = null;
 
             IsTalking = false;
             nowDialogData.isTalkingOver = true;
+
+            coroutine = StartCoroutine(DelayUpdateBool(sentences, sentenceState));
 
             //만약 대화데이터에 퀘스트가 있다면
             if (nowDialogData.questId > -1)
             {
                 //완료 상태 아니라면 강제수락
-                print(sentenceState);
                 switch (sentenceState)
                 {
                     case 0://수락 상태라면?
@@ -494,7 +540,7 @@ namespace DM.Dialog
                                 if (item.rewardType == RewardType.Item)
                                 {
                                     if (SuperManager.Instance.inventoryManager.CanAddInven(item.itemType))
-                                        SuperManager.Instance.inventoryManager.AddItem(item.itemType, item.getCount);
+                                        SuperManager.Instance.inventoryManager.AddItem(item.itemType, item.getCount, true);
                                     else
                                     {
                                         nowDialogData.isTalkingOver = false;
@@ -503,7 +549,7 @@ namespace DM.Dialog
                                 }
                                 else if (item.rewardType == RewardType.Event)
                                 {
-                                    EventManager.EventAction += EventManager.EventActions[item.getCount];
+                                    DIalogEventManager.EventAction += DIalogEventManager.EventActions[item.getCount];
                                 }
                                 //개수만큼 더하게 해야함
                             }
@@ -530,9 +576,13 @@ namespace DM.Dialog
                 }
             }
 
-            if (sentences[nowSentenceIdx-1].backeventIdx > 0)
-                EventManager.EventAction += EventManager.BackEventActions[sentences[nowSentenceIdx-1].backeventIdx];
 
+
+            if (sentences[nowSentenceIdx - 1].backeventIdx > 0)
+            {
+                DIalogEventManager.EventAction += DIalogEventManager.BackEventActions[sentences[nowSentenceIdx - 1].backeventIdx];
+                Debug.Log(nowSentenceIdx + " last back 이벤트실행!");
+            }
 
             PlayerInput.OnPressFDown = savedelegate;
             nowNpc = null;
@@ -542,7 +592,7 @@ namespace DM.Dialog
         {
             nowOnFab.GetComponent<TextBox>().DestroyTextBox();
             nowOnFab = null;
-            testdelegate = null;
+            dialogdelegate = null;
             IsTalking = false;
 
             PlayerInput.OnPressFDown = savedelegate;
@@ -553,6 +603,7 @@ namespace DM.Dialog
         {
             QuestData qd = questManager.ReturnCanClearQuestRequireNpc(0); //클리어가능한 퀘스트 0번 인덱스
 
+            // 튜토리얼
             if (qd && qd.npcID == 0)
             {
                 if (qd.questID > -1)

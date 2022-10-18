@@ -1,5 +1,4 @@
 ﻿using DM.Building;
-using DM.Dialog;
 using NSY.Manager;
 using NSY.Player;
 using System;
@@ -23,7 +22,6 @@ namespace DM.NPC
         [SerializeField] private bool isFollowPlayer;
         [SerializeField] private string talkSound;
 
-        private DialogueManager dialogueManager;
         private BuildingLike like = BuildingLike.None;
         float dist;
 
@@ -35,7 +33,6 @@ namespace DM.NPC
 
         private void Awake()
         {
-            dialogueManager = FindObjectOfType<DialogueManager>();
             player = FindObjectOfType<PlayerInteract>();
             if (dialogMarks.Length > 0)
                 dialogMarkScale = dialogMarks[0].localScale;
@@ -43,8 +40,8 @@ namespace DM.NPC
         private void Start()
         {
             GoHomeEvent += MoveToMyHome;
-            EventManager.EventActions[((int)EventEnum.MoveToMyHome)] += MoveToMyHome;
-            EventManager.EventActions[(int)EventEnum.OnFollowPlayer] += OnFollowPlayer;
+            DIalogEventManager.EventActions[((int)EventEnum.MoveToMyHome)] += MoveToMyHome;
+            //DIalogEventManager.EventActions[(int)EventEnum.OnFollowPlayer] += OnFollowPlayer;
         }
 
         internal void PlayDialogSound()
@@ -73,18 +70,13 @@ namespace DM.NPC
             if (dialogMarkType == nowDialogMarkType) return;
 
             if (nowDialogMarkType != DialogMarkType.None)
-            {
-                //dialogMarks[(int)nowDialogMarkType].gameObject.SetActive(false);
-                print(this.name + nowDialogMarkType.ToString());
-            }
+                dialogMarks[(int)nowDialogMarkType].gameObject.SetActive(false);
 
             nowDialogMarkType = dialogMarkType;
 
             if (dialogMarkType != DialogMarkType.None)
-            {
-                //dialogMarks[(int)nowDialogMarkType].gameObject.SetActive(true);
+                dialogMarks[(int)nowDialogMarkType].gameObject.SetActive(true);
 
-            }
             NPCStateUIUptate(dialogMarkType);
         }
 
@@ -93,17 +85,9 @@ namespace DM.NPC
             UIUpdateEvent((int)GetCharacterType(), dialogMarkType);
         }
 
-        public void OnFollowPlayer()
+        public void SetIsFollowPlayer(bool ison)
         {
-            //현재 대화 상대와 같다면
-            if (dialogueManager.GetNowNpc() == this)
-            {
-                if (player.SetNpc(this))
-                {
-                    isFollowPlayer = true;
-                }
-                EventManager.EventAction -= EventManager.EventActions[4];
-            }
+            isFollowPlayer = ison;
         }
         public bool IsHaveHouse()
         {
@@ -120,6 +104,11 @@ namespace DM.NPC
         }
         public void FindLikeHouse(BuildingBlock buildAreaObject) //해당 건축물에 입주 가능한지.
         {
+            if (buildAreaObject.SpecialHouse)
+            {
+                DebugText.Instance.SetText("특수 건물은 소개할 수 없어요!");
+                return;
+            }
             if (buildAreaObject._livingCharacter)
             {
                 like = BuildingLike.Cant;
@@ -138,10 +127,6 @@ namespace DM.NPC
                     break;
             }
         }
-        public BuildingLike CanGetMyHouse()
-        {
-            return GetBuildingLikeable(myHouse);
-        }
         public void SetMyHouse(BuildingBlock block, BuildingLike l)
         {
             like = l;
@@ -157,6 +142,12 @@ namespace DM.NPC
                 UIOnEvent((int)GetCharacterType());
             }
         }
+
+        internal bool IsFollowPlayer()
+        {
+            return isFollowPlayer;
+        }
+
         public BuildingLike GetBuildingLikeable(BuildingBlock buildingBlock) //bool형
         {
             if (!buildingBlock) return BuildingLike.None;
@@ -168,149 +159,59 @@ namespace DM.NPC
 
             int failBuildItemCount = 0;
 
+            dynamic[] dynamics1 = new dynamic[7];
+            dynamic[] dynamics2 = new dynamic[7];
+
             foreach (BuildingItemObj buildItem in buildItemList)//건축자재 하나씩
             {
-                int count = 0;
+                dynamics1[0] = buildItem.GetAttribute().buildItemKind;
+                dynamics1[1] = buildItem.GetAttribute().buildHPos;
+                dynamics1[2] = buildItem.GetAttribute().buildVPos;
+                dynamics1[3] = buildItem.GetAttribute().buildSize;
+                dynamics1[4] = buildItem.GetAttribute().buildColor;
+                dynamics1[5] = buildItem.GetAttribute().buildShape;
+                dynamics1[6] = buildItem.GetAttribute().buildThema;
+
                 for (int i = 0; i < wantToBuildCondition.Length; i++)
                 {
                     bool canContinue = true;
                     ints[i]++;
 
-                    foreach (var preferkind in wantToBuildCondition[i].buildItemKind)//설정한 종류들 중 하나 체크
+                    dynamics2[0] = wantToBuildCondition[i].buildItemKind;
+                    dynamics2[1] = wantToBuildCondition[i].buildHPos;
+                    dynamics2[2] = wantToBuildCondition[i].buildVPos;
+                    dynamics2[3] = wantToBuildCondition[i].buildSize;
+                    dynamics2[4] = wantToBuildCondition[i].buildColor;
+                    dynamics2[5] = wantToBuildCondition[i].buildShape;
+                    dynamics2[6] = wantToBuildCondition[i].buildThema;
+
+                    for (int d = 0; d < dynamics2.Length; d++)
                     {
-                        canContinue = false;
-                        //희망 조건에 있는 종류와 설치된 자재와 같은지
-                        if (preferkind == buildItem.GetAttribute().buildItemKind)
-                        {
-                            print(preferkind.ToString());
-                            canContinue = true;
+                        Test(dynamics2[d], dynamics1[d], ref canContinue, ref failBuildItemCount);
+                        if (!canContinue)
                             break;
-                        }
-                        count++;
-                    }
-                    //설정된게 있는데 하나도 해당되는게 없으면...
-                    if (wantToBuildCondition[i].buildItemKind.Length != 0 && count == wantToBuildCondition[i].buildItemKind.Length)
-                    {
-                        ++failBuildItemCount; //틀린 자재 개수 증가.
-
-                        //return BuildingLike.Unlike_Shape;
                     }
 
-                    if (!canContinue) break;
-
-                    count = 0;
-                    foreach (var kind in wantToBuildCondition[i].buildHPos)
-                    {
-                        canContinue = false;
-                        if (kind == buildItem.GetAttribute().buildHPos)
-                        {
-                            print(kind.ToString());
-                            canContinue = true;
-                            break;
-                        }
-                        count++;
-                    }
-                    if (wantToBuildCondition[i].buildHPos.Length != 0 && count == wantToBuildCondition[i].buildHPos.Length)
-                        ++failBuildItemCount;
-                    //return BuildingLike.Unlike_Shape;
-
-                    if (!canContinue) break;
-
-                    count = 0;
-                    foreach (var kind in wantToBuildCondition[i].buildVPos)
-                    {
-                        canContinue = false;
-                        if (kind == buildItem.GetAttribute().buildVPos)
-                        {
-                            print(kind.ToString());
-                            canContinue = true;
-                            break;
-                        }
-                        count++;
-                    }
-                    if (wantToBuildCondition[i].buildVPos.Length != 0 && count == wantToBuildCondition[i].buildVPos.Length)
-                        ++failBuildItemCount;
-                    //return BuildingLike.Unlike_Shape;
-
-                    if (!canContinue) break;
-
-                    count = 0;
-                    foreach (var kind in wantToBuildCondition[i].buildSize)
-                    {
-                        canContinue = false;
-                        if (kind == buildItem.GetAttribute().buildSize)
-                        {
-                            print(kind.ToString());
-                            canContinue = true;
-                            break;
-                        }
-                        count++;
-                    }
-                    if (wantToBuildCondition[i].buildSize.Length != 0 && count == wantToBuildCondition[i].buildSize.Length)
-                        ++failBuildItemCount;
-                    //return BuildingLike.Unlike_Shape;
-
-                    if (!canContinue) break;
-
-                    count = 0;
-                    foreach (var kind in wantToBuildCondition[i].buildColor)
-                    {
-                        canContinue = false;
-                        if (kind == buildItem.GetAttribute().buildColor)
-                        {
-                            print(kind.ToString());
-                            canContinue = true;
-                            break;
-                        }
-                        count++;
-                    }
-                    if (wantToBuildCondition[i].buildColor.Length != 0 && count == wantToBuildCondition[i].buildColor.Length)
-                        ++failBuildItemCount;
-                    //return BuildingLike.Unlike_Shape;
-
-                    if (!canContinue) break;
-
-                    count = 0;
-                    foreach (var kind in wantToBuildCondition[i].buildShape)
-                    {
-                        canContinue = false;
-                        if (kind == buildItem.GetAttribute().buildShape)
-                        {
-                            print(kind.ToString());
-                            canContinue = true;
-                            break;
-                        }
-                        count++;
-                    }
-                    if (wantToBuildCondition[i].buildShape.Length != 0 && count == wantToBuildCondition[i].buildShape.Length)
-                        ++failBuildItemCount;
-                    //return BuildingLike.Unlike_Shape;
-
-                    if (!canContinue) break;
-
-                    count = 0;
-                    foreach (var kind in wantToBuildCondition[i].buildThema)
-                    {
-                        canContinue = false;
-                        foreach (var thema in buildItem.GetAttribute().buildThema)
-                        {
-                            print(kind.ToString());
-                            if (kind == thema)
-                            {
-                                canContinue = true;
-                                break;
-                            }
-                        }
-                        if (canContinue) break;
-                        count++;
-                    }
-                    if (wantToBuildCondition[i].buildThema.Length != 0 && count == wantToBuildCondition[i].buildThema.Length)
-                        ++failBuildItemCount;
-                    //return BuildingLike.Unlike_Shape;
-
-                    if (!canContinue) break;
-
-
+                    //Test(wantToBuildCondition[i].buildItemKind, buildItem.GetAttribute().buildItemKind, ref canContinue, ref failBuildItemCount);
+                    //if (!canContinue) break;
+                    //
+                    //Test(wantToBuildCondition[i].buildHPos, buildItem.GetAttribute().buildHPos, ref canContinue, ref failBuildItemCount);
+                    //if (!canContinue) break;
+                    //
+                    //Test(wantToBuildCondition[i].buildVPos, buildItem.GetAttribute().buildVPos, ref canContinue, ref failBuildItemCount);
+                    //if (!canContinue) break;
+                    //
+                    //Test(wantToBuildCondition[i].buildSize, buildItem.GetAttribute().buildSize, ref canContinue, ref failBuildItemCount);
+                    //if (!canContinue) break;
+                    //
+                    //Test(wantToBuildCondition[i].buildColor, buildItem.GetAttribute().buildColor, ref canContinue, ref failBuildItemCount);
+                    //if (!canContinue) break;
+                    //
+                    //Test(wantToBuildCondition[i].buildShape, buildItem.GetAttribute().buildShape, ref canContinue, ref failBuildItemCount);
+                    //if (!canContinue) break;
+                    //
+                    //Test(wantToBuildCondition[i].buildThema, buildItem.GetAttribute().buildThema, ref canContinue, ref failBuildItemCount);
+                    //if (!canContinue) break;
                 }
             }
 
@@ -322,20 +223,58 @@ namespace DM.NPC
                 }
             }
 
-            for (int i = 0; i < wantToBuildCondition.Length; i++)
-            {
-                if (wantToBuildCondition[i].buildPerfactCount > ints[i])
-                {
-                    return BuildingLike.Unlike_Count; // false
-                }
-            }
+            //for (int i = 0; i < wantToBuildCondition.Length; i++)
+            //{
+            //    if (wantToBuildCondition[i].buildPerfactCount > ints[i])
+            //    {
+            //        return BuildingLike.Unlike_Count; // false
+            //    }
+            //}
 
-            print(failBuildItemCount);
             int halfbuildcount = buildItemList.Count / 2;
             if (halfbuildcount >= failBuildItemCount)
                 return BuildingLike.Like;
             else
                 return BuildingLike.Unlike_Shape;
+        }
+        public void Test<T>(T[] d, T attr, ref bool canContinue, ref int failBuildItemCount)
+        {
+            int count = 0;
+            foreach (T kind in d)
+            {
+                canContinue = false;
+                if (kind.Equals(attr))
+                {
+                    print(kind.ToString());
+                    canContinue = true;
+                    break;
+                }
+                count++;
+            }
+            if (d.Length != 0 && count == d.Length)
+                ++failBuildItemCount;
+        }
+        public void Test<T>(T[] d, T[] attrs, ref bool canContinue, ref int failBuildItemCount)
+        {
+            int count = 0;
+            foreach (T kind in d)
+            {
+                canContinue = false;
+                foreach (T attr in attrs)
+                {
+                    if (kind.Equals(attr))
+                    {
+                        print(kind.ToString());
+                        canContinue = true;
+                        break;
+                    }
+                }
+                if (canContinue) break;
+
+                count++;
+            }
+            if (d.Length != 0 && count == d.Length)
+                ++failBuildItemCount;
         }
 
         public override int CanInteract()
@@ -345,31 +284,30 @@ namespace DM.NPC
         public bool SettingBuildingTalk()
         {
             if (!PlayDialog()) return false;
-            if (isFollowPlayer)
-            {
-                player.SetNpc(null);
-                isFollowPlayer = false;
-            }
+            SetIsFollowPlayer(false);
             return true;
         }
         public override void Talk()
         {
-            if (isFollowPlayer)
-            {
-                player.SetNpc(null);
-                isFollowPlayer = false;
-                DebugText.Instance.SetText("소개를 중단했습니다.");
-            }
-            else
-                PlayDialog();
+            PlayDialog();
         }
         public bool PlayDialog()
         {
+            if (IsFollowPlayer())
+            {
+                Debug.Log("ResetDelay()");
+                SuperManager.Instance.dialogueManager.ResetDelay();
+            }
             return SuperManager.Instance.dialogueManager.FirstShowDialog(this, isFollowPlayer, (int)like);
         }
         public void MoveTo(Vector3 pos)
         {
             transform.position = pos;
+        }
+        public void TeleportToPlayer(Vector3 pos)
+        {
+            if (isFollowPlayer)
+                MoveTo(pos);
         }
         public void MoveToMyHome()
         {
@@ -378,7 +316,7 @@ namespace DM.NPC
                 Vector3 vec = myHouse.HouseOwnerTransform.position;
                 MoveTo(vec);
             }
-            EventManager.EventAction -= EventManager.EventActions[2];
+            DIalogEventManager.EventAction -= DIalogEventManager.EventActions[2];
         }
     }
 }

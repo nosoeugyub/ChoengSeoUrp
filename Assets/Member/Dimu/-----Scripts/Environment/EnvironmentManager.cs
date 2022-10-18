@@ -91,17 +91,16 @@ public class EnvironmentManager : MonoBehaviour
             cleanliness = value;
             if (cleanliness >= 100)
             {
-                cleanliness = 100;
-
                 endingButton.SetActive(true);
-                endingButtoninfo.SetActive(true);
+                if (endingButtoninfo)
+                    endingButtoninfo.SetActive(true);
             }
-            else if (cleanliness < 0)
-                cleanliness = 0;
             else
             {
                 endingButton.SetActive(false);
-                endingButtoninfo.SetActive(false);
+                if (endingButtoninfo)
+                    endingButtoninfo.SetActive(false);
+
             }
 
             if (cleanLevel < cleanLevels.Count)
@@ -110,7 +109,7 @@ public class EnvironmentManager : MonoBehaviour
                     ComeToPort();
             }
 
-            happyUI.HappyUISetting(cleanliness);
+            happyUI.HappyUISetting(Mathf.Max(Mathf.Min(cleanliness, 100), 0));
         }
     }
     public string name = "CreditDemo";
@@ -122,7 +121,11 @@ public class EnvironmentManager : MonoBehaviour
        
         StartCoroutine(takepictures());
     }
-
+    public void SetEndingButtonNull()
+    {
+        //endingButton = null;
+        endingButtoninfo = null;
+    }
     IEnumerator takepictures()
     {
         if (isShot)
@@ -151,8 +154,8 @@ public class EnvironmentManager : MonoBehaviour
         npcManager = FindObjectOfType<NPCManager>();
         dManager = FindObjectOfType<DialogueManager>();
 
-        EventManager.EventActions[(int)EventEnum.DownClean] += DownCleanliness;
-        EventManager.EventActions[(int)EventEnum.DownCleanDouble] += DownCleanlinessDouble;
+        DIalogEventManager.EventActions[(int)EventEnum.DownClean] += DownCleanliness;
+        DIalogEventManager.EventActions[(int)EventEnum.DownCleanDouble] += DownCleanlinessDouble;
     }
     private void Start()
     {
@@ -185,7 +188,12 @@ public class EnvironmentManager : MonoBehaviour
             Cleanliness += 3;
             //days++;
         }
-
+        //if (Input.GetKeyDown(KeyCode.M))
+        //{
+        //    //a.isHaveRecipeItem = true;
+        //    Cleanliness -= 3;
+        //    //days++;
+        //}
         if (canChange)
             Cleanliness = _cleanliness;
 
@@ -226,13 +234,13 @@ public class EnvironmentManager : MonoBehaviour
     {
         Cleanliness -= 4;
         DebugText.Instance.SetText("행복도가 감소합니다.");
-        EventManager.EventAction -= EventManager.EventActions[(int)EventEnum.DownClean];
+        DIalogEventManager.EventAction -= DIalogEventManager.EventActions[(int)EventEnum.DownClean];
     }
     public void DownCleanlinessDouble()
     {
         Cleanliness -= 8;
         DebugText.Instance.SetText("행복도가 대폭 감소합니다.");
-        EventManager.EventAction -= EventManager.EventActions[(int)EventEnum.DownCleanDouble];
+        DIalogEventManager.EventAction -= DIalogEventManager.EventActions[(int)EventEnum.DownCleanDouble];
     }
 }
 

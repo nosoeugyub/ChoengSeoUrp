@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace NSY.Player
 {
@@ -11,10 +9,15 @@ namespace NSY.Player
 
         public delegate void InputEvent();
         public static InputEvent OnPressFDown; //F 누를 때 실행할 메서드 갈아껴주는 용도
+        public static InputEvent OnPressESCDown; //F 누를 때 실행할 메서드 갈아껴주는 용도
+
+        bool isOnPressF;
+        bool isOnPressESC;
 
         //플레이어가 누르는 키입력
         [Space]
         public KeyCode _InputInterBtn = KeyCode.F;
+        public KeyCode _escKey = KeyCode.Escape;
 
         [Space]
         public KeyCode scaleUpKey = KeyCode.W;
@@ -24,6 +27,7 @@ namespace NSY.Player
         public KeyCode frontKey = KeyCode.E;
         public KeyCode BackKey = KeyCode.Q;
 
+
         internal bool interectObj;
 
         void Update()
@@ -31,10 +35,14 @@ namespace NSY.Player
 
             ActiveObj();
         }
+        public void OnPressF() => isOnPressF = true;
+        public void OffPressF() => isOnPressF = false;
+
         public void ActiveObj()
         {
-            if (Input.GetKey(_InputInterBtn))
+            if (Input.GetKey(_InputInterBtn) && isOnPressF)
             {
+                OnPressFDown();
                 interectObj = true;
             }
             else
@@ -42,12 +50,13 @@ namespace NSY.Player
                 interectObj = false;
             }
 
-            if (Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKeyDown(_InputInterBtn))
             {
-                if (CutScene.IsCutSceneOn == false)
-                {
-                    OnPressFDown();
-                }
+                //OnPressFDown();
+            }
+            if (Input.GetKeyDown(_escKey))
+            {
+                OnPressESCDown();
             }
         }
     }

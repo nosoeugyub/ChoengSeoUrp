@@ -1,9 +1,10 @@
 ﻿using DM.Building;
+using DM.Event;
 using DM.NPC;
+using NSY.Manager;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using NSY.Manager;
 using UnityEngine.EventSystems;
 
 namespace NSY.Player
@@ -11,13 +12,16 @@ namespace NSY.Player
     public class PlayerInteract : MonoBehaviour
     {
         [SerializeField] List<Interactable> interacts = new List<Interactable>();//상호작용 범위 내 있는 IInteractable오브젝트 리스트
-        Interactable closestObj;//가장 가까운 친구
+        [SerializeField] Interactable closestObj;//가장 가까운 친구
 
         CursorManager cursorManager;
         BuildingManager buildingManager;
+        EventContainer eventContainer;
 
-        public GameObject interactUI;//띄울 UI
-        public GameObject buildinginteractUi;//띄울 UI
+        public RectTransform interactUI;//띄울 UI
+        public RectTransform buildinginteractUi;//띄울 UI
+        public RectTransform introduceUi;//띄울 UI
+        public RectTransform introduceUituto;//띄울 UI
         public TextMeshProUGUI interactUiText2;
 
         //[SerializeField] Item handItem;
@@ -35,37 +39,59 @@ namespace NSY.Player
         Ray ray;
         Interactable nowInteractable;
         public bool canInteract = true;
-       [HideInInspector] public  int layerMask;   // Player 레이어만 충돌 체크함
+        public int canInteractCount;
+        [HideInInspector] public int layerMask;   // Player 레이어만 충돌 체크함
         [SerializeField] LayerMask layerMask2;   // Player 레이어만 충돌 체크함
 
         public RectTransform targetRectTr;
         public bool isAnimating = false;
         private Vector2 screenPoint;
 
-
-
         [SerializeField] Shader GlowColor;
 
-
+        Camera mainCam;
 
         private void Awake()
         {
             layerMask = 1 << LayerMask.NameToLayer("Interactable");
-            //마우스 상호작용 오브젝트는 Interactable 이라는 레이어를 가지고 있어야 합니다.
-
             cursorManager = FindObjectOfType<CursorManager>();
             buildingManager = FindObjectOfType<BuildingManager>();
+            eventContainer = FindObjectOfType<EventContainer>();
+            mainCam = Camera.main;
         }
         private void Start()
         {
+            canInteractCount = 0;
             PlayerInput.OnPressFDown = InvokeInteractClosestObj;
+            DIalogEventManager.EventActions[(int)EventEnum.OnFollowPlayer] = NPCIntroduceSetting;
         }
         private void Update()
         {
             if (!canInteract) return;
-            InteractWithObjects();
             LightClosestObj();
+            InteractWithObjects();
         }
+
+        public void SetCanInteract(bool _canInteract)
+        {
+            if (_canInteract)
+            {
+                canInteractCount--;
+
+                if (canInteractCount <= 0)
+                {
+                    canInteract = _canInteract;
+                    //Debug.Log("SetInteract true  " + closestObj);
+                }
+            }
+            else
+            {
+                canInteractCount++;
+                canInteract = _canInteract;
+                //Debug.Log("SetInteract false  " + closestObj);
+            }
+        }
+
         public bool SetNpc(HouseNpc npc)
         {
             if (npc == null)
@@ -74,70 +100,91 @@ namespace NSY.Player
                 return true;
             }
 
-            if (followNpc == null)
+            //if (followNpc == null)
             {
                 followNpc = npc;
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            //else
+            //{
+            //    return false;
+            //}
         }
 
         public void SetIsAnimation(bool isTrue)
         {
+            if (isTrue)
+            {
+                if (!isAnimating)
+                {
+                    SetCanInteract(false);
+                    eventContainer.RaiseEvent(GameEventType.playerMoveOffEvent);// playerMoveOffEvent.Raise();
+                }
+            }
+            else
+            {
+                if (isAnimating)
+                {
+                    SetCanInteract(true);
+                    eventContainer.RaiseEvent(GameEventType.playerMoveOnEvent); // playerMoveOnEvent.Raise();
+                }
+            }
             isAnimating = isTrue;
+        }
+
+        private void NPCIntroduceSetting()
+        {
+            followNpc.SetIsFollowPlayer(true);
+            introduceUi.gameObject.SetActive(true);
+
+            DIalogEventManager.EventAction -= DIalogEventManager.EventActions[(int)EventEnum.OnFollowPlayer];
+
+        }
+        public void IntroduceCancel()
+        {
+            followNpc.SetIsFollowPlayer(false);
+            introduceUi.gameObject.SetActive(false);
+            SetNpc(null);
+            DebugText.Instance.SetText("소개를 중단했습니다.");
+        }
+        public void EndIntroduce()
+        {
+            followNpc.SetIsFollowPlayer(false);
+            introduceUituto.gameObject.SetActive(false);
+            introduceUi.gameObject.SetActive(false);
+            SetNpc(null);
+
         }
 
         private void InvokeInteract(Interactable interactable)
         {
             if (!interactable) return;
+
             CollectObject collectObj = interactable.transform.GetComponent<CollectObject>();
             if (collectObj != null)
             {
-                //if (SuperManager.Instance.inventoryManager.isGettingItem == false)
-                {
-                   if( collectObj.Collect(playerAnimator.animator)) //콜렉트에서 애니 발생함
+                Debug.Log(collectObj.item.ItemName);
+                if (collectObj.Collect(playerAnimator.animator)) //콜렉트에서 애니 발생함
                     SetIsAnimation(true);
-                    return;
-                }
-                //collectObj.Collect(playerAnimator.animator); //콜렉트에서 애니 발생함
-                //SetIsAnimation(true);
-                //return;
+                return;
             }
 
             NPC talkable = interactable.transform.GetComponent<NPC>();
             if (talkable != null)
             {
-                talkable.Talk();
-                return;
+                if (!followNpc || !followNpc.IsFollowPlayer())
+                {
+                    SetNpc(interactable.transform.GetComponent<HouseNpc>());
+                    talkable.Talk();
+                    return;
+                }
             }
-            //IEventable eventable = interactable.transform.GetComponent<IEventable>();
-            //if (eventable != null)
-            //{
-            //    eventable.EtcEvent(handItem);
-            //    return;
-            //}
+
             TeleportObject teleportable = interactable.transform.GetComponent<TeleportObject>();
             if (teleportable != null)
             {
                 teleportable.Teleport(this.transform);
                 return;
-            }
-
-            MagnifyObject bubbleCollectable = interactable.transform.GetComponent<MagnifyObject>();
-            if (bubbleCollectable != null)
-            {
-                if (!bubbleCollectable.CheckBubble(playerAnimator.animator))
-                {
-                    SetIsAnimation(false);
-                }
-                else
-                {
-                    SetIsAnimation(true);
-                    return;
-                }
             }
             MineObject mineable = interactable.transform.GetComponent<MineObject>();
             if (mineable != null)
@@ -148,6 +195,7 @@ namespace NSY.Player
                 }
                 else
                 {
+                    Debug.Log(mineable.item.ItemName);
                     SetIsAnimation(true);
                     return;
                 }
@@ -157,14 +205,15 @@ namespace NSY.Player
             {
                 SetIsAnimation(false);
 
-                if (followNpc)
+                if (followNpc && followNpc.IsFollowPlayer())
                 {
                     followNpc.FindLikeHouse(buildAreaObject);
+                    EndIntroduce();
                 }
                 else
                 {
                     print(buildAreaObject.name);
-                    buildinginteractUi.SetActive(false);
+                    buildinginteractUi.gameObject.SetActive(false);
                     buildingManager.BuildModeOn(buildAreaObject);
                 }
                 return;
@@ -190,28 +239,27 @@ namespace NSY.Player
 
             if (nowInteractable)
                 nowInteractable.EndInteract();
-    
-            buildinginteractUi.SetActive(false);
+
+            buildinginteractUi.gameObject.SetActive(false);
+            //StartCoroutine(cursorManager.SetCursor((int)CursorType.Normal));
 
             if (Physics.Raycast(ray, out hit, 20, layerMask2.value) && !buildingManager.isBuildMode)
             {
                 nowInteractable = hit.collider.GetComponent<Interactable>();
                 if (nowInteractable != null && IsInteracted(nowInteractable))// 클릭한 옵젝이 닿은 옵젝 리스트에 있다면 통과ds
                 {
-                    StartCoroutine(cursorManager.SetCursor(nowInteractable.CanInteract()));
-
-                    if (nowInteractable.GetComponent<BuildingBlock>())
+                    if (nowInteractable.GetComponent<BuildingBlock>() && !IsPointerOverUIObject())
                     {
-                        buildinginteractUi.SetActive(true);
-                     Vector3 uiPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y + 40, Input.mousePosition.z);
+                        //StartCoroutine(cursorManager.SetCursor(nowInteractable.CanInteract()));//건축 외에는 변하지 않음
+                        buildinginteractUi.gameObject.SetActive(true);
+                        Vector3 uiPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y + 40, Input.mousePosition.z);
 
                         RectTransformUtility.ScreenPointToLocalPointInRectangle(targetRectTr, uiPos, uiCamera, out screenPoint);
-                        buildinginteractUi.GetComponent<RectTransform>().localPosition = screenPoint;
+                        buildinginteractUi.localPosition = screenPoint;
                     }
                 }
                 else
                 {
-                    StartCoroutine(cursorManager.SetCursor((int)CursorType.Normal));
                 }
             }
 
@@ -228,6 +276,7 @@ namespace NSY.Player
                 }
             }
         }
+
         ////가장 가까운 오브젝트 검출
         public void LightClosestObj()
         {
@@ -235,44 +284,45 @@ namespace NSY.Player
             {
                 closestObj.EndInteract();
                 closestObj = null;
-                interactUI.SetActive(false);
+                interactUI.gameObject.SetActive(false);
             }
 
             if (interacts.Count <= 1) return;
 
-            DistChect();
+            DistCheck();
 
             if (closestObj)
             {
                 closestObj.CanInteract();
-                interactUI.SetActive(true);
-                Vector3 vector3 = Camera.main.WorldToScreenPoint(closestObj.transform.position);
-
+                interactUI.gameObject.SetActive(true);
+                Vector3 vector3 = mainCam.WorldToScreenPoint(closestObj.transform.position);
                 RectTransformUtility.ScreenPointToLocalPointInRectangle(targetRectTr, vector3, uiCamera, out screenPoint);
-                interactUI.GetComponent<RectTransform>().localPosition = screenPoint;
-                //interactUI.transform.position = RectTransformUtility.WorldToScreenPoint(Camera.main, interactUI.transform.position);
-
-                //ChangeLightShader(closestObj);
+                interactUI.localPosition = screenPoint;
             }
         }
         public void InvokeInteractClosestObj()
         {
+            if (!canInteract && isAnimating) return;
+            LightClosestObj();
             InvokeInteract(closestObj);
         }
-        //거리 계산
-        public void DistChect()
+        //거리 계산. 한 메서드가 하는 일 많음.
+        public void DistCheck()
         {
             float shortestDist = 1000000;
 
-            foreach (var item in interacts)
+            for (int i = 0; i < interacts.Count; i++)
             {
-                if (item == null) interacts.Remove(item);
-                if (item.gameObject.layer != 9) continue;
-                float dist = Vector3.Distance(transform.position, item.transform.position);
+                if (interacts[i] == null)
+                    interacts.Remove(interacts[i]);
+                if (interacts[i].gameObject.layer != 9) continue;
+
+                float dist = Vector3.Distance(transform.position, interacts[i].transform.position);
                 if (dist < shortestDist)
                 {
                     shortestDist = dist;
-                    closestObj = item;
+                    closestObj = interacts[i];
+                    //Debug.Log(string.Format("closestObj: {0} // i: {1} // length: {2}", closestObj,i, interacts.Count));
                 }
             }
         }
@@ -282,11 +332,6 @@ namespace NSY.Player
             {
                 interactableobj.gameObject.GetComponentInChildren<MeshRenderer>().material.shader = GlowColor;
             }
-        }
-
-        public bool IsAnimating()
-        {
-            return isAnimating;
         }
 
         public bool IsInteracted(Interactable it)
@@ -313,6 +358,7 @@ namespace NSY.Player
             if (interactable != null)
             {
                 interacts.Remove(interactable);
+                //Debug.LogWarning("Remove: "+interactable.name);
                 EndInteract(interactable);
             }
         }
@@ -351,7 +397,10 @@ namespace NSY.Player
                     //interactUI.transform.position = RectTransformUtility.WorldToScreenPoint(Camera.main, interactUI.transform.position);
 
         */
-
+        private void OnDisable()
+        {
+            interactUI.gameObject.SetActive(false);
+        }
     }
 
 }
