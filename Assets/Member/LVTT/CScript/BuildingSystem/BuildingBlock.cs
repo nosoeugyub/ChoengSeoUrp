@@ -73,6 +73,8 @@ namespace DM.Building
         public delegate void CancelUIDelegate(bool ison);
         public CancelUIDelegate cancelUIDelegate;
 
+        public GameObject sscam;
+
         private void Awake()
         {
             specialHouse = GetComponent<SpecialHouse>();
