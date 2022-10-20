@@ -2,6 +2,7 @@
 using NSY.Iven;
 using NSY.Player;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -50,17 +51,11 @@ namespace DM.Building
 
         private Transform HouseBuild { get { return houseBuild; } set { houseBuild = value; } }
         private float AreaWidthsize { get { return areaWidthsize; } set { areaWidthsize = value; } }
+
         private float AreaHeightsize { get { return areaHeightsize; } set { areaHeightsize = value; } }
 
         public HouseNpc _livingCharacter { get { return livingCharacter; } set { livingCharacter = value; } }
 
-        internal void InitItemDestroyCount()
-        {
-            foreach (GameObject item in BuildItemList)
-            {
-                item.GetComponent<BuildingItemObj>().InitDestroyCount();
-            }
-        }
 
         public int Seasonnum { get { return seasonnum; } set { seasonnum = value; } }
         public SpecialHouse SpecialHouse { get { return specialHouse; } set { specialHouse = value; } }
@@ -74,6 +69,9 @@ namespace DM.Building
         public CancelUIDelegate cancelUIDelegate;
 
         public GameObject sscam;
+        private float _distance;
+        private float _blendTime;
+        
 
         private void Awake()
         {
@@ -86,27 +84,51 @@ namespace DM.Building
             layerMask = 1 << LayerMask.NameToLayer("Wall");
             ConstructSignsActive(!IsCompleteBuilding());
         }
+        internal void InitItemDestroyCount()
+        {
+            foreach (GameObject item in BuildItemList)
+            {
+                item.GetComponent<BuildingItemObj>().InitDestroyCount();
+            }
+        }
+        internal void SetDistanceWhitCam(float distance)
+        {
+            _distance = distance;
+        }
+
+        internal void SetBlentTime(float blendTime)
+        {
+            _blendTime = blendTime;
+        }
+
         public void SetCancelUIAction(CancelUIDelegate action)
         {
             cancelUIDelegate = action;
         }
         public void BuildModeOnSetting()
         {
-            Interact();
-            inventory.EnableCanBuildItem();
+            StartCoroutine(BuildModeOnSettingDelay());
+        }
+        IEnumerator BuildModeOnSettingDelay()
+        {
+            inventory.InvenAllOnOff(false);
             ConstructSignsActive(false);
             GetComponent<BoxCollider>().enabled = false;
+            Interact();
+            yield return new WaitForSeconds(_blendTime);
+            inventory.EnableCanBuildItem();
             SetBuildMode(BuildMode.BuildHouseMode);
         }
-
         public void BuildModeOffSetting(VoidDelegate addBuilding)
         {
-            GetComponent<BoxCollider>().enabled = true;
-            SetBuildMode(BuildMode.None);
-            inventory.InvenAllOnOff(true);
+            StartCoroutine(BuildModeOffSettingDelay(addBuilding));
+        }
+        IEnumerator BuildModeOffSettingDelay(VoidDelegate addBuilding)
+        {
+            inventory.InvenAllOnOff(false);
             inventory.SetCheckBuildItem(null);
-
             SetCurInteractObj(null);
+            SetBuildMode(BuildMode.None);
 
             if (IsCompleteBuilding())
             {
@@ -118,8 +140,10 @@ namespace DM.Building
                 SetBuildingState(BuildState.NotFinish);
                 ConstructSignsActive(true);
             }
+            yield return new WaitForSeconds(_blendTime);
+            GetComponent<BoxCollider>().enabled = true;
+            inventory.InvenAllOnOff(true);
         }
-
         public void ConstructSignsActive(bool isActive)
         {
             for (int i = 0; i < constructsign.Length; i++)
@@ -171,7 +195,7 @@ namespace DM.Building
             if (!curInteractObj) return;
 
             //자재를 들고있을 때
-            curInteractObj.CallUpdate(DistanceToNowBuildItemToNewSort(Camera.main.transform.position));
+            curInteractObj.CallUpdate(DistanceToNowBuildItemToNewSort());
             ScaleBuildItem();
             RotateBuildItem();
             FrontBackMoveBuildItem();
@@ -209,7 +233,7 @@ namespace DM.Building
 
         public void BackToInventory()
         {
-            inventory.AddItem(curInteractObj.item,false);
+            inventory.AddItem(curInteractObj.item, false);
             inventory.InvenSlotResetCanBuildMode(); //빌딩가능모드로 인벤 리셋
 
             RemoveBuildItemToList(curInteractObj);
@@ -386,13 +410,10 @@ namespace DM.Building
         {
             buildState = buildstate;
         }
-        public float DistanceToNowBuildItemToNewSort(Vector3 cameraPos)
+        public float DistanceToNowBuildItemToNewSort()
         {
-            Vector3 houseBuildPosXZ = new Vector3(HouseBuild.transform.position.x, cameraPos.y, HouseBuild.transform.position.z);
-            float camToPivotDist = Vector3.Distance(cameraPos, houseBuildPosXZ);
-
             float disc = ((BuildItemList.Count - 1f) / 2f) * BuildItemGap;
-            float toClosestItemDist = camToPivotDist - disc;
+            float toClosestItemDist = _distance - disc;
             float dis2c = ((BuildItemList.Count - 1) - curInteractObj.MyOrder) * BuildItemGap + toClosestItemDist;
 
             return dis2c;

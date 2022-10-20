@@ -37,37 +37,37 @@ namespace Game.Cam
         }
 
         // Update is called once per frame
-        void LateUpdate()
-        {
-            //Vector3 desiredPosition = target.position + offset;
-            //Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothedSpeed);
-            //transform.position = smoothedPosition;
-
-            //if(Input.GetMouseButton(0))
-            //{
-            //    CameraRotate();
-            //}    
-
-            if (this.RotatewhileMove)
-            {
-                if (this.reverseRotation)
-                {
-                    //CameraRotate();
-
-                }
-
-                if (!this.reverseRotation)
-                {
-                    CameraCornerRotate();
-                }
-            }
-        }
-
-        //void SetStartCamPos()
+        //void LateUpdate()
         //{
-        //    transform.localRotation = Quaternion.Euler(0, StartCamXRot, 0);
-        //    XRotangle = StartCamXRot;
+        //    //Vector3 desiredPosition = target.position + offset;
+        //    //Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothedSpeed);
+        //    //transform.position = smoothedPosition;
+
+        //    //if(Input.GetMouseButton(0))
+        //    //{
+        //    //    CameraRotate();
+        //    //}    
+
+        //    if (this.RotatewhileMove)
+        //    {
+        //        if (this.reverseRotation)
+        //        {
+        //            //CameraRotate();
+
+        //        }
+
+        //        if (!this.reverseRotation)
+        //        {
+        //            CameraCornerRotate();
+        //        }
+        //    }
         //}
+
+        ////void SetStartCamPos()
+        ////{
+        ////    transform.localRotation = Quaternion.Euler(0, StartCamXRot, 0);
+        ////    XRotangle = StartCamXRot;
+        ////}
         
 
         public void SetCamRot(float YRot)
@@ -93,15 +93,15 @@ namespace Game.Cam
            // target.localRotation = Quaternion.AngleAxis(XRotangle, Vector3.up);
         }
 
-        void CameraCornerRotate()
-        {
-            //XRotangle += Input.GetAxis("Mouse X") * RotateXSpeed * -Time.deltaTime;
-            XRotangle += Input.GetAxisRaw("Horizontal") * (RotateXSpeed) * -Time.deltaTime;
-            transform.localRotation = Quaternion.AngleAxis(XRotangle, Vector3.up);
-            CamManager.MainCamera.transform.localRotation = Quaternion.Euler(10, XRotangle, 0);
-            XRotangle = Mathf.Clamp(XRotangle, MinRotX, MaxRotX);
-            // target.localRotation = Quaternion.AngleAxis(XRotangle, Vector3.up);
-        }
+        //void CameraCornerRotate()
+        //{
+        //    //XRotangle += Input.GetAxis("Mouse X") * RotateXSpeed * -Time.deltaTime;
+        //    XRotangle += Input.GetAxisRaw("Horizontal") * (RotateXSpeed) * -Time.deltaTime;
+        //    transform.localRotation = Quaternion.AngleAxis(XRotangle, Vector3.up);
+        //    CamManager.MainCamera.transform.localRotation = Quaternion.Euler(10, XRotangle, 0);
+        //    XRotangle = Mathf.Clamp(XRotangle, MinRotX, MaxRotX);
+        //    // target.localRotation = Quaternion.AngleAxis(XRotangle, Vector3.up);
+        //}
         //private void OnTriggerEnter(Collider other)
         //{
         //    if(other.gameObject.tag=="Floor")

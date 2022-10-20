@@ -172,16 +172,19 @@ namespace NSY.Iven
                 }
                 childImgObject.SetNativeSize();
 
-                float maxsizeWH = childImgObject.sprite.texture.height;
-                if (childImgObject.sprite.texture.width >= childImgObject.sprite.texture.height)
-                    maxsizeWH = childImgObject.sprite.texture.width;
-
-                LayoutRebuilder.ForceRebuildLayoutImmediate(itemImage.rectTransform);
-                resizeSize = itemImage.rectTransform.rect.width / maxsizeWH;
-                if (resizeSize != 0)
+                if (childImgObject.sprite)
                 {
-                    Vector3 scaleVec = new Vector3(resizeSize, resizeSize, 1);
-                    childImgObject.rectTransform.localScale = scaleVec;// ResultSlotListImage.rectTransform.rect.width /maxsizeWH;
+                    float maxsizeWH = childImgObject.sprite.texture.height;
+                    if (childImgObject.sprite.texture.width >= childImgObject.sprite.texture.height)
+                        maxsizeWH = childImgObject.sprite.texture.width;
+
+                    LayoutRebuilder.ForceRebuildLayoutImmediate(itemImage.rectTransform);
+                    resizeSize = itemImage.rectTransform.rect.width / maxsizeWH;
+                    if (resizeSize != 0)
+                    {
+                        Vector3 scaleVec = new Vector3(resizeSize, resizeSize, 1);
+                        childImgObject.rectTransform.localScale = scaleVec;// ResultSlotListImage.rectTransform.rect.width /maxsizeWH;
+                    }
                 }
             }
         }
