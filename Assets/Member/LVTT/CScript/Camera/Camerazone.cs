@@ -13,12 +13,16 @@ namespace Game.Cam
         bool CanSwitchCam;
         CameraManager CamManager;
         static GameObject nowCam;
-        static GameObject nowTrig;
+        static Camerazone nowTrig;
         public static int camcount;
         void Start()
         {
             CamManager = FindObjectOfType<CameraManager>();
             camcount = 0;
+        }
+        public bool SameAs(Camerazone other)
+        {
+            return this.virtualCamera == other.virtualCamera;
         }
         private void OnTriggerEnter(Collider other)
         {
@@ -26,16 +30,23 @@ namespace Game.Cam
             {
                 if (other.GetComponent<CharacterController>())
                 {
-                    nowCam = virtualCamera;
-                    
-                    nowTrig = this.gameObject;
+
+                    nowTrig = this;
 
                     if (camcount <= 0)
                     {
                         Debug.Log(nowCam + "On");
+                        if (nowCam)
+                            nowCam.SetActive(false);
+                        nowCam = virtualCamera;
                         nowCam.SetActive(true);
                     }
+                    else
+                    {
+                        nowCam = virtualCamera;
+                    }
                     camcount++;
+                    Debug.Log(nowTrig + "<now  this>" + gameObject.name + " ++ " + camcount);
                 }
             }
         }
@@ -43,12 +54,11 @@ namespace Game.Cam
         {
             if (other.CompareTag("Player") && other.GetComponent<CharacterController>())
             {
-
-                if (nowTrig != this.gameObject)
+                if (nowTrig.virtualCamera != this.virtualCamera)
                 {
-                    Debug.Log(gameObject.name);
                     Debug.Log(virtualCamera + "Off");
                     virtualCamera.SetActive(false);
+
 
                     if (camcount > 1)
                     {
@@ -59,6 +69,8 @@ namespace Game.Cam
                 }
                 CamManager.LookIn = true;
                 camcount--;
+                Debug.Log(nowTrig + "<now  this>" + gameObject.name + " -- " + camcount);
+
             }
         }
 

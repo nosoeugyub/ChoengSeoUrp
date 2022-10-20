@@ -37,8 +37,8 @@ namespace DM.Building
         private PlayerInput playerInput;
 
         [SerializeField] BuildingItemObj curInteractObj;
-        private float BuildItemScaleVar = 0.04f;
-        private float BuildItemRotationVar = 4;
+        private float BuildItemScaleVar = 0.015f;
+        private float BuildItemRotationVar = 1.4f;
         private float BuildItemGap = 0.002f;
 
         [SerializeField] Transform CameraPos;
