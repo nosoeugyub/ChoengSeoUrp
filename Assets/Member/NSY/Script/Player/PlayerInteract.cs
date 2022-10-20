@@ -67,6 +67,8 @@ namespace NSY.Player
         }
         private void Update()
         {
+            //interactUI.gameObject.SetActive(false);
+            InteractUIMoving();
             if (!canInteract) return;
             LightClosestObj();
             InteractWithObjects();
@@ -295,11 +297,20 @@ namespace NSY.Player
             {
                 closestObj.CanInteract();
                 interactUI.gameObject.SetActive(true);
+                InteractUIMoving();
+            }
+        }
+
+        private void InteractUIMoving()
+        {
+            if (closestObj)
+            {
                 Vector3 vector3 = mainCam.WorldToScreenPoint(closestObj.transform.position);
                 RectTransformUtility.ScreenPointToLocalPointInRectangle(targetRectTr, vector3, uiCamera, out screenPoint);
                 interactUI.localPosition = screenPoint;
             }
         }
+
         public void InvokeInteractClosestObj()
         {
             if (!canInteract && isAnimating) return;

@@ -137,6 +137,7 @@ public class EnvironmentManager : MonoBehaviour
         isShot = true;
         for (int i = 0; i < screenshot.Length; i++)
         {
+            screenshot[i].gameObject.SetActive(true);
             screenshot[i].OnSceenShotEvent();
             Loading.SetActive(true);
             yield return new WaitForSeconds(2f);

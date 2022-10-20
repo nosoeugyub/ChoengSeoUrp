@@ -313,7 +313,7 @@
             else if (Physics.Raycast(ray, out hit, 1000, messageLayerMask))
             {
                 isMessage = true;
-                print("isMessage");
+                //print("isMessage");
                 return true;
 
             }

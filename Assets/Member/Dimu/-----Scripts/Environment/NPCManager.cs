@@ -52,6 +52,8 @@ public class NPCManager : MonoBehaviour
             npcTfs[i].Npctf.GoHomeEvent += GoNPCsHouse;
         }
 
+        StartCoroutine(FadeIn());
+
         DIalogEventManager.BackEventActions[(int)EventEnum.MoveToBearsHouse] += MoveToBearsHouse;
         DIalogEventManager.EventActions[(int)EventEnum.MoveToWalPort] += MoveToWalPort;
         DIalogEventManager.EventActions[(int)EventEnum.GotoBearsWithSheep] += MoveToBearsHouseWithSheep;
@@ -253,7 +255,10 @@ public class NPCManager : MonoBehaviour
         eventContainer.RaiseEvent(GameEventType.playerCanInteractEvent);
 
     }
-
+    IEnumerator FadeIn()
+    {
+        yield return fader.IFadeIn(Color.white, 2);
+    }
     private void ChickenGOBearHOuse()
     {
         MoveToNPCSomewhere(3, npcTfs[1].Npctf.MyHouse.FriendTransform.position);
