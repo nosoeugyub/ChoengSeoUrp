@@ -11,12 +11,6 @@ public class SceneChangeManager : MonoBehaviour
 
     EventContainer eventContainer;
 
-    //[SerializeField] GameEvent playerMoveOnEvent;
-    //[SerializeField] GameEvent playerMoveOffEvent;
-    //
-    //[SerializeField] GameEvent playerCanInteractEvent;
-    //[SerializeField] GameEvent playerCantInteractEvent;
-
     private void Awake()
     {
         eventContainer = FindObjectOfType<EventContainer>();

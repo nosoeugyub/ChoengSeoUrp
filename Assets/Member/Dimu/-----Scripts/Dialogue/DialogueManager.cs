@@ -280,7 +280,7 @@ namespace DM.Dialog
                     canStartDialogs = GetCanAcceptDialogList((int)nowNpc.GetCharacterType(), false);
                     if (canStartDialogs.Count <= 0)
                     {
-                        DebugText.Instance.SetText(string.Format("진행할 대화가 없습니다."));
+                        //DebugText.Instance.SetText(string.Format("진행할 대화가 없습니다."));
 
                         IsTalking = false;
                         return;

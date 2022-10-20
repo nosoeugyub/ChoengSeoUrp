@@ -277,7 +277,7 @@ public class NPCManager : MonoBehaviour
     }
     private void ChickenGoSheepHouse()
     {
-        Vector3 MovePos = npcTfs[8].Npctf.MyHouse.FriendTransform.position + npcTfs[NowInteractNPCIndex].Npctf.transform.forward * -5;
+        Vector3 MovePos = npcTfs[8].Npctf.MyHouse.FriendTransform.position + npcTfs[8].Npctf.MyHouse.FriendTransform.right * -8;
         Vector3 randPos = new Vector3(Random.Range(-1.5f, 1.5f), 0, Random.Range(-1.5f, 1.5f));
 
         MoveToNPCSomewhere(3, MovePos);
@@ -294,9 +294,9 @@ public class NPCManager : MonoBehaviour
     }
     private void ChickenAppearAndGetChick()
     {
-        MoveToNPCSomewhere(3, npcTfs[8].Npctf.MyHouse.FriendTransform.position + npcTfs[1].Npctf.transform.right * 4);
+        MoveToNPCSomewhere(3, npcTfs[8].Npctf.MyHouse.FriendTransform.position + npcTfs[1].Npctf.transform.right * 2);
         float chicktpos = chick.transform.position.y;
-        chick.transform.position = npcTfs[3].Npctf.transform.position + npcTfs[3].Npctf.transform.right * 1.5f;
+        chick.transform.position = npcTfs[3].Npctf.transform.position + npcTfs[3].Npctf.transform.right * 0.75f;
         chick.transform.position = new Vector3(chick.transform.position.x, chicktpos, chick.transform.position.z);
 
         DIalogEventManager.EventAction -= DIalogEventManager.EventActions[(int)EventEnum.ChickenAppearAndGetChick];
