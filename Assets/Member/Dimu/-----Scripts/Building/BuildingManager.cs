@@ -90,7 +90,7 @@ namespace DM.Building
             //buildingDisplay.BuildDisplayOn(false);
 
             //camera
-            Camerazone.camcount--;
+            Camerazone.camcount-= Camerazone.camcount;
             CamManager.DeactiveSubCamera(1);
         }
         public void AddBuilding(BuildingBlock buildingBlock)
