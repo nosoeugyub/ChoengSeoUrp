@@ -7,10 +7,11 @@ public class Fader : MonoBehaviour
 {
     [SerializeField] Animator fadeAnim;
     [SerializeField] Image fadeImg;
+    Coroutine nowcoroutine;
 
     public void Start()
     {
-        StartCoroutine(IFadeIn(Color.white, 2));
+        nowcoroutine = StartCoroutine(IFadeIn(Color.white, 2));
     }
 
     public void FadeOut(Color color, float speed)
@@ -23,6 +24,10 @@ public class Fader : MonoBehaviour
     }
     public IEnumerator IFadeOut(Color color, float speed)
     {
+        yield return nowcoroutine = StartCoroutine(IFadeOutCor(color, speed));
+    }
+    public IEnumerator IFadeOutCor(Color color, float speed)
+    {
         fadeImg.color = color;
         fadeImg.raycastTarget = true;
         fadeAnim.ResetTrigger("whitescreen");
@@ -31,7 +36,13 @@ public class Fader : MonoBehaviour
         fadeAnim.speed = 1 / speed;
         yield return new WaitForSeconds(speed);
     }
+
     public IEnumerator IFadeIn(Color color, float speed)
+    {
+        yield return nowcoroutine = StartCoroutine(IFadeInCor(color, speed));
+    }
+
+    public IEnumerator IFadeInCor(Color color, float speed)
     {
         fadeImg.color = color;
         fadeImg.raycastTarget = true;

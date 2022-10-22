@@ -1,6 +1,7 @@
 ﻿using Game.Cam;
 using NSY.Manager;
 using NSY.Player;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,6 +17,9 @@ namespace DM.Building
         PlayerInput.InputEvent savedelegate_ESC;
         PlayerInput.InputEvent savedelegate_F;
 
+        private float _distance;
+        private float _blendTime;
+
         public bool isBuildMode { get; set; } = false;
         private BuildingBlock nowBuildingBlock { get; set; } = null; //static에서 private로...
 
@@ -24,7 +28,12 @@ namespace DM.Building
             CamManager = FindObjectOfType<CameraManager>();
             buildingDisplay = FindObjectOfType<BuildingDisplay>();
         }
-
+        private void Start()
+        {
+            _distance = CamManager.GetCameraDistance(1);
+            _blendTime = CamManager.GetBlendTime();
+            Debug.Log(_distance);
+        }
         public void BuildModeOn(BuildingBlock nowBuildingBlock_)
         {
             if (SuperManager.Instance.dialogueManager.IsTalking) return;
@@ -34,16 +43,16 @@ namespace DM.Building
             PlayerInput.OnPressESCDown = BuildModeOff;
             PlayerInput.OnPressFDown = null;
 
-            isBuildMode = true;
-
             //NPC Off
             SuperManager.Instance.npcManager.AllNpcActive(false);
 
             //BuildingBlockSetting
             nowBuildingBlock = nowBuildingBlock_;
             nowBuildingBlock_.SetCancelUIAction(buildingDisplay.CancelUIState);
+            nowBuildingBlock_.SetBlentTime(_blendTime);
+            nowBuildingBlock_.SetDistanceWhitCam(_distance);
             nowBuildingBlock_.BuildModeOnSetting();
-
+            StartCoroutine(Waitblendtime(true));
             //UI
             //buildingDisplay.BuildDisplayOn(true); //UI Display 추가
 
@@ -52,16 +61,20 @@ namespace DM.Building
             CamManager.ActiveSubCamera(1);
 
         }
+        IEnumerator Waitblendtime(bool ison)
+        {
+            yield return new WaitForSeconds(_blendTime);
+            isBuildMode = ison;
+        }
 
         public void BuildModeOff()
         {
             if (!isBuildMode) return;
+            StartCoroutine(Waitblendtime(false));
 
             PlayerInput.OnPressESCDown = savedelegate_ESC;
             PlayerInput.OnPressFDown = savedelegate_F;
-
-            isBuildMode = false;
-
+            
             //NPC On
             SuperManager.Instance.npcManager.AllNpcActive(true);
 
@@ -77,7 +90,7 @@ namespace DM.Building
             //buildingDisplay.BuildDisplayOn(false);
 
             //camera
-            Camerazone.camcount--;
+            Camerazone.camcount-= Camerazone.camcount;
             CamManager.DeactiveSubCamera(1);
         }
         public void AddBuilding(BuildingBlock buildingBlock)

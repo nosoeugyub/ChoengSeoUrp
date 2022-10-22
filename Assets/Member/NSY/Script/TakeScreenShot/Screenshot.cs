@@ -216,6 +216,7 @@ public class Screenshot : MonoBehaviour
         set
         {
             CamPos = value;
+            if(SceenShotCam)
             SceenShotCam.transform.position = CamPos.transform.position;
         }
     }

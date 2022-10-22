@@ -11,7 +11,7 @@ namespace DM.Building
         public InItemType toolType;
 
         float MaxScale = 3f;
-        float MinScale = 0.1f;
+        float MinScale = 0.2f;
         public int breakCount;
         int originbreakCount;
 
@@ -117,7 +117,6 @@ namespace DM.Building
             Vector3 movePos = Input.mousePosition;
             movePos.z = _distanceToNowBuildItemToNewSort;
             movePos = Camera.main.ScreenToWorldPoint(movePos);
-
             HouseBuildAreaCal();
 
             if (movePos.y >= MaxY) movePos.y = MaxY;
@@ -152,7 +151,7 @@ namespace DM.Building
             ObjOriginPos.y = housebuildpos.y + (_areaHeightsize / 2);
             ObjOriginPos.x = housebuildpos.x;
         }
-        private void SetBuildItemScale(Vector3 scalenum)
+        private void SetBuildingItemScaleMinMax(Vector3 scalenum)
         {
             if (scalenum.x >= MaxScale) scalenum.x = MaxScale;
             if (scalenum.x <= MinScale) scalenum.x = MinScale;
@@ -165,7 +164,7 @@ namespace DM.Building
             Vector3 var = transform.localScale;
             var.x += BuildItemScaleVar;
             var.y += BuildItemScaleVar;
-            SetBuildItemScale(var);
+            SetBuildingItemScaleMinMax(var);
         }
 
         public void SetBuildItemRotation(float scalenum)

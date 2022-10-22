@@ -20,6 +20,7 @@ namespace NSY.Player
 
         public RectTransform interactUI;//띄울 UI
         public RectTransform buildinginteractUi;//띄울 UI
+        public TextMeshProUGUI buildinginteractUiText;//띄울 UI
         public RectTransform introduceUi;//띄울 UI
         public RectTransform introduceUituto;//띄울 UI
         public TextMeshProUGUI interactUiText2;
@@ -67,6 +68,8 @@ namespace NSY.Player
         }
         private void Update()
         {
+            //interactUI.gameObject.SetActive(false);
+            InteractUIMoving();
             if (!canInteract) return;
             LightClosestObj();
             InteractWithObjects();
@@ -251,6 +254,15 @@ namespace NSY.Player
                     if (nowInteractable.GetComponent<BuildingBlock>() && !IsPointerOverUIObject())
                     {
                         //StartCoroutine(cursorManager.SetCursor(nowInteractable.CanInteract()));//건축 외에는 변하지 않음
+                        if (followNpc && followNpc.IsFollowPlayer())
+                        {
+                            buildinginteractUiText.text = "클릭하여 소개하기";
+                        }
+                        else
+                        {
+                            buildinginteractUiText.text = "클릭하여 건축하기";
+
+                        }
                         buildinginteractUi.gameObject.SetActive(true);
                         Vector3 uiPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y + 40, Input.mousePosition.z);
 
@@ -295,11 +307,20 @@ namespace NSY.Player
             {
                 closestObj.CanInteract();
                 interactUI.gameObject.SetActive(true);
+                InteractUIMoving();
+            }
+        }
+
+        private void InteractUIMoving()
+        {
+            if (closestObj)
+            {
                 Vector3 vector3 = mainCam.WorldToScreenPoint(closestObj.transform.position);
                 RectTransformUtility.ScreenPointToLocalPointInRectangle(targetRectTr, vector3, uiCamera, out screenPoint);
                 interactUI.localPosition = screenPoint;
             }
         }
+
         public void InvokeInteractClosestObj()
         {
             if (!canInteract && isAnimating) return;

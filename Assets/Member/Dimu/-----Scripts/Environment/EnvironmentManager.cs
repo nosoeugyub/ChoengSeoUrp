@@ -133,18 +133,16 @@ public class EnvironmentManager : MonoBehaviour
             Debug.Log("두번은 안통하지 ㅋㅋ");
             yield return null;
         }
-
-            isShot = true;
-            for (int i = 0; i < screenshot.Length; i++)
-            {
-                screenshot[i].OnSceenShotEvent();
-                Loading.SetActive(true);
-                yield return new WaitForSeconds(2f);
-            }
+        isShot = true;
+        for (int i = 0; i < screenshot.Length; i++)
+        {
+            screenshot[i].gameObject.SetActive(true);
+            screenshot[i].OnSceenShotEvent();
+            Loading.SetActive(true);
             yield return new WaitForSeconds(2f);
             Loading.SetActive(false);
             SuperManager.Instance.scenechagemanage.LoadSceneFadeString(name);
-        
+        }
 
     }
 

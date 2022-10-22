@@ -52,6 +52,8 @@ public class NPCManager : MonoBehaviour
             npcTfs[i].Npctf.GoHomeEvent += GoNPCsHouse;
         }
 
+        StartCoroutine(FadeIn());
+
         DIalogEventManager.BackEventActions[(int)EventEnum.MoveToBearsHouse] += MoveToBearsHouse;
         DIalogEventManager.EventActions[(int)EventEnum.MoveToWalPort] += MoveToWalPort;
         DIalogEventManager.EventActions[(int)EventEnum.GotoBearsWithSheep] += MoveToBearsHouseWithSheep;
@@ -69,10 +71,10 @@ public class NPCManager : MonoBehaviour
         DIalogEventManager.BackEventActions[(int)EventEnum.BearGoSheepHouse] += BearGoSheepHouse;
         DIalogEventManager.BackEventActions[(int)EventEnum.BearGoHisHouse] += BearGoHisHouse;
         //텔포 따로 나눠야 할듯
-        //for (int i = 0; i < teleportPosButtons.Length - 1; ++i)
-        //{
-        //    ButtonInteractable(i, false);
-        //}
+        for (int i = 0; i < teleportPosButtons.Length - 1; ++i)
+        {
+            ButtonInteractable(i, false);
+        }
     }
 
     public void PlayNPCDialogSound(int npcidx)
@@ -130,19 +132,19 @@ public class NPCManager : MonoBehaviour
     {
         if (isOn)
         {
-            portInformUI.DOLocalMoveY(480, 1).SetEase(Ease.OutQuart);
+            portInformUI.DOLocalMoveY(490, 1).SetEase(Ease.OutQuart);
             if (nowCor != null)
                 StopCoroutine(nowCor);
             nowCor = StartCoroutine(ComeToPortCor());
         }
         else
         {
-            portInformUI.DOLocalMoveY(620, 1).SetEase(Ease.OutQuart);
+            portInformUI.DOLocalMoveY(600, 1).SetEase(Ease.OutQuart);
         }
     }
     IEnumerator ComeToPortCor()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(10f);
         ComeToPortUIAction(false);
     }
 
@@ -253,7 +255,10 @@ public class NPCManager : MonoBehaviour
         eventContainer.RaiseEvent(GameEventType.playerCanInteractEvent);
 
     }
-
+    IEnumerator FadeIn()
+    {
+        yield return fader.IFadeIn(Color.white, 2);
+    }
     private void ChickenGOBearHOuse()
     {
         MoveToNPCSomewhere(3, npcTfs[1].Npctf.MyHouse.FriendTransform.position);
@@ -272,7 +277,7 @@ public class NPCManager : MonoBehaviour
     }
     private void ChickenGoSheepHouse()
     {
-        Vector3 MovePos = npcTfs[8].Npctf.MyHouse.FriendTransform.position + npcTfs[NowInteractNPCIndex].Npctf.transform.forward * -5;
+        Vector3 MovePos = npcTfs[8].Npctf.MyHouse.FriendTransform.position + npcTfs[8].Npctf.MyHouse.FriendTransform.right * -8;
         Vector3 randPos = new Vector3(Random.Range(-1.5f, 1.5f), 0, Random.Range(-1.5f, 1.5f));
 
         MoveToNPCSomewhere(3, MovePos);
@@ -289,9 +294,9 @@ public class NPCManager : MonoBehaviour
     }
     private void ChickenAppearAndGetChick()
     {
-        MoveToNPCSomewhere(3, npcTfs[8].Npctf.MyHouse.FriendTransform.position + npcTfs[1].Npctf.transform.right * 4);
+        MoveToNPCSomewhere(3, npcTfs[8].Npctf.MyHouse.FriendTransform.position + npcTfs[1].Npctf.transform.right * 2);
         float chicktpos = chick.transform.position.y;
-        chick.transform.position = npcTfs[3].Npctf.transform.position + npcTfs[3].Npctf.transform.right * 1.5f;
+        chick.transform.position = npcTfs[3].Npctf.transform.position + npcTfs[3].Npctf.transform.right * 0.75f;
         chick.transform.position = new Vector3(chick.transform.position.x, chicktpos, chick.transform.position.z);
 
         DIalogEventManager.EventAction -= DIalogEventManager.EventActions[(int)EventEnum.ChickenAppearAndGetChick];
