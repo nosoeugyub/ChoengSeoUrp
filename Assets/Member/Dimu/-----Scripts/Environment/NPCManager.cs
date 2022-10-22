@@ -132,19 +132,19 @@ public class NPCManager : MonoBehaviour
     {
         if (isOn)
         {
-            portInformUI.DOLocalMoveY(480, 1).SetEase(Ease.OutQuart);
+            portInformUI.DOLocalMoveY(490, 1).SetEase(Ease.OutQuart);
             if (nowCor != null)
                 StopCoroutine(nowCor);
             nowCor = StartCoroutine(ComeToPortCor());
         }
         else
         {
-            portInformUI.DOLocalMoveY(620, 1).SetEase(Ease.OutQuart);
+            portInformUI.DOLocalMoveY(600, 1).SetEase(Ease.OutQuart);
         }
     }
     IEnumerator ComeToPortCor()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(10f);
         ComeToPortUIAction(false);
     }
 
