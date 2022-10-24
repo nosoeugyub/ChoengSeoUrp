@@ -71,7 +71,7 @@ namespace DM.Building
         public GameObject sscam;
         private float _distance;
         private float _blendTime;
-        
+
 
         private void Awake()
         {
@@ -144,6 +144,46 @@ namespace DM.Building
             GetComponent<BoxCollider>().enabled = true;
             inventory.InvenAllOnOff(true);
         }
+
+        internal float CalculatePercent(dynamic dynamic, Type type)
+        {
+            if (BuildItemList.Count <= 0) return 0;
+            int clear = 0;
+            //bool canContinue = false;
+            //dynamic 타입과 이외의 타입
+            foreach (BuildingItemObj itemObj in GetBuildItemList())
+            {
+                //Type type1 = itemObj.GetAttribute().buildShape.GetType();
+                //Type type2 = type.GetType(); // 이거 하면 안됨. type은 타입으로만 쓰기
+
+                if (itemObj.GetAttribute().buildShape.GetType() == type)
+                {
+                    if (itemObj.GetAttribute().buildShape == dynamic)
+                    {
+                        clear++;
+                        continue;
+                    }
+                }
+                //canContinue = false;
+                for (int i = 0; i < itemObj.GetAttribute().buildThema.Length; i++)
+                {
+                    if (itemObj.GetAttribute().buildThema[i].GetType() == type)
+                    {
+                        if (itemObj.GetAttribute().buildThema[i] == dynamic)
+                        {
+                            clear++;
+                            //canContinue = true;
+                            break;
+                        }
+                    }
+                    
+                }
+            }
+            float percent = (float)clear / BuildItemList.Count * 100;
+            Debug.Log("percent: " + percent);
+            return (int)percent;
+        }
+
         public void ConstructSignsActive(bool isActive)
         {
             for (int i = 0; i < constructsign.Length; i++)
@@ -194,12 +234,6 @@ namespace DM.Building
             }
             if (!curInteractObj) return;
 
-            //자재를 들고있을 때
-            curInteractObj.CallUpdate(DistanceToNowBuildItemToNewSort());
-            ScaleBuildItem();
-            RotateBuildItem();
-            FrontBackMoveBuildItem();
-
             if (Input.GetMouseButtonDown(1))
             {
                 if (curInteractObj.IsFirstDrop)
@@ -220,7 +254,15 @@ namespace DM.Building
                 }
             }
         }
-
+        private void FixedUpdate()
+        {
+            if (!curInteractObj) return;
+            //자재를 들고있을 때
+            curInteractObj.CallUpdate(DistanceToNowBuildItemToNewSort());
+            ScaleBuildItem();
+            RotateBuildItem();
+            FrontBackMoveBuildItem();
+        }
         //UI 위에라면 레이 안쏨
         public bool IsPointerOverUIObject()
         {

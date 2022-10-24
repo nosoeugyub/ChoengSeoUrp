@@ -70,6 +70,15 @@ namespace DM.Building
         {
             return attributes;
         }
+        public void SetBuildMaterial()
+        {
+            //attributes.buildThema = new  BuildMaterial[2] { BuildMaterial.Sand, BuildMaterial.Wood };
+            //attributes.buildThema = new  BuildMaterial[1] { BuildMaterial.Iron };//Paper Grass Iron Sand Wood Stone
+        }
+        public void SetBuildShape()
+        {
+            attributes.buildShape = BuildShape.Etc;//Square = 10000, Circle, Rectangle, Triangle, Etc,  Etc
+        }
         private new void Awake()
         {
             SpawnHandyObjParent = FindObjectOfType<BuildingHandyObjSpawn>();
@@ -327,6 +336,8 @@ namespace DM.Building
         {
             myOrder = count;
         }
+
+ 
     }
 
 }

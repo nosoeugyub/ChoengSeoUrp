@@ -10,7 +10,12 @@ namespace DM.Building
         [SerializeField] Button buildOffUi;
         [SerializeField] GameObject cancelUi;
         [SerializeField] GameObject buildingTutorialImg;
+        [SerializeField] GameObject percentUI;
 
+        private void Start()
+        {
+            percentUIState(false);
+        }
         public void BuildDisplayOn(bool isOn)
         {
             BuildOffUiState(isOn);
@@ -21,7 +26,10 @@ namespace DM.Building
         {
             cancelUi.SetActive(isOn);
         }
-
+        public void percentUIState(bool isOn)
+        {
+            percentUI.SetActive(isOn);
+        }
         private void BuildOffUiState(bool isOn)
         {
             buildOffUi.gameObject.SetActive(isOn);
