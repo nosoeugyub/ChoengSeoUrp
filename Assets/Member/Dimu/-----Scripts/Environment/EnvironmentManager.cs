@@ -196,11 +196,11 @@ public class EnvironmentManager : MonoBehaviour
             Cleanliness = _cleanliness;
 
         //fog
-        _fogColor = ((goodFogColor - badFogColor) / 100 * Cleanliness) + badFogColor;
-        RenderSettings.fogColor = _fogColor;
+       // _fogColor = ((goodFogColor - badFogColor) / 100 * Cleanliness) + badFogColor;
+       // RenderSettings.fogColor = _fogColor;
 
-        RenderSettings.fogStartDistance = ((goodFogStartDis - badFogStartDis) / 100 * Cleanliness) + badFogStartDis;
-        RenderSettings.fogEndDistance = ((goodFogEndDis - badFogEndDis) / 100 * Cleanliness) + badFogEndDis;
+        //RenderSettings.fogStartDistance = ((goodFogStartDis - badFogStartDis) / 100 * Cleanliness) + badFogStartDis;
+        //RenderSettings.fogEndDistance = ((goodFogEndDis - badFogEndDis) / 100 * Cleanliness) + badFogEndDis;
     }
 
     private void ComeToPort()

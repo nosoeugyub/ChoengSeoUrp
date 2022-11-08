@@ -97,8 +97,6 @@ namespace DM.Quest
             {
                 foreach (QuestTask_Build building in tasks.builds)
                 {
-                    //building.buildCondition
-
                     foreach (var item in SuperManager.Instance.buildingManager.buildings)
                     {
                         if (!item.SpecialHouse) continue;
@@ -161,12 +159,9 @@ namespace DM.Quest
             {
                 foreach (QuestTask gotItem in tasks.gotItems)
                 {
-                    //if (gotItem.finishData > PlayerData.gotItemData[gotItem.objType].amounts[0] - gotItem.initData)
+                    if (gotItem.finishData > SuperManager.Instance.inventoryManager.ItemCount(gotItem.objType.ToString()))
                     {
-                        if (gotItem.finishData > SuperManager.Instance.inventoryManager.ItemCount(gotItem.objType.ToString()))
-                        {
-                            return false;
-                        }
+                        return false;
                     }
                 }
             }
@@ -182,28 +177,6 @@ namespace DM.Quest
             }
             return true;
         }
-
-        //public bool CanAccept()
-        //{
-        //    //레벨이 충족되었는가?
-        //    //if(requirements.requirementLevel > 현재 레벨)
-        //    //{
-        //    //   return false;
-        //    //}
-        //    //선행퀘스트가 있는가?
-        //    foreach (QuestData requireQuest in requirements.requireQuests)
-        //    {
-        //        //선행퀘스트가 클리어 퀘스트 목록에 하나라도 없으면
-        //        if (SuperManager.Instance.questmanager.IsQuestCleared(requireQuest))
-        //        {
-        //            Debug.Log("선행퀘스트를 클리어해야 합니다.");
-        //            return false;
-        //        }
-        //    }
-        //    Debug.Log("퀘스트를 받을 수 있습니다.");
-
-        //    return true;
-        //}
 
         public int QuestID => questID;
     }

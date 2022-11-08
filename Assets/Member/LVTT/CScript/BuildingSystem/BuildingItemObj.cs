@@ -70,6 +70,16 @@ namespace DM.Building
         {
             return attributes;
         }
+        public void SetBuildMaterial()
+        {
+            //attributes.buildThema = new  BuildMaterial[2] { BuildMaterial.Sand, BuildMaterial.Wood };
+            attributes.buildThema = new  BuildMaterial[1] { BuildMaterial.Grass };//Paper Grass Iron Sand Wood Stone
+            //attributes.buildThema[0] = BuildMaterial.Paper;
+        }
+        public void SetBuildShape()
+        {
+            attributes.buildShape = BuildShape.Etc;//Square = 10000, Circle, Rectangle, Triangle, Etc,  Etc
+        }
         private new void Awake()
         {
             SpawnHandyObjParent = FindObjectOfType<BuildingHandyObjSpawn>();
@@ -227,7 +237,7 @@ namespace DM.Building
             GameObject nearObj = null;
             float curObjZ = transform.localPosition.z;//선택한 오브젝트의 z값
             float bujildItemZ = 10000;
-            //float minDIst = 10000;
+
             if (isUp)
             {
                 foreach (GameObject item in buildItemList)
@@ -250,7 +260,6 @@ namespace DM.Building
                 }
                 if (nearObj)
                 {
-                    //print("Up Near Obj is " + nearObj.name);
                     nearObj.transform.position += nearObj.transform.forward * buildItemGap; //가장 가까운 자재후진
                     nearObj.GetComponent<BuildingItemObj>().MyOrder--;
                     transform.position -= transform.forward * buildItemGap; //선택중인 자재 전진
@@ -327,6 +336,8 @@ namespace DM.Building
         {
             myOrder = count;
         }
+
+ 
     }
 
 }

@@ -1,6 +1,7 @@
 ﻿using Game.Cam;
 using NSY.Manager;
 using NSY.Player;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,8 +15,9 @@ namespace DM.Building
         private CameraManager CamManager;
         private BuildingDisplay buildingDisplay;
 
-        PlayerInput.InputEvent savedelegate_ESC;
-        PlayerInput.InputEvent savedelegate_F;
+
+        PlayerInput.InputEvent savedelegate_Exit;
+        PlayerInput.InputEvent savedelegate_Interact;
 
         private float _distance;
         private float _blendTime;
@@ -38,10 +40,10 @@ namespace DM.Building
         {
             if (SuperManager.Instance.dialogueManager.IsTalking) return;
 
-            savedelegate_ESC = PlayerInput.OnPressESCDown;
-            savedelegate_F = PlayerInput.OnPressFDown;
-            PlayerInput.OnPressESCDown = BuildModeOff;
-            PlayerInput.OnPressFDown = null;
+            savedelegate_Exit = PlayerInput.OnPressExitDown;
+            savedelegate_Interact = PlayerInput.OnPressInteractDown;
+            PlayerInput.OnPressExitDown = BuildModeOff;
+            PlayerInput.OnPressInteractDown = null;
 
             //NPC Off
             SuperManager.Instance.npcManager.AllNpcActive(false);
@@ -54,6 +56,7 @@ namespace DM.Building
             nowBuildingBlock_.BuildModeOnSetting();
             StartCoroutine(Waitblendtime(true));
             //UI
+            buildingDisplay.percentUIState(true);
             //buildingDisplay.BuildDisplayOn(true); //UI Display 추가
 
             //camera
@@ -72,8 +75,8 @@ namespace DM.Building
             if (!isBuildMode) return;
             StartCoroutine(Waitblendtime(false));
 
-            PlayerInput.OnPressESCDown = savedelegate_ESC;
-            PlayerInput.OnPressFDown = savedelegate_F;
+            PlayerInput.OnPressExitDown = savedelegate_Exit;
+            PlayerInput.OnPressInteractDown = savedelegate_Interact;
             
             //NPC On
             SuperManager.Instance.npcManager.AllNpcActive(true);
@@ -86,6 +89,7 @@ namespace DM.Building
             PlayerData.AddValue(0, (int)BuildInputBehaviorEnum.EndBuilding, PlayerData.BuildInputData, (int)BuildInputBehaviorEnum.length);
 
             //UI
+            buildingDisplay.percentUIState(false);
             buildingDisplay.CancelUIState(false);
             //buildingDisplay.BuildDisplayOn(false);
 
@@ -137,16 +141,24 @@ namespace DM.Building
             }
             return buildingBlocks;
         }
+
+
+        internal float GetPercent(dynamic dynamic, Type type)
+        {
+            return nowBuildingBlock.CalculatePercent(dynamic, type);
+        }
     }
 }
 public enum BuildVPos { Top, Mid, Bottom, Length }
 public enum BuildHPos { Left, Right, Mid, Length }
 public enum BuildSize { Small, Normal, Big, Length }
-public enum BuildColor { None, Red, Orange, Yellow, Green, Blue, Mint, Pupple, White, Black, Pink, Length }
+public enum BuildColor { None, Red, Orange, Yellow, Green, Blue, Mint, Pupple, White, Black, Length }
 public enum BuildMaterial//타이어
 {
-    Wood, Stone, Paper, Iron, Gold, Silver, Rubber, Wax, Sand, Grass, Honey, Stick,
-    Brick, StainedGlass, Herringbone, Plain, Slate, Truss, Kiwa, Thatched, Stroke, Cuty, Length
+    Wood, Stone, Paper, Iron, Sand, Grass, 
+    //Gold, Silver, Rubber, Wax,  Honey, Stick,
+    //Brick, StainedGlass, Herringbone, Plain, Slate, Truss, Kiwa, Thatched, Stroke, Cuty
+     Length
 }
 public enum BuildShape
 {
@@ -163,6 +175,7 @@ public enum BuildShape
     Flower = 4000, Fence, PostBox, Fountain, Flowerpot, Balloon, Bell, Alphabet, Clock, Light, Ribbon, GiftBox,
     Terrace, DreamCatcher, Moss, Vine, Stairs, Button, EggPlate, Snack, MiniBulb,
 
+    Square = 10000, Circle, Rectangle, Triangle, Etc,
 
     Length
 }

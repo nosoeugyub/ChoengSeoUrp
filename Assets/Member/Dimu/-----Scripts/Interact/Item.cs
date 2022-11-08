@@ -19,8 +19,6 @@ public class Item : ScriptableObject
     [SerializeField] float cleanAmount;
     [SerializeField] int eatAmount;
 
-    //[Header("Combination")]
-    //[SerializeField] private ingredientNeeded[] necessaryIngredient;
     [Header("MineItemVariable")]
     [SerializeField] private int chopCount;
     [SerializeField] private DropItem[] dropItems;
@@ -29,21 +27,21 @@ public class Item : ScriptableObject
     [SerializeField] private string usingToolSoundName;
 
 
-    //NSY추가 및 조건 명시
-    //아이템 식별 넘버
-    [SerializeField]
-    private int _ItemNubering;
-    public int ItemNubering
-    {
-        get
-        {
-            return _ItemNubering;
-        }
-        set
-        {
-            _ItemNubering = value;
-        }
-    }
+    ////NSY추가 및 조건 명시
+    ////아이템 식별 넘버
+    //[SerializeField]
+    //private int _ItemNubering;
+    //public int ItemNubering
+    //{
+    //    get
+    //    {
+    //        return _ItemNubering;
+    //    }
+    //    set
+    //    {
+    //        _ItemNubering = value;
+    //    }
+    //}
 
     [SerializeField]
     private int GetCountitems = 0;
@@ -139,13 +137,7 @@ public class Item : ScriptableObject
     }
 
     public string ItemDescription => itemDescription;
-    //public InItemType InItemType => inItemType;
-    //public OutItemType OutItemType => outItemType;
-    //public Sprite ItemSprite => itemSprite;
-    //public Material ItemMaterial => itemMaterial;
     public float CleanAmount => cleanAmount;
-    public int EatAmount => eatAmount;
-    //public ingredientNeeded[] NnecessaryIngredient => necessaryIngredient;
     public DropItem[] DropItems => dropItems;
     public int ChopCount => chopCount;
     public string UsingToolSoundName => usingToolSoundName;
@@ -164,7 +156,6 @@ public class Item : ScriptableObject
         //MaximumStacks = 20;
         //itemName = itemPrefab.name;
         MaximumStacks = 30;
-        //Debug.Log(itemName);
     }
     public virtual Item GetCopy()
     {

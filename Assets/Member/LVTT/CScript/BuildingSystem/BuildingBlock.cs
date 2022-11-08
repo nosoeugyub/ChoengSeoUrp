@@ -39,7 +39,7 @@ namespace DM.Building
         [SerializeField] BuildingItemObj curInteractObj;
         private float BuildItemScaleVar = 0.015f;
         private float BuildItemRotationVar = 1.4f;
-        private float BuildItemGap = 0.002f;
+        [SerializeField] private float BuildItemGap = 0.002f;
 
         [SerializeField] Transform CameraPos;
 
@@ -69,9 +69,9 @@ namespace DM.Building
         public CancelUIDelegate cancelUIDelegate;
 
         public GameObject sscam;
-        private float _distance;
+        private float _distancetoCam;
         private float _blendTime;
-        
+
 
         private void Awake()
         {
@@ -93,7 +93,7 @@ namespace DM.Building
         }
         internal void SetDistanceWhitCam(float distance)
         {
-            _distance = distance;
+            _distancetoCam = distance;
         }
 
         internal void SetBlentTime(float blendTime)
@@ -144,6 +144,46 @@ namespace DM.Building
             GetComponent<BoxCollider>().enabled = true;
             inventory.InvenAllOnOff(true);
         }
+
+        internal float CalculatePercent(dynamic dynamic, Type type)
+        {
+            if (BuildItemList.Count <= 0) return 0;
+            int clear = 0;
+            //bool canContinue = false;
+            //dynamic 타입과 이외의 타입
+            foreach (BuildingItemObj itemObj in GetBuildItemList())
+            {
+                //Type type1 = itemObj.GetAttribute().buildShape.GetType();
+                //Type type2 = type.GetType(); // 이거 하면 안됨. type은 타입으로만 쓰기
+
+                if (itemObj.GetAttribute().buildShape.GetType() == type)
+                {
+                    if (itemObj.GetAttribute().buildShape == dynamic)
+                    {
+                        clear++;
+                        continue;
+                    }
+                }
+                //canContinue = false;
+                for (int i = 0; i < itemObj.GetAttribute().buildThema.Length; i++)
+                {
+                    if (itemObj.GetAttribute().buildThema[i].GetType() == type)
+                    {
+                        if (itemObj.GetAttribute().buildThema[i] == dynamic)
+                        {
+                            clear++;
+                            //canContinue = true;
+                            break;
+                        }
+                    }
+                    
+                }
+            }
+            float percent = (float)clear / BuildItemList.Count * 100;
+            Debug.Log("percent: " + percent);
+            return (int)percent;
+        }
+
         public void ConstructSignsActive(bool isActive)
         {
             for (int i = 0; i < constructsign.Length; i++)
@@ -178,7 +218,7 @@ namespace DM.Building
                 ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 Debug.DrawRay(ray.origin, ray.direction * 20, Color.blue, 0.3f);
 
-                if (Physics.Raycast(ray, out hit, 20, layerMask) && !IsPointerOverUIObject())
+                if (Physics.Raycast(ray, out hit, 25, layerMask) && !IsPointerOverUIObject())
                 {
                     if (curInteractObj != null)//뭘 이미 들고 있다면?
                     {
@@ -193,12 +233,6 @@ namespace DM.Building
                 }
             }
             if (!curInteractObj) return;
-
-            //자재를 들고있을 때
-            curInteractObj.CallUpdate(DistanceToNowBuildItemToNewSort());
-            ScaleBuildItem();
-            RotateBuildItem();
-            FrontBackMoveBuildItem();
 
             if (Input.GetMouseButtonDown(1))
             {
@@ -220,7 +254,15 @@ namespace DM.Building
                 }
             }
         }
-
+        private void FixedUpdate()
+        {
+            if (!curInteractObj) return;
+            //자재를 들고있을 때
+            curInteractObj.CallUpdate(DistanceToNowBuildItemToNewSort());
+            ScaleBuildItem();
+            RotateBuildItem();
+            FrontBackMoveBuildItem();
+        }
         //UI 위에라면 레이 안쏨
         public bool IsPointerOverUIObject()
         {
@@ -276,7 +318,7 @@ namespace DM.Building
             BuildItemList.Remove(Item.gameObject);
         }
 
-        public bool IsCompleteBuilding()//벽과 문이 있다면 건설 완료 처리
+        public bool IsCompleteBuilding()
         {
             if (buildState == BuildState.Finish) return true;
 
@@ -381,16 +423,17 @@ namespace DM.Building
         {
             foreach (GameObject item in BuildItemList)
             {
-                float bigZinWalls = deleteObj.transform.localPosition.z;//삭제할 오브젝트의 z값
+                float deleteObjZ = deleteObj.transform.localPosition.z;//삭제할 오브젝트의 z값
 
-                if (bigZinWalls <= item.transform.localPosition.z)//삭제할애가 더 앞이면
+                if (deleteObjZ <= item.transform.localPosition.z)//삭제할애가 더 앞이면
                 {
                     item.transform.position -= item.transform.forward * BuildItemGap / 2; //반값전진
                 }
                 else
                 {
-                    item.transform.position -= item.transform.forward * BuildItemGap / 2; //반값전진
-                    item.transform.position += item.transform.forward * BuildItemGap; //가까운것들 정값후진
+                    item.transform.position += item.transform.forward * BuildItemGap / 2; //반값전진
+                    //item.transform.position -= item.transform.forward * BuildItemGap / 2; //반값전진
+                    //item.transform.position += item.transform.forward * BuildItemGap; //가까운것들 정값후진
                     item.GetComponent<BuildingItemObj>().MyOrder--;
                 }
             }
@@ -413,7 +456,7 @@ namespace DM.Building
         public float DistanceToNowBuildItemToNewSort()
         {
             float disc = ((BuildItemList.Count - 1f) / 2f) * BuildItemGap;
-            float toClosestItemDist = _distance - disc;
+            float toClosestItemDist = _distancetoCam - disc;
             float dis2c = ((BuildItemList.Count - 1) - curInteractObj.MyOrder) * BuildItemGap + toClosestItemDist;
 
             return dis2c;
