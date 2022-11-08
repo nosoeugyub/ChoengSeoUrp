@@ -134,7 +134,7 @@ namespace DM.Dialog
         IEnumerator firstDialog()
         {
             yield return new WaitForSeconds(0.1f);
-            savedelegate = PlayerInput.OnPressFDown;
+            savedelegate = PlayerInput.OnPressInteractDown;
 
             FirstShowDialog(npcManager.NpcTfs[0].Npctf, false, -1);
         }
@@ -255,7 +255,6 @@ namespace DM.Dialog
                     dialogLength = nowDialogData.clearSentenceInfo.Length;
                     sentenceState = 2;//클리어
                 }
-                //하 슈발 코드 개기네 일단 대화 가능한 
                 else if (canStartDialog)//시작가능 대화가 있다면?
                 {
                     //nowDialogData = questDialogLists[nowPartner].dialogList[canStartDialogs[0].questId];
@@ -491,7 +490,7 @@ namespace DM.Dialog
 
                     UpdateDialogText(sentences, sentenceState);
                 });
-                PlayerInput.OnPressFDown = dialogdelegate;
+                PlayerInput.OnPressInteractDown = dialogdelegate;
             }
         }
         IEnumerator DelayUpdateBool(Sentence[] sentences, int sentenceState)
@@ -508,7 +507,7 @@ namespace DM.Dialog
                 LastDialogNextEvent(sentences, sentenceState);
 
             });
-            PlayerInput.OnPressFDown = dialogdelegate;
+            PlayerInput.OnPressInteractDown = dialogdelegate;
         }
 
         private void LastDialogNextEvent(Sentence[] sentences, int sentenceState)
@@ -584,7 +583,7 @@ namespace DM.Dialog
                 Debug.Log(nowSentenceIdx + " last back 이벤트실행!");
             }
 
-            PlayerInput.OnPressFDown = savedelegate;
+            PlayerInput.OnPressInteractDown = savedelegate;
             nowNpc = null;
             UpdateNpcsQuestMark();
         }
@@ -595,7 +594,7 @@ namespace DM.Dialog
             dialogdelegate = null;
             IsTalking = false;
 
-            PlayerInput.OnPressFDown = savedelegate;
+            PlayerInput.OnPressInteractDown = savedelegate;
             nowNpc = null;
             UpdateNpcsQuestMark();
         }

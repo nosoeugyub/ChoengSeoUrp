@@ -16,8 +16,8 @@ namespace DM.Building
         private BuildingDisplay buildingDisplay;
 
 
-        PlayerInput.InputEvent savedelegate_ESC;
-        PlayerInput.InputEvent savedelegate_F;
+        PlayerInput.InputEvent savedelegate_Exit;
+        PlayerInput.InputEvent savedelegate_Interact;
 
         private float _distance;
         private float _blendTime;
@@ -40,10 +40,10 @@ namespace DM.Building
         {
             if (SuperManager.Instance.dialogueManager.IsTalking) return;
 
-            savedelegate_ESC = PlayerInput.OnPressESCDown;
-            savedelegate_F = PlayerInput.OnPressFDown;
-            PlayerInput.OnPressESCDown = BuildModeOff;
-            PlayerInput.OnPressFDown = null;
+            savedelegate_Exit = PlayerInput.OnPressExitDown;
+            savedelegate_Interact = PlayerInput.OnPressInteractDown;
+            PlayerInput.OnPressExitDown = BuildModeOff;
+            PlayerInput.OnPressInteractDown = null;
 
             //NPC Off
             SuperManager.Instance.npcManager.AllNpcActive(false);
@@ -75,8 +75,8 @@ namespace DM.Building
             if (!isBuildMode) return;
             StartCoroutine(Waitblendtime(false));
 
-            PlayerInput.OnPressESCDown = savedelegate_ESC;
-            PlayerInput.OnPressFDown = savedelegate_F;
+            PlayerInput.OnPressExitDown = savedelegate_Exit;
+            PlayerInput.OnPressInteractDown = savedelegate_Interact;
             
             //NPC On
             SuperManager.Instance.npcManager.AllNpcActive(true);

@@ -39,7 +39,7 @@ namespace DM.Building
         [SerializeField] BuildingItemObj curInteractObj;
         private float BuildItemScaleVar = 0.015f;
         private float BuildItemRotationVar = 1.4f;
-        private float BuildItemGap = 0.002f;
+        [SerializeField] private float BuildItemGap = 0.002f;
 
         [SerializeField] Transform CameraPos;
 
@@ -69,7 +69,7 @@ namespace DM.Building
         public CancelUIDelegate cancelUIDelegate;
 
         public GameObject sscam;
-        private float _distance;
+        private float _distancetoCam;
         private float _blendTime;
 
 
@@ -93,7 +93,7 @@ namespace DM.Building
         }
         internal void SetDistanceWhitCam(float distance)
         {
-            _distance = distance;
+            _distancetoCam = distance;
         }
 
         internal void SetBlentTime(float blendTime)
@@ -318,7 +318,7 @@ namespace DM.Building
             BuildItemList.Remove(Item.gameObject);
         }
 
-        public bool IsCompleteBuilding()//벽과 문이 있다면 건설 완료 처리
+        public bool IsCompleteBuilding()
         {
             if (buildState == BuildState.Finish) return true;
 
@@ -423,16 +423,17 @@ namespace DM.Building
         {
             foreach (GameObject item in BuildItemList)
             {
-                float bigZinWalls = deleteObj.transform.localPosition.z;//삭제할 오브젝트의 z값
+                float deleteObjZ = deleteObj.transform.localPosition.z;//삭제할 오브젝트의 z값
 
-                if (bigZinWalls <= item.transform.localPosition.z)//삭제할애가 더 앞이면
+                if (deleteObjZ <= item.transform.localPosition.z)//삭제할애가 더 앞이면
                 {
                     item.transform.position -= item.transform.forward * BuildItemGap / 2; //반값전진
                 }
                 else
                 {
-                    item.transform.position -= item.transform.forward * BuildItemGap / 2; //반값전진
-                    item.transform.position += item.transform.forward * BuildItemGap; //가까운것들 정값후진
+                    item.transform.position += item.transform.forward * BuildItemGap / 2; //반값전진
+                    //item.transform.position -= item.transform.forward * BuildItemGap / 2; //반값전진
+                    //item.transform.position += item.transform.forward * BuildItemGap; //가까운것들 정값후진
                     item.GetComponent<BuildingItemObj>().MyOrder--;
                 }
             }
@@ -455,7 +456,7 @@ namespace DM.Building
         public float DistanceToNowBuildItemToNewSort()
         {
             float disc = ((BuildItemList.Count - 1f) / 2f) * BuildItemGap;
-            float toClosestItemDist = _distance - disc;
+            float toClosestItemDist = _distancetoCam - disc;
             float dis2c = ((BuildItemList.Count - 1) - curInteractObj.MyOrder) * BuildItemGap + toClosestItemDist;
 
             return dis2c;

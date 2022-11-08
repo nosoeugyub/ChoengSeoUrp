@@ -63,7 +63,7 @@ namespace NSY.Player
         private void Start()
         {
             canInteractCount = 0;
-            PlayerInput.OnPressFDown = InvokeInteractClosestObj;
+            PlayerInput.OnPressInteractDown = InvokeInteractClosestObj;
             DIalogEventManager.EventActions[(int)EventEnum.OnFollowPlayer] = NPCIntroduceSetting;
         }
         private void Update()
@@ -84,24 +84,22 @@ namespace NSY.Player
                 if (canInteractCount <= 0)
                 {
                     canInteract = _canInteract;
-                    //Debug.Log("SetInteract true  " + closestObj);
                 }
             }
             else
             {
                 canInteractCount++;
                 canInteract = _canInteract;
-                //Debug.Log("SetInteract false  " + closestObj);
             }
         }
 
         public bool SetNpc(HouseNpc npc)
         {
-            if (npc == null)
-            {
-                followNpc = npc;
-                return true;
-            }
+            //if (npc == null)
+            //{
+            //    followNpc = npc;
+            //    return true;
+            //}
 
             //if (followNpc == null)
             {

@@ -4,15 +4,12 @@ namespace NSY.Player
 {
     public class PlayerInput : MonoBehaviour
     {
-        [SerializeField]
-        PlayerController playerController;
-
         public delegate void InputEvent();
-        public static InputEvent OnPressFDown; //F 누를 때 실행할 메서드 갈아껴주는 용도
-        public static InputEvent OnPressESCDown; //F 누를 때 실행할 메서드 갈아껴주는 용도
+        public static InputEvent OnPressInteractDown; //F 누를 때 실행할 메서드 갈아껴주는 용도
+        public static InputEvent OnPressExitDown; //F 누를 때 실행할 메서드 갈아껴주는 용도
 
-        bool isOnPressF;
-        bool isOnPressESC;
+        bool isOnPressInteract;
+        bool isOnPressExit;
 
         //플레이어가 누르는 키입력
         [Space]
@@ -32,17 +29,16 @@ namespace NSY.Player
 
         void Update()
         {
-
             ActiveObj();
         }
-        public void OnPressF() => isOnPressF = true;
-        public void OffPressF() => isOnPressF = false;
+        public void OnPressF() => isOnPressInteract = true;
+        public void OffPressF() => isOnPressInteract = false;
 
         public void ActiveObj()
         {
-            if (Input.GetKey(_InputInterBtn) && isOnPressF)
+            if (Input.GetKey(_InputInterBtn) && isOnPressInteract)
             {
-                OnPressFDown();
+                OnPressInteractDown();
                 interectObj = true;
             }
             else
@@ -56,7 +52,7 @@ namespace NSY.Player
             }
             if (Input.GetKeyDown(_escKey))
             {
-                OnPressESCDown();
+                OnPressExitDown();
             }
         }
     }

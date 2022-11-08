@@ -7,19 +7,15 @@ public class MaterialChoiceUI : MonoBehaviour
     int nowindex;
     BuildingItemPercentUI buildingItemPercentUI;
     [SerializeField] Image image;
-    EEEEE nowlist;
+    BuildingMaterialsInfo nowlist;
     private void Awake()
     {
         buildingItemPercentUI = FindObjectOfType<BuildingItemPercentUI>();
     }
-    private void Start()
-    {
-        //index = 0;
-    }
 
-    internal void UpdateListUI(EEEEE eeeee, int _index)
+    internal void UpdateListUI(BuildingMaterialsInfo matinfo, int _index)
     {
-        nowlist = eeeee;
+        nowlist = matinfo;
         nowindex = _index;
         UpdateSprite();
     }
@@ -28,7 +24,7 @@ public class MaterialChoiceUI : MonoBehaviour
     {
         image.sprite = nowlist.images[index[nowindex]];
         print(nowlist.elemants[index[nowindex]]);
-        buildingItemPercentUI.UpdatePercent(nowlist.elemants[index[nowindex]], nowlist.type);
+        buildingItemPercentUI.UpdatePercent(nowlist.elemants[index[nowindex]], nowlist.type, nowlist.elemantsname[index[nowindex]]);
     }
 
     public void UpDownIndex(bool up)

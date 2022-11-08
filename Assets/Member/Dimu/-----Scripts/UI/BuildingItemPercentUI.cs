@@ -12,8 +12,9 @@ public class BuildingItemPercentUI : MonoBehaviour
     {
         buildingManager = FindObjectOfType<BuildingManager>();
     }
-    internal void UpdatePercent(dynamic dynamic, Type type)
+    internal void UpdatePercent(dynamic dynamic, Type type, string name)
     {
         percentText.text = string.Format("{0}%", buildingManager.GetPercent(dynamic, type));
+        percentnameText.text = name;
     }
 }

@@ -13,32 +13,26 @@ public class GameSetting : MonoBehaviour
 
     private void Start()
     {
-        PlayerInput.OnPressESCDown = SettingUIONOff;
+        PlayerInput.OnPressExitDown = SettingUIONOff;
     }
-    //public void Update()
-    //{
-    //    if (Input.GetKeyUp(KeyCode.Escape))
-    //    {
-    //        SettingUIONOff();
-    //    }
-    //}
 
     public void SettingUIONOff()
     {
         if (!settingUI.activeSelf)
         {
-            savedelegate = PlayerInput.OnPressESCDown;
-            PlayerInput.OnPressESCDown = SettingUIONOff;
+            savedelegate = PlayerInput.OnPressExitDown;
+            PlayerInput.OnPressExitDown = SettingUIONOff;
         }
         else
         {
-            PlayerInput.OnPressESCDown = savedelegate;
+            //건축 시 예외처리 필요
+            PlayerInput.OnPressExitDown = savedelegate;
         }
         settingUI.SetActive(!settingUI.activeSelf);
     }
     public void ClickCloseSetting()
     {
-        PlayerInput.OnPressESCDown = savedelegate;
+        PlayerInput.OnPressExitDown = savedelegate;
         settingUI.SetActive(false);
     }
     public void ReflectionONOff(bool value)

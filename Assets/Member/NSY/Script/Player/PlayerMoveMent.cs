@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace NSY.Player
 {
-    public class PlayerMoveMent : MonoBehaviour, IDataManager
+    public class PlayerMoveMent : MonoBehaviour//, IDataManager
     {
         //플립
         [SerializeField]
@@ -161,15 +161,23 @@ namespace NSY.Player
             }
         }
 
-        public void LoadData(SaveData data)
+        public void LoadData()
         {
-
+            this.movement = ES3.Load<Vector3>("playerpos");
         }
-
-        public void SaveData(ref SaveData data)
+        public void SaveData()
         {
-            this.movement = data.PlayerVector;
+            ES3.Save("playerpos", this.movement);
         }
+        //public void LoadData(SaveData data)
+        //{
+
+        //}
+
+        //public void SaveData(ref SaveData data)
+        //{
+        //    this.movement = data.PlayerVector;
+        //}
     }
 }
 
