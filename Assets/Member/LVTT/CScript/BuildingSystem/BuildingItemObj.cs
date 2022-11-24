@@ -72,8 +72,8 @@ namespace DM.Building
         }
         public void SetBuildMaterial()
         {
-            //attributes.buildThema = new  BuildMaterial[2] { BuildMaterial.Sand, BuildMaterial.Wood };
-            attributes.buildThema = new  BuildMaterial[1] { BuildMaterial.Grass };//Paper Grass Iron Sand Wood Stone
+            attributes.buildThema = new  BuildMaterial[2] { BuildMaterial.Sand, BuildMaterial.Iron };
+            //attributes.buildThema = new  BuildMaterial[1] { BuildMaterial.Iron };//Paper Grass Iron Sand Wood Stone
             //attributes.buildThema[0] = BuildMaterial.Paper;
         }
         public void SetBuildShape()

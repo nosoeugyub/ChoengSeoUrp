@@ -421,6 +421,9 @@ public class CreateAsset : MonoBehaviour
             {
                 buildingitemObject.SetBuildMaterial();
             }
+            EditorUtility.SetDirty(buildingitemObject);
+            TextureImporter textureImporter = AssetImporter.GetAtPath(path) as TextureImporter;
+            textureImporter.SaveAndReimport();
             AssetDatabase.Refresh();
         }
     }
