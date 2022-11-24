@@ -72,13 +72,13 @@ namespace DM.Building
         }
         public void SetBuildMaterial()
         {
-            attributes.buildThema = new  BuildMaterial[2] { BuildMaterial.Sand, BuildMaterial.Iron };
+            attributes.buildThema = new  BuildMaterial[2] { BuildMaterial.Wood, BuildMaterial.Sand };
             //attributes.buildThema = new  BuildMaterial[1] { BuildMaterial.Iron };//Paper Grass Iron Sand Wood Stone
             //attributes.buildThema[0] = BuildMaterial.Paper;
         }
         public void SetBuildShape()
         {
-            attributes.buildShape = BuildShape.Etc;//Square = 10000, Circle, Rectangle, Triangle, Etc,  Etc
+            attributes.buildShape = BuildShape.Rectangle;//Square = 10000, Circle, Rectangle, Triangle, Etc,  Etc
         }
         private new void Awake()
         {
