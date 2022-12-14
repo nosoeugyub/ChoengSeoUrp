@@ -13,9 +13,7 @@ public class TypeChoiceUI : MonoBehaviour
     private void Awake()
     {
         materialChoiceUI = FindObjectOfType<MaterialChoiceUI>();
-    }
-    private void Start()
-    {
+
         if (buildmatinfo == null)
         {
             buildmatinfo = new BuildingMaterialsInfo[2];
@@ -54,8 +52,11 @@ public class TypeChoiceUI : MonoBehaviour
         buildmatinfo[1].elemantsname[3] = "삼각형";
         buildmatinfo[1].elemants[4] = BuildShape.Etc;
         buildmatinfo[1].elemantsname[4] = "그 외 모양";
-        //ees[0].elemants[5] = Activator.CreateInstance(ees[0].type);
         Init();
+    }
+    private void Start()
+    {
+        //ees[0].elemants[5] = Activator.CreateInstance(ees[0].type);
         UpdateTextUI();
     }
     private void Init()
@@ -63,7 +64,7 @@ public class TypeChoiceUI : MonoBehaviour
         index = 0;
         materialChoiceUI.Init(buildmatinfo.Length);
     }
-    private void UpdateTextUI()
+    public void UpdateTextUI() //nowbuildingblock 업데이트 후 호출해야 함 흠..
     {
         typeText.text = buildmatinfo[index].name;
         materialChoiceUI.UpdateListUI(buildmatinfo[index], index);

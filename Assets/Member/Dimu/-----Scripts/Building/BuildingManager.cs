@@ -14,6 +14,7 @@ namespace DM.Building
 
         private CameraManager CamManager;
         private BuildingDisplay buildingDisplay;
+        private TypeChoiceUI typeChoiceUI;
 
 
         PlayerInput.InputEvent savedelegate_Exit;
@@ -29,6 +30,7 @@ namespace DM.Building
         {
             CamManager = FindObjectOfType<CameraManager>();
             buildingDisplay = FindObjectOfType<BuildingDisplay>();
+            typeChoiceUI = FindObjectOfType<TypeChoiceUI>();
         }
         private void Start()
         {
@@ -51,12 +53,14 @@ namespace DM.Building
             //BuildingBlockSetting
             nowBuildingBlock = nowBuildingBlock_;
             nowBuildingBlock_.SetCancelUIAction(buildingDisplay.CancelUIState);
+            nowBuildingBlock_.SetDeleteItemAction(typeChoiceUI.UpdateTextUI);
             nowBuildingBlock_.SetBlentTime(_blendTime);
             nowBuildingBlock_.SetDistanceWhitCam(_distance);
             nowBuildingBlock_.BuildModeOnSetting();
             StartCoroutine(Waitblendtime(true));
             //UI
             buildingDisplay.percentUIState(true);
+            typeChoiceUI.UpdateTextUI();
             //buildingDisplay.BuildDisplayOn(true); //UI Display 추가
 
             //camera
@@ -129,6 +133,7 @@ namespace DM.Building
         internal void BtnSpawnHouseBuildItem(Item item)
         {
             nowBuildingBlock.BtnSpawnHouseBuildItem(item);
+            typeChoiceUI.UpdateTextUI();
         }
 
         public List<BuildingBlock> GetCompleteBuildings()

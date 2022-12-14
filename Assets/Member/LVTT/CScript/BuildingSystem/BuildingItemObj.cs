@@ -12,7 +12,7 @@ namespace DM.Building
 
         float MaxScale = 3f;
         float MinScale = 0.2f;
-        public int breakCount;
+        private int breakCount = 3;
         int originbreakCount;
 
         [SerializeField] private bool itemisSet;
@@ -25,16 +25,29 @@ namespace DM.Building
         float MinX;
         float MaxY;
         float MinY;
-       [SerializeField] float _areaWidthsize;
+        [SerializeField] float _areaWidthsize;
         [SerializeField] float _areaHeightsize;
 
-        [SerializeField]  Vector3 _houseBuildPos;
+        [SerializeField] Vector3 _houseBuildPos;
         Vector3 ObjOriginPos;
 
         BuildingHandyObjSpawn SpawnHandyObjParent;
 
         [SerializeField] int myOrder;
         public int MyOrder { get { return myOrder; } set { myOrder = value; } }
+        public int BreakCount
+        {
+            get { return breakCount; }
+            set
+            {
+                breakCount = value;
+                particle.Play();
+                PlayerData.AddValue(0, (int)BuildInputBehaviorEnum.Demolish, PlayerData.BuildInputData, (int)BuildInputBehaviorEnum.length);
+            }
+        }
+
+        public delegate void EventHandler();
+        public event EventHandler DeleteObjEvent;
 
         public bool IsFirstDrop
         {
@@ -72,7 +85,7 @@ namespace DM.Building
         }
         public void SetBuildMaterial()
         {
-            attributes.buildThema = new  BuildMaterial[2] { BuildMaterial.Wood, BuildMaterial.Sand };
+            attributes.buildThema = new BuildMaterial[2] { BuildMaterial.Wood, BuildMaterial.Sand };
             //attributes.buildThema = new  BuildMaterial[1] { BuildMaterial.Iron };//Paper Grass Iron Sand Wood Stone
             //attributes.buildThema[0] = BuildMaterial.Paper;
         }
@@ -110,7 +123,7 @@ namespace DM.Building
             MinScale = 0.1f;
             if (transform.parent)
                 SetPivotPos(transform.parent.position);
- 
+
 
         }
         public void CallUpdate(float _distanceToNowBuildItemToNewSort)
@@ -186,20 +199,16 @@ namespace DM.Building
             return (int)CursorType.Build;
         }
 
-        public bool Demolish()
+        public bool IsDemolishObj()
         {
-            breakCount--;
-            //이펙트 등
-            particle.Play();
+            return breakCount <= 0;
+        }
 
-            if (breakCount == 0)
-            {
-                DropItems();
-                PlayerData.AddValue(0, (int)BuildInputBehaviorEnum.Demolish, PlayerData.BuildInputData, (int)BuildInputBehaviorEnum.length);
-                return true;
-            }
-            return false;
+        public void Demolish()
+        {
 
+            DropItems();
+            Destroy(gameObject);
         }
         public void DropItems()
         {
@@ -337,7 +346,7 @@ namespace DM.Building
             myOrder = count;
         }
 
- 
+
     }
 
 }

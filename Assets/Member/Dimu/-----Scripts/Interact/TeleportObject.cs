@@ -8,6 +8,17 @@ public class TeleportObject : AreaInteract
     Transform playerObj = null;
     [SerializeField] int distfromplayer = 5;
     [SerializeField] ParticleSystem openParticle;
+
+    private void Start()
+    {
+        gameObject.SetActive(false);
+        NSY.Manager.DIalogEventManager.EventActions[(int)EventEnum.MoveToWalPort] += ActiveOn;
+    }
+    private void ActiveOn()
+    {
+        gameObject.SetActive(true);
+        NSY.Manager.DIalogEventManager.EventActions[(int)EventEnum.MoveToWalPort] -= ActiveOn;
+    }
     public override int CanInteract()
     {
         return (int)CursorType.Mag;

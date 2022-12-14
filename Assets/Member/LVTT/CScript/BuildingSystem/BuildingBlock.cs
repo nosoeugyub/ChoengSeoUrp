@@ -64,6 +64,7 @@ namespace DM.Building
         public int BuildingID { get { return buildingId; } set { buildingId = value; } }
 
         //액션을 사용해보기
+        public Action deleteAction;
         public delegate void VoidDelegate(BuildingBlock buildingBlock);
         public delegate void CancelUIDelegate(bool ison);
         public CancelUIDelegate cancelUIDelegate;
@@ -101,9 +102,13 @@ namespace DM.Building
             _blendTime = blendTime;
         }
 
-        public void SetCancelUIAction(CancelUIDelegate action)
+        public void SetCancelUIAction(CancelUIDelegate action) // 전달 인자 많아질 시 param으로...
         {
             cancelUIDelegate = action;
+        }
+        public void SetDeleteItemAction(Action action) // 전달 인자 많아질 시 param으로...
+        {
+            deleteAction = action;
         }
         public void BuildModeOnSetting()
         {
@@ -176,7 +181,7 @@ namespace DM.Building
                             break;
                         }
                     }
-                    
+
                 }
             }
             float percent = (float)clear / BuildItemList.Count * 100;
@@ -242,13 +247,14 @@ namespace DM.Building
                 }
                 else
                 {
+                    curInteractObj.BreakCount--;
                     // 직관적이지 않은 부분 존재
-                    if (curInteractObj.Demolish())
+                    if (curInteractObj.IsDemolishObj())
                     {
+                        curInteractObj.Demolish();
                         RemoveBuildItemToList(curInteractObj);
                         DeleteBuildingItemObjSorting(curInteractObj.gameObject);
-                        Destroy(curInteractObj.gameObject);
-
+                        deleteAction();
                         inventory.InvenSlotResetCanBuildMode(); //빌딩가능모드로 인벤 리셋
                     }
                 }
