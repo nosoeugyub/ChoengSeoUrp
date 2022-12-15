@@ -259,16 +259,16 @@ namespace DM.Building
                     }
                 }
             }
-        }
-        private void FixedUpdate()
-        {
+
             if (!curInteractObj) return;
             //자재를 들고있을 때
             curInteractObj.CallUpdate(DistanceToNowBuildItemToNewSort());
+            FrontBackMoveBuildItem();
             ScaleBuildItem();
             RotateBuildItem();
-            FrontBackMoveBuildItem();
+
         }
+           
         //UI 위에라면 레이 안쏨
         public bool IsPointerOverUIObject()
         {
@@ -374,12 +374,15 @@ namespace DM.Building
             {
                 curInteractObj.SwitchBuildingItemObjZPos(true, BuildItemList, BuildItemGap);
                 PlayerData.AddValue(0, (int)BuildInputBehaviorEnum.LayerUp, PlayerData.BuildInputData, (int)BuildInputBehaviorEnum.length);
+                DebugText.Instance.SetText("FrontMoveBuildItem");
 
             }
             else if (Input.GetKeyDown(playerInput.BackKey))
             {
                 curInteractObj.SwitchBuildingItemObjZPos(false, BuildItemList, BuildItemGap);
                 PlayerData.AddValue(0, (int)BuildInputBehaviorEnum.LayerDown, PlayerData.BuildInputData, (int)BuildInputBehaviorEnum.length);
+                DebugText.Instance.SetText("BackMoveBuildItem");
+
             }
         }
 
