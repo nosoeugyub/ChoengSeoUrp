@@ -185,14 +185,14 @@ namespace DM.Building
         public void SetBuildingItemScale(float BuildItemScaleVar)
         {
             Vector3 var = transform.localScale;
-            var.x += BuildItemScaleVar;
-            var.y += BuildItemScaleVar;
+            var.x += BuildItemScaleVar* Time.deltaTime;
+            var.y += BuildItemScaleVar* Time.deltaTime;
             SetBuildingItemScaleMinMax(var);
         }
 
         public void SetBuildItemRotation(float scalenum)
         {
-            transform.Rotate(new Vector3(0, 0, scalenum));
+            transform.Rotate(new Vector3(0, 0, scalenum * Time.deltaTime));
         }
         public override int CanInteract()
         {
