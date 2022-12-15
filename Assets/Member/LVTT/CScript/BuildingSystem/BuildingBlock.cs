@@ -37,8 +37,8 @@ namespace DM.Building
         private PlayerInput playerInput;
 
         [SerializeField] BuildingItemObj curInteractObj;
-        private float BuildItemScaleVar = 0.015f;
-        private float BuildItemRotationVar = 1.4f;
+        private float BuildItemScaleVar = 1f;
+        private float BuildItemRotationVar = 50f;
         [SerializeField] private float BuildItemGap = 0.002f;
 
         [SerializeField] Transform CameraPos;
@@ -374,14 +374,12 @@ namespace DM.Building
             {
                 curInteractObj.SwitchBuildingItemObjZPos(true, BuildItemList, BuildItemGap);
                 PlayerData.AddValue(0, (int)BuildInputBehaviorEnum.LayerUp, PlayerData.BuildInputData, (int)BuildInputBehaviorEnum.length);
-                DebugText.Instance.SetText("FrontMoveBuildItem");
 
             }
             else if (Input.GetKeyDown(playerInput.BackKey))
             {
                 curInteractObj.SwitchBuildingItemObjZPos(false, BuildItemList, BuildItemGap);
                 PlayerData.AddValue(0, (int)BuildInputBehaviorEnum.LayerDown, PlayerData.BuildInputData, (int)BuildInputBehaviorEnum.length);
-                DebugText.Instance.SetText("BackMoveBuildItem");
 
             }
         }

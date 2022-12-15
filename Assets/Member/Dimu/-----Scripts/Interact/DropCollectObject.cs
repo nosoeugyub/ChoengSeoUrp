@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class DropCollectObject : CollectObject
 {
-    [SerializeField] float powerInit = 0.3f;
-    [SerializeField] float power=0.3f;
+    float powerInit = 10f;
+    float power;
     [SerializeField] bool canMove;
 
     [SerializeField] string startsoundName = "item_drop2";
@@ -22,7 +22,7 @@ public class DropCollectObject : CollectObject
         box.enabled = false;
         StartCoroutine(CanInteractDelay());
         canMove = true;
-        StartCoroutine(SpawnUpdate());
+       // StartCoroutine(SpawnUpdate());
         power = powerInit;
     }
 
@@ -34,10 +34,20 @@ public class DropCollectObject : CollectObject
     {
         while (canMove)
         {
-            Vector3 newVec = new Vector3(transform.position.x, transform.position.y + power, transform.position.z);
+            Vector3 newVec = new Vector3(transform.position.x, transform.position.y + power * Time.deltaTime, transform.position.z);
             transform.position = newVec;
-            power -= Time.deltaTime * 0.5f;
+            power -= 0.6f;
             yield return null;
+        }
+    }
+
+    public void FixedUpdate()
+    {
+       if (canMove)
+        {
+            Vector3 newVec = new Vector3(transform.position.x, transform.position.y + power * Time.deltaTime, transform.position.z);
+            transform.position = newVec;
+            power -= 0.6f;
         }
     }
     IEnumerator CanInteractDelay()
